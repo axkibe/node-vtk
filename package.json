@@ -1,0 +1,17 @@
+{
+  "name": "vtk",
+  "version": "5.8.0",
+  "description": "node.js bindings to VTK",
+  "author": {
+    "name": "Axel Kittenberger",
+    "email": "axkibe@gmail.com"
+  },
+  "main": "./index",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "node-cmake": "^1.1.0"
+  },
+  "dependencies": {
+    "nan": "^2.1.0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "build_type": "Debug",
+  "generator": "Unix Makefiles",
+  "toolset": "",
+  "platform": "",
+  "variant": "node",
+  "version": "5.3.0",
+  "download": "OFF",
+  "standard": "11"
+}
