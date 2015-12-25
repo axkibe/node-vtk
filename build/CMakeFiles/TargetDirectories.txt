@@ -1,1 +1,0 @@
-/home/axel/hello/vtk/build/CMakeFiles/node-vtk.dir
