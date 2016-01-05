@@ -49,7 +49,6 @@ NAN_METHOD( render )
 
 	//Render and interact
 	renderWindow->Render( );
-	renderWindowInteractor->Print( std::cout );
 	renderWindowInteractor->Start( );
 }
 
