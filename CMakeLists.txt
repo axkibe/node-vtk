@@ -1,21 +1,15 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 2.8)
 
 project(node-vtk)
+
+file(GLOB SOURCE_FILES "src/*.cc" "src/*.h")
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_JS_INC})
 
 find_package(VTK REQUIRED)
 include(${VTK_USE_FILE})
 
-list(APPEND CMAKE_MODULE_PATH 
-    ${CMAKE_CURRENT_SOURCE_DIR}/node_modules/node-cmake
-)
-
-find_package(NodeJS)
-
-add_nodejs_module(
-	${PROJECT_NAME}
-	src/init.cc
-	src/vtkConeSourceWrap.cc
-	src/render.cc
-)
-target_link_libraries(${PROJECT_NAME} ${VTK_LIBRARIES})
-
+target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB} ${VTK_LIBRARIES})

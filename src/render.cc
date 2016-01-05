@@ -1,5 +1,9 @@
 #include <nan.h>
 
+#include <vtkCamera.h>
+#include <vtkCommand.h>
+#include <vtkCallbackCommand.h>
+#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkConeSource.h>
 #include <vtkPolyData.h>
 #include <vtkSmartPointer.h>
@@ -30,15 +34,22 @@ NAN_METHOD( render )
 	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
 	vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
 	renderWindow->AddRenderer( renderer );
+
 	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New( );
 	renderWindowInteractor->SetRenderWindow( renderWindow );
- 
+	renderWindowInteractor->Initialize( );
+
+	vtkInteractorStyle* style1 = vtkInteractorStyleTrackballCamera::New();
+	renderWindowInteractor->SetInteractorStyle(style1);
+
 	//Add the actors to the scene
 	renderer->AddActor( actor );
 	renderer->SetBackground( .3, .2, .1 );
- 
+	renderer->ResetCamera( );
+
 	//Render and interact
 	renderWindow->Render( );
+	renderWindowInteractor->Print( std::cout );
 	renderWindowInteractor->Start( );
 }
 
