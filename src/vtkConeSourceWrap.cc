@@ -1,13 +1,7 @@
 #include <nan.h>
 
 #include <vtkConeSource.h>
-#include <vtkPolyData.h>
 #include <vtkSmartPointer.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkActor.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderer.h>
-#include <vtkRenderWindowInteractor.h>
 
 #include "node-vtk.h"
 
@@ -60,7 +54,8 @@ void VtkConeSourceWrap::New( const Nan::FunctionCallbackInfo<v8::Value>& info )
 {
 	if( !info.IsConstructCall( ) )
 	{
-		throw "TODO";
+		Nan::ThrowError("Constructor called outside new");
+		return;
 	}
 
 	vtkSmartPointer<vtkConeSource> coneSource = vtkSmartPointer<vtkConeSource>::New( );

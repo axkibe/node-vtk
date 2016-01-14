@@ -1,0 +1,1209 @@
+diff -urB --new-file VTK-6.1.0-org/CMake/vtkModuleMacros.cmake VTK-6.1.0/CMake/vtkModuleMacros.cmake
+--- VTK-6.1.0-org/CMake/vtkModuleMacros.cmake	2014-01-22 16:55:41.000000000 +0100
++++ VTK-6.1.0/CMake/vtkModuleMacros.cmake	2016-01-13 09:50:49.631074605 +0100
+@@ -234,7 +234,7 @@
+       DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
+       COMPONENT Development)
+     if(NOT ${vtk-module}_EXCLUDE_FROM_WRAPPING)
+-      if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++      if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA OR VTK_WRAP_NODEJS)
+         install(FILES ${${vtk-module}_WRAP_HIERARCHY_FILE}
+           DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
+           COMPONENT Development)
+@@ -515,7 +515,7 @@
+   # TODO: Re-order things so we do not need to duplicate this condition.
+   if(NOT ${vtk-module}_EXCLUDE_FROM_WRAPPING AND
+       NOT ${vtk-module}_EXCLUDE_FROM_WRAP_HIERARCHY AND
+-      ( VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA ))
++      ( VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA OR VTK_WRAP_NODEJS ))
+     set(_hierarchy ${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}Hierarchy.stamp)
+   else()
+     set(_hierarchy "")
+diff -urB --new-file VTK-6.1.0-org/CMake/vtkNodeJsWrapping.cmake VTK-6.1.0/CMake/vtkNodeJsWrapping.cmake
+--- VTK-6.1.0-org/CMake/vtkNodeJsWrapping.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.1.0/CMake/vtkNodeJsWrapping.cmake	2016-01-14 15:13:05.362105382 +0100
+@@ -0,0 +1,134 @@
++include(vtkWrapNodeJs)
++
++function(vtk_add_nodejs_wrapping module_name)
++  if(NOT VTK_WRAP_NODEJS_INIT_EXE)
++    if(TARGET vtkWrapNodeJsInit)
++      set (VTK_WRAP_NODEJS_INIT_EXE vtkWrapNodeJsInit)
++    else()
++      message(FATAL_ERROR "VTK must be built with Node.js wrapping turned on.")
++    endif()
++  endif()
++
++  if(NOT ${module_name}_EXCLUDE_FROM_WRAP_HIERARCHY)
++    set(KIT_HIERARCHY_FILE ${${module_name}_WRAP_HIERARCHY_FILE})
++  endif()
++
++  string(REGEX REPLACE "^vtk" "" kit_name "${module_name}")
++  set(KIT ${kit_name})
++
++  # Figure out the dependent PythonXYD libraries for the module
++  unset(extra_links)
++  set(EXTRA_NODEJS_INCLUDE_DIRS ${${module_name}_NODEJS_INCLUDE_DIRS})
++
++#  foreach(dep ${${module_name}_DEPENDS})
++#    if(NOT "${module_name}" STREQUAL "${dep}" AND TARGET ${dep}PythonD)
++#      list(APPEND extra_links ${dep}PythonD)
++#    endif()
++#  endforeach()
++
++  if(${module_name}_WRAP_HINTS AND EXISTS "${${module_name}_WRAP_HINTS}")
++    set(VTK_WRAP_HINTS "${${module_name}_WRAP_HINTS}")
++  endif()
++
++  vtk_wrap_nodejs(${module_name}NodeJs NodeJs_SRCS ${module_name})
++
++  add_custom_target( ${module_name}NodeJsD ALL DEPENDS ${NodeJs_SRCS})
++
++#  vtk_add_library(${module_name}PythonD ${Python_SRCS} ${extra_srcs})
++#  get_property(output_name TARGET ${module_name}PythonD PROPERTY OUTPUT_NAME)
++#  string(REPLACE "PythonD" "Python${XY}D" output_name "${output_name}")
++#  set_property(TARGET ${module_name}PythonD PROPERTY OUTPUT_NAME ${output_name})
++#  if(CMAKE_HAS_TARGET_INCLUDES)
++#    set_property(TARGET ${module_name}PythonD APPEND
++#      PROPERTY INCLUDE_DIRECTORIES ${_python_include_dirs})
++#  endif()
++#  if(${module_name}_IMPLEMENTS)
++#    set_property(TARGET ${module_name}PythonD PROPERTY COMPILE_DEFINITIONS
++#      "${module_name}_AUTOINIT=1(${module_name})")
++#  endif()
++#  target_link_libraries(${module_name}PythonD LINK_PUBLIC ${module_name}
++#    vtkWrappingPythonCore ${extra_links} ${VTK_PYTHON_LIBRARIES})
++#
++#  _vtk_add_python_module(${module_name}Python ${module_name}PythonInit.cxx)
++#  target_link_libraries(${module_name}Python ${module_name}PythonD)
++#  if(CMAKE_HAS_TARGET_INCLUDES)
++#    set_property(TARGET ${module_name}Python APPEND
++#      PROPERTY INCLUDE_DIRECTORIES ${_python_include_dirs})
++#  endif()
++endfunction()
++
++#------------------------------------------------------------------------------
++# _vtk_add_python_module(<name> src1 src2..) is used to build modules for Python.
++# A python module is the module that gets imported in Python interpretor.
++# This is an internal function used by vtk_add_python_wrapping() to create the
++# module for each VTK module. If BUILD_SHARED_LIBS is OFF, this simply creates
++# a static library. In that case applications are expected to use
++# vtk_write_python_modules_header_for_wrapped_modules() to generate a header
++# that statically initializes the modules after Py_Inititalize() is called.
++#function(_vtk_add_python_module name)
++#  if (BUILD_SHARED_LIBS)
++#    add_library(${name} MODULE ${ARGN})
++#    set_property(TARGET ${name} PROPERTY PREFIX "${PYTHON_MODULE_PREFIX}")
++#    if (WIN32 AND NOT CYGWIN)
++#      # when building shared on Windows, the python module files need to be
++#      # named as *.pyd
++#      set_target_properties(${name} PROPERTIES SUFFIX ".pyd")
++#    endif()
++#  else ()
++#    # when building statically, the module targets need to be exported since
++#    # others can link against them, unlike when building shared, and hence we
++#    # use vtk_add_library() call.
++#    vtk_add_library(${name} ${ARGN})
++#  endif()
++#endfunction()
++
++#------------------------------------------------------------------------------
++# vtk_write_python_modules_header(filename vtk-module1 vtk-module2...)
++# This is similar to vtk_write_python_modules_header_for_wrapped_modules()
++# execpt caller is expected to explitictly specify the modules to be initialized
++# in the generated header. The header file will have non-empty content only if
++# BUILD_SHARED_LIBS is OFF. When ON, the header file contains empty functions
++# and hence can still be used by the client code, but it doesn't really do any
++# initialization.
++#function(vtk_write_python_modules_header filename)
++#  get_filename_component(_name "${filename}" NAME_WE)
++#  STRING(REPLACE "." "_" _name "${_name}")
++#  STRING(TOUPPER ${_name} _nameUpper)
++#
++#  set (EXTERN_DEFINES)
++#  set (INIT_CALLS)
++#
++#  if (NOT BUILD_SHARED_LIBS)
++#    # fill in the init functions only when BUILD_SHARED_LIBS is OFF.
++#    foreach (module ${ARGN})
++#      set (EXTERN_DEFINES "${EXTERN_DEFINES}\n  extern void init${module}Python();")
++#      set (INIT_CALLS "${INIT_CALLS}\n
++#  static char name${module}[] = \"${module}Python\";
++#  PyImport_AppendInittab(name${module}, init${module}Python);")
++#    endforeach()
++#  endif()
++#
++#  configure_file(${VTK_CMAKE_DIR}/pythonmodules.h.in
++#    ${filename} @ONLY)
++#endfunction()
++
++#------------------------------------------------------------------------------
++# create init header for all python wrapped modules.
++# this uses VTK_PYTHON_WRAPPED global property which is filled with every pyhton
++# module.
++# Usage: vtk_write_python_modules_header_for_wrapped_modules(
++#           <filename> <out_variable>)
++# out_variable is set to the list of dependencies to which the code including
++# the header file should link against (using target_link_libraries()).
++#function(vtk_write_python_modules_header_for_wrapped_modules filename out_var)
++#  get_property(python_wrapped_modules GLOBAL PROPERTY VTK_PYTHON_WRAPPED)
++#  vtk_write_python_modules_header(
++#    "${filename}" ${python_wrapped_modules})
++#  set (dependencies)
++#  if (NOT BUILD_SHARED_LIBS)
++#    foreach(mod IN LISTS python_wrapped_modules)
++#      list(APPEND dependencies ${mod}Python)
++#    endforeach()
++#  endif()
++#  set (${out_var} "${dependencies}" PARENT_SCOPE)
++#endfunction()
+diff -urB --new-file VTK-6.1.0-org/CMake/vtkWrapNodeJs.cmake VTK-6.1.0/CMake/vtkWrapNodeJs.cmake
+--- VTK-6.1.0-org/CMake/vtkWrapNodeJs.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.1.0/CMake/vtkWrapNodeJs.cmake	2016-01-14 15:15:15.767380663 +0100
+@@ -0,0 +1,153 @@
++#
++# CMake implementation of the Wrap NodeJs command.
++#
++file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/NodeJs)
++
++# Determine the location of the supplied header in the include_dirs supplied.
++macro(vtk_find_header header include_dirs full_path)
++  unset(${full_path})
++  foreach(_dir ${include_dirs})
++    if(EXISTS "${_dir}/${header}")
++      set(${full_path} "${_dir}/${header}")
++      break()
++    endif()
++  endforeach()
++endmacro()
++
++# Macro that just takes the name of the module, figure the rest out from there.
++macro(vtk_wrap_nodejs TARGET SRC_LIST_NAME module)
++  if(NOT VTK_WRAP_NODEJS_INIT_EXE)
++    if(TARGET vtkWrapNodeJsInit)
++      set(VTK_WRAP_NODEJS_INIT_EXE vtkWrapNodeJsInit)
++    else()
++      message(SEND_ERROR
++        "VTK_WRAP_NODEJS_INIT_EXE not specified when calling vtk_wrap_nodejs")
++    endif()
++  endif()
++  if(NOT VTK_WRAP_NODEJS_EXE)
++    if(TARGET vtkWrapNodeJs)
++      set(VTK_WRAP_NODEJS_EXE vtkWrapNodeJs)
++    else()
++      message(SEND_ERROR
++        "VTK_WRAP_NODEJS_EXE not specified when calling vtk_wrap_nodejs")
++    endif()
++  endif()
++
++  # The shell into which nmake.exe executes the custom command has some issues
++  # with mixing quoted and unquoted arguments :( Let's help.
++  if(CMAKE_GENERATOR MATCHES "NMake Makefiles")
++    set(verbatim "")
++    set(quote "\"")
++  else()
++    set(verbatim "VERBATIM")
++    set(quote "")
++  endif()
++
++  # Initialize the custom target counter.
++#  if(VTK_WRAP_NODEJS_NEED_CUSTOM_TARGETS)
++#    set(VTK_WRAP_NODEJS_CUSTOM_COUNT "")
++#    set(VTK_WRAP_NODEJS_CUSTOM_NAME ${TARGET})
++#    set(VTK_WRAP_NODEJS_CUSTOM_LIST)
++#  endif()
++
++  # start writing the input file for the init file
++  set(VTK_WRAPPER_INIT_DATA "${TARGET}")
++
++  # all the include directories
++  if(${module}_INCLUDE_DIRS)
++    set(TMP_INCLUDE_DIRS ${${module}_INCLUDE_DIRS})
++  elseif(VTK_WRAP_INCLUDE_DIRS)
++    set(TMP_INCLUDE_DIRS ${VTK_WRAP_INCLUDE_DIRS})
++  else()
++    set(TMP_INCLUDE_DIRS ${VTK_INCLUDE_DIRS})
++  endif()
++  # all the include directories
++
++  if(EXTRA_NODEJS_INCLUDE_DIRS)
++    list(APPEND TMP_INCLUDE_DIRS ${EXTRA_NODEJS_INCLUDE_DIRS})
++  endif()
++
++  # collect the common wrapper-tool arguments
++  set(_common_args)
++  get_directory_property(_def_list DEFINITION COMPILE_DEFINITIONS)
++  foreach(TMP_DEF ${_def_list})
++    set(_common_args "${_common_args}-D${TMP_DEF}\n")
++  endforeach()
++  foreach(INCLUDE_DIR ${TMP_INCLUDE_DIRS})
++    set(_common_args "${_common_args}-I\"${INCLUDE_DIR}\"\n")
++  endforeach()
++  if(VTK_WRAP_HINTS)
++    set(_common_args "${_common_args}--hints \"${VTK_WRAP_HINTS}\"\n")
++  endif()
++  if(KIT_HIERARCHY_FILE)
++    set(_common_args "${_common_args}--types \"${KIT_HIERARCHY_FILE}\"\n")
++  endif()
++
++  # write wrapper-tool arguments to a file
++  string(STRIP "${_common_args}" CMAKE_CONFIGURABLE_FILE_CONTENT)
++  set(_args_file ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}.args)
++  configure_file(${CMAKE_ROOT}/Modules/CMakeConfigurableFile.in
++                 ${_args_file} @ONLY)
++
++  # Decide what to do for each header.
++  foreach(header ${${module}_HEADERS})
++    # Everything in this block is for headers that will be wrapped.
++    if(${module}_HEADER_${header}_WRAP_SPECIAL OR
++       NOT ${module}_HEADER_${header}_WRAP_EXCLUDE)
++
++      # Find the full path to the header file to be wrapped.
++      vtk_find_header(${header}.h "${${module}_INCLUDE_DIRS}" class_header_path)
++      if(NOT class_header_path)
++        message(FATAL_ERROR "Could not find the ${header} header file.")
++      endif()
++
++      # add the info to the init file
++      set(VTK_WRAPPER_INIT_DATA
++        "${VTK_WRAPPER_INIT_DATA}\n${header}")
++
++      # new source file is nameWrap.c, add to resulting list
++      set(${SRC_LIST_NAME} ${${SRC_LIST_NAME}} ${header}Wrap.cc)
++
++      # add custom command to output
++      add_custom_command(
++        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${header}Wrap.cc
++        DEPENDS ${VTK_WRAP_NODEJS_EXE} ${VTK_WRAP_HINTS} ${class_header_path}
++          ${_args_file} ${KIT_HIERARCHY_FILE}
++        COMMAND ${VTK_WRAP_NODEJS_EXE}
++          ARGS
++          "${quote}@${_args_file}${quote}"
++          "-o" "${quote}${CMAKE_BINARY_DIR}/NodeJs/${header}Wrap.cc${quote}"
++          "${quote}${class_header_path}${quote}"
++        COMMENT "NodeJs Wrapping - generating ${header}Wrap.cc"
++          ${verbatim}
++        )
++    else()
++      message("${header} will not be wrapped.")
++    endif()
++  endforeach()
++
++  # finish the data file for the init file
++  configure_file(
++    ${VTK_CMAKE_DIR}/vtkWrapperInit.data.in
++    ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data
++    COPY_ONLY
++    )
++
++#  add_custom_command(
++#    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.cc
++#           ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}InitImpl.cc
++#    DEPENDS ${VTK_WRAP_NODEJS_INIT_EXE}
++#      ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data
++#    COMMAND ${VTK_WRAP_NODEJS_INIT_EXE}
++#    ARGS
++#      "${quote}${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.data${quote}"
++#      "${quote}${CMAKE_CURRENT_BINARY_DIR}/${TARGET}Init.cc${quote}"
++#      "${quote}${CMAKE_CURRENT_BINARY_DIR}/${TARGET}InitImpl.cc${quote}"
++#    COMMENT "NodeJs Wrapping - generating ${TARGET}Init.cc"
++#      ${verbatim}
++#    )
++
++  # Create the Init File
++#  set(${SRC_LIST_NAME} ${${SRC_LIST_NAME}} ${TARGET}InitImpl.cc)
++endmacro()
++
+diff -urB --new-file VTK-6.1.0-org/CMake/vtkWrapping.cmake VTK-6.1.0/CMake/vtkWrapping.cmake
+--- VTK-6.1.0-org/CMake/vtkWrapping.cmake	2014-01-22 16:55:41.000000000 +0100
++++ VTK-6.1.0/CMake/vtkWrapping.cmake	2016-01-13 10:15:02.608743161 +0100
+@@ -6,6 +6,9 @@
+ if(VTK_WRAP_PYTHON)
+ #  include(vtkPythonWrapping)
+ endif()
++if(VTK_WRAP_NODEJS)
++  include(vtkNodeJsWrapping)
++endif()
+ if(VTK_WRAP_TCL)
+   include(vtkTclWrapping)
+ endif()
+@@ -24,7 +27,7 @@
+ function(vtk_add_wrapping module_name module_srcs module_hdrs)
+   if(NOT ${module_name}_EXCLUDE_FROM_WRAPPING)
+     set(_wrap_module FALSE)
+-    if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++    if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA OR VTK_WRAP_NODEJS)
+       set(_wrap_module TRUE)
+     endif()
+ 
+@@ -58,6 +61,9 @@
+         # Note that the module should be Python wrapped.
+         set_property(GLOBAL APPEND PROPERTY VTK_PYTHON_WRAPPED ${module_name})
+       endif()
++      if(VTK_WRAP_NODEJS)
++        set_property(GLOBAL APPEND PROPERTY VTK_NODEJS_WRAPPED ${module_name})
++      endif()
+       if(VTK_WRAP_TCL)
+         set_property(GLOBAL APPEND PROPERTY VTK_TCL_WRAPPED ${module_name})
+         vtk_add_tcl_wrapping(${module_name} "${module_srcs}" "${module_hdrs}")
+diff -urB --new-file VTK-6.1.0-org/CMake/vtkWrapPython.cmake VTK-6.1.0/CMake/vtkWrapPython.cmake
+--- VTK-6.1.0-org/CMake/vtkWrapPython.cmake	2014-01-22 16:55:41.000000000 +0100
++++ VTK-6.1.0/CMake/vtkWrapPython.cmake	2016-01-13 11:39:45.959845810 +0100
+@@ -113,6 +113,11 @@
+           "${quote}@${_args_file}${quote}"
+           "-o" "${quote}${CMAKE_CURRENT_BINARY_DIR}/${TMP_FILENAME}Python.cxx${quote}"
+           "${quote}${TMP_INPUT}${quote}"
++#        COMMAND ${VTK_WRAP_NODEJS_EXE}
++#          ARGS
++#          "${quote}@${_args_file}${quote}"
++#          "-o" "${quote}${CMAKE_BINARY_DIR}/NodeJs/${TMP_FILENAME}Wrap.cxx${quote}"
++#          "${quote}${TMP_INPUT}${quote}"
+         COMMENT "Python Wrapping - generating ${TMP_FILENAME}Python.cxx"
+           ${verbatim}
+         )
+@@ -313,6 +319,11 @@
+           "${quote}@${_args_file}${quote}"
+           "-o" "${quote}${CMAKE_CURRENT_BINARY_DIR}/${header}Python.cxx${quote}"
+           "${quote}${class_header_path}${quote}"
++#        COMMAND ${VTK_WRAP_NODEJS_EXE}
++#          ARGS
++#          "${quote}@${_args_file}${quote}"
++#          "-o" "${quote}${CMAKE_BINARY_DIR}/NodeJs/${header}Wrap.cxx${quote}"
++#          "${quote}${class_header_path}${quote}"
+         COMMENT "Python Wrapping - generating ${header}Python.cxx"
+           ${verbatim}
+         )
+diff -urB --new-file VTK-6.1.0-org/CMakeLists.txt VTK-6.1.0/CMakeLists.txt
+--- VTK-6.1.0-org/CMakeLists.txt	2014-01-22 16:55:41.000000000 +0100
++++ VTK-6.1.0/CMakeLists.txt	2016-01-12 15:47:50.238257364 +0100
+@@ -279,6 +279,9 @@
+ # Add the option for build the Python wrapping to VTK.
+ option(VTK_WRAP_PYTHON "Should VTK Python wrapping be built?" OFF)
+ 
++# Add the option for build the NodeJS wrapping to VTK.
++option(VTK_WRAP_NODEJS "Should VTK NodeJS wrapping be built?" ON)
++
+ # Add the option for build the Python wrapping to VTK.
+ option(VTK_WRAP_JAVA "Should VTK Java wrapping be built?" OFF)
+ 
+@@ -315,6 +318,19 @@
+     FORCE)
+ endif()
+ 
++if(VTK_WRAP_NODEJS)
++  set(VTK_WRAP_NODEJS_EXE vtkWrapNodeJs)
++  set(VTK_WRAP_NODEJS_INIT_EXE vtkWrapNodeJsInit)
++  set(VTK_NODEJS_EXE vtknodejs)
++  # Force the WrappingNodeJSCore module to on if wrapping is on
++  set(Module_vtkWrappingNodeJs ON CACHE BOOL "Core Node.js wrapping library"
++    FORCE)
++else()
++  # if wrapping is not on then force WrappingNodeJSCore module to be off
++  set(Module_vtkWrappingNodeJs OFF CACHE BOOL "Core Node.js wrapping library"
++    FORCE)
++endif()
++
+ if(VTK_WRAP_JAVA)
+   set(VTK_WRAP_JAVA3_INIT_DIR "${VTK_SOURCE_DIR}/Wrapping/Java")
+   # Wrapping executables.
+@@ -349,7 +365,7 @@
+     FORCE)
+ endif()
+ 
+-if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA)
++if(VTK_WRAP_PYTHON OR VTK_WRAP_TCL OR VTK_WRAP_JAVA OR VTK_WRAP_NODEJS)
+   set(VTK_WRAP_HIERARCHY_EXE vtkWrapHierarchy)
+ endif()
+ 
+diff -urB --new-file VTK-6.1.0-org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx VTK-6.1.0/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx
+--- VTK-6.1.0-org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx	2014-01-22 16:55:41.000000000 +0100
++++ VTK-6.1.0/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx	2016-01-07 18:39:28.143210053 +0100
+@@ -27,7 +27,7 @@
+ 
+ // define GLX_GLXEXT_LEGACY to prevent glx.h to include glxext.h provided by
+ // the system
+-//#define GLX_GLXEXT_LEGACY
++#define GLX_GLXEXT_LEGACY
+ #include "GL/glx.h"
+ 
+ #include "vtkgl.h"
+diff -urB --new-file VTK-6.1.0-org/Wrapping/NodeJs/CMakeLists.txt VTK-6.1.0/Wrapping/NodeJs/CMakeLists.txt
+--- VTK-6.1.0-org/Wrapping/NodeJs/CMakeLists.txt	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.1.0/Wrapping/NodeJs/CMakeLists.txt	2016-01-13 10:18:21.068614569 +0100
+@@ -0,0 +1,19 @@
++# This is where we actually wrap the modules that have requested it.
++include(vtkNodeJsWrapping)
++
++get_property(VTK_NODEJS_MODULES GLOBAL PROPERTY VTK_NODEJS_WRAPPED)
++
++# Get the include directories for the module and all its dependencies.
++macro(vtk_include_recurse module)
++  _vtk_module_config_recurse("${module}_NODEJS" ${module})
++  include_directories(${${module}_NODEJS_INCLUDE_DIRS})
++endmacro()
++
++# Loop through all modules that should be wrapped, and wrap them.
++foreach(module ${VTK_NODEJS_MODULES})
++  vtk_module_load(${module})
++  vtk_module_headers_load(${module})
++  vtk_include_recurse(${module})
++  vtk_add_nodejs_wrapping(${module})
++endforeach()
++
+diff -urB --new-file VTK-6.1.0-org/Wrapping/NodeJs/module.cmake VTK-6.1.0/Wrapping/NodeJs/module.cmake
+--- VTK-6.1.0-org/Wrapping/NodeJs/module.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.1.0/Wrapping/NodeJs/module.cmake	2016-01-12 15:47:38.134510727 +0100
+@@ -0,0 +1,9 @@
++vtk_module(vtkWrappingNodeJs
++  DEPENDS
++    vtkCommonCore
++    vtksys
++  COMPILE_DEPENDS
++    vtkWrappingTools
++  EXCLUDE_FROM_ALL
++  EXCLUDE_FROM_WRAPPING
++  )
+diff -urB --new-file VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/CMakeLists.txt
+--- VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt	2014-01-22 16:55:41.000000000 +0100
++++ VTK-6.1.0/Wrapping/Tools/CMakeLists.txt	2016-01-14 15:51:53.705503887 +0100
+@@ -76,6 +76,12 @@
+   add_executable(vtkWrapPythonInit vtkWrapPythonInit.c)
+   vtk_compile_tools_target(vtkWrapPython)
+   vtk_compile_tools_target(vtkWrapPythonInit)
++  
++  add_executable(vtkWrapNodeJs vtkWrapNodeJs.c)
++  target_link_libraries(vtkWrapNodeJs vtkWrappingTools)
++  add_executable(vtkWrapNodeJsInit vtkWrapNodeJsInit.c)
++  vtk_compile_tools_target(vtkWrapNodeJs)
++  vtk_compile_tools_target(vtkWrapNodeJsInit)
+ 
+   add_executable(vtkParseJava vtkParseJava.c)
+   target_link_libraries(vtkParseJava vtkWrappingTools)
+diff -urB --new-file VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
+--- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-14 16:05:54.055971505 +0100
+@@ -0,0 +1,561 @@
++/*=========================================================================
++
++  Program:   Visualization Toolkit
++  Module:    vtkWrapNodeJs.c
++
++  Copyright (c) Ken Martin, Will Schroeder, Bill Lorensen
++  All rights reserved.
++  See Copyright.txt or http://www.kitware.com/Copyright.htm for details.
++
++     This software is distributed WITHOUT ANY WARRANTY; without even
++     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
++     PURPOSE.  See the above copyright notice for more information.
++
++=========================================================================*/
++
++#include "vtkWrap.h"
++#include "vtkWrapText.h"
++#include "vtkParse.h"
++#include "vtkParseData.h"
++#include "vtkParseMain.h"
++#include "vtkParseExtras.h"
++#include "vtkParseMangle.h"
++#include "vtkParseString.h"
++#include "vtkParseHierarchy.h"
++#include "vtkConfigure.h"
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <ctype.h>
++
++
++/* -------------------------------------------------------------------- */
++/* Check an arg to see if it is wrappable */
++
++static int vtkWrapNodeJs_isValueWrappable(
++  ValueInfo *val,
++  HierarchyInfo *hinfo,
++  int flags
++)
++{
++  static unsigned int wrappableTypes[] = {
++    VTK_PARSE_VOID, VTK_PARSE_BOOL, VTK_PARSE_FLOAT, VTK_PARSE_DOUBLE,
++    VTK_PARSE_CHAR, VTK_PARSE_UNSIGNED_CHAR, VTK_PARSE_SIGNED_CHAR,
++    VTK_PARSE_INT, VTK_PARSE_UNSIGNED_INT,
++    VTK_PARSE_SHORT, VTK_PARSE_UNSIGNED_SHORT,
++    VTK_PARSE_LONG, VTK_PARSE_UNSIGNED_LONG,
++    VTK_PARSE_ID_TYPE, VTK_PARSE_UNSIGNED_ID_TYPE,
++    VTK_PARSE_SSIZE_T, VTK_PARSE_SIZE_T,
++#ifdef VTK_TYPE_USE_LONG_LONG
++    VTK_PARSE_LONG_LONG, VTK_PARSE_UNSIGNED_LONG_LONG,
++#endif
++#ifdef VTK_TYPE_USE___INT64
++    VTK_PARSE___INT64, VTK_PARSE_UNSIGNED___INT64,
++#endif
++    VTK_PARSE_OBJECT, VTK_PARSE_QOBJECT, VTK_PARSE_STRING,
++#ifndef VTK_PYTHON_NO_UNICODE
++    VTK_PARSE_UNICODE_STRING,
++#endif
++    0
++  };
++
++  const char *aClass;
++  unsigned int baseType;
++  int j;
++
++  if ((flags & VTK_WRAP_RETURN) != 0)
++    {
++    if (vtkWrap_IsVoid(val))
++      {
++      return 1;
++      }
++
++    if (vtkWrap_IsNArray(val))
++      {
++      return 0;
++      }
++    }
++
++  aClass = val->Class;
++  baseType = (val->Type & VTK_PARSE_BASE_TYPE);
++
++  /* go through all types that are indicated as wrappable */
++  for (j = 0; wrappableTypes[j] != 0; j++)
++    {
++    if (baseType == wrappableTypes[j]) { break; }
++    }
++  if (wrappableTypes[j] == 0)
++    {
++    return 0;
++    }
++
++  if (vtkWrap_IsRef(val) && !vtkWrap_IsScalar(val))
++    {
++    return 0;
++    }
++
++  if (vtkWrap_IsScalar(val))
++    {
++    if (vtkWrap_IsNumeric(val) ||
++        vtkWrap_IsString(val))
++      {
++      return 1;
++      }
++    if (vtkWrap_IsObject(val))
++      {
++      if (vtkWrap_IsSpecialType(hinfo, aClass) ||
++//          vtkWrapPython_HasWrappedSuperClass(hinfo, aClass, NULL) ||
++          vtkWrap_IsQtObject(val) ||
++          vtkWrap_IsQtEnum(val))
++        {
++        return 1;
++        }
++      }
++    }
++  else if (vtkWrap_IsArray(val) || vtkWrap_IsNArray(val))
++    {
++    if (vtkWrap_IsNumeric(val))
++      {
++      return 1;
++      }
++    }
++  else if (vtkWrap_IsPointer(val))
++    {
++    if (vtkWrap_IsCharPointer(val) ||
++        vtkWrap_IsVoidPointer(val) ||
++        vtkWrap_IsPODPointer(val))
++      {
++      return 1;
++      }
++    if (vtkWrap_IsObject(val))
++      {
++      if (vtkWrap_IsVTKObjectBaseType(hinfo, aClass) ||
++          vtkWrap_IsQtObject(val))
++        {
++        return 1;
++        }
++      }
++    }
++
++  return 0;
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Checks a method to see if it is wrappable in python */
++
++static int vtkWrapNodeJs_MethodCheck(
++  FunctionInfo *currentFunction, HierarchyInfo *hinfo)
++{
++  int i, n;
++
++  /* some functions will not get wrapped no matter what */
++  if (currentFunction->Access != VTK_ACCESS_PUBLIC)
++    {
++    return 0;
++    }
++
++  /* new and delete are meaningless in wrapped languages */
++  if (currentFunction->Name == 0 ||
++      strcmp("Register", currentFunction->Name) == 0 ||
++      strcmp("UnRegister", currentFunction->Name) == 0 ||
++      strcmp("Delete", currentFunction->Name) == 0 ||
++      strcmp("New", currentFunction->Name) == 0)
++    {
++    return 0;
++    }
++
++  /* function pointer arguments for callbacks */
++  if (currentFunction->NumberOfParameters == 2 &&
++      vtkWrap_IsVoidFunction(currentFunction->Parameters[0]) &&
++      vtkWrap_IsVoidPointer(currentFunction->Parameters[1]) &&
++      !vtkWrap_IsConst(currentFunction->Parameters[1]) &&
++      vtkWrap_IsVoid(currentFunction->ReturnValue))
++    {
++    return 1;
++    }
++
++  n = vtkWrap_CountWrappedParameters(currentFunction);
++
++  /* check to see if we can handle all the args */
++  for (i = 0; i < n; i++)
++    {
++    if (!vtkWrapNodeJs_isValueWrappable(
++          currentFunction->Parameters[i], hinfo, VTK_WRAP_ARG))
++      {
++      return 0;
++      }
++    }
++
++  /* check the return value */
++  if (!vtkWrapNodeJs_isValueWrappable(
++        currentFunction->ReturnValue, hinfo, VTK_WRAP_RETURN))
++    {
++    return 0;
++    }
++
++  return 1;
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes a function header */
++
++static void vtkWrapNodeJs_writeFunctionHeader(
++  FILE *f,
++  FunctionInfo *finfo,
++  ClassInfo *cinfo,
++  HierarchyInfo *hinfo
++)
++{
++	if( !vtkWrapNodeJs_MethodCheck (finfo, hinfo ) ) return;
++
++    fprintf(
++		f,
++		"\t\tstatic void %s(const Nan::FunctionCallbackInfo<v8::Value>& info);\n",
++		finfo->Name
++	);
++}
++  
++/* -------------------------------------------------------------------- */
++/* Writes the initializer which registers a wrapper class to node       */
++
++static void vtkWrapNodeJs_writeInit(
++  FILE *f,
++  const char *name,
++  const char *wrapperName,
++  ClassInfo *cinfo,
++  HierarchyInfo *hinfo
++)
++{
++  FunctionInfo *finfo;
++  size_t i;
++
++  fprintf(f, "void %s::Init(v8::Local<v8::Object> exports)\n", wrapperName);
++  fprintf(f, "{\n");
++  fprintf(f, "\tNan::HanleScrope scope;\n");
++  fprintf(f, "\n");
++  fprintf(f, "\tv8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);\n");
++  fprintf(f, "\ttpl->SetClassName(Nan::New(\"%s\").ToLocalChecked());\n", wrapperName);
++  fprintf(f, "\ttpl->InstanceTemplate()->SetInternalFieldCount(1);\n");
++  fprintf(f, "\n");
++
++  for (i = 0; i < cinfo->NumberOfFunctions; i++)
++    {
++    finfo = cinfo->Functions[i];
++
++	if( !vtkWrapNodeJs_MethodCheck (finfo, hinfo ) ) continue;
++
++    fprintf(
++		f,
++		"\tNan::SetPrototypeMethod(tpl, \"%s\", %s);\n",
++		finfo->Name,
++		finfo->Name
++	);
++
++    fprintf(
++		f,
++		"\tNan::SetPrototypeMethod(tpl, \"%c%s\", %s);\n",
++		tolower(*finfo->Name), finfo->Name + 1,
++		finfo->Name
++	);
++    
++	fprintf(f, "\n");
++    }
++
++  fprintf(f, "\ŧconstructor.Reset( tpl->GetFunction() );\n");
++  fprintf(f, "\n");
++
++  fprintf(
++  	f,
++	"\texports->Set(Nan::New(\"%s\").ToLocalChecked(),tpl->GetFunction());\n",
++	name
++	);
++
++  if(!strncmp(name, "vtk", 3 )) 
++    {
++      fprintf(
++        f,
++        "\texports->Set(Nan::New(\"%c%s\").ToLocalChecked(),tpl->GetFunction());\n",
++        tolower(name[3]),
++		name + 4
++        );
++    }
++
++  fprintf(f, "}\n");
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the "new" handler. */
++
++static void vtkWrapNodeJs_writeNew(
++  FILE *f,
++  const char *name,
++  const char *wrapperName
++)
++{
++  FunctionInfo *finfo;
++  size_t i;
++
++  fprintf(f, "void %s::New(const Nan::FunctionCallbackInfo<v8::Value>& info)\n", wrapperName);
++  fprintf(f, "{\n");
++  fprintf(f, "\tif(!info.IsConstructCall())\n");
++  fprintf(f, "\t{\n");
++  fprintf(f, "\t\tNan::ThrowError(\"Constructor not called in a construct call.\");");
++  fprintf(f, "\t\treturn;");
++  fprintf(f, "\t}\n");
++  fprintf(f, "\n");
++  fprintf(f, "\tvtkSmartPointer<%s> native = vtkSmartPointer<%s>::New();\n", name, name);
++  fprintf(f, "\t%s* obj = new %s(native);", wrapperName, wrapperName);
++  fprintf(f, "\n");
++  fprintf(f, "\tobj->Wrap(info.This());\n");
++  fprintf(f, "\tinfo.GetReturnvalue().Set(info.This());\n");
++  fprintf(f, "}\n");
++}
++
++
++  
++/* -------------------------------------------------------------------- */
++/* Writes the header for the wrapped object class */
++
++void vtkWrapNodeJs_writeHeader(
++  const char *name,
++  const char *wrapperName,
++  FileInfo *file_info,
++  HierarchyInfo *hinfo,
++  OptionInfo *options
++)
++{
++  char *c;
++  char *cxxFilename;
++  char *hFilename;
++  char *upperName;
++  size_t i, k, m;
++  FILE * hf;
++  ClassInfo *cinfo = file_info->MainClass;
++  
++  if (!cinfo) return;
++
++  cxxFilename = options->OutputFileName; 
++  m = strlen(cxxFilename);
++
++  for (k = m; k > 0 && cxxFilename[ k ] != '.'; k--);
++
++  if (k == 0)
++    {
++    fprintf(stderr, "Output filename \"%s\" has no extension", options->OutputFileName);
++	exit(1);
++	}
++
++  hFilename = calloc(m + 3, sizeof( char ));
++  strncpy(hFilename, cxxFilename, k);
++  strcat(hFilename, ".h");
++
++  hf = fopen( hFilename, "w" );
++
++  if (!hf)
++    {
++    fprintf(stderr, "Error opening output header file %s\n", hFilename);
++    exit(1);
++	}
++
++  upperName = strdup( name );
++  for(c = upperName; *c; c++) *c = toupper(*c);
++  
++  fprintf(hf, "/* this file has been autogenerated by vtkNodeJsWrap */\n");
++  fprintf(hf, "/* editing this might proof futile */\n");
++  fprintf(hf, "\n" );
++  fprintf(hf, "#ifndef NATIVE_EXTENSION_VTK_%sWRAP_H\n", upperName);
++  fprintf(hf, "#define NATIVE_EXTENSION_VTK_%sWRAP_H\n", upperName);
++  fprintf(hf, "\n");
++  fprintf(hf, "#include <nan.h>\n");
++  fprintf(hf, "\n");
++  fprintf(hf, "#include <vtkSmartPointer.h>\n");
++  fprintf(hf, "#include <%s.h>\n", name);
++  fprintf(hf, "\n");
++  fprintf(hf, "class %s : public Nan::ObjectWrap {\n", wrapperName);
++  fprintf(hf, "\tpublic:\n");
++  fprintf(hf, "\t\tstatic void Init( v8::Local<v8::Object> exports )\n");
++  fprintf(hf, "\n");
++  fprintf(hf, "\t\tvtkSmartPointer<%s> native;\n", name);
++  fprintf(hf, "\n");
++  fprintf(hf, "\tprivate:");
++  fprintf(hf, "\t\texplicit %s( vtkSmartPointer<%s> native );\n", wrapperName, name);
++  fprintf(hf, "\t\t~%s( );\n", wrapperName);
++  fprintf(hf, "\t\tstatic void New(const Nan::FunctionCallbackInfo<v8::Value>& info);\n");
++  fprintf(hf, "\t\tstatic Nan::Persistent<v8::Function> constructor;\n");
++  fprintf(hf, "\n");
++
++  for (i = 0; i < cinfo->NumberOfFunctions; i++)
++    {
++  	vtkWrapNodeJs_writeFunctionHeader(hf, cinfo->Functions[i], cinfo, hinfo);
++    }
++
++  fprintf(hf, "}\n");
++  fprintf(hf, "\n");
++  fprintf(hf, "#endif\n");
++
++  fclose(hf);
++
++  free(hFilename);
++  free(upperName);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the c++ code for the wrapped object class */
++
++void vtkWrapNodeJs_writeCC(
++  const char *name,
++  const char *wrapperName,
++  FileInfo *file_info,
++  HierarchyInfo *hinfo,
++  OptionInfo *options
++)
++{
++  FILE *f;
++  ClassInfo *cinfo = file_info->MainClass;
++  
++  if (!cinfo) return;
++  
++  /* get the output file */
++  f = fopen(options->OutputFileName, "w");
++  
++  fprintf(f, "/* this file has been autogenerated by vtkNodeJsWrap */\n");
++  fprintf(f, "/* editing this might proof futile */\n");
++  fprintf(f, "\n" );
++
++  if (!f)
++    {
++    fprintf(stderr, "Error opening output file %s\n", options->OutputFileName);
++    exit(1);
++    }
++
++  /* get the global namespace */
++  /* use the hierarchy file to expand typedefs */
++  /*
++  if (hinfo)
++    {
++    for (i = 0; i < contents->NumberOfClasses; i++)
++      {
++      vtkWrap_ExpandTypedefs(contents->Classes[i], file_info, hinfo);
++      }
++    }
++  */
++
++  /* the VTK_WRAPPING_CXX tells header files where they're included from */
++  fprintf(f, "#define VTK_WRAPPING_CXX\n" );
++
++  /* unless this is vtkObjectBase.h, define VTK_STREAMS_FWD_ONLY */
++  if (strcmp("vtkObjectBase", name) != 0)
++    {
++    /* Block inclusion of full streams.  */
++    fprintf(f, "#define VTK_STREAMS_FWD_ONLY\n");
++    }
++
++  fprintf(f, "#include <nan.h>\n");
++  fprintf(f, "\n");
++  fprintf(f, "#include <vtkSmartPointer.h>\n" );
++  fprintf(f, "#include <%s.h>\n\n", name );
++  fprintf(f, "\n");
++  fprintf(f, "#include \"%c%s\"\n", tolower(*wrapperName), wrapperName + 1);
++  fprintf(f, "\n");
++  fprintf(f, "using namespace v8\n" );
++  fprintf(f, "\n");
++
++  fprintf(f, "Nan::Persistent<v8::Function> %s::constructor;\n", wrapperName);
++  fprintf(f, "\n");
++
++  fprintf(f, "%s::%s( vtkSmartPointer<%s> native ) :\n", wrapperName, wrapperName, name);
++  fprintf(f, "\tnative( native )\n");
++  fprintf(f, "{ }\n");
++  fprintf(f, "\n");
++
++  fprintf(f, "%s::~%s( ) :\n", wrapperName, wrapperName);
++  fprintf(f, "{\n");
++  fprintf(f, "\tdelete native;\n");
++  fprintf(f, "}\n");
++  fprintf(f, "\n");
++
++  vtkWrapNodeJs_writeInit(f, name, wrapperName, cinfo, hinfo);
++  
++  fprintf(f, "\n");
++  
++  vtkWrapNodeJs_writeNew(f, name, wrapperName, cinfo, hinfo);
++  
++  fprintf(f, "\n");
++  
++  fprintf(f, "void %s::New(const Nan::FunctionCallback<v8::Value>& info)\n", wrapperName);
++}
++
++
++/* -------------------------------------------------------------------- */
++/* This is the main entry point. */
++
++#define MAX_WRAPPED_CLASSES 256
++
++int main(int argc, char *argv[])
++{
++  OptionInfo *options = NULL;
++  HierarchyInfo *hinfo = NULL;
++  FileInfo *file_info = NULL;
++  const char *name = NULL;
++  char *name_from_file = NULL;
++  char *wrapperName = NULL;
++  size_t k, m;
++  
++  /* get command-line args and parse the header file */
++  file_info = vtkParse_Main(argc, argv);
++
++  /* get the command-line options */
++  options = vtkParse_GetCommandLineOptions();
++
++  /* get the hierarchy info for accurate typing */
++  if (options->HierarchyFileName)
++    {
++    hinfo = vtkParseHierarchy_ReadFile(options->HierarchyFileName);
++    }
++
++  /* get the filename without the extension */
++  name = file_info->FileName;
++  m = strlen(name);
++  for (k = m; k > 0; k--)
++    {
++    if (name[k] == '.') { break; }
++    }
++
++  if (k > 0) { m = k; }
++
++  for (k = m; k > 0; k--)
++    {
++    if (!((name[k-1] >= 'a' && name[k-1] <= 'z') ||
++          (name[k-1] >= 'A' && name[k-1] <= 'Z') ||
++          (name[k-1] >= '0' && name[k-1] <= '9') ||
++          name[k-1] == '_')) { break; }
++    }
++  name_from_file = (char *)calloc(m - k + 1, sizeof( char ));
++
++  strncpy(name_from_file, name + k, m - k);
++
++  wrapperName = (char *)calloc(strlen(name_from_file) + 5, sizeof( char ));
++
++  strcpy(wrapperName, name_from_file);
++
++  strcat(wrapperName, "Wrap");
++
++  *wrapperName = toupper(*wrapperName);
++
++  vtkWrapNodeJs_writeHeader(name_from_file, wrapperName, file_info, hinfo, options);
++
++  vtkWrapNodeJs_writeCC(name_from_file, wrapperName, file_info, hinfo, options);
++
++  free(name_from_file);
++
++  free(wrapperName);
++
++  vtkParse_Free(file_info);
++
++  return 0;
++}
+diff -urB --new-file VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsInit.c
+--- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsInit.c	2016-01-08 09:20:40.014571208 +0100
+@@ -0,0 +1,159 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++static void CreateInitFile(const char *libName, FILE *fout)
++{
++  const char *prefix = "";
++  const char* dllexp = "VTK_ABI_EXPORT ";
++
++  fprintf(fout,"// Generated by vtkWrapPythonInit in VTK/Wrapping\n");
++  fprintf(fout,"#include \"vtkSystemIncludes.h\"\n");
++  fprintf(fout,"// Handle compiler warning messages, etc.\n"
++          "#if defined( _MSC_VER ) && !defined(VTK_DISPLAY_WIN32_WARNINGS)\n"
++          "#pragma warning ( disable : 4706 )\n"
++          "#endif // Windows Warnings \n\n");
++
++  fprintf(fout,"extern \"C\" void real_init%s(const char *modulename);\n\n", libName);
++
++  for (;;)
++    {
++    fprintf(fout,"extern  \"C\" { %svoid init%s%s(); }\n\n", dllexp, prefix, libName);
++
++    fprintf(fout,"void init%s%s()\n{\n", prefix, libName);
++    fprintf(fout,"  static const char modulename[] = \"%s%s\";\n", prefix, libName);
++    fprintf(fout,"  real_init%s(modulename);\n}\n\n", libName);
++
++#if defined(__CYGWIN__) || !defined(_WIN32)
++    /* add a "lib" prefix for compatibility with old python scripts */
++    if (strcmp(prefix, "lib") != 0)
++      {
++      prefix = "lib";
++      continue;
++      }
++#endif
++    break;
++    }
++}
++
++
++/* warning this code is also in getclasses.cxx under pcmaker */
++/* this routine creates the init file */
++static void CreateImplFile(const char *libName,
++  int numFiles, char **files,
++  FILE *fout)
++{
++  int i;
++
++  const char* dllexp = "VTK_ABI_EXPORT ";
++
++  fprintf(fout,"// Generated by vtkWrapPythonInit in VTK/Wrapping\n");
++  fprintf(fout,"#include \"vtkPython.h\"\n\n");
++  fprintf(fout,"#include \"vtkSystemIncludes.h\"\n");
++  fprintf(fout,"#include <string.h>\n");
++  fprintf(fout,"// Handle compiler warning messages, etc.\n"
++          "#if defined( _MSC_VER ) && !defined(VTK_DISPLAY_WIN32_WARNINGS)\n"
++          "#pragma warning ( disable : 4706 )\n"
++          "#endif // Windows Warnings \n\n");
++
++  for (i = 0; i < numFiles; i++)
++    {
++    fprintf(fout,"extern  \"C\" {%sPyObject *PyVTKAddFile_%s(PyObject *, const char *); }\n", dllexp, files[i]);
++    }
++
++  fprintf(fout,"\nstatic PyMethodDef Py%s_ClassMethods[] = {\n", libName);
++  fprintf(fout,"{NULL, NULL, 0, NULL}};\n\n");
++
++  fprintf(fout,"extern  \"C\" {%svoid real_init%s(const char *modulename); }\n\n", dllexp, libName);
++
++  fprintf(fout,"void real_init%s(const char *modulename)\n{\n", libName);
++
++  /* module init function */
++  fprintf(fout,"  PyObject *m, *d;\n\n");
++  fprintf(fout,"  m = Py_InitModule((char*)modulename, Py%s_ClassMethods);\n",
++    libName);
++
++  fprintf(fout,"  d = PyModule_GetDict(m);\n");
++  fprintf(fout,"  if (!d)\n");
++  fprintf(fout,"    {\n");
++  fprintf(fout,"    Py_FatalError((char*)\"can't get dictionary for module %s\");\n",
++    libName);
++  fprintf(fout,"    }\n");
++
++  for (i = 0; i < numFiles; i++)
++    {
++    fprintf(fout,"  PyVTKAddFile_%s(d, modulename);\n",
++      files[i]);
++    }
++  fprintf(fout,"}\n\n");
++}
++
++
++int main(int argc,char *argv[])
++{
++  FILE *file;
++  FILE *fout_init;
++  FILE *fout_impl;
++  int numFiles = 0;
++  char libName[250];
++  char tmpVal[250];
++  char *files[4000];
++
++  if (argc < 4)
++    {
++    fprintf(stderr,"Usage: %s input_file init_file impl_file\n",argv[0]);
++    return 1;
++    }
++
++  file = fopen(argv[1],"r");
++  if (!file)
++    {
++    fprintf(stderr,"Input file %s could not be opened\n",argv[1]);
++    return 1;
++    }
++
++  /* read the info from the file */
++  if (fscanf(file,"%s",libName) != 1)
++    {
++    fprintf(stderr,"Error getting libName\n");
++    fclose(file);
++    return 1;
++    }
++  /* read in the classes */
++  while (fscanf(file,"%s",tmpVal) != EOF)
++    {
++    files[numFiles] = strdup(tmpVal);
++    numFiles++;
++    }
++  /* close the file */
++  fclose(file);
++  file = NULL;
++
++  fout_init = fopen(argv[2],"w");
++  if (!fout_init)
++    {
++    return 1;
++    }
++
++  fout_impl = fopen(argv[3],"w");
++  if (!fout_impl)
++    {
++    fclose(fout_init);
++    return 1;
++    }
++
++  /* extra object for the Common module */
++  if (strcmp(libName, "vtkCommonCorePython") == 0)
++    {
++    /* the PyVTKMutableObject */
++    files[numFiles] = strdup("mutable");
++    numFiles++;
++    }
++
++  CreateInitFile(libName, fout_init);
++  CreateImplFile(libName, numFiles, files, fout_impl);
++  fclose(fout_init);
++  fclose(fout_impl);
++
++  return 0;
++}
