@@ -25,7 +25,7 @@ NAN_METHOD( render )
  
 	//Create a mapper and actor
 	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New( );
-	mapper->SetInputConnection( source->coneSource->GetOutputPort( ) );
+	mapper->SetInputConnection( source->native->GetOutputPort( ) );
  
 	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper( mapper );
