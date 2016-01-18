@@ -1,5 +1,6 @@
 #include <nan.h>
 
+#include <vtkObject.h>
 #include <vtkCamera.h>
 #include <vtkCommand.h>
 #include <vtkCallbackCommand.h>
@@ -25,7 +26,10 @@ NAN_METHOD( render )
  
 	//Create a mapper and actor
 	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New( );
-	mapper->SetInputConnection( source->native->GetOutputPort( ) );
+
+	vtkConeSource *native = (vtkConeSource *) source->native.GetPointer();
+
+	mapper->SetInputConnection( native->GetOutputPort( ) );
  
 	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper( mapper );

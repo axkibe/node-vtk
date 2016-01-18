@@ -14,6 +14,10 @@ void init( Local<Object> exports )
         Nan::GetFunction( Nan::New<FunctionTemplate>( render ) ).ToLocalChecked( )
 	);
 
+	VtkObjectBaseWrap::Init( exports );
+	VtkObjectWrap::Init( exports );
+	VtkAlgorithmWrap::Init( exports );
+	VtkPolyDataAlgorithmWrap::Init( exports );
 	VtkConeSourceWrap::Init( exports );
 }
 
