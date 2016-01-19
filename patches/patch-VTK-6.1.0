@@ -152,5 +152,4 @@ diff -urB VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/C
    add_executable(vtkParseJava vtkParseJava.c)
    target_link_libraries(vtkParseJava vtkWrappingTools)
 Only in VTK-6.1.0/Wrapping/Tools: vtkWrapNodeJs.c
-Only in VTK-6.1.0/Wrapping/Tools: .vtkWrapNodeJs.c.swp
 Only in VTK-6.1.0/Wrapping/Tools: vtkWrapNodeJsInit.c

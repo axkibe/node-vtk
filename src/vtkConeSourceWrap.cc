@@ -8,7 +8,9 @@
 #include <vtkSmartPointer.h>
 #include <vtkConeSource.h>
 
+#include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkConeSourceWrap.h"
+#include "vtkObjectWrap.h"
 
 using namespace v8;
 
@@ -31,11 +33,11 @@ void VtkConeSourceWrap::Init(v8::Local<v8::Object> exports)
 	tpl->SetClassName(Nan::New("VtkConeSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
 	VtkObjectBaseWrap::InitTpl(tpl);
+	VtkObjectWrap::InitTpl(tpl);
+	VtkAlgorithmWrap::InitTpl(tpl);
+	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
+	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
 
@@ -45,6 +47,18 @@ void VtkConeSourceWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkConeSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
 	Nan::SetPrototypeMethod(tpl, "SetHeight", SetHeight);
 	Nan::SetPrototypeMethod(tpl, "setHeight", SetHeight);
 
@@ -121,10 +135,109 @@ void VtkConeSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 
-	vtkSmartPointer<vtkConeSource> native = vtkSmartPointer<vtkConeSource>::New();
-	VtkConeSourceWrap* obj = new VtkConeSourceWrap(native);
-	obj->Wrap(info.This());
+	if(info.Length() == 0)
+	{
+		vtkSmartPointer<vtkConeSource> native = vtkSmartPointer<vtkConeSource>::New();
+		VtkConeSourceWrap* obj = new VtkConeSourceWrap(native);		obj->Wrap(info.This());
+	}
+	else
+	{
+		Nan::Utf8String s(info[0]);
+		if(strcmp(*s, "__nowrap" ))
+			Nan::ThrowError("Parameter Error");
+	}
+
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkConeSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	char const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetClassName();
+	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkConeSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsA(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkConeSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	vtkConeSource * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->NewInstance();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkConeSourceWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkConeSourceWrap *w = new VtkConeSourceWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkConeSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
+		vtkConeSource * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SafeDownCast(
+			(vtkObject *) a0->native.GetPointer()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkConeSourceWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkConeSourceWrap *w = new VtkConeSourceWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkConeSourceWrap::SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)

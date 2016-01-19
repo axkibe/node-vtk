@@ -14,17 +14,22 @@
 class VtkAlgorithmWrap : public VtkObjectWrap
 {
 	public:
+		using Nan::ObjectWrap::Wrap;
 		static void Init(v8::Local<v8::Object> exports);
 		static void InitTpl(v8::Local<v8::FunctionTemplate> tpl);
 
 		VtkAlgorithmWrap(vtkSmartPointer<vtkAlgorithm>);
 		VtkAlgorithmWrap();
 		~VtkAlgorithmWrap( );
+		static Nan::Persistent<v8::Function> constructor;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static Nan::Persistent<v8::Function> constructor;
 
+		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasExecutive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfInputPorts(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfOutputPorts(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -37,12 +42,19 @@ class VtkAlgorithmWrap : public VtkObjectWrap
 		static void GetProgressMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetProgressText(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProgressText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllInputs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AddInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllInputConnections(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputPort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfInputConnections(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTotalNumberOfInputConnections(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInputAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PropagateUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);

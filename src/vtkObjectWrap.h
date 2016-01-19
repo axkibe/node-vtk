@@ -14,17 +14,22 @@
 class VtkObjectWrap : public VtkObjectBaseWrap
 {
 	public:
+		using Nan::ObjectWrap::Wrap;
 		static void Init(v8::Local<v8::Object> exports);
 		static void InitTpl(v8::Local<v8::FunctionTemplate> tpl);
 
 		VtkObjectWrap(vtkSmartPointer<vtkObject>);
 		VtkObjectWrap();
 		~VtkObjectWrap( );
+		static Nan::Persistent<v8::Function> constructor;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static Nan::Persistent<v8::Function> constructor;
 
+		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DebugOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DebugOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BreakOnError(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -33,7 +38,10 @@ class VtkObjectWrap : public VtkObjectBaseWrap
 		static void GlobalWarningDisplayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalWarningDisplayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobalWarningDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveObservers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllObservers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasObserver(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InvokeEvent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

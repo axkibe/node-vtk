@@ -15,22 +15,17 @@
 #include <vtkRenderWindowInteractor.h>
 
 #include "node-vtk.h"
+#include "vtkConeSourceWrap.h"
+#include "vtkPolyDataMapperWrap.h"
 
 using namespace v8;
 
 
 NAN_METHOD( render )
 {
-	//Create a cone
-	VtkConeSourceWrap *source = Nan::ObjectWrap::Unwrap<VtkConeSourceWrap>( info[ 0 ]->ToObject( ) );
- 
-	//Create a mapper and actor
-	vtkSmartPointer<vtkPolyDataMapper> mapper = vtkSmartPointer<vtkPolyDataMapper>::New( );
+	VtkPolyDataMapperWrap *mw = Nan::ObjectWrap::Unwrap<VtkPolyDataMapperWrap>( info[ 0 ]->ToObject( ) );
+	vtkPolyDataMapper *mapper = (vtkPolyDataMapper *) mw->native.GetPointer();
 
-	vtkConeSource *native = (vtkConeSource *) source->native.GetPointer();
-
-	mapper->SetInputConnection( native->GetOutputPort( ) );
- 
 	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper( mapper );
  

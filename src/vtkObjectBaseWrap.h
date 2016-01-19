@@ -13,6 +13,7 @@
 class VtkObjectBaseWrap : public Nan::ObjectWrap
 {
 	public:
+		using Nan::ObjectWrap::Wrap;
 		static void Init(v8::Local<v8::Object> exports);
 		static void InitTpl(v8::Local<v8::FunctionTemplate> tpl);
 
@@ -21,11 +22,14 @@ class VtkObjectBaseWrap : public Nan::ObjectWrap
 		VtkObjectBaseWrap(vtkSmartPointer<vtkObjectBase>);
 		VtkObjectBaseWrap();
 		~VtkObjectBaseWrap( );
+		static Nan::Persistent<v8::Function> constructor;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static Nan::Persistent<v8::Function> constructor;
 
+		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsTypeOf(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif
