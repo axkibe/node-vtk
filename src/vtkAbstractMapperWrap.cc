@@ -11,6 +11,7 @@
 #include "vtkAlgorithmWrap.h"
 #include "vtkAbstractMapperWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkWindowWrap.h"
 
 using namespace v8;
 
@@ -57,6 +58,9 @@ void VtkAbstractMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
+	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
 	Nan::SetPrototypeMethod(tpl, "GetTimeToDraw", GetTimeToDraw);
 	Nan::SetPrototypeMethod(tpl, "getTimeToDraw", GetTimeToDraw);
@@ -177,6 +181,26 @@ void VtkAbstractMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native.TakeReference(r);
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ReleaseGraphicsResources(
+			(vtkWindow *) a0->native.GetPointer()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

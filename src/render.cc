@@ -13,18 +13,15 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindowInteractor.h>
 
-#include "vtkRendererWrap.h"
+#include "vtkRenderWindowWrap.h"
 
 using namespace v8;
 
 
 NAN_METHOD( render )
 {
-    VtkRendererWrap *w = Nan::ObjectWrap::Unwrap<VtkRendererWrap>( info[ 0 ]->ToObject( ) );
-	vtkRenderer *renderer = (vtkRenderer *) w->native.GetPointer();
-
-	vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
-	renderWindow->AddRenderer( renderer );
+    VtkRenderWindowWrap *w = Nan::ObjectWrap::Unwrap<VtkRenderWindowWrap>( info[ 0 ]->ToObject( ) );
+	vtkRenderWindow *renderWindow = (vtkRenderWindow *) w->native.GetPointer();
 
 	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New( );
 	renderWindowInteractor->SetRenderWindow( renderWindow );

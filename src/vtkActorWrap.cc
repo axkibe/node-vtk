@@ -15,6 +15,7 @@
 #include "vtkRendererWrap.h"
 #include "vtkMapperWrap.h"
 #include "vtkPropWrap.h"
+#include "vtkWindowWrap.h"
 
 using namespace v8;
 
@@ -77,6 +78,9 @@ void VtkActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
+
+	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
+	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
 	Nan::SetPrototypeMethod(tpl, "SetMapper", SetMapper);
 	Nan::SetPrototypeMethod(tpl, "setMapper", SetMapper);
@@ -299,6 +303,26 @@ void VtkActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		native->ShallowCopy(
 			(vtkProp *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ReleaseGraphicsResources(
+			(vtkWindow *) a0->native.GetPointer()
 		);
 		return;
 	}

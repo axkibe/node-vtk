@@ -5,6 +5,8 @@
 
 #include "vtkViewportWrap.h"
 #include "vtkRendererWrap.h"
+#include "vtkRenderWindowWrap.h"
+#include "vtkWindowWrap.h"
 #include "vtkActorWrap.h"
 #include "vtkProp3DWrap.h"
 #include "vtkPropWrap.h"
@@ -36,6 +38,8 @@ void init( Local<Object> exports )
 
 	VtkViewportWrap::Init( exports );
 	VtkRendererWrap::Init( exports );
+	VtkRenderWindowWrap::Init( exports );
+	VtkWindowWrap::Init( exports );
 	VtkActorWrap::Init( exports );
 	VtkProp3DWrap::Init( exports );
 	VtkPropWrap::Init( exports );

@@ -12,6 +12,8 @@
 #include "vtkRendererWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPropWrap.h"
+#include "vtkRenderWindowWrap.h"
+#include "vtkWindowWrap.h"
 
 using namespace v8;
 
@@ -196,6 +198,15 @@ void VtkRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "ResetCamera", ResetCamera);
 	Nan::SetPrototypeMethod(tpl, "resetCamera", ResetCamera);
+
+	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
+	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
+	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GetVTKWindow", GetVTKWindow);
+	Nan::SetPrototypeMethod(tpl, "getVTKWindow", GetVTKWindow);
 
 	Nan::SetPrototypeMethod(tpl, "SetBackingStore", SetBackingStore);
 	Nan::SetPrototypeMethod(tpl, "setBackingStore", SetBackingStore);
@@ -1078,6 +1089,72 @@ void VtkRendererWrap::ResetCamera(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	native->ResetCamera();
+}
+
+void VtkRendererWrap::SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRenderWindow(
+			(vtkRenderWindow *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	vtkRenderWindow * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRenderWindow();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkRendererWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	vtkWindow * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVTKWindow();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkWindowWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkWindowWrap *w = new VtkWindowWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkRendererWrap::SetBackingStore(const Nan::FunctionCallbackInfo<v8::Value>& info)

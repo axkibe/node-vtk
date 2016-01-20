@@ -32,6 +32,7 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateDefaultLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);

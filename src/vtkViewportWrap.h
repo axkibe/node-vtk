@@ -48,6 +48,7 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void SetViewPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWorldPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsInViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayToView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ViewToDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WorldToView(const Nan::FunctionCallbackInfo<v8::Value>& info);

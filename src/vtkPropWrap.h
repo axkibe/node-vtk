@@ -53,6 +53,7 @@ class VtkPropWrap : public VtkObjectWrap
 		static void RenderVolumetricGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RestoreEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);

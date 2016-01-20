@@ -11,6 +11,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkPropWrap.h"
+#include "vtkWindowWrap.h"
 
 using namespace v8;
 
@@ -110,6 +111,9 @@ void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "IsInViewport", IsInViewport);
 	Nan::SetPrototypeMethod(tpl, "isInViewport", IsInViewport);
+
+	Nan::SetPrototypeMethod(tpl, "GetVTKWindow", GetVTKWindow);
+	Nan::SetPrototypeMethod(tpl, "getVTKWindow", GetVTKWindow);
 
 	Nan::SetPrototypeMethod(tpl, "DisplayToView", DisplayToView);
 	Nan::SetPrototypeMethod(tpl, "displayToView", DisplayToView);
@@ -663,6 +667,29 @@ void VtkViewportWrap::IsInViewport(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewportWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	vtkWindow * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVTKWindow();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkWindowWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkWindowWrap *w = new VtkWindowWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkViewportWrap::DisplayToView(const Nan::FunctionCallbackInfo<v8::Value>& info)

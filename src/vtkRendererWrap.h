@@ -74,6 +74,9 @@ class VtkRendererWrap : public VtkViewportWrap
 		static void GetNearClippingPlaneToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNearClippingPlaneTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ResetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBackingStore(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackingStore(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BackingStoreOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

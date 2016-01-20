@@ -11,6 +11,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkViewportWrap.h"
+#include "vtkWindowWrap.h"
 
 using namespace v8;
 
@@ -125,6 +126,9 @@ void VtkPropWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
+	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
 	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
 	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
@@ -636,6 +640,26 @@ void VtkPropWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInf
 	}
 	r = native->HasTranslucentPolygonalGeometry();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPropWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ReleaseGraphicsResources(
+			(vtkWindow *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPropWrap::GetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
