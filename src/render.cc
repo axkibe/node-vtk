@@ -5,7 +5,6 @@
 #include <vtkCommand.h>
 #include <vtkCallbackCommand.h>
 #include <vtkInteractorStyleTrackballCamera.h>
-#include <vtkConeSource.h>
 #include <vtkPolyData.h>
 #include <vtkSmartPointer.h>
 #include <vtkPolyDataMapper.h>
@@ -14,20 +13,22 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindowInteractor.h>
 
-#include "vtkConeSourceWrap.h"
-#include "vtkPolyDataMapperWrap.h"
+#include "vtkActorWrap.h"
 
 using namespace v8;
 
 
 NAN_METHOD( render )
 {
-	VtkPolyDataMapperWrap *mw = Nan::ObjectWrap::Unwrap<VtkPolyDataMapperWrap>( info[ 0 ]->ToObject( ) );
-	vtkPolyDataMapper *mapper = (vtkPolyDataMapper *) mw->native.GetPointer();
+//	VtkPolyDataMapperWrap *mw = Nan::ObjectWrap::Unwrap<VtkPolyDataMapperWrap>( info[ 0 ]->ToObject( ) );
+//	vtkPolyDataMapper *mapper = (vtkPolyDataMapper *) mw->native.GetPointer();
 
-	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
-	actor->SetMapper( mapper );
- 
+//	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+//	actor->SetMapper( mapper );
+
+    VtkActorWrap *w = Nan::ObjectWrap::Unwrap<VtkActorWrap>( info[ 0 ]->ToObject( ) );
+	vtkActor *actor = (vtkActor *) w->native.GetPointer();
+
 	//Create a renderer, render window, and interactor
 	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
 	vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();

@@ -3,6 +3,9 @@
 
 #include <nan.h>
 
+#include "vtkActorWrap.h"
+#include "vtkProp3DWrap.h"
+#include "vtkPropWrap.h"
 #include "vtkObjectBaseWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractMapperWrap.h"
@@ -29,6 +32,9 @@ void init( Local<Object> exports )
 		Nan::GetFunction( Nan::New<FunctionTemplate>( render ) ).ToLocalChecked( )
 	);
 
+	VtkActorWrap::Init( exports );
+	VtkProp3DWrap::Init( exports );
+	VtkPropWrap::Init( exports );
 	VtkObjectBaseWrap::Init( exports );
 	VtkObjectWrap::Init( exports );
 	VtkAbstractMapperWrap::Init( exports );
