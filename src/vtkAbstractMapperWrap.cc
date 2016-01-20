@@ -110,6 +110,20 @@ void VtkAbstractMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkAbstractMapperWrap::GetTimeToDraw(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeToDraw();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAbstractMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
@@ -155,6 +169,38 @@ void VtkAbstractMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAbstractMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ReleaseGraphicsResources(
+			(vtkWindow *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractMapperWrap::RemoveAllClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->RemoveAllClippingPlanes();
+}
+
 void VtkAbstractMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
@@ -184,52 +230,6 @@ void VtkAbstractMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
-	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->ReleaseGraphicsResources(
-			(vtkWindow *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractMapperWrap::GetTimeToDraw(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
-	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetTimeToDraw();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkAbstractMapperWrap::RemoveAllClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
-	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->RemoveAllClippingPlanes();
 }
 
 void VtkAbstractMapperWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)

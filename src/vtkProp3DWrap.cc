@@ -131,6 +131,72 @@ void VtkProp3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkProp3DWrap::AddOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->AddOrientation(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProp3DWrap::AddPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->AddPosition(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProp3DWrap::ComputeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->ComputeMatrix();
+}
+
 void VtkProp3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
@@ -143,6 +209,46 @@ void VtkProp3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkProp3DWrap::GetIsIdentity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIsIdentity();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkProp3DWrap::GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkProp3DWrap::InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->InitPathTraversal();
 }
 
 void VtkProp3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -190,58 +296,7 @@ void VtkProp3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkProp3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
-	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
-		vtkProp3D * r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->SafeDownCast(
-			(vtkObject *) a0->native.GetPointer()
-		);
-		const int argc = 1;
-		v8::Local<v8::Value> argv[argc] =
-			{ Nan::New("__nowrap").ToLocalChecked() };
-		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProp3DWrap::constructor);
-		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-		VtkProp3DWrap *w = new VtkProp3DWrap();
-		w->native.TakeReference(r);
-		w->Wrap(wo);
-		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkProp3DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
-	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->ShallowCopy(
-			(vtkProp *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkProp3DWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkProp3DWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
@@ -251,116 +306,25 @@ void VtkProp3DWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					Nan::ThrowError("Too many parameters.");
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->RotateWXYZ(
+						info[0]->NumberValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
 					return;
 				}
-				native->SetPosition(
-					info[0]->NumberValue(),
-					info[1]->NumberValue(),
-					info[2]->NumberValue()
-				);
-				return;
 			}
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkProp3DWrap::AddPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
-	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() > 1 && info[1]->IsNumber())
-		{
-			if(info.Length() > 2 && info[2]->IsNumber())
-			{
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				native->AddPosition(
-					info[0]->NumberValue(),
-					info[1]->NumberValue(),
-					info[2]->NumberValue()
-				);
-				return;
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkProp3DWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
-	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() > 1 && info[1]->IsNumber())
-		{
-			if(info.Length() > 2 && info[2]->IsNumber())
-			{
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				native->SetOrigin(
-					info[0]->NumberValue(),
-					info[1]->NumberValue(),
-					info[2]->NumberValue()
-				);
-				return;
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkProp3DWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
-	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() > 1 && info[1]->IsNumber())
-		{
-			if(info.Length() > 2 && info[2]->IsNumber())
-			{
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				native->SetScale(
-					info[0]->NumberValue(),
-					info[1]->NumberValue(),
-					info[2]->NumberValue()
-				);
-				return;
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkProp3DWrap::GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
-	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLength();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkProp3DWrap::RotateX(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -420,33 +384,33 @@ void VtkProp3DWrap::RotateZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkProp3DWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkProp3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	if(info.Length() > 0 && info[0]->IsObject())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
+		vtkProp3D * r;
+		if(info.Length() != 1)
 		{
-			if(info.Length() > 2 && info[2]->IsNumber())
-			{
-				if(info.Length() > 3 && info[3]->IsNumber())
-				{
-					if(info.Length() != 4)
-					{
-						Nan::ThrowError("Too many parameters.");
-						return;
-					}
-					native->RotateWXYZ(
-						info[0]->NumberValue(),
-						info[1]->NumberValue(),
-						info[2]->NumberValue(),
-						info[3]->NumberValue()
-					);
-					return;
-				}
-			}
+			Nan::ThrowError("Too many parameters.");
+			return;
 		}
+		r = native->SafeDownCast(
+			(vtkObject *) a0->native.GetPointer()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkProp3DWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkProp3DWrap *w = new VtkProp3DWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -478,7 +442,7 @@ void VtkProp3DWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& i
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkProp3DWrap::AddOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkProp3DWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
@@ -493,7 +457,7 @@ void VtkProp3DWrap::AddOrientation(const Nan::FunctionCallbackInfo<v8::Value>& i
 					Nan::ThrowError("Too many parameters.");
 					return;
 				}
-				native->AddOrientation(
+				native->SetOrigin(
 					info[0]->NumberValue(),
 					info[1]->NumberValue(),
 					info[2]->NumberValue()
@@ -505,41 +469,69 @@ void VtkProp3DWrap::AddOrientation(const Nan::FunctionCallbackInfo<v8::Value>& i
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkProp3DWrap::InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkProp3DWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		Nan::ThrowError("Too many parameters.");
-		return;
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetPosition(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				return;
+			}
+		}
 	}
-	native->InitPathTraversal();
+	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkProp3DWrap::ComputeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkProp3DWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		Nan::ThrowError("Too many parameters.");
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScale(
+			info[0]->NumberValue()
+		);
 		return;
 	}
-	native->ComputeMatrix();
+	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkProp3DWrap::GetIsIdentity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkProp3DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsObject())
 	{
-		Nan::ThrowError("Too many parameters.");
+		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ShallowCopy(
+			(vtkProp *) a0->native.GetPointer()
+		);
 		return;
 	}
-	r = native->GetIsIdentity();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 

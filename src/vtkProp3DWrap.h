@@ -26,25 +26,25 @@ class VtkProp3DWrap : public VtkPropWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AddPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIsIdentity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void AddPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RotateX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RotateY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RotateZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void AddOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ComputeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetIsIdentity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

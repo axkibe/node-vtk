@@ -27,12 +27,12 @@ class VtkAbstractMapperWrap : public VtkAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeToDraw(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetTimeToDraw(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

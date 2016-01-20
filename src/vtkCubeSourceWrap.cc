@@ -146,6 +146,146 @@ void VtkCubeSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkCubeSourceWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputPointsPrecision();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetXLength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetXLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetXLengthMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetXLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetXLengthMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetYLength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetYLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetYLengthMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetYLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetYLengthMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZLength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetZLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZLengthMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeSourceWrap::GetZLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZLengthMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkCubeSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
@@ -222,216 +362,6 @@ void VtkCubeSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkCubeSourceWrap::SetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetXLength(
-			info[0]->NumberValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkCubeSourceWrap::GetXLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetXLengthMinValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::GetXLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetXLengthMaxValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::GetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetXLength();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::SetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetYLength(
-			info[0]->NumberValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkCubeSourceWrap::GetYLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetYLengthMinValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::GetYLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetYLengthMaxValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::GetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetYLength();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::SetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetZLength(
-			info[0]->NumberValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkCubeSourceWrap::GetZLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetZLengthMinValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::GetZLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetZLengthMaxValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::GetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetZLength();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCubeSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
-	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() > 1 && info[1]->IsNumber())
-		{
-			if(info.Length() > 2 && info[2]->IsNumber())
-			{
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				native->SetCenter(
-					info[0]->NumberValue(),
-					info[1]->NumberValue(),
-					info[2]->NumberValue()
-				);
-				return;
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkCubeSourceWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
@@ -471,6 +401,33 @@ void VtkCubeSourceWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& in
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkCubeSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetCenter(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCubeSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
@@ -490,17 +447,60 @@ void VtkCubeSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkCubeSourceWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkCubeSourceWrap::SetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
 	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		Nan::ThrowError("Too many parameters.");
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetXLength(
+			info[0]->NumberValue()
+		);
 		return;
 	}
-	r = native->GetOutputPointsPrecision();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCubeSourceWrap::SetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetYLength(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCubeSourceWrap::SetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCubeSourceWrap>(info.Holder());
+	vtkCubeSource *native = (vtkCubeSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetZLength(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

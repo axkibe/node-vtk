@@ -110,6 +110,34 @@ void VtkAbstractMapper3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkAbstractMapper3DWrap::GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
+	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAbstractMapper3DWrap::GetNumberOfClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
+	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfClippingPlanes();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAbstractMapper3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
@@ -130,6 +158,34 @@ void VtkAbstractMapper3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractMapper3DWrap::IsARayCastMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
+	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsARayCastMapper();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAbstractMapper3DWrap::IsARenderIntoImageMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
+	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsARenderIntoImageMapper();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAbstractMapper3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -184,61 +240,5 @@ void VtkAbstractMapper3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractMapper3DWrap::GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
-	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLength();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkAbstractMapper3DWrap::IsARayCastMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
-	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsARayCastMapper();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkAbstractMapper3DWrap::IsARenderIntoImageMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
-	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsARenderIntoImageMapper();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkAbstractMapper3DWrap::GetNumberOfClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
-	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNumberOfClippingPlanes();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 

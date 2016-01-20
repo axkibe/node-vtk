@@ -26,25 +26,25 @@ class VtkInteractorStyleTrackballCameraWrap : public VtkInteractorStyleWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void Dolly(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnLeftButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnLeftButtonUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnMiddleButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnMiddleButtonUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void OnMouseWheelBackward(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void OnMouseWheelForward(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnRightButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnRightButtonUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void OnMouseWheelForward(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void OnMouseWheelBackward(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Rotate(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Spin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Pan(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Dolly(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Rotate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Spin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

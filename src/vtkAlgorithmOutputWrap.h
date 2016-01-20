@@ -27,12 +27,12 @@ class VtkAlgorithmOutputWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProducer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetProducer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProducer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

@@ -150,6 +150,58 @@ void VtkConeSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkConeSourceWrap::CappingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->CappingOff();
+}
+
+void VtkConeSourceWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->CappingOn();
+}
+
+void VtkConeSourceWrap::GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAngle();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCapping();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkConeSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
@@ -162,6 +214,146 @@ void VtkConeSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkConeSourceWrap::GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHeight();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetHeightMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHeightMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetHeightMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHeightMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputPointsPrecision();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRadius();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetRadiusMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRadiusMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetRadiusMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRadiusMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetResolution();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetResolutionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetResolutionMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConeSourceWrap::GetResolutionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetResolutionMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkConeSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -240,7 +432,7 @@ void VtkConeSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkConeSourceWrap::SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkConeSourceWrap::SetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
 	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
@@ -251,7 +443,7 @@ void VtkConeSourceWrap::SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& in
 			Nan::ThrowError("Too many parameters.");
 			return;
 		}
-		native->SetHeight(
+		native->SetAngle(
 			info[0]->NumberValue()
 		);
 		return;
@@ -259,110 +451,7 @@ void VtkConeSourceWrap::SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& in
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkConeSourceWrap::GetHeightMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetHeightMinValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::GetHeightMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetHeightMaxValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetHeight();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetRadius(
-			info[0]->NumberValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkConeSourceWrap::GetRadiusMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetRadiusMinValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::GetRadiusMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetRadiusMaxValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetRadius();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkConeSourceWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
 	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
@@ -373,54 +462,12 @@ void VtkConeSourceWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Value>
 			Nan::ThrowError("Too many parameters.");
 			return;
 		}
-		native->SetResolution(
+		native->SetCapping(
 			info[0]->Int32Value()
 		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkConeSourceWrap::GetResolutionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetResolutionMinValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::GetResolutionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetResolutionMaxValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetResolution();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkConeSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -477,7 +524,7 @@ void VtkConeSourceWrap::SetDirection(const Nan::FunctionCallbackInfo<v8::Value>&
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkConeSourceWrap::SetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkConeSourceWrap::SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
 	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
@@ -488,83 +535,12 @@ void VtkConeSourceWrap::SetAngle(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			Nan::ThrowError("Too many parameters.");
 			return;
 		}
-		native->SetAngle(
+		native->SetHeight(
 			info[0]->NumberValue()
 		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkConeSourceWrap::GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetAngle();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetCapping(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkConeSourceWrap::GetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetCapping();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkConeSourceWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->CappingOn();
-}
-
-void VtkConeSourceWrap::CappingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
-	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->CappingOff();
 }
 
 void VtkConeSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -586,17 +562,41 @@ void VtkConeSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkConeSourceWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkConeSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
 	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		Nan::ThrowError("Too many parameters.");
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRadius(
+			info[0]->NumberValue()
+		);
 		return;
 	}
-	r = native->GetOutputPointsPrecision();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkConeSourceWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkConeSourceWrap>(info.Holder());
+	vtkConeSource *native = (vtkConeSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetResolution(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

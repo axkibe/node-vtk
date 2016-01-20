@@ -154,6 +154,62 @@ void VtkPolyDataMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkPolyDataMapperWrap::GetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGhostLevel();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolyDataMapperWrap::GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfPieces();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolyDataMapperWrap::GetNumberOfSubPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfSubPieces();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolyDataMapperWrap::GetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPiece();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPolyDataMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
@@ -176,270 +232,34 @@ void VtkPolyDataMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkPolyDataMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkPolyDataMapperWrap::MapDataArrayToMultiTextureAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	vtkPolyDataMapper * r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->NewInstance();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataMapperWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-	VtkPolyDataMapperWrap *w = new VtkPolyDataMapperWrap();
-	w->native.TakeReference(r);
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
-		vtkPolyDataMapper * r;
-		if(info.Length() != 1)
+		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->SafeDownCast(
-			(vtkObject *) a0->native.GetPointer()
-		);
-		const int argc = 1;
-		v8::Local<v8::Value> argv[argc] =
-			{ Nan::New("__nowrap").ToLocalChecked() };
-		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataMapperWrap::constructor);
-		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-		VtkPolyDataMapperWrap *w = new VtkPolyDataMapperWrap();
-		w->native.TakeReference(r);
-		w->Wrap(wo);
-		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataMapperWrap::RenderPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
-		{
-			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+			Nan::Utf8String a1(info[1]);
+			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				Nan::ThrowError("Too many parameters.");
-				return;
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->MapDataArrayToMultiTextureAttribute(
+						info[0]->Int32Value(),
+						*a1,
+						info[2]->Int32Value(),
+						info[3]->Int32Value()
+					);
+					return;
+				}
 			}
-			native->RenderPiece(
-				(vtkRenderer *) a0->native.GetPointer(),
-				(vtkActor *) a1->native.GetPointer()
-			);
-			return;
 		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
-		{
-			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Render(
-				(vtkRenderer *) a0->native.GetPointer(),
-				(vtkActor *) a1->native.GetPointer()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataMapperWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Update();
-}
-
-void VtkPolyDataMapperWrap::SetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetPiece(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataMapperWrap::GetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetPiece();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkPolyDataMapperWrap::SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetNumberOfPieces(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataMapperWrap::GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNumberOfPieces();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkPolyDataMapperWrap::SetNumberOfSubPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetNumberOfSubPieces(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataMapperWrap::GetNumberOfSubPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNumberOfSubPieces();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkPolyDataMapperWrap::SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetGhostLevel(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataMapperWrap::GetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetGhostLevel();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkPolyDataMapperWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkAbstractMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->ShallowCopy(
-			(vtkAbstractMapper *) a0->native.GetPointer()
-		);
-		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -477,36 +297,39 @@ void VtkPolyDataMapperWrap::MapDataArrayToVertexAttribute(const Nan::FunctionCal
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkPolyDataMapperWrap::MapDataArrayToMultiTextureAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkPolyDataMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	vtkPolyDataMapper * r;
+	if(info.Length() != 0)
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					if(info.Length() != 4)
-					{
-						Nan::ThrowError("Too many parameters.");
-						return;
-					}
-					native->MapDataArrayToMultiTextureAttribute(
-						info[0]->Int32Value(),
-						*a1,
-						info[2]->Int32Value(),
-						info[3]->Int32Value()
-					);
-					return;
-				}
-			}
-		}
+		Nan::ThrowError("Too many parameters.");
+		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	r = native->NewInstance();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPolyDataMapperWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPolyDataMapperWrap *w = new VtkPolyDataMapperWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkPolyDataMapperWrap::RemoveAllVertexAttributeMappings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->RemoveAllVertexAttributeMappings();
 }
 
 void VtkPolyDataMapperWrap::RemoveVertexAttributeMapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -529,7 +352,184 @@ void VtkPolyDataMapperWrap::RemoveVertexAttributeMapping(const Nan::FunctionCall
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkPolyDataMapperWrap::RemoveAllVertexAttributeMappings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkPolyDataMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Render(
+				(vtkRenderer *) a0->native.GetPointer(),
+				(vtkActor *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::RenderPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RenderPiece(
+				(vtkRenderer *) a0->native.GetPointer(),
+				(vtkActor *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
+		vtkPolyDataMapper * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SafeDownCast(
+			(vtkObject *) a0->native.GetPointer()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkPolyDataMapperWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkPolyDataMapperWrap *w = new VtkPolyDataMapperWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGhostLevel(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfPieces(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::SetNumberOfSubPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfSubPieces(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::SetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPiece(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkAbstractMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ShallowCopy(
+			(vtkAbstractMapper *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
@@ -538,6 +538,6 @@ void VtkPolyDataMapperWrap::RemoveAllVertexAttributeMappings(const Nan::Function
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	native->RemoveAllVertexAttributeMappings();
+	native->Update();
 }
 

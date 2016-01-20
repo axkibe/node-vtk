@@ -341,96 +341,6 @@ void VtkRendererWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
-void VtkRendererWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	char const * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetClassName();
-	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkRendererWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		Nan::Utf8String a0(info[0]);
-		int r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->IsA(
-			*a0
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	vtkRenderer * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->NewInstance();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-	VtkRendererWrap *w = new VtkRendererWrap();
-	w->native.TakeReference(r);
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
-		vtkRenderer * r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->SafeDownCast(
-			(vtkObject *) a0->native.GetPointer()
-		);
-		const int argc = 1;
-		v8::Local<v8::Value> argv[argc] =
-			{ Nan::New("__nowrap").ToLocalChecked() };
-		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRendererWrap::constructor);
-		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-		VtkRendererWrap *w = new VtkRendererWrap();
-		w->native.TakeReference(r);
-		w->Wrap(wo);
-		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkRendererWrap::AddActor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
@@ -471,6 +381,710 @@ void VtkRendererWrap::AddVolume(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkRendererWrap::AutomaticLightCreationOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->AutomaticLightCreationOff();
+}
+
+void VtkRendererWrap::AutomaticLightCreationOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->AutomaticLightCreationOn();
+}
+
+void VtkRendererWrap::BackingStoreOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->BackingStoreOff();
+}
+
+void VtkRendererWrap::BackingStoreOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->BackingStoreOn();
+}
+
+void VtkRendererWrap::CaptureGL2PSSpecialProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CaptureGL2PSSpecialProp(
+			(vtkProp *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::Clear(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->Clear();
+}
+
+void VtkRendererWrap::CreateLight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->CreateLight();
+}
+
+void VtkRendererWrap::DeviceRender(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->DeviceRender();
+}
+
+void VtkRendererWrap::DeviceRenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->DeviceRenderTranslucentPolygonalGeometry();
+}
+
+void VtkRendererWrap::DrawOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->DrawOff();
+}
+
+void VtkRendererWrap::DrawOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->DrawOn();
+}
+
+void VtkRendererWrap::EraseOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->EraseOff();
+}
+
+void VtkRendererWrap::EraseOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->EraseOn();
+}
+
+void VtkRendererWrap::GetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAllocatedRenderTime();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetAutomaticLightCreation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAutomaticLightCreation();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetBackingStore(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackingStore();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	char const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetClassName();
+	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkRendererWrap::GetDraw(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDraw();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetErase(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetErase();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetInteractive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInteractive();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetLastRenderTimeInSeconds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastRenderTimeInSeconds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetLastRenderingUsedDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastRenderingUsedDepthPeeling();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetLayer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLayer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetLightFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLightFollowCamera();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetMaximumNumberOfPeels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumNumberOfPeels();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetNearClippingPlaneTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNearClippingPlaneTolerance();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetNearClippingPlaneToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNearClippingPlaneToleranceMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetNearClippingPlaneToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNearClippingPlaneToleranceMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetNumberOfPropsRendered(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfPropsRendered();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetOcclusionRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOcclusionRatio();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetOcclusionRatioMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOcclusionRatioMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetOcclusionRatioMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOcclusionRatioMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetPreserveDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPreserveDepthBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	vtkRenderWindow * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRenderWindow();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkRendererWrap::GetTiledAspectRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTiledAspectRatio();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetTimeFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeFactor();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetTwoSidedLighting(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTwoSidedLighting();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetUseDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseDepthPeeling();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	vtkWindow * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVTKWindow();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkWindowWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkWindowWrap *w = new VtkWindowWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkRendererWrap::GetZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			double r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetZ(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::InteractiveOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->InteractiveOff();
+}
+
+void VtkRendererWrap::InteractiveOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->InteractiveOn();
+}
+
+void VtkRendererWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		Nan::Utf8String a0(info[0]);
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsA(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::IsActiveCameraCreated(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsActiveCameraCreated();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRendererWrap::LightFollowCameraOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->LightFollowCameraOff();
+}
+
+void VtkRendererWrap::LightFollowCameraOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->LightFollowCameraOn();
+}
+
+void VtkRendererWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	vtkRenderer * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->NewInstance();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkRendererWrap *w = new VtkRendererWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkRendererWrap::PreserveDepthBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->PreserveDepthBufferOff();
+}
+
+void VtkRendererWrap::PreserveDepthBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->PreserveDepthBufferOn();
+}
+
 void VtkRendererWrap::RemoveActor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
@@ -489,6 +1103,18 @@ void VtkRendererWrap::RemoveActor(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::RemoveAllLights(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->RemoveAllLights();
 }
 
 void VtkRendererWrap::RemoveVolume(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -511,7 +1137,7 @@ void VtkRendererWrap::RemoveVolume(const Nan::FunctionCallbackInfo<v8::Value>& i
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkRendererWrap::RemoveAllLights(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
@@ -520,10 +1146,10 @@ void VtkRendererWrap::RemoveAllLights(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	native->RemoveAllLights();
+	native->Render();
 }
 
-void VtkRendererWrap::CreateLight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::ResetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
@@ -532,43 +1158,10 @@ void VtkRendererWrap::CreateLight(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	native->CreateLight();
+	native->ResetCamera();
 }
 
-void VtkRendererWrap::GetTwoSidedLighting(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetTwoSidedLighting();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::SetTwoSidedLighting(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetTwoSidedLighting(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::TwoSidedLightingOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::ResetCameraClippingRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
@@ -577,280 +1170,54 @@ void VtkRendererWrap::TwoSidedLightingOn(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	native->TwoSidedLightingOn();
+	native->ResetCameraClippingRange();
 }
 
-void VtkRendererWrap::TwoSidedLightingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->TwoSidedLightingOff();
-}
-
-void VtkRendererWrap::SetLightFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetLightFollowCamera(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetLightFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLightFollowCamera();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::LightFollowCameraOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->LightFollowCameraOn();
-}
-
-void VtkRendererWrap::LightFollowCameraOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->LightFollowCameraOff();
-}
-
-void VtkRendererWrap::GetAutomaticLightCreation(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetAutomaticLightCreation();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::SetAutomaticLightCreation(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetAutomaticLightCreation(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::AutomaticLightCreationOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->AutomaticLightCreationOn();
-}
-
-void VtkRendererWrap::AutomaticLightCreationOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->AutomaticLightCreationOff();
-}
-
-void VtkRendererWrap::UpdateLightsGeometryToFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->UpdateLightsGeometryToFollowCamera();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::SetErase(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetErase(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetErase(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetErase();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::EraseOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->EraseOn();
-}
-
-void VtkRendererWrap::EraseOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->EraseOff();
-}
-
-void VtkRendererWrap::SetDraw(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetDraw(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetDraw(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetDraw();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::DrawOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->DrawOn();
-}
-
-void VtkRendererWrap::DrawOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->DrawOff();
-}
-
-void VtkRendererWrap::CaptureGL2PSSpecialProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsObject())
 	{
-		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		int r;
+		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
+		vtkRenderer * r;
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
 		}
-		r = native->CaptureGL2PSSpecialProp(
-			(vtkProp *) a0->native.GetPointer()
+		r = native->SafeDownCast(
+			(vtkObject *) a0->native.GetPointer()
 		);
-		info.GetReturnValue().Set(Nan::New(r));
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkRendererWrap *w = new VtkRendererWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAllocatedRenderTime(
+			info[0]->NumberValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -883,7 +1250,159 @@ void VtkRendererWrap::SetAmbient(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkRendererWrap::SetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::SetAutomaticLightCreation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAutomaticLightCreation(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetBackingStore(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackingStore(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetDraw(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDraw(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetErase(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetErase(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetInteractive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInteractive(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetLayer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLayer(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetLightFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLightFollowCamera(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetMaximumNumberOfPeels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaximumNumberOfPeels(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetNearClippingPlaneTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
@@ -894,7 +1413,7 @@ void VtkRendererWrap::SetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8:
 			Nan::ThrowError("Too many parameters.");
 			return;
 		}
-		native->SetAllocatedRenderTime(
+		native->SetNearClippingPlaneTolerance(
 			info[0]->NumberValue()
 		);
 		return;
@@ -902,35 +1421,191 @@ void VtkRendererWrap::SetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8:
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkRendererWrap::GetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::SetOcclusionRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOcclusionRatio(
+			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetPreserveDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPreserveDepthBuffer(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRenderWindow(
+			(vtkRenderWindow *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetTwoSidedLighting(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTwoSidedLighting(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetUseDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseDepthPeeling(
+			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::StereoMidpoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
 	if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	r = native->GetAllocatedRenderTime();
+	native->StereoMidpoint();
+}
+
+void VtkRendererWrap::TexturedBackgroundOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->TexturedBackgroundOff();
+}
+
+void VtkRendererWrap::TexturedBackgroundOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->TexturedBackgroundOn();
+}
+
+void VtkRendererWrap::Transparent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->Transparent();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkRendererWrap::GetTimeFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::TwoSidedLightingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
 	if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	r = native->GetTimeFactor();
+	native->TwoSidedLightingOff();
+}
+
+void VtkRendererWrap::TwoSidedLightingOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->TwoSidedLightingOn();
+}
+
+void VtkRendererWrap::UpdateLightsGeometryToFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->UpdateLightsGeometryToFollowCamera();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkRendererWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::UseDepthPeelingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
@@ -939,10 +1614,10 @@ void VtkRendererWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	native->Render();
+	native->UseDepthPeelingOff();
 }
 
-void VtkRendererWrap::DeviceRender(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::UseDepthPeelingOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
@@ -951,10 +1626,10 @@ void VtkRendererWrap::DeviceRender(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	native->DeviceRender();
+	native->UseDepthPeelingOn();
 }
 
-void VtkRendererWrap::DeviceRenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkRendererWrap::ViewToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
@@ -963,19 +1638,7 @@ void VtkRendererWrap::DeviceRenderTranslucentPolygonalGeometry(const Nan::Functi
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
-	native->DeviceRenderTranslucentPolygonalGeometry();
-}
-
-void VtkRendererWrap::Clear(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Clear();
+	native->ViewToWorld();
 }
 
 void VtkRendererWrap::VisibleActorCount(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1006,375 +1669,6 @@ void VtkRendererWrap::VisibleVolumeCount(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkRendererWrap::ResetCameraClippingRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->ResetCameraClippingRange();
-}
-
-void VtkRendererWrap::SetNearClippingPlaneTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetNearClippingPlaneTolerance(
-			info[0]->NumberValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetNearClippingPlaneToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNearClippingPlaneToleranceMinValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::GetNearClippingPlaneToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNearClippingPlaneToleranceMaxValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::GetNearClippingPlaneTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNearClippingPlaneTolerance();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::ResetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->ResetCamera();
-}
-
-void VtkRendererWrap::SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
-	{
-		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetRenderWindow(
-			(vtkRenderWindow *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	vtkRenderWindow * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetRenderWindow();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
-	w->native.TakeReference(r);
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkRendererWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	vtkWindow * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetVTKWindow();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWindowWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-	VtkWindowWrap *w = new VtkWindowWrap();
-	w->native.TakeReference(r);
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkRendererWrap::SetBackingStore(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetBackingStore(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetBackingStore(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetBackingStore();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::BackingStoreOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->BackingStoreOn();
-}
-
-void VtkRendererWrap::BackingStoreOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->BackingStoreOff();
-}
-
-void VtkRendererWrap::SetInteractive(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetInteractive(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetInteractive(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetInteractive();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::InteractiveOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->InteractiveOn();
-}
-
-void VtkRendererWrap::InteractiveOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->InteractiveOff();
-}
-
-void VtkRendererWrap::SetLayer(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetLayer(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetLayer(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLayer();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::SetPreserveDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetPreserveDepthBuffer(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetPreserveDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetPreserveDepthBuffer();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::PreserveDepthBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->PreserveDepthBufferOn();
-}
-
-void VtkRendererWrap::PreserveDepthBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->PreserveDepthBufferOff();
-}
-
-void VtkRendererWrap::Transparent(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->Transparent();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkRendererWrap::WorldToView(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
@@ -1385,299 +1679,5 @@ void VtkRendererWrap::WorldToView(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	native->WorldToView();
-}
-
-void VtkRendererWrap::ViewToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->ViewToWorld();
-}
-
-void VtkRendererWrap::GetZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			double r;
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			r = native->GetZ(
-				info[0]->Int32Value(),
-				info[1]->Int32Value()
-			);
-			info.GetReturnValue().Set(Nan::New(r));
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetLastRenderTimeInSeconds(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLastRenderTimeInSeconds();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::GetNumberOfPropsRendered(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNumberOfPropsRendered();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::StereoMidpoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->StereoMidpoint();
-}
-
-void VtkRendererWrap::GetTiledAspectRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetTiledAspectRatio();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::IsActiveCameraCreated(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsActiveCameraCreated();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::SetUseDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetUseDepthPeeling(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetUseDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetUseDepthPeeling();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::UseDepthPeelingOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->UseDepthPeelingOn();
-}
-
-void VtkRendererWrap::UseDepthPeelingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->UseDepthPeelingOff();
-}
-
-void VtkRendererWrap::SetOcclusionRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetOcclusionRatio(
-			info[0]->NumberValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetOcclusionRatioMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetOcclusionRatioMinValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::GetOcclusionRatioMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetOcclusionRatioMaxValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::GetOcclusionRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetOcclusionRatio();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::SetMaximumNumberOfPeels(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetMaximumNumberOfPeels(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRendererWrap::GetMaximumNumberOfPeels(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetMaximumNumberOfPeels();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::GetLastRenderingUsedDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLastRenderingUsedDepthPeeling();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRendererWrap::TexturedBackgroundOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->TexturedBackgroundOn();
-}
-
-void VtkRendererWrap::TexturedBackgroundOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->TexturedBackgroundOff();
 }
 

@@ -27,25 +27,25 @@ class VtkCubeSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetYLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetYLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetXLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetXLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetYLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetYLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetZLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetZLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -28,8 +28,8 @@ class VtkObjectBaseWrap : public Nan::ObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsTypeOf(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsTypeOf(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif
