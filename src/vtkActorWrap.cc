@@ -52,8 +52,17 @@ void VtkActorWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
+	Nan::SetPrototypeMethod(tpl, "ApplyProperties", ApplyProperties);
+	Nan::SetPrototypeMethod(tpl, "applyProperties", ApplyProperties);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
+	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
+
+	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
+	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -61,8 +70,11 @@ void VtkActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
+	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "RenderOpaqueGeometry", RenderOpaqueGeometry);
 	Nan::SetPrototypeMethod(tpl, "renderOpaqueGeometry", RenderOpaqueGeometry);
@@ -70,26 +82,14 @@ void VtkActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "RenderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "renderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
 
-	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
-	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
-
-	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
-	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
-
-	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
-	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "SetMapper", SetMapper);
 	Nan::SetPrototypeMethod(tpl, "setMapper", SetMapper);
 
-	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
-	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
-
-	Nan::SetPrototypeMethod(tpl, "ApplyProperties", ApplyProperties);
-	Nan::SetPrototypeMethod(tpl, "applyProperties", ApplyProperties);
+	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
+	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
 }
 

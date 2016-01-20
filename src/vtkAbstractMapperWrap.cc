@@ -50,23 +50,23 @@ void VtkAbstractMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeToDraw", GetTimeToDraw);
+	Nan::SetPrototypeMethod(tpl, "getTimeToDraw", GetTimeToDraw);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
-	Nan::SetPrototypeMethod(tpl, "GetTimeToDraw", GetTimeToDraw);
-	Nan::SetPrototypeMethod(tpl, "getTimeToDraw", GetTimeToDraw);
-
 	Nan::SetPrototypeMethod(tpl, "RemoveAllClippingPlanes", RemoveAllClippingPlanes);
 	Nan::SetPrototypeMethod(tpl, "removeAllClippingPlanes", RemoveAllClippingPlanes);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);

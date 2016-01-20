@@ -52,167 +52,14 @@ void VtkMapperWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
-	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
-	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "ColorByArrayComponent", ColorByArrayComponent);
+	Nan::SetPrototypeMethod(tpl, "colorByArrayComponent", ColorByArrayComponent);
 
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
-	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
-
-	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
-	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
+	Nan::SetPrototypeMethod(tpl, "ColorByArrayComponent", ColorByArrayComponent);
+	Nan::SetPrototypeMethod(tpl, "colorByArrayComponent", ColorByArrayComponent);
 
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLookupTable", CreateDefaultLookupTable);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLookupTable", CreateDefaultLookupTable);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarVisibility", SetScalarVisibility);
-	Nan::SetPrototypeMethod(tpl, "setScalarVisibility", SetScalarVisibility);
-
-	Nan::SetPrototypeMethod(tpl, "GetScalarVisibility", GetScalarVisibility);
-	Nan::SetPrototypeMethod(tpl, "getScalarVisibility", GetScalarVisibility);
-
-	Nan::SetPrototypeMethod(tpl, "ScalarVisibilityOn", ScalarVisibilityOn);
-	Nan::SetPrototypeMethod(tpl, "scalarVisibilityOn", ScalarVisibilityOn);
-
-	Nan::SetPrototypeMethod(tpl, "ScalarVisibilityOff", ScalarVisibilityOff);
-	Nan::SetPrototypeMethod(tpl, "scalarVisibilityOff", ScalarVisibilityOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetStatic", SetStatic);
-	Nan::SetPrototypeMethod(tpl, "setStatic", SetStatic);
-
-	Nan::SetPrototypeMethod(tpl, "GetStatic", GetStatic);
-	Nan::SetPrototypeMethod(tpl, "getStatic", GetStatic);
-
-	Nan::SetPrototypeMethod(tpl, "StaticOn", StaticOn);
-	Nan::SetPrototypeMethod(tpl, "staticOn", StaticOn);
-
-	Nan::SetPrototypeMethod(tpl, "StaticOff", StaticOff);
-	Nan::SetPrototypeMethod(tpl, "staticOff", StaticOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetColorMode", SetColorMode);
-	Nan::SetPrototypeMethod(tpl, "setColorMode", SetColorMode);
-
-	Nan::SetPrototypeMethod(tpl, "GetColorMode", GetColorMode);
-	Nan::SetPrototypeMethod(tpl, "getColorMode", GetColorMode);
-
-	Nan::SetPrototypeMethod(tpl, "SetColorModeToDefault", SetColorModeToDefault);
-	Nan::SetPrototypeMethod(tpl, "setColorModeToDefault", SetColorModeToDefault);
-
-	Nan::SetPrototypeMethod(tpl, "SetColorModeToMapScalars", SetColorModeToMapScalars);
-	Nan::SetPrototypeMethod(tpl, "setColorModeToMapScalars", SetColorModeToMapScalars);
-
-	Nan::SetPrototypeMethod(tpl, "GetColorModeAsString", GetColorModeAsString);
-	Nan::SetPrototypeMethod(tpl, "getColorModeAsString", GetColorModeAsString);
-
-	Nan::SetPrototypeMethod(tpl, "SetInterpolateScalarsBeforeMapping", SetInterpolateScalarsBeforeMapping);
-	Nan::SetPrototypeMethod(tpl, "setInterpolateScalarsBeforeMapping", SetInterpolateScalarsBeforeMapping);
-
-	Nan::SetPrototypeMethod(tpl, "GetInterpolateScalarsBeforeMapping", GetInterpolateScalarsBeforeMapping);
-	Nan::SetPrototypeMethod(tpl, "getInterpolateScalarsBeforeMapping", GetInterpolateScalarsBeforeMapping);
-
-	Nan::SetPrototypeMethod(tpl, "InterpolateScalarsBeforeMappingOn", InterpolateScalarsBeforeMappingOn);
-	Nan::SetPrototypeMethod(tpl, "interpolateScalarsBeforeMappingOn", InterpolateScalarsBeforeMappingOn);
-
-	Nan::SetPrototypeMethod(tpl, "InterpolateScalarsBeforeMappingOff", InterpolateScalarsBeforeMappingOff);
-	Nan::SetPrototypeMethod(tpl, "interpolateScalarsBeforeMappingOff", InterpolateScalarsBeforeMappingOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetUseLookupTableScalarRange", SetUseLookupTableScalarRange);
-	Nan::SetPrototypeMethod(tpl, "setUseLookupTableScalarRange", SetUseLookupTableScalarRange);
-
-	Nan::SetPrototypeMethod(tpl, "GetUseLookupTableScalarRange", GetUseLookupTableScalarRange);
-	Nan::SetPrototypeMethod(tpl, "getUseLookupTableScalarRange", GetUseLookupTableScalarRange);
-
-	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
-	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
-
-	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOff", UseLookupTableScalarRangeOff);
-	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOff", UseLookupTableScalarRangeOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
-	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
-
-	Nan::SetPrototypeMethod(tpl, "SetImmediateModeRendering", SetImmediateModeRendering);
-	Nan::SetPrototypeMethod(tpl, "setImmediateModeRendering", SetImmediateModeRendering);
-
-	Nan::SetPrototypeMethod(tpl, "GetImmediateModeRendering", GetImmediateModeRendering);
-	Nan::SetPrototypeMethod(tpl, "getImmediateModeRendering", GetImmediateModeRendering);
-
-	Nan::SetPrototypeMethod(tpl, "ImmediateModeRenderingOn", ImmediateModeRenderingOn);
-	Nan::SetPrototypeMethod(tpl, "immediateModeRenderingOn", ImmediateModeRenderingOn);
-
-	Nan::SetPrototypeMethod(tpl, "ImmediateModeRenderingOff", ImmediateModeRenderingOff);
-	Nan::SetPrototypeMethod(tpl, "immediateModeRenderingOff", ImmediateModeRenderingOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetGlobalImmediateModeRendering", SetGlobalImmediateModeRendering);
-	Nan::SetPrototypeMethod(tpl, "setGlobalImmediateModeRendering", SetGlobalImmediateModeRendering);
-
-	Nan::SetPrototypeMethod(tpl, "GlobalImmediateModeRenderingOn", GlobalImmediateModeRenderingOn);
-	Nan::SetPrototypeMethod(tpl, "globalImmediateModeRenderingOn", GlobalImmediateModeRenderingOn);
-
-	Nan::SetPrototypeMethod(tpl, "GlobalImmediateModeRenderingOff", GlobalImmediateModeRenderingOff);
-	Nan::SetPrototypeMethod(tpl, "globalImmediateModeRenderingOff", GlobalImmediateModeRenderingOff);
-
-	Nan::SetPrototypeMethod(tpl, "GetGlobalImmediateModeRendering", GetGlobalImmediateModeRendering);
-	Nan::SetPrototypeMethod(tpl, "getGlobalImmediateModeRendering", GetGlobalImmediateModeRendering);
-
-	Nan::SetPrototypeMethod(tpl, "GetForceCompileOnly", GetForceCompileOnly);
-	Nan::SetPrototypeMethod(tpl, "getForceCompileOnly", GetForceCompileOnly);
-
-	Nan::SetPrototypeMethod(tpl, "SetForceCompileOnly", SetForceCompileOnly);
-	Nan::SetPrototypeMethod(tpl, "setForceCompileOnly", SetForceCompileOnly);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarMode", SetScalarMode);
-	Nan::SetPrototypeMethod(tpl, "setScalarMode", SetScalarMode);
-
-	Nan::SetPrototypeMethod(tpl, "GetScalarMode", GetScalarMode);
-	Nan::SetPrototypeMethod(tpl, "getScalarMode", GetScalarMode);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarModeToDefault", SetScalarModeToDefault);
-	Nan::SetPrototypeMethod(tpl, "setScalarModeToDefault", SetScalarModeToDefault);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUsePointData", SetScalarModeToUsePointData);
-	Nan::SetPrototypeMethod(tpl, "setScalarModeToUsePointData", SetScalarModeToUsePointData);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUseCellData", SetScalarModeToUseCellData);
-	Nan::SetPrototypeMethod(tpl, "setScalarModeToUseCellData", SetScalarModeToUseCellData);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUsePointFieldData", SetScalarModeToUsePointFieldData);
-	Nan::SetPrototypeMethod(tpl, "setScalarModeToUsePointFieldData", SetScalarModeToUsePointFieldData);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUseCellFieldData", SetScalarModeToUseCellFieldData);
-	Nan::SetPrototypeMethod(tpl, "setScalarModeToUseCellFieldData", SetScalarModeToUseCellFieldData);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUseFieldData", SetScalarModeToUseFieldData);
-	Nan::SetPrototypeMethod(tpl, "setScalarModeToUseFieldData", SetScalarModeToUseFieldData);
-
-	Nan::SetPrototypeMethod(tpl, "SelectColorArray", SelectColorArray);
-	Nan::SetPrototypeMethod(tpl, "selectColorArray", SelectColorArray);
-
-	Nan::SetPrototypeMethod(tpl, "SelectColorArray", SelectColorArray);
-	Nan::SetPrototypeMethod(tpl, "selectColorArray", SelectColorArray);
-
-	Nan::SetPrototypeMethod(tpl, "ColorByArrayComponent", ColorByArrayComponent);
-	Nan::SetPrototypeMethod(tpl, "colorByArrayComponent", ColorByArrayComponent);
-
-	Nan::SetPrototypeMethod(tpl, "ColorByArrayComponent", ColorByArrayComponent);
-	Nan::SetPrototypeMethod(tpl, "colorByArrayComponent", ColorByArrayComponent);
-
-	Nan::SetPrototypeMethod(tpl, "GetArrayName", GetArrayName);
-	Nan::SetPrototypeMethod(tpl, "getArrayName", GetArrayName);
-
-	Nan::SetPrototypeMethod(tpl, "GetArrayId", GetArrayId);
-	Nan::SetPrototypeMethod(tpl, "getArrayId", GetArrayId);
 
 	Nan::SetPrototypeMethod(tpl, "GetArrayAccessMode", GetArrayAccessMode);
 	Nan::SetPrototypeMethod(tpl, "getArrayAccessMode", GetArrayAccessMode);
@@ -220,14 +67,143 @@ void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetArrayComponent", GetArrayComponent);
 	Nan::SetPrototypeMethod(tpl, "getArrayComponent", GetArrayComponent);
 
+	Nan::SetPrototypeMethod(tpl, "GetArrayId", GetArrayId);
+	Nan::SetPrototypeMethod(tpl, "getArrayId", GetArrayId);
+
+	Nan::SetPrototypeMethod(tpl, "GetArrayName", GetArrayName);
+	Nan::SetPrototypeMethod(tpl, "getArrayName", GetArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetColorMode", GetColorMode);
+	Nan::SetPrototypeMethod(tpl, "getColorMode", GetColorMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetColorModeAsString", GetColorModeAsString);
+	Nan::SetPrototypeMethod(tpl, "getColorModeAsString", GetColorModeAsString);
+
+	Nan::SetPrototypeMethod(tpl, "GetForceCompileOnly", GetForceCompileOnly);
+	Nan::SetPrototypeMethod(tpl, "getForceCompileOnly", GetForceCompileOnly);
+
+	Nan::SetPrototypeMethod(tpl, "GetGlobalImmediateModeRendering", GetGlobalImmediateModeRendering);
+	Nan::SetPrototypeMethod(tpl, "getGlobalImmediateModeRendering", GetGlobalImmediateModeRendering);
+
+	Nan::SetPrototypeMethod(tpl, "GetImmediateModeRendering", GetImmediateModeRendering);
+	Nan::SetPrototypeMethod(tpl, "getImmediateModeRendering", GetImmediateModeRendering);
+
+	Nan::SetPrototypeMethod(tpl, "GetInterpolateScalarsBeforeMapping", GetInterpolateScalarsBeforeMapping);
+	Nan::SetPrototypeMethod(tpl, "getInterpolateScalarsBeforeMapping", GetInterpolateScalarsBeforeMapping);
+
+	Nan::SetPrototypeMethod(tpl, "GetRenderTime", GetRenderTime);
+	Nan::SetPrototypeMethod(tpl, "getRenderTime", GetRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "GetResolveCoincidentTopology", GetResolveCoincidentTopology);
+	Nan::SetPrototypeMethod(tpl, "getResolveCoincidentTopology", GetResolveCoincidentTopology);
+
+	Nan::SetPrototypeMethod(tpl, "GetResolveCoincidentTopologyPolygonOffsetFaces", GetResolveCoincidentTopologyPolygonOffsetFaces);
+	Nan::SetPrototypeMethod(tpl, "getResolveCoincidentTopologyPolygonOffsetFaces", GetResolveCoincidentTopologyPolygonOffsetFaces);
+
+	Nan::SetPrototypeMethod(tpl, "GetResolveCoincidentTopologyZShift", GetResolveCoincidentTopologyZShift);
+	Nan::SetPrototypeMethod(tpl, "getResolveCoincidentTopologyZShift", GetResolveCoincidentTopologyZShift);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalarMaterialMode", GetScalarMaterialMode);
+	Nan::SetPrototypeMethod(tpl, "getScalarMaterialMode", GetScalarMaterialMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalarMaterialModeAsString", GetScalarMaterialModeAsString);
+	Nan::SetPrototypeMethod(tpl, "getScalarMaterialModeAsString", GetScalarMaterialModeAsString);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalarMode", GetScalarMode);
+	Nan::SetPrototypeMethod(tpl, "getScalarMode", GetScalarMode);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarModeAsString", GetScalarModeAsString);
 	Nan::SetPrototypeMethod(tpl, "getScalarModeAsString", GetScalarModeAsString);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalarVisibility", GetScalarVisibility);
+	Nan::SetPrototypeMethod(tpl, "getScalarVisibility", GetScalarVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetStatic", GetStatic);
+	Nan::SetPrototypeMethod(tpl, "getStatic", GetStatic);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseLookupTableScalarRange", GetUseLookupTableScalarRange);
+	Nan::SetPrototypeMethod(tpl, "getUseLookupTableScalarRange", GetUseLookupTableScalarRange);
+
+	Nan::SetPrototypeMethod(tpl, "GlobalImmediateModeRenderingOff", GlobalImmediateModeRenderingOff);
+	Nan::SetPrototypeMethod(tpl, "globalImmediateModeRenderingOff", GlobalImmediateModeRenderingOff);
+
+	Nan::SetPrototypeMethod(tpl, "GlobalImmediateModeRenderingOn", GlobalImmediateModeRenderingOn);
+	Nan::SetPrototypeMethod(tpl, "globalImmediateModeRenderingOn", GlobalImmediateModeRenderingOn);
+
+	Nan::SetPrototypeMethod(tpl, "ImmediateModeRenderingOff", ImmediateModeRenderingOff);
+	Nan::SetPrototypeMethod(tpl, "immediateModeRenderingOff", ImmediateModeRenderingOff);
+
+	Nan::SetPrototypeMethod(tpl, "ImmediateModeRenderingOn", ImmediateModeRenderingOn);
+	Nan::SetPrototypeMethod(tpl, "immediateModeRenderingOn", ImmediateModeRenderingOn);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolateScalarsBeforeMappingOff", InterpolateScalarsBeforeMappingOff);
+	Nan::SetPrototypeMethod(tpl, "interpolateScalarsBeforeMappingOff", InterpolateScalarsBeforeMappingOff);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolateScalarsBeforeMappingOn", InterpolateScalarsBeforeMappingOn);
+	Nan::SetPrototypeMethod(tpl, "interpolateScalarsBeforeMappingOn", InterpolateScalarsBeforeMappingOn);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
+	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "ScalarVisibilityOff", ScalarVisibilityOff);
+	Nan::SetPrototypeMethod(tpl, "scalarVisibilityOff", ScalarVisibilityOff);
+
+	Nan::SetPrototypeMethod(tpl, "ScalarVisibilityOn", ScalarVisibilityOn);
+	Nan::SetPrototypeMethod(tpl, "scalarVisibilityOn", ScalarVisibilityOn);
+
+	Nan::SetPrototypeMethod(tpl, "SelectColorArray", SelectColorArray);
+	Nan::SetPrototypeMethod(tpl, "selectColorArray", SelectColorArray);
+
+	Nan::SetPrototypeMethod(tpl, "SelectColorArray", SelectColorArray);
+	Nan::SetPrototypeMethod(tpl, "selectColorArray", SelectColorArray);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorMode", SetColorMode);
+	Nan::SetPrototypeMethod(tpl, "setColorMode", SetColorMode);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorModeToDefault", SetColorModeToDefault);
+	Nan::SetPrototypeMethod(tpl, "setColorModeToDefault", SetColorModeToDefault);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorModeToMapScalars", SetColorModeToMapScalars);
+	Nan::SetPrototypeMethod(tpl, "setColorModeToMapScalars", SetColorModeToMapScalars);
+
+	Nan::SetPrototypeMethod(tpl, "SetForceCompileOnly", SetForceCompileOnly);
+	Nan::SetPrototypeMethod(tpl, "setForceCompileOnly", SetForceCompileOnly);
+
+	Nan::SetPrototypeMethod(tpl, "SetGlobalImmediateModeRendering", SetGlobalImmediateModeRendering);
+	Nan::SetPrototypeMethod(tpl, "setGlobalImmediateModeRendering", SetGlobalImmediateModeRendering);
+
+	Nan::SetPrototypeMethod(tpl, "SetImmediateModeRendering", SetImmediateModeRendering);
+	Nan::SetPrototypeMethod(tpl, "setImmediateModeRendering", SetImmediateModeRendering);
+
+	Nan::SetPrototypeMethod(tpl, "SetInterpolateScalarsBeforeMapping", SetInterpolateScalarsBeforeMapping);
+	Nan::SetPrototypeMethod(tpl, "setInterpolateScalarsBeforeMapping", SetInterpolateScalarsBeforeMapping);
+
+	Nan::SetPrototypeMethod(tpl, "SetRenderTime", SetRenderTime);
+	Nan::SetPrototypeMethod(tpl, "setRenderTime", SetRenderTime);
 
 	Nan::SetPrototypeMethod(tpl, "SetResolveCoincidentTopology", SetResolveCoincidentTopology);
 	Nan::SetPrototypeMethod(tpl, "setResolveCoincidentTopology", SetResolveCoincidentTopology);
 
-	Nan::SetPrototypeMethod(tpl, "GetResolveCoincidentTopology", GetResolveCoincidentTopology);
-	Nan::SetPrototypeMethod(tpl, "getResolveCoincidentTopology", GetResolveCoincidentTopology);
+	Nan::SetPrototypeMethod(tpl, "SetResolveCoincidentTopologyPolygonOffsetFaces", SetResolveCoincidentTopologyPolygonOffsetFaces);
+	Nan::SetPrototypeMethod(tpl, "setResolveCoincidentTopologyPolygonOffsetFaces", SetResolveCoincidentTopologyPolygonOffsetFaces);
+
+	Nan::SetPrototypeMethod(tpl, "SetResolveCoincidentTopologyPolygonOffsetParameters", SetResolveCoincidentTopologyPolygonOffsetParameters);
+	Nan::SetPrototypeMethod(tpl, "setResolveCoincidentTopologyPolygonOffsetParameters", SetResolveCoincidentTopologyPolygonOffsetParameters);
 
 	Nan::SetPrototypeMethod(tpl, "SetResolveCoincidentTopologyToDefault", SetResolveCoincidentTopologyToDefault);
 	Nan::SetPrototypeMethod(tpl, "setResolveCoincidentTopologyToDefault", SetResolveCoincidentTopologyToDefault);
@@ -241,47 +217,71 @@ void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetResolveCoincidentTopologyToShiftZBuffer", SetResolveCoincidentTopologyToShiftZBuffer);
 	Nan::SetPrototypeMethod(tpl, "setResolveCoincidentTopologyToShiftZBuffer", SetResolveCoincidentTopologyToShiftZBuffer);
 
-	Nan::SetPrototypeMethod(tpl, "SetResolveCoincidentTopologyPolygonOffsetParameters", SetResolveCoincidentTopologyPolygonOffsetParameters);
-	Nan::SetPrototypeMethod(tpl, "setResolveCoincidentTopologyPolygonOffsetParameters", SetResolveCoincidentTopologyPolygonOffsetParameters);
-
-	Nan::SetPrototypeMethod(tpl, "SetResolveCoincidentTopologyPolygonOffsetFaces", SetResolveCoincidentTopologyPolygonOffsetFaces);
-	Nan::SetPrototypeMethod(tpl, "setResolveCoincidentTopologyPolygonOffsetFaces", SetResolveCoincidentTopologyPolygonOffsetFaces);
-
-	Nan::SetPrototypeMethod(tpl, "GetResolveCoincidentTopologyPolygonOffsetFaces", GetResolveCoincidentTopologyPolygonOffsetFaces);
-	Nan::SetPrototypeMethod(tpl, "getResolveCoincidentTopologyPolygonOffsetFaces", GetResolveCoincidentTopologyPolygonOffsetFaces);
-
 	Nan::SetPrototypeMethod(tpl, "SetResolveCoincidentTopologyZShift", SetResolveCoincidentTopologyZShift);
 	Nan::SetPrototypeMethod(tpl, "setResolveCoincidentTopologyZShift", SetResolveCoincidentTopologyZShift);
-
-	Nan::SetPrototypeMethod(tpl, "GetResolveCoincidentTopologyZShift", GetResolveCoincidentTopologyZShift);
-	Nan::SetPrototypeMethod(tpl, "getResolveCoincidentTopologyZShift", GetResolveCoincidentTopologyZShift);
-
-	Nan::SetPrototypeMethod(tpl, "SetRenderTime", SetRenderTime);
-	Nan::SetPrototypeMethod(tpl, "setRenderTime", SetRenderTime);
-
-	Nan::SetPrototypeMethod(tpl, "GetRenderTime", GetRenderTime);
-	Nan::SetPrototypeMethod(tpl, "getRenderTime", GetRenderTime);
 
 	Nan::SetPrototypeMethod(tpl, "SetScalarMaterialMode", SetScalarMaterialMode);
 	Nan::SetPrototypeMethod(tpl, "setScalarMaterialMode", SetScalarMaterialMode);
 
-	Nan::SetPrototypeMethod(tpl, "GetScalarMaterialMode", GetScalarMaterialMode);
-	Nan::SetPrototypeMethod(tpl, "getScalarMaterialMode", GetScalarMaterialMode);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarMaterialModeToDefault", SetScalarMaterialModeToDefault);
-	Nan::SetPrototypeMethod(tpl, "setScalarMaterialModeToDefault", SetScalarMaterialModeToDefault);
-
 	Nan::SetPrototypeMethod(tpl, "SetScalarMaterialModeToAmbient", SetScalarMaterialModeToAmbient);
 	Nan::SetPrototypeMethod(tpl, "setScalarMaterialModeToAmbient", SetScalarMaterialModeToAmbient);
-
-	Nan::SetPrototypeMethod(tpl, "SetScalarMaterialModeToDiffuse", SetScalarMaterialModeToDiffuse);
-	Nan::SetPrototypeMethod(tpl, "setScalarMaterialModeToDiffuse", SetScalarMaterialModeToDiffuse);
 
 	Nan::SetPrototypeMethod(tpl, "SetScalarMaterialModeToAmbientAndDiffuse", SetScalarMaterialModeToAmbientAndDiffuse);
 	Nan::SetPrototypeMethod(tpl, "setScalarMaterialModeToAmbientAndDiffuse", SetScalarMaterialModeToAmbientAndDiffuse);
 
-	Nan::SetPrototypeMethod(tpl, "GetScalarMaterialModeAsString", GetScalarMaterialModeAsString);
-	Nan::SetPrototypeMethod(tpl, "getScalarMaterialModeAsString", GetScalarMaterialModeAsString);
+	Nan::SetPrototypeMethod(tpl, "SetScalarMaterialModeToDefault", SetScalarMaterialModeToDefault);
+	Nan::SetPrototypeMethod(tpl, "setScalarMaterialModeToDefault", SetScalarMaterialModeToDefault);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarMaterialModeToDiffuse", SetScalarMaterialModeToDiffuse);
+	Nan::SetPrototypeMethod(tpl, "setScalarMaterialModeToDiffuse", SetScalarMaterialModeToDiffuse);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarMode", SetScalarMode);
+	Nan::SetPrototypeMethod(tpl, "setScalarMode", SetScalarMode);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarModeToDefault", SetScalarModeToDefault);
+	Nan::SetPrototypeMethod(tpl, "setScalarModeToDefault", SetScalarModeToDefault);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUseCellData", SetScalarModeToUseCellData);
+	Nan::SetPrototypeMethod(tpl, "setScalarModeToUseCellData", SetScalarModeToUseCellData);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUseCellFieldData", SetScalarModeToUseCellFieldData);
+	Nan::SetPrototypeMethod(tpl, "setScalarModeToUseCellFieldData", SetScalarModeToUseCellFieldData);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUseFieldData", SetScalarModeToUseFieldData);
+	Nan::SetPrototypeMethod(tpl, "setScalarModeToUseFieldData", SetScalarModeToUseFieldData);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUsePointData", SetScalarModeToUsePointData);
+	Nan::SetPrototypeMethod(tpl, "setScalarModeToUsePointData", SetScalarModeToUsePointData);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUsePointFieldData", SetScalarModeToUsePointFieldData);
+	Nan::SetPrototypeMethod(tpl, "setScalarModeToUsePointFieldData", SetScalarModeToUsePointFieldData);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
+	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalarVisibility", SetScalarVisibility);
+	Nan::SetPrototypeMethod(tpl, "setScalarVisibility", SetScalarVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetStatic", SetStatic);
+	Nan::SetPrototypeMethod(tpl, "setStatic", SetStatic);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseLookupTableScalarRange", SetUseLookupTableScalarRange);
+	Nan::SetPrototypeMethod(tpl, "setUseLookupTableScalarRange", SetUseLookupTableScalarRange);
+
+	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
+	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
+
+	Nan::SetPrototypeMethod(tpl, "StaticOff", StaticOff);
+	Nan::SetPrototypeMethod(tpl, "staticOff", StaticOff);
+
+	Nan::SetPrototypeMethod(tpl, "StaticOn", StaticOn);
+	Nan::SetPrototypeMethod(tpl, "staticOn", StaticOn);
+
+	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOff", UseLookupTableScalarRangeOff);
+	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOff", UseLookupTableScalarRangeOff);
+
+	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
+	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 
 }
 
@@ -314,6 +314,7 @@ void VtkMapperWrap::ColorByArrayComponent(const Nan::FunctionCallbackInfo<v8::Va
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
+		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() != 2)
@@ -322,7 +323,7 @@ void VtkMapperWrap::ColorByArrayComponent(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 			native->ColorByArrayComponent(
-				info[0]->Int32Value(),
+				*a0,
 				info[1]->Int32Value()
 			);
 			return;
@@ -874,13 +875,14 @@ void VtkMapperWrap::SelectColorArray(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
+		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
 		}
 		native->SelectColorArray(
-			info[0]->Int32Value()
+			*a0
 		);
 		return;
 	}

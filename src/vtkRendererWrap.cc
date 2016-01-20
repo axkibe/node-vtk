@@ -49,116 +49,32 @@ void VtkRendererWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
-	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
-	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
-
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
 	Nan::SetPrototypeMethod(tpl, "AddActor", AddActor);
 	Nan::SetPrototypeMethod(tpl, "addActor", AddActor);
 
 	Nan::SetPrototypeMethod(tpl, "AddVolume", AddVolume);
 	Nan::SetPrototypeMethod(tpl, "addVolume", AddVolume);
 
-	Nan::SetPrototypeMethod(tpl, "RemoveActor", RemoveActor);
-	Nan::SetPrototypeMethod(tpl, "removeActor", RemoveActor);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveVolume", RemoveVolume);
-	Nan::SetPrototypeMethod(tpl, "removeVolume", RemoveVolume);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveAllLights", RemoveAllLights);
-	Nan::SetPrototypeMethod(tpl, "removeAllLights", RemoveAllLights);
-
-	Nan::SetPrototypeMethod(tpl, "CreateLight", CreateLight);
-	Nan::SetPrototypeMethod(tpl, "createLight", CreateLight);
-
-	Nan::SetPrototypeMethod(tpl, "GetTwoSidedLighting", GetTwoSidedLighting);
-	Nan::SetPrototypeMethod(tpl, "getTwoSidedLighting", GetTwoSidedLighting);
-
-	Nan::SetPrototypeMethod(tpl, "SetTwoSidedLighting", SetTwoSidedLighting);
-	Nan::SetPrototypeMethod(tpl, "setTwoSidedLighting", SetTwoSidedLighting);
-
-	Nan::SetPrototypeMethod(tpl, "TwoSidedLightingOn", TwoSidedLightingOn);
-	Nan::SetPrototypeMethod(tpl, "twoSidedLightingOn", TwoSidedLightingOn);
-
-	Nan::SetPrototypeMethod(tpl, "TwoSidedLightingOff", TwoSidedLightingOff);
-	Nan::SetPrototypeMethod(tpl, "twoSidedLightingOff", TwoSidedLightingOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetLightFollowCamera", SetLightFollowCamera);
-	Nan::SetPrototypeMethod(tpl, "setLightFollowCamera", SetLightFollowCamera);
-
-	Nan::SetPrototypeMethod(tpl, "GetLightFollowCamera", GetLightFollowCamera);
-	Nan::SetPrototypeMethod(tpl, "getLightFollowCamera", GetLightFollowCamera);
-
-	Nan::SetPrototypeMethod(tpl, "LightFollowCameraOn", LightFollowCameraOn);
-	Nan::SetPrototypeMethod(tpl, "lightFollowCameraOn", LightFollowCameraOn);
-
-	Nan::SetPrototypeMethod(tpl, "LightFollowCameraOff", LightFollowCameraOff);
-	Nan::SetPrototypeMethod(tpl, "lightFollowCameraOff", LightFollowCameraOff);
-
-	Nan::SetPrototypeMethod(tpl, "GetAutomaticLightCreation", GetAutomaticLightCreation);
-	Nan::SetPrototypeMethod(tpl, "getAutomaticLightCreation", GetAutomaticLightCreation);
-
-	Nan::SetPrototypeMethod(tpl, "SetAutomaticLightCreation", SetAutomaticLightCreation);
-	Nan::SetPrototypeMethod(tpl, "setAutomaticLightCreation", SetAutomaticLightCreation);
+	Nan::SetPrototypeMethod(tpl, "AutomaticLightCreationOff", AutomaticLightCreationOff);
+	Nan::SetPrototypeMethod(tpl, "automaticLightCreationOff", AutomaticLightCreationOff);
 
 	Nan::SetPrototypeMethod(tpl, "AutomaticLightCreationOn", AutomaticLightCreationOn);
 	Nan::SetPrototypeMethod(tpl, "automaticLightCreationOn", AutomaticLightCreationOn);
 
-	Nan::SetPrototypeMethod(tpl, "AutomaticLightCreationOff", AutomaticLightCreationOff);
-	Nan::SetPrototypeMethod(tpl, "automaticLightCreationOff", AutomaticLightCreationOff);
+	Nan::SetPrototypeMethod(tpl, "BackingStoreOff", BackingStoreOff);
+	Nan::SetPrototypeMethod(tpl, "backingStoreOff", BackingStoreOff);
 
-	Nan::SetPrototypeMethod(tpl, "UpdateLightsGeometryToFollowCamera", UpdateLightsGeometryToFollowCamera);
-	Nan::SetPrototypeMethod(tpl, "updateLightsGeometryToFollowCamera", UpdateLightsGeometryToFollowCamera);
-
-	Nan::SetPrototypeMethod(tpl, "SetErase", SetErase);
-	Nan::SetPrototypeMethod(tpl, "setErase", SetErase);
-
-	Nan::SetPrototypeMethod(tpl, "GetErase", GetErase);
-	Nan::SetPrototypeMethod(tpl, "getErase", GetErase);
-
-	Nan::SetPrototypeMethod(tpl, "EraseOn", EraseOn);
-	Nan::SetPrototypeMethod(tpl, "eraseOn", EraseOn);
-
-	Nan::SetPrototypeMethod(tpl, "EraseOff", EraseOff);
-	Nan::SetPrototypeMethod(tpl, "eraseOff", EraseOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetDraw", SetDraw);
-	Nan::SetPrototypeMethod(tpl, "setDraw", SetDraw);
-
-	Nan::SetPrototypeMethod(tpl, "GetDraw", GetDraw);
-	Nan::SetPrototypeMethod(tpl, "getDraw", GetDraw);
-
-	Nan::SetPrototypeMethod(tpl, "DrawOn", DrawOn);
-	Nan::SetPrototypeMethod(tpl, "drawOn", DrawOn);
-
-	Nan::SetPrototypeMethod(tpl, "DrawOff", DrawOff);
-	Nan::SetPrototypeMethod(tpl, "drawOff", DrawOff);
+	Nan::SetPrototypeMethod(tpl, "BackingStoreOn", BackingStoreOn);
+	Nan::SetPrototypeMethod(tpl, "backingStoreOn", BackingStoreOn);
 
 	Nan::SetPrototypeMethod(tpl, "CaptureGL2PSSpecialProp", CaptureGL2PSSpecialProp);
 	Nan::SetPrototypeMethod(tpl, "captureGL2PSSpecialProp", CaptureGL2PSSpecialProp);
 
-	Nan::SetPrototypeMethod(tpl, "SetAmbient", SetAmbient);
-	Nan::SetPrototypeMethod(tpl, "setAmbient", SetAmbient);
+	Nan::SetPrototypeMethod(tpl, "Clear", Clear);
+	Nan::SetPrototypeMethod(tpl, "clear", Clear);
 
-	Nan::SetPrototypeMethod(tpl, "SetAllocatedRenderTime", SetAllocatedRenderTime);
-	Nan::SetPrototypeMethod(tpl, "setAllocatedRenderTime", SetAllocatedRenderTime);
-
-	Nan::SetPrototypeMethod(tpl, "GetAllocatedRenderTime", GetAllocatedRenderTime);
-	Nan::SetPrototypeMethod(tpl, "getAllocatedRenderTime", GetAllocatedRenderTime);
-
-	Nan::SetPrototypeMethod(tpl, "GetTimeFactor", GetTimeFactor);
-	Nan::SetPrototypeMethod(tpl, "getTimeFactor", GetTimeFactor);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
+	Nan::SetPrototypeMethod(tpl, "CreateLight", CreateLight);
+	Nan::SetPrototypeMethod(tpl, "createLight", CreateLight);
 
 	Nan::SetPrototypeMethod(tpl, "DeviceRender", DeviceRender);
 	Nan::SetPrototypeMethod(tpl, "deviceRender", DeviceRender);
@@ -166,8 +82,230 @@ void VtkRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "DeviceRenderTranslucentPolygonalGeometry", DeviceRenderTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "deviceRenderTranslucentPolygonalGeometry", DeviceRenderTranslucentPolygonalGeometry);
 
-	Nan::SetPrototypeMethod(tpl, "Clear", Clear);
-	Nan::SetPrototypeMethod(tpl, "clear", Clear);
+	Nan::SetPrototypeMethod(tpl, "DrawOff", DrawOff);
+	Nan::SetPrototypeMethod(tpl, "drawOff", DrawOff);
+
+	Nan::SetPrototypeMethod(tpl, "DrawOn", DrawOn);
+	Nan::SetPrototypeMethod(tpl, "drawOn", DrawOn);
+
+	Nan::SetPrototypeMethod(tpl, "EraseOff", EraseOff);
+	Nan::SetPrototypeMethod(tpl, "eraseOff", EraseOff);
+
+	Nan::SetPrototypeMethod(tpl, "EraseOn", EraseOn);
+	Nan::SetPrototypeMethod(tpl, "eraseOn", EraseOn);
+
+	Nan::SetPrototypeMethod(tpl, "GetAllocatedRenderTime", GetAllocatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "getAllocatedRenderTime", GetAllocatedRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "GetAutomaticLightCreation", GetAutomaticLightCreation);
+	Nan::SetPrototypeMethod(tpl, "getAutomaticLightCreation", GetAutomaticLightCreation);
+
+	Nan::SetPrototypeMethod(tpl, "GetBackingStore", GetBackingStore);
+	Nan::SetPrototypeMethod(tpl, "getBackingStore", GetBackingStore);
+
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetDraw", GetDraw);
+	Nan::SetPrototypeMethod(tpl, "getDraw", GetDraw);
+
+	Nan::SetPrototypeMethod(tpl, "GetErase", GetErase);
+	Nan::SetPrototypeMethod(tpl, "getErase", GetErase);
+
+	Nan::SetPrototypeMethod(tpl, "GetInteractive", GetInteractive);
+	Nan::SetPrototypeMethod(tpl, "getInteractive", GetInteractive);
+
+	Nan::SetPrototypeMethod(tpl, "GetLastRenderTimeInSeconds", GetLastRenderTimeInSeconds);
+	Nan::SetPrototypeMethod(tpl, "getLastRenderTimeInSeconds", GetLastRenderTimeInSeconds);
+
+	Nan::SetPrototypeMethod(tpl, "GetLastRenderingUsedDepthPeeling", GetLastRenderingUsedDepthPeeling);
+	Nan::SetPrototypeMethod(tpl, "getLastRenderingUsedDepthPeeling", GetLastRenderingUsedDepthPeeling);
+
+	Nan::SetPrototypeMethod(tpl, "GetLayer", GetLayer);
+	Nan::SetPrototypeMethod(tpl, "getLayer", GetLayer);
+
+	Nan::SetPrototypeMethod(tpl, "GetLightFollowCamera", GetLightFollowCamera);
+	Nan::SetPrototypeMethod(tpl, "getLightFollowCamera", GetLightFollowCamera);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfPeels", GetMaximumNumberOfPeels);
+	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfPeels", GetMaximumNumberOfPeels);
+
+	Nan::SetPrototypeMethod(tpl, "GetNearClippingPlaneTolerance", GetNearClippingPlaneTolerance);
+	Nan::SetPrototypeMethod(tpl, "getNearClippingPlaneTolerance", GetNearClippingPlaneTolerance);
+
+	Nan::SetPrototypeMethod(tpl, "GetNearClippingPlaneToleranceMaxValue", GetNearClippingPlaneToleranceMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getNearClippingPlaneToleranceMaxValue", GetNearClippingPlaneToleranceMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetNearClippingPlaneToleranceMinValue", GetNearClippingPlaneToleranceMinValue);
+	Nan::SetPrototypeMethod(tpl, "getNearClippingPlaneToleranceMinValue", GetNearClippingPlaneToleranceMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfPropsRendered", GetNumberOfPropsRendered);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfPropsRendered", GetNumberOfPropsRendered);
+
+	Nan::SetPrototypeMethod(tpl, "GetOcclusionRatio", GetOcclusionRatio);
+	Nan::SetPrototypeMethod(tpl, "getOcclusionRatio", GetOcclusionRatio);
+
+	Nan::SetPrototypeMethod(tpl, "GetOcclusionRatioMaxValue", GetOcclusionRatioMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getOcclusionRatioMaxValue", GetOcclusionRatioMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetOcclusionRatioMinValue", GetOcclusionRatioMinValue);
+	Nan::SetPrototypeMethod(tpl, "getOcclusionRatioMinValue", GetOcclusionRatioMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetPreserveDepthBuffer", GetPreserveDepthBuffer);
+	Nan::SetPrototypeMethod(tpl, "getPreserveDepthBuffer", GetPreserveDepthBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
+	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GetTiledAspectRatio", GetTiledAspectRatio);
+	Nan::SetPrototypeMethod(tpl, "getTiledAspectRatio", GetTiledAspectRatio);
+
+	Nan::SetPrototypeMethod(tpl, "GetTimeFactor", GetTimeFactor);
+	Nan::SetPrototypeMethod(tpl, "getTimeFactor", GetTimeFactor);
+
+	Nan::SetPrototypeMethod(tpl, "GetTwoSidedLighting", GetTwoSidedLighting);
+	Nan::SetPrototypeMethod(tpl, "getTwoSidedLighting", GetTwoSidedLighting);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseDepthPeeling", GetUseDepthPeeling);
+	Nan::SetPrototypeMethod(tpl, "getUseDepthPeeling", GetUseDepthPeeling);
+
+	Nan::SetPrototypeMethod(tpl, "GetVTKWindow", GetVTKWindow);
+	Nan::SetPrototypeMethod(tpl, "getVTKWindow", GetVTKWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GetZ", GetZ);
+	Nan::SetPrototypeMethod(tpl, "getZ", GetZ);
+
+	Nan::SetPrototypeMethod(tpl, "InteractiveOff", InteractiveOff);
+	Nan::SetPrototypeMethod(tpl, "interactiveOff", InteractiveOff);
+
+	Nan::SetPrototypeMethod(tpl, "InteractiveOn", InteractiveOn);
+	Nan::SetPrototypeMethod(tpl, "interactiveOn", InteractiveOn);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsActiveCameraCreated", IsActiveCameraCreated);
+	Nan::SetPrototypeMethod(tpl, "isActiveCameraCreated", IsActiveCameraCreated);
+
+	Nan::SetPrototypeMethod(tpl, "LightFollowCameraOff", LightFollowCameraOff);
+	Nan::SetPrototypeMethod(tpl, "lightFollowCameraOff", LightFollowCameraOff);
+
+	Nan::SetPrototypeMethod(tpl, "LightFollowCameraOn", LightFollowCameraOn);
+	Nan::SetPrototypeMethod(tpl, "lightFollowCameraOn", LightFollowCameraOn);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "PreserveDepthBufferOff", PreserveDepthBufferOff);
+	Nan::SetPrototypeMethod(tpl, "preserveDepthBufferOff", PreserveDepthBufferOff);
+
+	Nan::SetPrototypeMethod(tpl, "PreserveDepthBufferOn", PreserveDepthBufferOn);
+	Nan::SetPrototypeMethod(tpl, "preserveDepthBufferOn", PreserveDepthBufferOn);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveActor", RemoveActor);
+	Nan::SetPrototypeMethod(tpl, "removeActor", RemoveActor);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveAllLights", RemoveAllLights);
+	Nan::SetPrototypeMethod(tpl, "removeAllLights", RemoveAllLights);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveVolume", RemoveVolume);
+	Nan::SetPrototypeMethod(tpl, "removeVolume", RemoveVolume);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
+
+	Nan::SetPrototypeMethod(tpl, "ResetCamera", ResetCamera);
+	Nan::SetPrototypeMethod(tpl, "resetCamera", ResetCamera);
+
+	Nan::SetPrototypeMethod(tpl, "ResetCamera", ResetCamera);
+	Nan::SetPrototypeMethod(tpl, "resetCamera", ResetCamera);
+
+	Nan::SetPrototypeMethod(tpl, "ResetCameraClippingRange", ResetCameraClippingRange);
+	Nan::SetPrototypeMethod(tpl, "resetCameraClippingRange", ResetCameraClippingRange);
+
+	Nan::SetPrototypeMethod(tpl, "ResetCameraClippingRange", ResetCameraClippingRange);
+	Nan::SetPrototypeMethod(tpl, "resetCameraClippingRange", ResetCameraClippingRange);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAllocatedRenderTime", SetAllocatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "setAllocatedRenderTime", SetAllocatedRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "SetAmbient", SetAmbient);
+	Nan::SetPrototypeMethod(tpl, "setAmbient", SetAmbient);
+
+	Nan::SetPrototypeMethod(tpl, "SetAutomaticLightCreation", SetAutomaticLightCreation);
+	Nan::SetPrototypeMethod(tpl, "setAutomaticLightCreation", SetAutomaticLightCreation);
+
+	Nan::SetPrototypeMethod(tpl, "SetBackingStore", SetBackingStore);
+	Nan::SetPrototypeMethod(tpl, "setBackingStore", SetBackingStore);
+
+	Nan::SetPrototypeMethod(tpl, "SetDraw", SetDraw);
+	Nan::SetPrototypeMethod(tpl, "setDraw", SetDraw);
+
+	Nan::SetPrototypeMethod(tpl, "SetErase", SetErase);
+	Nan::SetPrototypeMethod(tpl, "setErase", SetErase);
+
+	Nan::SetPrototypeMethod(tpl, "SetInteractive", SetInteractive);
+	Nan::SetPrototypeMethod(tpl, "setInteractive", SetInteractive);
+
+	Nan::SetPrototypeMethod(tpl, "SetLayer", SetLayer);
+	Nan::SetPrototypeMethod(tpl, "setLayer", SetLayer);
+
+	Nan::SetPrototypeMethod(tpl, "SetLightFollowCamera", SetLightFollowCamera);
+	Nan::SetPrototypeMethod(tpl, "setLightFollowCamera", SetLightFollowCamera);
+
+	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfPeels", SetMaximumNumberOfPeels);
+	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfPeels", SetMaximumNumberOfPeels);
+
+	Nan::SetPrototypeMethod(tpl, "SetNearClippingPlaneTolerance", SetNearClippingPlaneTolerance);
+	Nan::SetPrototypeMethod(tpl, "setNearClippingPlaneTolerance", SetNearClippingPlaneTolerance);
+
+	Nan::SetPrototypeMethod(tpl, "SetOcclusionRatio", SetOcclusionRatio);
+	Nan::SetPrototypeMethod(tpl, "setOcclusionRatio", SetOcclusionRatio);
+
+	Nan::SetPrototypeMethod(tpl, "SetPreserveDepthBuffer", SetPreserveDepthBuffer);
+	Nan::SetPrototypeMethod(tpl, "setPreserveDepthBuffer", SetPreserveDepthBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
+	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
+
+	Nan::SetPrototypeMethod(tpl, "SetTwoSidedLighting", SetTwoSidedLighting);
+	Nan::SetPrototypeMethod(tpl, "setTwoSidedLighting", SetTwoSidedLighting);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseDepthPeeling", SetUseDepthPeeling);
+	Nan::SetPrototypeMethod(tpl, "setUseDepthPeeling", SetUseDepthPeeling);
+
+	Nan::SetPrototypeMethod(tpl, "StereoMidpoint", StereoMidpoint);
+	Nan::SetPrototypeMethod(tpl, "stereoMidpoint", StereoMidpoint);
+
+	Nan::SetPrototypeMethod(tpl, "TexturedBackgroundOff", TexturedBackgroundOff);
+	Nan::SetPrototypeMethod(tpl, "texturedBackgroundOff", TexturedBackgroundOff);
+
+	Nan::SetPrototypeMethod(tpl, "TexturedBackgroundOn", TexturedBackgroundOn);
+	Nan::SetPrototypeMethod(tpl, "texturedBackgroundOn", TexturedBackgroundOn);
+
+	Nan::SetPrototypeMethod(tpl, "Transparent", Transparent);
+	Nan::SetPrototypeMethod(tpl, "transparent", Transparent);
+
+	Nan::SetPrototypeMethod(tpl, "TwoSidedLightingOff", TwoSidedLightingOff);
+	Nan::SetPrototypeMethod(tpl, "twoSidedLightingOff", TwoSidedLightingOff);
+
+	Nan::SetPrototypeMethod(tpl, "TwoSidedLightingOn", TwoSidedLightingOn);
+	Nan::SetPrototypeMethod(tpl, "twoSidedLightingOn", TwoSidedLightingOn);
+
+	Nan::SetPrototypeMethod(tpl, "UpdateLightsGeometryToFollowCamera", UpdateLightsGeometryToFollowCamera);
+	Nan::SetPrototypeMethod(tpl, "updateLightsGeometryToFollowCamera", UpdateLightsGeometryToFollowCamera);
+
+	Nan::SetPrototypeMethod(tpl, "UseDepthPeelingOff", UseDepthPeelingOff);
+	Nan::SetPrototypeMethod(tpl, "useDepthPeelingOff", UseDepthPeelingOff);
+
+	Nan::SetPrototypeMethod(tpl, "UseDepthPeelingOn", UseDepthPeelingOn);
+	Nan::SetPrototypeMethod(tpl, "useDepthPeelingOn", UseDepthPeelingOn);
+
+	Nan::SetPrototypeMethod(tpl, "ViewToWorld", ViewToWorld);
+	Nan::SetPrototypeMethod(tpl, "viewToWorld", ViewToWorld);
 
 	Nan::SetPrototypeMethod(tpl, "VisibleActorCount", VisibleActorCount);
 	Nan::SetPrototypeMethod(tpl, "visibleActorCount", VisibleActorCount);
@@ -175,146 +313,8 @@ void VtkRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "VisibleVolumeCount", VisibleVolumeCount);
 	Nan::SetPrototypeMethod(tpl, "visibleVolumeCount", VisibleVolumeCount);
 
-	Nan::SetPrototypeMethod(tpl, "ResetCameraClippingRange", ResetCameraClippingRange);
-	Nan::SetPrototypeMethod(tpl, "resetCameraClippingRange", ResetCameraClippingRange);
-
-	Nan::SetPrototypeMethod(tpl, "ResetCameraClippingRange", ResetCameraClippingRange);
-	Nan::SetPrototypeMethod(tpl, "resetCameraClippingRange", ResetCameraClippingRange);
-
-	Nan::SetPrototypeMethod(tpl, "SetNearClippingPlaneTolerance", SetNearClippingPlaneTolerance);
-	Nan::SetPrototypeMethod(tpl, "setNearClippingPlaneTolerance", SetNearClippingPlaneTolerance);
-
-	Nan::SetPrototypeMethod(tpl, "GetNearClippingPlaneToleranceMinValue", GetNearClippingPlaneToleranceMinValue);
-	Nan::SetPrototypeMethod(tpl, "getNearClippingPlaneToleranceMinValue", GetNearClippingPlaneToleranceMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetNearClippingPlaneToleranceMaxValue", GetNearClippingPlaneToleranceMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getNearClippingPlaneToleranceMaxValue", GetNearClippingPlaneToleranceMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetNearClippingPlaneTolerance", GetNearClippingPlaneTolerance);
-	Nan::SetPrototypeMethod(tpl, "getNearClippingPlaneTolerance", GetNearClippingPlaneTolerance);
-
-	Nan::SetPrototypeMethod(tpl, "ResetCamera", ResetCamera);
-	Nan::SetPrototypeMethod(tpl, "resetCamera", ResetCamera);
-
-	Nan::SetPrototypeMethod(tpl, "ResetCamera", ResetCamera);
-	Nan::SetPrototypeMethod(tpl, "resetCamera", ResetCamera);
-
-	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
-	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
-
-	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
-	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
-
-	Nan::SetPrototypeMethod(tpl, "GetVTKWindow", GetVTKWindow);
-	Nan::SetPrototypeMethod(tpl, "getVTKWindow", GetVTKWindow);
-
-	Nan::SetPrototypeMethod(tpl, "SetBackingStore", SetBackingStore);
-	Nan::SetPrototypeMethod(tpl, "setBackingStore", SetBackingStore);
-
-	Nan::SetPrototypeMethod(tpl, "GetBackingStore", GetBackingStore);
-	Nan::SetPrototypeMethod(tpl, "getBackingStore", GetBackingStore);
-
-	Nan::SetPrototypeMethod(tpl, "BackingStoreOn", BackingStoreOn);
-	Nan::SetPrototypeMethod(tpl, "backingStoreOn", BackingStoreOn);
-
-	Nan::SetPrototypeMethod(tpl, "BackingStoreOff", BackingStoreOff);
-	Nan::SetPrototypeMethod(tpl, "backingStoreOff", BackingStoreOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetInteractive", SetInteractive);
-	Nan::SetPrototypeMethod(tpl, "setInteractive", SetInteractive);
-
-	Nan::SetPrototypeMethod(tpl, "GetInteractive", GetInteractive);
-	Nan::SetPrototypeMethod(tpl, "getInteractive", GetInteractive);
-
-	Nan::SetPrototypeMethod(tpl, "InteractiveOn", InteractiveOn);
-	Nan::SetPrototypeMethod(tpl, "interactiveOn", InteractiveOn);
-
-	Nan::SetPrototypeMethod(tpl, "InteractiveOff", InteractiveOff);
-	Nan::SetPrototypeMethod(tpl, "interactiveOff", InteractiveOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetLayer", SetLayer);
-	Nan::SetPrototypeMethod(tpl, "setLayer", SetLayer);
-
-	Nan::SetPrototypeMethod(tpl, "GetLayer", GetLayer);
-	Nan::SetPrototypeMethod(tpl, "getLayer", GetLayer);
-
-	Nan::SetPrototypeMethod(tpl, "SetPreserveDepthBuffer", SetPreserveDepthBuffer);
-	Nan::SetPrototypeMethod(tpl, "setPreserveDepthBuffer", SetPreserveDepthBuffer);
-
-	Nan::SetPrototypeMethod(tpl, "GetPreserveDepthBuffer", GetPreserveDepthBuffer);
-	Nan::SetPrototypeMethod(tpl, "getPreserveDepthBuffer", GetPreserveDepthBuffer);
-
-	Nan::SetPrototypeMethod(tpl, "PreserveDepthBufferOn", PreserveDepthBufferOn);
-	Nan::SetPrototypeMethod(tpl, "preserveDepthBufferOn", PreserveDepthBufferOn);
-
-	Nan::SetPrototypeMethod(tpl, "PreserveDepthBufferOff", PreserveDepthBufferOff);
-	Nan::SetPrototypeMethod(tpl, "preserveDepthBufferOff", PreserveDepthBufferOff);
-
-	Nan::SetPrototypeMethod(tpl, "Transparent", Transparent);
-	Nan::SetPrototypeMethod(tpl, "transparent", Transparent);
-
 	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
 	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
-
-	Nan::SetPrototypeMethod(tpl, "ViewToWorld", ViewToWorld);
-	Nan::SetPrototypeMethod(tpl, "viewToWorld", ViewToWorld);
-
-	Nan::SetPrototypeMethod(tpl, "GetZ", GetZ);
-	Nan::SetPrototypeMethod(tpl, "getZ", GetZ);
-
-	Nan::SetPrototypeMethod(tpl, "GetLastRenderTimeInSeconds", GetLastRenderTimeInSeconds);
-	Nan::SetPrototypeMethod(tpl, "getLastRenderTimeInSeconds", GetLastRenderTimeInSeconds);
-
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfPropsRendered", GetNumberOfPropsRendered);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfPropsRendered", GetNumberOfPropsRendered);
-
-	Nan::SetPrototypeMethod(tpl, "StereoMidpoint", StereoMidpoint);
-	Nan::SetPrototypeMethod(tpl, "stereoMidpoint", StereoMidpoint);
-
-	Nan::SetPrototypeMethod(tpl, "GetTiledAspectRatio", GetTiledAspectRatio);
-	Nan::SetPrototypeMethod(tpl, "getTiledAspectRatio", GetTiledAspectRatio);
-
-	Nan::SetPrototypeMethod(tpl, "IsActiveCameraCreated", IsActiveCameraCreated);
-	Nan::SetPrototypeMethod(tpl, "isActiveCameraCreated", IsActiveCameraCreated);
-
-	Nan::SetPrototypeMethod(tpl, "SetUseDepthPeeling", SetUseDepthPeeling);
-	Nan::SetPrototypeMethod(tpl, "setUseDepthPeeling", SetUseDepthPeeling);
-
-	Nan::SetPrototypeMethod(tpl, "GetUseDepthPeeling", GetUseDepthPeeling);
-	Nan::SetPrototypeMethod(tpl, "getUseDepthPeeling", GetUseDepthPeeling);
-
-	Nan::SetPrototypeMethod(tpl, "UseDepthPeelingOn", UseDepthPeelingOn);
-	Nan::SetPrototypeMethod(tpl, "useDepthPeelingOn", UseDepthPeelingOn);
-
-	Nan::SetPrototypeMethod(tpl, "UseDepthPeelingOff", UseDepthPeelingOff);
-	Nan::SetPrototypeMethod(tpl, "useDepthPeelingOff", UseDepthPeelingOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetOcclusionRatio", SetOcclusionRatio);
-	Nan::SetPrototypeMethod(tpl, "setOcclusionRatio", SetOcclusionRatio);
-
-	Nan::SetPrototypeMethod(tpl, "GetOcclusionRatioMinValue", GetOcclusionRatioMinValue);
-	Nan::SetPrototypeMethod(tpl, "getOcclusionRatioMinValue", GetOcclusionRatioMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetOcclusionRatioMaxValue", GetOcclusionRatioMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getOcclusionRatioMaxValue", GetOcclusionRatioMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetOcclusionRatio", GetOcclusionRatio);
-	Nan::SetPrototypeMethod(tpl, "getOcclusionRatio", GetOcclusionRatio);
-
-	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfPeels", SetMaximumNumberOfPeels);
-	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfPeels", SetMaximumNumberOfPeels);
-
-	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfPeels", GetMaximumNumberOfPeels);
-	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfPeels", GetMaximumNumberOfPeels);
-
-	Nan::SetPrototypeMethod(tpl, "GetLastRenderingUsedDepthPeeling", GetLastRenderingUsedDepthPeeling);
-	Nan::SetPrototypeMethod(tpl, "getLastRenderingUsedDepthPeeling", GetLastRenderingUsedDepthPeeling);
-
-	Nan::SetPrototypeMethod(tpl, "TexturedBackgroundOn", TexturedBackgroundOn);
-	Nan::SetPrototypeMethod(tpl, "texturedBackgroundOn", TexturedBackgroundOn);
-
-	Nan::SetPrototypeMethod(tpl, "TexturedBackgroundOff", TexturedBackgroundOff);
-	Nan::SetPrototypeMethod(tpl, "texturedBackgroundOff", TexturedBackgroundOff);
 
 }
 
@@ -1153,24 +1153,78 @@ void VtkRendererWrap::ResetCamera(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		Nan::ThrowError("Too many parameters.");
-		return;
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() > 4 && info[4]->IsNumber())
+					{
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							native->ResetCamera(
+								info[0]->NumberValue(),
+								info[1]->NumberValue(),
+								info[2]->NumberValue(),
+								info[3]->NumberValue(),
+								info[4]->NumberValue(),
+								info[5]->NumberValue()
+							);
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
-	native->ResetCamera();
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRendererWrap::ResetCameraClippingRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		Nan::ThrowError("Too many parameters.");
-		return;
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() > 4 && info[4]->IsNumber())
+					{
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							native->ResetCameraClippingRange(
+								info[0]->NumberValue(),
+								info[1]->NumberValue(),
+								info[2]->NumberValue(),
+								info[3]->NumberValue(),
+								info[4]->NumberValue(),
+								info[5]->NumberValue()
+							);
+							return;
+						}
+					}
+				}
+			}
+		}
 	}
-	native->ResetCameraClippingRange();
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

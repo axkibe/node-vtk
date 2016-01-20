@@ -47,20 +47,20 @@ void VtkInteractorStyleTrackballCameraWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkInteractorStyleTrackballCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
+	Nan::SetPrototypeMethod(tpl, "Dolly", Dolly);
+	Nan::SetPrototypeMethod(tpl, "dolly", Dolly);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetMotionFactor", GetMotionFactor);
+	Nan::SetPrototypeMethod(tpl, "getMotionFactor", GetMotionFactor);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "OnMouseMove", OnMouseMove);
-	Nan::SetPrototypeMethod(tpl, "onMouseMove", OnMouseMove);
 
 	Nan::SetPrototypeMethod(tpl, "OnLeftButtonDown", OnLeftButtonDown);
 	Nan::SetPrototypeMethod(tpl, "onLeftButtonDown", OnLeftButtonDown);
@@ -74,35 +74,35 @@ void VtkInteractorStyleTrackballCameraWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "OnMiddleButtonUp", OnMiddleButtonUp);
 	Nan::SetPrototypeMethod(tpl, "onMiddleButtonUp", OnMiddleButtonUp);
 
+	Nan::SetPrototypeMethod(tpl, "OnMouseMove", OnMouseMove);
+	Nan::SetPrototypeMethod(tpl, "onMouseMove", OnMouseMove);
+
+	Nan::SetPrototypeMethod(tpl, "OnMouseWheelBackward", OnMouseWheelBackward);
+	Nan::SetPrototypeMethod(tpl, "onMouseWheelBackward", OnMouseWheelBackward);
+
+	Nan::SetPrototypeMethod(tpl, "OnMouseWheelForward", OnMouseWheelForward);
+	Nan::SetPrototypeMethod(tpl, "onMouseWheelForward", OnMouseWheelForward);
+
 	Nan::SetPrototypeMethod(tpl, "OnRightButtonDown", OnRightButtonDown);
 	Nan::SetPrototypeMethod(tpl, "onRightButtonDown", OnRightButtonDown);
 
 	Nan::SetPrototypeMethod(tpl, "OnRightButtonUp", OnRightButtonUp);
 	Nan::SetPrototypeMethod(tpl, "onRightButtonUp", OnRightButtonUp);
 
-	Nan::SetPrototypeMethod(tpl, "OnMouseWheelForward", OnMouseWheelForward);
-	Nan::SetPrototypeMethod(tpl, "onMouseWheelForward", OnMouseWheelForward);
-
-	Nan::SetPrototypeMethod(tpl, "OnMouseWheelBackward", OnMouseWheelBackward);
-	Nan::SetPrototypeMethod(tpl, "onMouseWheelBackward", OnMouseWheelBackward);
+	Nan::SetPrototypeMethod(tpl, "Pan", Pan);
+	Nan::SetPrototypeMethod(tpl, "pan", Pan);
 
 	Nan::SetPrototypeMethod(tpl, "Rotate", Rotate);
 	Nan::SetPrototypeMethod(tpl, "rotate", Rotate);
 
-	Nan::SetPrototypeMethod(tpl, "Spin", Spin);
-	Nan::SetPrototypeMethod(tpl, "spin", Spin);
-
-	Nan::SetPrototypeMethod(tpl, "Pan", Pan);
-	Nan::SetPrototypeMethod(tpl, "pan", Pan);
-
-	Nan::SetPrototypeMethod(tpl, "Dolly", Dolly);
-	Nan::SetPrototypeMethod(tpl, "dolly", Dolly);
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "SetMotionFactor", SetMotionFactor);
 	Nan::SetPrototypeMethod(tpl, "setMotionFactor", SetMotionFactor);
 
-	Nan::SetPrototypeMethod(tpl, "GetMotionFactor", GetMotionFactor);
-	Nan::SetPrototypeMethod(tpl, "getMotionFactor", GetMotionFactor);
+	Nan::SetPrototypeMethod(tpl, "Spin", Spin);
+	Nan::SetPrototypeMethod(tpl, "spin", Spin);
 
 }
 

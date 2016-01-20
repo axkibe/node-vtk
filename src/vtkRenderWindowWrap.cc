@@ -48,284 +48,26 @@ void VtkRenderWindowWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
-	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
-	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
-
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
 	Nan::SetPrototypeMethod(tpl, "AddRenderer", AddRenderer);
 	Nan::SetPrototypeMethod(tpl, "addRenderer", AddRenderer);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveRenderer", RemoveRenderer);
-	Nan::SetPrototypeMethod(tpl, "removeRenderer", RemoveRenderer);
-
-	Nan::SetPrototypeMethod(tpl, "HasRenderer", HasRenderer);
-	Nan::SetPrototypeMethod(tpl, "hasRenderer", HasRenderer);
-
-	Nan::SetPrototypeMethod(tpl, "GetRenderLibrary", GetRenderLibrary);
-	Nan::SetPrototypeMethod(tpl, "getRenderLibrary", GetRenderLibrary);
-
-	Nan::SetPrototypeMethod(tpl, "GetCapturingGL2PSSpecialProps", GetCapturingGL2PSSpecialProps);
-	Nan::SetPrototypeMethod(tpl, "getCapturingGL2PSSpecialProps", GetCapturingGL2PSSpecialProps);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
-
-	Nan::SetPrototypeMethod(tpl, "Start", Start);
-	Nan::SetPrototypeMethod(tpl, "start", Start);
-
-	Nan::SetPrototypeMethod(tpl, "Finalize", Finalize);
-	Nan::SetPrototypeMethod(tpl, "finalize", Finalize);
-
-	Nan::SetPrototypeMethod(tpl, "Frame", Frame);
-	Nan::SetPrototypeMethod(tpl, "frame", Frame);
-
-	Nan::SetPrototypeMethod(tpl, "WaitForCompletion", WaitForCompletion);
-	Nan::SetPrototypeMethod(tpl, "waitForCompletion", WaitForCompletion);
-
-	Nan::SetPrototypeMethod(tpl, "CopyResultFrame", CopyResultFrame);
-	Nan::SetPrototypeMethod(tpl, "copyResultFrame", CopyResultFrame);
-
-	Nan::SetPrototypeMethod(tpl, "MakeRenderWindowInteractor", MakeRenderWindowInteractor);
-	Nan::SetPrototypeMethod(tpl, "makeRenderWindowInteractor", MakeRenderWindowInteractor);
-
-	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
-	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
-
-	Nan::SetPrototypeMethod(tpl, "ShowCursor", ShowCursor);
-	Nan::SetPrototypeMethod(tpl, "showCursor", ShowCursor);
-
-	Nan::SetPrototypeMethod(tpl, "SetCursorPosition", SetCursorPosition);
-	Nan::SetPrototypeMethod(tpl, "setCursorPosition", SetCursorPosition);
-
-	Nan::SetPrototypeMethod(tpl, "SetCurrentCursor", SetCurrentCursor);
-	Nan::SetPrototypeMethod(tpl, "setCurrentCursor", SetCurrentCursor);
-
-	Nan::SetPrototypeMethod(tpl, "GetCurrentCursor", GetCurrentCursor);
-	Nan::SetPrototypeMethod(tpl, "getCurrentCursor", GetCurrentCursor);
-
-	Nan::SetPrototypeMethod(tpl, "SetFullScreen", SetFullScreen);
-	Nan::SetPrototypeMethod(tpl, "setFullScreen", SetFullScreen);
-
-	Nan::SetPrototypeMethod(tpl, "GetFullScreen", GetFullScreen);
-	Nan::SetPrototypeMethod(tpl, "getFullScreen", GetFullScreen);
-
-	Nan::SetPrototypeMethod(tpl, "FullScreenOn", FullScreenOn);
-	Nan::SetPrototypeMethod(tpl, "fullScreenOn", FullScreenOn);
-
-	Nan::SetPrototypeMethod(tpl, "FullScreenOff", FullScreenOff);
-	Nan::SetPrototypeMethod(tpl, "fullScreenOff", FullScreenOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetBorders", SetBorders);
-	Nan::SetPrototypeMethod(tpl, "setBorders", SetBorders);
-
-	Nan::SetPrototypeMethod(tpl, "GetBorders", GetBorders);
-	Nan::SetPrototypeMethod(tpl, "getBorders", GetBorders);
-
-	Nan::SetPrototypeMethod(tpl, "BordersOn", BordersOn);
-	Nan::SetPrototypeMethod(tpl, "bordersOn", BordersOn);
-
-	Nan::SetPrototypeMethod(tpl, "BordersOff", BordersOff);
-	Nan::SetPrototypeMethod(tpl, "bordersOff", BordersOff);
-
-	Nan::SetPrototypeMethod(tpl, "GetStereoCapableWindow", GetStereoCapableWindow);
-	Nan::SetPrototypeMethod(tpl, "getStereoCapableWindow", GetStereoCapableWindow);
-
-	Nan::SetPrototypeMethod(tpl, "StereoCapableWindowOn", StereoCapableWindowOn);
-	Nan::SetPrototypeMethod(tpl, "stereoCapableWindowOn", StereoCapableWindowOn);
-
-	Nan::SetPrototypeMethod(tpl, "StereoCapableWindowOff", StereoCapableWindowOff);
-	Nan::SetPrototypeMethod(tpl, "stereoCapableWindowOff", StereoCapableWindowOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoCapableWindow", SetStereoCapableWindow);
-	Nan::SetPrototypeMethod(tpl, "setStereoCapableWindow", SetStereoCapableWindow);
-
-	Nan::SetPrototypeMethod(tpl, "GetStereoRender", GetStereoRender);
-	Nan::SetPrototypeMethod(tpl, "getStereoRender", GetStereoRender);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoRender", SetStereoRender);
-	Nan::SetPrototypeMethod(tpl, "setStereoRender", SetStereoRender);
-
-	Nan::SetPrototypeMethod(tpl, "StereoRenderOn", StereoRenderOn);
-	Nan::SetPrototypeMethod(tpl, "stereoRenderOn", StereoRenderOn);
-
-	Nan::SetPrototypeMethod(tpl, "StereoRenderOff", StereoRenderOff);
-	Nan::SetPrototypeMethod(tpl, "stereoRenderOff", StereoRenderOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetAlphaBitPlanes", SetAlphaBitPlanes);
-	Nan::SetPrototypeMethod(tpl, "setAlphaBitPlanes", SetAlphaBitPlanes);
-
-	Nan::SetPrototypeMethod(tpl, "GetAlphaBitPlanes", GetAlphaBitPlanes);
-	Nan::SetPrototypeMethod(tpl, "getAlphaBitPlanes", GetAlphaBitPlanes);
-
-	Nan::SetPrototypeMethod(tpl, "AlphaBitPlanesOn", AlphaBitPlanesOn);
-	Nan::SetPrototypeMethod(tpl, "alphaBitPlanesOn", AlphaBitPlanesOn);
 
 	Nan::SetPrototypeMethod(tpl, "AlphaBitPlanesOff", AlphaBitPlanesOff);
 	Nan::SetPrototypeMethod(tpl, "alphaBitPlanesOff", AlphaBitPlanesOff);
 
-	Nan::SetPrototypeMethod(tpl, "SetPointSmoothing", SetPointSmoothing);
-	Nan::SetPrototypeMethod(tpl, "setPointSmoothing", SetPointSmoothing);
+	Nan::SetPrototypeMethod(tpl, "AlphaBitPlanesOn", AlphaBitPlanesOn);
+	Nan::SetPrototypeMethod(tpl, "alphaBitPlanesOn", AlphaBitPlanesOn);
 
-	Nan::SetPrototypeMethod(tpl, "GetPointSmoothing", GetPointSmoothing);
-	Nan::SetPrototypeMethod(tpl, "getPointSmoothing", GetPointSmoothing);
+	Nan::SetPrototypeMethod(tpl, "BordersOff", BordersOff);
+	Nan::SetPrototypeMethod(tpl, "bordersOff", BordersOff);
 
-	Nan::SetPrototypeMethod(tpl, "PointSmoothingOn", PointSmoothingOn);
-	Nan::SetPrototypeMethod(tpl, "pointSmoothingOn", PointSmoothingOn);
-
-	Nan::SetPrototypeMethod(tpl, "PointSmoothingOff", PointSmoothingOff);
-	Nan::SetPrototypeMethod(tpl, "pointSmoothingOff", PointSmoothingOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetLineSmoothing", SetLineSmoothing);
-	Nan::SetPrototypeMethod(tpl, "setLineSmoothing", SetLineSmoothing);
-
-	Nan::SetPrototypeMethod(tpl, "GetLineSmoothing", GetLineSmoothing);
-	Nan::SetPrototypeMethod(tpl, "getLineSmoothing", GetLineSmoothing);
-
-	Nan::SetPrototypeMethod(tpl, "LineSmoothingOn", LineSmoothingOn);
-	Nan::SetPrototypeMethod(tpl, "lineSmoothingOn", LineSmoothingOn);
-
-	Nan::SetPrototypeMethod(tpl, "LineSmoothingOff", LineSmoothingOff);
-	Nan::SetPrototypeMethod(tpl, "lineSmoothingOff", LineSmoothingOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetPolygonSmoothing", SetPolygonSmoothing);
-	Nan::SetPrototypeMethod(tpl, "setPolygonSmoothing", SetPolygonSmoothing);
-
-	Nan::SetPrototypeMethod(tpl, "GetPolygonSmoothing", GetPolygonSmoothing);
-	Nan::SetPrototypeMethod(tpl, "getPolygonSmoothing", GetPolygonSmoothing);
-
-	Nan::SetPrototypeMethod(tpl, "PolygonSmoothingOn", PolygonSmoothingOn);
-	Nan::SetPrototypeMethod(tpl, "polygonSmoothingOn", PolygonSmoothingOn);
-
-	Nan::SetPrototypeMethod(tpl, "PolygonSmoothingOff", PolygonSmoothingOff);
-	Nan::SetPrototypeMethod(tpl, "polygonSmoothingOff", PolygonSmoothingOff);
-
-	Nan::SetPrototypeMethod(tpl, "GetStereoType", GetStereoType);
-	Nan::SetPrototypeMethod(tpl, "getStereoType", GetStereoType);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoType", SetStereoType);
-	Nan::SetPrototypeMethod(tpl, "setStereoType", SetStereoType);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToCrystalEyes", SetStereoTypeToCrystalEyes);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToCrystalEyes", SetStereoTypeToCrystalEyes);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToRedBlue", SetStereoTypeToRedBlue);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToRedBlue", SetStereoTypeToRedBlue);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToInterlaced", SetStereoTypeToInterlaced);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToInterlaced", SetStereoTypeToInterlaced);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToLeft", SetStereoTypeToLeft);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToLeft", SetStereoTypeToLeft);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToRight", SetStereoTypeToRight);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToRight", SetStereoTypeToRight);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToDresden", SetStereoTypeToDresden);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToDresden", SetStereoTypeToDresden);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToAnaglyph", SetStereoTypeToAnaglyph);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToAnaglyph", SetStereoTypeToAnaglyph);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToCheckerboard", SetStereoTypeToCheckerboard);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToCheckerboard", SetStereoTypeToCheckerboard);
-
-	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToSplitViewportHorizontal", SetStereoTypeToSplitViewportHorizontal);
-	Nan::SetPrototypeMethod(tpl, "setStereoTypeToSplitViewportHorizontal", SetStereoTypeToSplitViewportHorizontal);
-
-	Nan::SetPrototypeMethod(tpl, "GetStereoTypeAsString", GetStereoTypeAsString);
-	Nan::SetPrototypeMethod(tpl, "getStereoTypeAsString", GetStereoTypeAsString);
-
-	Nan::SetPrototypeMethod(tpl, "StereoUpdate", StereoUpdate);
-	Nan::SetPrototypeMethod(tpl, "stereoUpdate", StereoUpdate);
-
-	Nan::SetPrototypeMethod(tpl, "StereoMidpoint", StereoMidpoint);
-	Nan::SetPrototypeMethod(tpl, "stereoMidpoint", StereoMidpoint);
-
-	Nan::SetPrototypeMethod(tpl, "StereoRenderComplete", StereoRenderComplete);
-	Nan::SetPrototypeMethod(tpl, "stereoRenderComplete", StereoRenderComplete);
-
-	Nan::SetPrototypeMethod(tpl, "SetAnaglyphColorMask", SetAnaglyphColorMask);
-	Nan::SetPrototypeMethod(tpl, "setAnaglyphColorMask", SetAnaglyphColorMask);
-
-	Nan::SetPrototypeMethod(tpl, "WindowRemap", WindowRemap);
-	Nan::SetPrototypeMethod(tpl, "windowRemap", WindowRemap);
-
-	Nan::SetPrototypeMethod(tpl, "SetSwapBuffers", SetSwapBuffers);
-	Nan::SetPrototypeMethod(tpl, "setSwapBuffers", SetSwapBuffers);
-
-	Nan::SetPrototypeMethod(tpl, "GetSwapBuffers", GetSwapBuffers);
-	Nan::SetPrototypeMethod(tpl, "getSwapBuffers", GetSwapBuffers);
-
-	Nan::SetPrototypeMethod(tpl, "SwapBuffersOn", SwapBuffersOn);
-	Nan::SetPrototypeMethod(tpl, "swapBuffersOn", SwapBuffersOn);
-
-	Nan::SetPrototypeMethod(tpl, "SwapBuffersOff", SwapBuffersOff);
-	Nan::SetPrototypeMethod(tpl, "swapBuffersOff", SwapBuffersOff);
-
-	Nan::SetPrototypeMethod(tpl, "GetAAFrames", GetAAFrames);
-	Nan::SetPrototypeMethod(tpl, "getAAFrames", GetAAFrames);
-
-	Nan::SetPrototypeMethod(tpl, "SetAAFrames", SetAAFrames);
-	Nan::SetPrototypeMethod(tpl, "setAAFrames", SetAAFrames);
-
-	Nan::SetPrototypeMethod(tpl, "GetFDFrames", GetFDFrames);
-	Nan::SetPrototypeMethod(tpl, "getFDFrames", GetFDFrames);
-
-	Nan::SetPrototypeMethod(tpl, "SetFDFrames", SetFDFrames);
-	Nan::SetPrototypeMethod(tpl, "setFDFrames", SetFDFrames);
-
-	Nan::SetPrototypeMethod(tpl, "GetUseConstantFDOffsets", GetUseConstantFDOffsets);
-	Nan::SetPrototypeMethod(tpl, "getUseConstantFDOffsets", GetUseConstantFDOffsets);
-
-	Nan::SetPrototypeMethod(tpl, "SetUseConstantFDOffsets", SetUseConstantFDOffsets);
-	Nan::SetPrototypeMethod(tpl, "setUseConstantFDOffsets", SetUseConstantFDOffsets);
-
-	Nan::SetPrototypeMethod(tpl, "GetSubFrames", GetSubFrames);
-	Nan::SetPrototypeMethod(tpl, "getSubFrames", GetSubFrames);
-
-	Nan::SetPrototypeMethod(tpl, "SetSubFrames", SetSubFrames);
-	Nan::SetPrototypeMethod(tpl, "setSubFrames", SetSubFrames);
-
-	Nan::SetPrototypeMethod(tpl, "GetNeverRendered", GetNeverRendered);
-	Nan::SetPrototypeMethod(tpl, "getNeverRendered", GetNeverRendered);
-
-	Nan::SetPrototypeMethod(tpl, "GetAbortRender", GetAbortRender);
-	Nan::SetPrototypeMethod(tpl, "getAbortRender", GetAbortRender);
-
-	Nan::SetPrototypeMethod(tpl, "SetAbortRender", SetAbortRender);
-	Nan::SetPrototypeMethod(tpl, "setAbortRender", SetAbortRender);
-
-	Nan::SetPrototypeMethod(tpl, "GetInAbortCheck", GetInAbortCheck);
-	Nan::SetPrototypeMethod(tpl, "getInAbortCheck", GetInAbortCheck);
-
-	Nan::SetPrototypeMethod(tpl, "SetInAbortCheck", SetInAbortCheck);
-	Nan::SetPrototypeMethod(tpl, "setInAbortCheck", SetInAbortCheck);
+	Nan::SetPrototypeMethod(tpl, "BordersOn", BordersOn);
+	Nan::SetPrototypeMethod(tpl, "bordersOn", BordersOn);
 
 	Nan::SetPrototypeMethod(tpl, "CheckAbortStatus", CheckAbortStatus);
 	Nan::SetPrototypeMethod(tpl, "checkAbortStatus", CheckAbortStatus);
 
-	Nan::SetPrototypeMethod(tpl, "GetIsPicking", GetIsPicking);
-	Nan::SetPrototypeMethod(tpl, "getIsPicking", GetIsPicking);
-
-	Nan::SetPrototypeMethod(tpl, "SetIsPicking", SetIsPicking);
-	Nan::SetPrototypeMethod(tpl, "setIsPicking", SetIsPicking);
-
-	Nan::SetPrototypeMethod(tpl, "IsPickingOn", IsPickingOn);
-	Nan::SetPrototypeMethod(tpl, "isPickingOn", IsPickingOn);
-
-	Nan::SetPrototypeMethod(tpl, "IsPickingOff", IsPickingOff);
-	Nan::SetPrototypeMethod(tpl, "isPickingOff", IsPickingOff);
-
-	Nan::SetPrototypeMethod(tpl, "GetEventPending", GetEventPending);
-	Nan::SetPrototypeMethod(tpl, "getEventPending", GetEventPending);
+	Nan::SetPrototypeMethod(tpl, "CheckGraphicError", CheckGraphicError);
+	Nan::SetPrototypeMethod(tpl, "checkGraphicError", CheckGraphicError);
 
 	Nan::SetPrototypeMethod(tpl, "CheckInRenderStatus", CheckInRenderStatus);
 	Nan::SetPrototypeMethod(tpl, "checkInRenderStatus", CheckInRenderStatus);
@@ -333,95 +75,353 @@ void VtkRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ClearInRenderStatus", ClearInRenderStatus);
 	Nan::SetPrototypeMethod(tpl, "clearInRenderStatus", ClearInRenderStatus);
 
-	Nan::SetPrototypeMethod(tpl, "SetDesiredUpdateRate", SetDesiredUpdateRate);
-	Nan::SetPrototypeMethod(tpl, "setDesiredUpdateRate", SetDesiredUpdateRate);
+	Nan::SetPrototypeMethod(tpl, "CopyResultFrame", CopyResultFrame);
+	Nan::SetPrototypeMethod(tpl, "copyResultFrame", CopyResultFrame);
 
-	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRate", GetDesiredUpdateRate);
-	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRate", GetDesiredUpdateRate);
+	Nan::SetPrototypeMethod(tpl, "Finalize", Finalize);
+	Nan::SetPrototypeMethod(tpl, "finalize", Finalize);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfLayers", GetNumberOfLayers);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfLayers", GetNumberOfLayers);
+	Nan::SetPrototypeMethod(tpl, "Frame", Frame);
+	Nan::SetPrototypeMethod(tpl, "frame", Frame);
 
-	Nan::SetPrototypeMethod(tpl, "SetNumberOfLayers", SetNumberOfLayers);
-	Nan::SetPrototypeMethod(tpl, "setNumberOfLayers", SetNumberOfLayers);
+	Nan::SetPrototypeMethod(tpl, "FullScreenOff", FullScreenOff);
+	Nan::SetPrototypeMethod(tpl, "fullScreenOff", FullScreenOff);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfLayersMinValue", GetNumberOfLayersMinValue);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfLayersMinValue", GetNumberOfLayersMinValue);
+	Nan::SetPrototypeMethod(tpl, "FullScreenOn", FullScreenOn);
+	Nan::SetPrototypeMethod(tpl, "fullScreenOn", FullScreenOn);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfLayersMaxValue", GetNumberOfLayersMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfLayersMaxValue", GetNumberOfLayersMaxValue);
+	Nan::SetPrototypeMethod(tpl, "GetAAFrames", GetAAFrames);
+	Nan::SetPrototypeMethod(tpl, "getAAFrames", GetAAFrames);
 
-	Nan::SetPrototypeMethod(tpl, "GetInteractor", GetInteractor);
-	Nan::SetPrototypeMethod(tpl, "getInteractor", GetInteractor);
+	Nan::SetPrototypeMethod(tpl, "GetAbortRender", GetAbortRender);
+	Nan::SetPrototypeMethod(tpl, "getAbortRender", GetAbortRender);
 
-	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
-	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
+	Nan::SetPrototypeMethod(tpl, "GetAlphaBitPlanes", GetAlphaBitPlanes);
+	Nan::SetPrototypeMethod(tpl, "getAlphaBitPlanes", GetAlphaBitPlanes);
 
-	Nan::SetPrototypeMethod(tpl, "SetWindowInfo", SetWindowInfo);
-	Nan::SetPrototypeMethod(tpl, "setWindowInfo", SetWindowInfo);
+	Nan::SetPrototypeMethod(tpl, "GetBorders", GetBorders);
+	Nan::SetPrototypeMethod(tpl, "getBorders", GetBorders);
 
-	Nan::SetPrototypeMethod(tpl, "SetNextWindowInfo", SetNextWindowInfo);
-	Nan::SetPrototypeMethod(tpl, "setNextWindowInfo", SetNextWindowInfo);
+	Nan::SetPrototypeMethod(tpl, "GetCapturingGL2PSSpecialProps", GetCapturingGL2PSSpecialProps);
+	Nan::SetPrototypeMethod(tpl, "getCapturingGL2PSSpecialProps", GetCapturingGL2PSSpecialProps);
 
-	Nan::SetPrototypeMethod(tpl, "SetParentInfo", SetParentInfo);
-	Nan::SetPrototypeMethod(tpl, "setParentInfo", SetParentInfo);
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "MakeCurrent", MakeCurrent);
-	Nan::SetPrototypeMethod(tpl, "makeCurrent", MakeCurrent);
-
-	Nan::SetPrototypeMethod(tpl, "SetForceMakeCurrent", SetForceMakeCurrent);
-	Nan::SetPrototypeMethod(tpl, "setForceMakeCurrent", SetForceMakeCurrent);
-
-	Nan::SetPrototypeMethod(tpl, "ReportCapabilities", ReportCapabilities);
-	Nan::SetPrototypeMethod(tpl, "reportCapabilities", ReportCapabilities);
-
-	Nan::SetPrototypeMethod(tpl, "SupportsOpenGL", SupportsOpenGL);
-	Nan::SetPrototypeMethod(tpl, "supportsOpenGL", SupportsOpenGL);
-
-	Nan::SetPrototypeMethod(tpl, "IsDirect", IsDirect);
-	Nan::SetPrototypeMethod(tpl, "isDirect", IsDirect);
+	Nan::SetPrototypeMethod(tpl, "GetCurrentCursor", GetCurrentCursor);
+	Nan::SetPrototypeMethod(tpl, "getCurrentCursor", GetCurrentCursor);
 
 	Nan::SetPrototypeMethod(tpl, "GetDepthBufferSize", GetDepthBufferSize);
 	Nan::SetPrototypeMethod(tpl, "getDepthBufferSize", GetDepthBufferSize);
 
-	Nan::SetPrototypeMethod(tpl, "SetMultiSamples", SetMultiSamples);
-	Nan::SetPrototypeMethod(tpl, "setMultiSamples", SetMultiSamples);
+	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRate", GetDesiredUpdateRate);
+	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRate", GetDesiredUpdateRate);
+
+	Nan::SetPrototypeMethod(tpl, "GetEventPending", GetEventPending);
+	Nan::SetPrototypeMethod(tpl, "getEventPending", GetEventPending);
+
+	Nan::SetPrototypeMethod(tpl, "GetFDFrames", GetFDFrames);
+	Nan::SetPrototypeMethod(tpl, "getFDFrames", GetFDFrames);
+
+	Nan::SetPrototypeMethod(tpl, "GetFullScreen", GetFullScreen);
+	Nan::SetPrototypeMethod(tpl, "getFullScreen", GetFullScreen);
+
+	Nan::SetPrototypeMethod(tpl, "GetInAbortCheck", GetInAbortCheck);
+	Nan::SetPrototypeMethod(tpl, "getInAbortCheck", GetInAbortCheck);
+
+	Nan::SetPrototypeMethod(tpl, "GetInteractor", GetInteractor);
+	Nan::SetPrototypeMethod(tpl, "getInteractor", GetInteractor);
+
+	Nan::SetPrototypeMethod(tpl, "GetIsPicking", GetIsPicking);
+	Nan::SetPrototypeMethod(tpl, "getIsPicking", GetIsPicking);
+
+	Nan::SetPrototypeMethod(tpl, "GetLastGraphicErrorString", GetLastGraphicErrorString);
+	Nan::SetPrototypeMethod(tpl, "getLastGraphicErrorString", GetLastGraphicErrorString);
+
+	Nan::SetPrototypeMethod(tpl, "GetLineSmoothing", GetLineSmoothing);
+	Nan::SetPrototypeMethod(tpl, "getLineSmoothing", GetLineSmoothing);
 
 	Nan::SetPrototypeMethod(tpl, "GetMultiSamples", GetMultiSamples);
 	Nan::SetPrototypeMethod(tpl, "getMultiSamples", GetMultiSamples);
 
-	Nan::SetPrototypeMethod(tpl, "SetStencilCapable", SetStencilCapable);
-	Nan::SetPrototypeMethod(tpl, "setStencilCapable", SetStencilCapable);
+	Nan::SetPrototypeMethod(tpl, "GetNeverRendered", GetNeverRendered);
+	Nan::SetPrototypeMethod(tpl, "getNeverRendered", GetNeverRendered);
 
-	Nan::SetPrototypeMethod(tpl, "GetStencilCapable", GetStencilCapable);
-	Nan::SetPrototypeMethod(tpl, "getStencilCapable", GetStencilCapable);
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfLayers", GetNumberOfLayers);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfLayers", GetNumberOfLayers);
 
-	Nan::SetPrototypeMethod(tpl, "StencilCapableOn", StencilCapableOn);
-	Nan::SetPrototypeMethod(tpl, "stencilCapableOn", StencilCapableOn);
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfLayersMaxValue", GetNumberOfLayersMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfLayersMaxValue", GetNumberOfLayersMaxValue);
 
-	Nan::SetPrototypeMethod(tpl, "StencilCapableOff", StencilCapableOff);
-	Nan::SetPrototypeMethod(tpl, "stencilCapableOff", StencilCapableOff);
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfLayersMinValue", GetNumberOfLayersMinValue);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfLayersMinValue", GetNumberOfLayersMinValue);
 
-	Nan::SetPrototypeMethod(tpl, "SetReportGraphicErrors", SetReportGraphicErrors);
-	Nan::SetPrototypeMethod(tpl, "setReportGraphicErrors", SetReportGraphicErrors);
+	Nan::SetPrototypeMethod(tpl, "GetPointSmoothing", GetPointSmoothing);
+	Nan::SetPrototypeMethod(tpl, "getPointSmoothing", GetPointSmoothing);
 
-	Nan::SetPrototypeMethod(tpl, "SetReportGraphicErrorsOn", SetReportGraphicErrorsOn);
-	Nan::SetPrototypeMethod(tpl, "setReportGraphicErrorsOn", SetReportGraphicErrorsOn);
+	Nan::SetPrototypeMethod(tpl, "GetPolygonSmoothing", GetPolygonSmoothing);
+	Nan::SetPrototypeMethod(tpl, "getPolygonSmoothing", GetPolygonSmoothing);
 
-	Nan::SetPrototypeMethod(tpl, "SetReportGraphicErrorsOff", SetReportGraphicErrorsOff);
-	Nan::SetPrototypeMethod(tpl, "setReportGraphicErrorsOff", SetReportGraphicErrorsOff);
+	Nan::SetPrototypeMethod(tpl, "GetRenderLibrary", GetRenderLibrary);
+	Nan::SetPrototypeMethod(tpl, "getRenderLibrary", GetRenderLibrary);
 
 	Nan::SetPrototypeMethod(tpl, "GetReportGraphicErrors", GetReportGraphicErrors);
 	Nan::SetPrototypeMethod(tpl, "getReportGraphicErrors", GetReportGraphicErrors);
 
-	Nan::SetPrototypeMethod(tpl, "CheckGraphicError", CheckGraphicError);
-	Nan::SetPrototypeMethod(tpl, "checkGraphicError", CheckGraphicError);
+	Nan::SetPrototypeMethod(tpl, "GetStencilCapable", GetStencilCapable);
+	Nan::SetPrototypeMethod(tpl, "getStencilCapable", GetStencilCapable);
+
+	Nan::SetPrototypeMethod(tpl, "GetStereoCapableWindow", GetStereoCapableWindow);
+	Nan::SetPrototypeMethod(tpl, "getStereoCapableWindow", GetStereoCapableWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GetStereoRender", GetStereoRender);
+	Nan::SetPrototypeMethod(tpl, "getStereoRender", GetStereoRender);
+
+	Nan::SetPrototypeMethod(tpl, "GetStereoType", GetStereoType);
+	Nan::SetPrototypeMethod(tpl, "getStereoType", GetStereoType);
+
+	Nan::SetPrototypeMethod(tpl, "GetStereoTypeAsString", GetStereoTypeAsString);
+	Nan::SetPrototypeMethod(tpl, "getStereoTypeAsString", GetStereoTypeAsString);
+
+	Nan::SetPrototypeMethod(tpl, "GetSubFrames", GetSubFrames);
+	Nan::SetPrototypeMethod(tpl, "getSubFrames", GetSubFrames);
+
+	Nan::SetPrototypeMethod(tpl, "GetSwapBuffers", GetSwapBuffers);
+	Nan::SetPrototypeMethod(tpl, "getSwapBuffers", GetSwapBuffers);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseConstantFDOffsets", GetUseConstantFDOffsets);
+	Nan::SetPrototypeMethod(tpl, "getUseConstantFDOffsets", GetUseConstantFDOffsets);
 
 	Nan::SetPrototypeMethod(tpl, "HasGraphicError", HasGraphicError);
 	Nan::SetPrototypeMethod(tpl, "hasGraphicError", HasGraphicError);
 
-	Nan::SetPrototypeMethod(tpl, "GetLastGraphicErrorString", GetLastGraphicErrorString);
-	Nan::SetPrototypeMethod(tpl, "getLastGraphicErrorString", GetLastGraphicErrorString);
+	Nan::SetPrototypeMethod(tpl, "HasRenderer", HasRenderer);
+	Nan::SetPrototypeMethod(tpl, "hasRenderer", HasRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
+	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsDirect", IsDirect);
+	Nan::SetPrototypeMethod(tpl, "isDirect", IsDirect);
+
+	Nan::SetPrototypeMethod(tpl, "IsPickingOff", IsPickingOff);
+	Nan::SetPrototypeMethod(tpl, "isPickingOff", IsPickingOff);
+
+	Nan::SetPrototypeMethod(tpl, "IsPickingOn", IsPickingOn);
+	Nan::SetPrototypeMethod(tpl, "isPickingOn", IsPickingOn);
+
+	Nan::SetPrototypeMethod(tpl, "LineSmoothingOff", LineSmoothingOff);
+	Nan::SetPrototypeMethod(tpl, "lineSmoothingOff", LineSmoothingOff);
+
+	Nan::SetPrototypeMethod(tpl, "LineSmoothingOn", LineSmoothingOn);
+	Nan::SetPrototypeMethod(tpl, "lineSmoothingOn", LineSmoothingOn);
+
+	Nan::SetPrototypeMethod(tpl, "MakeCurrent", MakeCurrent);
+	Nan::SetPrototypeMethod(tpl, "makeCurrent", MakeCurrent);
+
+	Nan::SetPrototypeMethod(tpl, "MakeRenderWindowInteractor", MakeRenderWindowInteractor);
+	Nan::SetPrototypeMethod(tpl, "makeRenderWindowInteractor", MakeRenderWindowInteractor);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "PointSmoothingOff", PointSmoothingOff);
+	Nan::SetPrototypeMethod(tpl, "pointSmoothingOff", PointSmoothingOff);
+
+	Nan::SetPrototypeMethod(tpl, "PointSmoothingOn", PointSmoothingOn);
+	Nan::SetPrototypeMethod(tpl, "pointSmoothingOn", PointSmoothingOn);
+
+	Nan::SetPrototypeMethod(tpl, "PolygonSmoothingOff", PolygonSmoothingOff);
+	Nan::SetPrototypeMethod(tpl, "polygonSmoothingOff", PolygonSmoothingOff);
+
+	Nan::SetPrototypeMethod(tpl, "PolygonSmoothingOn", PolygonSmoothingOn);
+	Nan::SetPrototypeMethod(tpl, "polygonSmoothingOn", PolygonSmoothingOn);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveRenderer", RemoveRenderer);
+	Nan::SetPrototypeMethod(tpl, "removeRenderer", RemoveRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
+
+	Nan::SetPrototypeMethod(tpl, "ReportCapabilities", ReportCapabilities);
+	Nan::SetPrototypeMethod(tpl, "reportCapabilities", ReportCapabilities);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAAFrames", SetAAFrames);
+	Nan::SetPrototypeMethod(tpl, "setAAFrames", SetAAFrames);
+
+	Nan::SetPrototypeMethod(tpl, "SetAbortRender", SetAbortRender);
+	Nan::SetPrototypeMethod(tpl, "setAbortRender", SetAbortRender);
+
+	Nan::SetPrototypeMethod(tpl, "SetAlphaBitPlanes", SetAlphaBitPlanes);
+	Nan::SetPrototypeMethod(tpl, "setAlphaBitPlanes", SetAlphaBitPlanes);
+
+	Nan::SetPrototypeMethod(tpl, "SetAnaglyphColorMask", SetAnaglyphColorMask);
+	Nan::SetPrototypeMethod(tpl, "setAnaglyphColorMask", SetAnaglyphColorMask);
+
+	Nan::SetPrototypeMethod(tpl, "SetBorders", SetBorders);
+	Nan::SetPrototypeMethod(tpl, "setBorders", SetBorders);
+
+	Nan::SetPrototypeMethod(tpl, "SetCurrentCursor", SetCurrentCursor);
+	Nan::SetPrototypeMethod(tpl, "setCurrentCursor", SetCurrentCursor);
+
+	Nan::SetPrototypeMethod(tpl, "SetCursorPosition", SetCursorPosition);
+	Nan::SetPrototypeMethod(tpl, "setCursorPosition", SetCursorPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetDesiredUpdateRate", SetDesiredUpdateRate);
+	Nan::SetPrototypeMethod(tpl, "setDesiredUpdateRate", SetDesiredUpdateRate);
+
+	Nan::SetPrototypeMethod(tpl, "SetFDFrames", SetFDFrames);
+	Nan::SetPrototypeMethod(tpl, "setFDFrames", SetFDFrames);
+
+	Nan::SetPrototypeMethod(tpl, "SetForceMakeCurrent", SetForceMakeCurrent);
+	Nan::SetPrototypeMethod(tpl, "setForceMakeCurrent", SetForceMakeCurrent);
+
+	Nan::SetPrototypeMethod(tpl, "SetFullScreen", SetFullScreen);
+	Nan::SetPrototypeMethod(tpl, "setFullScreen", SetFullScreen);
+
+	Nan::SetPrototypeMethod(tpl, "SetInAbortCheck", SetInAbortCheck);
+	Nan::SetPrototypeMethod(tpl, "setInAbortCheck", SetInAbortCheck);
+
+	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
+	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
+
+	Nan::SetPrototypeMethod(tpl, "SetIsPicking", SetIsPicking);
+	Nan::SetPrototypeMethod(tpl, "setIsPicking", SetIsPicking);
+
+	Nan::SetPrototypeMethod(tpl, "SetLineSmoothing", SetLineSmoothing);
+	Nan::SetPrototypeMethod(tpl, "setLineSmoothing", SetLineSmoothing);
+
+	Nan::SetPrototypeMethod(tpl, "SetMultiSamples", SetMultiSamples);
+	Nan::SetPrototypeMethod(tpl, "setMultiSamples", SetMultiSamples);
+
+	Nan::SetPrototypeMethod(tpl, "SetNextWindowInfo", SetNextWindowInfo);
+	Nan::SetPrototypeMethod(tpl, "setNextWindowInfo", SetNextWindowInfo);
+
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfLayers", SetNumberOfLayers);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfLayers", SetNumberOfLayers);
+
+	Nan::SetPrototypeMethod(tpl, "SetParentInfo", SetParentInfo);
+	Nan::SetPrototypeMethod(tpl, "setParentInfo", SetParentInfo);
+
+	Nan::SetPrototypeMethod(tpl, "SetPointSmoothing", SetPointSmoothing);
+	Nan::SetPrototypeMethod(tpl, "setPointSmoothing", SetPointSmoothing);
+
+	Nan::SetPrototypeMethod(tpl, "SetPolygonSmoothing", SetPolygonSmoothing);
+	Nan::SetPrototypeMethod(tpl, "setPolygonSmoothing", SetPolygonSmoothing);
+
+	Nan::SetPrototypeMethod(tpl, "SetReportGraphicErrors", SetReportGraphicErrors);
+	Nan::SetPrototypeMethod(tpl, "setReportGraphicErrors", SetReportGraphicErrors);
+
+	Nan::SetPrototypeMethod(tpl, "SetReportGraphicErrorsOff", SetReportGraphicErrorsOff);
+	Nan::SetPrototypeMethod(tpl, "setReportGraphicErrorsOff", SetReportGraphicErrorsOff);
+
+	Nan::SetPrototypeMethod(tpl, "SetReportGraphicErrorsOn", SetReportGraphicErrorsOn);
+	Nan::SetPrototypeMethod(tpl, "setReportGraphicErrorsOn", SetReportGraphicErrorsOn);
+
+	Nan::SetPrototypeMethod(tpl, "SetStencilCapable", SetStencilCapable);
+	Nan::SetPrototypeMethod(tpl, "setStencilCapable", SetStencilCapable);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoCapableWindow", SetStereoCapableWindow);
+	Nan::SetPrototypeMethod(tpl, "setStereoCapableWindow", SetStereoCapableWindow);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoRender", SetStereoRender);
+	Nan::SetPrototypeMethod(tpl, "setStereoRender", SetStereoRender);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoType", SetStereoType);
+	Nan::SetPrototypeMethod(tpl, "setStereoType", SetStereoType);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToAnaglyph", SetStereoTypeToAnaglyph);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToAnaglyph", SetStereoTypeToAnaglyph);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToCheckerboard", SetStereoTypeToCheckerboard);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToCheckerboard", SetStereoTypeToCheckerboard);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToCrystalEyes", SetStereoTypeToCrystalEyes);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToCrystalEyes", SetStereoTypeToCrystalEyes);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToDresden", SetStereoTypeToDresden);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToDresden", SetStereoTypeToDresden);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToInterlaced", SetStereoTypeToInterlaced);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToInterlaced", SetStereoTypeToInterlaced);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToLeft", SetStereoTypeToLeft);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToLeft", SetStereoTypeToLeft);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToRedBlue", SetStereoTypeToRedBlue);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToRedBlue", SetStereoTypeToRedBlue);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToRight", SetStereoTypeToRight);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToRight", SetStereoTypeToRight);
+
+	Nan::SetPrototypeMethod(tpl, "SetStereoTypeToSplitViewportHorizontal", SetStereoTypeToSplitViewportHorizontal);
+	Nan::SetPrototypeMethod(tpl, "setStereoTypeToSplitViewportHorizontal", SetStereoTypeToSplitViewportHorizontal);
+
+	Nan::SetPrototypeMethod(tpl, "SetSubFrames", SetSubFrames);
+	Nan::SetPrototypeMethod(tpl, "setSubFrames", SetSubFrames);
+
+	Nan::SetPrototypeMethod(tpl, "SetSwapBuffers", SetSwapBuffers);
+	Nan::SetPrototypeMethod(tpl, "setSwapBuffers", SetSwapBuffers);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseConstantFDOffsets", SetUseConstantFDOffsets);
+	Nan::SetPrototypeMethod(tpl, "setUseConstantFDOffsets", SetUseConstantFDOffsets);
+
+	Nan::SetPrototypeMethod(tpl, "SetWindowInfo", SetWindowInfo);
+	Nan::SetPrototypeMethod(tpl, "setWindowInfo", SetWindowInfo);
+
+	Nan::SetPrototypeMethod(tpl, "ShowCursor", ShowCursor);
+	Nan::SetPrototypeMethod(tpl, "showCursor", ShowCursor);
+
+	Nan::SetPrototypeMethod(tpl, "Start", Start);
+	Nan::SetPrototypeMethod(tpl, "start", Start);
+
+	Nan::SetPrototypeMethod(tpl, "StencilCapableOff", StencilCapableOff);
+	Nan::SetPrototypeMethod(tpl, "stencilCapableOff", StencilCapableOff);
+
+	Nan::SetPrototypeMethod(tpl, "StencilCapableOn", StencilCapableOn);
+	Nan::SetPrototypeMethod(tpl, "stencilCapableOn", StencilCapableOn);
+
+	Nan::SetPrototypeMethod(tpl, "StereoCapableWindowOff", StereoCapableWindowOff);
+	Nan::SetPrototypeMethod(tpl, "stereoCapableWindowOff", StereoCapableWindowOff);
+
+	Nan::SetPrototypeMethod(tpl, "StereoCapableWindowOn", StereoCapableWindowOn);
+	Nan::SetPrototypeMethod(tpl, "stereoCapableWindowOn", StereoCapableWindowOn);
+
+	Nan::SetPrototypeMethod(tpl, "StereoMidpoint", StereoMidpoint);
+	Nan::SetPrototypeMethod(tpl, "stereoMidpoint", StereoMidpoint);
+
+	Nan::SetPrototypeMethod(tpl, "StereoRenderComplete", StereoRenderComplete);
+	Nan::SetPrototypeMethod(tpl, "stereoRenderComplete", StereoRenderComplete);
+
+	Nan::SetPrototypeMethod(tpl, "StereoRenderOff", StereoRenderOff);
+	Nan::SetPrototypeMethod(tpl, "stereoRenderOff", StereoRenderOff);
+
+	Nan::SetPrototypeMethod(tpl, "StereoRenderOn", StereoRenderOn);
+	Nan::SetPrototypeMethod(tpl, "stereoRenderOn", StereoRenderOn);
+
+	Nan::SetPrototypeMethod(tpl, "StereoUpdate", StereoUpdate);
+	Nan::SetPrototypeMethod(tpl, "stereoUpdate", StereoUpdate);
+
+	Nan::SetPrototypeMethod(tpl, "SupportsOpenGL", SupportsOpenGL);
+	Nan::SetPrototypeMethod(tpl, "supportsOpenGL", SupportsOpenGL);
+
+	Nan::SetPrototypeMethod(tpl, "SwapBuffersOff", SwapBuffersOff);
+	Nan::SetPrototypeMethod(tpl, "swapBuffersOff", SwapBuffersOff);
+
+	Nan::SetPrototypeMethod(tpl, "SwapBuffersOn", SwapBuffersOn);
+	Nan::SetPrototypeMethod(tpl, "swapBuffersOn", SwapBuffersOn);
+
+	Nan::SetPrototypeMethod(tpl, "WaitForCompletion", WaitForCompletion);
+	Nan::SetPrototypeMethod(tpl, "waitForCompletion", WaitForCompletion);
+
+	Nan::SetPrototypeMethod(tpl, "WindowRemap", WindowRemap);
+	Nan::SetPrototypeMethod(tpl, "windowRemap", WindowRemap);
 
 }
 

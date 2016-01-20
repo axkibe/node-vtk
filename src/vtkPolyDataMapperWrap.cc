@@ -55,65 +55,65 @@ void VtkPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "RenderPiece", RenderPiece);
-	Nan::SetPrototypeMethod(tpl, "renderPiece", RenderPiece);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
-
-	Nan::SetPrototypeMethod(tpl, "Update", Update);
-	Nan::SetPrototypeMethod(tpl, "update", Update);
-
-	Nan::SetPrototypeMethod(tpl, "Update", Update);
-	Nan::SetPrototypeMethod(tpl, "update", Update);
-
-	Nan::SetPrototypeMethod(tpl, "SetPiece", SetPiece);
-	Nan::SetPrototypeMethod(tpl, "setPiece", SetPiece);
-
-	Nan::SetPrototypeMethod(tpl, "GetPiece", GetPiece);
-	Nan::SetPrototypeMethod(tpl, "getPiece", GetPiece);
-
-	Nan::SetPrototypeMethod(tpl, "SetNumberOfPieces", SetNumberOfPieces);
-	Nan::SetPrototypeMethod(tpl, "setNumberOfPieces", SetNumberOfPieces);
+	Nan::SetPrototypeMethod(tpl, "GetGhostLevel", GetGhostLevel);
+	Nan::SetPrototypeMethod(tpl, "getGhostLevel", GetGhostLevel);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPieces", GetNumberOfPieces);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPieces", GetNumberOfPieces);
 
-	Nan::SetPrototypeMethod(tpl, "SetNumberOfSubPieces", SetNumberOfSubPieces);
-	Nan::SetPrototypeMethod(tpl, "setNumberOfSubPieces", SetNumberOfSubPieces);
-
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfSubPieces", GetNumberOfSubPieces);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfSubPieces", GetNumberOfSubPieces);
 
-	Nan::SetPrototypeMethod(tpl, "SetGhostLevel", SetGhostLevel);
-	Nan::SetPrototypeMethod(tpl, "setGhostLevel", SetGhostLevel);
+	Nan::SetPrototypeMethod(tpl, "GetPiece", GetPiece);
+	Nan::SetPrototypeMethod(tpl, "getPiece", GetPiece);
 
-	Nan::SetPrototypeMethod(tpl, "GetGhostLevel", GetGhostLevel);
-	Nan::SetPrototypeMethod(tpl, "getGhostLevel", GetGhostLevel);
-
-	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
-	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
-
-	Nan::SetPrototypeMethod(tpl, "MapDataArrayToVertexAttribute", MapDataArrayToVertexAttribute);
-	Nan::SetPrototypeMethod(tpl, "mapDataArrayToVertexAttribute", MapDataArrayToVertexAttribute);
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "MapDataArrayToMultiTextureAttribute", MapDataArrayToMultiTextureAttribute);
 	Nan::SetPrototypeMethod(tpl, "mapDataArrayToMultiTextureAttribute", MapDataArrayToMultiTextureAttribute);
 
-	Nan::SetPrototypeMethod(tpl, "RemoveVertexAttributeMapping", RemoveVertexAttributeMapping);
-	Nan::SetPrototypeMethod(tpl, "removeVertexAttributeMapping", RemoveVertexAttributeMapping);
+	Nan::SetPrototypeMethod(tpl, "MapDataArrayToVertexAttribute", MapDataArrayToVertexAttribute);
+	Nan::SetPrototypeMethod(tpl, "mapDataArrayToVertexAttribute", MapDataArrayToVertexAttribute);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
 	Nan::SetPrototypeMethod(tpl, "RemoveAllVertexAttributeMappings", RemoveAllVertexAttributeMappings);
 	Nan::SetPrototypeMethod(tpl, "removeAllVertexAttributeMappings", RemoveAllVertexAttributeMappings);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveVertexAttributeMapping", RemoveVertexAttributeMapping);
+	Nan::SetPrototypeMethod(tpl, "removeVertexAttributeMapping", RemoveVertexAttributeMapping);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
+
+	Nan::SetPrototypeMethod(tpl, "RenderPiece", RenderPiece);
+	Nan::SetPrototypeMethod(tpl, "renderPiece", RenderPiece);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetGhostLevel", SetGhostLevel);
+	Nan::SetPrototypeMethod(tpl, "setGhostLevel", SetGhostLevel);
+
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfPieces", SetNumberOfPieces);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfPieces", SetNumberOfPieces);
+
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfSubPieces", SetNumberOfSubPieces);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfSubPieces", SetNumberOfSubPieces);
+
+	Nan::SetPrototypeMethod(tpl, "SetPiece", SetPiece);
+	Nan::SetPrototypeMethod(tpl, "setPiece", SetPiece);
+
+	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
+	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
+
+	Nan::SetPrototypeMethod(tpl, "Update", Update);
+	Nan::SetPrototypeMethod(tpl, "update", Update);
+
+	Nan::SetPrototypeMethod(tpl, "Update", Update);
+	Nan::SetPrototypeMethod(tpl, "update", Update);
 
 }
 
@@ -533,11 +533,18 @@ void VtkPolyDataMapperWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Update(
+			info[0]->Int32Value()
+		);
 		return;
 	}
-	native->Update();
+	Nan::ThrowError("Parameter mismatch");
 }
 

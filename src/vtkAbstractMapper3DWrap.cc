@@ -50,17 +50,14 @@ void VtkAbstractMapper3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
 	Nan::SetPrototypeMethod(tpl, "GetLength", GetLength);
 	Nan::SetPrototypeMethod(tpl, "getLength", GetLength);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfClippingPlanes", GetNumberOfClippingPlanes);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfClippingPlanes", GetNumberOfClippingPlanes);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "IsARayCastMapper", IsARayCastMapper);
 	Nan::SetPrototypeMethod(tpl, "isARayCastMapper", IsARayCastMapper);
@@ -68,8 +65,11 @@ void VtkAbstractMapper3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "IsARenderIntoImageMapper", IsARenderIntoImageMapper);
 	Nan::SetPrototypeMethod(tpl, "isARenderIntoImageMapper", IsARenderIntoImageMapper);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfClippingPlanes", GetNumberOfClippingPlanes);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfClippingPlanes", GetNumberOfClippingPlanes);
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 }
 

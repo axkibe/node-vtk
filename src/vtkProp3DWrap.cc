@@ -46,8 +46,26 @@ void VtkProp3DWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
+	Nan::SetPrototypeMethod(tpl, "AddOrientation", AddOrientation);
+	Nan::SetPrototypeMethod(tpl, "addOrientation", AddOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "AddPosition", AddPosition);
+	Nan::SetPrototypeMethod(tpl, "addPosition", AddPosition);
+
+	Nan::SetPrototypeMethod(tpl, "ComputeMatrix", ComputeMatrix);
+	Nan::SetPrototypeMethod(tpl, "computeMatrix", ComputeMatrix);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetIsIdentity", GetIsIdentity);
+	Nan::SetPrototypeMethod(tpl, "getIsIdentity", GetIsIdentity);
+
+	Nan::SetPrototypeMethod(tpl, "GetLength", GetLength);
+	Nan::SetPrototypeMethod(tpl, "getLength", GetLength);
+
+	Nan::SetPrototypeMethod(tpl, "InitPathTraversal", InitPathTraversal);
+	Nan::SetPrototypeMethod(tpl, "initPathTraversal", InitPathTraversal);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -55,29 +73,8 @@ void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
-	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
-
-	Nan::SetPrototypeMethod(tpl, "SetPosition", SetPosition);
-	Nan::SetPrototypeMethod(tpl, "setPosition", SetPosition);
-
-	Nan::SetPrototypeMethod(tpl, "AddPosition", AddPosition);
-	Nan::SetPrototypeMethod(tpl, "addPosition", AddPosition);
-
-	Nan::SetPrototypeMethod(tpl, "SetOrigin", SetOrigin);
-	Nan::SetPrototypeMethod(tpl, "setOrigin", SetOrigin);
-
-	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
-	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
-
-	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
-	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
-
-	Nan::SetPrototypeMethod(tpl, "GetLength", GetLength);
-	Nan::SetPrototypeMethod(tpl, "getLength", GetLength);
+	Nan::SetPrototypeMethod(tpl, "RotateWXYZ", RotateWXYZ);
+	Nan::SetPrototypeMethod(tpl, "rotateWXYZ", RotateWXYZ);
 
 	Nan::SetPrototypeMethod(tpl, "RotateX", RotateX);
 	Nan::SetPrototypeMethod(tpl, "rotateX", RotateX);
@@ -88,23 +85,26 @@ void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "RotateZ", RotateZ);
 	Nan::SetPrototypeMethod(tpl, "rotateZ", RotateZ);
 
-	Nan::SetPrototypeMethod(tpl, "RotateWXYZ", RotateWXYZ);
-	Nan::SetPrototypeMethod(tpl, "rotateWXYZ", RotateWXYZ);
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
 	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
 
-	Nan::SetPrototypeMethod(tpl, "AddOrientation", AddOrientation);
-	Nan::SetPrototypeMethod(tpl, "addOrientation", AddOrientation);
+	Nan::SetPrototypeMethod(tpl, "SetOrigin", SetOrigin);
+	Nan::SetPrototypeMethod(tpl, "setOrigin", SetOrigin);
 
-	Nan::SetPrototypeMethod(tpl, "InitPathTraversal", InitPathTraversal);
-	Nan::SetPrototypeMethod(tpl, "initPathTraversal", InitPathTraversal);
+	Nan::SetPrototypeMethod(tpl, "SetPosition", SetPosition);
+	Nan::SetPrototypeMethod(tpl, "setPosition", SetPosition);
 
-	Nan::SetPrototypeMethod(tpl, "ComputeMatrix", ComputeMatrix);
-	Nan::SetPrototypeMethod(tpl, "computeMatrix", ComputeMatrix);
+	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
+	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
 
-	Nan::SetPrototypeMethod(tpl, "GetIsIdentity", GetIsIdentity);
-	Nan::SetPrototypeMethod(tpl, "getIsIdentity", GetIsIdentity);
+	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
+	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
+
+	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
+	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
 }
 
@@ -502,15 +502,23 @@ void VtkProp3DWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			Nan::ThrowError("Too many parameters.");
-			return;
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetScale(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				return;
+			}
 		}
-		native->SetScale(
-			info[0]->NumberValue()
-		);
-		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

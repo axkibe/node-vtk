@@ -46,83 +46,83 @@ void VtkInteractorObserverWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkInteractorObserverWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
-	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
-	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
-
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "SetEnabled", SetEnabled);
-	Nan::SetPrototypeMethod(tpl, "setEnabled", SetEnabled);
-
-	Nan::SetPrototypeMethod(tpl, "GetEnabled", GetEnabled);
-	Nan::SetPrototypeMethod(tpl, "getEnabled", GetEnabled);
+	Nan::SetPrototypeMethod(tpl, "EnabledOff", EnabledOff);
+	Nan::SetPrototypeMethod(tpl, "enabledOff", EnabledOff);
 
 	Nan::SetPrototypeMethod(tpl, "EnabledOn", EnabledOn);
 	Nan::SetPrototypeMethod(tpl, "enabledOn", EnabledOn);
 
-	Nan::SetPrototypeMethod(tpl, "EnabledOff", EnabledOff);
-	Nan::SetPrototypeMethod(tpl, "enabledOff", EnabledOff);
-
-	Nan::SetPrototypeMethod(tpl, "On", On);
-	Nan::SetPrototypeMethod(tpl, "on", On);
-
-	Nan::SetPrototypeMethod(tpl, "Off", Off);
-	Nan::SetPrototypeMethod(tpl, "off", Off);
-
-	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
-	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
-
-	Nan::SetPrototypeMethod(tpl, "GetInteractor", GetInteractor);
-	Nan::SetPrototypeMethod(tpl, "getInteractor", GetInteractor);
-
-	Nan::SetPrototypeMethod(tpl, "PickingManagedOn", PickingManagedOn);
-	Nan::SetPrototypeMethod(tpl, "pickingManagedOn", PickingManagedOn);
-
-	Nan::SetPrototypeMethod(tpl, "PickingManagedOff", PickingManagedOff);
-	Nan::SetPrototypeMethod(tpl, "pickingManagedOff", PickingManagedOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetKeyPressActivation", SetKeyPressActivation);
-	Nan::SetPrototypeMethod(tpl, "setKeyPressActivation", SetKeyPressActivation);
-
-	Nan::SetPrototypeMethod(tpl, "GetKeyPressActivation", GetKeyPressActivation);
-	Nan::SetPrototypeMethod(tpl, "getKeyPressActivation", GetKeyPressActivation);
-
-	Nan::SetPrototypeMethod(tpl, "KeyPressActivationOn", KeyPressActivationOn);
-	Nan::SetPrototypeMethod(tpl, "keyPressActivationOn", KeyPressActivationOn);
-
-	Nan::SetPrototypeMethod(tpl, "KeyPressActivationOff", KeyPressActivationOff);
-	Nan::SetPrototypeMethod(tpl, "keyPressActivationOff", KeyPressActivationOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetKeyPressActivationValue", SetKeyPressActivationValue);
-	Nan::SetPrototypeMethod(tpl, "setKeyPressActivationValue", SetKeyPressActivationValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetKeyPressActivationValue", GetKeyPressActivationValue);
-	Nan::SetPrototypeMethod(tpl, "getKeyPressActivationValue", GetKeyPressActivationValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetDefaultRenderer", GetDefaultRenderer);
-	Nan::SetPrototypeMethod(tpl, "getDefaultRenderer", GetDefaultRenderer);
-
-	Nan::SetPrototypeMethod(tpl, "SetDefaultRenderer", SetDefaultRenderer);
-	Nan::SetPrototypeMethod(tpl, "setDefaultRenderer", SetDefaultRenderer);
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetCurrentRenderer", GetCurrentRenderer);
 	Nan::SetPrototypeMethod(tpl, "getCurrentRenderer", GetCurrentRenderer);
 
-	Nan::SetPrototypeMethod(tpl, "SetCurrentRenderer", SetCurrentRenderer);
-	Nan::SetPrototypeMethod(tpl, "setCurrentRenderer", SetCurrentRenderer);
+	Nan::SetPrototypeMethod(tpl, "GetDefaultRenderer", GetDefaultRenderer);
+	Nan::SetPrototypeMethod(tpl, "getDefaultRenderer", GetDefaultRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "GetEnabled", GetEnabled);
+	Nan::SetPrototypeMethod(tpl, "getEnabled", GetEnabled);
+
+	Nan::SetPrototypeMethod(tpl, "GetInteractor", GetInteractor);
+	Nan::SetPrototypeMethod(tpl, "getInteractor", GetInteractor);
+
+	Nan::SetPrototypeMethod(tpl, "GetKeyPressActivation", GetKeyPressActivation);
+	Nan::SetPrototypeMethod(tpl, "getKeyPressActivation", GetKeyPressActivation);
+
+	Nan::SetPrototypeMethod(tpl, "GetKeyPressActivationValue", GetKeyPressActivationValue);
+	Nan::SetPrototypeMethod(tpl, "getKeyPressActivationValue", GetKeyPressActivationValue);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "KeyPressActivationOff", KeyPressActivationOff);
+	Nan::SetPrototypeMethod(tpl, "keyPressActivationOff", KeyPressActivationOff);
+
+	Nan::SetPrototypeMethod(tpl, "KeyPressActivationOn", KeyPressActivationOn);
+	Nan::SetPrototypeMethod(tpl, "keyPressActivationOn", KeyPressActivationOn);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "Off", Off);
+	Nan::SetPrototypeMethod(tpl, "off", Off);
+
+	Nan::SetPrototypeMethod(tpl, "On", On);
+	Nan::SetPrototypeMethod(tpl, "on", On);
 
 	Nan::SetPrototypeMethod(tpl, "OnChar", OnChar);
 	Nan::SetPrototypeMethod(tpl, "onChar", OnChar);
 
+	Nan::SetPrototypeMethod(tpl, "PickingManagedOff", PickingManagedOff);
+	Nan::SetPrototypeMethod(tpl, "pickingManagedOff", PickingManagedOff);
+
+	Nan::SetPrototypeMethod(tpl, "PickingManagedOn", PickingManagedOn);
+	Nan::SetPrototypeMethod(tpl, "pickingManagedOn", PickingManagedOn);
+
 	Nan::SetPrototypeMethod(tpl, "ReleaseFocus", ReleaseFocus);
 	Nan::SetPrototypeMethod(tpl, "releaseFocus", ReleaseFocus);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCurrentRenderer", SetCurrentRenderer);
+	Nan::SetPrototypeMethod(tpl, "setCurrentRenderer", SetCurrentRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "SetDefaultRenderer", SetDefaultRenderer);
+	Nan::SetPrototypeMethod(tpl, "setDefaultRenderer", SetDefaultRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "SetEnabled", SetEnabled);
+	Nan::SetPrototypeMethod(tpl, "setEnabled", SetEnabled);
+
+	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
+	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
+
+	Nan::SetPrototypeMethod(tpl, "SetKeyPressActivation", SetKeyPressActivation);
+	Nan::SetPrototypeMethod(tpl, "setKeyPressActivation", SetKeyPressActivation);
+
+	Nan::SetPrototypeMethod(tpl, "SetKeyPressActivationValue", SetKeyPressActivationValue);
+	Nan::SetPrototypeMethod(tpl, "setKeyPressActivationValue", SetKeyPressActivationValue);
 
 }
 

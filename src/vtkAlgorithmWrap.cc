@@ -45,20 +45,38 @@ void VtkAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
+	Nan::SetPrototypeMethod(tpl, "AbortExecuteOff", AbortExecuteOff);
+	Nan::SetPrototypeMethod(tpl, "abortExecuteOff", AbortExecuteOff);
+
+	Nan::SetPrototypeMethod(tpl, "AbortExecuteOn", AbortExecuteOn);
+	Nan::SetPrototypeMethod(tpl, "abortExecuteOn", AbortExecuteOn);
+
+	Nan::SetPrototypeMethod(tpl, "AddInputConnection", AddInputConnection);
+	Nan::SetPrototypeMethod(tpl, "addInputConnection", AddInputConnection);
+
+	Nan::SetPrototypeMethod(tpl, "AddInputConnection", AddInputConnection);
+	Nan::SetPrototypeMethod(tpl, "addInputConnection", AddInputConnection);
+
+	Nan::SetPrototypeMethod(tpl, "ComputePriority", ComputePriority);
+	Nan::SetPrototypeMethod(tpl, "computePriority", ComputePriority);
+
+	Nan::SetPrototypeMethod(tpl, "GetAbortExecute", GetAbortExecute);
+	Nan::SetPrototypeMethod(tpl, "getAbortExecute", GetAbortExecute);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+	Nan::SetPrototypeMethod(tpl, "GetInputAlgorithm", GetInputAlgorithm);
+	Nan::SetPrototypeMethod(tpl, "getInputAlgorithm", GetInputAlgorithm);
 
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "GetInputAlgorithm", GetInputAlgorithm);
+	Nan::SetPrototypeMethod(tpl, "getInputAlgorithm", GetInputAlgorithm);
 
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "GetInputConnection", GetInputConnection);
+	Nan::SetPrototypeMethod(tpl, "getInputConnection", GetInputConnection);
 
-	Nan::SetPrototypeMethod(tpl, "HasExecutive", HasExecutive);
-	Nan::SetPrototypeMethod(tpl, "hasExecutive", HasExecutive);
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfInputConnections", GetNumberOfInputConnections);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfInputConnections", GetNumberOfInputConnections);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfInputPorts", GetNumberOfInputPorts);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfInputPorts", GetNumberOfInputPorts);
@@ -66,92 +84,119 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfOutputPorts", GetNumberOfOutputPorts);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfOutputPorts", GetNumberOfOutputPorts);
 
-	Nan::SetPrototypeMethod(tpl, "SetAbortExecute", SetAbortExecute);
-	Nan::SetPrototypeMethod(tpl, "setAbortExecute", SetAbortExecute);
+	Nan::SetPrototypeMethod(tpl, "GetOutputPort", GetOutputPort);
+	Nan::SetPrototypeMethod(tpl, "getOutputPort", GetOutputPort);
 
-	Nan::SetPrototypeMethod(tpl, "GetAbortExecute", GetAbortExecute);
-	Nan::SetPrototypeMethod(tpl, "getAbortExecute", GetAbortExecute);
-
-	Nan::SetPrototypeMethod(tpl, "AbortExecuteOn", AbortExecuteOn);
-	Nan::SetPrototypeMethod(tpl, "abortExecuteOn", AbortExecuteOn);
-
-	Nan::SetPrototypeMethod(tpl, "AbortExecuteOff", AbortExecuteOff);
-	Nan::SetPrototypeMethod(tpl, "abortExecuteOff", AbortExecuteOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetProgress", SetProgress);
-	Nan::SetPrototypeMethod(tpl, "setProgress", SetProgress);
-
-	Nan::SetPrototypeMethod(tpl, "GetProgressMinValue", GetProgressMinValue);
-	Nan::SetPrototypeMethod(tpl, "getProgressMinValue", GetProgressMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetProgressMaxValue", GetProgressMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getProgressMaxValue", GetProgressMaxValue);
+	Nan::SetPrototypeMethod(tpl, "GetOutputPort", GetOutputPort);
+	Nan::SetPrototypeMethod(tpl, "getOutputPort", GetOutputPort);
 
 	Nan::SetPrototypeMethod(tpl, "GetProgress", GetProgress);
 	Nan::SetPrototypeMethod(tpl, "getProgress", GetProgress);
 
-	Nan::SetPrototypeMethod(tpl, "UpdateProgress", UpdateProgress);
-	Nan::SetPrototypeMethod(tpl, "updateProgress", UpdateProgress);
+	Nan::SetPrototypeMethod(tpl, "GetProgressMaxValue", GetProgressMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getProgressMaxValue", GetProgressMaxValue);
 
-	Nan::SetPrototypeMethod(tpl, "SetProgressText", SetProgressText);
-	Nan::SetPrototypeMethod(tpl, "setProgressText", SetProgressText);
+	Nan::SetPrototypeMethod(tpl, "GetProgressMinValue", GetProgressMinValue);
+	Nan::SetPrototypeMethod(tpl, "getProgressMinValue", GetProgressMinValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetProgressText", GetProgressText);
 	Nan::SetPrototypeMethod(tpl, "getProgressText", GetProgressText);
 
-	Nan::SetPrototypeMethod(tpl, "SetInputArrayToProcess", SetInputArrayToProcess);
-	Nan::SetPrototypeMethod(tpl, "setInputArrayToProcess", SetInputArrayToProcess);
-
-	Nan::SetPrototypeMethod(tpl, "SetInputArrayToProcess", SetInputArrayToProcess);
-	Nan::SetPrototypeMethod(tpl, "setInputArrayToProcess", SetInputArrayToProcess);
-
-	Nan::SetPrototypeMethod(tpl, "SetInputArrayToProcess", SetInputArrayToProcess);
-	Nan::SetPrototypeMethod(tpl, "setInputArrayToProcess", SetInputArrayToProcess);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveAllInputs", RemoveAllInputs);
-	Nan::SetPrototypeMethod(tpl, "removeAllInputs", RemoveAllInputs);
-
-	Nan::SetPrototypeMethod(tpl, "SetInputConnection", SetInputConnection);
-	Nan::SetPrototypeMethod(tpl, "setInputConnection", SetInputConnection);
-
-	Nan::SetPrototypeMethod(tpl, "SetInputConnection", SetInputConnection);
-	Nan::SetPrototypeMethod(tpl, "setInputConnection", SetInputConnection);
-
-	Nan::SetPrototypeMethod(tpl, "AddInputConnection", AddInputConnection);
-	Nan::SetPrototypeMethod(tpl, "addInputConnection", AddInputConnection);
-
-	Nan::SetPrototypeMethod(tpl, "AddInputConnection", AddInputConnection);
-	Nan::SetPrototypeMethod(tpl, "addInputConnection", AddInputConnection);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveInputConnection", RemoveInputConnection);
-	Nan::SetPrototypeMethod(tpl, "removeInputConnection", RemoveInputConnection);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveInputConnection", RemoveInputConnection);
-	Nan::SetPrototypeMethod(tpl, "removeInputConnection", RemoveInputConnection);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveAllInputConnections", RemoveAllInputConnections);
-	Nan::SetPrototypeMethod(tpl, "removeAllInputConnections", RemoveAllInputConnections);
-
-	Nan::SetPrototypeMethod(tpl, "GetOutputPort", GetOutputPort);
-	Nan::SetPrototypeMethod(tpl, "getOutputPort", GetOutputPort);
-
-	Nan::SetPrototypeMethod(tpl, "GetOutputPort", GetOutputPort);
-	Nan::SetPrototypeMethod(tpl, "getOutputPort", GetOutputPort);
-
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfInputConnections", GetNumberOfInputConnections);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfInputConnections", GetNumberOfInputConnections);
+	Nan::SetPrototypeMethod(tpl, "GetReleaseDataFlag", GetReleaseDataFlag);
+	Nan::SetPrototypeMethod(tpl, "getReleaseDataFlag", GetReleaseDataFlag);
 
 	Nan::SetPrototypeMethod(tpl, "GetTotalNumberOfInputConnections", GetTotalNumberOfInputConnections);
 	Nan::SetPrototypeMethod(tpl, "getTotalNumberOfInputConnections", GetTotalNumberOfInputConnections);
 
-	Nan::SetPrototypeMethod(tpl, "GetInputConnection", GetInputConnection);
-	Nan::SetPrototypeMethod(tpl, "getInputConnection", GetInputConnection);
+	Nan::SetPrototypeMethod(tpl, "GetUpdateGhostLevel", GetUpdateGhostLevel);
+	Nan::SetPrototypeMethod(tpl, "getUpdateGhostLevel", GetUpdateGhostLevel);
 
-	Nan::SetPrototypeMethod(tpl, "GetInputAlgorithm", GetInputAlgorithm);
-	Nan::SetPrototypeMethod(tpl, "getInputAlgorithm", GetInputAlgorithm);
+	Nan::SetPrototypeMethod(tpl, "GetUpdateGhostLevel", GetUpdateGhostLevel);
+	Nan::SetPrototypeMethod(tpl, "getUpdateGhostLevel", GetUpdateGhostLevel);
 
-	Nan::SetPrototypeMethod(tpl, "GetInputAlgorithm", GetInputAlgorithm);
-	Nan::SetPrototypeMethod(tpl, "getInputAlgorithm", GetInputAlgorithm);
+	Nan::SetPrototypeMethod(tpl, "GetUpdateNumberOfPieces", GetUpdateNumberOfPieces);
+	Nan::SetPrototypeMethod(tpl, "getUpdateNumberOfPieces", GetUpdateNumberOfPieces);
+
+	Nan::SetPrototypeMethod(tpl, "GetUpdateNumberOfPieces", GetUpdateNumberOfPieces);
+	Nan::SetPrototypeMethod(tpl, "getUpdateNumberOfPieces", GetUpdateNumberOfPieces);
+
+	Nan::SetPrototypeMethod(tpl, "GetUpdatePiece", GetUpdatePiece);
+	Nan::SetPrototypeMethod(tpl, "getUpdatePiece", GetUpdatePiece);
+
+	Nan::SetPrototypeMethod(tpl, "GetUpdatePiece", GetUpdatePiece);
+	Nan::SetPrototypeMethod(tpl, "getUpdatePiece", GetUpdatePiece);
+
+	Nan::SetPrototypeMethod(tpl, "HasExecutive", HasExecutive);
+	Nan::SetPrototypeMethod(tpl, "hasExecutive", HasExecutive);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "PropagateUpdateExtent", PropagateUpdateExtent);
+	Nan::SetPrototypeMethod(tpl, "propagateUpdateExtent", PropagateUpdateExtent);
+
+	Nan::SetPrototypeMethod(tpl, "ReleaseDataFlagOff", ReleaseDataFlagOff);
+	Nan::SetPrototypeMethod(tpl, "releaseDataFlagOff", ReleaseDataFlagOff);
+
+	Nan::SetPrototypeMethod(tpl, "ReleaseDataFlagOn", ReleaseDataFlagOn);
+	Nan::SetPrototypeMethod(tpl, "releaseDataFlagOn", ReleaseDataFlagOn);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveAllInputConnections", RemoveAllInputConnections);
+	Nan::SetPrototypeMethod(tpl, "removeAllInputConnections", RemoveAllInputConnections);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveAllInputs", RemoveAllInputs);
+	Nan::SetPrototypeMethod(tpl, "removeAllInputs", RemoveAllInputs);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveInputConnection", RemoveInputConnection);
+	Nan::SetPrototypeMethod(tpl, "removeInputConnection", RemoveInputConnection);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveInputConnection", RemoveInputConnection);
+	Nan::SetPrototypeMethod(tpl, "removeInputConnection", RemoveInputConnection);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAbortExecute", SetAbortExecute);
+	Nan::SetPrototypeMethod(tpl, "setAbortExecute", SetAbortExecute);
+
+	Nan::SetPrototypeMethod(tpl, "SetInputArrayToProcess", SetInputArrayToProcess);
+	Nan::SetPrototypeMethod(tpl, "setInputArrayToProcess", SetInputArrayToProcess);
+
+	Nan::SetPrototypeMethod(tpl, "SetInputArrayToProcess", SetInputArrayToProcess);
+	Nan::SetPrototypeMethod(tpl, "setInputArrayToProcess", SetInputArrayToProcess);
+
+	Nan::SetPrototypeMethod(tpl, "SetInputArrayToProcess", SetInputArrayToProcess);
+	Nan::SetPrototypeMethod(tpl, "setInputArrayToProcess", SetInputArrayToProcess);
+
+	Nan::SetPrototypeMethod(tpl, "SetInputConnection", SetInputConnection);
+	Nan::SetPrototypeMethod(tpl, "setInputConnection", SetInputConnection);
+
+	Nan::SetPrototypeMethod(tpl, "SetInputConnection", SetInputConnection);
+	Nan::SetPrototypeMethod(tpl, "setInputConnection", SetInputConnection);
+
+	Nan::SetPrototypeMethod(tpl, "SetProgress", SetProgress);
+	Nan::SetPrototypeMethod(tpl, "setProgress", SetProgress);
+
+	Nan::SetPrototypeMethod(tpl, "SetProgressText", SetProgressText);
+	Nan::SetPrototypeMethod(tpl, "setProgressText", SetProgressText);
+
+	Nan::SetPrototypeMethod(tpl, "SetReleaseDataFlag", SetReleaseDataFlag);
+	Nan::SetPrototypeMethod(tpl, "setReleaseDataFlag", SetReleaseDataFlag);
+
+	Nan::SetPrototypeMethod(tpl, "SetUpdateExtent", SetUpdateExtent);
+	Nan::SetPrototypeMethod(tpl, "setUpdateExtent", SetUpdateExtent);
+
+	Nan::SetPrototypeMethod(tpl, "SetUpdateExtent", SetUpdateExtent);
+	Nan::SetPrototypeMethod(tpl, "setUpdateExtent", SetUpdateExtent);
+
+	Nan::SetPrototypeMethod(tpl, "SetUpdateExtentToWholeExtent", SetUpdateExtentToWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "setUpdateExtentToWholeExtent", SetUpdateExtentToWholeExtent);
+
+	Nan::SetPrototypeMethod(tpl, "SetUpdateExtentToWholeExtent", SetUpdateExtentToWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "setUpdateExtentToWholeExtent", SetUpdateExtentToWholeExtent);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -162,56 +207,11 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateInformation", UpdateInformation);
 	Nan::SetPrototypeMethod(tpl, "updateInformation", UpdateInformation);
 
-	Nan::SetPrototypeMethod(tpl, "PropagateUpdateExtent", PropagateUpdateExtent);
-	Nan::SetPrototypeMethod(tpl, "propagateUpdateExtent", PropagateUpdateExtent);
+	Nan::SetPrototypeMethod(tpl, "UpdateProgress", UpdateProgress);
+	Nan::SetPrototypeMethod(tpl, "updateProgress", UpdateProgress);
 
 	Nan::SetPrototypeMethod(tpl, "UpdateWholeExtent", UpdateWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "updateWholeExtent", UpdateWholeExtent);
-
-	Nan::SetPrototypeMethod(tpl, "SetReleaseDataFlag", SetReleaseDataFlag);
-	Nan::SetPrototypeMethod(tpl, "setReleaseDataFlag", SetReleaseDataFlag);
-
-	Nan::SetPrototypeMethod(tpl, "GetReleaseDataFlag", GetReleaseDataFlag);
-	Nan::SetPrototypeMethod(tpl, "getReleaseDataFlag", GetReleaseDataFlag);
-
-	Nan::SetPrototypeMethod(tpl, "ReleaseDataFlagOn", ReleaseDataFlagOn);
-	Nan::SetPrototypeMethod(tpl, "releaseDataFlagOn", ReleaseDataFlagOn);
-
-	Nan::SetPrototypeMethod(tpl, "ReleaseDataFlagOff", ReleaseDataFlagOff);
-	Nan::SetPrototypeMethod(tpl, "releaseDataFlagOff", ReleaseDataFlagOff);
-
-	Nan::SetPrototypeMethod(tpl, "ComputePriority", ComputePriority);
-	Nan::SetPrototypeMethod(tpl, "computePriority", ComputePriority);
-
-	Nan::SetPrototypeMethod(tpl, "SetUpdateExtentToWholeExtent", SetUpdateExtentToWholeExtent);
-	Nan::SetPrototypeMethod(tpl, "setUpdateExtentToWholeExtent", SetUpdateExtentToWholeExtent);
-
-	Nan::SetPrototypeMethod(tpl, "SetUpdateExtentToWholeExtent", SetUpdateExtentToWholeExtent);
-	Nan::SetPrototypeMethod(tpl, "setUpdateExtentToWholeExtent", SetUpdateExtentToWholeExtent);
-
-	Nan::SetPrototypeMethod(tpl, "SetUpdateExtent", SetUpdateExtent);
-	Nan::SetPrototypeMethod(tpl, "setUpdateExtent", SetUpdateExtent);
-
-	Nan::SetPrototypeMethod(tpl, "SetUpdateExtent", SetUpdateExtent);
-	Nan::SetPrototypeMethod(tpl, "setUpdateExtent", SetUpdateExtent);
-
-	Nan::SetPrototypeMethod(tpl, "GetUpdatePiece", GetUpdatePiece);
-	Nan::SetPrototypeMethod(tpl, "getUpdatePiece", GetUpdatePiece);
-
-	Nan::SetPrototypeMethod(tpl, "GetUpdatePiece", GetUpdatePiece);
-	Nan::SetPrototypeMethod(tpl, "getUpdatePiece", GetUpdatePiece);
-
-	Nan::SetPrototypeMethod(tpl, "GetUpdateNumberOfPieces", GetUpdateNumberOfPieces);
-	Nan::SetPrototypeMethod(tpl, "getUpdateNumberOfPieces", GetUpdateNumberOfPieces);
-
-	Nan::SetPrototypeMethod(tpl, "GetUpdateNumberOfPieces", GetUpdateNumberOfPieces);
-	Nan::SetPrototypeMethod(tpl, "getUpdateNumberOfPieces", GetUpdateNumberOfPieces);
-
-	Nan::SetPrototypeMethod(tpl, "GetUpdateGhostLevel", GetUpdateGhostLevel);
-	Nan::SetPrototypeMethod(tpl, "getUpdateGhostLevel", GetUpdateGhostLevel);
-
-	Nan::SetPrototypeMethod(tpl, "GetUpdateGhostLevel", GetUpdateGhostLevel);
-	Nan::SetPrototypeMethod(tpl, "getUpdateGhostLevel", GetUpdateGhostLevel);
 
 }
 
@@ -266,22 +266,18 @@ void VtkAlgorithmWrap::AddInputConnection(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsObject())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
 		{
-			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->AddInputConnection(
-				info[0]->Int32Value(),
-				(vtkAlgorithmOutput *) a1->native.GetPointer()
-			);
+			Nan::ThrowError("Too many parameters.");
 			return;
 		}
+		native->AddInputConnection(
+			(vtkAlgorithmOutput *) a0->native.GetPointer()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -332,23 +328,34 @@ void VtkAlgorithmWrap::GetInputAlgorithm(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	vtkAlgorithm * r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
-		return;
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			vtkAlgorithm * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetInputAlgorithm(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			const int argc = 1;
+			v8::Local<v8::Value> argv[argc] =
+				{ Nan::New("__nowrap").ToLocalChecked() };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::Function>(VtkAlgorithmWrap::constructor);
+			v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+			VtkAlgorithmWrap *w = new VtkAlgorithmWrap();
+			w->native.TakeReference(r);
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
 	}
-	r = native->GetInputAlgorithm();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAlgorithmWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-	VtkAlgorithmWrap *w = new VtkAlgorithmWrap();
-	w->native.TakeReference(r);
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::GetInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -438,23 +445,30 @@ void VtkAlgorithmWrap::GetOutputPort(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	vtkAlgorithmOutput * r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
+		vtkAlgorithmOutput * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetOutputPort(
+			info[0]->Int32Value()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
 		return;
 	}
-	r = native->GetOutputPort();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
-	VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-	w->native.TakeReference(r);
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::GetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -545,42 +559,63 @@ void VtkAlgorithmWrap::GetUpdateGhostLevel(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetUpdateGhostLevel(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->GetUpdateGhostLevel();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::GetUpdateNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetUpdateNumberOfPieces(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->GetUpdateNumberOfPieces();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::GetUpdatePiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetUpdatePiece(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->GetUpdatePiece();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::HasExecutive(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -715,8 +750,9 @@ void VtkAlgorithmWrap::RemoveInputConnection(const Nan::FunctionCallbackInfo<v8:
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsObject())
 		{
+			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
@@ -724,7 +760,7 @@ void VtkAlgorithmWrap::RemoveInputConnection(const Nan::FunctionCallbackInfo<v8:
 			}
 			native->RemoveInputConnection(
 				info[0]->Int32Value(),
-				info[1]->Int32Value()
+				(vtkAlgorithmOutput *) a1->native.GetPointer()
 			);
 			return;
 		}
@@ -794,8 +830,10 @@ void VtkAlgorithmWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
+					Nan::Utf8String a3(info[3]);
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
+						Nan::Utf8String a4(info[4]);
 						if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
@@ -805,8 +843,8 @@ void VtkAlgorithmWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8
 							info[0]->Int32Value(),
 							info[1]->Int32Value(),
 							info[2]->Int32Value(),
-							info[3]->Int32Value(),
-							info[4]->Int32Value()
+							*a3,
+							*a4
 						);
 						return;
 					}
@@ -821,22 +859,18 @@ void VtkAlgorithmWrap::SetInputConnection(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsObject())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
 		{
-			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->SetInputConnection(
-				info[0]->Int32Value(),
-				(vtkAlgorithmOutput *) a1->native.GetPointer()
-			);
+			Nan::ThrowError("Too many parameters.");
 			return;
 		}
+		native->SetInputConnection(
+			(vtkAlgorithmOutput *) a0->native.GetPointer()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -909,17 +943,21 @@ void VtkAlgorithmWrap::SetUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					Nan::ThrowError("Too many parameters.");
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetUpdateExtent(
+						info[0]->Int32Value(),
+						info[1]->Int32Value(),
+						info[2]->Int32Value(),
+						info[3]->Int32Value()
+					);
 					return;
 				}
-				native->SetUpdateExtent(
-					info[0]->Int32Value(),
-					info[1]->Int32Value(),
-					info[2]->Int32Value()
-				);
-				return;
 			}
 		}
 	}
@@ -930,26 +968,40 @@ void VtkAlgorithmWrap::SetUpdateExtentToWholeExtent(const Nan::FunctionCallbackI
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SetUpdateExtentToWholeExtent(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->SetUpdateExtentToWholeExtent();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Update(
+			info[0]->Int32Value()
+		);
 		return;
 	}
-	native->Update();
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::UpdateInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)

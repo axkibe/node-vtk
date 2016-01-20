@@ -47,50 +47,11 @@ void VtkRenderWindowInteractorWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
-	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
-	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "CharEvent", CharEvent);
+	Nan::SetPrototypeMethod(tpl, "charEvent", CharEvent);
 
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
-	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
-
-	Nan::SetPrototypeMethod(tpl, "ReInitialize", ReInitialize);
-	Nan::SetPrototypeMethod(tpl, "reInitialize", ReInitialize);
-
-	Nan::SetPrototypeMethod(tpl, "Start", Start);
-	Nan::SetPrototypeMethod(tpl, "start", Start);
-
-	Nan::SetPrototypeMethod(tpl, "Enable", Enable);
-	Nan::SetPrototypeMethod(tpl, "enable", Enable);
-
-	Nan::SetPrototypeMethod(tpl, "Disable", Disable);
-	Nan::SetPrototypeMethod(tpl, "disable", Disable);
-
-	Nan::SetPrototypeMethod(tpl, "GetEnabled", GetEnabled);
-	Nan::SetPrototypeMethod(tpl, "getEnabled", GetEnabled);
-
-	Nan::SetPrototypeMethod(tpl, "EnableRenderOn", EnableRenderOn);
-	Nan::SetPrototypeMethod(tpl, "enableRenderOn", EnableRenderOn);
-
-	Nan::SetPrototypeMethod(tpl, "EnableRenderOff", EnableRenderOff);
-	Nan::SetPrototypeMethod(tpl, "enableRenderOff", EnableRenderOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
-	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
-
-	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
-	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
-
-	Nan::SetPrototypeMethod(tpl, "UpdateSize", UpdateSize);
-	Nan::SetPrototypeMethod(tpl, "updateSize", UpdateSize);
+	Nan::SetPrototypeMethod(tpl, "ConfigureEvent", ConfigureEvent);
+	Nan::SetPrototypeMethod(tpl, "configureEvent", ConfigureEvent);
 
 	Nan::SetPrototypeMethod(tpl, "CreateTimer", CreateTimer);
 	Nan::SetPrototypeMethod(tpl, "createTimer", CreateTimer);
@@ -98,110 +59,38 @@ void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "DestroyTimer", DestroyTimer);
 	Nan::SetPrototypeMethod(tpl, "destroyTimer", DestroyTimer);
 
-	Nan::SetPrototypeMethod(tpl, "IsOneShotTimer", IsOneShotTimer);
-	Nan::SetPrototypeMethod(tpl, "isOneShotTimer", IsOneShotTimer);
-
-	Nan::SetPrototypeMethod(tpl, "ResetTimer", ResetTimer);
-	Nan::SetPrototypeMethod(tpl, "resetTimer", ResetTimer);
-
 	Nan::SetPrototypeMethod(tpl, "DestroyTimer", DestroyTimer);
 	Nan::SetPrototypeMethod(tpl, "destroyTimer", DestroyTimer);
 
-	Nan::SetPrototypeMethod(tpl, "GetVTKTimerId", GetVTKTimerId);
-	Nan::SetPrototypeMethod(tpl, "getVTKTimerId", GetVTKTimerId);
+	Nan::SetPrototypeMethod(tpl, "Disable", Disable);
+	Nan::SetPrototypeMethod(tpl, "disable", Disable);
 
-	Nan::SetPrototypeMethod(tpl, "SetTimerEventId", SetTimerEventId);
-	Nan::SetPrototypeMethod(tpl, "setTimerEventId", SetTimerEventId);
+	Nan::SetPrototypeMethod(tpl, "Enable", Enable);
+	Nan::SetPrototypeMethod(tpl, "enable", Enable);
 
-	Nan::SetPrototypeMethod(tpl, "GetTimerEventId", GetTimerEventId);
-	Nan::SetPrototypeMethod(tpl, "getTimerEventId", GetTimerEventId);
+	Nan::SetPrototypeMethod(tpl, "EnableRenderOff", EnableRenderOff);
+	Nan::SetPrototypeMethod(tpl, "enableRenderOff", EnableRenderOff);
 
-	Nan::SetPrototypeMethod(tpl, "SetTimerEventType", SetTimerEventType);
-	Nan::SetPrototypeMethod(tpl, "setTimerEventType", SetTimerEventType);
-
-	Nan::SetPrototypeMethod(tpl, "GetTimerEventType", GetTimerEventType);
-	Nan::SetPrototypeMethod(tpl, "getTimerEventType", GetTimerEventType);
-
-	Nan::SetPrototypeMethod(tpl, "SetTimerEventDuration", SetTimerEventDuration);
-	Nan::SetPrototypeMethod(tpl, "setTimerEventDuration", SetTimerEventDuration);
-
-	Nan::SetPrototypeMethod(tpl, "GetTimerEventDuration", GetTimerEventDuration);
-	Nan::SetPrototypeMethod(tpl, "getTimerEventDuration", GetTimerEventDuration);
-
-	Nan::SetPrototypeMethod(tpl, "SetTimerEventPlatformId", SetTimerEventPlatformId);
-	Nan::SetPrototypeMethod(tpl, "setTimerEventPlatformId", SetTimerEventPlatformId);
-
-	Nan::SetPrototypeMethod(tpl, "GetTimerEventPlatformId", GetTimerEventPlatformId);
-	Nan::SetPrototypeMethod(tpl, "getTimerEventPlatformId", GetTimerEventPlatformId);
-
-	Nan::SetPrototypeMethod(tpl, "TerminateApp", TerminateApp);
-	Nan::SetPrototypeMethod(tpl, "terminateApp", TerminateApp);
-
-	Nan::SetPrototypeMethod(tpl, "SetInteractorStyle", SetInteractorStyle);
-	Nan::SetPrototypeMethod(tpl, "setInteractorStyle", SetInteractorStyle);
-
-	Nan::SetPrototypeMethod(tpl, "GetInteractorStyle", GetInteractorStyle);
-	Nan::SetPrototypeMethod(tpl, "getInteractorStyle", GetInteractorStyle);
-
-	Nan::SetPrototypeMethod(tpl, "SetLightFollowCamera", SetLightFollowCamera);
-	Nan::SetPrototypeMethod(tpl, "setLightFollowCamera", SetLightFollowCamera);
-
-	Nan::SetPrototypeMethod(tpl, "GetLightFollowCamera", GetLightFollowCamera);
-	Nan::SetPrototypeMethod(tpl, "getLightFollowCamera", GetLightFollowCamera);
-
-	Nan::SetPrototypeMethod(tpl, "LightFollowCameraOn", LightFollowCameraOn);
-	Nan::SetPrototypeMethod(tpl, "lightFollowCameraOn", LightFollowCameraOn);
-
-	Nan::SetPrototypeMethod(tpl, "LightFollowCameraOff", LightFollowCameraOff);
-	Nan::SetPrototypeMethod(tpl, "lightFollowCameraOff", LightFollowCameraOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetDesiredUpdateRate", SetDesiredUpdateRate);
-	Nan::SetPrototypeMethod(tpl, "setDesiredUpdateRate", SetDesiredUpdateRate);
-
-	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRateMinValue", GetDesiredUpdateRateMinValue);
-	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRateMinValue", GetDesiredUpdateRateMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRateMaxValue", GetDesiredUpdateRateMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRateMaxValue", GetDesiredUpdateRateMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRate", GetDesiredUpdateRate);
-	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRate", GetDesiredUpdateRate);
-
-	Nan::SetPrototypeMethod(tpl, "SetStillUpdateRate", SetStillUpdateRate);
-	Nan::SetPrototypeMethod(tpl, "setStillUpdateRate", SetStillUpdateRate);
-
-	Nan::SetPrototypeMethod(tpl, "GetStillUpdateRateMinValue", GetStillUpdateRateMinValue);
-	Nan::SetPrototypeMethod(tpl, "getStillUpdateRateMinValue", GetStillUpdateRateMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetStillUpdateRateMaxValue", GetStillUpdateRateMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getStillUpdateRateMaxValue", GetStillUpdateRateMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetStillUpdateRate", GetStillUpdateRate);
-	Nan::SetPrototypeMethod(tpl, "getStillUpdateRate", GetStillUpdateRate);
-
-	Nan::SetPrototypeMethod(tpl, "GetInitialized", GetInitialized);
-	Nan::SetPrototypeMethod(tpl, "getInitialized", GetInitialized);
-
-	Nan::SetPrototypeMethod(tpl, "ExitCallback", ExitCallback);
-	Nan::SetPrototypeMethod(tpl, "exitCallback", ExitCallback);
-
-	Nan::SetPrototypeMethod(tpl, "UserCallback", UserCallback);
-	Nan::SetPrototypeMethod(tpl, "userCallback", UserCallback);
-
-	Nan::SetPrototypeMethod(tpl, "StartPickCallback", StartPickCallback);
-	Nan::SetPrototypeMethod(tpl, "startPickCallback", StartPickCallback);
+	Nan::SetPrototypeMethod(tpl, "EnableRenderOn", EnableRenderOn);
+	Nan::SetPrototypeMethod(tpl, "enableRenderOn", EnableRenderOn);
 
 	Nan::SetPrototypeMethod(tpl, "EndPickCallback", EndPickCallback);
 	Nan::SetPrototypeMethod(tpl, "endPickCallback", EndPickCallback);
 
-	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
-	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
+	Nan::SetPrototypeMethod(tpl, "EnterEvent", EnterEvent);
+	Nan::SetPrototypeMethod(tpl, "enterEvent", EnterEvent);
 
-	Nan::SetPrototypeMethod(tpl, "ShowCursor", ShowCursor);
-	Nan::SetPrototypeMethod(tpl, "showCursor", ShowCursor);
+	Nan::SetPrototypeMethod(tpl, "ExitCallback", ExitCallback);
+	Nan::SetPrototypeMethod(tpl, "exitCallback", ExitCallback);
 
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
+	Nan::SetPrototypeMethod(tpl, "ExitEvent", ExitEvent);
+	Nan::SetPrototypeMethod(tpl, "exitEvent", ExitEvent);
+
+	Nan::SetPrototypeMethod(tpl, "ExposeEvent", ExposeEvent);
+	Nan::SetPrototypeMethod(tpl, "exposeEvent", ExposeEvent);
+
+	Nan::SetPrototypeMethod(tpl, "FindPokedRenderer", FindPokedRenderer);
+	Nan::SetPrototypeMethod(tpl, "findPokedRenderer", FindPokedRenderer);
 
 	Nan::SetPrototypeMethod(tpl, "FlyTo", FlyTo);
 	Nan::SetPrototypeMethod(tpl, "flyTo", FlyTo);
@@ -209,125 +98,98 @@ void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "FlyToImage", FlyToImage);
 	Nan::SetPrototypeMethod(tpl, "flyToImage", FlyToImage);
 
-	Nan::SetPrototypeMethod(tpl, "SetNumberOfFlyFrames", SetNumberOfFlyFrames);
-	Nan::SetPrototypeMethod(tpl, "setNumberOfFlyFrames", SetNumberOfFlyFrames);
-
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfFlyFramesMinValue", GetNumberOfFlyFramesMinValue);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfFlyFramesMinValue", GetNumberOfFlyFramesMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfFlyFramesMaxValue", GetNumberOfFlyFramesMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfFlyFramesMaxValue", GetNumberOfFlyFramesMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfFlyFrames", GetNumberOfFlyFrames);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfFlyFrames", GetNumberOfFlyFrames);
-
-	Nan::SetPrototypeMethod(tpl, "SetDolly", SetDolly);
-	Nan::SetPrototypeMethod(tpl, "setDolly", SetDolly);
-
-	Nan::SetPrototypeMethod(tpl, "GetDolly", GetDolly);
-	Nan::SetPrototypeMethod(tpl, "getDolly", GetDolly);
-
-	Nan::SetPrototypeMethod(tpl, "SetLastEventPosition", SetLastEventPosition);
-	Nan::SetPrototypeMethod(tpl, "setLastEventPosition", SetLastEventPosition);
-
-	Nan::SetPrototypeMethod(tpl, "SetEventPosition", SetEventPosition);
-	Nan::SetPrototypeMethod(tpl, "setEventPosition", SetEventPosition);
-
-	Nan::SetPrototypeMethod(tpl, "SetEventPositionFlipY", SetEventPositionFlipY);
-	Nan::SetPrototypeMethod(tpl, "setEventPositionFlipY", SetEventPositionFlipY);
-
-	Nan::SetPrototypeMethod(tpl, "SetAltKey", SetAltKey);
-	Nan::SetPrototypeMethod(tpl, "setAltKey", SetAltKey);
-
 	Nan::SetPrototypeMethod(tpl, "GetAltKey", GetAltKey);
 	Nan::SetPrototypeMethod(tpl, "getAltKey", GetAltKey);
 
-	Nan::SetPrototypeMethod(tpl, "SetControlKey", SetControlKey);
-	Nan::SetPrototypeMethod(tpl, "setControlKey", SetControlKey);
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetControlKey", GetControlKey);
 	Nan::SetPrototypeMethod(tpl, "getControlKey", GetControlKey);
 
-	Nan::SetPrototypeMethod(tpl, "SetShiftKey", SetShiftKey);
-	Nan::SetPrototypeMethod(tpl, "setShiftKey", SetShiftKey);
+	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRate", GetDesiredUpdateRate);
+	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRate", GetDesiredUpdateRate);
 
-	Nan::SetPrototypeMethod(tpl, "GetShiftKey", GetShiftKey);
-	Nan::SetPrototypeMethod(tpl, "getShiftKey", GetShiftKey);
+	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRateMaxValue", GetDesiredUpdateRateMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRateMaxValue", GetDesiredUpdateRateMaxValue);
 
-	Nan::SetPrototypeMethod(tpl, "SetKeyCode", SetKeyCode);
-	Nan::SetPrototypeMethod(tpl, "setKeyCode", SetKeyCode);
+	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRateMinValue", GetDesiredUpdateRateMinValue);
+	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRateMinValue", GetDesiredUpdateRateMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetDolly", GetDolly);
+	Nan::SetPrototypeMethod(tpl, "getDolly", GetDolly);
+
+	Nan::SetPrototypeMethod(tpl, "GetEnabled", GetEnabled);
+	Nan::SetPrototypeMethod(tpl, "getEnabled", GetEnabled);
+
+	Nan::SetPrototypeMethod(tpl, "GetInitialized", GetInitialized);
+	Nan::SetPrototypeMethod(tpl, "getInitialized", GetInitialized);
+
+	Nan::SetPrototypeMethod(tpl, "GetInteractorStyle", GetInteractorStyle);
+	Nan::SetPrototypeMethod(tpl, "getInteractorStyle", GetInteractorStyle);
 
 	Nan::SetPrototypeMethod(tpl, "GetKeyCode", GetKeyCode);
 	Nan::SetPrototypeMethod(tpl, "getKeyCode", GetKeyCode);
 
-	Nan::SetPrototypeMethod(tpl, "SetRepeatCount", SetRepeatCount);
-	Nan::SetPrototypeMethod(tpl, "setRepeatCount", SetRepeatCount);
+	Nan::SetPrototypeMethod(tpl, "GetKeySym", GetKeySym);
+	Nan::SetPrototypeMethod(tpl, "getKeySym", GetKeySym);
+
+	Nan::SetPrototypeMethod(tpl, "GetLightFollowCamera", GetLightFollowCamera);
+	Nan::SetPrototypeMethod(tpl, "getLightFollowCamera", GetLightFollowCamera);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfFlyFrames", GetNumberOfFlyFrames);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfFlyFrames", GetNumberOfFlyFrames);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfFlyFramesMaxValue", GetNumberOfFlyFramesMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfFlyFramesMaxValue", GetNumberOfFlyFramesMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfFlyFramesMinValue", GetNumberOfFlyFramesMinValue);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfFlyFramesMinValue", GetNumberOfFlyFramesMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
+	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
 
 	Nan::SetPrototypeMethod(tpl, "GetRepeatCount", GetRepeatCount);
 	Nan::SetPrototypeMethod(tpl, "getRepeatCount", GetRepeatCount);
 
-	Nan::SetPrototypeMethod(tpl, "SetKeySym", SetKeySym);
-	Nan::SetPrototypeMethod(tpl, "setKeySym", SetKeySym);
+	Nan::SetPrototypeMethod(tpl, "GetShiftKey", GetShiftKey);
+	Nan::SetPrototypeMethod(tpl, "getShiftKey", GetShiftKey);
 
-	Nan::SetPrototypeMethod(tpl, "GetKeySym", GetKeySym);
-	Nan::SetPrototypeMethod(tpl, "getKeySym", GetKeySym);
+	Nan::SetPrototypeMethod(tpl, "GetStillUpdateRate", GetStillUpdateRate);
+	Nan::SetPrototypeMethod(tpl, "getStillUpdateRate", GetStillUpdateRate);
 
-	Nan::SetPrototypeMethod(tpl, "SetEventInformation", SetEventInformation);
-	Nan::SetPrototypeMethod(tpl, "setEventInformation", SetEventInformation);
+	Nan::SetPrototypeMethod(tpl, "GetStillUpdateRateMaxValue", GetStillUpdateRateMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getStillUpdateRateMaxValue", GetStillUpdateRateMaxValue);
 
-	Nan::SetPrototypeMethod(tpl, "SetEventInformationFlipY", SetEventInformationFlipY);
-	Nan::SetPrototypeMethod(tpl, "setEventInformationFlipY", SetEventInformationFlipY);
+	Nan::SetPrototypeMethod(tpl, "GetStillUpdateRateMinValue", GetStillUpdateRateMinValue);
+	Nan::SetPrototypeMethod(tpl, "getStillUpdateRateMinValue", GetStillUpdateRateMinValue);
 
-	Nan::SetPrototypeMethod(tpl, "SetKeyEventInformation", SetKeyEventInformation);
-	Nan::SetPrototypeMethod(tpl, "setKeyEventInformation", SetKeyEventInformation);
+	Nan::SetPrototypeMethod(tpl, "GetTimerEventDuration", GetTimerEventDuration);
+	Nan::SetPrototypeMethod(tpl, "getTimerEventDuration", GetTimerEventDuration);
 
-	Nan::SetPrototypeMethod(tpl, "SetSize", SetSize);
-	Nan::SetPrototypeMethod(tpl, "setSize", SetSize);
+	Nan::SetPrototypeMethod(tpl, "GetTimerEventId", GetTimerEventId);
+	Nan::SetPrototypeMethod(tpl, "getTimerEventId", GetTimerEventId);
 
-	Nan::SetPrototypeMethod(tpl, "SetEventSize", SetEventSize);
-	Nan::SetPrototypeMethod(tpl, "setEventSize", SetEventSize);
+	Nan::SetPrototypeMethod(tpl, "GetTimerEventPlatformId", GetTimerEventPlatformId);
+	Nan::SetPrototypeMethod(tpl, "getTimerEventPlatformId", GetTimerEventPlatformId);
 
-	Nan::SetPrototypeMethod(tpl, "FindPokedRenderer", FindPokedRenderer);
-	Nan::SetPrototypeMethod(tpl, "findPokedRenderer", FindPokedRenderer);
+	Nan::SetPrototypeMethod(tpl, "GetTimerEventType", GetTimerEventType);
+	Nan::SetPrototypeMethod(tpl, "getTimerEventType", GetTimerEventType);
 
-	Nan::SetPrototypeMethod(tpl, "MouseMoveEvent", MouseMoveEvent);
-	Nan::SetPrototypeMethod(tpl, "mouseMoveEvent", MouseMoveEvent);
+	Nan::SetPrototypeMethod(tpl, "GetVTKTimerId", GetVTKTimerId);
+	Nan::SetPrototypeMethod(tpl, "getVTKTimerId", GetVTKTimerId);
 
-	Nan::SetPrototypeMethod(tpl, "RightButtonPressEvent", RightButtonPressEvent);
-	Nan::SetPrototypeMethod(tpl, "rightButtonPressEvent", RightButtonPressEvent);
+	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
+	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
 
-	Nan::SetPrototypeMethod(tpl, "RightButtonReleaseEvent", RightButtonReleaseEvent);
-	Nan::SetPrototypeMethod(tpl, "rightButtonReleaseEvent", RightButtonReleaseEvent);
+	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
+	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
-	Nan::SetPrototypeMethod(tpl, "LeftButtonPressEvent", LeftButtonPressEvent);
-	Nan::SetPrototypeMethod(tpl, "leftButtonPressEvent", LeftButtonPressEvent);
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
-	Nan::SetPrototypeMethod(tpl, "LeftButtonReleaseEvent", LeftButtonReleaseEvent);
-	Nan::SetPrototypeMethod(tpl, "leftButtonReleaseEvent", LeftButtonReleaseEvent);
-
-	Nan::SetPrototypeMethod(tpl, "MiddleButtonPressEvent", MiddleButtonPressEvent);
-	Nan::SetPrototypeMethod(tpl, "middleButtonPressEvent", MiddleButtonPressEvent);
-
-	Nan::SetPrototypeMethod(tpl, "MiddleButtonReleaseEvent", MiddleButtonReleaseEvent);
-	Nan::SetPrototypeMethod(tpl, "middleButtonReleaseEvent", MiddleButtonReleaseEvent);
-
-	Nan::SetPrototypeMethod(tpl, "MouseWheelForwardEvent", MouseWheelForwardEvent);
-	Nan::SetPrototypeMethod(tpl, "mouseWheelForwardEvent", MouseWheelForwardEvent);
-
-	Nan::SetPrototypeMethod(tpl, "MouseWheelBackwardEvent", MouseWheelBackwardEvent);
-	Nan::SetPrototypeMethod(tpl, "mouseWheelBackwardEvent", MouseWheelBackwardEvent);
-
-	Nan::SetPrototypeMethod(tpl, "ExposeEvent", ExposeEvent);
-	Nan::SetPrototypeMethod(tpl, "exposeEvent", ExposeEvent);
-
-	Nan::SetPrototypeMethod(tpl, "ConfigureEvent", ConfigureEvent);
-	Nan::SetPrototypeMethod(tpl, "configureEvent", ConfigureEvent);
-
-	Nan::SetPrototypeMethod(tpl, "EnterEvent", EnterEvent);
-	Nan::SetPrototypeMethod(tpl, "enterEvent", EnterEvent);
-
-	Nan::SetPrototypeMethod(tpl, "LeaveEvent", LeaveEvent);
-	Nan::SetPrototypeMethod(tpl, "leaveEvent", LeaveEvent);
+	Nan::SetPrototypeMethod(tpl, "IsOneShotTimer", IsOneShotTimer);
+	Nan::SetPrototypeMethod(tpl, "isOneShotTimer", IsOneShotTimer);
 
 	Nan::SetPrototypeMethod(tpl, "KeyPressEvent", KeyPressEvent);
 	Nan::SetPrototypeMethod(tpl, "keyPressEvent", KeyPressEvent);
@@ -335,11 +197,149 @@ void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "KeyReleaseEvent", KeyReleaseEvent);
 	Nan::SetPrototypeMethod(tpl, "keyReleaseEvent", KeyReleaseEvent);
 
-	Nan::SetPrototypeMethod(tpl, "CharEvent", CharEvent);
-	Nan::SetPrototypeMethod(tpl, "charEvent", CharEvent);
+	Nan::SetPrototypeMethod(tpl, "LeaveEvent", LeaveEvent);
+	Nan::SetPrototypeMethod(tpl, "leaveEvent", LeaveEvent);
 
-	Nan::SetPrototypeMethod(tpl, "ExitEvent", ExitEvent);
-	Nan::SetPrototypeMethod(tpl, "exitEvent", ExitEvent);
+	Nan::SetPrototypeMethod(tpl, "LeftButtonPressEvent", LeftButtonPressEvent);
+	Nan::SetPrototypeMethod(tpl, "leftButtonPressEvent", LeftButtonPressEvent);
+
+	Nan::SetPrototypeMethod(tpl, "LeftButtonReleaseEvent", LeftButtonReleaseEvent);
+	Nan::SetPrototypeMethod(tpl, "leftButtonReleaseEvent", LeftButtonReleaseEvent);
+
+	Nan::SetPrototypeMethod(tpl, "LightFollowCameraOff", LightFollowCameraOff);
+	Nan::SetPrototypeMethod(tpl, "lightFollowCameraOff", LightFollowCameraOff);
+
+	Nan::SetPrototypeMethod(tpl, "LightFollowCameraOn", LightFollowCameraOn);
+	Nan::SetPrototypeMethod(tpl, "lightFollowCameraOn", LightFollowCameraOn);
+
+	Nan::SetPrototypeMethod(tpl, "MiddleButtonPressEvent", MiddleButtonPressEvent);
+	Nan::SetPrototypeMethod(tpl, "middleButtonPressEvent", MiddleButtonPressEvent);
+
+	Nan::SetPrototypeMethod(tpl, "MiddleButtonReleaseEvent", MiddleButtonReleaseEvent);
+	Nan::SetPrototypeMethod(tpl, "middleButtonReleaseEvent", MiddleButtonReleaseEvent);
+
+	Nan::SetPrototypeMethod(tpl, "MouseMoveEvent", MouseMoveEvent);
+	Nan::SetPrototypeMethod(tpl, "mouseMoveEvent", MouseMoveEvent);
+
+	Nan::SetPrototypeMethod(tpl, "MouseWheelBackwardEvent", MouseWheelBackwardEvent);
+	Nan::SetPrototypeMethod(tpl, "mouseWheelBackwardEvent", MouseWheelBackwardEvent);
+
+	Nan::SetPrototypeMethod(tpl, "MouseWheelForwardEvent", MouseWheelForwardEvent);
+	Nan::SetPrototypeMethod(tpl, "mouseWheelForwardEvent", MouseWheelForwardEvent);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "ReInitialize", ReInitialize);
+	Nan::SetPrototypeMethod(tpl, "reInitialize", ReInitialize);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
+
+	Nan::SetPrototypeMethod(tpl, "ResetTimer", ResetTimer);
+	Nan::SetPrototypeMethod(tpl, "resetTimer", ResetTimer);
+
+	Nan::SetPrototypeMethod(tpl, "RightButtonPressEvent", RightButtonPressEvent);
+	Nan::SetPrototypeMethod(tpl, "rightButtonPressEvent", RightButtonPressEvent);
+
+	Nan::SetPrototypeMethod(tpl, "RightButtonReleaseEvent", RightButtonReleaseEvent);
+	Nan::SetPrototypeMethod(tpl, "rightButtonReleaseEvent", RightButtonReleaseEvent);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAltKey", SetAltKey);
+	Nan::SetPrototypeMethod(tpl, "setAltKey", SetAltKey);
+
+	Nan::SetPrototypeMethod(tpl, "SetControlKey", SetControlKey);
+	Nan::SetPrototypeMethod(tpl, "setControlKey", SetControlKey);
+
+	Nan::SetPrototypeMethod(tpl, "SetDesiredUpdateRate", SetDesiredUpdateRate);
+	Nan::SetPrototypeMethod(tpl, "setDesiredUpdateRate", SetDesiredUpdateRate);
+
+	Nan::SetPrototypeMethod(tpl, "SetDolly", SetDolly);
+	Nan::SetPrototypeMethod(tpl, "setDolly", SetDolly);
+
+	Nan::SetPrototypeMethod(tpl, "SetEventInformation", SetEventInformation);
+	Nan::SetPrototypeMethod(tpl, "setEventInformation", SetEventInformation);
+
+	Nan::SetPrototypeMethod(tpl, "SetEventInformationFlipY", SetEventInformationFlipY);
+	Nan::SetPrototypeMethod(tpl, "setEventInformationFlipY", SetEventInformationFlipY);
+
+	Nan::SetPrototypeMethod(tpl, "SetEventPosition", SetEventPosition);
+	Nan::SetPrototypeMethod(tpl, "setEventPosition", SetEventPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetEventPositionFlipY", SetEventPositionFlipY);
+	Nan::SetPrototypeMethod(tpl, "setEventPositionFlipY", SetEventPositionFlipY);
+
+	Nan::SetPrototypeMethod(tpl, "SetEventSize", SetEventSize);
+	Nan::SetPrototypeMethod(tpl, "setEventSize", SetEventSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetInteractorStyle", SetInteractorStyle);
+	Nan::SetPrototypeMethod(tpl, "setInteractorStyle", SetInteractorStyle);
+
+	Nan::SetPrototypeMethod(tpl, "SetKeyCode", SetKeyCode);
+	Nan::SetPrototypeMethod(tpl, "setKeyCode", SetKeyCode);
+
+	Nan::SetPrototypeMethod(tpl, "SetKeyEventInformation", SetKeyEventInformation);
+	Nan::SetPrototypeMethod(tpl, "setKeyEventInformation", SetKeyEventInformation);
+
+	Nan::SetPrototypeMethod(tpl, "SetKeySym", SetKeySym);
+	Nan::SetPrototypeMethod(tpl, "setKeySym", SetKeySym);
+
+	Nan::SetPrototypeMethod(tpl, "SetLastEventPosition", SetLastEventPosition);
+	Nan::SetPrototypeMethod(tpl, "setLastEventPosition", SetLastEventPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetLightFollowCamera", SetLightFollowCamera);
+	Nan::SetPrototypeMethod(tpl, "setLightFollowCamera", SetLightFollowCamera);
+
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfFlyFrames", SetNumberOfFlyFrames);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfFlyFrames", SetNumberOfFlyFrames);
+
+	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
+	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
+
+	Nan::SetPrototypeMethod(tpl, "SetRepeatCount", SetRepeatCount);
+	Nan::SetPrototypeMethod(tpl, "setRepeatCount", SetRepeatCount);
+
+	Nan::SetPrototypeMethod(tpl, "SetShiftKey", SetShiftKey);
+	Nan::SetPrototypeMethod(tpl, "setShiftKey", SetShiftKey);
+
+	Nan::SetPrototypeMethod(tpl, "SetSize", SetSize);
+	Nan::SetPrototypeMethod(tpl, "setSize", SetSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetStillUpdateRate", SetStillUpdateRate);
+	Nan::SetPrototypeMethod(tpl, "setStillUpdateRate", SetStillUpdateRate);
+
+	Nan::SetPrototypeMethod(tpl, "SetTimerEventDuration", SetTimerEventDuration);
+	Nan::SetPrototypeMethod(tpl, "setTimerEventDuration", SetTimerEventDuration);
+
+	Nan::SetPrototypeMethod(tpl, "SetTimerEventId", SetTimerEventId);
+	Nan::SetPrototypeMethod(tpl, "setTimerEventId", SetTimerEventId);
+
+	Nan::SetPrototypeMethod(tpl, "SetTimerEventPlatformId", SetTimerEventPlatformId);
+	Nan::SetPrototypeMethod(tpl, "setTimerEventPlatformId", SetTimerEventPlatformId);
+
+	Nan::SetPrototypeMethod(tpl, "SetTimerEventType", SetTimerEventType);
+	Nan::SetPrototypeMethod(tpl, "setTimerEventType", SetTimerEventType);
+
+	Nan::SetPrototypeMethod(tpl, "ShowCursor", ShowCursor);
+	Nan::SetPrototypeMethod(tpl, "showCursor", ShowCursor);
+
+	Nan::SetPrototypeMethod(tpl, "Start", Start);
+	Nan::SetPrototypeMethod(tpl, "start", Start);
+
+	Nan::SetPrototypeMethod(tpl, "StartPickCallback", StartPickCallback);
+	Nan::SetPrototypeMethod(tpl, "startPickCallback", StartPickCallback);
+
+	Nan::SetPrototypeMethod(tpl, "TerminateApp", TerminateApp);
+	Nan::SetPrototypeMethod(tpl, "terminateApp", TerminateApp);
+
+	Nan::SetPrototypeMethod(tpl, "UpdateSize", UpdateSize);
+	Nan::SetPrototypeMethod(tpl, "updateSize", UpdateSize);
+
+	Nan::SetPrototypeMethod(tpl, "UserCallback", UserCallback);
+	Nan::SetPrototypeMethod(tpl, "userCallback", UserCallback);
 
 }
 
@@ -415,14 +415,21 @@ void VtkRenderWindowInteractorWrap::DestroyTimer(const Nan::FunctionCallbackInfo
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->DestroyTimer(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->DestroyTimer();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRenderWindowInteractorWrap::Disable(const Nan::FunctionCallbackInfo<v8::Value>& info)

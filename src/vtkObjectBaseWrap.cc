@@ -43,11 +43,11 @@ void VtkObjectBaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "IsTypeOf", IsTypeOf);
-	Nan::SetPrototypeMethod(tpl, "isTypeOf", IsTypeOf);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsTypeOf", IsTypeOf);
+	Nan::SetPrototypeMethod(tpl, "isTypeOf", IsTypeOf);
 
 }
 

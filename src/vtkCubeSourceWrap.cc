@@ -50,6 +50,36 @@ void VtkCubeSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
+	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
+
+	Nan::SetPrototypeMethod(tpl, "GetXLength", GetXLength);
+	Nan::SetPrototypeMethod(tpl, "getXLength", GetXLength);
+
+	Nan::SetPrototypeMethod(tpl, "GetXLengthMaxValue", GetXLengthMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getXLengthMaxValue", GetXLengthMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetXLengthMinValue", GetXLengthMinValue);
+	Nan::SetPrototypeMethod(tpl, "getXLengthMinValue", GetXLengthMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetYLength", GetYLength);
+	Nan::SetPrototypeMethod(tpl, "getYLength", GetYLength);
+
+	Nan::SetPrototypeMethod(tpl, "GetYLengthMaxValue", GetYLengthMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getYLengthMaxValue", GetYLengthMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetYLengthMinValue", GetYLengthMinValue);
+	Nan::SetPrototypeMethod(tpl, "getYLengthMinValue", GetYLengthMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetZLength", GetZLength);
+	Nan::SetPrototypeMethod(tpl, "getZLength", GetZLength);
+
+	Nan::SetPrototypeMethod(tpl, "GetZLengthMaxValue", GetZLengthMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getZLengthMaxValue", GetZLengthMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetZLengthMinValue", GetZLengthMinValue);
+	Nan::SetPrototypeMethod(tpl, "getZLengthMinValue", GetZLengthMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -59,53 +89,23 @@ void VtkCubeSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	Nan::SetPrototypeMethod(tpl, "SetXLength", SetXLength);
-	Nan::SetPrototypeMethod(tpl, "setXLength", SetXLength);
-
-	Nan::SetPrototypeMethod(tpl, "GetXLengthMinValue", GetXLengthMinValue);
-	Nan::SetPrototypeMethod(tpl, "getXLengthMinValue", GetXLengthMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetXLengthMaxValue", GetXLengthMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getXLengthMaxValue", GetXLengthMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetXLength", GetXLength);
-	Nan::SetPrototypeMethod(tpl, "getXLength", GetXLength);
-
-	Nan::SetPrototypeMethod(tpl, "SetYLength", SetYLength);
-	Nan::SetPrototypeMethod(tpl, "setYLength", SetYLength);
-
-	Nan::SetPrototypeMethod(tpl, "GetYLengthMinValue", GetYLengthMinValue);
-	Nan::SetPrototypeMethod(tpl, "getYLengthMinValue", GetYLengthMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetYLengthMaxValue", GetYLengthMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getYLengthMaxValue", GetYLengthMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetYLength", GetYLength);
-	Nan::SetPrototypeMethod(tpl, "getYLength", GetYLength);
-
-	Nan::SetPrototypeMethod(tpl, "SetZLength", SetZLength);
-	Nan::SetPrototypeMethod(tpl, "setZLength", SetZLength);
-
-	Nan::SetPrototypeMethod(tpl, "GetZLengthMinValue", GetZLengthMinValue);
-	Nan::SetPrototypeMethod(tpl, "getZLengthMinValue", GetZLengthMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetZLengthMaxValue", GetZLengthMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getZLengthMaxValue", GetZLengthMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetZLength", GetZLength);
-	Nan::SetPrototypeMethod(tpl, "getZLength", GetZLength);
+	Nan::SetPrototypeMethod(tpl, "SetBounds", SetBounds);
+	Nan::SetPrototypeMethod(tpl, "setBounds", SetBounds);
 
 	Nan::SetPrototypeMethod(tpl, "SetCenter", SetCenter);
 	Nan::SetPrototypeMethod(tpl, "setCenter", SetCenter);
 
-	Nan::SetPrototypeMethod(tpl, "SetBounds", SetBounds);
-	Nan::SetPrototypeMethod(tpl, "setBounds", SetBounds);
-
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
-	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
-	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
+	Nan::SetPrototypeMethod(tpl, "SetXLength", SetXLength);
+	Nan::SetPrototypeMethod(tpl, "setXLength", SetXLength);
+
+	Nan::SetPrototypeMethod(tpl, "SetYLength", SetYLength);
+	Nan::SetPrototypeMethod(tpl, "setYLength", SetYLength);
+
+	Nan::SetPrototypeMethod(tpl, "SetZLength", SetZLength);
+	Nan::SetPrototypeMethod(tpl, "setZLength", SetZLength);
 
 }
 

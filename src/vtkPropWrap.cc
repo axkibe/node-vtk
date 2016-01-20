@@ -46,74 +46,86 @@ void VtkPropWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkPropWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
-	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
-	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "AddConsumer", AddConsumer);
+	Nan::SetPrototypeMethod(tpl, "addConsumer", AddConsumer);
 
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "SetVisibility", SetVisibility);
-	Nan::SetPrototypeMethod(tpl, "setVisibility", SetVisibility);
-
-	Nan::SetPrototypeMethod(tpl, "GetVisibility", GetVisibility);
-	Nan::SetPrototypeMethod(tpl, "getVisibility", GetVisibility);
-
-	Nan::SetPrototypeMethod(tpl, "VisibilityOn", VisibilityOn);
-	Nan::SetPrototypeMethod(tpl, "visibilityOn", VisibilityOn);
-
-	Nan::SetPrototypeMethod(tpl, "VisibilityOff", VisibilityOff);
-	Nan::SetPrototypeMethod(tpl, "visibilityOff", VisibilityOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetPickable", SetPickable);
-	Nan::SetPrototypeMethod(tpl, "setPickable", SetPickable);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickable", GetPickable);
-	Nan::SetPrototypeMethod(tpl, "getPickable", GetPickable);
-
-	Nan::SetPrototypeMethod(tpl, "PickableOn", PickableOn);
-	Nan::SetPrototypeMethod(tpl, "pickableOn", PickableOn);
-
-	Nan::SetPrototypeMethod(tpl, "PickableOff", PickableOff);
-	Nan::SetPrototypeMethod(tpl, "pickableOff", PickableOff);
-
-	Nan::SetPrototypeMethod(tpl, "Pick", Pick);
-	Nan::SetPrototypeMethod(tpl, "pick", Pick);
-
-	Nan::SetPrototypeMethod(tpl, "SetDragable", SetDragable);
-	Nan::SetPrototypeMethod(tpl, "setDragable", SetDragable);
-
-	Nan::SetPrototypeMethod(tpl, "GetDragable", GetDragable);
-	Nan::SetPrototypeMethod(tpl, "getDragable", GetDragable);
-
-	Nan::SetPrototypeMethod(tpl, "DragableOn", DragableOn);
-	Nan::SetPrototypeMethod(tpl, "dragableOn", DragableOn);
+	Nan::SetPrototypeMethod(tpl, "AddEstimatedRenderTime", AddEstimatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "addEstimatedRenderTime", AddEstimatedRenderTime);
 
 	Nan::SetPrototypeMethod(tpl, "DragableOff", DragableOff);
 	Nan::SetPrototypeMethod(tpl, "dragableOff", DragableOff);
 
-	Nan::SetPrototypeMethod(tpl, "UseBoundsOn", UseBoundsOn);
-	Nan::SetPrototypeMethod(tpl, "useBoundsOn", UseBoundsOn);
+	Nan::SetPrototypeMethod(tpl, "DragableOn", DragableOn);
+	Nan::SetPrototypeMethod(tpl, "dragableOn", DragableOn);
 
-	Nan::SetPrototypeMethod(tpl, "UseBoundsOff", UseBoundsOff);
-	Nan::SetPrototypeMethod(tpl, "useBoundsOff", UseBoundsOff);
+	Nan::SetPrototypeMethod(tpl, "GetAllocatedRenderTime", GetAllocatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "getAllocatedRenderTime", GetAllocatedRenderTime);
 
-	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
-	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "InitPathTraversal", InitPathTraversal);
-	Nan::SetPrototypeMethod(tpl, "initPathTraversal", InitPathTraversal);
+	Nan::SetPrototypeMethod(tpl, "GetConsumer", GetConsumer);
+	Nan::SetPrototypeMethod(tpl, "getConsumer", GetConsumer);
+
+	Nan::SetPrototypeMethod(tpl, "GetDragable", GetDragable);
+	Nan::SetPrototypeMethod(tpl, "getDragable", GetDragable);
+
+	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfConsumers", GetNumberOfConsumers);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfConsumers", GetNumberOfConsumers);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPaths", GetNumberOfPaths);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPaths", GetNumberOfPaths);
 
+	Nan::SetPrototypeMethod(tpl, "GetPickable", GetPickable);
+	Nan::SetPrototypeMethod(tpl, "getPickable", GetPickable);
+
+	Nan::SetPrototypeMethod(tpl, "GetRenderTimeMultiplier", GetRenderTimeMultiplier);
+	Nan::SetPrototypeMethod(tpl, "getRenderTimeMultiplier", GetRenderTimeMultiplier);
+
+	Nan::SetPrototypeMethod(tpl, "GetVisibility", GetVisibility);
+	Nan::SetPrototypeMethod(tpl, "getVisibility", GetVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
+	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "InitPathTraversal", InitPathTraversal);
+	Nan::SetPrototypeMethod(tpl, "initPathTraversal", InitPathTraversal);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsConsumer", IsConsumer);
+	Nan::SetPrototypeMethod(tpl, "isConsumer", IsConsumer);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "Pick", Pick);
+	Nan::SetPrototypeMethod(tpl, "pick", Pick);
+
+	Nan::SetPrototypeMethod(tpl, "PickableOff", PickableOff);
+	Nan::SetPrototypeMethod(tpl, "pickableOff", PickableOff);
+
+	Nan::SetPrototypeMethod(tpl, "PickableOn", PickableOn);
+	Nan::SetPrototypeMethod(tpl, "pickableOn", PickableOn);
+
+	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
+	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveConsumer", RemoveConsumer);
+	Nan::SetPrototypeMethod(tpl, "removeConsumer", RemoveConsumer);
+
 	Nan::SetPrototypeMethod(tpl, "RenderOpaqueGeometry", RenderOpaqueGeometry);
 	Nan::SetPrototypeMethod(tpl, "renderOpaqueGeometry", RenderOpaqueGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "RenderOverlay", RenderOverlay);
+	Nan::SetPrototypeMethod(tpl, "renderOverlay", RenderOverlay);
 
 	Nan::SetPrototypeMethod(tpl, "RenderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "renderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
@@ -121,56 +133,44 @@ void VtkPropWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "RenderVolumetricGeometry", RenderVolumetricGeometry);
 	Nan::SetPrototypeMethod(tpl, "renderVolumetricGeometry", RenderVolumetricGeometry);
 
-	Nan::SetPrototypeMethod(tpl, "RenderOverlay", RenderOverlay);
-	Nan::SetPrototypeMethod(tpl, "renderOverlay", RenderOverlay);
-
-	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
-	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
-
-	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
-	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
-
-	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
-	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
-
-	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
-	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
-
-	Nan::SetPrototypeMethod(tpl, "SetEstimatedRenderTime", SetEstimatedRenderTime);
-	Nan::SetPrototypeMethod(tpl, "setEstimatedRenderTime", SetEstimatedRenderTime);
-
 	Nan::SetPrototypeMethod(tpl, "RestoreEstimatedRenderTime", RestoreEstimatedRenderTime);
 	Nan::SetPrototypeMethod(tpl, "restoreEstimatedRenderTime", RestoreEstimatedRenderTime);
 
-	Nan::SetPrototypeMethod(tpl, "AddEstimatedRenderTime", AddEstimatedRenderTime);
-	Nan::SetPrototypeMethod(tpl, "addEstimatedRenderTime", AddEstimatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "SetAllocatedRenderTime", SetAllocatedRenderTime);
 	Nan::SetPrototypeMethod(tpl, "setAllocatedRenderTime", SetAllocatedRenderTime);
 
-	Nan::SetPrototypeMethod(tpl, "GetAllocatedRenderTime", GetAllocatedRenderTime);
-	Nan::SetPrototypeMethod(tpl, "getAllocatedRenderTime", GetAllocatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "SetDragable", SetDragable);
+	Nan::SetPrototypeMethod(tpl, "setDragable", SetDragable);
+
+	Nan::SetPrototypeMethod(tpl, "SetEstimatedRenderTime", SetEstimatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "setEstimatedRenderTime", SetEstimatedRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "SetPickable", SetPickable);
+	Nan::SetPrototypeMethod(tpl, "setPickable", SetPickable);
 
 	Nan::SetPrototypeMethod(tpl, "SetRenderTimeMultiplier", SetRenderTimeMultiplier);
 	Nan::SetPrototypeMethod(tpl, "setRenderTimeMultiplier", SetRenderTimeMultiplier);
 
-	Nan::SetPrototypeMethod(tpl, "GetRenderTimeMultiplier", GetRenderTimeMultiplier);
-	Nan::SetPrototypeMethod(tpl, "getRenderTimeMultiplier", GetRenderTimeMultiplier);
+	Nan::SetPrototypeMethod(tpl, "SetVisibility", SetVisibility);
+	Nan::SetPrototypeMethod(tpl, "setVisibility", SetVisibility);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfConsumers", GetNumberOfConsumers);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfConsumers", GetNumberOfConsumers);
+	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
+	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	Nan::SetPrototypeMethod(tpl, "AddConsumer", AddConsumer);
-	Nan::SetPrototypeMethod(tpl, "addConsumer", AddConsumer);
+	Nan::SetPrototypeMethod(tpl, "UseBoundsOff", UseBoundsOff);
+	Nan::SetPrototypeMethod(tpl, "useBoundsOff", UseBoundsOff);
 
-	Nan::SetPrototypeMethod(tpl, "RemoveConsumer", RemoveConsumer);
-	Nan::SetPrototypeMethod(tpl, "removeConsumer", RemoveConsumer);
+	Nan::SetPrototypeMethod(tpl, "UseBoundsOn", UseBoundsOn);
+	Nan::SetPrototypeMethod(tpl, "useBoundsOn", UseBoundsOn);
 
-	Nan::SetPrototypeMethod(tpl, "GetConsumer", GetConsumer);
-	Nan::SetPrototypeMethod(tpl, "getConsumer", GetConsumer);
+	Nan::SetPrototypeMethod(tpl, "VisibilityOff", VisibilityOff);
+	Nan::SetPrototypeMethod(tpl, "visibilityOff", VisibilityOff);
 
-	Nan::SetPrototypeMethod(tpl, "IsConsumer", IsConsumer);
-	Nan::SetPrototypeMethod(tpl, "isConsumer", IsConsumer);
+	Nan::SetPrototypeMethod(tpl, "VisibilityOn", VisibilityOn);
+	Nan::SetPrototypeMethod(tpl, "visibilityOn", VisibilityOn);
 
 }
 
@@ -341,14 +341,22 @@ void VtkPropWrap::GetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
 	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsObject())
 	{
-		Nan::ThrowError("Too many parameters.");
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		double r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEstimatedRenderTime(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->GetEstimatedRenderTime();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPropWrap::GetNumberOfConsumers(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -43,53 +43,53 @@ void VtkObjectWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkObjectWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
-	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
-	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
-
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "DebugOn", DebugOn);
-	Nan::SetPrototypeMethod(tpl, "debugOn", DebugOn);
+	Nan::SetPrototypeMethod(tpl, "BreakOnError", BreakOnError);
+	Nan::SetPrototypeMethod(tpl, "breakOnError", BreakOnError);
 
 	Nan::SetPrototypeMethod(tpl, "DebugOff", DebugOff);
 	Nan::SetPrototypeMethod(tpl, "debugOff", DebugOff);
 
-	Nan::SetPrototypeMethod(tpl, "BreakOnError", BreakOnError);
-	Nan::SetPrototypeMethod(tpl, "breakOnError", BreakOnError);
+	Nan::SetPrototypeMethod(tpl, "DebugOn", DebugOn);
+	Nan::SetPrototypeMethod(tpl, "debugOn", DebugOn);
 
-	Nan::SetPrototypeMethod(tpl, "Modified", Modified);
-	Nan::SetPrototypeMethod(tpl, "modified", Modified);
-
-	Nan::SetPrototypeMethod(tpl, "SetGlobalWarningDisplay", SetGlobalWarningDisplay);
-	Nan::SetPrototypeMethod(tpl, "setGlobalWarningDisplay", SetGlobalWarningDisplay);
-
-	Nan::SetPrototypeMethod(tpl, "GlobalWarningDisplayOn", GlobalWarningDisplayOn);
-	Nan::SetPrototypeMethod(tpl, "globalWarningDisplayOn", GlobalWarningDisplayOn);
-
-	Nan::SetPrototypeMethod(tpl, "GlobalWarningDisplayOff", GlobalWarningDisplayOff);
-	Nan::SetPrototypeMethod(tpl, "globalWarningDisplayOff", GlobalWarningDisplayOff);
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetGlobalWarningDisplay", GetGlobalWarningDisplay);
 	Nan::SetPrototypeMethod(tpl, "getGlobalWarningDisplay", GetGlobalWarningDisplay);
 
-	Nan::SetPrototypeMethod(tpl, "RemoveObservers", RemoveObservers);
-	Nan::SetPrototypeMethod(tpl, "removeObservers", RemoveObservers);
+	Nan::SetPrototypeMethod(tpl, "GlobalWarningDisplayOff", GlobalWarningDisplayOff);
+	Nan::SetPrototypeMethod(tpl, "globalWarningDisplayOff", GlobalWarningDisplayOff);
 
-	Nan::SetPrototypeMethod(tpl, "RemoveAllObservers", RemoveAllObservers);
-	Nan::SetPrototypeMethod(tpl, "removeAllObservers", RemoveAllObservers);
+	Nan::SetPrototypeMethod(tpl, "GlobalWarningDisplayOn", GlobalWarningDisplayOn);
+	Nan::SetPrototypeMethod(tpl, "globalWarningDisplayOn", GlobalWarningDisplayOn);
 
 	Nan::SetPrototypeMethod(tpl, "HasObserver", HasObserver);
 	Nan::SetPrototypeMethod(tpl, "hasObserver", HasObserver);
 
 	Nan::SetPrototypeMethod(tpl, "InvokeEvent", InvokeEvent);
 	Nan::SetPrototypeMethod(tpl, "invokeEvent", InvokeEvent);
+
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "Modified", Modified);
+	Nan::SetPrototypeMethod(tpl, "modified", Modified);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveAllObservers", RemoveAllObservers);
+	Nan::SetPrototypeMethod(tpl, "removeAllObservers", RemoveAllObservers);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveObservers", RemoveObservers);
+	Nan::SetPrototypeMethod(tpl, "removeObservers", RemoveObservers);
+
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetGlobalWarningDisplay", SetGlobalWarningDisplay);
+	Nan::SetPrototypeMethod(tpl, "setGlobalWarningDisplay", SetGlobalWarningDisplay);
 
 }
 

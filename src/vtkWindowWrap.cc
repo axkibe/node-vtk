@@ -44,20 +44,86 @@ void VtkWindowWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
+	Nan::SetPrototypeMethod(tpl, "DoubleBufferOff", DoubleBufferOff);
+	Nan::SetPrototypeMethod(tpl, "doubleBufferOff", DoubleBufferOff);
+
+	Nan::SetPrototypeMethod(tpl, "DoubleBufferOn", DoubleBufferOn);
+	Nan::SetPrototypeMethod(tpl, "doubleBufferOn", DoubleBufferOn);
+
+	Nan::SetPrototypeMethod(tpl, "EraseOff", EraseOff);
+	Nan::SetPrototypeMethod(tpl, "eraseOff", EraseOff);
+
+	Nan::SetPrototypeMethod(tpl, "EraseOn", EraseOn);
+	Nan::SetPrototypeMethod(tpl, "eraseOn", EraseOn);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetDPI", GetDPI);
+	Nan::SetPrototypeMethod(tpl, "getDPI", GetDPI);
+
+	Nan::SetPrototypeMethod(tpl, "GetDPIMaxValue", GetDPIMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getDPIMaxValue", GetDPIMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetDPIMinValue", GetDPIMinValue);
+	Nan::SetPrototypeMethod(tpl, "getDPIMinValue", GetDPIMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetDoubleBuffer", GetDoubleBuffer);
+	Nan::SetPrototypeMethod(tpl, "getDoubleBuffer", GetDoubleBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "GetErase", GetErase);
+	Nan::SetPrototypeMethod(tpl, "getErase", GetErase);
+
+	Nan::SetPrototypeMethod(tpl, "GetMapped", GetMapped);
+	Nan::SetPrototypeMethod(tpl, "getMapped", GetMapped);
+
+	Nan::SetPrototypeMethod(tpl, "GetOffScreenRendering", GetOffScreenRendering);
+	Nan::SetPrototypeMethod(tpl, "getOffScreenRendering", GetOffScreenRendering);
+
+	Nan::SetPrototypeMethod(tpl, "GetWindowName", GetWindowName);
+	Nan::SetPrototypeMethod(tpl, "getWindowName", GetWindowName);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "MakeCurrent", MakeCurrent);
+	Nan::SetPrototypeMethod(tpl, "makeCurrent", MakeCurrent);
+
+	Nan::SetPrototypeMethod(tpl, "MappedOff", MappedOff);
+	Nan::SetPrototypeMethod(tpl, "mappedOff", MappedOff);
+
+	Nan::SetPrototypeMethod(tpl, "MappedOn", MappedOn);
+	Nan::SetPrototypeMethod(tpl, "mappedOn", MappedOn);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "OffScreenRenderingOff", OffScreenRenderingOff);
+	Nan::SetPrototypeMethod(tpl, "offScreenRenderingOff", OffScreenRenderingOff);
+
+	Nan::SetPrototypeMethod(tpl, "OffScreenRenderingOn", OffScreenRenderingOn);
+	Nan::SetPrototypeMethod(tpl, "offScreenRenderingOn", OffScreenRenderingOn);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	Nan::SetPrototypeMethod(tpl, "SetWindowInfo", SetWindowInfo);
-	Nan::SetPrototypeMethod(tpl, "setWindowInfo", SetWindowInfo);
+	Nan::SetPrototypeMethod(tpl, "SetDPI", SetDPI);
+	Nan::SetPrototypeMethod(tpl, "setDPI", SetDPI);
+
+	Nan::SetPrototypeMethod(tpl, "SetDoubleBuffer", SetDoubleBuffer);
+	Nan::SetPrototypeMethod(tpl, "setDoubleBuffer", SetDoubleBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetErase", SetErase);
+	Nan::SetPrototypeMethod(tpl, "setErase", SetErase);
+
+	Nan::SetPrototypeMethod(tpl, "SetMapped", SetMapped);
+	Nan::SetPrototypeMethod(tpl, "setMapped", SetMapped);
+
+	Nan::SetPrototypeMethod(tpl, "SetOffScreenRendering", SetOffScreenRendering);
+	Nan::SetPrototypeMethod(tpl, "setOffScreenRendering", SetOffScreenRendering);
 
 	Nan::SetPrototypeMethod(tpl, "SetParentInfo", SetParentInfo);
 	Nan::SetPrototypeMethod(tpl, "setParentInfo", SetParentInfo);
@@ -68,78 +134,6 @@ void VtkWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSize", SetSize);
 	Nan::SetPrototypeMethod(tpl, "setSize", SetSize);
 
-	Nan::SetPrototypeMethod(tpl, "SetMapped", SetMapped);
-	Nan::SetPrototypeMethod(tpl, "setMapped", SetMapped);
-
-	Nan::SetPrototypeMethod(tpl, "GetMapped", GetMapped);
-	Nan::SetPrototypeMethod(tpl, "getMapped", GetMapped);
-
-	Nan::SetPrototypeMethod(tpl, "MappedOn", MappedOn);
-	Nan::SetPrototypeMethod(tpl, "mappedOn", MappedOn);
-
-	Nan::SetPrototypeMethod(tpl, "MappedOff", MappedOff);
-	Nan::SetPrototypeMethod(tpl, "mappedOff", MappedOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetErase", SetErase);
-	Nan::SetPrototypeMethod(tpl, "setErase", SetErase);
-
-	Nan::SetPrototypeMethod(tpl, "GetErase", GetErase);
-	Nan::SetPrototypeMethod(tpl, "getErase", GetErase);
-
-	Nan::SetPrototypeMethod(tpl, "EraseOn", EraseOn);
-	Nan::SetPrototypeMethod(tpl, "eraseOn", EraseOn);
-
-	Nan::SetPrototypeMethod(tpl, "EraseOff", EraseOff);
-	Nan::SetPrototypeMethod(tpl, "eraseOff", EraseOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetDoubleBuffer", SetDoubleBuffer);
-	Nan::SetPrototypeMethod(tpl, "setDoubleBuffer", SetDoubleBuffer);
-
-	Nan::SetPrototypeMethod(tpl, "GetDoubleBuffer", GetDoubleBuffer);
-	Nan::SetPrototypeMethod(tpl, "getDoubleBuffer", GetDoubleBuffer);
-
-	Nan::SetPrototypeMethod(tpl, "DoubleBufferOn", DoubleBufferOn);
-	Nan::SetPrototypeMethod(tpl, "doubleBufferOn", DoubleBufferOn);
-
-	Nan::SetPrototypeMethod(tpl, "DoubleBufferOff", DoubleBufferOff);
-	Nan::SetPrototypeMethod(tpl, "doubleBufferOff", DoubleBufferOff);
-
-	Nan::SetPrototypeMethod(tpl, "GetWindowName", GetWindowName);
-	Nan::SetPrototypeMethod(tpl, "getWindowName", GetWindowName);
-
-	Nan::SetPrototypeMethod(tpl, "SetWindowName", SetWindowName);
-	Nan::SetPrototypeMethod(tpl, "setWindowName", SetWindowName);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
-
-	Nan::SetPrototypeMethod(tpl, "GetDPI", GetDPI);
-	Nan::SetPrototypeMethod(tpl, "getDPI", GetDPI);
-
-	Nan::SetPrototypeMethod(tpl, "SetDPI", SetDPI);
-	Nan::SetPrototypeMethod(tpl, "setDPI", SetDPI);
-
-	Nan::SetPrototypeMethod(tpl, "GetDPIMinValue", GetDPIMinValue);
-	Nan::SetPrototypeMethod(tpl, "getDPIMinValue", GetDPIMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetDPIMaxValue", GetDPIMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getDPIMaxValue", GetDPIMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "SetOffScreenRendering", SetOffScreenRendering);
-	Nan::SetPrototypeMethod(tpl, "setOffScreenRendering", SetOffScreenRendering);
-
-	Nan::SetPrototypeMethod(tpl, "GetOffScreenRendering", GetOffScreenRendering);
-	Nan::SetPrototypeMethod(tpl, "getOffScreenRendering", GetOffScreenRendering);
-
-	Nan::SetPrototypeMethod(tpl, "OffScreenRenderingOn", OffScreenRenderingOn);
-	Nan::SetPrototypeMethod(tpl, "offScreenRenderingOn", OffScreenRenderingOn);
-
-	Nan::SetPrototypeMethod(tpl, "OffScreenRenderingOff", OffScreenRenderingOff);
-	Nan::SetPrototypeMethod(tpl, "offScreenRenderingOff", OffScreenRenderingOff);
-
-	Nan::SetPrototypeMethod(tpl, "MakeCurrent", MakeCurrent);
-	Nan::SetPrototypeMethod(tpl, "makeCurrent", MakeCurrent);
-
 	Nan::SetPrototypeMethod(tpl, "SetTileScale", SetTileScale);
 	Nan::SetPrototypeMethod(tpl, "setTileScale", SetTileScale);
 
@@ -148,6 +142,12 @@ void VtkWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "SetTileViewport", SetTileViewport);
 	Nan::SetPrototypeMethod(tpl, "setTileViewport", SetTileViewport);
+
+	Nan::SetPrototypeMethod(tpl, "SetWindowInfo", SetWindowInfo);
+	Nan::SetPrototypeMethod(tpl, "setWindowInfo", SetWindowInfo);
+
+	Nan::SetPrototypeMethod(tpl, "SetWindowName", SetWindowName);
+	Nan::SetPrototypeMethod(tpl, "setWindowName", SetWindowName);
 
 }
 
@@ -663,15 +663,19 @@ void VtkWindowWrap::SetTileScale(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkWindow *native = (vtkWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			Nan::ThrowError("Too many parameters.");
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetTileScale(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
 			return;
 		}
-		native->SetTileScale(
-			info[0]->Int32Value()
-		);
-		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

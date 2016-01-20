@@ -46,35 +46,89 @@ void VtkViewportWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
-	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
-	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
-
-	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
-	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
-	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
-	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "AddActor2D", AddActor2D);
+	Nan::SetPrototypeMethod(tpl, "addActor2D", AddActor2D);
 
 	Nan::SetPrototypeMethod(tpl, "AddViewProp", AddViewProp);
 	Nan::SetPrototypeMethod(tpl, "addViewProp", AddViewProp);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeAspect", ComputeAspect);
+	Nan::SetPrototypeMethod(tpl, "computeAspect", ComputeAspect);
+
+	Nan::SetPrototypeMethod(tpl, "DisplayToView", DisplayToView);
+	Nan::SetPrototypeMethod(tpl, "displayToView", DisplayToView);
+
+	Nan::SetPrototypeMethod(tpl, "DisplayToWorld", DisplayToWorld);
+	Nan::SetPrototypeMethod(tpl, "displayToWorld", DisplayToWorld);
+
+	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
+	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetIsPicking", GetIsPicking);
+	Nan::SetPrototypeMethod(tpl, "getIsPicking", GetIsPicking);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickHeight", GetPickHeight);
+	Nan::SetPrototypeMethod(tpl, "getPickHeight", GetPickHeight);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickWidth", GetPickWidth);
+	Nan::SetPrototypeMethod(tpl, "getPickWidth", GetPickWidth);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickX", GetPickX);
+	Nan::SetPrototypeMethod(tpl, "getPickX", GetPickX);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickX1", GetPickX1);
+	Nan::SetPrototypeMethod(tpl, "getPickX1", GetPickX1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickX2", GetPickX2);
+	Nan::SetPrototypeMethod(tpl, "getPickX2", GetPickX2);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickY", GetPickY);
+	Nan::SetPrototypeMethod(tpl, "getPickY", GetPickY);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickY1", GetPickY1);
+	Nan::SetPrototypeMethod(tpl, "getPickY1", GetPickY1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickY2", GetPickY2);
+	Nan::SetPrototypeMethod(tpl, "getPickY2", GetPickY2);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickedZ", GetPickedZ);
+	Nan::SetPrototypeMethod(tpl, "getPickedZ", GetPickedZ);
+
+	Nan::SetPrototypeMethod(tpl, "GetVTKWindow", GetVTKWindow);
+	Nan::SetPrototypeMethod(tpl, "getVTKWindow", GetVTKWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GradientBackgroundOff", GradientBackgroundOff);
+	Nan::SetPrototypeMethod(tpl, "gradientBackgroundOff", GradientBackgroundOff);
+
+	Nan::SetPrototypeMethod(tpl, "GradientBackgroundOn", GradientBackgroundOn);
+	Nan::SetPrototypeMethod(tpl, "gradientBackgroundOn", GradientBackgroundOn);
+
 	Nan::SetPrototypeMethod(tpl, "HasViewProp", HasViewProp);
 	Nan::SetPrototypeMethod(tpl, "hasViewProp", HasViewProp);
 
-	Nan::SetPrototypeMethod(tpl, "RemoveViewProp", RemoveViewProp);
-	Nan::SetPrototypeMethod(tpl, "removeViewProp", RemoveViewProp);
+	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
+	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsInViewport", IsInViewport);
+	Nan::SetPrototypeMethod(tpl, "isInViewport", IsInViewport);
+
+	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
+	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveActor2D", RemoveActor2D);
+	Nan::SetPrototypeMethod(tpl, "removeActor2D", RemoveActor2D);
 
 	Nan::SetPrototypeMethod(tpl, "RemoveAllViewProps", RemoveAllViewProps);
 	Nan::SetPrototypeMethod(tpl, "removeAllViewProps", RemoveAllViewProps);
 
-	Nan::SetPrototypeMethod(tpl, "AddActor2D", AddActor2D);
-	Nan::SetPrototypeMethod(tpl, "addActor2D", AddActor2D);
+	Nan::SetPrototypeMethod(tpl, "RemoveViewProp", RemoveViewProp);
+	Nan::SetPrototypeMethod(tpl, "removeViewProp", RemoveViewProp);
 
-	Nan::SetPrototypeMethod(tpl, "RemoveActor2D", RemoveActor2D);
-	Nan::SetPrototypeMethod(tpl, "removeActor2D", RemoveActor2D);
+	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
+	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAspect", SetAspect);
+	Nan::SetPrototypeMethod(tpl, "setAspect", SetAspect);
 
 	Nan::SetPrototypeMethod(tpl, "SetBackground", SetBackground);
 	Nan::SetPrototypeMethod(tpl, "setBackground", SetBackground);
@@ -82,86 +136,32 @@ void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetBackground2", SetBackground2);
 	Nan::SetPrototypeMethod(tpl, "setBackground2", SetBackground2);
 
-	Nan::SetPrototypeMethod(tpl, "GradientBackgroundOn", GradientBackgroundOn);
-	Nan::SetPrototypeMethod(tpl, "gradientBackgroundOn", GradientBackgroundOn);
-
-	Nan::SetPrototypeMethod(tpl, "GradientBackgroundOff", GradientBackgroundOff);
-	Nan::SetPrototypeMethod(tpl, "gradientBackgroundOff", GradientBackgroundOff);
-
-	Nan::SetPrototypeMethod(tpl, "SetAspect", SetAspect);
-	Nan::SetPrototypeMethod(tpl, "setAspect", SetAspect);
-
-	Nan::SetPrototypeMethod(tpl, "ComputeAspect", ComputeAspect);
-	Nan::SetPrototypeMethod(tpl, "computeAspect", ComputeAspect);
+	Nan::SetPrototypeMethod(tpl, "SetDisplayPoint", SetDisplayPoint);
+	Nan::SetPrototypeMethod(tpl, "setDisplayPoint", SetDisplayPoint);
 
 	Nan::SetPrototypeMethod(tpl, "SetPixelAspect", SetPixelAspect);
 	Nan::SetPrototypeMethod(tpl, "setPixelAspect", SetPixelAspect);
 
-	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
-	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
-
-	Nan::SetPrototypeMethod(tpl, "SetDisplayPoint", SetDisplayPoint);
-	Nan::SetPrototypeMethod(tpl, "setDisplayPoint", SetDisplayPoint);
-
 	Nan::SetPrototypeMethod(tpl, "SetViewPoint", SetViewPoint);
 	Nan::SetPrototypeMethod(tpl, "setViewPoint", SetViewPoint);
+
+	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
+	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
 	Nan::SetPrototypeMethod(tpl, "SetWorldPoint", SetWorldPoint);
 	Nan::SetPrototypeMethod(tpl, "setWorldPoint", SetWorldPoint);
 
-	Nan::SetPrototypeMethod(tpl, "IsInViewport", IsInViewport);
-	Nan::SetPrototypeMethod(tpl, "isInViewport", IsInViewport);
-
-	Nan::SetPrototypeMethod(tpl, "GetVTKWindow", GetVTKWindow);
-	Nan::SetPrototypeMethod(tpl, "getVTKWindow", GetVTKWindow);
-
-	Nan::SetPrototypeMethod(tpl, "DisplayToView", DisplayToView);
-	Nan::SetPrototypeMethod(tpl, "displayToView", DisplayToView);
-
 	Nan::SetPrototypeMethod(tpl, "ViewToDisplay", ViewToDisplay);
 	Nan::SetPrototypeMethod(tpl, "viewToDisplay", ViewToDisplay);
-
-	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
-	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
 
 	Nan::SetPrototypeMethod(tpl, "ViewToWorld", ViewToWorld);
 	Nan::SetPrototypeMethod(tpl, "viewToWorld", ViewToWorld);
 
-	Nan::SetPrototypeMethod(tpl, "DisplayToWorld", DisplayToWorld);
-	Nan::SetPrototypeMethod(tpl, "displayToWorld", DisplayToWorld);
-
 	Nan::SetPrototypeMethod(tpl, "WorldToDisplay", WorldToDisplay);
 	Nan::SetPrototypeMethod(tpl, "worldToDisplay", WorldToDisplay);
 
-	Nan::SetPrototypeMethod(tpl, "GetPickX", GetPickX);
-	Nan::SetPrototypeMethod(tpl, "getPickX", GetPickX);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickY", GetPickY);
-	Nan::SetPrototypeMethod(tpl, "getPickY", GetPickY);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickWidth", GetPickWidth);
-	Nan::SetPrototypeMethod(tpl, "getPickWidth", GetPickWidth);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickHeight", GetPickHeight);
-	Nan::SetPrototypeMethod(tpl, "getPickHeight", GetPickHeight);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickX1", GetPickX1);
-	Nan::SetPrototypeMethod(tpl, "getPickX1", GetPickX1);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickY1", GetPickY1);
-	Nan::SetPrototypeMethod(tpl, "getPickY1", GetPickY1);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickX2", GetPickX2);
-	Nan::SetPrototypeMethod(tpl, "getPickX2", GetPickX2);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickY2", GetPickY2);
-	Nan::SetPrototypeMethod(tpl, "getPickY2", GetPickY2);
-
-	Nan::SetPrototypeMethod(tpl, "GetIsPicking", GetIsPicking);
-	Nan::SetPrototypeMethod(tpl, "getIsPicking", GetIsPicking);
-
-	Nan::SetPrototypeMethod(tpl, "GetPickedZ", GetPickedZ);
-	Nan::SetPrototypeMethod(tpl, "getPickedZ", GetPickedZ);
+	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
+	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
 
 }
 

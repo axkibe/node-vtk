@@ -48,6 +48,12 @@ void VtkAlgorithmOutputWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetIndex", GetIndex);
+	Nan::SetPrototypeMethod(tpl, "getIndex", GetIndex);
+
+	Nan::SetPrototypeMethod(tpl, "GetProducer", GetProducer);
+	Nan::SetPrototypeMethod(tpl, "getProducer", GetProducer);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -59,12 +65,6 @@ void VtkAlgorithmOutputWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "SetIndex", SetIndex);
 	Nan::SetPrototypeMethod(tpl, "setIndex", SetIndex);
-
-	Nan::SetPrototypeMethod(tpl, "GetIndex", GetIndex);
-	Nan::SetPrototypeMethod(tpl, "getIndex", GetIndex);
-
-	Nan::SetPrototypeMethod(tpl, "GetProducer", GetProducer);
-	Nan::SetPrototypeMethod(tpl, "getProducer", GetProducer);
 
 	Nan::SetPrototypeMethod(tpl, "SetProducer", SetProducer);
 	Nan::SetPrototypeMethod(tpl, "setProducer", SetProducer);

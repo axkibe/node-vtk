@@ -47,8 +47,50 @@ void VtkConeSourceWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkConeSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
+	Nan::SetPrototypeMethod(tpl, "CappingOff", CappingOff);
+	Nan::SetPrototypeMethod(tpl, "cappingOff", CappingOff);
+
+	Nan::SetPrototypeMethod(tpl, "CappingOn", CappingOn);
+	Nan::SetPrototypeMethod(tpl, "cappingOn", CappingOn);
+
+	Nan::SetPrototypeMethod(tpl, "GetAngle", GetAngle);
+	Nan::SetPrototypeMethod(tpl, "getAngle", GetAngle);
+
+	Nan::SetPrototypeMethod(tpl, "GetCapping", GetCapping);
+	Nan::SetPrototypeMethod(tpl, "getCapping", GetCapping);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetHeight", GetHeight);
+	Nan::SetPrototypeMethod(tpl, "getHeight", GetHeight);
+
+	Nan::SetPrototypeMethod(tpl, "GetHeightMaxValue", GetHeightMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getHeightMaxValue", GetHeightMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetHeightMinValue", GetHeightMinValue);
+	Nan::SetPrototypeMethod(tpl, "getHeightMinValue", GetHeightMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
+	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
+
+	Nan::SetPrototypeMethod(tpl, "GetRadius", GetRadius);
+	Nan::SetPrototypeMethod(tpl, "getRadius", GetRadius);
+
+	Nan::SetPrototypeMethod(tpl, "GetRadiusMaxValue", GetRadiusMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getRadiusMaxValue", GetRadiusMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetRadiusMinValue", GetRadiusMinValue);
+	Nan::SetPrototypeMethod(tpl, "getRadiusMinValue", GetRadiusMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetResolution", GetResolution);
+	Nan::SetPrototypeMethod(tpl, "getResolution", GetResolution);
+
+	Nan::SetPrototypeMethod(tpl, "GetResolutionMaxValue", GetResolutionMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getResolutionMaxValue", GetResolutionMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetResolutionMinValue", GetResolutionMinValue);
+	Nan::SetPrototypeMethod(tpl, "getResolutionMinValue", GetResolutionMinValue);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -59,41 +101,11 @@ void VtkConeSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	Nan::SetPrototypeMethod(tpl, "SetHeight", SetHeight);
-	Nan::SetPrototypeMethod(tpl, "setHeight", SetHeight);
+	Nan::SetPrototypeMethod(tpl, "SetAngle", SetAngle);
+	Nan::SetPrototypeMethod(tpl, "setAngle", SetAngle);
 
-	Nan::SetPrototypeMethod(tpl, "GetHeightMinValue", GetHeightMinValue);
-	Nan::SetPrototypeMethod(tpl, "getHeightMinValue", GetHeightMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetHeightMaxValue", GetHeightMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getHeightMaxValue", GetHeightMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetHeight", GetHeight);
-	Nan::SetPrototypeMethod(tpl, "getHeight", GetHeight);
-
-	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
-	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
-
-	Nan::SetPrototypeMethod(tpl, "GetRadiusMinValue", GetRadiusMinValue);
-	Nan::SetPrototypeMethod(tpl, "getRadiusMinValue", GetRadiusMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetRadiusMaxValue", GetRadiusMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getRadiusMaxValue", GetRadiusMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetRadius", GetRadius);
-	Nan::SetPrototypeMethod(tpl, "getRadius", GetRadius);
-
-	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
-	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
-
-	Nan::SetPrototypeMethod(tpl, "GetResolutionMinValue", GetResolutionMinValue);
-	Nan::SetPrototypeMethod(tpl, "getResolutionMinValue", GetResolutionMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetResolutionMaxValue", GetResolutionMaxValue);
-	Nan::SetPrototypeMethod(tpl, "getResolutionMaxValue", GetResolutionMaxValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetResolution", GetResolution);
-	Nan::SetPrototypeMethod(tpl, "getResolution", GetResolution);
+	Nan::SetPrototypeMethod(tpl, "SetCapping", SetCapping);
+	Nan::SetPrototypeMethod(tpl, "setCapping", SetCapping);
 
 	Nan::SetPrototypeMethod(tpl, "SetCenter", SetCenter);
 	Nan::SetPrototypeMethod(tpl, "setCenter", SetCenter);
@@ -101,29 +113,17 @@ void VtkConeSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDirection", SetDirection);
 	Nan::SetPrototypeMethod(tpl, "setDirection", SetDirection);
 
-	Nan::SetPrototypeMethod(tpl, "SetAngle", SetAngle);
-	Nan::SetPrototypeMethod(tpl, "setAngle", SetAngle);
-
-	Nan::SetPrototypeMethod(tpl, "GetAngle", GetAngle);
-	Nan::SetPrototypeMethod(tpl, "getAngle", GetAngle);
-
-	Nan::SetPrototypeMethod(tpl, "SetCapping", SetCapping);
-	Nan::SetPrototypeMethod(tpl, "setCapping", SetCapping);
-
-	Nan::SetPrototypeMethod(tpl, "GetCapping", GetCapping);
-	Nan::SetPrototypeMethod(tpl, "getCapping", GetCapping);
-
-	Nan::SetPrototypeMethod(tpl, "CappingOn", CappingOn);
-	Nan::SetPrototypeMethod(tpl, "cappingOn", CappingOn);
-
-	Nan::SetPrototypeMethod(tpl, "CappingOff", CappingOff);
-	Nan::SetPrototypeMethod(tpl, "cappingOff", CappingOff);
+	Nan::SetPrototypeMethod(tpl, "SetHeight", SetHeight);
+	Nan::SetPrototypeMethod(tpl, "setHeight", SetHeight);
 
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
-	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
-	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
+	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
+	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
+
+	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
+	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
 }
 
