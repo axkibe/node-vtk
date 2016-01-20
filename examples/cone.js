@@ -16,7 +16,7 @@ actor.setMapper( mapper );
 
 renderer = new vtk.renderer( );
 renderer.addActor( actor );
-renderer.setBackground( .3, .2, .1 );
+renderer.setBackground( 0.3, 0.2, 0.1 );
 renderer.resetCamera( );
 
 renderWindow = new vtk.renderWindow( );
