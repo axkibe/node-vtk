@@ -11,6 +11,8 @@
 #include "vtkMapperWrap.h"
 #include "vtkPolyDataMapperWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkRendererWrap.h"
+#include "vtkActorWrap.h"
 #include "vtkAbstractMapperWrap.h"
 
 using namespace v8;
@@ -61,6 +63,12 @@ void VtkPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "RenderPiece", RenderPiece);
+	Nan::SetPrototypeMethod(tpl, "renderPiece", RenderPiece);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -218,6 +226,56 @@ void VtkPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::RenderPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RenderPiece(
+				(vtkRenderer *) a0->native.GetPointer(),
+				(vtkActor *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Render(
+				(vtkRenderer *) a0->native.GetPointer(),
+				(vtkActor *) a1->native.GetPointer()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

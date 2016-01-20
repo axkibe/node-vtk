@@ -11,8 +11,10 @@
 #include "vtkProp3DWrap.h"
 #include "vtkActorWrap.h"
 #include "vtkObjectWrap.h"
-#include "vtkPropWrap.h"
+#include "vtkViewportWrap.h"
+#include "vtkRendererWrap.h"
 #include "vtkMapperWrap.h"
+#include "vtkPropWrap.h"
 
 using namespace v8;
 
@@ -61,8 +63,17 @@ void VtkActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "RenderOpaqueGeometry", RenderOpaqueGeometry);
+	Nan::SetPrototypeMethod(tpl, "renderOpaqueGeometry", RenderOpaqueGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "RenderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
+	Nan::SetPrototypeMethod(tpl, "renderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
+
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
@@ -191,6 +202,50 @@ void VtkActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RenderOpaqueGeometry(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkActorWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RenderTranslucentPolygonalGeometry(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkActorWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
@@ -203,6 +258,31 @@ void VtkActorWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackIn
 	}
 	r = native->HasTranslucentPolygonalGeometry();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkActorWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkMapperWrap *a1 = ObjectWrap::Unwrap<VtkMapperWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Render(
+				(vtkRenderer *) a0->native.GetPointer(),
+				(vtkMapper *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)

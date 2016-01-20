@@ -10,6 +10,7 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkPropWrap.h"
+#include "vtkViewportWrap.h"
 
 using namespace v8;
 
@@ -110,8 +111,23 @@ void VtkPropWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPaths", GetNumberOfPaths);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPaths", GetNumberOfPaths);
 
+	Nan::SetPrototypeMethod(tpl, "RenderOpaqueGeometry", RenderOpaqueGeometry);
+	Nan::SetPrototypeMethod(tpl, "renderOpaqueGeometry", RenderOpaqueGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "RenderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
+	Nan::SetPrototypeMethod(tpl, "renderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "RenderVolumetricGeometry", RenderVolumetricGeometry);
+	Nan::SetPrototypeMethod(tpl, "renderVolumetricGeometry", RenderVolumetricGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "RenderOverlay", RenderOverlay);
+	Nan::SetPrototypeMethod(tpl, "renderOverlay", RenderOverlay);
+
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
 	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
@@ -121,6 +137,12 @@ void VtkPropWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "RestoreEstimatedRenderTime", RestoreEstimatedRenderTime);
 	Nan::SetPrototypeMethod(tpl, "restoreEstimatedRenderTime", RestoreEstimatedRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "AddEstimatedRenderTime", AddEstimatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "addEstimatedRenderTime", AddEstimatedRenderTime);
+
+	Nan::SetPrototypeMethod(tpl, "SetAllocatedRenderTime", SetAllocatedRenderTime);
+	Nan::SetPrototypeMethod(tpl, "setAllocatedRenderTime", SetAllocatedRenderTime);
 
 	Nan::SetPrototypeMethod(tpl, "GetAllocatedRenderTime", GetAllocatedRenderTime);
 	Nan::SetPrototypeMethod(tpl, "getAllocatedRenderTime", GetAllocatedRenderTime);
@@ -514,6 +536,94 @@ void VtkPropWrap::GetNumberOfPaths(const Nan::FunctionCallbackInfo<v8::Value>& i
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPropWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RenderOpaqueGeometry(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RenderTranslucentPolygonalGeometry(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::RenderVolumetricGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RenderVolumetricGeometry(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RenderOverlay(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPropWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
@@ -532,14 +642,22 @@ void VtkPropWrap::GetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
 	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
+	if(info.Length() > 0 && info[0]->IsObject())
 	{
-		Nan::ThrowError("Too many parameters.");
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		double r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEstimatedRenderTime(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->GetEstimatedRenderTime();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPropWrap::SetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -571,6 +689,54 @@ void VtkPropWrap::RestoreEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	native->RestoreEstimatedRenderTime();
+}
+
+void VtkPropWrap::AddEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddEstimatedRenderTime(
+				info[0]->NumberValue(),
+				(vtkViewport *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::SetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetAllocatedRenderTime(
+				info[0]->NumberValue(),
+				(vtkViewport *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPropWrap::GetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)

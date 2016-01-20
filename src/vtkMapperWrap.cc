@@ -12,6 +12,8 @@
 #include "vtkMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractMapperWrap.h"
+#include "vtkRendererWrap.h"
+#include "vtkActorWrap.h"
 
 using namespace v8;
 
@@ -63,6 +65,9 @@ void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
+
+	Nan::SetPrototypeMethod(tpl, "Render", Render);
+	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLookupTable", CreateDefaultLookupTable);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLookupTable", CreateDefaultLookupTable);
@@ -405,6 +410,31 @@ void VtkMapperWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 			(vtkAbstractMapper *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Render(
+				(vtkRenderer *) a0->native.GetPointer(),
+				(vtkActor *) a1->native.GetPointer()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
