@@ -1,5 +1,0 @@
-#ifndef NATIVE_EXTENSION_VTK_H
-#define NATIVE_EXTENSION_VTK_H
-
-#endif
-

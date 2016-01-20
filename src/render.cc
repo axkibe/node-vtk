@@ -14,7 +14,6 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindowInteractor.h>
 
-#include "node-vtk.h"
 #include "vtkConeSourceWrap.h"
 #include "vtkPolyDataMapperWrap.h"
 
