@@ -12,6 +12,7 @@
 #include "vtkRenderWindowWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
+#include "vtkRenderWindowInteractorWrap.h"
 
 using namespace v8;
 
@@ -91,6 +92,9 @@ void VtkRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "CopyResultFrame", CopyResultFrame);
 	Nan::SetPrototypeMethod(tpl, "copyResultFrame", CopyResultFrame);
+
+	Nan::SetPrototypeMethod(tpl, "MakeRenderWindowInteractor", MakeRenderWindowInteractor);
+	Nan::SetPrototypeMethod(tpl, "makeRenderWindowInteractor", MakeRenderWindowInteractor);
 
 	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
 	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
@@ -347,6 +351,12 @@ void VtkRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfLayersMaxValue", GetNumberOfLayersMaxValue);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfLayersMaxValue", GetNumberOfLayersMaxValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetInteractor", GetInteractor);
+	Nan::SetPrototypeMethod(tpl, "getInteractor", GetInteractor);
+
+	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
+	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
+
 	Nan::SetPrototypeMethod(tpl, "SetWindowInfo", SetWindowInfo);
 	Nan::SetPrototypeMethod(tpl, "setWindowInfo", SetWindowInfo);
 
@@ -456,7 +466,7 @@ void VtkRenderWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -688,6 +698,29 @@ void VtkRenderWindowWrap::CopyResultFrame(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	native->CopyResultFrame();
+}
+
+void VtkRenderWindowWrap::MakeRenderWindowInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	vtkRenderWindowInteractor * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->MakeRenderWindowInteractor();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkRenderWindowInteractorWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkRenderWindowWrap::HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1926,11 +1959,54 @@ void VtkRenderWindowWrap::GetNumberOfLayersMaxValue(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkRenderWindowWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	vtkRenderWindowInteractor * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInteractor();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkRenderWindowInteractorWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkRenderWindowWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInteractor(
+			(vtkRenderWindowInteractor *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkRenderWindowWrap::SetWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1950,7 +2026,7 @@ void VtkRenderWindowWrap::SetNextWindowInfo(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1970,7 +2046,7 @@ void VtkRenderWindowWrap::SetParentInfo(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

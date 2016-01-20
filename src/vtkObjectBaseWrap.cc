@@ -92,7 +92,7 @@ void VtkObjectBaseWrap::IsTypeOf(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkObjectBaseWrap *wrapper = ObjectWrap::Unwrap<VtkObjectBaseWrap>(info.Holder());
 	vtkObjectBase *native = (vtkObjectBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -114,7 +114,7 @@ void VtkObjectBaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkObjectBaseWrap *wrapper = ObjectWrap::Unwrap<VtkObjectBaseWrap>(info.Holder());
 	vtkObjectBase *native = (vtkObjectBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

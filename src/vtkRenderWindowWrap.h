@@ -41,6 +41,7 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void Frame(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WaitForCompletion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyResultFrame(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MakeRenderWindowInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCursorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -126,6 +127,8 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void SetNumberOfLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLayersMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLayersMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNextWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParentInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);

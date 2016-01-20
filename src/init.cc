@@ -4,8 +4,12 @@
 #include <nan.h>
 
 #include "vtkViewportWrap.h"
+#include "vtkInteractorStyleWrap.h"
+#include "vtkInteractorStyleTrackballCameraWrap.h"
+#include "vtkInteractorObserverWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "vtkRenderWindowInteractorWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkActorWrap.h"
 #include "vtkProp3DWrap.h"
@@ -26,19 +30,15 @@ using namespace v8;
 using v8::Local;
 using v8::Object;
 
-NAN_METHOD( render );
-
 void init( Local<Object> exports )
 {
-	Nan::Set(
-		exports,
-		Nan::New( "render" ).ToLocalChecked( ),
-		Nan::GetFunction( Nan::New<FunctionTemplate>( render ) ).ToLocalChecked( )
-	);
-
 	VtkViewportWrap::Init( exports );
+	VtkInteractorStyleWrap::Init( exports );
+	VtkInteractorStyleTrackballCameraWrap::Init( exports );
+	VtkInteractorObserverWrap::Init( exports );
 	VtkRendererWrap::Init( exports );
 	VtkRenderWindowWrap::Init( exports );
+	VtkRenderWindowInteractorWrap::Init( exports );
 	VtkWindowWrap::Init( exports );
 	VtkActorWrap::Init( exports );
 	VtkProp3DWrap::Init( exports );
