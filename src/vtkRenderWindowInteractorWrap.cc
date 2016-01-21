@@ -59,9 +59,6 @@ void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "DestroyTimer", DestroyTimer);
 	Nan::SetPrototypeMethod(tpl, "destroyTimer", DestroyTimer);
 
-	Nan::SetPrototypeMethod(tpl, "DestroyTimer", DestroyTimer);
-	Nan::SetPrototypeMethod(tpl, "destroyTimer", DestroyTimer);
-
 	Nan::SetPrototypeMethod(tpl, "Disable", Disable);
 	Nan::SetPrototypeMethod(tpl, "disable", Disable);
 
@@ -429,7 +426,14 @@ void VtkRenderWindowInteractorWrap::DestroyTimer(const Nan::FunctionCallbackInfo
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->DestroyTimer();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRenderWindowInteractorWrap::Disable(const Nan::FunctionCallbackInfo<v8::Value>& info)

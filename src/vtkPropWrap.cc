@@ -73,9 +73,6 @@ void VtkPropWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
 	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
 
-	Nan::SetPrototypeMethod(tpl, "GetEstimatedRenderTime", GetEstimatedRenderTime);
-	Nan::SetPrototypeMethod(tpl, "getEstimatedRenderTime", GetEstimatedRenderTime);
-
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfConsumers", GetNumberOfConsumers);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfConsumers", GetNumberOfConsumers);
 
@@ -356,7 +353,14 @@ void VtkPropWrap::GetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Val
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEstimatedRenderTime();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPropWrap::GetNumberOfConsumers(const Nan::FunctionCallbackInfo<v8::Value>& info)

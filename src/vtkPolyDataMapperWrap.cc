@@ -112,9 +112,6 @@ void VtkPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	Nan::SetPrototypeMethod(tpl, "Update", Update);
-	Nan::SetPrototypeMethod(tpl, "update", Update);
-
 }
 
 void VtkPolyDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -545,6 +542,11 @@ void VtkPolyDataMapperWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& i
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->Update();
 }
 

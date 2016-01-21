@@ -55,9 +55,6 @@ void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ColorByArrayComponent", ColorByArrayComponent);
 	Nan::SetPrototypeMethod(tpl, "colorByArrayComponent", ColorByArrayComponent);
 
-	Nan::SetPrototypeMethod(tpl, "ColorByArrayComponent", ColorByArrayComponent);
-	Nan::SetPrototypeMethod(tpl, "colorByArrayComponent", ColorByArrayComponent);
-
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLookupTable", CreateDefaultLookupTable);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLookupTable", CreateDefaultLookupTable);
 
@@ -165,9 +162,6 @@ void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "ScalarVisibilityOn", ScalarVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "scalarVisibilityOn", ScalarVisibilityOn);
-
-	Nan::SetPrototypeMethod(tpl, "SelectColorArray", SelectColorArray);
-	Nan::SetPrototypeMethod(tpl, "selectColorArray", SelectColorArray);
 
 	Nan::SetPrototypeMethod(tpl, "SelectColorArray", SelectColorArray);
 	Nan::SetPrototypeMethod(tpl, "selectColorArray", SelectColorArray);
@@ -324,6 +318,22 @@ void VtkMapperWrap::ColorByArrayComponent(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			native->ColorByArrayComponent(
 				*a0,
+				info[1]->Int32Value()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ColorByArrayComponent(
+				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
 			return;
@@ -883,6 +893,18 @@ void VtkMapperWrap::SelectColorArray(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->SelectColorArray(
 			*a0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SelectColorArray(
+			info[0]->Int32Value()
 		);
 		return;
 	}

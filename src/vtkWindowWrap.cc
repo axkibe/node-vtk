@@ -137,9 +137,6 @@ void VtkWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTileScale", SetTileScale);
 	Nan::SetPrototypeMethod(tpl, "setTileScale", SetTileScale);
 
-	Nan::SetPrototypeMethod(tpl, "SetTileScale", SetTileScale);
-	Nan::SetPrototypeMethod(tpl, "setTileScale", SetTileScale);
-
 	Nan::SetPrototypeMethod(tpl, "SetTileViewport", SetTileViewport);
 	Nan::SetPrototypeMethod(tpl, "setTileViewport", SetTileViewport);
 
@@ -676,6 +673,15 @@ void VtkWindowWrap::SetTileScale(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			);
 			return;
 		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTileScale(
+			info[0]->Int32Value()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

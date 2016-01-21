@@ -217,12 +217,6 @@ void VtkRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ResetCamera", ResetCamera);
 	Nan::SetPrototypeMethod(tpl, "resetCamera", ResetCamera);
 
-	Nan::SetPrototypeMethod(tpl, "ResetCamera", ResetCamera);
-	Nan::SetPrototypeMethod(tpl, "resetCamera", ResetCamera);
-
-	Nan::SetPrototypeMethod(tpl, "ResetCameraClippingRange", ResetCameraClippingRange);
-	Nan::SetPrototypeMethod(tpl, "resetCameraClippingRange", ResetCameraClippingRange);
-
 	Nan::SetPrototypeMethod(tpl, "ResetCameraClippingRange", ResetCameraClippingRange);
 	Nan::SetPrototypeMethod(tpl, "resetCameraClippingRange", ResetCameraClippingRange);
 
@@ -1185,7 +1179,12 @@ void VtkRendererWrap::ResetCamera(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 		}
 	}
-	Nan::ThrowError("Parameter mismatch");
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->ResetCamera();
 }
 
 void VtkRendererWrap::ResetCameraClippingRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1224,7 +1223,12 @@ void VtkRendererWrap::ResetCameraClippingRange(const Nan::FunctionCallbackInfo<v
 			}
 		}
 	}
-	Nan::ThrowError("Parameter mismatch");
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	native->ResetCameraClippingRange();
 }
 
 void VtkRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
