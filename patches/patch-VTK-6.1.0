@@ -500,8 +500,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-21 12:25:14.976201932 +0100
-@@ -0,0 +1,1246 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-21 12:45:14.323210115 +0100
+@@ -0,0 +1,1276 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -1066,9 +1066,87 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      break;
 +    }
 +}
-+    
++
 +/* -------------------------------------------------------------------- */
-+/* Writes the return valua paramter if needed. . */
++/* Writes a parameter value getter for the handlers native call. */
++
++static void writeHandlerParameterValue(
++   FILE *f,
++   char const *indent,
++   size_t p,
++   ValueInfo *vinfo,
++   int nop
++)
++{
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++ 
++  switch(baseType)
++    {
++    case VTK_PARSE_DOUBLE :
++   
++      fprintf(f,
++        "\t%s\tinfo[%zu]->NumberValue()%s\n",
++        indent,
++        p,
++        p + 1 < nop ? "," : ""
++        );
++      break;
++   
++    case VTK_PARSE_INT :
++   
++      fprintf(f,
++        "\t%s\tinfo[%zu]->Int32Value()%s\n",
++        indent,
++        p,
++        p + 1 < nop ? "," : ""
++        );
++      break;
++   
++    case VTK_PARSE_CHAR :
++      
++      if(vtkWrap_IsPointer(vinfo))
++        {
++        fprintf(f,
++          "\t%s\t*a%zu%s\n",
++          indent,
++          p,
++          p + 1 < nop ? "," : ""
++          );
++        }
++        else
++        {
++        fprintf(f,
++          "\t%s\ta%zu%s\n",
++          indent,
++          p,
++          p + 1 < nop ? "," : ""
++          );
++        }
++        
++      break;
++   
++    case VTK_PARSE_OBJECT :
++      
++      fprintf(f,
++        "\t%s\t(%s *) a%zu->native.GetPointer()%s\n",
++        indent,
++        vinfo->Class,
++        p,
++        p + 1 < nop ? "," : ""
++        );
++        
++      break;
++ 
++    default :
++   
++     fprintf(stderr, "Unexpected parameter type.\n");
++     exit(1);
++    }
++}
++
++
++/* -------------------------------------------------------------------- */
++/* Writes the return value parameter if needed. . */
 +
 +static void writeHandlerReturnVar(
 +   FILE *f,
@@ -1116,6 +1194,69 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    }
 +}
 +    
++
++/* -------------------------------------------------------------------- */
++/* Writes the return value setter, if needed. . */
++
++static void writeHandlerReturnSetter(
++   FILE *f,
++   char const *indent,
++   ValueInfo *rinfo
++)
++{
++  unsigned int rBaseType = (rinfo->Type & VTK_PARSE_BASE_TYPE);
++
++  switch( rBaseType )
++    {
++    case VTK_PARSE_VOID :
++      break;
++ 
++    case VTK_PARSE_INT :
++    case VTK_PARSE_DOUBLE :
++      fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
++      break;
++ 
++    case VTK_PARSE_CHAR :
++      if (vtkWrap_IsPointer(rinfo))
++        {
++        fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r).ToLocalChecked());\n", indent);
++        }
++        else
++        {
++        fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
++        }
++      break;
++ 
++    case VTK_PARSE_OBJECT :
++      fprintf(f, "\t%sconst int argc = 1;\n", indent);
++      fprintf(f, "\t%sv8::Local<v8::Value> argv[argc] =\n", indent );
++      fprintf(f, "\t%s\t{ Nan::New(\"__nowrap\").ToLocalChecked() };\n", indent);
++      fprintf(f, "\t%sv8::Local<v8::Function> cons =\n", indent );
++      fprintf(f,
++        "\t%s\tNan::New<v8::Function>(%c%sWrap::constructor);\n",
++        indent,
++        toupper(*rinfo->Class),
++        rinfo->Class + 1
++        );
++      fprintf(f, "\t%sv8::Local<v8::Object> wo = cons->NewInstance(argc, argv);\n", indent );
++      fprintf(f,
++        "\t%s%c%sWrap *w = new %c%sWrap();\n",
++        indent, 
++        toupper(*rinfo->Class),
++        rinfo->Class + 1,
++        toupper(*rinfo->Class),
++        rinfo->Class + 1
++        );
++      fprintf(f, "\t%sw->native.TakeReference(r);\n", indent );
++      fprintf(f, "\t%sw->Wrap(wo);\n", indent);
++      fprintf(f, "\t%sinfo.GetReturnValue().Set(wo);\n", indent);
++      break;
++ 
++    default :
++      fprintf(stderr, "Unexpected parameter type %d for return value.\n", rBaseType);
++      exit(1);
++    }
++}
 +
 +
 +/* -------------------------------------------------------------------- */
@@ -1180,9 +1321,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +        );
 + 
 +      fprintf(f, "\t%s{\n", indent);
-+      
 +      strcat(indent, "\t");
-+ 
 +      writeHandlerParameterVar(f, indent, p, vinfo );
 +      }
 +
@@ -1196,7 +1335,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    fprintf(f, "\t%s\tNan::ThrowError(\"Too many parameters.\");\n", indent );
 +    fprintf(f, "\t%s\treturn;\n", indent );
 +    fprintf(f, "\t%s}\n", indent );
-+ 
++
++    /* writes the native call */
 +    fprintf(f,
 +      "\t%s%snative->%s(",
 +      indent,
@@ -1204,138 +1344,26 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      finfo->Name
 +      );
 + 
-+    if( nop == 0 )
-+      {
-+      fprintf(f, ");\n");
-+      }
-+    else
++    if( nop > 0 )
 +      {
 +      fprintf(f, "\n");
 + 
 +      for(p = 0; p < nop; p++)
 +        {
-+        ValueInfo *vinfo = finfo->Parameters[p];
-+ 
-+        unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
-+ 
-+        switch(baseType)
-+          {
-+          case VTK_PARSE_DOUBLE :
-+         
-+            fprintf(f,
-+              "\t%s\tinfo[%zu]->NumberValue()%s\n",
-+              indent,
-+              p,
-+              p + 1 < nop ? "," : ""
-+              );
-+            break;
-+         
-+          case VTK_PARSE_INT :
-+         
-+            fprintf(f,
-+              "\t%s\tinfo[%zu]->Int32Value()%s\n",
-+              indent,
-+              p,
-+              p + 1 < nop ? "," : ""
-+              );
-+            break;
-+         
-+          case VTK_PARSE_CHAR :
-+            
-+            if(vtkWrap_IsPointer(vinfo))
-+              {
-+              fprintf(f,
-+                "\t%s\t*a%zu%s\n",
-+                indent,
-+                p,
-+                p + 1 < nop ? "," : ""
-+                );
-+              }
-+              else
-+              {
-+              fprintf(f,
-+                "\t%s\ta%zu%s\n",
-+                indent,
-+                p,
-+                p + 1 < nop ? "," : ""
-+                );
-+              }
-+              
-+            break;
-+         
-+          case VTK_PARSE_OBJECT :
-+            
-+            fprintf(f,
-+              "\t%s\t(%s *) a%zu->native.GetPointer()%s\n",
-+              indent,
-+              vinfo->Class,
-+              p,
-+              p + 1 < nop ? "," : ""
-+              );
-+              
-+            break;
-+ 
-+          default :
-+         
-+           fprintf(stderr, "Unexpected parameter type.\n");
-+           exit(1);
-+          }
++        writeHandlerParameterValue(f, indent, p, finfo->Parameters[p], nop);
 +        }
 +    
 +      fprintf(f, "\t%s);\n", indent);
 +      }
-+    
-+    switch( rBaseType )
++    else
 +      {
-+      case VTK_PARSE_VOID :
-+        break;
-+ 
-+      case VTK_PARSE_INT :
-+      case VTK_PARSE_DOUBLE :
-+        fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
-+        break;
-+ 
-+      case VTK_PARSE_CHAR :
-+        if (vtkWrap_IsPointer(rinfo))
-+          {
-+          fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r).ToLocalChecked());\n", indent);
-+          }
-+          else
-+          {
-+          fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
-+          }
-+        break;
-+ 
-+      case VTK_PARSE_OBJECT :
-+        fprintf(f, "\t%sconst int argc = 1;\n", indent);
-+        fprintf(f, "\t%sv8::Local<v8::Value> argv[argc] =\n", indent );
-+        fprintf(f, "\t%s\t{ Nan::New(\"__nowrap\").ToLocalChecked() };\n", indent);
-+        fprintf(f, "\t%sv8::Local<v8::Function> cons =\n", indent );
-+        fprintf(f,
-+          "\t%s\tNan::New<v8::Function>(%c%sWrap::constructor);\n",
-+          indent,
-+          toupper(*rinfo->Class),
-+          rinfo->Class + 1
-+          );
-+        fprintf(f, "\t%sv8::Local<v8::Object> wo = cons->NewInstance(argc, argv);\n", indent );
-+        fprintf(f,
-+          "\t%s%c%sWrap *w = new %c%sWrap();\n",
-+          indent, 
-+          toupper(*rinfo->Class),
-+          rinfo->Class + 1,
-+          toupper(*rinfo->Class),
-+          rinfo->Class + 1
-+          );
-+        fprintf(f, "\t%sw->native.TakeReference(r);\n", indent );
-+        fprintf(f, "\t%sw->Wrap(wo);\n", indent);
-+        fprintf(f, "\t%sinfo.GetReturnValue().Set(wo);\n", indent);
-+        break;
-+ 
-+      default :
-+        fprintf(stderr, "Unexpected parameter type %d for return value.\n", rBaseType);
-+        exit(1);
++      fprintf(f, ");\n");
 +      }
++
++    /* sets the return value */
++    writeHandlerReturnSetter(f, indent, rinfo);
 + 
++    /* if one overload takes zero parameter, it will be the last in the chain */
 +    if(nop > 0)
 +      {
 +      fprintf(f, "\t%sreturn;\n", indent);
@@ -1349,7 +1377,9 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    }
 +
 +  if(nop > 0)
++    {
 +    fprintf(f, "\tNan::ThrowError(\"Parameter mismatch\");\n" );
++    }
 +
 +  fprintf(f, "}\n");
 +}
