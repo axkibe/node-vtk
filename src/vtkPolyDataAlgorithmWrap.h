@@ -26,10 +26,16 @@ class VtkPolyDataAlgorithmWrap : public VtkAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPolyDataInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

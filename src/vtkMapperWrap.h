@@ -38,7 +38,10 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void GetForceCompileOnly(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobalImmediateModeRendering(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImmediateModeRendering(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInputAsDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolateScalarsBeforeMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolveCoincidentTopology(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolveCoincidentTopologyPolygonOffsetFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -57,6 +60,7 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void InterpolateScalarsBeforeMappingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InterpolateScalarsBeforeMappingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MapScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -71,6 +75,7 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void SetGlobalImmediateModeRendering(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetImmediateModeRendering(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolateScalarsBeforeMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolveCoincidentTopology(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolveCoincidentTopologyPolygonOffsetFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);

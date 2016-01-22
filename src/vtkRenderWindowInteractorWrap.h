@@ -28,6 +28,7 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 
 		static void CharEvent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ConfigureEvent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CreateDefaultPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DestroyTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Disable(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -58,6 +59,9 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void GetNumberOfFlyFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFlyFramesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFlyFramesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetObserverMediator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPickingManager(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepeatCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShiftKey(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -108,6 +112,8 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void SetLastEventPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLightFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfFlyFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPickingManager(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepeatCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShiftKey(const Nan::FunctionCallbackInfo<v8::Value>& info);

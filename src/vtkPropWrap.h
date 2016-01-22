@@ -28,18 +28,25 @@ class VtkPropWrap : public VtkObjectWrap
 
 		static void AddConsumer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AddEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void BuildPaths(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DragableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DragableOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConsumer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDragable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNextPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfConsumers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPaths(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPropertyKeys(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderTimeMultiplier(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,6 +55,7 @@ class VtkPropWrap : public VtkObjectWrap
 		static void Pick(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PickableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PickableOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PokeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveConsumer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -60,6 +68,7 @@ class VtkPropWrap : public VtkObjectWrap
 		static void SetDragable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPickable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPropertyKeys(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderTimeMultiplier(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);

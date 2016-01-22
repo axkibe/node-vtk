@@ -5,11 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkWindow.h>
 
 #include "vtkObjectWrap.h"
 #include "vtkWindowWrap.h"
+#include "vtkUnsignedCharArrayWrap.h"
 
 using namespace v8;
 
@@ -79,6 +78,9 @@ void VtkWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "GetOffScreenRendering", GetOffScreenRendering);
 	Nan::SetPrototypeMethod(tpl, "getOffScreenRendering", GetOffScreenRendering);
+
+	Nan::SetPrototypeMethod(tpl, "GetPixelData", GetPixelData);
+	Nan::SetPrototypeMethod(tpl, "getPixelData", GetPixelData);
 
 	Nan::SetPrototypeMethod(tpl, "GetWindowName", GetWindowName);
 	Nan::SetPrototypeMethod(tpl, "getWindowName", GetWindowName);
@@ -329,6 +331,48 @@ void VtkWindowWrap::GetOffScreenRendering(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetOffScreenRendering();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkWindowWrap::GetPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWindowWrap *wrapper = ObjectWrap::Unwrap<VtkWindowWrap>(info.Holder());
+	vtkWindow *native = (vtkWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsInt32())
+					{
+						if(info.Length() > 5 && info[5]->IsObject())
+						{
+							VtkUnsignedCharArrayWrap *a5 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[5]->ToObject());
+							int r;
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							r = native->GetPixelData(
+								info[0]->Int32Value(),
+								info[1]->Int32Value(),
+								info[2]->Int32Value(),
+								info[3]->Int32Value(),
+								info[4]->Int32Value(),
+								(vtkUnsignedCharArray *) a5->native.GetPointer()
+							);
+							info.GetReturnValue().Set(Nan::New(r));
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkWindowWrap::GetWindowName(const Nan::FunctionCallbackInfo<v8::Value>& info)

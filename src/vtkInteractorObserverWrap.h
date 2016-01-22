@@ -35,6 +35,7 @@ class VtkInteractorObserverWrap : public VtkObjectWrap
 		static void GetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyPressActivation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyPressActivationValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GrabFocus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void KeyPressActivationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void KeyPressActivationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

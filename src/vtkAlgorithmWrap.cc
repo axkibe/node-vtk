@@ -5,12 +5,19 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkAlgorithm.h>
 
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmWrap.h"
+#include "vtkExecutiveWrap.h"
+#include "vtkInformationWrap.h"
+#include "vtkCollectionWrap.h"
+#include "vtkInformationVectorWrap.h"
+#include "vtkInformationIntegerKeyWrap.h"
+#include "vtkInformationInformationVectorKeyWrap.h"
+#include "vtkInformationStringVectorKeyWrap.h"
+#include "vtkDataObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "vtkProgressObserverWrap.h"
 
 using namespace v8;
 
@@ -54,6 +61,9 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "AddInputConnection", AddInputConnection);
 	Nan::SetPrototypeMethod(tpl, "addInputConnection", AddInputConnection);
 
+	Nan::SetPrototypeMethod(tpl, "AddInputDataObject", AddInputDataObject);
+	Nan::SetPrototypeMethod(tpl, "addInputDataObject", AddInputDataObject);
+
 	Nan::SetPrototypeMethod(tpl, "ComputePriority", ComputePriority);
 	Nan::SetPrototypeMethod(tpl, "computePriority", ComputePriority);
 
@@ -63,11 +73,32 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetExecutive", GetExecutive);
+	Nan::SetPrototypeMethod(tpl, "getExecutive", GetExecutive);
+
+	Nan::SetPrototypeMethod(tpl, "GetInformation", GetInformation);
+	Nan::SetPrototypeMethod(tpl, "getInformation", GetInformation);
+
 	Nan::SetPrototypeMethod(tpl, "GetInputAlgorithm", GetInputAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "getInputAlgorithm", GetInputAlgorithm);
 
+	Nan::SetPrototypeMethod(tpl, "GetInputArrayInformation", GetInputArrayInformation);
+	Nan::SetPrototypeMethod(tpl, "getInputArrayInformation", GetInputArrayInformation);
+
 	Nan::SetPrototypeMethod(tpl, "GetInputConnection", GetInputConnection);
 	Nan::SetPrototypeMethod(tpl, "getInputConnection", GetInputConnection);
+
+	Nan::SetPrototypeMethod(tpl, "GetInputDataObject", GetInputDataObject);
+	Nan::SetPrototypeMethod(tpl, "getInputDataObject", GetInputDataObject);
+
+	Nan::SetPrototypeMethod(tpl, "GetInputExecutive", GetInputExecutive);
+	Nan::SetPrototypeMethod(tpl, "getInputExecutive", GetInputExecutive);
+
+	Nan::SetPrototypeMethod(tpl, "GetInputInformation", GetInputInformation);
+	Nan::SetPrototypeMethod(tpl, "getInputInformation", GetInputInformation);
+
+	Nan::SetPrototypeMethod(tpl, "GetInputPortInformation", GetInputPortInformation);
+	Nan::SetPrototypeMethod(tpl, "getInputPortInformation", GetInputPortInformation);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfInputConnections", GetNumberOfInputConnections);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfInputConnections", GetNumberOfInputConnections);
@@ -78,8 +109,17 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfOutputPorts", GetNumberOfOutputPorts);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfOutputPorts", GetNumberOfOutputPorts);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutputDataObject", GetOutputDataObject);
+	Nan::SetPrototypeMethod(tpl, "getOutputDataObject", GetOutputDataObject);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputInformation", GetOutputInformation);
+	Nan::SetPrototypeMethod(tpl, "getOutputInformation", GetOutputInformation);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputPort", GetOutputPort);
 	Nan::SetPrototypeMethod(tpl, "getOutputPort", GetOutputPort);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputPortInformation", GetOutputPortInformation);
+	Nan::SetPrototypeMethod(tpl, "getOutputPortInformation", GetOutputPortInformation);
 
 	Nan::SetPrototypeMethod(tpl, "GetProgress", GetProgress);
 	Nan::SetPrototypeMethod(tpl, "getProgress", GetProgress);
@@ -89,6 +129,9 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "GetProgressMinValue", GetProgressMinValue);
 	Nan::SetPrototypeMethod(tpl, "getProgressMinValue", GetProgressMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetProgressObserver", GetProgressObserver);
+	Nan::SetPrototypeMethod(tpl, "getProgressObserver", GetProgressObserver);
 
 	Nan::SetPrototypeMethod(tpl, "GetProgressText", GetProgressText);
 	Nan::SetPrototypeMethod(tpl, "getProgressText", GetProgressText);
@@ -111,11 +154,45 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "HasExecutive", HasExecutive);
 	Nan::SetPrototypeMethod(tpl, "hasExecutive", HasExecutive);
 
+	Nan::SetPrototypeMethod(tpl, "INPUT_ARRAYS_TO_PROCESS", INPUT_ARRAYS_TO_PROCESS);
+
+	Nan::SetPrototypeMethod(tpl, "INPUT_CONNECTION", INPUT_CONNECTION);
+
+	Nan::SetPrototypeMethod(tpl, "INPUT_IS_OPTIONAL", INPUT_IS_OPTIONAL);
+
+	Nan::SetPrototypeMethod(tpl, "INPUT_IS_REPEATABLE", INPUT_IS_REPEATABLE);
+
+	Nan::SetPrototypeMethod(tpl, "INPUT_PORT", INPUT_PORT);
+
+	Nan::SetPrototypeMethod(tpl, "INPUT_REQUIRED_DATA_TYPE", INPUT_REQUIRED_DATA_TYPE);
+
+	Nan::SetPrototypeMethod(tpl, "INPUT_REQUIRED_FIELDS", INPUT_REQUIRED_FIELDS);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "MANAGES_METAINFORMATION", MANAGES_METAINFORMATION);
+
+	Nan::SetPrototypeMethod(tpl, "ModifyRequest", ModifyRequest);
+	Nan::SetPrototypeMethod(tpl, "modifyRequest", ModifyRequest);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "PRESERVES_ATTRIBUTES", PRESERVES_ATTRIBUTES);
+
+	Nan::SetPrototypeMethod(tpl, "PRESERVES_BOUNDS", PRESERVES_BOUNDS);
+
+	Nan::SetPrototypeMethod(tpl, "PRESERVES_DATASET", PRESERVES_DATASET);
+
+	Nan::SetPrototypeMethod(tpl, "PRESERVES_GEOMETRY", PRESERVES_GEOMETRY);
+
+	Nan::SetPrototypeMethod(tpl, "PRESERVES_RANGES", PRESERVES_RANGES);
+
+	Nan::SetPrototypeMethod(tpl, "PRESERVES_TOPOLOGY", PRESERVES_TOPOLOGY);
+
+	Nan::SetPrototypeMethod(tpl, "ProcessRequest", ProcessRequest);
+	Nan::SetPrototypeMethod(tpl, "processRequest", ProcessRequest);
 
 	Nan::SetPrototypeMethod(tpl, "PropagateUpdateExtent", PropagateUpdateExtent);
 	Nan::SetPrototypeMethod(tpl, "propagateUpdateExtent", PropagateUpdateExtent);
@@ -141,14 +218,29 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetAbortExecute", SetAbortExecute);
 	Nan::SetPrototypeMethod(tpl, "setAbortExecute", SetAbortExecute);
 
+	Nan::SetPrototypeMethod(tpl, "SetDefaultExecutivePrototype", SetDefaultExecutivePrototype);
+	Nan::SetPrototypeMethod(tpl, "setDefaultExecutivePrototype", SetDefaultExecutivePrototype);
+
+	Nan::SetPrototypeMethod(tpl, "SetExecutive", SetExecutive);
+	Nan::SetPrototypeMethod(tpl, "setExecutive", SetExecutive);
+
+	Nan::SetPrototypeMethod(tpl, "SetInformation", SetInformation);
+	Nan::SetPrototypeMethod(tpl, "setInformation", SetInformation);
+
 	Nan::SetPrototypeMethod(tpl, "SetInputArrayToProcess", SetInputArrayToProcess);
 	Nan::SetPrototypeMethod(tpl, "setInputArrayToProcess", SetInputArrayToProcess);
 
 	Nan::SetPrototypeMethod(tpl, "SetInputConnection", SetInputConnection);
 	Nan::SetPrototypeMethod(tpl, "setInputConnection", SetInputConnection);
 
+	Nan::SetPrototypeMethod(tpl, "SetInputDataObject", SetInputDataObject);
+	Nan::SetPrototypeMethod(tpl, "setInputDataObject", SetInputDataObject);
+
 	Nan::SetPrototypeMethod(tpl, "SetProgress", SetProgress);
 	Nan::SetPrototypeMethod(tpl, "setProgress", SetProgress);
+
+	Nan::SetPrototypeMethod(tpl, "SetProgressObserver", SetProgressObserver);
+	Nan::SetPrototypeMethod(tpl, "setProgressObserver", SetProgressObserver);
 
 	Nan::SetPrototypeMethod(tpl, "SetProgressText", SetProgressText);
 	Nan::SetPrototypeMethod(tpl, "setProgressText", SetProgressText);
@@ -164,6 +256,9 @@ void VtkAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
+
+	Nan::SetPrototypeMethod(tpl, "UpdateExtentIsEmpty", UpdateExtentIsEmpty);
+	Nan::SetPrototypeMethod(tpl, "updateExtentIsEmpty", UpdateExtentIsEmpty);
 
 	Nan::SetPrototypeMethod(tpl, "UpdateInformation", UpdateInformation);
 	Nan::SetPrototypeMethod(tpl, "updateInformation", UpdateInformation);
@@ -260,6 +355,43 @@ void VtkAlgorithmWrap::AddInputConnection(const Nan::FunctionCallbackInfo<v8::Va
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAlgorithmWrap::AddInputDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->AddInputDataObject(
+			(vtkDataObject *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddInputDataObject(
+				info[0]->Int32Value(),
+				(vtkDataObject *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAlgorithmWrap::ComputePriority(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
@@ -300,6 +432,52 @@ void VtkAlgorithmWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAlgorithmWrap::GetExecutive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkExecutive * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExecutive();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkExecutiveWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkExecutiveWrap *w = new VtkExecutiveWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::GetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformation * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInformation();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationWrap *w = new VtkInformationWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkAlgorithmWrap::GetInputAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -352,6 +530,36 @@ void VtkAlgorithmWrap::GetInputAlgorithm(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAlgorithmWrap::GetInputArrayInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		vtkInformation * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetInputArrayInformation(
+			info[0]->Int32Value()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkInformationWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkInformationWrap *w = new VtkInformationWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAlgorithmWrap::GetInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
@@ -382,6 +590,170 @@ void VtkAlgorithmWrap::GetInputConnection(const Nan::FunctionCallbackInfo<v8::Va
 			info.GetReturnValue().Set(wo);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAlgorithmWrap::GetInputDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			vtkDataObject * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetInputDataObject(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			const int argc = 1;
+			v8::Local<v8::Value> argv[argc] =
+				{ Nan::New("__nowrap").ToLocalChecked() };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+			VtkDataObjectWrap *w = new VtkDataObjectWrap();
+			w->native.TakeReference(r);
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAlgorithmWrap::GetInputExecutive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			vtkExecutive * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetInputExecutive(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			const int argc = 1;
+			v8::Local<v8::Value> argv[argc] =
+				{ Nan::New("__nowrap").ToLocalChecked() };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::Function>(VtkExecutiveWrap::constructor);
+			v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+			VtkExecutiveWrap *w = new VtkExecutiveWrap();
+			w->native.TakeReference(r);
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	vtkExecutive * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInputExecutive();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkExecutiveWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkExecutiveWrap *w = new VtkExecutiveWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::GetInputInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			vtkInformation * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetInputInformation(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			const int argc = 1;
+			v8::Local<v8::Value> argv[argc] =
+				{ Nan::New("__nowrap").ToLocalChecked() };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::Function>(VtkInformationWrap::constructor);
+			v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+			VtkInformationWrap *w = new VtkInformationWrap();
+			w->native.TakeReference(r);
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	vtkInformation * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInputInformation();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationWrap *w = new VtkInformationWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::GetInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		vtkInformation * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetInputPortInformation(
+			info[0]->Int32Value()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkInformationWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkInformationWrap *w = new VtkInformationWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -435,6 +807,66 @@ void VtkAlgorithmWrap::GetNumberOfOutputPorts(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAlgorithmWrap::GetOutputDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		vtkDataObject * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetOutputDataObject(
+			info[0]->Int32Value()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkDataObjectWrap *w = new VtkDataObjectWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAlgorithmWrap::GetOutputInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		vtkInformation * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetOutputInformation(
+			info[0]->Int32Value()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkInformationWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkInformationWrap *w = new VtkInformationWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAlgorithmWrap::GetOutputPort(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
@@ -481,6 +913,36 @@ void VtkAlgorithmWrap::GetOutputPort(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAlgorithmWrap::GetOutputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		vtkInformation * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetOutputPortInformation(
+			info[0]->Int32Value()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkInformationWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkInformationWrap *w = new VtkInformationWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAlgorithmWrap::GetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
@@ -521,6 +983,29 @@ void VtkAlgorithmWrap::GetProgressMinValue(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetProgressMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAlgorithmWrap::GetProgressObserver(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkProgressObserver * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProgressObserver();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkProgressObserverWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkProgressObserverWrap *w = new VtkProgressObserverWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkAlgorithmWrap::GetProgressText(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -663,6 +1148,167 @@ void VtkAlgorithmWrap::HasExecutive(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAlgorithmWrap::INPUT_ARRAYS_TO_PROCESS(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationInformationVectorKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->INPUT_ARRAYS_TO_PROCESS();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationInformationVectorKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationInformationVectorKeyWrap *w = new VtkInformationInformationVectorKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::INPUT_CONNECTION(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->INPUT_CONNECTION();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::INPUT_IS_OPTIONAL(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->INPUT_IS_OPTIONAL();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::INPUT_IS_REPEATABLE(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->INPUT_IS_REPEATABLE();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::INPUT_PORT(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->INPUT_PORT();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::INPUT_REQUIRED_DATA_TYPE(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationStringVectorKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->INPUT_REQUIRED_DATA_TYPE();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationStringVectorKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationStringVectorKeyWrap *w = new VtkInformationStringVectorKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::INPUT_REQUIRED_FIELDS(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationInformationVectorKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->INPUT_REQUIRED_FIELDS();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationInformationVectorKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationInformationVectorKeyWrap *w = new VtkInformationInformationVectorKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
 void VtkAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
@@ -681,6 +1327,55 @@ void VtkAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAlgorithmWrap::MANAGES_METAINFORMATION(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->MANAGES_METAINFORMATION();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::ModifyRequest(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ModifyRequest(
+				(vtkInformation *) a0->native.GetPointer(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -706,6 +1401,176 @@ void VtkAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native.TakeReference(r);
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::PRESERVES_ATTRIBUTES(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->PRESERVES_ATTRIBUTES();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::PRESERVES_BOUNDS(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->PRESERVES_BOUNDS();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::PRESERVES_DATASET(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->PRESERVES_DATASET();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::PRESERVES_GEOMETRY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->PRESERVES_GEOMETRY();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::PRESERVES_RANGES(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->PRESERVES_RANGES();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::PRESERVES_TOPOLOGY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	vtkInformationIntegerKey * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->PRESERVES_TOPOLOGY();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkAlgorithmWrap::ProcessRequest(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkCollectionWrap *a1 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsObject())
+			{
+				VtkInformationVectorWrap *a2 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[2]->ToObject());
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->ProcessRequest(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkCollection *) a1->native.GetPointer(),
+					(vtkInformationVector *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::PropagateUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -862,13 +1727,87 @@ void VtkAlgorithmWrap::SetAbortExecute(const Nan::FunctionCallbackInfo<v8::Value
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAlgorithmWrap::SetDefaultExecutivePrototype(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkExecutiveWrap *a0 = ObjectWrap::Unwrap<VtkExecutiveWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDefaultExecutivePrototype(
+			(vtkExecutive *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAlgorithmWrap::SetExecutive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkExecutiveWrap *a0 = ObjectWrap::Unwrap<VtkExecutiveWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetExecutive(
+			(vtkExecutive *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAlgorithmWrap::SetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInformation(
+			(vtkInformation *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAlgorithmWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetInputArrayToProcess(
+				info[0]->Int32Value(),
+				(vtkInformation *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
@@ -972,6 +1911,43 @@ void VtkAlgorithmWrap::SetInputConnection(const Nan::FunctionCallbackInfo<v8::Va
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAlgorithmWrap::SetInputDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInputDataObject(
+			(vtkDataObject *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetInputDataObject(
+				info[0]->Int32Value(),
+				(vtkDataObject *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAlgorithmWrap::SetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
@@ -985,6 +1961,26 @@ void VtkAlgorithmWrap::SetProgress(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 		native->SetProgress(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAlgorithmWrap::SetProgressObserver(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkProgressObserverWrap *a0 = ObjectWrap::Unwrap<VtkProgressObserverWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetProgressObserver(
+			(vtkProgressObserver *) a0->native.GetPointer()
 		);
 		return;
 	}
@@ -1122,6 +2118,48 @@ void VtkAlgorithmWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	native->Update();
+}
+
+void VtkAlgorithmWrap::UpdateExtentIsEmpty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->UpdateExtentIsEmpty(
+				(vtkInformation *) a0->native.GetPointer(),
+				(vtkDataObject *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->UpdateExtentIsEmpty(
+				(vtkInformation *) a0->native.GetPointer(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAlgorithmWrap::UpdateInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -5,8 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkCubeSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkCubeSourceWrap.h"

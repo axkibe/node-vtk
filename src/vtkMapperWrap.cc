@@ -5,8 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkMapper.h>
 
 #include "vtkAbstractMapper3DWrap.h"
 #include "vtkMapperWrap.h"
@@ -15,6 +13,9 @@
 #include "vtkRendererWrap.h"
 #include "vtkActorWrap.h"
 #include "vtkWindowWrap.h"
+#include "vtkScalarsToColorsWrap.h"
+#include "vtkDataSetWrap.h"
+#include "vtkUnsignedCharArrayWrap.h"
 
 using namespace v8;
 
@@ -88,8 +89,17 @@ void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetImmediateModeRendering", GetImmediateModeRendering);
 	Nan::SetPrototypeMethod(tpl, "getImmediateModeRendering", GetImmediateModeRendering);
 
+	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
+	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
+
+	Nan::SetPrototypeMethod(tpl, "GetInputAsDataSet", GetInputAsDataSet);
+	Nan::SetPrototypeMethod(tpl, "getInputAsDataSet", GetInputAsDataSet);
+
 	Nan::SetPrototypeMethod(tpl, "GetInterpolateScalarsBeforeMapping", GetInterpolateScalarsBeforeMapping);
 	Nan::SetPrototypeMethod(tpl, "getInterpolateScalarsBeforeMapping", GetInterpolateScalarsBeforeMapping);
+
+	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
+	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
 	Nan::SetPrototypeMethod(tpl, "GetRenderTime", GetRenderTime);
 	Nan::SetPrototypeMethod(tpl, "getRenderTime", GetRenderTime);
@@ -145,6 +155,9 @@ void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "MapScalars", MapScalars);
+	Nan::SetPrototypeMethod(tpl, "mapScalars", MapScalars);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -186,6 +199,9 @@ void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "SetInterpolateScalarsBeforeMapping", SetInterpolateScalarsBeforeMapping);
 	Nan::SetPrototypeMethod(tpl, "setInterpolateScalarsBeforeMapping", SetInterpolateScalarsBeforeMapping);
+
+	Nan::SetPrototypeMethod(tpl, "SetLookupTable", SetLookupTable);
+	Nan::SetPrototypeMethod(tpl, "setLookupTable", SetLookupTable);
 
 	Nan::SetPrototypeMethod(tpl, "SetRenderTime", SetRenderTime);
 	Nan::SetPrototypeMethod(tpl, "setRenderTime", SetRenderTime);
@@ -494,6 +510,52 @@ void VtkMapperWrap::GetImmediateModeRendering(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	vtkDataSet * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInput();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkDataSetWrap *w = new VtkDataSetWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkMapperWrap::GetInputAsDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	vtkDataSet * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInputAsDataSet();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkDataSetWrap *w = new VtkDataSetWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
 void VtkMapperWrap::GetInterpolateScalarsBeforeMapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
@@ -506,6 +568,29 @@ void VtkMapperWrap::GetInterpolateScalarsBeforeMapping(const Nan::FunctionCallba
 	}
 	r = native->GetInterpolateScalarsBeforeMapping();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMapperWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	vtkScalarsToColors * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLookupTable();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkMapperWrap::GetRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -751,6 +836,36 @@ void VtkMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			*a0
 		);
 		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMapperWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		vtkUnsignedCharArray * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->MapScalars(
+			info[0]->NumberValue()
+		);
+		const int argc = 1;
+		v8::Local<v8::Value> argv[argc] =
+			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::Function>(VtkUnsignedCharArrayWrap::constructor);
+		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
+		w->native.TakeReference(r);
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -1024,6 +1139,26 @@ void VtkMapperWrap::SetInterpolateScalarsBeforeMapping(const Nan::FunctionCallba
 		}
 		native->SetInterpolateScalarsBeforeMapping(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMapperWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLookupTable(
+			(vtkScalarsToColors *) a0->native.GetPointer()
 		);
 		return;
 	}

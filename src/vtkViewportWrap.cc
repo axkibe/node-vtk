@@ -5,13 +5,14 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkViewport.h>
 
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkPropWrap.h"
+#include "vtkPropCollectionWrap.h"
+#include "vtkActor2DCollectionWrap.h"
 #include "vtkWindowWrap.h"
+#include "vtkAssemblyPathWrap.h"
 
 using namespace v8;
 
@@ -61,6 +62,9 @@ void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "DisplayToWorld", DisplayToWorld);
 	Nan::SetPrototypeMethod(tpl, "displayToWorld", DisplayToWorld);
 
+	Nan::SetPrototypeMethod(tpl, "GetActors2D", GetActors2D);
+	Nan::SetPrototypeMethod(tpl, "getActors2D", GetActors2D);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +73,9 @@ void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "GetPickHeight", GetPickHeight);
 	Nan::SetPrototypeMethod(tpl, "getPickHeight", GetPickHeight);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickResultProps", GetPickResultProps);
+	Nan::SetPrototypeMethod(tpl, "getPickResultProps", GetPickResultProps);
 
 	Nan::SetPrototypeMethod(tpl, "GetPickWidth", GetPickWidth);
 	Nan::SetPrototypeMethod(tpl, "getPickWidth", GetPickWidth);
@@ -97,6 +104,9 @@ void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetVTKWindow", GetVTKWindow);
 	Nan::SetPrototypeMethod(tpl, "getVTKWindow", GetVTKWindow);
 
+	Nan::SetPrototypeMethod(tpl, "GetViewProps", GetViewProps);
+	Nan::SetPrototypeMethod(tpl, "getViewProps", GetViewProps);
+
 	Nan::SetPrototypeMethod(tpl, "GradientBackgroundOff", GradientBackgroundOff);
 	Nan::SetPrototypeMethod(tpl, "gradientBackgroundOff", GradientBackgroundOff);
 
@@ -114,6 +124,12 @@ void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "PickProp", PickProp);
+	Nan::SetPrototypeMethod(tpl, "pickProp", PickProp);
+
+	Nan::SetPrototypeMethod(tpl, "PickPropFrom", PickPropFrom);
+	Nan::SetPrototypeMethod(tpl, "pickPropFrom", PickPropFrom);
 
 	Nan::SetPrototypeMethod(tpl, "RemoveActor2D", RemoveActor2D);
 	Nan::SetPrototypeMethod(tpl, "removeActor2D", RemoveActor2D);
@@ -264,6 +280,29 @@ void VtkViewportWrap::DisplayToWorld(const Nan::FunctionCallbackInfo<v8::Value>&
 	native->DisplayToWorld();
 }
 
+void VtkViewportWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	vtkActor2DCollection * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActors2D();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkActor2DCollectionWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkActor2DCollectionWrap *w = new VtkActor2DCollectionWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
 void VtkViewportWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
@@ -304,6 +343,29 @@ void VtkViewportWrap::GetPickHeight(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetPickHeight();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkViewportWrap::GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	vtkPropCollection * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPickResultProps();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPropCollectionWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkViewportWrap::GetPickWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -441,6 +503,29 @@ void VtkViewportWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& i
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	vtkPropCollection * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetViewProps();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPropCollectionWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
 void VtkViewportWrap::GradientBackgroundOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
@@ -555,6 +640,79 @@ void VtkViewportWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native.TakeReference(r);
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkViewportWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			vtkAssemblyPath * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->PickProp(
+				info[0]->NumberValue(),
+				info[1]->NumberValue()
+			);
+			const int argc = 1;
+			v8::Local<v8::Value> argv[argc] =
+				{ Nan::New("__nowrap").ToLocalChecked() };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
+			v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+			VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
+			w->native.TakeReference(r);
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsObject())
+			{
+				VtkPropCollectionWrap *a2 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[2]->ToObject());
+				vtkAssemblyPath * r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->PickPropFrom(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					(vtkPropCollection *) a2->native.GetPointer()
+				);
+				const int argc = 1;
+				v8::Local<v8::Value> argv[argc] =
+					{ Nan::New("__nowrap").ToLocalChecked() };
+				v8::Local<v8::Function> cons =
+					Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
+				v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+				VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
+				w->native.TakeReference(r);
+				w->Wrap(wo);
+				info.GetReturnValue().Set(wo);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkViewportWrap::RemoveActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info)

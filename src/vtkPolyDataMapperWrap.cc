@@ -5,14 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkPolyDataMapper.h>
 
 #include "vtkMapperWrap.h"
 #include "vtkPolyDataMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkActorWrap.h"
+#include "vtkPolyDataWrap.h"
 #include "vtkAbstractMapperWrap.h"
 
 using namespace v8;
@@ -58,6 +57,9 @@ void VtkPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetGhostLevel", GetGhostLevel);
 	Nan::SetPrototypeMethod(tpl, "getGhostLevel", GetGhostLevel);
 
+	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
+	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPieces", GetNumberOfPieces);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPieces", GetNumberOfPieces);
 
@@ -96,6 +98,9 @@ void VtkPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "SetGhostLevel", SetGhostLevel);
 	Nan::SetPrototypeMethod(tpl, "setGhostLevel", SetGhostLevel);
+
+	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
+	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPieces", SetNumberOfPieces);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPieces", SetNumberOfPieces);
@@ -163,6 +168,29 @@ void VtkPolyDataMapperWrap::GetGhostLevel(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetGhostLevel();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolyDataMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	vtkPolyData * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInput();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPolyDataWrap *w = new VtkPolyDataWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkPolyDataMapperWrap::GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -443,6 +471,26 @@ void VtkPolyDataMapperWrap::SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetGhostLevel(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInputData(
+			(vtkPolyData *) a0->native.GetPointer()
 		);
 		return;
 	}

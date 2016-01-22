@@ -5,11 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkObject.h>
 
 #include "vtkObjectBaseWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkCommandWrap.h"
 
 using namespace v8;
 
@@ -81,6 +80,9 @@ void VtkObjectWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "RemoveAllObservers", RemoveAllObservers);
 	Nan::SetPrototypeMethod(tpl, "removeAllObservers", RemoveAllObservers);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveObserver", RemoveObserver);
+	Nan::SetPrototypeMethod(tpl, "removeObserver", RemoveObserver);
 
 	Nan::SetPrototypeMethod(tpl, "RemoveObservers", RemoveObservers);
 	Nan::SetPrototypeMethod(tpl, "removeObservers", RemoveObservers);
@@ -211,6 +213,22 @@ void VtkObjectWrap::HasObserver(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->HasObserver(
+				*a0,
+				(vtkCommand *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 		int r;
 		if(info.Length() != 1)
 		{
@@ -317,6 +335,26 @@ void VtkObjectWrap::RemoveAllObservers(const Nan::FunctionCallbackInfo<v8::Value
 	native->RemoveAllObservers();
 }
 
+void VtkObjectWrap::RemoveObserver(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
+	vtkObject *native = (vtkObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkCommandWrap *a0 = ObjectWrap::Unwrap<VtkCommandWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveObserver(
+			(vtkCommand *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkObjectWrap::RemoveObservers(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
@@ -324,6 +362,20 @@ void VtkObjectWrap::RemoveObservers(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RemoveObservers(
+				*a0,
+				(vtkCommand *) a1->native.GetPointer()
+			);
+			return;
+		}
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");

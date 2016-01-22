@@ -32,9 +32,13 @@ class VtkProp3DWrap : public VtkPropWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsIdentity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PokeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RotateX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RotateY(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,6 +48,8 @@ class VtkProp3DWrap : public VtkPropWrap
 		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

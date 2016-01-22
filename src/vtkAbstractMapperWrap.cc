@@ -5,13 +5,14 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkAbstractMapper.h>
 
 #include "vtkAlgorithmWrap.h"
 #include "vtkAbstractMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkWindowWrap.h"
+#include "vtkPlaneWrap.h"
+#include "vtkPlaneCollectionWrap.h"
+#include "vtkPlanesWrap.h"
 
 using namespace v8;
 
@@ -47,8 +48,14 @@ void VtkAbstractMapperWrap::Init(v8::Local<v8::Object> exports)
 
 void VtkAbstractMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 {
+	Nan::SetPrototypeMethod(tpl, "AddClippingPlane", AddClippingPlane);
+	Nan::SetPrototypeMethod(tpl, "addClippingPlane", AddClippingPlane);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetClippingPlanes", GetClippingPlanes);
+	Nan::SetPrototypeMethod(tpl, "getClippingPlanes", GetClippingPlanes);
 
 	Nan::SetPrototypeMethod(tpl, "GetTimeToDraw", GetTimeToDraw);
 	Nan::SetPrototypeMethod(tpl, "getTimeToDraw", GetTimeToDraw);
@@ -65,8 +72,14 @@ void VtkAbstractMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "RemoveAllClippingPlanes", RemoveAllClippingPlanes);
 	Nan::SetPrototypeMethod(tpl, "removeAllClippingPlanes", RemoveAllClippingPlanes);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveClippingPlane", RemoveClippingPlane);
+	Nan::SetPrototypeMethod(tpl, "removeClippingPlane", RemoveClippingPlane);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetClippingPlanes", SetClippingPlanes);
+	Nan::SetPrototypeMethod(tpl, "setClippingPlanes", SetClippingPlanes);
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
@@ -96,6 +109,26 @@ void VtkAbstractMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkAbstractMapperWrap::AddClippingPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->AddClippingPlane(
+			(vtkPlane *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAbstractMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
@@ -108,6 +141,29 @@ void VtkAbstractMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAbstractMapperWrap::GetClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	vtkPlaneCollection * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetClippingPlanes();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPlaneCollectionWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkAbstractMapperWrap::GetTimeToDraw(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -201,6 +257,26 @@ void VtkAbstractMapperWrap::RemoveAllClippingPlanes(const Nan::FunctionCallbackI
 	native->RemoveAllClippingPlanes();
 }
 
+void VtkAbstractMapperWrap::RemoveClippingPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveClippingPlane(
+			(vtkPlane *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAbstractMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
@@ -227,6 +303,26 @@ void VtkAbstractMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native.TakeReference(r);
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractMapperWrap::SetClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
+	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetClippingPlanes(
+			(vtkPlaneCollection *) a0->native.GetPointer()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

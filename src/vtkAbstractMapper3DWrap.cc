@@ -5,8 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkAbstractMapper3D.h>
 
 #include "vtkAbstractMapperWrap.h"
 #include "vtkAbstractMapper3DWrap.h"

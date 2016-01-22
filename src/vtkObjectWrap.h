@@ -39,6 +39,7 @@ class VtkObjectWrap : public VtkObjectBaseWrap
 		static void Modified(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllObservers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveObserver(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveObservers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGlobalWarningDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);

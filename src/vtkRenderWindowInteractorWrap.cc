@@ -5,14 +5,16 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkRenderWindowInteractor.h>
 
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkRenderWindowWrap.h"
 #include "vtkInteractorObserverWrap.h"
+#include "vtkAbstractPickerWrap.h"
+#include "vtkAbstractPropPickerWrap.h"
+#include "vtkPickingManagerWrap.h"
 #include "vtkRendererWrap.h"
+#include "vtkObserverMediatorWrap.h"
 
 using namespace v8;
 
@@ -52,6 +54,9 @@ void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "ConfigureEvent", ConfigureEvent);
 	Nan::SetPrototypeMethod(tpl, "configureEvent", ConfigureEvent);
+
+	Nan::SetPrototypeMethod(tpl, "CreateDefaultPicker", CreateDefaultPicker);
+	Nan::SetPrototypeMethod(tpl, "createDefaultPicker", CreateDefaultPicker);
 
 	Nan::SetPrototypeMethod(tpl, "CreateTimer", CreateTimer);
 	Nan::SetPrototypeMethod(tpl, "createTimer", CreateTimer);
@@ -142,6 +147,15 @@ void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfFlyFramesMinValue", GetNumberOfFlyFramesMinValue);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfFlyFramesMinValue", GetNumberOfFlyFramesMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetObserverMediator", GetObserverMediator);
+	Nan::SetPrototypeMethod(tpl, "getObserverMediator", GetObserverMediator);
+
+	Nan::SetPrototypeMethod(tpl, "GetPicker", GetPicker);
+	Nan::SetPrototypeMethod(tpl, "getPicker", GetPicker);
+
+	Nan::SetPrototypeMethod(tpl, "GetPickingManager", GetPickingManager);
+	Nan::SetPrototypeMethod(tpl, "getPickingManager", GetPickingManager);
 
 	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
@@ -293,6 +307,12 @@ void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfFlyFrames", SetNumberOfFlyFrames);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfFlyFrames", SetNumberOfFlyFrames);
 
+	Nan::SetPrototypeMethod(tpl, "SetPicker", SetPicker);
+	Nan::SetPrototypeMethod(tpl, "setPicker", SetPicker);
+
+	Nan::SetPrototypeMethod(tpl, "SetPickingManager", SetPickingManager);
+	Nan::SetPrototypeMethod(tpl, "setPickingManager", SetPickingManager);
+
 	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
 
@@ -385,6 +405,29 @@ void VtkRenderWindowInteractorWrap::ConfigureEvent(const Nan::FunctionCallbackIn
 		return;
 	}
 	native->ConfigureEvent();
+}
+
+void VtkRenderWindowInteractorWrap::CreateDefaultPicker(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	vtkAbstractPropPicker * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->CreateDefaultPicker();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkAbstractPropPickerWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkAbstractPropPickerWrap *w = new VtkAbstractPropPickerWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkRenderWindowInteractorWrap::CreateTimer(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -869,6 +912,75 @@ void VtkRenderWindowInteractorWrap::GetNumberOfFlyFramesMinValue(const Nan::Func
 	}
 	r = native->GetNumberOfFlyFramesMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowInteractorWrap::GetObserverMediator(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	vtkObserverMediator * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetObserverMediator();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkObserverMediatorWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkObserverMediatorWrap *w = new VtkObserverMediatorWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkRenderWindowInteractorWrap::GetPicker(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	vtkAbstractPicker * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPicker();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkAbstractPickerWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkAbstractPickerWrap *w = new VtkAbstractPickerWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkRenderWindowInteractorWrap::GetPickingManager(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	vtkPickingManager * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPickingManager();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPickingManagerWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPickingManagerWrap *w = new VtkPickingManagerWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkRenderWindowInteractorWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1782,6 +1894,46 @@ void VtkRenderWindowInteractorWrap::SetNumberOfFlyFrames(const Nan::FunctionCall
 		}
 		native->SetNumberOfFlyFrames(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderWindowInteractorWrap::SetPicker(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkAbstractPickerWrap *a0 = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPicker(
+			(vtkAbstractPicker *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderWindowInteractorWrap::SetPickingManager(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPickingManagerWrap *a0 = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPickingManager(
+			(vtkPickingManager *) a0->native.GetPointer()
 		);
 		return;
 	}

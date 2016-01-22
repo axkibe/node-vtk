@@ -5,15 +5,15 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkInteractorStyle.h>
 
 #include "vtkInteractorObserverWrap.h"
 #include "vtkInteractorStyleWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkPropWrap.h"
+#include "vtkActor2DWrap.h"
 #include "vtkProp3DWrap.h"
+#include "vtkTDxInteractorStyleWrap.h"
 
 using namespace v8;
 
@@ -103,6 +103,9 @@ void VtkInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetState", GetState);
 	Nan::SetPrototypeMethod(tpl, "getState", GetState);
 
+	Nan::SetPrototypeMethod(tpl, "GetTDxStyle", GetTDxStyle);
+	Nan::SetPrototypeMethod(tpl, "getTDxStyle", GetTDxStyle);
+
 	Nan::SetPrototypeMethod(tpl, "GetUseTimers", GetUseTimers);
 	Nan::SetPrototypeMethod(tpl, "getUseTimers", GetUseTimers);
 
@@ -111,6 +114,9 @@ void VtkInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "HandleObserversOn", HandleObserversOn);
 	Nan::SetPrototypeMethod(tpl, "handleObserversOn", HandleObserversOn);
+
+	Nan::SetPrototypeMethod(tpl, "HighlightActor2D", HighlightActor2D);
+	Nan::SetPrototypeMethod(tpl, "highlightActor2D", HighlightActor2D);
 
 	Nan::SetPrototypeMethod(tpl, "HighlightProp", HighlightProp);
 	Nan::SetPrototypeMethod(tpl, "highlightProp", HighlightProp);
@@ -207,6 +213,9 @@ void VtkInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "SetPickColor", SetPickColor);
 	Nan::SetPrototypeMethod(tpl, "setPickColor", SetPickColor);
+
+	Nan::SetPrototypeMethod(tpl, "SetTDxStyle", SetTDxStyle);
+	Nan::SetPrototypeMethod(tpl, "setTDxStyle", SetTDxStyle);
 
 	Nan::SetPrototypeMethod(tpl, "SetUseTimers", SetUseTimers);
 	Nan::SetPrototypeMethod(tpl, "setUseTimers", SetUseTimers);
@@ -525,6 +534,29 @@ void VtkInteractorStyleWrap::GetState(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkInteractorStyleWrap::GetTDxStyle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
+	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
+	vtkTDxInteractorStyle * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTDxStyle();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkTDxInteractorStyleWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkTDxInteractorStyleWrap *w = new VtkTDxInteractorStyleWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
 void VtkInteractorStyleWrap::GetUseTimers(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
@@ -561,6 +593,26 @@ void VtkInteractorStyleWrap::HandleObserversOn(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	native->HandleObserversOn();
+}
+
+void VtkInteractorStyleWrap::HighlightActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
+	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkActor2DWrap *a0 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->HighlightActor2D(
+			(vtkActor2D *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkInteractorStyleWrap::HighlightProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1050,6 +1102,26 @@ void VtkInteractorStyleWrap::SetPickColor(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorStyleWrap::SetTDxStyle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
+	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkTDxInteractorStyleWrap *a0 = ObjectWrap::Unwrap<VtkTDxInteractorStyleWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTDxStyle(
+			(vtkTDxInteractorStyle *) a0->native.GetPointer()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

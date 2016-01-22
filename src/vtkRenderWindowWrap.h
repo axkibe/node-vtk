@@ -31,6 +31,7 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void AlphaBitPlanesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BordersOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BordersOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CaptureGL2PSSpecialProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CheckAbortStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CheckGraphicError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CheckInRenderStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -62,9 +63,13 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void GetNumberOfLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLayersMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLayersMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPainterDeviceAdapter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointSmoothing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolygonSmoothing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRGBACharPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRGBAPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderLibrary(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRenderers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReportGraphicErrors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStencilCapable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStereoCapableWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -74,6 +79,7 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void GetSubFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwapBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseConstantFDOffsets(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZbufferData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasGraphicError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -113,8 +119,11 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void SetNextWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParentInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointSmoothing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolygonSmoothing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRGBACharPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRGBAPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReportGraphicErrors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReportGraphicErrorsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReportGraphicErrorsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -135,6 +144,7 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void SetSwapBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseConstantFDOffsets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetZbufferData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Start(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StencilCapableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

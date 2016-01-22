@@ -5,13 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkInteractorObserver.h>
 
 #include "vtkObjectWrap.h"
 #include "vtkInteractorObserverWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkRendererWrap.h"
+#include "vtkCommandWrap.h"
 
 using namespace v8;
 
@@ -72,6 +71,9 @@ void VtkInteractorObserverWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "GetKeyPressActivationValue", GetKeyPressActivationValue);
 	Nan::SetPrototypeMethod(tpl, "getKeyPressActivationValue", GetKeyPressActivationValue);
+
+	Nan::SetPrototypeMethod(tpl, "GrabFocus", GrabFocus);
+	Nan::SetPrototypeMethod(tpl, "grabFocus", GrabFocus);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -296,6 +298,31 @@ void VtkInteractorObserverWrap::GetKeyPressActivationValue(const Nan::FunctionCa
 	}
 	r = native->GetKeyPressActivationValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkInteractorObserverWrap::GrabFocus(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkCommandWrap *a0 = ObjectWrap::Unwrap<VtkCommandWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject())
+		{
+			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GrabFocus(
+				(vtkCommand *) a0->native.GetPointer(),
+				(vtkCommand *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkInteractorObserverWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

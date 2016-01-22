@@ -31,9 +31,11 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void ComputeAspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayToView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsPicking(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickX1(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,12 +45,15 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void GetPickY2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickedZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GradientBackgroundOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GradientBackgroundOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasViewProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsInViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllViewProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveViewProp(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -5,17 +5,18 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkActor.h>
 
 #include "vtkProp3DWrap.h"
 #include "vtkActorWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkPropCollectionWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkMapperWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkWindowWrap.h"
+#include "vtkPropertyWrap.h"
+#include "vtkTextureWrap.h"
 
 using namespace v8;
 
@@ -55,17 +56,32 @@ void VtkActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ApplyProperties", ApplyProperties);
 	Nan::SetPrototypeMethod(tpl, "applyProperties", ApplyProperties);
 
+	Nan::SetPrototypeMethod(tpl, "GetActors", GetActors);
+	Nan::SetPrototypeMethod(tpl, "getActors", GetActors);
+
+	Nan::SetPrototypeMethod(tpl, "GetBackfaceProperty", GetBackfaceProperty);
+	Nan::SetPrototypeMethod(tpl, "getBackfaceProperty", GetBackfaceProperty);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
 	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
 
+	Nan::SetPrototypeMethod(tpl, "GetProperty", GetProperty);
+	Nan::SetPrototypeMethod(tpl, "getProperty", GetProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetTexture", GetTexture);
+	Nan::SetPrototypeMethod(tpl, "getTexture", GetTexture);
+
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "MakeProperty", MakeProperty);
+	Nan::SetPrototypeMethod(tpl, "makeProperty", MakeProperty);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -85,8 +101,17 @@ void VtkActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetBackfaceProperty", SetBackfaceProperty);
+	Nan::SetPrototypeMethod(tpl, "setBackfaceProperty", SetBackfaceProperty);
+
 	Nan::SetPrototypeMethod(tpl, "SetMapper", SetMapper);
 	Nan::SetPrototypeMethod(tpl, "setMapper", SetMapper);
+
+	Nan::SetPrototypeMethod(tpl, "SetProperty", SetProperty);
+	Nan::SetPrototypeMethod(tpl, "setProperty", SetProperty);
+
+	Nan::SetPrototypeMethod(tpl, "SetTexture", SetTexture);
+	Nan::SetPrototypeMethod(tpl, "setTexture", SetTexture);
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
@@ -128,6 +153,49 @@ void VtkActorWrap::ApplyProperties(const Nan::FunctionCallbackInfo<v8::Value>& i
 	native->ApplyProperties();
 }
 
+void VtkActorWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetActors(
+			(vtkPropCollection *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkActorWrap::GetBackfaceProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	vtkProperty * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackfaceProperty();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPropertyWrap *w = new VtkPropertyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
 void VtkActorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
@@ -160,6 +228,52 @@ void VtkActorWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::Function>(VtkMapperWrap::constructor);
 	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
 	VtkMapperWrap *w = new VtkMapperWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkActorWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	vtkProperty * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProperty();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPropertyWrap *w = new VtkPropertyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkActorWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	vtkTexture * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTexture();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkTextureWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkTextureWrap *w = new VtkTextureWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
@@ -199,6 +313,29 @@ void VtkActorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkActorWrap::MakeProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	vtkProperty * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->MakeProperty();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkPropertyWrap *w = new VtkPropertyWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
 }
 
 void VtkActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -344,6 +481,26 @@ void VtkActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkActorWrap::SetBackfaceProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackfaceProperty(
+			(vtkProperty *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkActorWrap::SetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
@@ -358,6 +515,46 @@ void VtkActorWrap::SetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		native->SetMapper(
 			(vtkMapper *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkActorWrap::SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetProperty(
+			(vtkProperty *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkActorWrap::SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkTextureWrap *a0 = ObjectWrap::Unwrap<VtkTextureWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTexture(
+			(vtkTexture *) a0->native.GetPointer()
 		);
 		return;
 	}

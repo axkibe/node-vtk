@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkProp3D.h>
 
 #include "vtkPropWrap.h"
 #include "vtkProp3DWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkLinearTransformWrap.h"
+#include "vtkMatrix4x4Wrap.h"
 
 using namespace v8;
 
@@ -64,6 +64,15 @@ void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "GetLength", GetLength);
 	Nan::SetPrototypeMethod(tpl, "getLength", GetLength);
 
+	Nan::SetPrototypeMethod(tpl, "GetMatrix", GetMatrix);
+	Nan::SetPrototypeMethod(tpl, "getMatrix", GetMatrix);
+
+	Nan::SetPrototypeMethod(tpl, "GetUserMatrix", GetUserMatrix);
+	Nan::SetPrototypeMethod(tpl, "getUserMatrix", GetUserMatrix);
+
+	Nan::SetPrototypeMethod(tpl, "GetUserTransform", GetUserTransform);
+	Nan::SetPrototypeMethod(tpl, "getUserTransform", GetUserTransform);
+
 	Nan::SetPrototypeMethod(tpl, "InitPathTraversal", InitPathTraversal);
 	Nan::SetPrototypeMethod(tpl, "initPathTraversal", InitPathTraversal);
 
@@ -72,6 +81,9 @@ void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "PokeMatrix", PokeMatrix);
+	Nan::SetPrototypeMethod(tpl, "pokeMatrix", PokeMatrix);
 
 	Nan::SetPrototypeMethod(tpl, "RotateWXYZ", RotateWXYZ);
 	Nan::SetPrototypeMethod(tpl, "rotateWXYZ", RotateWXYZ);
@@ -99,6 +111,12 @@ void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
 	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
+
+	Nan::SetPrototypeMethod(tpl, "SetUserMatrix", SetUserMatrix);
+	Nan::SetPrototypeMethod(tpl, "setUserMatrix", SetUserMatrix);
+
+	Nan::SetPrototypeMethod(tpl, "SetUserTransform", SetUserTransform);
+	Nan::SetPrototypeMethod(tpl, "setUserTransform", SetUserTransform);
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
@@ -236,6 +254,88 @@ void VtkProp3DWrap::GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkProp3DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetMatrix(
+			(vtkMatrix4x4 *) a0->native.GetPointer()
+		);
+		return;
+	}
+	vtkMatrix4x4 * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMatrix();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkMatrix4x4Wrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkProp3DWrap::GetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	vtkMatrix4x4 * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUserMatrix();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkMatrix4x4Wrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
+void VtkProp3DWrap::GetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	vtkLinearTransform * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUserTransform();
+	const int argc = 1;
+	v8::Local<v8::Value> argv[argc] =
+		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Function> cons =
+		Nan::New<v8::Function>(VtkLinearTransformWrap::constructor);
+	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	VtkLinearTransformWrap *w = new VtkLinearTransformWrap();
+	w->native.TakeReference(r);
+	w->Wrap(wo);
+	info.GetReturnValue().Set(wo);
+}
+
 void VtkProp3DWrap::InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
@@ -291,6 +391,26 @@ void VtkProp3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 	w->native.TakeReference(r);
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkProp3DWrap::PokeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PokeMatrix(
+			(vtkMatrix4x4 *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkProp3DWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -523,6 +643,46 @@ void VtkProp3DWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		native->SetScale(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProp3DWrap::SetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUserMatrix(
+			(vtkMatrix4x4 *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProp3DWrap::SetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject())
+	{
+		VtkLinearTransformWrap *a0 = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUserTransform(
+			(vtkLinearTransform *) a0->native.GetPointer()
 		);
 		return;
 	}

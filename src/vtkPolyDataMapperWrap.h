@@ -28,6 +28,7 @@ class VtkPolyDataMapperWrap : public VtkMapperWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfSubPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,7 @@ class VtkPolyDataMapperWrap : public VtkMapperWrap
 		static void RenderPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfSubPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -4,8 +4,6 @@
 #define VTK_WRAPPING_CXX
 #include <nan.h>
 
-#include <vtkSmartPointer.h>
-#include <vtkObjectBase.h>
 
 #include "vtkObjectBaseWrap.h"
 

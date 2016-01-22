@@ -27,17 +27,25 @@ class VtkActorWrap : public VtkProp3DWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void ApplyProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackfaceProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MakeProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBackfaceProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
