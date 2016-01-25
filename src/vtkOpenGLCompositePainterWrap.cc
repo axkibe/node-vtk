@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOpenGLCompositePainterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOpenGLCompositePainterWrap::ptpl;
 
 VtkOpenGLCompositePainterWrap::VtkOpenGLCompositePainterWrap()
 { }
@@ -26,19 +27,19 @@ VtkOpenGLCompositePainterWrap::~VtkOpenGLCompositePainterWrap()
 
 void VtkOpenGLCompositePainterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositePainterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositePainterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOpenGLCompositePainterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPainterWrap::InitTpl(tpl);
-	VtkCompositePainterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOpenGLCompositePainter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OpenGLCompositePainter").ToLocalChecked(),tpl->GetFunction());

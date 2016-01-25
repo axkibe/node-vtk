@@ -20,6 +20,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkScatterPlotMatrixWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkScatterPlotMatrixWrap::ptpl;
 
 VtkScatterPlotMatrixWrap::VtkScatterPlotMatrixWrap()
 { }
@@ -32,19 +33,19 @@ VtkScatterPlotMatrixWrap::~VtkScatterPlotMatrixWrap()
 
 void VtkScatterPlotMatrixWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkChartMatrixWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartMatrixWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkScatterPlotMatrixWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractContextItemWrap::InitTpl(tpl);
-	VtkChartMatrixWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkScatterPlotMatrix").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ScatterPlotMatrix").ToLocalChecked(),tpl->GetFunction());

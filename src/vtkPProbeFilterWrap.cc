@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPProbeFilterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPProbeFilterWrap::ptpl;
 
 VtkPProbeFilterWrap::VtkPProbeFilterWrap()
 { }
@@ -27,21 +28,19 @@ VtkPProbeFilterWrap::~VtkPProbeFilterWrap()
 
 void VtkPProbeFilterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeDataProbeFilterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataProbeFilterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPProbeFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkDataSetAlgorithmWrap::InitTpl(tpl);
-	VtkProbeFilterWrap::InitTpl(tpl);
-	VtkCompositeDataProbeFilterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPProbeFilter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PProbeFilter").ToLocalChecked(),tpl->GetFunction());

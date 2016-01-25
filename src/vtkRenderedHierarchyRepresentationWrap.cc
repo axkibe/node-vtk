@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkRenderedHierarchyRepresentationWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkRenderedHierarchyRepresentationWrap::ptpl;
 
 VtkRenderedHierarchyRepresentationWrap::VtkRenderedHierarchyRepresentationWrap()
 { }
@@ -26,22 +27,19 @@ VtkRenderedHierarchyRepresentationWrap::~VtkRenderedHierarchyRepresentationWrap(
 
 void VtkRenderedHierarchyRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderedGraphRepresentationWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedGraphRepresentationWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkRenderedHierarchyRepresentationWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPassInputTypeAlgorithmWrap::InitTpl(tpl);
-	VtkDataRepresentationWrap::InitTpl(tpl);
-	VtkRenderedRepresentationWrap::InitTpl(tpl);
-	VtkRenderedGraphRepresentationWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkRenderedHierarchyRepresentation").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("RenderedHierarchyRepresentation").ToLocalChecked(),tpl->GetFunction());

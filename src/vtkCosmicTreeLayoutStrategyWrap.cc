@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkCosmicTreeLayoutStrategyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkCosmicTreeLayoutStrategyWrap::ptpl;
 
 VtkCosmicTreeLayoutStrategyWrap::VtkCosmicTreeLayoutStrategyWrap()
 { }
@@ -26,18 +27,19 @@ VtkCosmicTreeLayoutStrategyWrap::~VtkCosmicTreeLayoutStrategyWrap()
 
 void VtkCosmicTreeLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutStrategyWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkCosmicTreeLayoutStrategyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkGraphLayoutStrategyWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkCosmicTreeLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("CosmicTreeLayoutStrategy").ToLocalChecked(),tpl->GetFunction());

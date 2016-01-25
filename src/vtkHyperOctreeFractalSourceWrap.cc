@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkHyperOctreeFractalSourceWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeFractalSourceWrap::ptpl;
 
 VtkHyperOctreeFractalSourceWrap::VtkHyperOctreeFractalSourceWrap()
 { }
@@ -26,19 +27,19 @@ VtkHyperOctreeFractalSourceWrap::~VtkHyperOctreeFractalSourceWrap()
 
 void VtkHyperOctreeFractalSourceWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHyperOctreeAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperOctreeAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkHyperOctreeFractalSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkHyperOctreeAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkHyperOctreeFractalSource").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("HyperOctreeFractalSource").ToLocalChecked(),tpl->GetFunction());

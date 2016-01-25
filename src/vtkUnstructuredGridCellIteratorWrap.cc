@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkUnstructuredGridCellIteratorWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridCellIteratorWrap::ptpl;
 
 VtkUnstructuredGridCellIteratorWrap::VtkUnstructuredGridCellIteratorWrap()
 { }
@@ -26,18 +27,19 @@ VtkUnstructuredGridCellIteratorWrap::~VtkUnstructuredGridCellIteratorWrap()
 
 void VtkUnstructuredGridCellIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCellIteratorWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellIteratorWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkUnstructuredGridCellIteratorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkCellIteratorWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkUnstructuredGridCellIterator").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("UnstructuredGridCellIterator").ToLocalChecked(),tpl->GetFunction());

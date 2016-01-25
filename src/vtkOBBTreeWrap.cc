@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOBBTreeWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOBBTreeWrap::ptpl;
 
 VtkOBBTreeWrap::VtkOBBTreeWrap()
 { }
@@ -27,19 +28,19 @@ VtkOBBTreeWrap::~VtkOBBTreeWrap()
 
 void VtkOBBTreeWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractCellLocatorWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOBBTreeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkLocatorWrap::InitTpl(tpl);
-	VtkAbstractCellLocatorWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOBBTree").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OBBTree").ToLocalChecked(),tpl->GetFunction());

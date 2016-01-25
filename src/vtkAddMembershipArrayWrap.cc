@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkAddMembershipArrayWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkAddMembershipArrayWrap::ptpl;
 
 VtkAddMembershipArrayWrap::VtkAddMembershipArrayWrap()
 { }
@@ -27,19 +28,19 @@ VtkAddMembershipArrayWrap::~VtkAddMembershipArrayWrap()
 
 void VtkAddMembershipArrayWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkAddMembershipArrayWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPassInputTypeAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkAddMembershipArray").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("AddMembershipArray").ToLocalChecked(),tpl->GetFunction());

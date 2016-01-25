@@ -19,6 +19,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkStatisticsAlgorithmWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkStatisticsAlgorithmWrap::ptpl;
 
 VtkStatisticsAlgorithmWrap::VtkStatisticsAlgorithmWrap()
 { }
@@ -31,19 +32,19 @@ VtkStatisticsAlgorithmWrap::~VtkStatisticsAlgorithmWrap()
 
 void VtkStatisticsAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkStatisticsAlgorithmWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkTableAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkStatisticsAlgorithm").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("StatisticsAlgorithm").ToLocalChecked(),tpl->GetFunction());

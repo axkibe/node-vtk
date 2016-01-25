@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSQLiteDatabaseWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSQLiteDatabaseWrap::ptpl;
 
 VtkSQLiteDatabaseWrap::VtkSQLiteDatabaseWrap()
 { }
@@ -28,18 +29,19 @@ VtkSQLiteDatabaseWrap::~VtkSQLiteDatabaseWrap()
 
 void VtkSQLiteDatabaseWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSQLDatabaseWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSQLDatabaseWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSQLiteDatabaseWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkSQLDatabaseWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSQLiteDatabase").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("SQLiteDatabase").ToLocalChecked(),tpl->GetFunction());

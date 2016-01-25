@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkTypeFloat32ArrayWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkTypeFloat32ArrayWrap::ptpl;
 
 VtkTypeFloat32ArrayWrap::VtkTypeFloat32ArrayWrap()
 { }
@@ -26,20 +27,19 @@ VtkTypeFloat32ArrayWrap::~VtkTypeFloat32ArrayWrap()
 
 void VtkTypeFloat32ArrayWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkFloatArrayWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFloatArrayWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkTypeFloat32ArrayWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractArrayWrap::InitTpl(tpl);
-	VtkDataArrayWrap::InitTpl(tpl);
-	VtkFloatArrayWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkTypeFloat32Array").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("TypeFloat32Array").ToLocalChecked(),tpl->GetFunction());

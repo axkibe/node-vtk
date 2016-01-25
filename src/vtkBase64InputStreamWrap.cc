@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkBase64InputStreamWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkBase64InputStreamWrap::ptpl;
 
 VtkBase64InputStreamWrap::VtkBase64InputStreamWrap()
 { }
@@ -26,18 +27,19 @@ VtkBase64InputStreamWrap::~VtkBase64InputStreamWrap()
 
 void VtkBase64InputStreamWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInputStreamWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInputStreamWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkBase64InputStreamWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInputStreamWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkBase64InputStream").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Base64InputStream").ToLocalChecked(),tpl->GetFunction());

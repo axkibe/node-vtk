@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkVolumeRayCastSpaceLeapingImageFilterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkVolumeRayCastSpaceLeapingImageFilterWrap::ptpl;
 
 VtkVolumeRayCastSpaceLeapingImageFilterWrap::VtkVolumeRayCastSpaceLeapingImageFilterWrap()
 { }
@@ -28,20 +29,19 @@ VtkVolumeRayCastSpaceLeapingImageFilterWrap::~VtkVolumeRayCastSpaceLeapingImageF
 
 void VtkVolumeRayCastSpaceLeapingImageFilterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkVolumeRayCastSpaceLeapingImageFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
-	VtkThreadedImageAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkVolumeRayCastSpaceLeapingImageFilter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("VolumeRayCastSpaceLeapingImageFilter").ToLocalChecked(),tpl->GetFunction());

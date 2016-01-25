@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGlyph2DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGlyph2DWrap::ptpl;
 
 VtkGlyph2DWrap::VtkGlyph2DWrap()
 { }
@@ -26,20 +27,19 @@ VtkGlyph2DWrap::~VtkGlyph2DWrap()
 
 void VtkGlyph2DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGlyph3DWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGlyph3DWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGlyph2DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
-	VtkGlyph3DWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGlyph2D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Glyph2D").ToLocalChecked(),tpl->GetFunction());

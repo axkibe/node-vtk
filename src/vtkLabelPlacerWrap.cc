@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkLabelPlacerWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkLabelPlacerWrap::ptpl;
 
 VtkLabelPlacerWrap::VtkLabelPlacerWrap()
 { }
@@ -28,19 +29,19 @@ VtkLabelPlacerWrap::~VtkLabelPlacerWrap()
 
 void VtkLabelPlacerWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkLabelPlacerWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkLabelPlacer").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("LabelPlacer").ToLocalChecked(),tpl->GetFunction());

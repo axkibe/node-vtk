@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkQuadraticQuadWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkQuadraticQuadWrap::ptpl;
 
 VtkQuadraticQuadWrap::VtkQuadraticQuadWrap()
 { }
@@ -29,19 +30,19 @@ VtkQuadraticQuadWrap::~VtkQuadraticQuadWrap()
 
 void VtkQuadraticQuadWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkNonLinearCellWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkNonLinearCellWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkQuadraticQuadWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkCellWrap::InitTpl(tpl);
-	VtkNonLinearCellWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkQuadraticQuad").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("QuadraticQuad").ToLocalChecked(),tpl->GetFunction());

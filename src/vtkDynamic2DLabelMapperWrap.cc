@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkDynamic2DLabelMapperWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkDynamic2DLabelMapperWrap::ptpl;
 
 VtkDynamic2DLabelMapperWrap::VtkDynamic2DLabelMapperWrap()
 { }
@@ -28,21 +29,19 @@ VtkDynamic2DLabelMapperWrap::~VtkDynamic2DLabelMapperWrap()
 
 void VtkDynamic2DLabelMapperWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLabeledDataMapperWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabeledDataMapperWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkDynamic2DLabelMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAbstractMapperWrap::InitTpl(tpl);
-	VtkMapper2DWrap::InitTpl(tpl);
-	VtkLabeledDataMapperWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkDynamic2DLabelMapper").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Dynamic2DLabelMapper").ToLocalChecked(),tpl->GetFunction());

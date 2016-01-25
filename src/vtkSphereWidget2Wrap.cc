@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSphereWidget2Wrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSphereWidget2Wrap::ptpl;
 
 VtkSphereWidget2Wrap::VtkSphereWidget2Wrap()
 { }
@@ -27,19 +28,19 @@ VtkSphereWidget2Wrap::~VtkSphereWidget2Wrap()
 
 void VtkSphereWidget2Wrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSphereWidget2Wrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInteractorObserverWrap::InitTpl(tpl);
-	VtkAbstractWidgetWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSphereWidget2").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("SphereWidget2").ToLocalChecked(),tpl->GetFunction());

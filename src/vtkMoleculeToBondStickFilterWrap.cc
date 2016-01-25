@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkMoleculeToBondStickFilterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkMoleculeToBondStickFilterWrap::ptpl;
 
 VtkMoleculeToBondStickFilterWrap::VtkMoleculeToBondStickFilterWrap()
 { }
@@ -26,20 +27,19 @@ VtkMoleculeToBondStickFilterWrap::~VtkMoleculeToBondStickFilterWrap()
 
 void VtkMoleculeToBondStickFilterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMoleculeToPolyDataFilterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeToPolyDataFilterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkMoleculeToBondStickFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
-	VtkMoleculeToPolyDataFilterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkMoleculeToBondStickFilter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("MoleculeToBondStickFilter").ToLocalChecked(),tpl->GetFunction());

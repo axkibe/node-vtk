@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGaussianBlurPassWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGaussianBlurPassWrap::ptpl;
 
 VtkGaussianBlurPassWrap::VtkGaussianBlurPassWrap()
 { }
@@ -27,19 +28,19 @@ VtkGaussianBlurPassWrap::~VtkGaussianBlurPassWrap()
 
 void VtkGaussianBlurPassWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageProcessingPassWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageProcessingPassWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGaussianBlurPassWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkRenderPassWrap::InitTpl(tpl);
-	VtkImageProcessingPassWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGaussianBlurPass").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GaussianBlurPass").ToLocalChecked(),tpl->GetFunction());

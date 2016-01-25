@@ -29,6 +29,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkRendererWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkRendererWrap::ptpl;
 
 VtkRendererWrap::VtkRendererWrap()
 { }
@@ -41,18 +42,19 @@ VtkRendererWrap::~VtkRendererWrap()
 
 void VtkRendererWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkViewportWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkViewportWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkRendererWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkViewportWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkRenderer").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Renderer").ToLocalChecked(),tpl->GetFunction());

@@ -19,6 +19,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkResliceCursorLineRepresentationWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkResliceCursorLineRepresentationWrap::ptpl;
 
 VtkResliceCursorLineRepresentationWrap::VtkResliceCursorLineRepresentationWrap()
 { }
@@ -31,20 +32,19 @@ VtkResliceCursorLineRepresentationWrap::~VtkResliceCursorLineRepresentationWrap(
 
 void VtkResliceCursorLineRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkResliceCursorRepresentationWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkResliceCursorRepresentationWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkResliceCursorLineRepresentationWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPropWrap::InitTpl(tpl);
-	VtkWidgetRepresentationWrap::InitTpl(tpl);
-	VtkResliceCursorRepresentationWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkResliceCursorLineRepresentation").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ResliceCursorLineRepresentation").ToLocalChecked(),tpl->GetFunction());

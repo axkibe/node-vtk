@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkImageProcessingPassWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkImageProcessingPassWrap::ptpl;
 
 VtkImageProcessingPassWrap::VtkImageProcessingPassWrap()
 { }
@@ -27,18 +28,19 @@ VtkImageProcessingPassWrap::~VtkImageProcessingPassWrap()
 
 void VtkImageProcessingPassWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderPassWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkImageProcessingPassWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkRenderPassWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkImageProcessingPass").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ImageProcessingPass").ToLocalChecked(),tpl->GetFunction());

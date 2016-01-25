@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkImageFlipWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkImageFlipWrap::ptpl;
 
 VtkImageFlipWrap::VtkImageFlipWrap()
 { }
@@ -26,21 +27,19 @@ VtkImageFlipWrap::~VtkImageFlipWrap()
 
 void VtkImageFlipWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageResliceWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageResliceWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkImageFlipWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
-	VtkThreadedImageAlgorithmWrap::InitTpl(tpl);
-	VtkImageResliceWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkImageFlip").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ImageFlip").ToLocalChecked(),tpl->GetFunction());

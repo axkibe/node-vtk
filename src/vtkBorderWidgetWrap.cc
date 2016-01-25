@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkBorderWidgetWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkBorderWidgetWrap::ptpl;
 
 VtkBorderWidgetWrap::VtkBorderWidgetWrap()
 { }
@@ -27,19 +28,19 @@ VtkBorderWidgetWrap::~VtkBorderWidgetWrap()
 
 void VtkBorderWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkBorderWidgetWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInteractorObserverWrap::InitTpl(tpl);
-	VtkAbstractWidgetWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkBorderWidget").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("BorderWidget").ToLocalChecked(),tpl->GetFunction());

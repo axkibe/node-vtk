@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkMedicalImageReader2Wrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkMedicalImageReader2Wrap::ptpl;
 
 VtkMedicalImageReader2Wrap::VtkMedicalImageReader2Wrap()
 { }
@@ -27,20 +28,19 @@ VtkMedicalImageReader2Wrap::~VtkMedicalImageReader2Wrap()
 
 void VtkMedicalImageReader2Wrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageReader2Wrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageReader2Wrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkMedicalImageReader2Wrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
-	VtkImageReader2Wrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkMedicalImageReader2").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("MedicalImageReader2").ToLocalChecked(),tpl->GetFunction());

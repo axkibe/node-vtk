@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGeoTerrain2DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGeoTerrain2DWrap::ptpl;
 
 VtkGeoTerrain2DWrap::VtkGeoTerrain2DWrap()
 { }
@@ -27,18 +28,19 @@ VtkGeoTerrain2DWrap::~VtkGeoTerrain2DWrap()
 
 void VtkGeoTerrain2DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGeoTerrainWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGeoTerrainWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGeoTerrain2DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkGeoTerrainWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGeoTerrain2D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GeoTerrain2D").ToLocalChecked(),tpl->GetFunction());

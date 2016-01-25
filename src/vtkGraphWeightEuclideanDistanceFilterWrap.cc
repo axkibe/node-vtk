@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGraphWeightEuclideanDistanceFilterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGraphWeightEuclideanDistanceFilterWrap::ptpl;
 
 VtkGraphWeightEuclideanDistanceFilterWrap::VtkGraphWeightEuclideanDistanceFilterWrap()
 { }
@@ -26,20 +27,19 @@ VtkGraphWeightEuclideanDistanceFilterWrap::~VtkGraphWeightEuclideanDistanceFilte
 
 void VtkGraphWeightEuclideanDistanceFilterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphWeightFilterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphWeightFilterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGraphWeightEuclideanDistanceFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkGraphAlgorithmWrap::InitTpl(tpl);
-	VtkGraphWeightFilterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGraphWeightEuclideanDistanceFilter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GraphWeightEuclideanDistanceFilter").ToLocalChecked(),tpl->GetFunction());

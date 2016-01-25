@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkCirclePackLayoutStrategyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkCirclePackLayoutStrategyWrap::ptpl;
 
 VtkCirclePackLayoutStrategyWrap::VtkCirclePackLayoutStrategyWrap()
 { }
@@ -27,17 +28,19 @@ VtkCirclePackLayoutStrategyWrap::~VtkCirclePackLayoutStrategyWrap()
 
 void VtkCirclePackLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkCirclePackLayoutStrategyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkCirclePackLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("CirclePackLayoutStrategy").ToLocalChecked(),tpl->GetFunction());

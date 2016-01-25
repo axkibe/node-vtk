@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkParallelCoordinatesHistogramRepresentationWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkParallelCoordinatesHistogramRepresentationWrap::ptpl;
 
 VtkParallelCoordinatesHistogramRepresentationWrap::VtkParallelCoordinatesHistogramRepresentationWrap()
 { }
@@ -27,22 +28,19 @@ VtkParallelCoordinatesHistogramRepresentationWrap::~VtkParallelCoordinatesHistog
 
 void VtkParallelCoordinatesHistogramRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkParallelCoordinatesRepresentationWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParallelCoordinatesRepresentationWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkParallelCoordinatesHistogramRepresentationWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPassInputTypeAlgorithmWrap::InitTpl(tpl);
-	VtkDataRepresentationWrap::InitTpl(tpl);
-	VtkRenderedRepresentationWrap::InitTpl(tpl);
-	VtkParallelCoordinatesRepresentationWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkParallelCoordinatesHistogramRepresentation").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ParallelCoordinatesHistogramRepresentation").ToLocalChecked(),tpl->GetFunction());

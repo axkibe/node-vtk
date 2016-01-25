@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkDecimateProWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkDecimateProWrap::ptpl;
 
 VtkDecimateProWrap::VtkDecimateProWrap()
 { }
@@ -26,19 +27,19 @@ VtkDecimateProWrap::~VtkDecimateProWrap()
 
 void VtkDecimateProWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkDecimateProWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkDecimatePro").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("DecimatePro").ToLocalChecked(),tpl->GetFunction());

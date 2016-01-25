@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkImageCursor3DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkImageCursor3DWrap::ptpl;
 
 VtkImageCursor3DWrap::VtkImageCursor3DWrap()
 { }
@@ -26,20 +27,19 @@ VtkImageCursor3DWrap::~VtkImageCursor3DWrap()
 
 void VtkImageCursor3DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageInPlaceFilterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageInPlaceFilterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkImageCursor3DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
-	VtkImageInPlaceFilterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkImageCursor3D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ImageCursor3D").ToLocalChecked(),tpl->GetFunction());

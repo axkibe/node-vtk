@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkVolumeTextureMapper2DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkVolumeTextureMapper2DWrap::ptpl;
 
 VtkVolumeTextureMapper2DWrap::VtkVolumeTextureMapper2DWrap()
 { }
@@ -28,23 +29,19 @@ VtkVolumeTextureMapper2DWrap::~VtkVolumeTextureMapper2DWrap()
 
 void VtkVolumeTextureMapper2DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeTextureMapperWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeTextureMapperWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkVolumeTextureMapper2DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAbstractMapperWrap::InitTpl(tpl);
-	VtkAbstractMapper3DWrap::InitTpl(tpl);
-	VtkAbstractVolumeMapperWrap::InitTpl(tpl);
-	VtkVolumeMapperWrap::InitTpl(tpl);
-	VtkVolumeTextureMapperWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkVolumeTextureMapper2D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("VolumeTextureMapper2D").ToLocalChecked(),tpl->GetFunction());

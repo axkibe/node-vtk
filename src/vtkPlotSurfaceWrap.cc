@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPlotSurfaceWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPlotSurfaceWrap::ptpl;
 
 VtkPlotSurfaceWrap::VtkPlotSurfaceWrap()
 { }
@@ -27,20 +28,19 @@ VtkPlotSurfaceWrap::~VtkPlotSurfaceWrap()
 
 void VtkPlotSurfaceWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPlot3DWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlot3DWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPlotSurfaceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractContextItemWrap::InitTpl(tpl);
-	VtkContextItemWrap::InitTpl(tpl);
-	VtkPlot3DWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPlotSurface").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PlotSurface").ToLocalChecked(),tpl->GetFunction());

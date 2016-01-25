@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGeoEdgeStrategyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGeoEdgeStrategyWrap::ptpl;
 
 VtkGeoEdgeStrategyWrap::VtkGeoEdgeStrategyWrap()
 { }
@@ -26,18 +27,19 @@ VtkGeoEdgeStrategyWrap::~VtkGeoEdgeStrategyWrap()
 
 void VtkGeoEdgeStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkEdgeLayoutStrategyWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEdgeLayoutStrategyWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGeoEdgeStrategyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkEdgeLayoutStrategyWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGeoEdgeStrategy").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GeoEdgeStrategy").ToLocalChecked(),tpl->GetFunction());

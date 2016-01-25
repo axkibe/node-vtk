@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSQLiteToTableReaderWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSQLiteToTableReaderWrap::ptpl;
 
 VtkSQLiteToTableReaderWrap::VtkSQLiteToTableReaderWrap()
 { }
@@ -26,20 +27,19 @@ VtkSQLiteToTableReaderWrap::~VtkSQLiteToTableReaderWrap()
 
 void VtkSQLiteToTableReaderWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDatabaseToTableReaderWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDatabaseToTableReaderWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSQLiteToTableReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkTableAlgorithmWrap::InitTpl(tpl);
-	VtkDatabaseToTableReaderWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSQLiteToTableReader").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("SQLiteToTableReader").ToLocalChecked(),tpl->GetFunction());

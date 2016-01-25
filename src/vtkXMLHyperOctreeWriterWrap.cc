@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkXMLHyperOctreeWriterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkXMLHyperOctreeWriterWrap::ptpl;
 
 VtkXMLHyperOctreeWriterWrap::VtkXMLHyperOctreeWriterWrap()
 { }
@@ -27,19 +28,19 @@ VtkXMLHyperOctreeWriterWrap::~VtkXMLHyperOctreeWriterWrap()
 
 void VtkXMLHyperOctreeWriterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLWriterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLWriterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkXMLHyperOctreeWriterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkXMLWriterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkXMLHyperOctreeWriter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("XMLHyperOctreeWriter").ToLocalChecked(),tpl->GetFunction());

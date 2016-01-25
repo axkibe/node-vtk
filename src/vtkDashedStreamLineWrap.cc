@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkDashedStreamLineWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkDashedStreamLineWrap::ptpl;
 
 VtkDashedStreamLineWrap::VtkDashedStreamLineWrap()
 { }
@@ -26,21 +27,19 @@ VtkDashedStreamLineWrap::~VtkDashedStreamLineWrap()
 
 void VtkDashedStreamLineWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStreamLineWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamLineWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkDashedStreamLineWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
-	VtkStreamerWrap::InitTpl(tpl);
-	VtkStreamLineWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkDashedStreamLine").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("DashedStreamLine").ToLocalChecked(),tpl->GetFunction());

@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkRenderedRepresentationWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkRenderedRepresentationWrap::ptpl;
 
 VtkRenderedRepresentationWrap::VtkRenderedRepresentationWrap()
 { }
@@ -26,20 +27,19 @@ VtkRenderedRepresentationWrap::~VtkRenderedRepresentationWrap()
 
 void VtkRenderedRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataRepresentationWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataRepresentationWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkRenderedRepresentationWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPassInputTypeAlgorithmWrap::InitTpl(tpl);
-	VtkDataRepresentationWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkRenderedRepresentation").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("RenderedRepresentation").ToLocalChecked(),tpl->GetFunction());

@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkIncrementalOctreeNodeWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkIncrementalOctreeNodeWrap::ptpl;
 
 VtkIncrementalOctreeNodeWrap::VtkIncrementalOctreeNodeWrap()
 { }
@@ -26,17 +27,19 @@ VtkIncrementalOctreeNodeWrap::~VtkIncrementalOctreeNodeWrap()
 
 void VtkIncrementalOctreeNodeWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkIncrementalOctreeNodeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkIncrementalOctreeNode").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("IncrementalOctreeNode").ToLocalChecked(),tpl->GetFunction());

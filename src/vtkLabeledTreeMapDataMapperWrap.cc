@@ -18,6 +18,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkLabeledTreeMapDataMapperWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkLabeledTreeMapDataMapperWrap::ptpl;
 
 VtkLabeledTreeMapDataMapperWrap::VtkLabeledTreeMapDataMapperWrap()
 { }
@@ -30,21 +31,19 @@ VtkLabeledTreeMapDataMapperWrap::~VtkLabeledTreeMapDataMapperWrap()
 
 void VtkLabeledTreeMapDataMapperWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLabeledDataMapperWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabeledDataMapperWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkLabeledTreeMapDataMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAbstractMapperWrap::InitTpl(tpl);
-	VtkMapper2DWrap::InitTpl(tpl);
-	VtkLabeledDataMapperWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkLabeledTreeMapDataMapper").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("LabeledTreeMapDataMapper").ToLocalChecked(),tpl->GetFunction());

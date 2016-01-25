@@ -22,6 +22,7 @@ class VtkDistanceRepresentation2DWrap : public VtkDistanceRepresentationWrap
 		VtkDistanceRepresentation2DWrap();
 		~VtkDistanceRepresentation2DWrap( );
 		static Nan::Persistent<v8::Function> constructor;
+		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);

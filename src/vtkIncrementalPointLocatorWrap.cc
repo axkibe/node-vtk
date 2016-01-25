@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkIncrementalPointLocatorWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkIncrementalPointLocatorWrap::ptpl;
 
 VtkIncrementalPointLocatorWrap::VtkIncrementalPointLocatorWrap()
 { }
@@ -26,19 +27,19 @@ VtkIncrementalPointLocatorWrap::~VtkIncrementalPointLocatorWrap()
 
 void VtkIncrementalPointLocatorWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractPointLocatorWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPointLocatorWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkIncrementalPointLocatorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkLocatorWrap::InitTpl(tpl);
-	VtkAbstractPointLocatorWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkIncrementalPointLocator").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("IncrementalPointLocator").ToLocalChecked(),tpl->GetFunction());

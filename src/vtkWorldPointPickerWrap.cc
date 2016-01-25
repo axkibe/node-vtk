@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkWorldPointPickerWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkWorldPointPickerWrap::ptpl;
 
 VtkWorldPointPickerWrap::VtkWorldPointPickerWrap()
 { }
@@ -27,18 +28,19 @@ VtkWorldPointPickerWrap::~VtkWorldPointPickerWrap()
 
 void VtkWorldPointPickerWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractPickerWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPickerWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkWorldPointPickerWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractPickerWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkWorldPointPicker").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("WorldPointPicker").ToLocalChecked(),tpl->GetFunction());

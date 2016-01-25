@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkImageDilateErode3DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkImageDilateErode3DWrap::ptpl;
 
 VtkImageDilateErode3DWrap::VtkImageDilateErode3DWrap()
 { }
@@ -26,21 +27,19 @@ VtkImageDilateErode3DWrap::~VtkImageDilateErode3DWrap()
 
 void VtkImageDilateErode3DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageSpatialAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageSpatialAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkImageDilateErode3DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
-	VtkThreadedImageAlgorithmWrap::InitTpl(tpl);
-	VtkImageSpatialAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkImageDilateErode3D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ImageDilateErode3D").ToLocalChecked(),tpl->GetFunction());

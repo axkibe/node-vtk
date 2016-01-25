@@ -22,6 +22,7 @@ class VtkMultiBlockPLOT3DReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkMultiBlockPLOT3DReaderWrap();
 		~VtkMultiBlockPLOT3DReaderWrap( );
 		static Nan::Persistent<v8::Function> constructor;
+		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);

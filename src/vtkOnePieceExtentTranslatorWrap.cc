@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOnePieceExtentTranslatorWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOnePieceExtentTranslatorWrap::ptpl;
 
 VtkOnePieceExtentTranslatorWrap::VtkOnePieceExtentTranslatorWrap()
 { }
@@ -26,18 +27,19 @@ VtkOnePieceExtentTranslatorWrap::~VtkOnePieceExtentTranslatorWrap()
 
 void VtkOnePieceExtentTranslatorWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtentTranslatorWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtentTranslatorWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOnePieceExtentTranslatorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkExtentTranslatorWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOnePieceExtentTranslator").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OnePieceExtentTranslator").ToLocalChecked(),tpl->GetFunction());

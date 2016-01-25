@@ -19,6 +19,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkReebGraphWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkReebGraphWrap::ptpl;
 
 VtkReebGraphWrap::VtkReebGraphWrap()
 { }
@@ -31,21 +32,19 @@ VtkReebGraphWrap::~VtkReebGraphWrap()
 
 void VtkReebGraphWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMutableDirectedGraphWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMutableDirectedGraphWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkReebGraphWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkDataObjectWrap::InitTpl(tpl);
-	VtkGraphWrap::InitTpl(tpl);
-	VtkDirectedGraphWrap::InitTpl(tpl);
-	VtkMutableDirectedGraphWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkReebGraph").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ReebGraph").ToLocalChecked(),tpl->GetFunction());

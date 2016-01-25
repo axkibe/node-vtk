@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSliceAndDiceLayoutStrategyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSliceAndDiceLayoutStrategyWrap::ptpl;
 
 VtkSliceAndDiceLayoutStrategyWrap::VtkSliceAndDiceLayoutStrategyWrap()
 { }
@@ -28,19 +29,19 @@ VtkSliceAndDiceLayoutStrategyWrap::~VtkSliceAndDiceLayoutStrategyWrap()
 
 void VtkSliceAndDiceLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTreeMapLayoutStrategyWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeMapLayoutStrategyWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSliceAndDiceLayoutStrategyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAreaLayoutStrategyWrap::InitTpl(tpl);
-	VtkTreeMapLayoutStrategyWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSliceAndDiceLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("SliceAndDiceLayoutStrategy").ToLocalChecked(),tpl->GetFunction());

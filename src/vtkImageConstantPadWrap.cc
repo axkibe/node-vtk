@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkImageConstantPadWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkImageConstantPadWrap::ptpl;
 
 VtkImageConstantPadWrap::VtkImageConstantPadWrap()
 { }
@@ -26,21 +27,19 @@ VtkImageConstantPadWrap::~VtkImageConstantPadWrap()
 
 void VtkImageConstantPadWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImagePadFilterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImagePadFilterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkImageConstantPadWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
-	VtkThreadedImageAlgorithmWrap::InitTpl(tpl);
-	VtkImagePadFilterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkImageConstantPad").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ImageConstantPad").ToLocalChecked(),tpl->GetFunction());

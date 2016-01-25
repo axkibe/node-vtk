@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkHyperTreeGridSourceWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkHyperTreeGridSourceWrap::ptpl;
 
 VtkHyperTreeGridSourceWrap::VtkHyperTreeGridSourceWrap()
 { }
@@ -29,19 +30,19 @@ VtkHyperTreeGridSourceWrap::~VtkHyperTreeGridSourceWrap()
 
 void VtkHyperTreeGridSourceWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHyperTreeGridAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperTreeGridAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkHyperTreeGridSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkHyperTreeGridAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkHyperTreeGridSource").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("HyperTreeGridSource").ToLocalChecked(),tpl->GetFunction());

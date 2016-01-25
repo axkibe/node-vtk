@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkTreeWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkTreeWrap::ptpl;
 
 VtkTreeWrap::VtkTreeWrap()
 { }
@@ -28,21 +29,19 @@ VtkTreeWrap::~VtkTreeWrap()
 
 void VtkTreeWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDirectedAcyclicGraphWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDirectedAcyclicGraphWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkTreeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkDataObjectWrap::InitTpl(tpl);
-	VtkGraphWrap::InitTpl(tpl);
-	VtkDirectedGraphWrap::InitTpl(tpl);
-	VtkDirectedAcyclicGraphWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkTree").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Tree").ToLocalChecked(),tpl->GetFunction());

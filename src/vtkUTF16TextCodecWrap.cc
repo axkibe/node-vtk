@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkUTF16TextCodecWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkUTF16TextCodecWrap::ptpl;
 
 VtkUTF16TextCodecWrap::VtkUTF16TextCodecWrap()
 { }
@@ -26,18 +27,19 @@ VtkUTF16TextCodecWrap::~VtkUTF16TextCodecWrap()
 
 void VtkUTF16TextCodecWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTextCodecWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTextCodecWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkUTF16TextCodecWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkTextCodecWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkUTF16TextCodec").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("UTF16TextCodec").ToLocalChecked(),tpl->GetFunction());

@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOpenGLProjectedTetrahedraMapperWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOpenGLProjectedTetrahedraMapperWrap::ptpl;
 
 VtkOpenGLProjectedTetrahedraMapperWrap::VtkOpenGLProjectedTetrahedraMapperWrap()
 { }
@@ -29,23 +30,19 @@ VtkOpenGLProjectedTetrahedraMapperWrap::~VtkOpenGLProjectedTetrahedraMapperWrap(
 
 void VtkOpenGLProjectedTetrahedraMapperWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProjectedTetrahedraMapperWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProjectedTetrahedraMapperWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOpenGLProjectedTetrahedraMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAbstractMapperWrap::InitTpl(tpl);
-	VtkAbstractMapper3DWrap::InitTpl(tpl);
-	VtkAbstractVolumeMapperWrap::InitTpl(tpl);
-	VtkUnstructuredGridVolumeMapperWrap::InitTpl(tpl);
-	VtkProjectedTetrahedraMapperWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOpenGLProjectedTetrahedraMapper").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OpenGLProjectedTetrahedraMapper").ToLocalChecked(),tpl->GetFunction());

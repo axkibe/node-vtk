@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkDijkstraImageGeodesicPathWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkDijkstraImageGeodesicPathWrap::ptpl;
 
 VtkDijkstraImageGeodesicPathWrap::VtkDijkstraImageGeodesicPathWrap()
 { }
@@ -28,22 +29,19 @@ VtkDijkstraImageGeodesicPathWrap::~VtkDijkstraImageGeodesicPathWrap()
 
 void VtkDijkstraImageGeodesicPathWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDijkstraGraphGeodesicPathWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDijkstraGraphGeodesicPathWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkDijkstraImageGeodesicPathWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
-	VtkGeodesicPathWrap::InitTpl(tpl);
-	VtkGraphGeodesicPathWrap::InitTpl(tpl);
-	VtkDijkstraGraphGeodesicPathWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkDijkstraImageGeodesicPath").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("DijkstraImageGeodesicPath").ToLocalChecked(),tpl->GetFunction());

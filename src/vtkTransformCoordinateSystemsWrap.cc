@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkTransformCoordinateSystemsWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkTransformCoordinateSystemsWrap::ptpl;
 
 VtkTransformCoordinateSystemsWrap::VtkTransformCoordinateSystemsWrap()
 { }
@@ -27,19 +28,19 @@ VtkTransformCoordinateSystemsWrap::~VtkTransformCoordinateSystemsWrap()
 
 void VtkTransformCoordinateSystemsWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointSetAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkTransformCoordinateSystemsWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPointSetAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkTransformCoordinateSystems").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("TransformCoordinateSystems").ToLocalChecked(),tpl->GetFunction());

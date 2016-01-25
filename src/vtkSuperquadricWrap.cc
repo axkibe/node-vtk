@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSuperquadricWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSuperquadricWrap::ptpl;
 
 VtkSuperquadricWrap::VtkSuperquadricWrap()
 { }
@@ -26,18 +27,19 @@ VtkSuperquadricWrap::~VtkSuperquadricWrap()
 
 void VtkSuperquadricWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSuperquadricWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkImplicitFunctionWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSuperquadric").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Superquadric").ToLocalChecked(),tpl->GetFunction());

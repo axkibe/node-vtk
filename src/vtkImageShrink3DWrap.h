@@ -22,6 +22,7 @@ class VtkImageShrink3DWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageShrink3DWrap();
 		~VtkImageShrink3DWrap( );
 		static Nan::Persistent<v8::Function> constructor;
+		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);

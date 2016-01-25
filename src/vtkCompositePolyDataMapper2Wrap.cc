@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkCompositePolyDataMapper2Wrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkCompositePolyDataMapper2Wrap::ptpl;
 
 VtkCompositePolyDataMapper2Wrap::VtkCompositePolyDataMapper2Wrap()
 { }
@@ -27,23 +28,19 @@ VtkCompositePolyDataMapper2Wrap::~VtkCompositePolyDataMapper2Wrap()
 
 void VtkCompositePolyDataMapper2Wrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterPolyDataMapperWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterPolyDataMapperWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkCompositePolyDataMapper2Wrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAbstractMapperWrap::InitTpl(tpl);
-	VtkAbstractMapper3DWrap::InitTpl(tpl);
-	VtkMapperWrap::InitTpl(tpl);
-	VtkPolyDataMapperWrap::InitTpl(tpl);
-	VtkPainterPolyDataMapperWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkCompositePolyDataMapper2").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("CompositePolyDataMapper2").ToLocalChecked(),tpl->GetFunction());

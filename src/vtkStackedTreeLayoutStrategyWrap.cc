@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkStackedTreeLayoutStrategyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkStackedTreeLayoutStrategyWrap::ptpl;
 
 VtkStackedTreeLayoutStrategyWrap::VtkStackedTreeLayoutStrategyWrap()
 { }
@@ -28,18 +29,19 @@ VtkStackedTreeLayoutStrategyWrap::~VtkStackedTreeLayoutStrategyWrap()
 
 void VtkStackedTreeLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAreaLayoutStrategyWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAreaLayoutStrategyWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkStackedTreeLayoutStrategyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAreaLayoutStrategyWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkStackedTreeLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("StackedTreeLayoutStrategy").ToLocalChecked(),tpl->GetFunction());

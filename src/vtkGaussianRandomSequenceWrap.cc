@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGaussianRandomSequenceWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGaussianRandomSequenceWrap::ptpl;
 
 VtkGaussianRandomSequenceWrap::VtkGaussianRandomSequenceWrap()
 { }
@@ -26,18 +27,19 @@ VtkGaussianRandomSequenceWrap::~VtkGaussianRandomSequenceWrap()
 
 void VtkGaussianRandomSequenceWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRandomSequenceWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRandomSequenceWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGaussianRandomSequenceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkRandomSequenceWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGaussianRandomSequence").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GaussianRandomSequence").ToLocalChecked(),tpl->GetFunction());

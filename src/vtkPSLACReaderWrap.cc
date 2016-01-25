@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPSLACReaderWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPSLACReaderWrap::ptpl;
 
 VtkPSLACReaderWrap::VtkPSLACReaderWrap()
 { }
@@ -27,20 +28,19 @@ VtkPSLACReaderWrap::~VtkPSLACReaderWrap()
 
 void VtkPSLACReaderWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSLACReaderWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSLACReaderWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPSLACReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkMultiBlockDataSetAlgorithmWrap::InitTpl(tpl);
-	VtkSLACReaderWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPSLACReader").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PSLACReader").ToLocalChecked(),tpl->GetFunction());

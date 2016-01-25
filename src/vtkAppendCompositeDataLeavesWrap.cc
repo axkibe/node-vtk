@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkAppendCompositeDataLeavesWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkAppendCompositeDataLeavesWrap::ptpl;
 
 VtkAppendCompositeDataLeavesWrap::VtkAppendCompositeDataLeavesWrap()
 { }
@@ -26,19 +27,19 @@ VtkAppendCompositeDataLeavesWrap::~VtkAppendCompositeDataLeavesWrap()
 
 void VtkAppendCompositeDataLeavesWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeDataSetAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataSetAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkAppendCompositeDataLeavesWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkCompositeDataSetAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkAppendCompositeDataLeaves").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("AppendCompositeDataLeaves").ToLocalChecked(),tpl->GetFunction());

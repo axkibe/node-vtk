@@ -18,6 +18,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOpenGLPropertyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOpenGLPropertyWrap::ptpl;
 
 VtkOpenGLPropertyWrap::VtkOpenGLPropertyWrap()
 { }
@@ -30,18 +31,19 @@ VtkOpenGLPropertyWrap::~VtkOpenGLPropertyWrap()
 
 void VtkOpenGLPropertyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPropertyWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropertyWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOpenGLPropertyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPropertyWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOpenGLProperty").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OpenGLProperty").ToLocalChecked(),tpl->GetFunction());

@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkTemporalInterpolatorWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkTemporalInterpolatorWrap::ptpl;
 
 VtkTemporalInterpolatorWrap::VtkTemporalInterpolatorWrap()
 { }
@@ -26,19 +27,19 @@ VtkTemporalInterpolatorWrap::~VtkTemporalInterpolatorWrap()
 
 void VtkTemporalInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiTimeStepAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiTimeStepAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkTemporalInterpolatorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkMultiTimeStepAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkTemporalInterpolator").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("TemporalInterpolator").ToLocalChecked(),tpl->GetFunction());

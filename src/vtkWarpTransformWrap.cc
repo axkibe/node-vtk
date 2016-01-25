@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkWarpTransformWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkWarpTransformWrap::ptpl;
 
 VtkWarpTransformWrap::VtkWarpTransformWrap()
 { }
@@ -26,18 +27,19 @@ VtkWarpTransformWrap::~VtkWarpTransformWrap()
 
 void VtkWarpTransformWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractTransformWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkWarpTransformWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractTransformWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkWarpTransform").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("WarpTransform").ToLocalChecked(),tpl->GetFunction());

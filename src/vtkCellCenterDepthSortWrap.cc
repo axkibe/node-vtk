@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkCellCenterDepthSortWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkCellCenterDepthSortWrap::ptpl;
 
 VtkCellCenterDepthSortWrap::VtkCellCenterDepthSortWrap()
 { }
@@ -27,18 +28,19 @@ VtkCellCenterDepthSortWrap::~VtkCellCenterDepthSortWrap()
 
 void VtkCellCenterDepthSortWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVisibilitySortWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVisibilitySortWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkCellCenterDepthSortWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkVisibilitySortWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkCellCenterDepthSort").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("CellCenterDepthSort").ToLocalChecked(),tpl->GetFunction());

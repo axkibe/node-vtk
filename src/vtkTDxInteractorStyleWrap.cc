@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkTDxInteractorStyleWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkTDxInteractorStyleWrap::ptpl;
 
 VtkTDxInteractorStyleWrap::VtkTDxInteractorStyleWrap()
 { }
@@ -26,17 +27,19 @@ VtkTDxInteractorStyleWrap::~VtkTDxInteractorStyleWrap()
 
 void VtkTDxInteractorStyleWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkTDxInteractorStyleWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkTDxInteractorStyle").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("TDxInteractorStyle").ToLocalChecked(),tpl->GetFunction());

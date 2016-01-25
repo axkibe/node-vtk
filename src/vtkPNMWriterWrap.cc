@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPNMWriterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPNMWriterWrap::ptpl;
 
 VtkPNMWriterWrap::VtkPNMWriterWrap()
 { }
@@ -26,20 +27,19 @@ VtkPNMWriterWrap::~VtkPNMWriterWrap()
 
 void VtkPNMWriterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageWriterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageWriterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPNMWriterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
-	VtkImageWriterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPNMWriter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PNMWriter").ToLocalChecked(),tpl->GetFunction());

@@ -26,6 +26,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkLODProp3DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkLODProp3DWrap::ptpl;
 
 VtkLODProp3DWrap::VtkLODProp3DWrap()
 { }
@@ -38,19 +39,19 @@ VtkLODProp3DWrap::~VtkLODProp3DWrap()
 
 void VtkLODProp3DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProp3DWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkLODProp3DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPropWrap::InitTpl(tpl);
-	VtkProp3DWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkLODProp3D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("LODProp3D").ToLocalChecked(),tpl->GetFunction());

@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPCellDataToPointDataWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPCellDataToPointDataWrap::ptpl;
 
 VtkPCellDataToPointDataWrap::VtkPCellDataToPointDataWrap()
 { }
@@ -26,20 +27,19 @@ VtkPCellDataToPointDataWrap::~VtkPCellDataToPointDataWrap()
 
 void VtkPCellDataToPointDataWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCellDataToPointDataWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellDataToPointDataWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPCellDataToPointDataWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkDataSetAlgorithmWrap::InitTpl(tpl);
-	VtkCellDataToPointDataWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPCellDataToPointData").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PCellDataToPointData").ToLocalChecked(),tpl->GetFunction());

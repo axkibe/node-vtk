@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkLoopSubdivisionFilterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkLoopSubdivisionFilterWrap::ptpl;
 
 VtkLoopSubdivisionFilterWrap::VtkLoopSubdivisionFilterWrap()
 { }
@@ -26,20 +27,19 @@ VtkLoopSubdivisionFilterWrap::~VtkLoopSubdivisionFilterWrap()
 
 void VtkLoopSubdivisionFilterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkApproximatingSubdivisionFilterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkApproximatingSubdivisionFilterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkLoopSubdivisionFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
-	VtkApproximatingSubdivisionFilterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkLoopSubdivisionFilter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("LoopSubdivisionFilter").ToLocalChecked(),tpl->GetFunction());

@@ -19,6 +19,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSplineWidgetWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSplineWidgetWrap::ptpl;
 
 VtkSplineWidgetWrap::VtkSplineWidgetWrap()
 { }
@@ -31,19 +32,19 @@ VtkSplineWidgetWrap::~VtkSplineWidgetWrap()
 
 void VtkSplineWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	Vtk3DWidgetWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSplineWidgetWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInteractorObserverWrap::InitTpl(tpl);
-	Vtk3DWidgetWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSplineWidget").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("SplineWidget").ToLocalChecked(),tpl->GetFunction());

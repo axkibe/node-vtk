@@ -11,6 +11,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkObjectBaseWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkObjectBaseWrap::ptpl;
 
 VtkObjectBaseWrap::VtkObjectBaseWrap()
 { }
@@ -23,15 +24,17 @@ VtkObjectBaseWrap::~VtkObjectBaseWrap()
 
 void VtkObjectBaseWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+
 	tpl->SetClassName(Nan::New("VtkObjectBaseWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkObjectBase").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ObjectBase").ToLocalChecked(),tpl->GetFunction());

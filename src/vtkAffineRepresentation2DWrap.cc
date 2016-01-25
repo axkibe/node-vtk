@@ -21,6 +21,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkAffineRepresentation2DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkAffineRepresentation2DWrap::ptpl;
 
 VtkAffineRepresentation2DWrap::VtkAffineRepresentation2DWrap()
 { }
@@ -33,20 +34,19 @@ VtkAffineRepresentation2DWrap::~VtkAffineRepresentation2DWrap()
 
 void VtkAffineRepresentation2DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAffineRepresentationWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAffineRepresentationWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkAffineRepresentation2DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPropWrap::InitTpl(tpl);
-	VtkWidgetRepresentationWrap::InitTpl(tpl);
-	VtkAffineRepresentationWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkAffineRepresentation2D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("AffineRepresentation2D").ToLocalChecked(),tpl->GetFunction());

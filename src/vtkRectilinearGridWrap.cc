@@ -19,6 +19,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkRectilinearGridWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkRectilinearGridWrap::ptpl;
 
 VtkRectilinearGridWrap::VtkRectilinearGridWrap()
 { }
@@ -31,19 +32,19 @@ VtkRectilinearGridWrap::~VtkRectilinearGridWrap()
 
 void VtkRectilinearGridWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkRectilinearGridWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkDataObjectWrap::InitTpl(tpl);
-	VtkDataSetWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkRectilinearGrid").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("RectilinearGrid").ToLocalChecked(),tpl->GetFunction());

@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkHyperOctreeClipCutPointsGrabberWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeClipCutPointsGrabberWrap::ptpl;
 
 VtkHyperOctreeClipCutPointsGrabberWrap::VtkHyperOctreeClipCutPointsGrabberWrap()
 { }
@@ -28,18 +29,19 @@ VtkHyperOctreeClipCutPointsGrabberWrap::~VtkHyperOctreeClipCutPointsGrabberWrap(
 
 void VtkHyperOctreeClipCutPointsGrabberWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHyperOctreePointsGrabberWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperOctreePointsGrabberWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkHyperOctreeClipCutPointsGrabberWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkHyperOctreePointsGrabberWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkHyperOctreeClipCutPointsGrabber").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("HyperOctreeClipCutPointsGrabber").ToLocalChecked(),tpl->GetFunction());

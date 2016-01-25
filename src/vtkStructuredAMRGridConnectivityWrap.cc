@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkStructuredAMRGridConnectivityWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkStructuredAMRGridConnectivityWrap::ptpl;
 
 VtkStructuredAMRGridConnectivityWrap::VtkStructuredAMRGridConnectivityWrap()
 { }
@@ -26,18 +27,19 @@ VtkStructuredAMRGridConnectivityWrap::~VtkStructuredAMRGridConnectivityWrap()
 
 void VtkStructuredAMRGridConnectivityWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractGridConnectivityWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkStructuredAMRGridConnectivityWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractGridConnectivityWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkStructuredAMRGridConnectivity").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("StructuredAMRGridConnectivity").ToLocalChecked(),tpl->GetFunction());

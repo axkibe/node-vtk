@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkLSDynaSummaryParserWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkLSDynaSummaryParserWrap::ptpl;
 
 VtkLSDynaSummaryParserWrap::VtkLSDynaSummaryParserWrap()
 { }
@@ -26,18 +27,19 @@ VtkLSDynaSummaryParserWrap::~VtkLSDynaSummaryParserWrap()
 
 void VtkLSDynaSummaryParserWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLParserWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLParserWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkLSDynaSummaryParserWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkXMLParserWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkLSDynaSummaryParser").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("LSDynaSummaryParser").ToLocalChecked(),tpl->GetFunction());

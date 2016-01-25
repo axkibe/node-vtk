@@ -19,6 +19,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkContourRepresentationWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkContourRepresentationWrap::ptpl;
 
 VtkContourRepresentationWrap::VtkContourRepresentationWrap()
 { }
@@ -31,19 +32,19 @@ VtkContourRepresentationWrap::~VtkContourRepresentationWrap()
 
 void VtkContourRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkContourRepresentationWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPropWrap::InitTpl(tpl);
-	VtkWidgetRepresentationWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkContourRepresentation").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ContourRepresentation").ToLocalChecked(),tpl->GetFunction());

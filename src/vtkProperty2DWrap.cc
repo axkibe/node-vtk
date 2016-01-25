@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkProperty2DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkProperty2DWrap::ptpl;
 
 VtkProperty2DWrap::VtkProperty2DWrap()
 { }
@@ -26,17 +27,19 @@ VtkProperty2DWrap::~VtkProperty2DWrap()
 
 void VtkProperty2DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkProperty2DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkProperty2D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Property2D").ToLocalChecked(),tpl->GetFunction());

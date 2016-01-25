@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSurfaceLICPainterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSurfaceLICPainterWrap::ptpl;
 
 VtkSurfaceLICPainterWrap::VtkSurfaceLICPainterWrap()
 { }
@@ -29,18 +30,19 @@ VtkSurfaceLICPainterWrap::~VtkSurfaceLICPainterWrap()
 
 void VtkSurfaceLICPainterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSurfaceLICPainterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPainterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSurfaceLICPainter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("SurfaceLICPainter").ToLocalChecked(),tpl->GetFunction());

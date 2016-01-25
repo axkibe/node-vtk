@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGraphGeodesicPathWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGraphGeodesicPathWrap::ptpl;
 
 VtkGraphGeodesicPathWrap::VtkGraphGeodesicPathWrap()
 { }
@@ -26,20 +27,19 @@ VtkGraphGeodesicPathWrap::~VtkGraphGeodesicPathWrap()
 
 void VtkGraphGeodesicPathWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGeodesicPathWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGeodesicPathWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGraphGeodesicPathWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
-	VtkGeodesicPathWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGraphGeodesicPath").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GraphGeodesicPath").ToLocalChecked(),tpl->GetFunction());

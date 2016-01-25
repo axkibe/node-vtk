@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkXMLHierarchicalBoxDataReaderWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkXMLHierarchicalBoxDataReaderWrap::ptpl;
 
 VtkXMLHierarchicalBoxDataReaderWrap::VtkXMLHierarchicalBoxDataReaderWrap()
 { }
@@ -26,21 +27,19 @@ VtkXMLHierarchicalBoxDataReaderWrap::~VtkXMLHierarchicalBoxDataReaderWrap()
 
 void VtkXMLHierarchicalBoxDataReaderWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLUniformGridAMRReaderWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLUniformGridAMRReaderWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkXMLHierarchicalBoxDataReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkXMLReaderWrap::InitTpl(tpl);
-	VtkXMLCompositeDataReaderWrap::InitTpl(tpl);
-	VtkXMLUniformGridAMRReaderWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkXMLHierarchicalBoxDataReader").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("XMLHierarchicalBoxDataReader").ToLocalChecked(),tpl->GetFunction());

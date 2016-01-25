@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOpenGLClipPlanesPainterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOpenGLClipPlanesPainterWrap::ptpl;
 
 VtkOpenGLClipPlanesPainterWrap::VtkOpenGLClipPlanesPainterWrap()
 { }
@@ -26,19 +27,19 @@ VtkOpenGLClipPlanesPainterWrap::~VtkOpenGLClipPlanesPainterWrap()
 
 void VtkOpenGLClipPlanesPainterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkClipPlanesPainterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkClipPlanesPainterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOpenGLClipPlanesPainterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPainterWrap::InitTpl(tpl);
-	VtkClipPlanesPainterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOpenGLClipPlanesPainter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OpenGLClipPlanesPainter").ToLocalChecked(),tpl->GetFunction());

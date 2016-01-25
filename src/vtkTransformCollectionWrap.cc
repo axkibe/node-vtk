@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkTransformCollectionWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkTransformCollectionWrap::ptpl;
 
 VtkTransformCollectionWrap::VtkTransformCollectionWrap()
 { }
@@ -27,18 +28,19 @@ VtkTransformCollectionWrap::~VtkTransformCollectionWrap()
 
 void VtkTransformCollectionWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCollectionWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkTransformCollectionWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkCollectionWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkTransformCollection").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("TransformCollection").ToLocalChecked(),tpl->GetFunction());

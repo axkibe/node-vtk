@@ -18,6 +18,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkUnstructuredGridBaseWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridBaseWrap::ptpl;
 
 VtkUnstructuredGridBaseWrap::VtkUnstructuredGridBaseWrap()
 { }
@@ -30,20 +31,19 @@ VtkUnstructuredGridBaseWrap::~VtkUnstructuredGridBaseWrap()
 
 void VtkUnstructuredGridBaseWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointSetWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkUnstructuredGridBaseWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkDataObjectWrap::InitTpl(tpl);
-	VtkDataSetWrap::InitTpl(tpl);
-	VtkPointSetWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkUnstructuredGridBase").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("UnstructuredGridBase").ToLocalChecked(),tpl->GetFunction());

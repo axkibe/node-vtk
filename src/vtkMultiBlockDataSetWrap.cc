@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkMultiBlockDataSetWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkMultiBlockDataSetWrap::ptpl;
 
 VtkMultiBlockDataSetWrap::VtkMultiBlockDataSetWrap()
 { }
@@ -29,20 +30,19 @@ VtkMultiBlockDataSetWrap::~VtkMultiBlockDataSetWrap()
 
 void VtkMultiBlockDataSetWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectTreeWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectTreeWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkMultiBlockDataSetWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkDataObjectWrap::InitTpl(tpl);
-	VtkCompositeDataSetWrap::InitTpl(tpl);
-	VtkDataObjectTreeWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkMultiBlockDataSet").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("MultiBlockDataSet").ToLocalChecked(),tpl->GetFunction());

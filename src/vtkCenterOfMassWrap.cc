@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkCenterOfMassWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkCenterOfMassWrap::ptpl;
 
 VtkCenterOfMassWrap::VtkCenterOfMassWrap()
 { }
@@ -26,19 +27,19 @@ VtkCenterOfMassWrap::~VtkCenterOfMassWrap()
 
 void VtkCenterOfMassWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointSetAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkCenterOfMassWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPointSetAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkCenterOfMass").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("CenterOfMass").ToLocalChecked(),tpl->GetFunction());

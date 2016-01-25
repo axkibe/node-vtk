@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkJPEGReaderWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkJPEGReaderWrap::ptpl;
 
 VtkJPEGReaderWrap::VtkJPEGReaderWrap()
 { }
@@ -26,20 +27,19 @@ VtkJPEGReaderWrap::~VtkJPEGReaderWrap()
 
 void VtkJPEGReaderWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageReader2Wrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageReader2Wrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkJPEGReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
-	VtkImageReader2Wrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkJPEGReader").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("JPEGReader").ToLocalChecked(),tpl->GetFunction());

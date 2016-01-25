@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkWedgeWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkWedgeWrap::ptpl;
 
 VtkWedgeWrap::VtkWedgeWrap()
 { }
@@ -29,19 +30,19 @@ VtkWedgeWrap::~VtkWedgeWrap()
 
 void VtkWedgeWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCell3DWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCell3DWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkWedgeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkCellWrap::InitTpl(tpl);
-	VtkCell3DWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkWedge").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Wedge").ToLocalChecked(),tpl->GetFunction());

@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkImageToImageStencilWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkImageToImageStencilWrap::ptpl;
 
 VtkImageToImageStencilWrap::VtkImageToImageStencilWrap()
 { }
@@ -27,19 +28,19 @@ VtkImageToImageStencilWrap::~VtkImageToImageStencilWrap()
 
 void VtkImageToImageStencilWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageStencilAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageStencilAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkImageToImageStencilWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageStencilAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkImageToImageStencil").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ImageToImageStencil").ToLocalChecked(),tpl->GetFunction());

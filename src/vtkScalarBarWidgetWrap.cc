@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkScalarBarWidgetWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkScalarBarWidgetWrap::ptpl;
 
 VtkScalarBarWidgetWrap::VtkScalarBarWidgetWrap()
 { }
@@ -28,20 +29,19 @@ VtkScalarBarWidgetWrap::~VtkScalarBarWidgetWrap()
 
 void VtkScalarBarWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkBorderWidgetWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderWidgetWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkScalarBarWidgetWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInteractorObserverWrap::InitTpl(tpl);
-	VtkAbstractWidgetWrap::InitTpl(tpl);
-	VtkBorderWidgetWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkScalarBarWidget").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ScalarBarWidget").ToLocalChecked(),tpl->GetFunction());

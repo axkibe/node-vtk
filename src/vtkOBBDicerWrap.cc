@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOBBDicerWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOBBDicerWrap::ptpl;
 
 VtkOBBDicerWrap::VtkOBBDicerWrap()
 { }
@@ -26,20 +27,19 @@ VtkOBBDicerWrap::~VtkOBBDicerWrap()
 
 void VtkOBBDicerWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDicerWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDicerWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOBBDicerWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkDataSetAlgorithmWrap::InitTpl(tpl);
-	VtkDicerWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOBBDicer").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OBBDicer").ToLocalChecked(),tpl->GetFunction());

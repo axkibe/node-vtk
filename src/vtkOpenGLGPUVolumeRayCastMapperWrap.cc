@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOpenGLGPUVolumeRayCastMapperWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOpenGLGPUVolumeRayCastMapperWrap::ptpl;
 
 VtkOpenGLGPUVolumeRayCastMapperWrap::VtkOpenGLGPUVolumeRayCastMapperWrap()
 { }
@@ -29,23 +30,19 @@ VtkOpenGLGPUVolumeRayCastMapperWrap::~VtkOpenGLGPUVolumeRayCastMapperWrap()
 
 void VtkOpenGLGPUVolumeRayCastMapperWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGPUVolumeRayCastMapperWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGPUVolumeRayCastMapperWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOpenGLGPUVolumeRayCastMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAbstractMapperWrap::InitTpl(tpl);
-	VtkAbstractMapper3DWrap::InitTpl(tpl);
-	VtkAbstractVolumeMapperWrap::InitTpl(tpl);
-	VtkVolumeMapperWrap::InitTpl(tpl);
-	VtkGPUVolumeRayCastMapperWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOpenGLGPUVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OpenGLGPUVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());

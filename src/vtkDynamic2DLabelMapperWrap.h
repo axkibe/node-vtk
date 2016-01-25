@@ -22,6 +22,7 @@ class VtkDynamic2DLabelMapperWrap : public VtkLabeledDataMapperWrap
 		VtkDynamic2DLabelMapperWrap();
 		~VtkDynamic2DLabelMapperWrap( );
 		static Nan::Persistent<v8::Function> constructor;
+		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);

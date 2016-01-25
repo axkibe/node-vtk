@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkComputeHistogram2DOutliersWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkComputeHistogram2DOutliersWrap::ptpl;
 
 VtkComputeHistogram2DOutliersWrap::VtkComputeHistogram2DOutliersWrap()
 { }
@@ -28,19 +29,19 @@ VtkComputeHistogram2DOutliersWrap::~VtkComputeHistogram2DOutliersWrap()
 
 void VtkComputeHistogram2DOutliersWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSelectionAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkComputeHistogram2DOutliersWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkSelectionAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkComputeHistogram2DOutliers").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ComputeHistogram2DOutliers").ToLocalChecked(),tpl->GetFunction());

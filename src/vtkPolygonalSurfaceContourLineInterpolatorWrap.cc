@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPolygonalSurfaceContourLineInterpolatorWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPolygonalSurfaceContourLineInterpolatorWrap::ptpl;
 
 VtkPolygonalSurfaceContourLineInterpolatorWrap::VtkPolygonalSurfaceContourLineInterpolatorWrap()
 { }
@@ -29,19 +30,19 @@ VtkPolygonalSurfaceContourLineInterpolatorWrap::~VtkPolygonalSurfaceContourLineI
 
 void VtkPolygonalSurfaceContourLineInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataContourLineInterpolatorWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataContourLineInterpolatorWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPolygonalSurfaceContourLineInterpolatorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkContourLineInterpolatorWrap::InitTpl(tpl);
-	VtkPolyDataContourLineInterpolatorWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPolygonalSurfaceContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PolygonalSurfaceContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());

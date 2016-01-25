@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkModifiedBSPTreeWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkModifiedBSPTreeWrap::ptpl;
 
 VtkModifiedBSPTreeWrap::VtkModifiedBSPTreeWrap()
 { }
@@ -28,19 +29,19 @@ VtkModifiedBSPTreeWrap::~VtkModifiedBSPTreeWrap()
 
 void VtkModifiedBSPTreeWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractCellLocatorWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkModifiedBSPTreeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkLocatorWrap::InitTpl(tpl);
-	VtkAbstractCellLocatorWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkModifiedBSPTree").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ModifiedBSPTree").ToLocalChecked(),tpl->GetFunction());

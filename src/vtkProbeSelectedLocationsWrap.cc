@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkProbeSelectedLocationsWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkProbeSelectedLocationsWrap::ptpl;
 
 VtkProbeSelectedLocationsWrap::VtkProbeSelectedLocationsWrap()
 { }
@@ -26,20 +27,19 @@ VtkProbeSelectedLocationsWrap::~VtkProbeSelectedLocationsWrap()
 
 void VtkProbeSelectedLocationsWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtractSelectionBaseWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractSelectionBaseWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkProbeSelectedLocationsWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkDataObjectAlgorithmWrap::InitTpl(tpl);
-	VtkExtractSelectionBaseWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkProbeSelectedLocations").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ProbeSelectedLocations").ToLocalChecked(),tpl->GetFunction());

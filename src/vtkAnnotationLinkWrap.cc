@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkAnnotationLinkWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkAnnotationLinkWrap::ptpl;
 
 VtkAnnotationLinkWrap::VtkAnnotationLinkWrap()
 { }
@@ -29,19 +30,19 @@ VtkAnnotationLinkWrap::~VtkAnnotationLinkWrap()
 
 void VtkAnnotationLinkWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAnnotationLayersAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAnnotationLayersAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkAnnotationLinkWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAnnotationLayersAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkAnnotationLink").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("AnnotationLink").ToLocalChecked(),tpl->GetFunction());

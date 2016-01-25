@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkDirectedAcyclicGraphWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkDirectedAcyclicGraphWrap::ptpl;
 
 VtkDirectedAcyclicGraphWrap::VtkDirectedAcyclicGraphWrap()
 { }
@@ -28,20 +29,19 @@ VtkDirectedAcyclicGraphWrap::~VtkDirectedAcyclicGraphWrap()
 
 void VtkDirectedAcyclicGraphWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDirectedGraphWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDirectedGraphWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkDirectedAcyclicGraphWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkDataObjectWrap::InitTpl(tpl);
-	VtkGraphWrap::InitTpl(tpl);
-	VtkDirectedGraphWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkDirectedAcyclicGraph").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("DirectedAcyclicGraph").ToLocalChecked(),tpl->GetFunction());

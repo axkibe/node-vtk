@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPointDataWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPointDataWrap::ptpl;
 
 VtkPointDataWrap::VtkPointDataWrap()
 { }
@@ -26,19 +27,19 @@ VtkPointDataWrap::~VtkPointDataWrap()
 
 void VtkPointDataWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAttributesWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAttributesWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPointDataWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkFieldDataWrap::InitTpl(tpl);
-	VtkDataSetAttributesWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPointData").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PointData").ToLocalChecked(),tpl->GetFunction());

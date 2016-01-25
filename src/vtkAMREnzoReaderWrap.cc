@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkAMREnzoReaderWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkAMREnzoReaderWrap::ptpl;
 
 VtkAMREnzoReaderWrap::VtkAMREnzoReaderWrap()
 { }
@@ -26,21 +27,19 @@ VtkAMREnzoReaderWrap::~VtkAMREnzoReaderWrap()
 
 void VtkAMREnzoReaderWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAMRBaseReaderWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAMRBaseReaderWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkAMREnzoReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkUniformGridAMRAlgorithmWrap::InitTpl(tpl);
-	VtkOverlappingAMRAlgorithmWrap::InitTpl(tpl);
-	VtkAMRBaseReaderWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkAMREnzoReader").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("AMREnzoReader").ToLocalChecked(),tpl->GetFunction());

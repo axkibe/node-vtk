@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGraphItemWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGraphItemWrap::ptpl;
 
 VtkGraphItemWrap::VtkGraphItemWrap()
 { }
@@ -29,19 +30,19 @@ VtkGraphItemWrap::~VtkGraphItemWrap()
 
 void VtkGraphItemWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGraphItemWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractContextItemWrap::InitTpl(tpl);
-	VtkContextItemWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGraphItem").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GraphItem").ToLocalChecked(),tpl->GetFunction());

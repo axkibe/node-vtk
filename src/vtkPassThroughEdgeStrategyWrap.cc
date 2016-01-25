@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPassThroughEdgeStrategyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPassThroughEdgeStrategyWrap::ptpl;
 
 VtkPassThroughEdgeStrategyWrap::VtkPassThroughEdgeStrategyWrap()
 { }
@@ -26,18 +27,19 @@ VtkPassThroughEdgeStrategyWrap::~VtkPassThroughEdgeStrategyWrap()
 
 void VtkPassThroughEdgeStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkEdgeLayoutStrategyWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEdgeLayoutStrategyWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPassThroughEdgeStrategyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkEdgeLayoutStrategyWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPassThroughEdgeStrategy").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PassThroughEdgeStrategy").ToLocalChecked(),tpl->GetFunction());

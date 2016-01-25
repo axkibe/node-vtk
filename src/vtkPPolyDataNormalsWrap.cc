@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPPolyDataNormalsWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPPolyDataNormalsWrap::ptpl;
 
 VtkPPolyDataNormalsWrap::VtkPPolyDataNormalsWrap()
 { }
@@ -26,20 +27,19 @@ VtkPPolyDataNormalsWrap::~VtkPPolyDataNormalsWrap()
 
 void VtkPPolyDataNormalsWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataNormalsWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataNormalsWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPPolyDataNormalsWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataAlgorithmWrap::InitTpl(tpl);
-	VtkPolyDataNormalsWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPPolyDataNormals").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PPolyDataNormals").ToLocalChecked(),tpl->GetFunction());

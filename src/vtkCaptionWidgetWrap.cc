@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkCaptionWidgetWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkCaptionWidgetWrap::ptpl;
 
 VtkCaptionWidgetWrap::VtkCaptionWidgetWrap()
 { }
@@ -28,20 +29,19 @@ VtkCaptionWidgetWrap::~VtkCaptionWidgetWrap()
 
 void VtkCaptionWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkBorderWidgetWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderWidgetWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkCaptionWidgetWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInteractorObserverWrap::InitTpl(tpl);
-	VtkAbstractWidgetWrap::InitTpl(tpl);
-	VtkBorderWidgetWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkCaptionWidget").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("CaptionWidget").ToLocalChecked(),tpl->GetFunction());

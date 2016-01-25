@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkXMLPMultiBlockDataWriterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkXMLPMultiBlockDataWriterWrap::ptpl;
 
 VtkXMLPMultiBlockDataWriterWrap::VtkXMLPMultiBlockDataWriterWrap()
 { }
@@ -27,21 +28,19 @@ VtkXMLPMultiBlockDataWriterWrap::~VtkXMLPMultiBlockDataWriterWrap()
 
 void VtkXMLPMultiBlockDataWriterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLMultiBlockDataWriterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLMultiBlockDataWriterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkXMLPMultiBlockDataWriterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkXMLWriterWrap::InitTpl(tpl);
-	VtkXMLCompositeDataWriterWrap::InitTpl(tpl);
-	VtkXMLMultiBlockDataWriterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkXMLPMultiBlockDataWriter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("XMLPMultiBlockDataWriter").ToLocalChecked(),tpl->GetFunction());

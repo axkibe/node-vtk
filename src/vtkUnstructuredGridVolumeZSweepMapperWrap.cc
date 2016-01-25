@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkUnstructuredGridVolumeZSweepMapperWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridVolumeZSweepMapperWrap::ptpl;
 
 VtkUnstructuredGridVolumeZSweepMapperWrap::VtkUnstructuredGridVolumeZSweepMapperWrap()
 { }
@@ -29,22 +30,19 @@ VtkUnstructuredGridVolumeZSweepMapperWrap::~VtkUnstructuredGridVolumeZSweepMappe
 
 void VtkUnstructuredGridVolumeZSweepMapperWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridVolumeMapperWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkUnstructuredGridVolumeZSweepMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAbstractMapperWrap::InitTpl(tpl);
-	VtkAbstractMapper3DWrap::InitTpl(tpl);
-	VtkAbstractVolumeMapperWrap::InitTpl(tpl);
-	VtkUnstructuredGridVolumeMapperWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkUnstructuredGridVolumeZSweepMapper").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("UnstructuredGridVolumeZSweepMapper").ToLocalChecked(),tpl->GetFunction());

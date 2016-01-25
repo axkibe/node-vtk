@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkExtractSelectedRowsWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkExtractSelectedRowsWrap::ptpl;
 
 VtkExtractSelectedRowsWrap::VtkExtractSelectedRowsWrap()
 { }
@@ -28,19 +29,19 @@ VtkExtractSelectedRowsWrap::~VtkExtractSelectedRowsWrap()
 
 void VtkExtractSelectedRowsWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkExtractSelectedRowsWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkTableAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkExtractSelectedRows").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ExtractSelectedRows").ToLocalChecked(),tpl->GetFunction());

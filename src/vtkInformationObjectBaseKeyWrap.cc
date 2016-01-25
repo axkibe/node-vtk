@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkInformationObjectBaseKeyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkInformationObjectBaseKeyWrap::ptpl;
 
 VtkInformationObjectBaseKeyWrap::VtkInformationObjectBaseKeyWrap()
 { }
@@ -29,17 +30,19 @@ VtkInformationObjectBaseKeyWrap::~VtkInformationObjectBaseKeyWrap()
 
 void VtkInformationObjectBaseKeyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInformationKeyWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInformationKeyWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkInformationObjectBaseKeyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkInformationKeyWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkInformationObjectBaseKey").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("InformationObjectBaseKey").ToLocalChecked(),tpl->GetFunction());

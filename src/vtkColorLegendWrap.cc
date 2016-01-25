@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkColorLegendWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkColorLegendWrap::ptpl;
 
 VtkColorLegendWrap::VtkColorLegendWrap()
 { }
@@ -27,20 +28,19 @@ VtkColorLegendWrap::~VtkColorLegendWrap()
 
 void VtkColorLegendWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkChartLegendWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartLegendWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkColorLegendWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractContextItemWrap::InitTpl(tpl);
-	VtkContextItemWrap::InitTpl(tpl);
-	VtkChartLegendWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkColorLegend").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ColorLegend").ToLocalChecked(),tpl->GetFunction());

@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSignedCharArrayWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSignedCharArrayWrap::ptpl;
 
 VtkSignedCharArrayWrap::VtkSignedCharArrayWrap()
 { }
@@ -26,19 +27,19 @@ VtkSignedCharArrayWrap::~VtkSignedCharArrayWrap()
 
 void VtkSignedCharArrayWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataArrayWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataArrayWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSignedCharArrayWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractArrayWrap::InitTpl(tpl);
-	VtkDataArrayWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSignedCharArray").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("SignedCharArray").ToLocalChecked(),tpl->GetFunction());

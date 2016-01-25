@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPlotLine3DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPlotLine3DWrap::ptpl;
 
 VtkPlotLine3DWrap::VtkPlotLine3DWrap()
 { }
@@ -26,21 +27,19 @@ VtkPlotLine3DWrap::~VtkPlotLine3DWrap()
 
 void VtkPlotLine3DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPlotPoints3DWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotPoints3DWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPlotLine3DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractContextItemWrap::InitTpl(tpl);
-	VtkContextItemWrap::InitTpl(tpl);
-	VtkPlot3DWrap::InitTpl(tpl);
-	VtkPlotPoints3DWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPlotLine3D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PlotLine3D").ToLocalChecked(),tpl->GetFunction());

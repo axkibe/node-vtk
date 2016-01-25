@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkXMLStructuredDataReaderWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkXMLStructuredDataReaderWrap::ptpl;
 
 VtkXMLStructuredDataReaderWrap::VtkXMLStructuredDataReaderWrap()
 { }
@@ -27,20 +28,19 @@ VtkXMLStructuredDataReaderWrap::~VtkXMLStructuredDataReaderWrap()
 
 void VtkXMLStructuredDataReaderWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLDataReaderWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLDataReaderWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkXMLStructuredDataReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkXMLReaderWrap::InitTpl(tpl);
-	VtkXMLDataReaderWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkXMLStructuredDataReader").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("XMLStructuredDataReader").ToLocalChecked(),tpl->GetFunction());

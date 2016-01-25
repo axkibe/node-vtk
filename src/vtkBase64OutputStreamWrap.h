@@ -22,6 +22,7 @@ class VtkBase64OutputStreamWrap : public VtkOutputStreamWrap
 		VtkBase64OutputStreamWrap();
 		~VtkBase64OutputStreamWrap( );
 		static Nan::Persistent<v8::Function> constructor;
+		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);

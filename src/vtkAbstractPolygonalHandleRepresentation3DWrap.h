@@ -22,6 +22,7 @@ class VtkAbstractPolygonalHandleRepresentation3DWrap : public VtkHandleRepresent
 		VtkAbstractPolygonalHandleRepresentation3DWrap();
 		~VtkAbstractPolygonalHandleRepresentation3DWrap( );
 		static Nan::Persistent<v8::Function> constructor;
+		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);

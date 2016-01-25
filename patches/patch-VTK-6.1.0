@@ -398,8 +398,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-25 15:06:10.408114999 +0100
-@@ -0,0 +1,1409 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-25 16:47:44.873352616 +0100
+@@ -0,0 +1,1426 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -811,22 +811,37 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +)
 +{
 +  char const *lastName;
++  char const *sname;
 +  FunctionInfo **m;
 +
 +  fprintf(f, "void %s::Init(v8::Local<v8::Object> exports)\n", wrapperName);
 +  fprintf(f, "{\n");
++  fprintf(f, "\tif (!constructor.IsEmpty()) return;\n");
 +  fprintf(f, "\tNan::HandleScope scope;\n");
 +  fprintf(f, "\n");
 +  fprintf(f, "\tv8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);\n");
-+  fprintf(f, "\ttpl->SetClassName(Nan::New(\"%s\").ToLocalChecked());\n", wrapperName);
-+  fprintf(f, "\ttpl->InstanceTemplate()->SetInternalFieldCount(1);\n");
++
++  //writeTplCalls(f, hinfo, he);
++  if(he->NumberOfSuperClasses > 1 )
++    {
++    fprintf(stderr, "Cannot do multiple inheritance\n");
++    exit(1);
++    }
++  if(he->NumberOfSuperClasses > 0 )
++    {
++    sname = he->SuperClasses[0];
++    fprintf(f, "\t%c%sWrap::Init( exports );\n", toupper(*sname), sname + 1 );
++    fprintf(f, "\ttpl->Inherit(Nan::New<FunctionTemplate>(%c%sWrap::ptpl));\n", toupper(*sname), sname + 1 );
++    }
 +  fprintf(f, "\n");
 +
-+  writeTplCalls(f, hinfo, he);
++  fprintf(f, "\ttpl->SetClassName(Nan::New(\"%s\").ToLocalChecked());\n", wrapperName);
++  fprintf(f, "\ttpl->InstanceTemplate()->SetInternalFieldCount(1);\n");
 +  fprintf(f, "\tInitTpl(tpl);\n");
 +
 +  fprintf(f, "\n");
 +  fprintf(f, "\tconstructor.Reset( tpl->GetFunction() );\n");
++  fprintf(f, "\tptpl.Reset( tpl );\n");
 +  fprintf(f, "\n");
 +
 +  fprintf(f,
@@ -1521,6 +1536,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  fprintf(f, "\t\t%s();\n", wrapperName);
 +  fprintf(f, "\t\t~%s( );\n", wrapperName);
 +  fprintf(f, "\t\tstatic Nan::Persistent<v8::Function> constructor;\n");
++  fprintf(f, "\t\tstatic Nan::Persistent<v8::FunctionTemplate> ptpl;\n");
 +  fprintf(f, "\n");
 +  fprintf(f, "\tprivate:\n");
 +  fprintf(f, "\t\tstatic void New(const Nan::FunctionCallbackInfo<v8::Value>& info);\n");
@@ -1668,6 +1684,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  fprintf(f, "\n");
 +
 +  fprintf(f, "Nan::Persistent<v8::Function> %s::constructor;\n", wrapperName);
++  fprintf(f, "Nan::Persistent<v8::FunctionTemplate> %s::ptpl;\n", wrapperName);
 +  fprintf(f, "\n");
 +  
 +  fprintf(f, "%s::%s()\n", wrapperName, wrapperName);
@@ -1960,12 +1977,12 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/T
 +
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-25 14:04:56.692831922 +0100
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-25 16:54:05.009464820 +0100
 @@ -0,0 +1,47 @@
 +
 +/* used for development for a minimal vtk lib wrapper */
 +/* to quickly test stuff out */
-+#define DO_WHITELIST
++//#define DO_WHITELIST
 +
 +/* TODO REMOVE */
 +char const *whitelist[] =

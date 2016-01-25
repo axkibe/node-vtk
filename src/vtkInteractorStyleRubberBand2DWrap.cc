@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkInteractorStyleRubberBand2DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleRubberBand2DWrap::ptpl;
 
 VtkInteractorStyleRubberBand2DWrap::VtkInteractorStyleRubberBand2DWrap()
 { }
@@ -26,19 +27,19 @@ VtkInteractorStyleRubberBand2DWrap::~VtkInteractorStyleRubberBand2DWrap()
 
 void VtkInteractorStyleRubberBand2DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkInteractorStyleRubberBand2DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInteractorObserverWrap::InitTpl(tpl);
-	VtkInteractorStyleWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkInteractorStyleRubberBand2D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("InteractorStyleRubberBand2D").ToLocalChecked(),tpl->GetFunction());

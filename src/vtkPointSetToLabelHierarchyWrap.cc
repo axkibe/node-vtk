@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPointSetToLabelHierarchyWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPointSetToLabelHierarchyWrap::ptpl;
 
 VtkPointSetToLabelHierarchyWrap::VtkPointSetToLabelHierarchyWrap()
 { }
@@ -27,19 +28,19 @@ VtkPointSetToLabelHierarchyWrap::~VtkPointSetToLabelHierarchyWrap()
 
 void VtkPointSetToLabelHierarchyWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLabelHierarchyAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabelHierarchyAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPointSetToLabelHierarchyWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkLabelHierarchyAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPointSetToLabelHierarchy").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PointSetToLabelHierarchy").ToLocalChecked(),tpl->GetFunction());

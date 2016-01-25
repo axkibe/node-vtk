@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkVolumeContourSpectrumFilterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkVolumeContourSpectrumFilterWrap::ptpl;
 
 VtkVolumeContourSpectrumFilterWrap::VtkVolumeContourSpectrumFilterWrap()
 { }
@@ -27,19 +28,19 @@ VtkVolumeContourSpectrumFilterWrap::~VtkVolumeContourSpectrumFilterWrap()
 
 void VtkVolumeContourSpectrumFilterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkVolumeContourSpectrumFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkDataObjectAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkVolumeContourSpectrumFilter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("VolumeContourSpectrumFilter").ToLocalChecked(),tpl->GetFunction());

@@ -23,6 +23,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkDataReaderWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkDataReaderWrap::ptpl;
 
 VtkDataReaderWrap::VtkDataReaderWrap()
 { }
@@ -35,18 +36,19 @@ VtkDataReaderWrap::~VtkDataReaderWrap()
 
 void VtkDataReaderWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkDataReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkDataReader").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("DataReader").ToLocalChecked(),tpl->GetFunction());

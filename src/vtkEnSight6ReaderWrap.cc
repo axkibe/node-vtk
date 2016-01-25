@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkEnSight6ReaderWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkEnSight6ReaderWrap::ptpl;
 
 VtkEnSight6ReaderWrap::VtkEnSight6ReaderWrap()
 { }
@@ -26,21 +27,19 @@ VtkEnSight6ReaderWrap::~VtkEnSight6ReaderWrap()
 
 void VtkEnSight6ReaderWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkEnSightReaderWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEnSightReaderWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkEnSight6ReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkMultiBlockDataSetAlgorithmWrap::InitTpl(tpl);
-	VtkGenericEnSightReaderWrap::InitTpl(tpl);
-	VtkEnSightReaderWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkEnSight6Reader").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("EnSight6Reader").ToLocalChecked(),tpl->GetFunction());

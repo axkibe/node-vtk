@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGeoCameraWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGeoCameraWrap::ptpl;
 
 VtkGeoCameraWrap::VtkGeoCameraWrap()
 { }
@@ -27,17 +28,19 @@ VtkGeoCameraWrap::~VtkGeoCameraWrap()
 
 void VtkGeoCameraWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGeoCameraWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGeoCamera").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GeoCamera").ToLocalChecked(),tpl->GetFunction());

@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOverlappingAMRLevelIdScalarsWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOverlappingAMRLevelIdScalarsWrap::ptpl;
 
 VtkOverlappingAMRLevelIdScalarsWrap::VtkOverlappingAMRLevelIdScalarsWrap()
 { }
@@ -26,20 +27,19 @@ VtkOverlappingAMRLevelIdScalarsWrap::~VtkOverlappingAMRLevelIdScalarsWrap()
 
 void VtkOverlappingAMRLevelIdScalarsWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkOverlappingAMRAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOverlappingAMRAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOverlappingAMRLevelIdScalarsWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkUniformGridAMRAlgorithmWrap::InitTpl(tpl);
-	VtkOverlappingAMRAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOverlappingAMRLevelIdScalars").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OverlappingAMRLevelIdScalars").ToLocalChecked(),tpl->GetFunction());

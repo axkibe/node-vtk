@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOpenGLGlyph3DMapperWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOpenGLGlyph3DMapperWrap::ptpl;
 
 VtkOpenGLGlyph3DMapperWrap::VtkOpenGLGlyph3DMapperWrap()
 { }
@@ -29,22 +30,19 @@ VtkOpenGLGlyph3DMapperWrap::~VtkOpenGLGlyph3DMapperWrap()
 
 void VtkOpenGLGlyph3DMapperWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGlyph3DMapperWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGlyph3DMapperWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOpenGLGlyph3DMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkAbstractMapperWrap::InitTpl(tpl);
-	VtkAbstractMapper3DWrap::InitTpl(tpl);
-	VtkMapperWrap::InitTpl(tpl);
-	VtkGlyph3DMapperWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOpenGLGlyph3DMapper").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OpenGLGlyph3DMapper").ToLocalChecked(),tpl->GetFunction());

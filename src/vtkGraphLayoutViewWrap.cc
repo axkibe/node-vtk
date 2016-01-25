@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGraphLayoutViewWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGraphLayoutViewWrap::ptpl;
 
 VtkGraphLayoutViewWrap::VtkGraphLayoutViewWrap()
 { }
@@ -28,20 +29,19 @@ VtkGraphLayoutViewWrap::~VtkGraphLayoutViewWrap()
 
 void VtkGraphLayoutViewWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderViewWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderViewWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGraphLayoutViewWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkViewWrap::InitTpl(tpl);
-	VtkRenderViewBaseWrap::InitTpl(tpl);
-	VtkRenderViewWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGraphLayoutView").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GraphLayoutView").ToLocalChecked(),tpl->GetFunction());

@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkXMLFileOutputWindowWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkXMLFileOutputWindowWrap::ptpl;
 
 VtkXMLFileOutputWindowWrap::VtkXMLFileOutputWindowWrap()
 { }
@@ -26,19 +27,19 @@ VtkXMLFileOutputWindowWrap::~VtkXMLFileOutputWindowWrap()
 
 void VtkXMLFileOutputWindowWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkFileOutputWindowWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFileOutputWindowWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkXMLFileOutputWindowWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkOutputWindowWrap::InitTpl(tpl);
-	VtkFileOutputWindowWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkXMLFileOutputWindow").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("XMLFileOutputWindow").ToLocalChecked(),tpl->GetFunction());

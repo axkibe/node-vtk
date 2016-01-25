@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkThreadedCompositeDataPipelineWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkThreadedCompositeDataPipelineWrap::ptpl;
 
 VtkThreadedCompositeDataPipelineWrap::VtkThreadedCompositeDataPipelineWrap()
 { }
@@ -26,21 +27,19 @@ VtkThreadedCompositeDataPipelineWrap::~VtkThreadedCompositeDataPipelineWrap()
 
 void VtkThreadedCompositeDataPipelineWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeDataPipelineWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataPipelineWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkThreadedCompositeDataPipelineWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkExecutiveWrap::InitTpl(tpl);
-	VtkDemandDrivenPipelineWrap::InitTpl(tpl);
-	VtkStreamingDemandDrivenPipelineWrap::InitTpl(tpl);
-	VtkCompositeDataPipelineWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkThreadedCompositeDataPipeline").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ThreadedCompositeDataPipeline").ToLocalChecked(),tpl->GetFunction());

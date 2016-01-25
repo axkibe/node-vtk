@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkFrameBufferObject2Wrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkFrameBufferObject2Wrap::ptpl;
 
 VtkFrameBufferObject2Wrap::VtkFrameBufferObject2Wrap()
 { }
@@ -26,17 +27,19 @@ VtkFrameBufferObject2Wrap::~VtkFrameBufferObject2Wrap()
 
 void VtkFrameBufferObject2Wrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkFrameBufferObject2Wrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkFrameBufferObject2").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("FrameBufferObject2").ToLocalChecked(),tpl->GetFunction());

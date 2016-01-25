@@ -16,6 +16,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkSMPTransformWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkSMPTransformWrap::ptpl;
 
 VtkSMPTransformWrap::VtkSMPTransformWrap()
 { }
@@ -28,21 +29,19 @@ VtkSMPTransformWrap::~VtkSMPTransformWrap()
 
 void VtkSMPTransformWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTransformWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTransformWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkSMPTransformWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractTransformWrap::InitTpl(tpl);
-	VtkHomogeneousTransformWrap::InitTpl(tpl);
-	VtkLinearTransformWrap::InitTpl(tpl);
-	VtkTransformWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkSMPTransform").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("SMPTransform").ToLocalChecked(),tpl->GetFunction());

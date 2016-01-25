@@ -20,6 +20,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPickerWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPickerWrap::ptpl;
 
 VtkPickerWrap::VtkPickerWrap()
 { }
@@ -32,19 +33,19 @@ VtkPickerWrap::~VtkPickerWrap()
 
 void VtkPickerWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractPropPickerWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPropPickerWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPickerWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractPickerWrap::InitTpl(tpl);
-	VtkAbstractPropPickerWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPicker").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("Picker").ToLocalChecked(),tpl->GetFunction());

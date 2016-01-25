@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkXMLStructuredGridWriterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkXMLStructuredGridWriterWrap::ptpl;
 
 VtkXMLStructuredGridWriterWrap::VtkXMLStructuredGridWriterWrap()
 { }
@@ -27,20 +28,19 @@ VtkXMLStructuredGridWriterWrap::~VtkXMLStructuredGridWriterWrap()
 
 void VtkXMLStructuredGridWriterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLStructuredDataWriterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLStructuredDataWriterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkXMLStructuredGridWriterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkXMLWriterWrap::InitTpl(tpl);
-	VtkXMLStructuredDataWriterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkXMLStructuredGridWriter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("XMLStructuredGridWriter").ToLocalChecked(),tpl->GetFunction());

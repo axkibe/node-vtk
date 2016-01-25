@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkCachedStreamingDemandDrivenPipelineWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkCachedStreamingDemandDrivenPipelineWrap::ptpl;
 
 VtkCachedStreamingDemandDrivenPipelineWrap::VtkCachedStreamingDemandDrivenPipelineWrap()
 { }
@@ -26,20 +27,19 @@ VtkCachedStreamingDemandDrivenPipelineWrap::~VtkCachedStreamingDemandDrivenPipel
 
 void VtkCachedStreamingDemandDrivenPipelineWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStreamingDemandDrivenPipelineWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamingDemandDrivenPipelineWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkCachedStreamingDemandDrivenPipelineWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkExecutiveWrap::InitTpl(tpl);
-	VtkDemandDrivenPipelineWrap::InitTpl(tpl);
-	VtkStreamingDemandDrivenPipelineWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkCachedStreamingDemandDrivenPipeline").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("CachedStreamingDemandDrivenPipeline").ToLocalChecked(),tpl->GetFunction());

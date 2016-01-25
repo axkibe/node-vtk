@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkRIBLightWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkRIBLightWrap::ptpl;
 
 VtkRIBLightWrap::VtkRIBLightWrap()
 { }
@@ -27,18 +28,19 @@ VtkRIBLightWrap::~VtkRIBLightWrap()
 
 void VtkRIBLightWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLightWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLightWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkRIBLightWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkLightWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkRIBLight").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("RIBLight").ToLocalChecked(),tpl->GetFunction());

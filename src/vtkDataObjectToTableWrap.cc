@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkDataObjectToTableWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkDataObjectToTableWrap::ptpl;
 
 VtkDataObjectToTableWrap::VtkDataObjectToTableWrap()
 { }
@@ -26,19 +27,19 @@ VtkDataObjectToTableWrap::~VtkDataObjectToTableWrap()
 
 void VtkDataObjectToTableWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkDataObjectToTableWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkTableAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkDataObjectToTable").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("DataObjectToTable").ToLocalChecked(),tpl->GetFunction());

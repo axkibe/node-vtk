@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkOpenGLPainterDeviceAdapterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkOpenGLPainterDeviceAdapterWrap::ptpl;
 
 VtkOpenGLPainterDeviceAdapterWrap::VtkOpenGLPainterDeviceAdapterWrap()
 { }
@@ -27,18 +28,19 @@ VtkOpenGLPainterDeviceAdapterWrap::~VtkOpenGLPainterDeviceAdapterWrap()
 
 void VtkOpenGLPainterDeviceAdapterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterDeviceAdapterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterDeviceAdapterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkOpenGLPainterDeviceAdapterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPainterDeviceAdapterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkOpenGLPainterDeviceAdapter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("OpenGLPainterDeviceAdapter").ToLocalChecked(),tpl->GetFunction());

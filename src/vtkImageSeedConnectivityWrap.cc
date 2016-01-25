@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkImageSeedConnectivityWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkImageSeedConnectivityWrap::ptpl;
 
 VtkImageSeedConnectivityWrap::VtkImageSeedConnectivityWrap()
 { }
@@ -27,19 +28,19 @@ VtkImageSeedConnectivityWrap::~VtkImageSeedConnectivityWrap()
 
 void VtkImageSeedConnectivityWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkImageSeedConnectivityWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkImageAlgorithmWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkImageSeedConnectivity").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ImageSeedConnectivity").ToLocalChecked(),tpl->GetFunction());

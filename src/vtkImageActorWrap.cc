@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkImageActorWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkImageActorWrap::ptpl;
 
 VtkImageActorWrap::VtkImageActorWrap()
 { }
@@ -27,20 +28,19 @@ VtkImageActorWrap::~VtkImageActorWrap()
 
 void VtkImageActorWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageSliceWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageSliceWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkImageActorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPropWrap::InitTpl(tpl);
-	VtkProp3DWrap::InitTpl(tpl);
-	VtkImageSliceWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkImageActor").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("ImageActor").ToLocalChecked(),tpl->GetFunction());

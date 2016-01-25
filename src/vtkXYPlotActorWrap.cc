@@ -25,6 +25,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkXYPlotActorWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkXYPlotActorWrap::ptpl;
 
 VtkXYPlotActorWrap::VtkXYPlotActorWrap()
 { }
@@ -37,19 +38,19 @@ VtkXYPlotActorWrap::~VtkXYPlotActorWrap()
 
 void VtkXYPlotActorWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkXYPlotActorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkPropWrap::InitTpl(tpl);
-	VtkActor2DWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkXYPlotActor").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("XYPlotActor").ToLocalChecked(),tpl->GetFunction());

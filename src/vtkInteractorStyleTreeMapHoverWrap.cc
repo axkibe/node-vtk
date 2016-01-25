@@ -17,6 +17,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkInteractorStyleTreeMapHoverWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleTreeMapHoverWrap::ptpl;
 
 VtkInteractorStyleTreeMapHoverWrap::VtkInteractorStyleTreeMapHoverWrap()
 { }
@@ -29,21 +30,19 @@ VtkInteractorStyleTreeMapHoverWrap::~VtkInteractorStyleTreeMapHoverWrap()
 
 void VtkInteractorStyleTreeMapHoverWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleImageWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleImageWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkInteractorStyleTreeMapHoverWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInteractorObserverWrap::InitTpl(tpl);
-	VtkInteractorStyleWrap::InitTpl(tpl);
-	VtkInteractorStyleTrackballCameraWrap::InitTpl(tpl);
-	VtkInteractorStyleImageWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkInteractorStyleTreeMapHover").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("InteractorStyleTreeMapHover").ToLocalChecked(),tpl->GetFunction());

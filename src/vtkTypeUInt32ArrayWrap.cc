@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkTypeUInt32ArrayWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkTypeUInt32ArrayWrap::ptpl;
 
 VtkTypeUInt32ArrayWrap::VtkTypeUInt32ArrayWrap()
 { }
@@ -26,20 +27,19 @@ VtkTypeUInt32ArrayWrap::~VtkTypeUInt32ArrayWrap()
 
 void VtkTypeUInt32ArrayWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnsignedIntArrayWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnsignedIntArrayWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkTypeUInt32ArrayWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAbstractArrayWrap::InitTpl(tpl);
-	VtkDataArrayWrap::InitTpl(tpl);
-	VtkUnsignedIntArrayWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkTypeUInt32Array").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("TypeUInt32Array").ToLocalChecked(),tpl->GetFunction());

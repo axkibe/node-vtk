@@ -14,6 +14,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkStructuredGridGhostDataGeneratorWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkStructuredGridGhostDataGeneratorWrap::ptpl;
 
 VtkStructuredGridGhostDataGeneratorWrap::VtkStructuredGridGhostDataGeneratorWrap()
 { }
@@ -26,20 +27,19 @@ VtkStructuredGridGhostDataGeneratorWrap::~VtkStructuredGridGhostDataGeneratorWra
 
 void VtkStructuredGridGhostDataGeneratorWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetGhostGeneratorWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetGhostGeneratorWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkStructuredGridGhostDataGeneratorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkMultiBlockDataSetAlgorithmWrap::InitTpl(tpl);
-	VtkDataSetGhostGeneratorWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkStructuredGridGhostDataGenerator").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("StructuredGridGhostDataGenerator").ToLocalChecked(),tpl->GetFunction());

@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkBoxMuellerRandomSequenceWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkBoxMuellerRandomSequenceWrap::ptpl;
 
 VtkBoxMuellerRandomSequenceWrap::VtkBoxMuellerRandomSequenceWrap()
 { }
@@ -27,19 +28,19 @@ VtkBoxMuellerRandomSequenceWrap::~VtkBoxMuellerRandomSequenceWrap()
 
 void VtkBoxMuellerRandomSequenceWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGaussianRandomSequenceWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGaussianRandomSequenceWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkBoxMuellerRandomSequenceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkRandomSequenceWrap::InitTpl(tpl);
-	VtkGaussianRandomSequenceWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkBoxMuellerRandomSequence").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("BoxMuellerRandomSequence").ToLocalChecked(),tpl->GetFunction());

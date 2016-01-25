@@ -22,6 +22,7 @@ class VtkActor2DCollectionWrap : public VtkPropCollectionWrap
 		VtkActor2DCollectionWrap();
 		~VtkActor2DCollectionWrap( );
 		static Nan::Persistent<v8::Function> constructor;
+		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkGeometricErrorMetricWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkGeometricErrorMetricWrap::ptpl;
 
 VtkGeometricErrorMetricWrap::VtkGeometricErrorMetricWrap()
 { }
@@ -27,18 +28,19 @@ VtkGeometricErrorMetricWrap::~VtkGeometricErrorMetricWrap()
 
 void VtkGeometricErrorMetricWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGenericSubdivisionErrorMetricWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericSubdivisionErrorMetricWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkGeometricErrorMetricWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkGenericSubdivisionErrorMetricWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkGeometricErrorMetric").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("GeometricErrorMetric").ToLocalChecked(),tpl->GetFunction());

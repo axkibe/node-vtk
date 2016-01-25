@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkInteractorStyleImageWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleImageWrap::ptpl;
 
 VtkInteractorStyleImageWrap::VtkInteractorStyleImageWrap()
 { }
@@ -27,20 +28,19 @@ VtkInteractorStyleImageWrap::~VtkInteractorStyleImageWrap()
 
 void VtkInteractorStyleImageWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleTrackballCameraWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkInteractorStyleImageWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkInteractorObserverWrap::InitTpl(tpl);
-	VtkInteractorStyleWrap::InitTpl(tpl);
-	VtkInteractorStyleTrackballCameraWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkInteractorStyleImage").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("InteractorStyleImage").ToLocalChecked(),tpl->GetFunction());

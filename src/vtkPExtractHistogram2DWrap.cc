@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPExtractHistogram2DWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPExtractHistogram2DWrap::ptpl;
 
 VtkPExtractHistogram2DWrap::VtkPExtractHistogram2DWrap()
 { }
@@ -27,21 +28,19 @@ VtkPExtractHistogram2DWrap::~VtkPExtractHistogram2DWrap()
 
 void VtkPExtractHistogram2DWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtractHistogram2DWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractHistogram2DWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPExtractHistogram2DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkTableAlgorithmWrap::InitTpl(tpl);
-	VtkStatisticsAlgorithmWrap::InitTpl(tpl);
-	VtkExtractHistogram2DWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());

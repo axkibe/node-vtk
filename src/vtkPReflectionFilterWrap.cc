@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkPReflectionFilterWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkPReflectionFilterWrap::ptpl;
 
 VtkPReflectionFilterWrap::VtkPReflectionFilterWrap()
 { }
@@ -27,20 +28,19 @@ VtkPReflectionFilterWrap::~VtkPReflectionFilterWrap()
 
 void VtkPReflectionFilterWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkReflectionFilterWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkReflectionFilterWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkPReflectionFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkAlgorithmWrap::InitTpl(tpl);
-	VtkDataObjectAlgorithmWrap::InitTpl(tpl);
-	VtkReflectionFilterWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkPReflectionFilter").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("PReflectionFilter").ToLocalChecked(),tpl->GetFunction());

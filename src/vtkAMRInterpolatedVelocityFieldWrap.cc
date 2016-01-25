@@ -15,6 +15,7 @@ using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkAMRInterpolatedVelocityFieldWrap::constructor;
+Nan::Persistent<v8::FunctionTemplate> VtkAMRInterpolatedVelocityFieldWrap::ptpl;
 
 VtkAMRInterpolatedVelocityFieldWrap::VtkAMRInterpolatedVelocityFieldWrap()
 { }
@@ -27,19 +28,19 @@ VtkAMRInterpolatedVelocityFieldWrap::~VtkAMRInterpolatedVelocityFieldWrap()
 
 void VtkAMRInterpolatedVelocityFieldWrap::Init(v8::Local<v8::Object> exports)
 {
+	if (!constructor.IsEmpty()) return;
 	Nan::HandleScope scope;
 
 	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractInterpolatedVelocityFieldWrap::Init( exports );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractInterpolatedVelocityFieldWrap::ptpl));
+
 	tpl->SetClassName(Nan::New("VtkAMRInterpolatedVelocityFieldWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	VtkObjectBaseWrap::InitTpl(tpl);
-	VtkObjectWrap::InitTpl(tpl);
-	VtkFunctionSetWrap::InitTpl(tpl);
-	VtkAbstractInterpolatedVelocityFieldWrap::InitTpl(tpl);
 	InitTpl(tpl);
 
 	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 
 	exports->Set(Nan::New("vtkAMRInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
 	exports->Set(Nan::New("AMRInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
