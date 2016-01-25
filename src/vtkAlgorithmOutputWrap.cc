@@ -38,7 +38,7 @@ void VtkAlgorithmOutputWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkAlgorithmOutput").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("algorithmOutput").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("AlgorithmOutput").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkAlgorithmOutputWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

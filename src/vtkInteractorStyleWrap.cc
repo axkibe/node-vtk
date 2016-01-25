@@ -44,7 +44,7 @@ void VtkInteractorStyleWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkInteractorStyle").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("interactorStyle").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("InteractorStyle").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

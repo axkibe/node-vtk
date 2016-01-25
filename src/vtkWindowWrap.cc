@@ -38,7 +38,7 @@ void VtkWindowWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkWindow").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("window").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("Window").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

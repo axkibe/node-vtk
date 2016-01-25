@@ -42,7 +42,7 @@ void VtkViewportWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkViewport").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("viewport").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("Viewport").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

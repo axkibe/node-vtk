@@ -41,7 +41,7 @@ void VtkPolyDataAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkPolyDataAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("polyDataAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("PolyDataAlgorithm").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkPolyDataAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

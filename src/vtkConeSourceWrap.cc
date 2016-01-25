@@ -40,7 +40,7 @@ void VtkConeSourceWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkConeSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("coneSource").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("ConeSource").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkConeSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

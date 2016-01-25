@@ -44,7 +44,7 @@ void VtkPropWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkProp").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("prop").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("Prop").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkPropWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

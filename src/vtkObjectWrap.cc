@@ -37,7 +37,7 @@ void VtkObjectWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkObject").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("object").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("Object").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkObjectWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

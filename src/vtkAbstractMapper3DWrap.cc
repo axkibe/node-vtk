@@ -40,7 +40,7 @@ void VtkAbstractMapper3DWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkAbstractMapper3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("abstractMapper3D").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("AbstractMapper3D").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkAbstractMapper3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

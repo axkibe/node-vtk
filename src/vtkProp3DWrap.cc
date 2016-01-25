@@ -41,7 +41,7 @@ void VtkProp3DWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkProp3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("prop3D").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("Prop3D").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

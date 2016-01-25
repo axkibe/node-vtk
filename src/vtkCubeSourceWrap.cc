@@ -40,7 +40,7 @@ void VtkCubeSourceWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkCubeSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("cubeSource").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("CubeSource").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkCubeSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

@@ -44,7 +44,7 @@ void VtkRenderWindowInteractorWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkRenderWindowInteractor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("renderWindowInteractor").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("RenderWindowInteractor").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

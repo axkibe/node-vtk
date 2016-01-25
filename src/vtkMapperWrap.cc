@@ -48,7 +48,7 @@ void VtkMapperWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("mapper").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("Mapper").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

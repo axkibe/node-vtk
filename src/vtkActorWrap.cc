@@ -48,7 +48,7 @@ void VtkActorWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("actor").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("Actor").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

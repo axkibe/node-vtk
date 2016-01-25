@@ -33,7 +33,7 @@ void VtkObjectBaseWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkObjectBase").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("objectBase").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("ObjectBase").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkObjectBaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

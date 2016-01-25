@@ -40,7 +40,7 @@ void VtkInteractorStyleTrackballCameraWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkInteractorStyleTrackballCamera").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("interactorStyleTrackballCamera").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("InteractorStyleTrackballCamera").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkInteractorStyleTrackballCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

@@ -46,7 +46,7 @@ void VtkPolyDataMapperWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkPolyDataMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("polyDataMapper").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("PolyDataMapper").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

@@ -40,7 +40,7 @@ void VtkInteractorObserverWrap::Init(v8::Local<v8::Object> exports)
 	constructor.Reset( tpl->GetFunction() );
 
 	exports->Set(Nan::New("vtkInteractorObserver").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("interactorObserver").ToLocalChecked(),tpl->GetFunction());
+	exports->Set(Nan::New("InteractorObserver").ToLocalChecked(),tpl->GetFunction());
 }
 
 void VtkInteractorObserverWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)

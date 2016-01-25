@@ -4,27 +4,27 @@ var vtk, source, mapper, actor, renderer, renderWindow, renderWindowInteractor;
 
 vtk = require('./vtk');
 
-source = new vtk.coneSource( );
+source = new vtk.ConeSource( );
 source.setResolution( 10 );
 
-mapper = new vtk.polyDataMapper( );
+mapper = new vtk.PolyDataMapper( );
 
-mapper.setInputConnection(0, source.getOutputPort( 0 ) );
+mapper.setInputConnection( 0, source.getOutputPort( ) );
 
-actor = new vtk.actor( );
+actor = new vtk.Actor( );
 actor.setMapper( mapper );
 
-renderer = new vtk.renderer( );
+renderer = new vtk.Renderer( );
 renderer.addActor( actor );
 renderer.setBackground( 0.3, 0.2, 0.1 );
 renderer.resetCamera( );
 
-renderWindow = new vtk.renderWindow( );
+renderWindow = new vtk.RenderWindow( );
 renderWindow.addRenderer( renderer );
 
-renderWindowInteractor = new vtk.renderWindowInteractor( );
+renderWindowInteractor = new vtk.RenderWindowInteractor( );
 renderWindowInteractor.setRenderWindow( renderWindow );
-renderWindowInteractor.setInteractorStyle( new vtk.interactorStyleTrackballCamera( ) );
+renderWindowInteractor.setInteractorStyle( new vtk.InteractorStyleTrackballCamera( ) );
 
 renderWindow.render();
 
