@@ -18,6 +18,7 @@
 
 using namespace v8;
 
+extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkRenderWindowInteractorWrap::constructor;
 
 VtkRenderWindowInteractorWrap::VtkRenderWindowInteractorWrap()
@@ -376,7 +377,7 @@ void VtkRenderWindowInteractorWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	else
 	{
 		Nan::Utf8String s(info[0]);
-		if(strcmp(*s, "__nowrap" ))
+		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
 
@@ -418,12 +419,11 @@ void VtkRenderWindowInteractorWrap::CreateDefaultPicker(const Nan::FunctionCallb
 		return;
 	}
 	r = native->CreateDefaultPicker();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkAbstractPropPickerWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractPropPickerWrap *w = new VtkAbstractPropPickerWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -605,12 +605,11 @@ void VtkRenderWindowInteractorWrap::FindPokedRenderer(const Nan::FunctionCallbac
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
-			const int argc = 1;
-			v8::Local<v8::Value> argv[argc] =
-				{ Nan::New("__nowrap").ToLocalChecked() };
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
 				Nan::New<v8::Function>(VtkRendererWrap::constructor);
-			v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkRendererWrap *w = new VtkRendererWrap();
 			w->native.TakeReference(r);
 			w->Wrap(wo);
@@ -818,12 +817,11 @@ void VtkRenderWindowInteractorWrap::GetInteractorStyle(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetInteractorStyle();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkInteractorObserverWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorObserverWrap *w = new VtkInteractorObserverWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -925,12 +923,11 @@ void VtkRenderWindowInteractorWrap::GetObserverMediator(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetObserverMediator();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkObserverMediatorWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkObserverMediatorWrap *w = new VtkObserverMediatorWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -948,12 +945,11 @@ void VtkRenderWindowInteractorWrap::GetPicker(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetPicker();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkAbstractPickerWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractPickerWrap *w = new VtkAbstractPickerWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -971,12 +967,11 @@ void VtkRenderWindowInteractorWrap::GetPickingManager(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetPickingManager();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkPickingManagerWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPickingManagerWrap *w = new VtkPickingManagerWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -994,12 +989,11 @@ void VtkRenderWindowInteractorWrap::GetRenderWindow(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetRenderWindow();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1375,12 +1369,11 @@ void VtkRenderWindowInteractorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkRenderWindowInteractorWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1472,12 +1465,11 @@ void VtkRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-		const int argc = 1;
-		v8::Local<v8::Value> argv[argc] =
-			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
 			Nan::New<v8::Function>(VtkRenderWindowInteractorWrap::constructor);
-		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
 		w->native.TakeReference(r);
 		w->Wrap(wo);

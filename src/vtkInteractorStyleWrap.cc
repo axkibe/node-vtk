@@ -17,6 +17,7 @@
 
 using namespace v8;
 
+extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkInteractorStyleWrap::constructor;
 
 VtkInteractorStyleWrap::VtkInteractorStyleWrap()
@@ -286,7 +287,7 @@ void VtkInteractorStyleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	else
 	{
 		Nan::Utf8String s(info[0]);
-		if(strcmp(*s, "__nowrap" ))
+		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
 
@@ -545,12 +546,11 @@ void VtkInteractorStyleWrap::GetTDxStyle(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetTDxStyle();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkTDxInteractorStyleWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTDxInteractorStyleWrap *w = new VtkTDxInteractorStyleWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -688,12 +688,11 @@ void VtkInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkInteractorStyleWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleWrap *w = new VtkInteractorStyleWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -968,12 +967,11 @@ void VtkInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-		const int argc = 1;
-		v8::Local<v8::Value> argv[argc] =
-			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
 			Nan::New<v8::Function>(VtkInteractorStyleWrap::constructor);
-		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleWrap *w = new VtkInteractorStyleWrap();
 		w->native.TakeReference(r);
 		w->Wrap(wo);

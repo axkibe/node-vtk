@@ -16,6 +16,7 @@
 
 using namespace v8;
 
+extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkViewportWrap::constructor;
 
 VtkViewportWrap::VtkViewportWrap()
@@ -197,7 +198,7 @@ void VtkViewportWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		Nan::Utf8String s(info[0]);
-		if(strcmp(*s, "__nowrap" ))
+		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
 
@@ -291,12 +292,11 @@ void VtkViewportWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetActors2D();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkActor2DCollectionWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActor2DCollectionWrap *w = new VtkActor2DCollectionWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -356,12 +356,11 @@ void VtkViewportWrap::GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetPickResultProps();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkPropCollectionWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -491,12 +490,11 @@ void VtkViewportWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetVTKWindow();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkWindowWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowWrap *w = new VtkWindowWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -514,12 +512,11 @@ void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetViewProps();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkPropCollectionWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -630,12 +627,11 @@ void VtkViewportWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkViewportWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewportWrap *w = new VtkViewportWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -660,12 +656,11 @@ void VtkViewportWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				info[0]->NumberValue(),
 				info[1]->NumberValue()
 			);
-			const int argc = 1;
-			v8::Local<v8::Value> argv[argc] =
-				{ Nan::New("__nowrap").ToLocalChecked() };
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
 				Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
-			v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
 			w->native.TakeReference(r);
 			w->Wrap(wo);
@@ -698,12 +693,11 @@ void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& i
 					info[1]->NumberValue(),
 					(vtkPropCollection *) a2->native.GetPointer()
 				);
-				const int argc = 1;
-				v8::Local<v8::Value> argv[argc] =
-					{ Nan::New("__nowrap").ToLocalChecked() };
+				v8::Local<v8::Value> argv[1] =
+					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
 					Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
-				v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
 				w->native.TakeReference(r);
 				w->Wrap(wo);
@@ -783,12 +777,11 @@ void VtkViewportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-		const int argc = 1;
-		v8::Local<v8::Value> argv[argc] =
-			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
 			Nan::New<v8::Function>(VtkViewportWrap::constructor);
-		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkViewportWrap *w = new VtkViewportWrap();
 		w->native.TakeReference(r);
 		w->Wrap(wo);

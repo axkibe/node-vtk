@@ -27,6 +27,7 @@
 
 using namespace v8;
 
+extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 Nan::Persistent<v8::Function> VtkRendererWrap::constructor;
 
 VtkRendererWrap::VtkRendererWrap()
@@ -398,7 +399,7 @@ void VtkRendererWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		Nan::Utf8String s(info[0]);
-		if(strcmp(*s, "__nowrap" ))
+		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
 
@@ -662,12 +663,11 @@ void VtkRendererWrap::GetActiveCamera(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetActiveCamera();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkCameraWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -685,12 +685,11 @@ void VtkRendererWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetActors();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkActorCollectionWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActorCollectionWrap *w = new VtkActorCollectionWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -736,12 +735,11 @@ void VtkRendererWrap::GetBackgroundTexture(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetBackgroundTexture();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkTextureWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextureWrap *w = new VtkTextureWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -787,12 +785,11 @@ void VtkRendererWrap::GetCullers(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetCullers();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkCullerCollectionWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCullerCollectionWrap *w = new VtkCullerCollectionWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -810,12 +807,11 @@ void VtkRendererWrap::GetDelegate(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetDelegate();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkRendererDelegateWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererDelegateWrap *w = new VtkRendererDelegateWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -931,12 +927,11 @@ void VtkRendererWrap::GetLights(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetLights();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkLightCollectionWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightCollectionWrap *w = new VtkLightCollectionWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1080,12 +1075,11 @@ void VtkRendererWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetRenderWindow();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1103,12 +1097,11 @@ void VtkRendererWrap::GetSelector(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetSelector();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkHardwareSelectorWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHardwareSelectorWrap *w = new VtkHardwareSelectorWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1182,12 +1175,11 @@ void VtkRendererWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetVTKWindow();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkWindowWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowWrap *w = new VtkWindowWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1205,12 +1197,11 @@ void VtkRendererWrap::GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetVolumes();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkVolumeCollectionWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeCollectionWrap *w = new VtkVolumeCollectionWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1337,12 +1328,11 @@ void VtkRendererWrap::MakeCamera(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->MakeCamera();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkCameraWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1360,12 +1350,11 @@ void VtkRendererWrap::MakeLight(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->MakeLight();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkLightWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightWrap *w = new VtkLightWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1383,12 +1372,11 @@ void VtkRendererWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-	const int argc = 1;
-	v8::Local<v8::Value> argv[argc] =
-		{ Nan::New("__nowrap").ToLocalChecked() };
+	v8::Local<v8::Value> argv[1] =
+		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
 		Nan::New<v8::Function>(VtkRendererWrap::constructor);
-	v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
 	w->Wrap(wo);
@@ -1419,12 +1407,11 @@ void VtkRendererWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 						info[2]->NumberValue(),
 						info[3]->NumberValue()
 					);
-					const int argc = 1;
-					v8::Local<v8::Value> argv[argc] =
-						{ Nan::New("__nowrap").ToLocalChecked() };
+					v8::Local<v8::Value> argv[1] =
+						{ Nan::New(vtkNodeJsNoWrap) };
 					v8::Local<v8::Function> cons =
 						Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
-					v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+					v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 					VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
 					w->native.TakeReference(r);
 					w->Wrap(wo);
@@ -1442,12 +1429,11 @@ void VtkRendererWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				info[0]->NumberValue(),
 				info[1]->NumberValue()
 			);
-			const int argc = 1;
-			v8::Local<v8::Value> argv[argc] =
-				{ Nan::New("__nowrap").ToLocalChecked() };
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
 				Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
-			v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
 			w->native.TakeReference(r);
 			w->Wrap(wo);
@@ -1690,12 +1676,11 @@ void VtkRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-		const int argc = 1;
-		v8::Local<v8::Value> argv[argc] =
-			{ Nan::New("__nowrap").ToLocalChecked() };
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
 			Nan::New<v8::Function>(VtkRendererWrap::constructor);
-		v8::Local<v8::Object> wo = cons->NewInstance(argc, argv);
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRendererWrap *w = new VtkRendererWrap();
 		w->native.TakeReference(r);
 		w->Wrap(wo);

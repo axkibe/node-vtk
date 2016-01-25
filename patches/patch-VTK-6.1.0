@@ -345,20 +345,27 @@ diff -urBN VTK-6.1.0-org/Wrapping/NodeJs/CMakeLists.txt VTK-6.1.0/Wrapping/NodeJ
 +
 diff -urBN VTK-6.1.0-org/Wrapping/NodeJs/init.cc.in VTK-6.1.0/Wrapping/NodeJs/init.cc.in
 --- VTK-6.1.0-org/Wrapping/NodeJs/init.cc.in	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/NodeJs/init.cc.in	2016-01-25 13:08:33.539382634 +0100
-@@ -0,0 +1,12 @@
++++ VTK-6.1.0/Wrapping/NodeJs/init.cc.in	2016-01-25 15:14:36.597557094 +0100
+@@ -0,0 +1,19 @@
 +#include <nan.h>
 +
 +using namespace v8;
 +using v8::Local;
 +using v8::Object;
++
++// special object to request nowrap creations
++// not available to javascript.
++Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
 +@VTK_NODEJS_INIT_EXTERNALS@
 +
-+extern void init( Local<Object> exports )
-+{@VTK_NODEJS_INIT_CALLS@
++void init( Local<Object> exports )
++{
++	vtkNodeJsNoWrap.Reset( Nan::New<v8::Object>() );
++	@VTK_NODEJS_INIT_CALLS@
 +}
 +
 +NODE_MODULE( addon, init )
++
 diff -urBN VTK-6.1.0-org/Wrapping/NodeJs/module.cmake VTK-6.1.0/Wrapping/NodeJs/module.cmake
 --- VTK-6.1.0-org/Wrapping/NodeJs/module.cmake	1970-01-01 01:00:00.000000000 +0100
 +++ VTK-6.1.0/Wrapping/NodeJs/module.cmake	2016-01-12 15:47:38.134510727 +0100
@@ -391,8 +398,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-25 13:55:27.924725233 +0100
-@@ -0,0 +1,1399 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-25 15:06:10.408114999 +0100
+@@ -0,0 +1,1409 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -536,11 +543,20 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +        return 0;
 +        }
 +
++#ifndef DO_WHITELIST
 +      for(cpp = blacklist; *cpp; cpp++)
 +        if (!strcmp(val->Class, *cpp))
 +          {
 +          return 0;
 +          }
++#else
++      for(cpp = whitelist; *cpp; cpp++)
++        if (!strcmp(val->Class, *cpp))
++          {
++          break;
++          }
++      if (!*cpp) return 0;
++#endif
 +    }
 +
 +  if (vtkWrap_IsRef(val))
@@ -897,7 +913,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  fprintf(f, "\telse\n");
 +  fprintf(f, "\t{\n");
 +  fprintf(f, "\t\tNan::Utf8String s(info[0]);\n");
-+  fprintf(f, "\t\tif(strcmp(*s, \"__nowrap\" ))\n");
++  fprintf(f, "\t\tif(info[0]->ToObject() != vtkNodeJsNoWrap )\n");
 +  fprintf(f, "\t\t\tNan::ThrowError(\"Parameter Error\");\n");
 +  fprintf(f, "\t}\n");
 +  fprintf(f, "\n");
@@ -1146,9 +1162,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      break;
 + 
 +    case VTK_PARSE_OBJECT :
-+      fprintf(f, "\t%sconst int argc = 1;\n", indent);
-+      fprintf(f, "\t%sv8::Local<v8::Value> argv[argc] =\n", indent );
-+      fprintf(f, "\t%s\t{ Nan::New(\"__nowrap\").ToLocalChecked() };\n", indent);
++      fprintf(f, "\t%sv8::Local<v8::Value> argv[1] =\n", indent );
++      fprintf(f, "\t%s\t{ Nan::New(vtkNodeJsNoWrap) };\n", indent);
 +      fprintf(f, "\t%sv8::Local<v8::Function> cons =\n", indent );
 +      fprintf(f,
 +        "\t%s\tNan::New<v8::Function>(%c%sWrap::constructor);\n",
@@ -1156,7 +1171,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +        toupper(*rinfo->Class),
 +        rinfo->Class + 1
 +        );
-+      fprintf(f, "\t%sv8::Local<v8::Object> wo = cons->NewInstance(argc, argv);\n", indent );
++      fprintf(f, "\t%sv8::Local<v8::Object> wo = cons->NewInstance(1, argv);\n", indent );
 +      fprintf(f,
 +        "\t%s%c%sWrap *w = new %c%sWrap();\n",
 +        indent, 
@@ -1649,6 +1664,9 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  fprintf(f, "using namespace v8;\n" );
 +  fprintf(f, "\n");
 +
++  fprintf(f, "extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;");
++  fprintf(f, "\n");
++
 +  fprintf(f, "Nan::Persistent<v8::Function> %s::constructor;\n", wrapperName);
 +  fprintf(f, "\n");
 +  
@@ -1749,19 +1767,18 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  
 +  if (vtkParseHierarchy_GetProperty(he, "WRAP_EXCLUDE")) return 0;
 +
++#ifndef DO_WHITELIST
 +  for(cpp = blacklist; *cpp; cpp++)
 +    {
-+      if(!strcmp(*cpp, name_from_file )) return 0;
++    if(!strcmp(*cpp, name_from_file )) return 0;
 +    }
-+
-+//if(0){
-+//// FIXME remove
-+//for(cpp = whitelist; *cpp; cpp++)
-+//  {
-+//     if(!strcmp(*cpp, name_from_file )) break;
-+//  }
-+//  if (!*cpp) return 0;
-+//}
++#else
++  for(cpp = whitelist; *cpp; cpp++)
++    {
++    if(!strcmp(*cpp, name_from_file )) break;
++    }
++  if (!*cpp) return 0;
++#endif
 +
 +  cinfo = file_info->MainClass;
 +
@@ -1794,8 +1811,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +// vim:set ts=2 sw=2 expandtab:
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsInit.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsInit.c	2016-01-25 13:06:16.638230588 +0100
-@@ -0,0 +1,139 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsInit.c	2016-01-25 14:09:33.607042758 +0100
+@@ -0,0 +1,145 @@
 +#include <stdio.h>
 +#include <stdlib.h>
 +#include <string.h>
@@ -1809,12 +1826,18 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/T
 +{
 +  char const * const *e;
 +
++#ifndef DO_WHITELIST
 +  for (e = blacklist; *e; e++)
 +    {
 +    if (!strcmp(*e, name) ) return 1;
 +    }
-+
 +  return 0;
++#endif DO_WHITELIST
++  for (e = whitelist; *e; e++)
++    {
++    if (!strcmp(*e, name) ) return 0;
++    }
++  return 1;
 +}
 +
 +
@@ -1937,8 +1960,13 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/T
 +
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-22 14:19:33.321294521 +0100
-@@ -0,0 +1,42 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-25 14:04:56.692831922 +0100
+@@ -0,0 +1,47 @@
++
++/* used for development for a minimal vtk lib wrapper */
++/* to quickly test stuff out */
++#define DO_WHITELIST
++
 +/* TODO REMOVE */
 +char const *whitelist[] =
 +  {
