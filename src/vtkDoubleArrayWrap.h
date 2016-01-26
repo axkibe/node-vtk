@@ -24,7 +24,6 @@ class VtkDoubleArrayWrap : public VtkDataArrayWrap
 		VtkDoubleArrayWrap(vtkSmartPointer<vtkDoubleArray>);
 		VtkDoubleArrayWrap();
 		~VtkDoubleArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

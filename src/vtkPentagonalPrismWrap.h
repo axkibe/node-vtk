@@ -24,7 +24,6 @@ class VtkPentagonalPrismWrap : public VtkCell3DWrap
 		VtkPentagonalPrismWrap(vtkSmartPointer<vtkPentagonalPrism>);
 		VtkPentagonalPrismWrap();
 		~VtkPentagonalPrismWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

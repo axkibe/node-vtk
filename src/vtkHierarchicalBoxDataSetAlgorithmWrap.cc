@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHierarchicalBoxDataSetAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHierarchicalBoxDataSetAlgorithmWrap::ptpl;
 
 VtkHierarchicalBoxDataSetAlgorithmWrap::VtkHierarchicalBoxDataSetAlgorithmWrap()
@@ -68,7 +67,6 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -128,7 +126,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHierarchicalBoxDataSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalBoxDataSetWrap *w = new VtkHierarchicalBoxDataSetWrap();
 		w->native.TakeReference(r);
@@ -147,7 +145,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHierarchicalBoxDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHierarchicalBoxDataSetWrap *w = new VtkHierarchicalBoxDataSetWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHierarchicalBoxDataSetAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHierarchicalBoxDataSetAlgorithmWrap *w = new VtkHierarchicalBoxDataSetAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHierarchicalBoxDataSetAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalBoxDataSetAlgorithmWrap *w = new VtkHierarchicalBoxDataSetAlgorithmWrap();
 		w->native.TakeReference(r);

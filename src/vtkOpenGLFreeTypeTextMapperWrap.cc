@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLFreeTypeTextMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLFreeTypeTextMapperWrap::ptpl;
 
 VtkOpenGLFreeTypeTextMapperWrap::VtkOpenGLFreeTypeTextMapperWrap()
@@ -72,7 +71,6 @@ void VtkOpenGLFreeTypeTextMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -150,7 +148,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLFreeTypeTextMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLFreeTypeTextMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLFreeTypeTextMapperWrap *w = new VtkOpenGLFreeTypeTextMapperWrap();
 	w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLFreeTypeTextMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLFreeTypeTextMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLFreeTypeTextMapperWrap *w = new VtkOpenGLFreeTypeTextMapperWrap();
 		w->native.TakeReference(r);

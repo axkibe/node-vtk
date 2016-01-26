@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkServerSocketWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkServerSocketWrap::ptpl;
 
 VtkServerSocketWrap::VtkServerSocketWrap()
@@ -66,7 +65,6 @@ void VtkServerSocketWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkServerSocketWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkServerSocketWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkServerSocketWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkServerSocketWrap *w = new VtkServerSocketWrap();
 	w->native.TakeReference(r);
@@ -207,7 +205,7 @@ void VtkServerSocketWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkServerSocketWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkServerSocketWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkServerSocketWrap *w = new VtkServerSocketWrap();
 		w->native.TakeReference(r);

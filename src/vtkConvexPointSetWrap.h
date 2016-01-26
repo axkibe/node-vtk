@@ -24,7 +24,6 @@ class VtkConvexPointSetWrap : public VtkCell3DWrap
 		VtkConvexPointSetWrap(vtkSmartPointer<vtkConvexPointSet>);
 		VtkConvexPointSetWrap();
 		~VtkConvexPointSetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkOpenGLProjectedTetrahedraMapperWrap : public VtkProjectedTetrahedraMapp
 		VtkOpenGLProjectedTetrahedraMapperWrap(vtkSmartPointer<vtkOpenGLProjectedTetrahedraMapper>);
 		VtkOpenGLProjectedTetrahedraMapperWrap();
 		~VtkOpenGLProjectedTetrahedraMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

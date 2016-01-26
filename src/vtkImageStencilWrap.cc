@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageStencilWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageStencilWrap::ptpl;
 
 VtkImageStencilWrap::VtkImageStencilWrap()
@@ -99,7 +98,6 @@ void VtkImageStencilWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStencilData", SetStencilData);
 	Nan::SetPrototypeMethod(tpl, "setStencilData", SetStencilData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkImageStencilWrap::GetBackgroundInput(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkImageStencilWrap::GetStencil(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageStencilDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageStencilDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageStencilDataWrap *w = new VtkImageStencilDataWrap();
 	w->native.TakeReference(r);
@@ -251,7 +249,7 @@ void VtkImageStencilWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageStencilWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageStencilWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageStencilWrap *w = new VtkImageStencilWrap();
 	w->native.TakeReference(r);
@@ -303,7 +301,7 @@ void VtkImageStencilWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageStencilWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageStencilWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageStencilWrap *w = new VtkImageStencilWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkTreeDifferenceFilterWrap : public VtkGraphAlgorithmWrap
 		VtkTreeDifferenceFilterWrap(vtkSmartPointer<vtkTreeDifferenceFilter>);
 		VtkTreeDifferenceFilterWrap();
 		~VtkTreeDifferenceFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMetaImageReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMetaImageReaderWrap::ptpl;
 
 VtkMetaImageReaderWrap::VtkMetaImageReaderWrap()
@@ -129,7 +128,6 @@ void VtkMetaImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -537,7 +535,7 @@ void VtkMetaImageReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMetaImageReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMetaImageReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMetaImageReaderWrap *w = new VtkMetaImageReaderWrap();
 	w->native.TakeReference(r);
@@ -565,7 +563,7 @@ void VtkMetaImageReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMetaImageReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMetaImageReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMetaImageReaderWrap *w = new VtkMetaImageReaderWrap();
 		w->native.TakeReference(r);

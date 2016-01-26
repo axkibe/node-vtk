@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkJPEGWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkJPEGWriterWrap::ptpl;
 
 VtkJPEGWriterWrap::VtkJPEGWriterWrap()
@@ -94,7 +93,6 @@ void VtkJPEGWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteToMemoryOn", WriteToMemoryOn);
 	Nan::SetPrototypeMethod(tpl, "writeToMemoryOn", WriteToMemoryOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkJPEGWriterWrap::GetResult(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnsignedCharArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkJPEGWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkJPEGWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkJPEGWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkJPEGWriterWrap *w = new VtkJPEGWriterWrap();
 	w->native.TakeReference(r);
@@ -289,7 +287,7 @@ void VtkJPEGWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkJPEGWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkJPEGWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkJPEGWriterWrap *w = new VtkJPEGWriterWrap();
 		w->native.TakeReference(r);

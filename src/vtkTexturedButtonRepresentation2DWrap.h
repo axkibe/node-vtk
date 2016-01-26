@@ -24,7 +24,6 @@ class VtkTexturedButtonRepresentation2DWrap : public VtkButtonRepresentationWrap
 		VtkTexturedButtonRepresentation2DWrap(vtkSmartPointer<vtkTexturedButtonRepresentation2D>);
 		VtkTexturedButtonRepresentation2DWrap();
 		~VtkTexturedButtonRepresentation2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPMaskPointsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPMaskPointsWrap::ptpl;
 
 VtkPMaskPointsWrap::VtkPMaskPointsWrap()
@@ -67,7 +66,6 @@ void VtkPMaskPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkPMaskPointsWrap::GetController(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkPMaskPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPMaskPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPMaskPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPMaskPointsWrap *w = new VtkPMaskPointsWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkPMaskPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPMaskPointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPMaskPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPMaskPointsWrap *w = new VtkPMaskPointsWrap();
 		w->native.TakeReference(r);

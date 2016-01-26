@@ -24,7 +24,6 @@ class VtkOpenFOAMReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkOpenFOAMReaderWrap(vtkSmartPointer<vtkOpenFOAMReader>);
 		VtkOpenFOAMReaderWrap();
 		~VtkOpenFOAMReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

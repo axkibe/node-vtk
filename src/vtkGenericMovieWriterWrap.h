@@ -24,7 +24,6 @@ class VtkGenericMovieWriterWrap : public VtkImageAlgorithmWrap
 		VtkGenericMovieWriterWrap(vtkSmartPointer<vtkGenericMovieWriter>);
 		VtkGenericMovieWriterWrap();
 		~VtkGenericMovieWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

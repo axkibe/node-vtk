@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageIslandRemoval2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageIslandRemoval2DWrap::ptpl;
 
 VtkImageIslandRemoval2DWrap::VtkImageIslandRemoval2DWrap()
@@ -90,7 +89,6 @@ void VtkImageIslandRemoval2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SquareNeighborhoodOn", SquareNeighborhoodOn);
 	Nan::SetPrototypeMethod(tpl, "squareNeighborhoodOn", SquareNeighborhoodOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -224,7 +222,7 @@ void VtkImageIslandRemoval2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageIslandRemoval2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageIslandRemoval2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageIslandRemoval2DWrap *w = new VtkImageIslandRemoval2DWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkImageIslandRemoval2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageIslandRemoval2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageIslandRemoval2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageIslandRemoval2DWrap *w = new VtkImageIslandRemoval2DWrap();
 		w->native.TakeReference(r);

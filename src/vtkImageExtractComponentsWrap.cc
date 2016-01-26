@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageExtractComponentsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageExtractComponentsWrap::ptpl;
 
 VtkImageExtractComponentsWrap::VtkImageExtractComponentsWrap()
@@ -66,7 +65,6 @@ void VtkImageExtractComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetComponents", SetComponents);
 	Nan::SetPrototypeMethod(tpl, "setComponents", SetComponents);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkImageExtractComponentsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageExtractComponentsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageExtractComponentsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageExtractComponentsWrap *w = new VtkImageExtractComponentsWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkImageExtractComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageExtractComponentsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageExtractComponentsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageExtractComponentsWrap *w = new VtkImageExtractComponentsWrap();
 		w->native.TakeReference(r);

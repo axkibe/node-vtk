@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageSkeleton2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageSkeleton2DWrap::ptpl;
 
 VtkImageSkeleton2DWrap::VtkImageSkeleton2DWrap()
@@ -75,7 +74,6 @@ void VtkImageSkeleton2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPrune", SetPrune);
 	Nan::SetPrototypeMethod(tpl, "setPrune", SetPrune);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -167,7 +165,7 @@ void VtkImageSkeleton2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageSkeleton2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageSkeleton2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSkeleton2DWrap *w = new VtkImageSkeleton2DWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkImageSkeleton2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageSkeleton2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageSkeleton2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageSkeleton2DWrap *w = new VtkImageSkeleton2DWrap();
 		w->native.TakeReference(r);

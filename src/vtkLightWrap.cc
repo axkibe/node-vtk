@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLightWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLightWrap::ptpl;
 
 VtkLightWrap::VtkLightWrap()
@@ -172,7 +171,6 @@ void VtkLightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwitchOn", SwitchOn);
 	Nan::SetPrototypeMethod(tpl, "switchOn", SwitchOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -360,7 +358,7 @@ void VtkLightWrap::GetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrix4x4Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrix4x4Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
 	w->native.TakeReference(r);
@@ -447,7 +445,7 @@ void VtkLightWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLightWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLightWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightWrap *w = new VtkLightWrap();
 	w->native.TakeReference(r);
@@ -523,7 +521,7 @@ void VtkLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLightWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLightWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLightWrap *w = new VtkLightWrap();
 		w->native.TakeReference(r);
@@ -931,7 +929,7 @@ void VtkLightWrap::ShallowClone(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLightWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLightWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightWrap *w = new VtkLightWrap();
 	w->native.TakeReference(r);

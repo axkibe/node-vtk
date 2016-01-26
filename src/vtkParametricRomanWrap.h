@@ -24,7 +24,6 @@ class VtkParametricRomanWrap : public VtkParametricFunctionWrap
 		VtkParametricRomanWrap(vtkSmartPointer<vtkParametricRoman>);
 		VtkParametricRomanWrap();
 		~VtkParametricRomanWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

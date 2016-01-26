@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDijkstraImageContourLineInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDijkstraImageContourLineInterpolatorWrap::ptpl;
 
 VtkDijkstraImageContourLineInterpolatorWrap::VtkDijkstraImageContourLineInterpolatorWrap()
@@ -76,7 +75,6 @@ void VtkDijkstraImageContourLineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCostImage", SetCostImage);
 	Nan::SetPrototypeMethod(tpl, "setCostImage", SetCostImage);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -132,7 +130,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::GetCostImage(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -155,7 +153,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::GetDijkstraImageGeodesicPath(c
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDijkstraImageGeodesicPathWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDijkstraImageGeodesicPathWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDijkstraImageGeodesicPathWrap *w = new VtkDijkstraImageGeodesicPathWrap();
 	w->native.TakeReference(r);
@@ -235,7 +233,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::NewInstance(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDijkstraImageContourLineInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDijkstraImageContourLineInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDijkstraImageContourLineInterpolatorWrap *w = new VtkDijkstraImageContourLineInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -263,7 +261,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::SafeDownCast(const Nan::Functi
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDijkstraImageContourLineInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDijkstraImageContourLineInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDijkstraImageContourLineInterpolatorWrap *w = new VtkDijkstraImageContourLineInterpolatorWrap();
 		w->native.TakeReference(r);

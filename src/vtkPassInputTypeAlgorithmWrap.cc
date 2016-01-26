@@ -22,7 +22,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPassInputTypeAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPassInputTypeAlgorithmWrap::ptpl;
 
 VtkPassInputTypeAlgorithmWrap::VtkPassInputTypeAlgorithmWrap()
@@ -105,7 +104,6 @@ void VtkPassInputTypeAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -198,7 +196,7 @@ void VtkPassInputTypeAlgorithmWrap::GetGraphOutput(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphWrap *w = new VtkGraphWrap();
 	w->native.TakeReference(r);
@@ -221,7 +219,7 @@ void VtkPassInputTypeAlgorithmWrap::GetImageDataOutput(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkPassInputTypeAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -271,7 +269,7 @@ void VtkPassInputTypeAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -290,7 +288,7 @@ void VtkPassInputTypeAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -313,7 +311,7 @@ void VtkPassInputTypeAlgorithmWrap::GetPolyDataOutput(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -336,7 +334,7 @@ void VtkPassInputTypeAlgorithmWrap::GetRectilinearGridOutput(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearGridWrap *w = new VtkRectilinearGridWrap();
 	w->native.TakeReference(r);
@@ -359,7 +357,7 @@ void VtkPassInputTypeAlgorithmWrap::GetStructuredGridOutput(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridWrap *w = new VtkStructuredGridWrap();
 	w->native.TakeReference(r);
@@ -382,7 +380,7 @@ void VtkPassInputTypeAlgorithmWrap::GetStructuredPointsOutput(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredPointsWrap *w = new VtkStructuredPointsWrap();
 	w->native.TakeReference(r);
@@ -405,7 +403,7 @@ void VtkPassInputTypeAlgorithmWrap::GetTableOutput(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
 	w->native.TakeReference(r);
@@ -428,7 +426,7 @@ void VtkPassInputTypeAlgorithmWrap::GetUnstructuredGridOutput(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -473,7 +471,7 @@ void VtkPassInputTypeAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPassInputTypeAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPassInputTypeAlgorithmWrap *w = new VtkPassInputTypeAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -501,7 +499,7 @@ void VtkPassInputTypeAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPassInputTypeAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPassInputTypeAlgorithmWrap *w = new VtkPassInputTypeAlgorithmWrap();
 		w->native.TakeReference(r);

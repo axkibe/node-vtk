@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageCursor3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageCursor3DWrap::ptpl;
 
 VtkImageCursor3DWrap::VtkImageCursor3DWrap()
@@ -75,7 +74,6 @@ void VtkImageCursor3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCursorValue", SetCursorValue);
 	Nan::SetPrototypeMethod(tpl, "setCursorValue", SetCursorValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -181,7 +179,7 @@ void VtkImageCursor3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageCursor3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageCursor3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageCursor3DWrap *w = new VtkImageCursor3DWrap();
 	w->native.TakeReference(r);
@@ -209,7 +207,7 @@ void VtkImageCursor3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageCursor3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageCursor3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageCursor3DWrap *w = new VtkImageCursor3DWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkClipClosedSurfaceWrap : public VtkPolyDataAlgorithmWrap
 		VtkClipClosedSurfaceWrap(vtkSmartPointer<vtkClipClosedSurface>);
 		VtkClipClosedSurfaceWrap();
 		~VtkClipClosedSurfaceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

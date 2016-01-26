@@ -24,7 +24,6 @@ class VtkPipelineSizeWrap : public VtkObjectWrap
 		VtkPipelineSizeWrap(vtkSmartPointer<vtkPipelineSize>);
 		VtkPipelineSizeWrap();
 		~VtkPipelineSizeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

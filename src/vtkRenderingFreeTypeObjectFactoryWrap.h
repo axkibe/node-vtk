@@ -24,7 +24,6 @@ class VtkRenderingFreeTypeObjectFactoryWrap : public VtkObjectFactoryWrap
 		VtkRenderingFreeTypeObjectFactoryWrap(vtkSmartPointer<vtkRenderingFreeTypeObjectFactory>);
 		VtkRenderingFreeTypeObjectFactoryWrap();
 		~VtkRenderingFreeTypeObjectFactoryWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

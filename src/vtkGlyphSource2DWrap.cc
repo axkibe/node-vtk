@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGlyphSource2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGlyphSource2DWrap::ptpl;
 
 VtkGlyphSource2DWrap::VtkGlyphSource2DWrap()
@@ -189,7 +188,6 @@ void VtkGlyphSource2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScale2", SetScale2);
 	Nan::SetPrototypeMethod(tpl, "setScale2", SetScale2);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -535,7 +533,7 @@ void VtkGlyphSource2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGlyphSource2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGlyphSource2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGlyphSource2DWrap *w = new VtkGlyphSource2DWrap();
 	w->native.TakeReference(r);
@@ -563,7 +561,7 @@ void VtkGlyphSource2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGlyphSource2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGlyphSource2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGlyphSource2DWrap *w = new VtkGlyphSource2DWrap();
 		w->native.TakeReference(r);

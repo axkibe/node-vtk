@@ -24,7 +24,6 @@ class VtkAxisFollowerWrap : public VtkFollowerWrap
 		VtkAxisFollowerWrap(vtkSmartPointer<vtkAxisFollower>);
 		VtkAxisFollowerWrap();
 		~VtkAxisFollowerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

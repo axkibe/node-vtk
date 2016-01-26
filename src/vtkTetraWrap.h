@@ -24,7 +24,6 @@ class VtkTetraWrap : public VtkCell3DWrap
 		VtkTetraWrap(vtkSmartPointer<vtkTetra>);
 		VtkTetraWrap();
 		~VtkTetraWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

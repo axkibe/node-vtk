@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWarpLensWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWarpLensWrap::ptpl;
 
 VtkWarpLensWrap::VtkWarpLensWrap()
@@ -124,7 +123,6 @@ void VtkWarpLensWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPrincipalPoint", SetPrincipalPoint);
 	Nan::SetPrototypeMethod(tpl, "setPrincipalPoint", SetPrincipalPoint);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -354,7 +352,7 @@ void VtkWarpLensWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWarpLensWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWarpLensWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWarpLensWrap *w = new VtkWarpLensWrap();
 	w->native.TakeReference(r);
@@ -382,7 +380,7 @@ void VtkWarpLensWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWarpLensWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWarpLensWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWarpLensWrap *w = new VtkWarpLensWrap();
 		w->native.TakeReference(r);

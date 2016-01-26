@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImplicitTextureCoordsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImplicitTextureCoordsWrap::ptpl;
 
 VtkImplicitTextureCoordsWrap::VtkImplicitTextureCoordsWrap()
@@ -91,7 +90,6 @@ void VtkImplicitTextureCoordsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTFunction", SetTFunction);
 	Nan::SetPrototypeMethod(tpl, "setTFunction", SetTFunction);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -185,7 +183,7 @@ void VtkImplicitTextureCoordsWrap::GetRFunction(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
 	w->native.TakeReference(r);
@@ -208,7 +206,7 @@ void VtkImplicitTextureCoordsWrap::GetSFunction(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
 	w->native.TakeReference(r);
@@ -231,7 +229,7 @@ void VtkImplicitTextureCoordsWrap::GetTFunction(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
 	w->native.TakeReference(r);
@@ -276,7 +274,7 @@ void VtkImplicitTextureCoordsWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitTextureCoordsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitTextureCoordsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitTextureCoordsWrap *w = new VtkImplicitTextureCoordsWrap();
 	w->native.TakeReference(r);
@@ -304,7 +302,7 @@ void VtkImplicitTextureCoordsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImplicitTextureCoordsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImplicitTextureCoordsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitTextureCoordsWrap *w = new VtkImplicitTextureCoordsWrap();
 		w->native.TakeReference(r);

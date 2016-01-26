@@ -24,7 +24,6 @@ class VtkStringToNumericWrap : public VtkDataObjectAlgorithmWrap
 		VtkStringToNumericWrap(vtkSmartPointer<vtkStringToNumeric>);
 		VtkStringToNumericWrap();
 		~VtkStringToNumericWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

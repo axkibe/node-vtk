@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlotPointsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlotPointsWrap::ptpl;
 
 VtkPlotPointsWrap::VtkPlotPointsWrap()
@@ -91,7 +90,6 @@ void VtkPlotPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -159,7 +157,7 @@ void VtkPlotPointsWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -232,7 +230,7 @@ void VtkPlotPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlotPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlotPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlotPointsWrap *w = new VtkPlotPointsWrap();
 	w->native.TakeReference(r);
@@ -260,7 +258,7 @@ void VtkPlotPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlotPointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlotPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotPointsWrap *w = new VtkPlotPointsWrap();
 		w->native.TakeReference(r);

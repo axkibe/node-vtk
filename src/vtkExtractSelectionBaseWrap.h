@@ -24,7 +24,6 @@ class VtkExtractSelectionBaseWrap : public VtkDataObjectAlgorithmWrap
 		VtkExtractSelectionBaseWrap(vtkSmartPointer<vtkExtractSelectionBase>);
 		VtkExtractSelectionBaseWrap();
 		~VtkExtractSelectionBaseWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

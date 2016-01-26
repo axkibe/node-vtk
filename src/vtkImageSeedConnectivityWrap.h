@@ -24,7 +24,6 @@ class VtkImageSeedConnectivityWrap : public VtkImageAlgorithmWrap
 		VtkImageSeedConnectivityWrap(vtkSmartPointer<vtkImageSeedConnectivity>);
 		VtkImageSeedConnectivityWrap();
 		~VtkImageSeedConnectivityWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

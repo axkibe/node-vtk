@@ -24,7 +24,6 @@ class VtkImageViewer2Wrap : public VtkObjectWrap
 		VtkImageViewer2Wrap(vtkSmartPointer<vtkImageViewer2>);
 		VtkImageViewer2Wrap();
 		~VtkImageViewer2Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

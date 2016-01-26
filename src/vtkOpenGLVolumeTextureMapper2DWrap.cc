@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLVolumeTextureMapper2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLVolumeTextureMapper2DWrap::ptpl;
 
 VtkOpenGLVolumeTextureMapper2DWrap::VtkOpenGLVolumeTextureMapper2DWrap()
@@ -65,7 +64,6 @@ void VtkOpenGLVolumeTextureMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkOpenGLVolumeTextureMapper2DWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLVolumeTextureMapper2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLVolumeTextureMapper2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLVolumeTextureMapper2DWrap *w = new VtkOpenGLVolumeTextureMapper2DWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkOpenGLVolumeTextureMapper2DWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLVolumeTextureMapper2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLVolumeTextureMapper2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLVolumeTextureMapper2DWrap *w = new VtkOpenGLVolumeTextureMapper2DWrap();
 		w->native.TakeReference(r);

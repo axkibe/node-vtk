@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractDataOverTimeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractDataOverTimeWrap::ptpl;
 
 VtkExtractDataOverTimeWrap::VtkExtractDataOverTimeWrap()
@@ -69,7 +68,6 @@ void VtkExtractDataOverTimeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointIndex", SetPointIndex);
 	Nan::SetPrototypeMethod(tpl, "setPointIndex", SetPointIndex);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -175,7 +173,7 @@ void VtkExtractDataOverTimeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractDataOverTimeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractDataOverTimeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractDataOverTimeWrap *w = new VtkExtractDataOverTimeWrap();
 	w->native.TakeReference(r);
@@ -203,7 +201,7 @@ void VtkExtractDataOverTimeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractDataOverTimeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractDataOverTimeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractDataOverTimeWrap *w = new VtkExtractDataOverTimeWrap();
 		w->native.TakeReference(r);

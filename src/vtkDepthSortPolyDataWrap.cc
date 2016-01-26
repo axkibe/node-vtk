@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDepthSortPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDepthSortPolyDataWrap::ptpl;
 
 VtkDepthSortPolyDataWrap::VtkDepthSortPolyDataWrap()
@@ -122,7 +121,6 @@ void VtkDepthSortPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SortScalarsOn", SortScalarsOn);
 	Nan::SetPrototypeMethod(tpl, "sortScalarsOn", SortScalarsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -164,7 +162,7 @@ void VtkDepthSortPolyDataWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
@@ -229,7 +227,7 @@ void VtkDepthSortPolyDataWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProp3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProp3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProp3DWrap *w = new VtkProp3DWrap();
 	w->native.TakeReference(r);
@@ -288,7 +286,7 @@ void VtkDepthSortPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDepthSortPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDepthSortPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDepthSortPolyDataWrap *w = new VtkDepthSortPolyDataWrap();
 	w->native.TakeReference(r);
@@ -316,7 +314,7 @@ void VtkDepthSortPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDepthSortPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDepthSortPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDepthSortPolyDataWrap *w = new VtkDepthSortPolyDataWrap();
 		w->native.TakeReference(r);

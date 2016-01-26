@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageMaskWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageMaskWrap::ptpl;
 
 VtkImageMaskWrap::VtkImageMaskWrap()
@@ -104,7 +103,6 @@ void VtkImageMaskWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNotMask", SetNotMask);
 	Nan::SetPrototypeMethod(tpl, "setNotMask", SetNotMask);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -252,7 +250,7 @@ void VtkImageMaskWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageMaskWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageMaskWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMaskWrap *w = new VtkImageMaskWrap();
 	w->native.TakeReference(r);
@@ -304,7 +302,7 @@ void VtkImageMaskWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageMaskWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageMaskWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageMaskWrap *w = new VtkImageMaskWrap();
 		w->native.TakeReference(r);

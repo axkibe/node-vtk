@@ -24,7 +24,6 @@ class VtkInterpolatedVelocityFieldWrap : public VtkCompositeInterpolatedVelocity
 		VtkInterpolatedVelocityFieldWrap(vtkSmartPointer<vtkInterpolatedVelocityField>);
 		VtkInterpolatedVelocityFieldWrap();
 		~VtkInterpolatedVelocityFieldWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

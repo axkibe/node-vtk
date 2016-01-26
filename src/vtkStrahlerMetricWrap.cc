@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStrahlerMetricWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStrahlerMetricWrap::ptpl;
 
 VtkStrahlerMetricWrap::VtkStrahlerMetricWrap()
@@ -75,7 +74,6 @@ void VtkStrahlerMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNormalize", SetNormalize);
 	Nan::SetPrototypeMethod(tpl, "setNormalize", SetNormalize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -167,7 +165,7 @@ void VtkStrahlerMetricWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStrahlerMetricWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStrahlerMetricWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStrahlerMetricWrap *w = new VtkStrahlerMetricWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkStrahlerMetricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStrahlerMetricWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStrahlerMetricWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStrahlerMetricWrap *w = new VtkStrahlerMetricWrap();
 		w->native.TakeReference(r);

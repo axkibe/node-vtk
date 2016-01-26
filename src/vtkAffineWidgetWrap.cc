@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAffineWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAffineWidgetWrap::ptpl;
 
 VtkAffineWidgetWrap::VtkAffineWidgetWrap()
@@ -73,7 +72,6 @@ void VtkAffineWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -127,7 +125,7 @@ void VtkAffineWidgetWrap::GetAffineRepresentation(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAffineRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAffineRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAffineRepresentationWrap *w = new VtkAffineRepresentationWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkAffineWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAffineWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAffineWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAffineWidgetWrap *w = new VtkAffineWidgetWrap();
 	w->native.TakeReference(r);
@@ -214,7 +212,7 @@ void VtkAffineWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAffineWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAffineWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAffineWidgetWrap *w = new VtkAffineWidgetWrap();
 		w->native.TakeReference(r);

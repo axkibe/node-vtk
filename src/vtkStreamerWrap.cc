@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStreamerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStreamerWrap::ptpl;
 
 VtkStreamerWrap::VtkStreamerWrap()
@@ -195,7 +194,6 @@ void VtkStreamerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VorticityOn", VorticityOn);
 	Nan::SetPrototypeMethod(tpl, "vorticityOn", VorticityOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -363,7 +361,7 @@ void VtkStreamerWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInitialValueProblemSolverWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
 	w->native.TakeReference(r);
@@ -470,7 +468,7 @@ void VtkStreamerWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -585,7 +583,7 @@ void VtkStreamerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStreamerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStreamerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStreamerWrap *w = new VtkStreamerWrap();
 	w->native.TakeReference(r);
@@ -637,7 +635,7 @@ void VtkStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStreamerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStreamerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStreamerWrap *w = new VtkStreamerWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkGaussianCubeReaderWrap : public VtkMoleculeReaderBaseWrap
 		VtkGaussianCubeReaderWrap(vtkSmartPointer<vtkGaussianCubeReader>);
 		VtkGaussianCubeReaderWrap();
 		~VtkGaussianCubeReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

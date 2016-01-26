@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkElevationFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkElevationFilterWrap::ptpl;
 
 VtkElevationFilterWrap::VtkElevationFilterWrap()
@@ -69,7 +68,6 @@ void VtkElevationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -147,7 +145,7 @@ void VtkElevationFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkElevationFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkElevationFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkElevationFilterWrap *w = new VtkElevationFilterWrap();
 	w->native.TakeReference(r);
@@ -175,7 +173,7 @@ void VtkElevationFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkElevationFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkElevationFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkElevationFilterWrap *w = new VtkElevationFilterWrap();
 		w->native.TakeReference(r);

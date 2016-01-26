@@ -24,7 +24,6 @@ class VtkAVSucdReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkAVSucdReaderWrap(vtkSmartPointer<vtkAVSucdReader>);
 		VtkAVSucdReaderWrap();
 		~VtkAVSucdReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

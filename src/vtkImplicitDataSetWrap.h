@@ -24,7 +24,6 @@ class VtkImplicitDataSetWrap : public VtkImplicitFunctionWrap
 		VtkImplicitDataSetWrap(vtkSmartPointer<vtkImplicitDataSet>);
 		VtkImplicitDataSetWrap();
 		~VtkImplicitDataSetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

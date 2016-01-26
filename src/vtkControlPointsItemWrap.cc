@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkControlPointsItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkControlPointsItemWrap::ptpl;
 
 VtkControlPointsItemWrap::VtkControlPointsItemWrap()
@@ -92,7 +91,6 @@ void VtkControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValidBounds", SetValidBounds);
 	Nan::SetPrototypeMethod(tpl, "setValidBounds", SetValidBounds);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -174,7 +172,7 @@ void VtkControlPointsItemWrap::GetSelectedPointBrush(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBrushWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBrushWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBrushWrap *w = new VtkBrushWrap();
 	w->native.TakeReference(r);
@@ -197,7 +195,7 @@ void VtkControlPointsItemWrap::GetSelectedPointPen(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPenWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPenWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPenWrap *w = new VtkPenWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkControlPointsItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkControlPointsItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkControlPointsItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkControlPointsItemWrap *w = new VtkControlPointsItemWrap();
 	w->native.TakeReference(r);
@@ -294,7 +292,7 @@ void VtkControlPointsItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkControlPointsItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkControlPointsItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkControlPointsItemWrap *w = new VtkControlPointsItemWrap();
 		w->native.TakeReference(r);

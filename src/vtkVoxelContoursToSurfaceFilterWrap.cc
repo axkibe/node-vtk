@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVoxelContoursToSurfaceFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVoxelContoursToSurfaceFilterWrap::ptpl;
 
 VtkVoxelContoursToSurfaceFilterWrap::VtkVoxelContoursToSurfaceFilterWrap()
@@ -69,7 +68,6 @@ void VtkVoxelContoursToSurfaceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpacing", SetSpacing);
 	Nan::SetPrototypeMethod(tpl, "setSpacing", SetSpacing);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -161,7 +159,7 @@ void VtkVoxelContoursToSurfaceFilterWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVoxelContoursToSurfaceFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVoxelContoursToSurfaceFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVoxelContoursToSurfaceFilterWrap *w = new VtkVoxelContoursToSurfaceFilterWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkVoxelContoursToSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVoxelContoursToSurfaceFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVoxelContoursToSurfaceFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVoxelContoursToSurfaceFilterWrap *w = new VtkVoxelContoursToSurfaceFilterWrap();
 		w->native.TakeReference(r);

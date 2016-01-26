@@ -24,7 +24,6 @@ class VtkOrientedGlyphContourRepresentationWrap : public VtkContourRepresentatio
 		VtkOrientedGlyphContourRepresentationWrap(vtkSmartPointer<vtkOrientedGlyphContourRepresentation>);
 		VtkOrientedGlyphContourRepresentationWrap();
 		~VtkOrientedGlyphContourRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

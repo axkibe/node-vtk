@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperOctreeSurfaceFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeSurfaceFilterWrap::ptpl;
 
 VtkHyperOctreeSurfaceFilterWrap::VtkHyperOctreeSurfaceFilterWrap()
@@ -91,7 +90,6 @@ void VtkHyperOctreeSurfaceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassThroughCellIds", SetPassThroughCellIds);
 	Nan::SetPrototypeMethod(tpl, "setPassThroughCellIds", SetPassThroughCellIds);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -147,7 +145,7 @@ void VtkHyperOctreeSurfaceFilterWrap::GetLocator(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkHyperOctreeSurfaceFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeSurfaceFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeSurfaceFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeSurfaceFilterWrap *w = new VtkHyperOctreeSurfaceFilterWrap();
 	w->native.TakeReference(r);
@@ -296,7 +294,7 @@ void VtkHyperOctreeSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeSurfaceFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeSurfaceFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeSurfaceFilterWrap *w = new VtkHyperOctreeSurfaceFilterWrap();
 		w->native.TakeReference(r);

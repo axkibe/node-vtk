@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkScalarBarActorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkScalarBarActorWrap::ptpl;
 
 VtkScalarBarActorWrap::VtkScalarBarActorWrap()
@@ -363,7 +362,6 @@ void VtkScalarBarActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseOpacityOn", UseOpacityOn);
 	Nan::SetPrototypeMethod(tpl, "useOpacityOn", UseOpacityOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -601,7 +599,7 @@ void VtkScalarBarActorWrap::GetBackgroundProperty(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -792,7 +790,7 @@ void VtkScalarBarActorWrap::GetFrameProperty(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -829,7 +827,7 @@ void VtkScalarBarActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -852,7 +850,7 @@ void VtkScalarBarActorWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -1099,7 +1097,7 @@ void VtkScalarBarActorWrap::GetTextureActor(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActor2DWrap *w = new VtkActor2DWrap();
 	w->native.TakeReference(r);
@@ -1192,7 +1190,7 @@ void VtkScalarBarActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -1279,7 +1277,7 @@ void VtkScalarBarActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarBarActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarBarActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarActorWrap *w = new VtkScalarBarActorWrap();
 	w->native.TakeReference(r);
@@ -1393,7 +1391,7 @@ void VtkScalarBarActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkScalarBarActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkScalarBarActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkScalarBarActorWrap *w = new VtkScalarBarActorWrap();
 		w->native.TakeReference(r);

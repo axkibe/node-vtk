@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParametricSplineWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParametricSplineWrap::ptpl;
 
 VtkParametricSplineWrap::VtkParametricSplineWrap()
@@ -149,7 +148,6 @@ void VtkParametricSplineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZSpline", SetZSpline);
 	Nan::SetPrototypeMethod(tpl, "setZSpline", SetZSpline);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -327,7 +325,7 @@ void VtkParametricSplineWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -406,7 +404,7 @@ void VtkParametricSplineWrap::GetXSpline(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplineWrap *w = new VtkSplineWrap();
 	w->native.TakeReference(r);
@@ -429,7 +427,7 @@ void VtkParametricSplineWrap::GetYSpline(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplineWrap *w = new VtkSplineWrap();
 	w->native.TakeReference(r);
@@ -452,7 +450,7 @@ void VtkParametricSplineWrap::GetZSpline(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplineWrap *w = new VtkSplineWrap();
 	w->native.TakeReference(r);
@@ -497,7 +495,7 @@ void VtkParametricSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParametricSplineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParametricSplineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParametricSplineWrap *w = new VtkParametricSplineWrap();
 	w->native.TakeReference(r);
@@ -549,7 +547,7 @@ void VtkParametricSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParametricSplineWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParametricSplineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParametricSplineWrap *w = new VtkParametricSplineWrap();
 		w->native.TakeReference(r);

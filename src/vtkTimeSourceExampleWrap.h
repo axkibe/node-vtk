@@ -24,7 +24,6 @@ class VtkTimeSourceExampleWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkTimeSourceExampleWrap(vtkSmartPointer<vtkTimeSourceExample>);
 		VtkTimeSourceExampleWrap();
 		~VtkTimeSourceExampleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

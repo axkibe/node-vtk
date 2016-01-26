@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransformFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransformFilterWrap::ptpl;
 
 VtkTransformFilterWrap::VtkTransformFilterWrap()
@@ -77,7 +76,6 @@ void VtkTransformFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -173,7 +171,7 @@ void VtkTransformFilterWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkTransformFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransformFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransformFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransformFilterWrap *w = new VtkTransformFilterWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkTransformFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransformFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransformFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransformFilterWrap *w = new VtkTransformFilterWrap();
 		w->native.TakeReference(r);

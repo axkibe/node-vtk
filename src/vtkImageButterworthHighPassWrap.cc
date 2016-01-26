@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageButterworthHighPassWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageButterworthHighPassWrap::ptpl;
 
 VtkImageButterworthHighPassWrap::VtkImageButterworthHighPassWrap()
@@ -87,7 +86,6 @@ void VtkImageButterworthHighPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZCutOff", SetZCutOff);
 	Nan::SetPrototypeMethod(tpl, "setZCutOff", SetZCutOff);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -221,7 +219,7 @@ void VtkImageButterworthHighPassWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageButterworthHighPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageButterworthHighPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageButterworthHighPassWrap *w = new VtkImageButterworthHighPassWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkImageButterworthHighPassWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageButterworthHighPassWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageButterworthHighPassWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageButterworthHighPassWrap *w = new VtkImageButterworthHighPassWrap();
 		w->native.TakeReference(r);

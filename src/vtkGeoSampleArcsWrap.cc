@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoSampleArcsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoSampleArcsWrap::ptpl;
 
 VtkGeoSampleArcsWrap::VtkGeoSampleArcsWrap()
@@ -96,7 +95,6 @@ void VtkGeoSampleArcsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputCoordinateSystemToSpherical", SetOutputCoordinateSystemToSpherical);
 	Nan::SetPrototypeMethod(tpl, "setOutputCoordinateSystemToSpherical", SetOutputCoordinateSystemToSpherical);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -230,7 +228,7 @@ void VtkGeoSampleArcsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoSampleArcsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoSampleArcsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoSampleArcsWrap *w = new VtkGeoSampleArcsWrap();
 	w->native.TakeReference(r);
@@ -258,7 +256,7 @@ void VtkGeoSampleArcsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoSampleArcsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoSampleArcsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoSampleArcsWrap *w = new VtkGeoSampleArcsWrap();
 		w->native.TakeReference(r);

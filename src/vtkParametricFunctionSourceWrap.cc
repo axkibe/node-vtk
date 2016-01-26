@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParametricFunctionSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParametricFunctionSourceWrap::ptpl;
 
 VtkParametricFunctionSourceWrap::VtkParametricFunctionSourceWrap()
@@ -157,7 +156,6 @@ void VtkParametricFunctionSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWResolution", SetWResolution);
 	Nan::SetPrototypeMethod(tpl, "setWResolution", SetWResolution);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -265,7 +263,7 @@ void VtkParametricFunctionSourceWrap::GetParametricFunction(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParametricFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParametricFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParametricFunctionWrap *w = new VtkParametricFunctionWrap();
 	w->native.TakeReference(r);
@@ -394,7 +392,7 @@ void VtkParametricFunctionSourceWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParametricFunctionSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParametricFunctionSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParametricFunctionSourceWrap *w = new VtkParametricFunctionSourceWrap();
 	w->native.TakeReference(r);
@@ -422,7 +420,7 @@ void VtkParametricFunctionSourceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParametricFunctionSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParametricFunctionSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParametricFunctionSourceWrap *w = new VtkParametricFunctionSourceWrap();
 		w->native.TakeReference(r);

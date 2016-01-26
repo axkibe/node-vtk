@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBrownianPointsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBrownianPointsWrap::ptpl;
 
 VtkBrownianPointsWrap::VtkBrownianPointsWrap()
@@ -84,7 +83,6 @@ void VtkBrownianPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMinimumSpeed", SetMinimumSpeed);
 	Nan::SetPrototypeMethod(tpl, "setMinimumSpeed", SetMinimumSpeed);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -246,7 +244,7 @@ void VtkBrownianPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBrownianPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBrownianPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBrownianPointsWrap *w = new VtkBrownianPointsWrap();
 	w->native.TakeReference(r);
@@ -274,7 +272,7 @@ void VtkBrownianPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBrownianPointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBrownianPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBrownianPointsWrap *w = new VtkBrownianPointsWrap();
 		w->native.TakeReference(r);

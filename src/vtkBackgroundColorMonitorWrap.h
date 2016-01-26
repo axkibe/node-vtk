@@ -24,7 +24,6 @@ class VtkBackgroundColorMonitorWrap : public VtkObjectWrap
 		VtkBackgroundColorMonitorWrap(vtkSmartPointer<vtkBackgroundColorMonitor>);
 		VtkBackgroundColorMonitorWrap();
 		~VtkBackgroundColorMonitorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

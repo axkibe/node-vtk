@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDatabaseToTableReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDatabaseToTableReaderWrap::ptpl;
 
 VtkDatabaseToTableReaderWrap::VtkDatabaseToTableReaderWrap()
@@ -64,7 +63,6 @@ void VtkDatabaseToTableReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -120,7 +118,7 @@ void VtkDatabaseToTableReaderWrap::GetDatabase(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSQLDatabaseWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSQLDatabaseWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSQLDatabaseWrap *w = new VtkSQLDatabaseWrap();
 	w->native.TakeReference(r);
@@ -165,7 +163,7 @@ void VtkDatabaseToTableReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDatabaseToTableReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDatabaseToTableReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDatabaseToTableReaderWrap *w = new VtkDatabaseToTableReaderWrap();
 	w->native.TakeReference(r);
@@ -193,7 +191,7 @@ void VtkDatabaseToTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDatabaseToTableReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDatabaseToTableReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDatabaseToTableReaderWrap *w = new VtkDatabaseToTableReaderWrap();
 		w->native.TakeReference(r);

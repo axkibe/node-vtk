@@ -24,7 +24,6 @@ class VtkImageCursor3DWrap : public VtkImageInPlaceFilterWrap
 		VtkImageCursor3DWrap(vtkSmartPointer<vtkImageCursor3D>);
 		VtkImageCursor3DWrap();
 		~VtkImageCursor3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

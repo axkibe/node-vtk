@@ -24,7 +24,6 @@ class VtkLookupTableWithEnablingWrap : public VtkLookupTableWrap
 		VtkLookupTableWithEnablingWrap(vtkSmartPointer<vtkLookupTableWithEnabling>);
 		VtkLookupTableWithEnablingWrap();
 		~VtkLookupTableWithEnablingWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

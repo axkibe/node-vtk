@@ -24,7 +24,6 @@ class VtkDataRepresentationWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkDataRepresentationWrap(vtkSmartPointer<vtkDataRepresentation>);
 		VtkDataRepresentationWrap();
 		~VtkDataRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

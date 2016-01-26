@@ -24,7 +24,6 @@ class VtkRectilinearSynchronizedTemplatesWrap : public VtkPolyDataAlgorithmWrap
 		VtkRectilinearSynchronizedTemplatesWrap(vtkSmartPointer<vtkRectilinearSynchronizedTemplates>);
 		VtkRectilinearSynchronizedTemplatesWrap();
 		~VtkRectilinearSynchronizedTemplatesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

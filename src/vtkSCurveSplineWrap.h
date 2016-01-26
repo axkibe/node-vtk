@@ -24,7 +24,6 @@ class VtkSCurveSplineWrap : public VtkSplineWrap
 		VtkSCurveSplineWrap(vtkSmartPointer<vtkSCurveSpline>);
 		VtkSCurveSplineWrap();
 		~VtkSCurveSplineWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

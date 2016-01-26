@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRectilinearGridPartitionerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRectilinearGridPartitionerWrap::ptpl;
 
 VtkRectilinearGridPartitionerWrap::VtkRectilinearGridPartitionerWrap()
@@ -72,7 +71,6 @@ void VtkRectilinearGridPartitionerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPartitions", SetNumberOfPartitions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPartitions", SetNumberOfPartitions);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -178,7 +176,7 @@ void VtkRectilinearGridPartitionerWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearGridPartitionerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearGridPartitionerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearGridPartitionerWrap *w = new VtkRectilinearGridPartitionerWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkRectilinearGridPartitionerWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRectilinearGridPartitionerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRectilinearGridPartitionerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectilinearGridPartitionerWrap *w = new VtkRectilinearGridPartitionerWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkDicerWrap : public VtkDataSetAlgorithmWrap
 		VtkDicerWrap(vtkSmartPointer<vtkDicer>);
 		VtkDicerWrap();
 		~VtkDicerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

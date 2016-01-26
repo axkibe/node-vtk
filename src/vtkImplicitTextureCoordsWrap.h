@@ -24,7 +24,6 @@ class VtkImplicitTextureCoordsWrap : public VtkDataSetAlgorithmWrap
 		VtkImplicitTextureCoordsWrap(vtkSmartPointer<vtkImplicitTextureCoords>);
 		VtkImplicitTextureCoordsWrap();
 		~VtkImplicitTextureCoordsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

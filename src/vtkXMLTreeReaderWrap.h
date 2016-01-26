@@ -24,7 +24,6 @@ class VtkXMLTreeReaderWrap : public VtkTreeAlgorithmWrap
 		VtkXMLTreeReaderWrap(vtkSmartPointer<vtkXMLTreeReader>);
 		VtkXMLTreeReaderWrap();
 		~VtkXMLTreeReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkImageSkeleton2DWrap : public VtkImageIterateFilterWrap
 		VtkImageSkeleton2DWrap(vtkSmartPointer<vtkImageSkeleton2D>);
 		VtkImageSkeleton2DWrap();
 		~VtkImageSkeleton2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

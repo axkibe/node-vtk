@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageMandelbrotSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageMandelbrotSourceWrap::ptpl;
 
 VtkImageMandelbrotSourceWrap::VtkImageMandelbrotSourceWrap()
@@ -108,7 +107,6 @@ void VtkImageMandelbrotSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -286,7 +284,7 @@ void VtkImageMandelbrotSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageMandelbrotSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageMandelbrotSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMandelbrotSourceWrap *w = new VtkImageMandelbrotSourceWrap();
 	w->native.TakeReference(r);
@@ -341,7 +339,7 @@ void VtkImageMandelbrotSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageMandelbrotSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageMandelbrotSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageMandelbrotSourceWrap *w = new VtkImageMandelbrotSourceWrap();
 		w->native.TakeReference(r);

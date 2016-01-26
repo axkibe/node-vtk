@@ -24,7 +24,6 @@ class VtkReebGraphSimplificationMetricWrap : public VtkObjectWrap
 		VtkReebGraphSimplificationMetricWrap(vtkSmartPointer<vtkReebGraphSimplificationMetric>);
 		VtkReebGraphSimplificationMetricWrap();
 		~VtkReebGraphSimplificationMetricWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkKdTreeWrap : public VtkLocatorWrap
 		VtkKdTreeWrap(vtkSmartPointer<vtkKdTree>);
 		VtkKdTreeWrap();
 		~VtkKdTreeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

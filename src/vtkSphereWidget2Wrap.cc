@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSphereWidget2Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSphereWidget2Wrap::ptpl;
 
 VtkSphereWidget2Wrap::VtkSphereWidget2Wrap()
@@ -91,7 +90,6 @@ void VtkSphereWidget2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TranslationEnabledOn", TranslationEnabledOn);
 	Nan::SetPrototypeMethod(tpl, "translationEnabledOn", TranslationEnabledOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -209,7 +207,7 @@ void VtkSphereWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSphereWidget2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSphereWidget2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSphereWidget2Wrap *w = new VtkSphereWidget2Wrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkSphereWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSphereWidget2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSphereWidget2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSphereWidget2Wrap *w = new VtkSphereWidget2Wrap();
 		w->native.TakeReference(r);

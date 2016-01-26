@@ -24,7 +24,6 @@ class VtkGenericGlyph3DFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkGenericGlyph3DFilterWrap(vtkSmartPointer<vtkGenericGlyph3DFilter>);
 		VtkGenericGlyph3DFilterWrap();
 		~VtkGenericGlyph3DFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

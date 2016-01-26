@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTextSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTextSourceWrap::ptpl;
 
 VtkTextSourceWrap::VtkTextSourceWrap()
@@ -90,7 +89,6 @@ void VtkTextSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetText", SetText);
 	Nan::SetPrototypeMethod(tpl, "setText", SetText);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -234,7 +232,7 @@ void VtkTextSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextSourceWrap *w = new VtkTextSourceWrap();
 	w->native.TakeReference(r);
@@ -262,7 +260,7 @@ void VtkTextSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTextSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTextSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextSourceWrap *w = new VtkTextSourceWrap();
 		w->native.TakeReference(r);

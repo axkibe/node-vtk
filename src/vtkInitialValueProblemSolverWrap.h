@@ -24,7 +24,6 @@ class VtkInitialValueProblemSolverWrap : public VtkObjectWrap
 		VtkInitialValueProblemSolverWrap(vtkSmartPointer<vtkInitialValueProblemSolver>);
 		VtkInitialValueProblemSolverWrap();
 		~VtkInitialValueProblemSolverWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

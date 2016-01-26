@@ -24,7 +24,6 @@ class VtkImplicitPolyDataDistanceWrap : public VtkImplicitFunctionWrap
 		VtkImplicitPolyDataDistanceWrap(vtkSmartPointer<vtkImplicitPolyDataDistance>);
 		VtkImplicitPolyDataDistanceWrap();
 		~VtkImplicitPolyDataDistanceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

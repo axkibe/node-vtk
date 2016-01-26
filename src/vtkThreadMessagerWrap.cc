@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkThreadMessagerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkThreadMessagerWrap::ptpl;
 
 VtkThreadMessagerWrap::VtkThreadMessagerWrap()
@@ -74,7 +73,6 @@ void VtkThreadMessagerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WaitForReceiver", WaitForReceiver);
 	Nan::SetPrototypeMethod(tpl, "waitForReceiver", WaitForReceiver);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -176,7 +174,7 @@ void VtkThreadMessagerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkThreadMessagerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkThreadMessagerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkThreadMessagerWrap *w = new VtkThreadMessagerWrap();
 	w->native.TakeReference(r);
@@ -204,7 +202,7 @@ void VtkThreadMessagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkThreadMessagerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkThreadMessagerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkThreadMessagerWrap *w = new VtkThreadMessagerWrap();
 		w->native.TakeReference(r);

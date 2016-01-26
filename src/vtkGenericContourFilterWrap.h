@@ -24,7 +24,6 @@ class VtkGenericContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkGenericContourFilterWrap(vtkSmartPointer<vtkGenericContourFilter>);
 		VtkGenericContourFilterWrap();
 		~VtkGenericContourFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

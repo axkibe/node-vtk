@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAbstractGridConnectivityWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAbstractGridConnectivityWrap::ptpl;
 
 VtkAbstractGridConnectivityWrap::VtkAbstractGridConnectivityWrap()
@@ -84,7 +83,6 @@ void VtkAbstractGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -175,7 +173,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedCellGhostArray(const Nan::Functi
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnsignedCharArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
 		w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedGridCellData(const Nan::Function
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellDataWrap *w = new VtkCellDataWrap();
 		w->native.TakeReference(r);
@@ -235,7 +233,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedGridPointData(const Nan::Functio
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointDataWrap *w = new VtkPointDataWrap();
 		w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedPointGhostArray(const Nan::Funct
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnsignedCharArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
 		w->native.TakeReference(r);
@@ -295,7 +293,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedPoints(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointsWrap *w = new VtkPointsWrap();
 		w->native.TakeReference(r);
@@ -343,7 +341,7 @@ void VtkAbstractGridConnectivityWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractGridConnectivityWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractGridConnectivityWrap *w = new VtkAbstractGridConnectivityWrap();
 	w->native.TakeReference(r);
@@ -371,7 +369,7 @@ void VtkAbstractGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractGridConnectivityWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractGridConnectivityWrap *w = new VtkAbstractGridConnectivityWrap();
 		w->native.TakeReference(r);

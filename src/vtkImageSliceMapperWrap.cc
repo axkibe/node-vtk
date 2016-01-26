@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageSliceMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageSliceMapperWrap::ptpl;
 
 VtkImageSliceMapperWrap::VtkImageSliceMapperWrap()
@@ -120,7 +119,6 @@ void VtkImageSliceMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -320,7 +318,7 @@ void VtkImageSliceMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageSliceMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageSliceMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSliceMapperWrap *w = new VtkImageSliceMapperWrap();
 	w->native.TakeReference(r);
@@ -393,7 +391,7 @@ void VtkImageSliceMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageSliceMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageSliceMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageSliceMapperWrap *w = new VtkImageSliceMapperWrap();
 		w->native.TakeReference(r);

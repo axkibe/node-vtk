@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLCompositeDataReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLCompositeDataReaderWrap::ptpl;
 
 VtkXMLCompositeDataReaderWrap::VtkXMLCompositeDataReaderWrap()
@@ -64,7 +63,6 @@ void VtkXMLCompositeDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -124,7 +122,7 @@ void VtkXMLCompositeDataReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCompositeDataSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCompositeDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeDataSetWrap *w = new VtkCompositeDataSetWrap();
 		w->native.TakeReference(r);
@@ -143,7 +141,7 @@ void VtkXMLCompositeDataReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataSetWrap *w = new VtkCompositeDataSetWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkXMLCompositeDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLCompositeDataReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLCompositeDataReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLCompositeDataReaderWrap *w = new VtkXMLCompositeDataReaderWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkXMLCompositeDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLCompositeDataReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLCompositeDataReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLCompositeDataReaderWrap *w = new VtkXMLCompositeDataReaderWrap();
 		w->native.TakeReference(r);

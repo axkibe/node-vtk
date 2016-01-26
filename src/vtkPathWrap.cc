@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPathWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPathWrap::ptpl;
 
 VtkPathWrap::VtkPathWrap()
@@ -84,7 +83,6 @@ void VtkPathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCodes", SetCodes);
 	Nan::SetPrototypeMethod(tpl, "setCodes", SetCodes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -140,7 +138,7 @@ void VtkPathWrap::GetCodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIntArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIntArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIntArrayWrap *w = new VtkIntArrayWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkPathWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkPathWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkPathWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkPathWrap *w = new VtkPathWrap();
 			w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkPathWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPathWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPathWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPathWrap *w = new VtkPathWrap();
 		w->native.TakeReference(r);
@@ -299,7 +297,7 @@ void VtkPathWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPathWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPathWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPathWrap *w = new VtkPathWrap();
 	w->native.TakeReference(r);
@@ -339,7 +337,7 @@ void VtkPathWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPathWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPathWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPathWrap *w = new VtkPathWrap();
 		w->native.TakeReference(r);

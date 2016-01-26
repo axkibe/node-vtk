@@ -24,7 +24,6 @@ class VtkGenericCutterWrap : public VtkPolyDataAlgorithmWrap
 		VtkGenericCutterWrap(vtkSmartPointer<vtkGenericCutter>);
 		VtkGenericCutterWrap();
 		~VtkGenericCutterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

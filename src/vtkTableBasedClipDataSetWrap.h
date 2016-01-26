@@ -24,7 +24,6 @@ class VtkTableBasedClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkTableBasedClipDataSetWrap(vtkSmartPointer<vtkTableBasedClipDataSet>);
 		VtkTableBasedClipDataSetWrap();
 		~VtkTableBasedClipDataSetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

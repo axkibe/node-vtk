@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOutlineFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOutlineFilterWrap::ptpl;
 
 VtkOutlineFilterWrap::VtkOutlineFilterWrap()
@@ -72,7 +71,6 @@ void VtkOutlineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGenerateFaces", SetGenerateFaces);
 	Nan::SetPrototypeMethod(tpl, "setGenerateFaces", SetGenerateFaces);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -188,7 +186,7 @@ void VtkOutlineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOutlineFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOutlineFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOutlineFilterWrap *w = new VtkOutlineFilterWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkOutlineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOutlineFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOutlineFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOutlineFilterWrap *w = new VtkOutlineFilterWrap();
 		w->native.TakeReference(r);

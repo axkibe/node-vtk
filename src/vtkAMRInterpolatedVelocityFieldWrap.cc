@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRInterpolatedVelocityFieldWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRInterpolatedVelocityFieldWrap::ptpl;
 
 VtkAMRInterpolatedVelocityFieldWrap::VtkAMRInterpolatedVelocityFieldWrap()
@@ -67,7 +66,6 @@ void VtkAMRInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAMRData", SetAMRData);
 	Nan::SetPrototypeMethod(tpl, "setAMRData", SetAMRData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -109,7 +107,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::GetAmrDataSet(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOverlappingAMRWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRInterpolatedVelocityFieldWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRInterpolatedVelocityFieldWrap *w = new VtkAMRInterpolatedVelocityFieldWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRInterpolatedVelocityFieldWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRInterpolatedVelocityFieldWrap *w = new VtkAMRInterpolatedVelocityFieldWrap();
 		w->native.TakeReference(r);

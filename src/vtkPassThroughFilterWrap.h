@@ -24,7 +24,6 @@ class VtkPassThroughFilterWrap : public VtkDataSetAlgorithmWrap
 		VtkPassThroughFilterWrap(vtkSmartPointer<vtkPassThroughFilter>);
 		VtkPassThroughFilterWrap();
 		~VtkPassThroughFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

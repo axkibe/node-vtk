@@ -24,7 +24,6 @@ class VtkGenericRenderWindowInteractorWrap : public VtkRenderWindowInteractorWra
 		VtkGenericRenderWindowInteractorWrap(vtkSmartPointer<vtkGenericRenderWindowInteractor>);
 		VtkGenericRenderWindowInteractorWrap();
 		~VtkGenericRenderWindowInteractorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

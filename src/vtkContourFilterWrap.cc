@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContourFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContourFilterWrap::ptpl;
 
 VtkContourFilterWrap::VtkContourFilterWrap()
@@ -164,7 +163,6 @@ void VtkContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseScalarTreeOn", UseScalarTreeOn);
 	Nan::SetPrototypeMethod(tpl, "useScalarTreeOn", UseScalarTreeOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -425,7 +423,7 @@ void VtkContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -476,7 +474,7 @@ void VtkContourFilterWrap::GetScalarTree(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarTreeWrap *w = new VtkScalarTreeWrap();
 	w->native.TakeReference(r);
@@ -556,7 +554,7 @@ void VtkContourFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContourFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContourFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContourFilterWrap *w = new VtkContourFilterWrap();
 	w->native.TakeReference(r);
@@ -584,7 +582,7 @@ void VtkContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContourFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContourFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContourFilterWrap *w = new VtkContourFilterWrap();
 		w->native.TakeReference(r);

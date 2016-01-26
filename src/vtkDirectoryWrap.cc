@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDirectoryWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDirectoryWrap::ptpl;
 
 VtkDirectoryWrap::VtkDirectoryWrap()
@@ -78,7 +77,6 @@ void VtkDirectoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -178,7 +176,7 @@ void VtkDirectoryWrap::GetFiles(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkDirectoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDirectoryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDirectoryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDirectoryWrap *w = new VtkDirectoryWrap();
 	w->native.TakeReference(r);
@@ -322,7 +320,7 @@ void VtkDirectoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDirectoryWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDirectoryWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDirectoryWrap *w = new VtkDirectoryWrap();
 		w->native.TakeReference(r);

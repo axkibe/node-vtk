@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExodusModelWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExodusModelWrap::ptpl;
 
 VtkExodusModelWrap::VtkExodusModelWrap()
@@ -104,7 +103,6 @@ void VtkExodusModelWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnpackExodusModel", UnpackExodusModel);
 	Nan::SetPrototypeMethod(tpl, "unpackExodusModel", UnpackExodusModel);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -217,7 +215,7 @@ void VtkExodusModelWrap::ExtractExodusModel(const Nan::FunctionCallbackInfo<v8::
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkExodusModelWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkExodusModelWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkExodusModelWrap *w = new VtkExodusModelWrap();
 			w->native.TakeReference(r);
@@ -258,7 +256,7 @@ void VtkExodusModelWrap::GetModelMetadata(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkModelMetadataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkModelMetadataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkModelMetadataWrap *w = new VtkModelMetadataWrap();
 	w->native.TakeReference(r);
@@ -347,7 +345,7 @@ void VtkExodusModelWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExodusModelWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExodusModelWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExodusModelWrap *w = new VtkExodusModelWrap();
 	w->native.TakeReference(r);
@@ -451,7 +449,7 @@ void VtkExodusModelWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExodusModelWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExodusModelWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExodusModelWrap *w = new VtkExodusModelWrap();
 		w->native.TakeReference(r);

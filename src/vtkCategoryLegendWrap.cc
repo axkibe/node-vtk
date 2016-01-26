@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCategoryLegendWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCategoryLegendWrap::ptpl;
 
 VtkCategoryLegendWrap::VtkCategoryLegendWrap()
@@ -74,7 +73,6 @@ void VtkCategoryLegendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValues", SetValues);
 	Nan::SetPrototypeMethod(tpl, "setValues", SetValues);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -130,7 +128,7 @@ void VtkCategoryLegendWrap::GetScalarsToColors(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -153,7 +151,7 @@ void VtkCategoryLegendWrap::GetValues(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVariantArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVariantArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVariantArrayWrap *w = new VtkVariantArrayWrap();
 	w->native.TakeReference(r);
@@ -198,7 +196,7 @@ void VtkCategoryLegendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCategoryLegendWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCategoryLegendWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCategoryLegendWrap *w = new VtkCategoryLegendWrap();
 	w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkCategoryLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCategoryLegendWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCategoryLegendWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCategoryLegendWrap *w = new VtkCategoryLegendWrap();
 		w->native.TakeReference(r);

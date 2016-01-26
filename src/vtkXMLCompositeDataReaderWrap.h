@@ -24,7 +24,6 @@ class VtkXMLCompositeDataReaderWrap : public VtkXMLReaderWrap
 		VtkXMLCompositeDataReaderWrap(vtkSmartPointer<vtkXMLCompositeDataReader>);
 		VtkXMLCompositeDataReaderWrap();
 		~VtkXMLCompositeDataReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

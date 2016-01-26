@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRBaseParticlesReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRBaseParticlesReaderWrap::ptpl;
 
 VtkAMRBaseParticlesReaderWrap::VtkAMRBaseParticlesReaderWrap()
@@ -116,7 +115,6 @@ void VtkAMRBaseParticlesReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetParticleArrayStatus", SetParticleArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setParticleArrayStatus", SetParticleArrayStatus);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -196,7 +194,7 @@ void VtkAMRBaseParticlesReaderWrap::GetController(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -318,7 +316,7 @@ void VtkAMRBaseParticlesReaderWrap::GetParticleDataArraySelection(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArraySelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArraySelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArraySelectionWrap *w = new VtkDataArraySelectionWrap();
 	w->native.TakeReference(r);
@@ -377,7 +375,7 @@ void VtkAMRBaseParticlesReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRBaseParticlesReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRBaseParticlesReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRBaseParticlesReaderWrap *w = new VtkAMRBaseParticlesReaderWrap();
 	w->native.TakeReference(r);
@@ -405,7 +403,7 @@ void VtkAMRBaseParticlesReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRBaseParticlesReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRBaseParticlesReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRBaseParticlesReaderWrap *w = new VtkAMRBaseParticlesReaderWrap();
 		w->native.TakeReference(r);

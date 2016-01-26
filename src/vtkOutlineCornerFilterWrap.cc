@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOutlineCornerFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOutlineCornerFilterWrap::ptpl;
 
 VtkOutlineCornerFilterWrap::VtkOutlineCornerFilterWrap()
@@ -72,7 +71,6 @@ void VtkOutlineCornerFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCornerFactor", SetCornerFactor);
 	Nan::SetPrototypeMethod(tpl, "setCornerFactor", SetCornerFactor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkOutlineCornerFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOutlineCornerFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOutlineCornerFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOutlineCornerFilterWrap *w = new VtkOutlineCornerFilterWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkOutlineCornerFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOutlineCornerFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOutlineCornerFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOutlineCornerFilterWrap *w = new VtkOutlineCornerFilterWrap();
 		w->native.TakeReference(r);

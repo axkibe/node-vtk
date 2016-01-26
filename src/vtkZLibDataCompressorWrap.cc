@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkZLibDataCompressorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkZLibDataCompressorWrap::ptpl;
 
 VtkZLibDataCompressorWrap::VtkZLibDataCompressorWrap()
@@ -72,7 +71,6 @@ void VtkZLibDataCompressorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompressionLevel", SetCompressionLevel);
 	Nan::SetPrototypeMethod(tpl, "setCompressionLevel", SetCompressionLevel);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkZLibDataCompressorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkZLibDataCompressorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkZLibDataCompressorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkZLibDataCompressorWrap *w = new VtkZLibDataCompressorWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkZLibDataCompressorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkZLibDataCompressorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkZLibDataCompressorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkZLibDataCompressorWrap *w = new VtkZLibDataCompressorWrap();
 		w->native.TakeReference(r);

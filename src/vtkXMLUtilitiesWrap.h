@@ -24,7 +24,6 @@ class VtkXMLUtilitiesWrap : public VtkObjectWrap
 		VtkXMLUtilitiesWrap(vtkSmartPointer<vtkXMLUtilities>);
 		VtkXMLUtilitiesWrap();
 		~VtkXMLUtilitiesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkGeoTreeNodeCacheWrap : public VtkObjectWrap
 		VtkGeoTreeNodeCacheWrap(vtkSmartPointer<vtkGeoTreeNodeCache>);
 		VtkGeoTreeNodeCacheWrap();
 		~VtkGeoTreeNodeCacheWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

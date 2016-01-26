@@ -24,7 +24,6 @@ class VtkChartMatrixWrap : public VtkAbstractContextItemWrap
 		VtkChartMatrixWrap(vtkSmartPointer<vtkChartMatrix>);
 		VtkChartMatrixWrap();
 		~VtkChartMatrixWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

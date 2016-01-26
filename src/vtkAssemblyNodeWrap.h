@@ -24,7 +24,6 @@ class VtkAssemblyNodeWrap : public VtkObjectWrap
 		VtkAssemblyNodeWrap(vtkSmartPointer<vtkAssemblyNode>);
 		VtkAssemblyNodeWrap();
 		~VtkAssemblyNodeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

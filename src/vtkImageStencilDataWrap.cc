@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageStencilDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageStencilDataWrap::ptpl;
 
 VtkImageStencilDataWrap::VtkImageStencilDataWrap()
@@ -122,7 +121,6 @@ void VtkImageStencilDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Subtract", Subtract);
 	Nan::SetPrototypeMethod(tpl, "subtract", Subtract);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -270,7 +268,7 @@ void VtkImageStencilDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkImageStencilDataWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkImageStencilDataWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkImageStencilDataWrap *w = new VtkImageStencilDataWrap();
 			w->native.TakeReference(r);
@@ -291,7 +289,7 @@ void VtkImageStencilDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageStencilDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageStencilDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageStencilDataWrap *w = new VtkImageStencilDataWrap();
 		w->native.TakeReference(r);
@@ -490,7 +488,7 @@ void VtkImageStencilDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageStencilDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageStencilDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageStencilDataWrap *w = new VtkImageStencilDataWrap();
 	w->native.TakeReference(r);
@@ -569,7 +567,7 @@ void VtkImageStencilDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageStencilDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageStencilDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageStencilDataWrap *w = new VtkImageStencilDataWrap();
 		w->native.TakeReference(r);

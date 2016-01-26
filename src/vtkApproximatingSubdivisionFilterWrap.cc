@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkApproximatingSubdivisionFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkApproximatingSubdivisionFilterWrap::ptpl;
 
 VtkApproximatingSubdivisionFilterWrap::VtkApproximatingSubdivisionFilterWrap()
@@ -66,7 +65,6 @@ void VtkApproximatingSubdivisionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSubdivisions", SetNumberOfSubdivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSubdivisions", SetNumberOfSubdivisions);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkApproximatingSubdivisionFilterWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkApproximatingSubdivisionFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkApproximatingSubdivisionFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkApproximatingSubdivisionFilterWrap *w = new VtkApproximatingSubdivisionFilterWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkApproximatingSubdivisionFilterWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkApproximatingSubdivisionFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkApproximatingSubdivisionFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkApproximatingSubdivisionFilterWrap *w = new VtkApproximatingSubdivisionFilterWrap();
 		w->native.TakeReference(r);

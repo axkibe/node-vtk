@@ -24,7 +24,6 @@ class VtkTemporalPathLineFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkTemporalPathLineFilterWrap(vtkSmartPointer<vtkTemporalPathLineFilter>);
 		VtkTemporalPathLineFilterWrap();
 		~VtkTemporalPathLineFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

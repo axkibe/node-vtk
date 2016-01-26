@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVolume16ReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVolume16ReaderWrap::ptpl;
 
 VtkVolume16ReaderWrap::VtkVolume16ReaderWrap()
@@ -107,7 +106,6 @@ void VtkVolume16ReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwapBytesOn", SwapBytesOn);
 	Nan::SetPrototypeMethod(tpl, "swapBytesOn", SwapBytesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -209,7 +207,7 @@ void VtkVolume16ReaderWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataWrap *w = new VtkImageDataWrap();
 		w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkVolume16ReaderWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransformWrap *w = new VtkTransformWrap();
 	w->native.TakeReference(r);
@@ -294,7 +292,7 @@ void VtkVolume16ReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVolume16ReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVolume16ReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolume16ReaderWrap *w = new VtkVolume16ReaderWrap();
 	w->native.TakeReference(r);
@@ -322,7 +320,7 @@ void VtkVolume16ReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVolume16ReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVolume16ReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolume16ReaderWrap *w = new VtkVolume16ReaderWrap();
 		w->native.TakeReference(r);

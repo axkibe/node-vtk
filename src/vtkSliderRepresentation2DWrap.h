@@ -24,7 +24,6 @@ class VtkSliderRepresentation2DWrap : public VtkSliderRepresentationWrap
 		VtkSliderRepresentation2DWrap(vtkSmartPointer<vtkSliderRepresentation2D>);
 		VtkSliderRepresentation2DWrap();
 		~VtkSliderRepresentation2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

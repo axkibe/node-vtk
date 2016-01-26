@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDemandDrivenPipelineWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDemandDrivenPipelineWrap::ptpl;
 
 VtkDemandDrivenPipelineWrap::VtkDemandDrivenPipelineWrap()
@@ -101,7 +100,6 @@ void VtkDemandDrivenPipelineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdatePipelineMTime", UpdatePipelineMTime);
 	Nan::SetPrototypeMethod(tpl, "updatePipelineMTime", UpdatePipelineMTime);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkDemandDrivenPipelineWrap::DATA_NOT_GENERATED(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkDemandDrivenPipelineWrap::NewDataObject(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -254,7 +252,7 @@ void VtkDemandDrivenPipelineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDemandDrivenPipelineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDemandDrivenPipelineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDemandDrivenPipelineWrap *w = new VtkDemandDrivenPipelineWrap();
 	w->native.TakeReference(r);
@@ -277,7 +275,7 @@ void VtkDemandDrivenPipelineWrap::RELEASE_DATA(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -300,7 +298,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationRequestKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
 	w->native.TakeReference(r);
@@ -323,7 +321,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA_NOT_GENERATED(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationRequestKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
 	w->native.TakeReference(r);
@@ -346,7 +344,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA_OBJECT(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationRequestKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
 	w->native.TakeReference(r);
@@ -369,7 +367,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_INFORMATION(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationRequestKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
 	w->native.TakeReference(r);
@@ -392,7 +390,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_REGENERATE_INFORMATION(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -420,7 +418,7 @@ void VtkDemandDrivenPipelineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDemandDrivenPipelineWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDemandDrivenPipelineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDemandDrivenPipelineWrap *w = new VtkDemandDrivenPipelineWrap();
 		w->native.TakeReference(r);

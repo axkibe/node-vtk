@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAVSucdReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAVSucdReaderWrap::ptpl;
 
 VtkAVSucdReaderWrap::VtkAVSucdReaderWrap()
@@ -150,7 +149,6 @@ void VtkAVSucdReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointArrayStatus", SetPointArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setPointArrayStatus", SetPointArrayStatus);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -568,7 +566,7 @@ void VtkAVSucdReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAVSucdReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAVSucdReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAVSucdReaderWrap *w = new VtkAVSucdReaderWrap();
 	w->native.TakeReference(r);
@@ -596,7 +594,7 @@ void VtkAVSucdReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAVSucdReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAVSucdReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAVSucdReaderWrap *w = new VtkAVSucdReaderWrap();
 		w->native.TakeReference(r);

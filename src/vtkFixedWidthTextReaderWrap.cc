@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFixedWidthTextReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFixedWidthTextReaderWrap::ptpl;
 
 VtkFixedWidthTextReaderWrap::VtkFixedWidthTextReaderWrap()
@@ -84,7 +83,6 @@ void VtkFixedWidthTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StripWhiteSpaceOn", StripWhiteSpaceOn);
 	Nan::SetPrototypeMethod(tpl, "stripWhiteSpaceOn", StripWhiteSpaceOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -214,7 +212,7 @@ void VtkFixedWidthTextReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFixedWidthTextReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFixedWidthTextReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedWidthTextReaderWrap *w = new VtkFixedWidthTextReaderWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkFixedWidthTextReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFixedWidthTextReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFixedWidthTextReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFixedWidthTextReaderWrap *w = new VtkFixedWidthTextReaderWrap();
 		w->native.TakeReference(r);

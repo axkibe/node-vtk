@@ -21,7 +21,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDefaultPainterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDefaultPainterWrap::ptpl;
 
 VtkDefaultPainterWrap::VtkDefaultPainterWrap()
@@ -119,7 +118,6 @@ void VtkDefaultPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarsToColorsPainter", SetScalarsToColorsPainter);
 	Nan::SetPrototypeMethod(tpl, "setScalarsToColorsPainter", SetScalarsToColorsPainter);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -175,7 +173,7 @@ void VtkDefaultPainterWrap::GetClipPlanesPainter(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkClipPlanesPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkClipPlanesPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClipPlanesPainterWrap *w = new VtkClipPlanesPainterWrap();
 	w->native.TakeReference(r);
@@ -198,7 +196,7 @@ void VtkDefaultPainterWrap::GetCoincidentTopologyResolutionPainter(const Nan::Fu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoincidentTopologyResolutionPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoincidentTopologyResolutionPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoincidentTopologyResolutionPainterWrap *w = new VtkCoincidentTopologyResolutionPainterWrap();
 	w->native.TakeReference(r);
@@ -221,7 +219,7 @@ void VtkDefaultPainterWrap::GetCompositePainter(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositePainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositePainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositePainterWrap *w = new VtkCompositePainterWrap();
 	w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkDefaultPainterWrap::GetDelegatePainter(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPainterWrap *w = new VtkPainterWrap();
 	w->native.TakeReference(r);
@@ -267,7 +265,7 @@ void VtkDefaultPainterWrap::GetDisplayListPainter(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDisplayListPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDisplayListPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDisplayListPainterWrap *w = new VtkDisplayListPainterWrap();
 	w->native.TakeReference(r);
@@ -290,7 +288,7 @@ void VtkDefaultPainterWrap::GetLightingPainter(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLightingPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLightingPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightingPainterWrap *w = new VtkLightingPainterWrap();
 	w->native.TakeReference(r);
@@ -313,7 +311,7 @@ void VtkDefaultPainterWrap::GetRepresentationPainter(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRepresentationPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRepresentationPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRepresentationPainterWrap *w = new VtkRepresentationPainterWrap();
 	w->native.TakeReference(r);
@@ -336,7 +334,7 @@ void VtkDefaultPainterWrap::GetScalarsToColorsPainter(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsPainterWrap *w = new VtkScalarsToColorsPainterWrap();
 	w->native.TakeReference(r);
@@ -381,7 +379,7 @@ void VtkDefaultPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDefaultPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDefaultPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDefaultPainterWrap *w = new VtkDefaultPainterWrap();
 	w->native.TakeReference(r);
@@ -429,7 +427,7 @@ void VtkDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDefaultPainterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDefaultPainterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDefaultPainterWrap *w = new VtkDefaultPainterWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParticleReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParticleReaderWrap::ptpl;
 
 VtkParticleReaderWrap::VtkParticleReaderWrap()
@@ -144,7 +143,6 @@ void VtkParticleReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwapBytesOn", SwapBytesOn);
 	Nan::SetPrototypeMethod(tpl, "swapBytesOn", SwapBytesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -400,7 +398,7 @@ void VtkParticleReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParticleReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParticleReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParticleReaderWrap *w = new VtkParticleReaderWrap();
 	w->native.TakeReference(r);
@@ -428,7 +426,7 @@ void VtkParticleReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParticleReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParticleReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParticleReaderWrap *w = new VtkParticleReaderWrap();
 		w->native.TakeReference(r);

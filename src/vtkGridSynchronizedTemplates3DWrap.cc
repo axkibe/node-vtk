@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGridSynchronizedTemplates3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGridSynchronizedTemplates3DWrap::ptpl;
 
 VtkGridSynchronizedTemplates3DWrap::VtkGridSynchronizedTemplates3DWrap()
@@ -135,7 +134,6 @@ void VtkGridSynchronizedTemplates3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -469,7 +467,7 @@ void VtkGridSynchronizedTemplates3DWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGridSynchronizedTemplates3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGridSynchronizedTemplates3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGridSynchronizedTemplates3DWrap *w = new VtkGridSynchronizedTemplates3DWrap();
 	w->native.TakeReference(r);
@@ -497,7 +495,7 @@ void VtkGridSynchronizedTemplates3DWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGridSynchronizedTemplates3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGridSynchronizedTemplates3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGridSynchronizedTemplates3DWrap *w = new VtkGridSynchronizedTemplates3DWrap();
 		w->native.TakeReference(r);

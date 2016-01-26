@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAxesTransformRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAxesTransformRepresentationWrap::ptpl;
 
 VtkAxesTransformRepresentationWrap::VtkAxesTransformRepresentationWrap()
@@ -118,7 +117,6 @@ void VtkAxesTransformRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -257,7 +255,7 @@ void VtkAxesTransformRepresentationWrap::GetLabelProperty(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -280,7 +278,7 @@ void VtkAxesTransformRepresentationWrap::GetOriginRepresentation(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHandleRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
 	w->native.TakeReference(r);
@@ -303,7 +301,7 @@ void VtkAxesTransformRepresentationWrap::GetSelectionRepresentation(const Nan::F
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHandleRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
 	w->native.TakeReference(r);
@@ -390,7 +388,7 @@ void VtkAxesTransformRepresentationWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxesTransformRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxesTransformRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxesTransformRepresentationWrap *w = new VtkAxesTransformRepresentationWrap();
 	w->native.TakeReference(r);
@@ -482,7 +480,7 @@ void VtkAxesTransformRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAxesTransformRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAxesTransformRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxesTransformRepresentationWrap *w = new VtkAxesTransformRepresentationWrap();
 		w->native.TakeReference(r);

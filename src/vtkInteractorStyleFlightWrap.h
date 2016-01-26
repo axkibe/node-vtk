@@ -24,7 +24,6 @@ class VtkInteractorStyleFlightWrap : public VtkInteractorStyleWrap
 		VtkInteractorStyleFlightWrap(vtkSmartPointer<vtkInteractorStyleFlight>);
 		VtkInteractorStyleFlightWrap();
 		~VtkInteractorStyleFlightWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

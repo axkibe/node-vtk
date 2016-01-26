@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParallelopipedWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParallelopipedWidgetWrap::ptpl;
 
 VtkParallelopipedWidgetWrap::VtkParallelopipedWidgetWrap()
@@ -88,7 +87,6 @@ void VtkParallelopipedWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkParallelopipedWidgetWrap::GetParallelopipedRepresentation(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParallelopipedRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParallelopipedRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParallelopipedRepresentationWrap *w = new VtkParallelopipedRepresentationWrap();
 	w->native.TakeReference(r);
@@ -239,7 +237,7 @@ void VtkParallelopipedWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParallelopipedWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParallelopipedWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParallelopipedWidgetWrap *w = new VtkParallelopipedWidgetWrap();
 	w->native.TakeReference(r);
@@ -267,7 +265,7 @@ void VtkParallelopipedWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParallelopipedWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParallelopipedWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParallelopipedWidgetWrap *w = new VtkParallelopipedWidgetWrap();
 		w->native.TakeReference(r);

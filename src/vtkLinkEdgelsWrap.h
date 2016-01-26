@@ -24,7 +24,6 @@ class VtkLinkEdgelsWrap : public VtkPolyDataAlgorithmWrap
 		VtkLinkEdgelsWrap(vtkSmartPointer<vtkLinkEdgels>);
 		VtkLinkEdgelsWrap();
 		~VtkLinkEdgelsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProp3DFollowerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProp3DFollowerWrap::ptpl;
 
 VtkProp3DFollowerWrap::VtkProp3DFollowerWrap()
@@ -104,7 +103,6 @@ void VtkProp3DFollowerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkProp3DFollowerWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkProp3DFollowerWrap::GetNextPath(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkProp3DFollowerWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProp3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProp3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProp3DWrap *w = new VtkProp3DWrap();
 	w->native.TakeReference(r);
@@ -289,7 +287,7 @@ void VtkProp3DFollowerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProp3DFollowerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProp3DFollowerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProp3DFollowerWrap *w = new VtkProp3DFollowerWrap();
 	w->native.TakeReference(r);
@@ -403,7 +401,7 @@ void VtkProp3DFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProp3DFollowerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProp3DFollowerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProp3DFollowerWrap *w = new VtkProp3DFollowerWrap();
 		w->native.TakeReference(r);

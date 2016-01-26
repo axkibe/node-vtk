@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContextMapper2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContextMapper2DWrap::ptpl;
 
 VtkContextMapper2DWrap::VtkContextMapper2DWrap()
@@ -76,7 +75,6 @@ void VtkContextMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -132,7 +130,7 @@ void VtkContextMapper2DWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
 	w->native.TakeReference(r);
@@ -163,7 +161,7 @@ void VtkContextMapper2DWrap::GetInputAbstractArrayToProcess(const Nan::FunctionC
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkAbstractArrayWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
 			w->native.TakeReference(r);
@@ -198,7 +196,7 @@ void VtkContextMapper2DWrap::GetInputArrayToProcess(const Nan::FunctionCallbackI
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkDataArrayWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkDataArrayWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkDataArrayWrap *w = new VtkDataArrayWrap();
 			w->native.TakeReference(r);
@@ -247,7 +245,7 @@ void VtkContextMapper2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContextMapper2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContextMapper2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContextMapper2DWrap *w = new VtkContextMapper2DWrap();
 	w->native.TakeReference(r);
@@ -275,7 +273,7 @@ void VtkContextMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContextMapper2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContextMapper2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContextMapper2DWrap *w = new VtkContextMapper2DWrap();
 		w->native.TakeReference(r);

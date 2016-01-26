@@ -24,7 +24,6 @@ class VtkGL2PSUtilitiesWrap : public VtkObjectWrap
 		VtkGL2PSUtilitiesWrap(vtkSmartPointer<vtkGL2PSUtilities>);
 		VtkGL2PSUtilitiesWrap();
 		~VtkGL2PSUtilitiesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

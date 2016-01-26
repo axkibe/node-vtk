@@ -24,7 +24,6 @@ class VtkImageImportExecutiveWrap : public VtkStreamingDemandDrivenPipelineWrap
 		VtkImageImportExecutiveWrap(vtkSmartPointer<vtkImageImportExecutive>);
 		VtkImageImportExecutiveWrap();
 		~VtkImageImportExecutiveWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

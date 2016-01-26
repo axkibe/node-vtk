@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLUtilitiesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLUtilitiesWrap::ptpl;
 
 VtkXMLUtilitiesWrap::VtkXMLUtilitiesWrap()
@@ -72,7 +71,6 @@ void VtkXMLUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnFactorElements", UnFactorElements);
 	Nan::SetPrototypeMethod(tpl, "unFactorElements", UnFactorElements);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -170,7 +168,7 @@ void VtkXMLUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLUtilitiesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLUtilitiesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLUtilitiesWrap *w = new VtkXMLUtilitiesWrap();
 	w->native.TakeReference(r);
@@ -201,7 +199,7 @@ void VtkXMLUtilitiesWrap::ReadElementFromFile(const Nan::FunctionCallbackInfo<v8
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkXMLDataElementWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
 			w->native.TakeReference(r);
@@ -236,7 +234,7 @@ void VtkXMLUtilitiesWrap::ReadElementFromString(const Nan::FunctionCallbackInfo<
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkXMLDataElementWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
 			w->native.TakeReference(r);
@@ -268,7 +266,7 @@ void VtkXMLUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLUtilitiesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLUtilitiesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLUtilitiesWrap *w = new VtkXMLUtilitiesWrap();
 		w->native.TakeReference(r);

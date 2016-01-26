@@ -24,7 +24,6 @@ class VtkImageContinuousDilate3DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageContinuousDilate3DWrap(vtkSmartPointer<vtkImageContinuousDilate3D>);
 		VtkImageContinuousDilate3DWrap();
 		~VtkImageContinuousDilate3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

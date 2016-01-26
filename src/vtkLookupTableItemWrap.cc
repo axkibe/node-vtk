@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLookupTableItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLookupTableItemWrap::ptpl;
 
 VtkLookupTableItemWrap::VtkLookupTableItemWrap()
@@ -67,7 +66,6 @@ void VtkLookupTableItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLookupTable", SetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "setLookupTable", SetLookupTable);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkLookupTableItemWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLookupTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLookupTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLookupTableWrap *w = new VtkLookupTableWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkLookupTableItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLookupTableItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLookupTableItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLookupTableItemWrap *w = new VtkLookupTableItemWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkLookupTableItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLookupTableItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLookupTableItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLookupTableItemWrap *w = new VtkLookupTableItemWrap();
 		w->native.TakeReference(r);

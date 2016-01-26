@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBoxWidget2Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBoxWidget2Wrap::ptpl;
 
 VtkBoxWidget2Wrap::VtkBoxWidget2Wrap()
@@ -115,7 +114,6 @@ void VtkBoxWidget2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TranslationEnabledOn", TranslationEnabledOn);
 	Nan::SetPrototypeMethod(tpl, "translationEnabledOn", TranslationEnabledOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -285,7 +283,7 @@ void VtkBoxWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBoxWidget2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBoxWidget2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBoxWidget2Wrap *w = new VtkBoxWidget2Wrap();
 	w->native.TakeReference(r);
@@ -337,7 +335,7 @@ void VtkBoxWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBoxWidget2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBoxWidget2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBoxWidget2Wrap *w = new VtkBoxWidget2Wrap();
 		w->native.TakeReference(r);

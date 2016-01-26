@@ -24,7 +24,6 @@ class VtkTransformInterpolatorWrap : public VtkObjectWrap
 		VtkTransformInterpolatorWrap(vtkSmartPointer<vtkTransformInterpolator>);
 		VtkTransformInterpolatorWrap();
 		~VtkTransformInterpolatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

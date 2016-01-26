@@ -24,7 +24,6 @@ class VtkSplitColumnComponentsWrap : public VtkTableAlgorithmWrap
 		VtkSplitColumnComponentsWrap(vtkSmartPointer<vtkSplitColumnComponents>);
 		VtkSplitColumnComponentsWrap();
 		~VtkSplitColumnComponentsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

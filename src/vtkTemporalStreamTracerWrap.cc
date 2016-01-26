@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTemporalStreamTracerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTemporalStreamTracerWrap::ptpl;
 
 VtkTemporalStreamTracerWrap::VtkTemporalStreamTracerWrap()
@@ -158,7 +157,6 @@ void VtkTemporalStreamTracerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StaticSeedsOn", StaticSeedsOn);
 	Nan::SetPrototypeMethod(tpl, "staticSeedsOn", StaticSeedsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -314,7 +312,7 @@ void VtkTemporalStreamTracerWrap::GetParticleWriter(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractParticleWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractParticleWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractParticleWriterWrap *w = new VtkAbstractParticleWriterWrap();
 	w->native.TakeReference(r);
@@ -453,7 +451,7 @@ void VtkTemporalStreamTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTemporalStreamTracerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTemporalStreamTracerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTemporalStreamTracerWrap *w = new VtkTemporalStreamTracerWrap();
 	w->native.TakeReference(r);
@@ -493,7 +491,7 @@ void VtkTemporalStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTemporalStreamTracerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTemporalStreamTracerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTemporalStreamTracerWrap *w = new VtkTemporalStreamTracerWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkTreeAlgorithmWrap : public VtkAlgorithmWrap
 		VtkTreeAlgorithmWrap(vtkSmartPointer<vtkTreeAlgorithm>);
 		VtkTreeAlgorithmWrap();
 		~VtkTreeAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVolumeTextureMapper3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVolumeTextureMapper3DWrap::ptpl;
 
 VtkVolumeTextureMapper3DWrap::VtkVolumeTextureMapper3DWrap()
@@ -94,7 +93,6 @@ void VtkVolumeTextureMapper3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreferredRenderMethod", SetPreferredRenderMethod);
 	Nan::SetPrototypeMethod(tpl, "setPreferredRenderMethod", SetPreferredRenderMethod);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -277,7 +275,7 @@ void VtkVolumeTextureMapper3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVolumeTextureMapper3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVolumeTextureMapper3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeTextureMapper3DWrap *w = new VtkVolumeTextureMapper3DWrap();
 	w->native.TakeReference(r);
@@ -330,7 +328,7 @@ void VtkVolumeTextureMapper3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVolumeTextureMapper3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVolumeTextureMapper3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeTextureMapper3DWrap *w = new VtkVolumeTextureMapper3DWrap();
 		w->native.TakeReference(r);

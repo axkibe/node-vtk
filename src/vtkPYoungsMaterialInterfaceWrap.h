@@ -24,7 +24,6 @@ class VtkPYoungsMaterialInterfaceWrap : public VtkYoungsMaterialInterfaceWrap
 		VtkPYoungsMaterialInterfaceWrap(vtkSmartPointer<vtkPYoungsMaterialInterface>);
 		VtkPYoungsMaterialInterfaceWrap();
 		~VtkPYoungsMaterialInterfaceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

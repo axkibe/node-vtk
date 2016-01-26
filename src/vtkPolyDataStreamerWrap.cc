@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyDataStreamerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyDataStreamerWrap::ptpl;
 
 VtkPolyDataStreamerWrap::VtkPolyDataStreamerWrap()
@@ -78,7 +77,6 @@ void VtkPolyDataStreamerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfStreamDivisions", SetNumberOfStreamDivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfStreamDivisions", SetNumberOfStreamDivisions);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -208,7 +206,7 @@ void VtkPolyDataStreamerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataStreamerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataStreamerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataStreamerWrap *w = new VtkPolyDataStreamerWrap();
 	w->native.TakeReference(r);
@@ -236,7 +234,7 @@ void VtkPolyDataStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataStreamerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataStreamerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataStreamerWrap *w = new VtkPolyDataStreamerWrap();
 		w->native.TakeReference(r);

@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVolumeRayCastSpaceLeapingImageFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVolumeRayCastSpaceLeapingImageFilterWrap::ptpl;
 
 VtkVolumeRayCastSpaceLeapingImageFilterWrap::VtkVolumeRayCastSpaceLeapingImageFilterWrap()
@@ -119,7 +118,6 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateGradientOpacityFlagsOn", UpdateGradientOpacityFlagsOn);
 	Nan::SetPrototypeMethod(tpl, "updateGradientOpacityFlagsOn", UpdateGradientOpacityFlagsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -251,7 +249,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetCurrentScalars(const Nan::F
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArrayWrap *w = new VtkDataArrayWrap();
 	w->native.TakeReference(r);
@@ -338,7 +336,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::NewInstance(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVolumeRayCastSpaceLeapingImageFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastSpaceLeapingImageFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *w = new VtkVolumeRayCastSpaceLeapingImageFilterWrap();
 	w->native.TakeReference(r);
@@ -366,7 +364,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SafeDownCast(const Nan::Functi
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVolumeRayCastSpaceLeapingImageFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastSpaceLeapingImageFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeRayCastSpaceLeapingImageFilterWrap *w = new VtkVolumeRayCastSpaceLeapingImageFilterWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkImageCanvasSource2DWrap : public VtkImageAlgorithmWrap
 		VtkImageCanvasSource2DWrap(vtkSmartPointer<vtkImageCanvasSource2D>);
 		VtkImageCanvasSource2DWrap();
 		~VtkImageCanvasSource2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

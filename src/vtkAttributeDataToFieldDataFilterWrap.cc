@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAttributeDataToFieldDataFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAttributeDataToFieldDataFilterWrap::ptpl;
 
 VtkAttributeDataToFieldDataFilterWrap::VtkAttributeDataToFieldDataFilterWrap()
@@ -72,7 +71,6 @@ void VtkAttributeDataToFieldDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassAttributeData", SetPassAttributeData);
 	Nan::SetPrototypeMethod(tpl, "setPassAttributeData", SetPassAttributeData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -164,7 +162,7 @@ void VtkAttributeDataToFieldDataFilterWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAttributeDataToFieldDataFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAttributeDataToFieldDataFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAttributeDataToFieldDataFilterWrap *w = new VtkAttributeDataToFieldDataFilterWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkAttributeDataToFieldDataFilterWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAttributeDataToFieldDataFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAttributeDataToFieldDataFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAttributeDataToFieldDataFilterWrap *w = new VtkAttributeDataToFieldDataFilterWrap();
 		w->native.TakeReference(r);

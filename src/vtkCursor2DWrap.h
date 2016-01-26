@@ -24,7 +24,6 @@ class VtkCursor2DWrap : public VtkPolyDataAlgorithmWrap
 		VtkCursor2DWrap(vtkSmartPointer<vtkCursor2D>);
 		VtkCursor2DWrap();
 		~VtkCursor2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

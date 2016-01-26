@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBoundedPlanePointPlacerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBoundedPlanePointPlacerWrap::ptpl;
 
 VtkBoundedPlanePointPlacerWrap::VtkBoundedPlanePointPlacerWrap()
@@ -114,7 +113,6 @@ void VtkBoundedPlanePointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProjectionPosition", SetProjectionPosition);
 	Nan::SetPrototypeMethod(tpl, "setProjectionPosition", SetProjectionPosition);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -176,7 +174,7 @@ void VtkBoundedPlanePointPlacerWrap::GetBoundingPlanes(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlaneCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
 	w->native.TakeReference(r);
@@ -213,7 +211,7 @@ void VtkBoundedPlanePointPlacerWrap::GetObliquePlane(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlaneWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlaneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneWrap *w = new VtkPlaneWrap();
 	w->native.TakeReference(r);
@@ -314,7 +312,7 @@ void VtkBoundedPlanePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBoundedPlanePointPlacerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBoundedPlanePointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBoundedPlanePointPlacerWrap *w = new VtkBoundedPlanePointPlacerWrap();
 	w->native.TakeReference(r);
@@ -374,7 +372,7 @@ void VtkBoundedPlanePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBoundedPlanePointPlacerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBoundedPlanePointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBoundedPlanePointPlacerWrap *w = new VtkBoundedPlanePointPlacerWrap();
 		w->native.TakeReference(r);

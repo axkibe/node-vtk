@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUGFacetReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUGFacetReaderWrap::ptpl;
 
 VtkUGFacetReaderWrap::VtkUGFacetReaderWrap()
@@ -97,7 +96,6 @@ void VtkUGFacetReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPartNumber", SetPartNumber);
 	Nan::SetPrototypeMethod(tpl, "setPartNumber", SetPartNumber);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkUGFacetReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -290,7 +288,7 @@ void VtkUGFacetReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUGFacetReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUGFacetReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUGFacetReaderWrap *w = new VtkUGFacetReaderWrap();
 	w->native.TakeReference(r);
@@ -318,7 +316,7 @@ void VtkUGFacetReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUGFacetReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUGFacetReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUGFacetReaderWrap *w = new VtkUGFacetReaderWrap();
 		w->native.TakeReference(r);

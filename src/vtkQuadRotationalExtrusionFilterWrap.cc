@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkQuadRotationalExtrusionFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkQuadRotationalExtrusionFilterWrap::ptpl;
 
 VtkQuadRotationalExtrusionFilterWrap::VtkQuadRotationalExtrusionFilterWrap()
@@ -126,7 +125,6 @@ void VtkQuadRotationalExtrusionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTranslation", SetTranslation);
 	Nan::SetPrototypeMethod(tpl, "setTranslation", SetTranslation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -368,7 +366,7 @@ void VtkQuadRotationalExtrusionFilterWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuadRotationalExtrusionFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuadRotationalExtrusionFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuadRotationalExtrusionFilterWrap *w = new VtkQuadRotationalExtrusionFilterWrap();
 	w->native.TakeReference(r);
@@ -408,7 +406,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkQuadRotationalExtrusionFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkQuadRotationalExtrusionFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkQuadRotationalExtrusionFilterWrap *w = new VtkQuadRotationalExtrusionFilterWrap();
 		w->native.TakeReference(r);

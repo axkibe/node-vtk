@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkResliceCursorLineRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkResliceCursorLineRepresentationWrap::ptpl;
 
 VtkResliceCursorLineRepresentationWrap::VtkResliceCursorLineRepresentationWrap()
@@ -98,7 +97,6 @@ void VtkResliceCursorLineRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUserMatrix", SetUserMatrix);
 	Nan::SetPrototypeMethod(tpl, "setUserMatrix", SetUserMatrix);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -195,7 +193,7 @@ void VtkResliceCursorLineRepresentationWrap::GetResliceCursor(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorWrap *w = new VtkResliceCursorWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkResliceCursorLineRepresentationWrap::GetResliceCursorActor(const Nan::Fu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorActorWrap *w = new VtkResliceCursorActorWrap();
 	w->native.TakeReference(r);
@@ -296,7 +294,7 @@ void VtkResliceCursorLineRepresentationWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorLineRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorLineRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorLineRepresentationWrap *w = new VtkResliceCursorLineRepresentationWrap();
 	w->native.TakeReference(r);
@@ -410,7 +408,7 @@ void VtkResliceCursorLineRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkResliceCursorLineRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkResliceCursorLineRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkResliceCursorLineRepresentationWrap *w = new VtkResliceCursorLineRepresentationWrap();
 		w->native.TakeReference(r);

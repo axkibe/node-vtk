@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkIdListCollectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkIdListCollectionWrap::ptpl;
 
 VtkIdListCollectionWrap::VtkIdListCollectionWrap()
@@ -70,7 +69,6 @@ void VtkIdListCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -150,7 +148,7 @@ void VtkIdListCollectionWrap::GetItem(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdListWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdListWrap *w = new VtkIdListWrap();
 		w->native.TakeReference(r);
@@ -176,7 +174,7 @@ void VtkIdListCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdListWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdListWrap *w = new VtkIdListWrap();
 	w->native.TakeReference(r);
@@ -221,7 +219,7 @@ void VtkIdListCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdListCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdListCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdListCollectionWrap *w = new VtkIdListCollectionWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkIdListCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdListCollectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdListCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdListCollectionWrap *w = new VtkIdListCollectionWrap();
 		w->native.TakeReference(r);

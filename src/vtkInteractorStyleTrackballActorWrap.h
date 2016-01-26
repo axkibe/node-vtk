@@ -24,7 +24,6 @@ class VtkInteractorStyleTrackballActorWrap : public VtkInteractorStyleWrap
 		VtkInteractorStyleTrackballActorWrap(vtkSmartPointer<vtkInteractorStyleTrackballActor>);
 		VtkInteractorStyleTrackballActorWrap();
 		~VtkInteractorStyleTrackballActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

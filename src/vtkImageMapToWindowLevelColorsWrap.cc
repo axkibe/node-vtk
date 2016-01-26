@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageMapToWindowLevelColorsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageMapToWindowLevelColorsWrap::ptpl;
 
 VtkImageMapToWindowLevelColorsWrap::VtkImageMapToWindowLevelColorsWrap()
@@ -72,7 +71,6 @@ void VtkImageMapToWindowLevelColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWindow", SetWindow);
 	Nan::SetPrototypeMethod(tpl, "setWindow", SetWindow);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -178,7 +176,7 @@ void VtkImageMapToWindowLevelColorsWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageMapToWindowLevelColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageMapToWindowLevelColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMapToWindowLevelColorsWrap *w = new VtkImageMapToWindowLevelColorsWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkImageMapToWindowLevelColorsWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageMapToWindowLevelColorsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageMapToWindowLevelColorsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageMapToWindowLevelColorsWrap *w = new VtkImageMapToWindowLevelColorsWrap();
 		w->native.TakeReference(r);

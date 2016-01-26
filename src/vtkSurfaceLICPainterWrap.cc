@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSurfaceLICPainterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSurfaceLICPainterWrap::ptpl;
 
 VtkSurfaceLICPainterWrap::VtkSurfaceLICPainterWrap()
@@ -282,7 +281,6 @@ void VtkSurfaceLICPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteTimerLog", WriteTimerLog);
 	Nan::SetPrototypeMethod(tpl, "writeTimerLog", WriteTimerLog);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -666,7 +664,7 @@ void VtkSurfaceLICPainterWrap::GetNoiseDataSet(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -787,7 +785,7 @@ void VtkSurfaceLICPainterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -870,7 +868,7 @@ void VtkSurfaceLICPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSurfaceLICPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSurfaceLICPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSurfaceLICPainterWrap *w = new VtkSurfaceLICPainterWrap();
 	w->native.TakeReference(r);
@@ -942,7 +940,7 @@ void VtkSurfaceLICPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSurfaceLICPainterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSurfaceLICPainterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSurfaceLICPainterWrap *w = new VtkSurfaceLICPainterWrap();
 		w->native.TakeReference(r);

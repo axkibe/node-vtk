@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLRepresentationPainterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLRepresentationPainterWrap::ptpl;
 
 VtkOpenGLRepresentationPainterWrap::VtkOpenGLRepresentationPainterWrap()
@@ -63,7 +62,6 @@ void VtkOpenGLRepresentationPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkOpenGLRepresentationPainterWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLRepresentationPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLRepresentationPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLRepresentationPainterWrap *w = new VtkOpenGLRepresentationPainterWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkOpenGLRepresentationPainterWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLRepresentationPainterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLRepresentationPainterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLRepresentationPainterWrap *w = new VtkOpenGLRepresentationPainterWrap();
 		w->native.TakeReference(r);

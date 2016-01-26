@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyDataWrap::ptpl;
 
 VtkPolyDataWrap::VtkPolyDataWrap()
@@ -160,7 +159,6 @@ void VtkPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -361,7 +359,7 @@ void VtkPolyDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkPolyDataWrap *w = new VtkPolyDataWrap();
 			w->native.TakeReference(r);
@@ -382,7 +380,7 @@ void VtkPolyDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
 		w->native.TakeReference(r);
@@ -436,7 +434,7 @@ void VtkPolyDataWrap::GetLines(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellArrayWrap *w = new VtkCellArrayWrap();
 	w->native.TakeReference(r);
@@ -501,7 +499,7 @@ void VtkPolyDataWrap::GetPolys(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellArrayWrap *w = new VtkCellArrayWrap();
 	w->native.TakeReference(r);
@@ -524,7 +522,7 @@ void VtkPolyDataWrap::GetStrips(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellArrayWrap *w = new VtkCellArrayWrap();
 	w->native.TakeReference(r);
@@ -547,7 +545,7 @@ void VtkPolyDataWrap::GetVerts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellArrayWrap *w = new VtkCellArrayWrap();
 	w->native.TakeReference(r);
@@ -680,7 +678,7 @@ void VtkPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -751,7 +749,7 @@ void VtkPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
 		w->native.TakeReference(r);

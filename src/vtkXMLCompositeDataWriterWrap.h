@@ -24,7 +24,6 @@ class VtkXMLCompositeDataWriterWrap : public VtkXMLWriterWrap
 		VtkXMLCompositeDataWriterWrap(vtkSmartPointer<vtkXMLCompositeDataWriter>);
 		VtkXMLCompositeDataWriterWrap();
 		~VtkXMLCompositeDataWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

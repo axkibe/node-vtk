@@ -24,7 +24,6 @@ class VtkImageRange3DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageRange3DWrap(vtkSmartPointer<vtkImageRange3D>);
 		VtkImageRange3DWrap();
 		~VtkImageRange3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

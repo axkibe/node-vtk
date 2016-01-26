@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransposeTableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransposeTableWrap::ptpl;
 
 VtkTransposeTableWrap::VtkTransposeTableWrap()
@@ -78,7 +77,6 @@ void VtkTransposeTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseIdColumnOn", UseIdColumnOn);
 	Nan::SetPrototypeMethod(tpl, "useIdColumnOn", UseIdColumnOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkTransposeTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransposeTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransposeTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransposeTableWrap *w = new VtkTransposeTableWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkTransposeTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransposeTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransposeTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransposeTableWrap *w = new VtkTransposeTableWrap();
 		w->native.TakeReference(r);

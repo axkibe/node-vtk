@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOutlineCornerSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOutlineCornerSourceWrap::ptpl;
 
 VtkOutlineCornerSourceWrap::VtkOutlineCornerSourceWrap()
@@ -78,7 +77,6 @@ void VtkOutlineCornerSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -212,7 +210,7 @@ void VtkOutlineCornerSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOutlineCornerSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOutlineCornerSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOutlineCornerSourceWrap *w = new VtkOutlineCornerSourceWrap();
 	w->native.TakeReference(r);
@@ -240,7 +238,7 @@ void VtkOutlineCornerSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOutlineCornerSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOutlineCornerSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOutlineCornerSourceWrap *w = new VtkOutlineCornerSourceWrap();
 		w->native.TakeReference(r);

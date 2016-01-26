@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageCorrelationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageCorrelationWrap::ptpl;
 
 VtkImageCorrelationWrap::VtkImageCorrelationWrap()
@@ -79,7 +78,6 @@ void VtkImageCorrelationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput2Data", SetInput2Data);
 	Nan::SetPrototypeMethod(tpl, "setInput2Data", SetInput2Data);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -199,7 +197,7 @@ void VtkImageCorrelationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageCorrelationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageCorrelationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageCorrelationWrap *w = new VtkImageCorrelationWrap();
 	w->native.TakeReference(r);
@@ -227,7 +225,7 @@ void VtkImageCorrelationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageCorrelationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageCorrelationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageCorrelationWrap *w = new VtkImageCorrelationWrap();
 		w->native.TakeReference(r);

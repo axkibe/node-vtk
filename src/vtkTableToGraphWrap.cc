@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTableToGraphWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTableToGraphWrap::ptpl;
 
 VtkTableToGraphWrap::VtkTableToGraphWrap()
@@ -94,7 +93,6 @@ void VtkTableToGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexTableConnection", SetVertexTableConnection);
 	Nan::SetPrototypeMethod(tpl, "setVertexTableConnection", SetVertexTableConnection);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -252,7 +250,7 @@ void VtkTableToGraphWrap::GetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMutableDirectedGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMutableDirectedGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMutableDirectedGraphWrap *w = new VtkMutableDirectedGraphWrap();
 	w->native.TakeReference(r);
@@ -327,7 +325,7 @@ void VtkTableToGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableToGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableToGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableToGraphWrap *w = new VtkTableToGraphWrap();
 	w->native.TakeReference(r);
@@ -355,7 +353,7 @@ void VtkTableToGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTableToGraphWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTableToGraphWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTableToGraphWrap *w = new VtkTableToGraphWrap();
 		w->native.TakeReference(r);

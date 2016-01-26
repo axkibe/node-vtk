@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyDataSilhouetteWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyDataSilhouetteWrap::ptpl;
 
 VtkPolyDataSilhouetteWrap::VtkPolyDataSilhouetteWrap()
@@ -134,7 +133,6 @@ void VtkPolyDataSilhouetteWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVector", SetVector);
 	Nan::SetPrototypeMethod(tpl, "setVector", SetVector);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -214,7 +212,7 @@ void VtkPolyDataSilhouetteWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
@@ -307,7 +305,7 @@ void VtkPolyDataSilhouetteWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProp3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProp3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProp3DWrap *w = new VtkProp3DWrap();
 	w->native.TakeReference(r);
@@ -352,7 +350,7 @@ void VtkPolyDataSilhouetteWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataSilhouetteWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataSilhouetteWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataSilhouetteWrap *w = new VtkPolyDataSilhouetteWrap();
 	w->native.TakeReference(r);
@@ -404,7 +402,7 @@ void VtkPolyDataSilhouetteWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataSilhouetteWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataSilhouetteWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataSilhouetteWrap *w = new VtkPolyDataSilhouetteWrap();
 		w->native.TakeReference(r);

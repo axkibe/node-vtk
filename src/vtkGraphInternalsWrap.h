@@ -24,7 +24,6 @@ class VtkGraphInternalsWrap : public VtkObjectWrap
 		VtkGraphInternalsWrap(vtkSmartPointer<vtkGraphInternals>);
 		VtkGraphInternalsWrap();
 		~VtkGraphInternalsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

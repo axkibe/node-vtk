@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageResizeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageResizeWrap::ptpl;
 
 VtkImageResizeWrap::VtkImageResizeWrap()
@@ -139,7 +138,6 @@ void VtkImageResizeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResizeMethodToOutputSpacing", SetResizeMethodToOutputSpacing);
 	Nan::SetPrototypeMethod(tpl, "setResizeMethodToOutputSpacing", SetResizeMethodToOutputSpacing);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -285,7 +283,7 @@ void VtkImageResizeWrap::GetInterpolator(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractImageInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractImageInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractImageInterpolatorWrap *w = new VtkAbstractImageInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -410,7 +408,7 @@ void VtkImageResizeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageResizeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageResizeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageResizeWrap *w = new VtkImageResizeWrap();
 	w->native.TakeReference(r);
@@ -438,7 +436,7 @@ void VtkImageResizeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageResizeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageResizeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageResizeWrap *w = new VtkImageResizeWrap();
 		w->native.TakeReference(r);

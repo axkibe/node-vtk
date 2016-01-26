@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTableToSparseArrayWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTableToSparseArrayWrap::ptpl;
 
 VtkTableToSparseArrayWrap::VtkTableToSparseArrayWrap()
@@ -75,7 +74,6 @@ void VtkTableToSparseArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValueColumn", SetValueColumn);
 	Nan::SetPrototypeMethod(tpl, "setValueColumn", SetValueColumn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -211,7 +209,7 @@ void VtkTableToSparseArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableToSparseArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableToSparseArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableToSparseArrayWrap *w = new VtkTableToSparseArrayWrap();
 	w->native.TakeReference(r);
@@ -239,7 +237,7 @@ void VtkTableToSparseArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTableToSparseArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTableToSparseArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTableToSparseArrayWrap *w = new VtkTableToSparseArrayWrap();
 		w->native.TakeReference(r);

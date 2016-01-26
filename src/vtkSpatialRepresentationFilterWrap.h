@@ -24,7 +24,6 @@ class VtkSpatialRepresentationFilterWrap : public VtkMultiBlockDataSetAlgorithmW
 		VtkSpatialRepresentationFilterWrap(vtkSmartPointer<vtkSpatialRepresentationFilter>);
 		VtkSpatialRepresentationFilterWrap();
 		~VtkSpatialRepresentationFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

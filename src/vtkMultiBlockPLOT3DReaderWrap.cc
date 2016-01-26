@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMultiBlockPLOT3DReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMultiBlockPLOT3DReaderWrap::ptpl;
 
 VtkMultiBlockPLOT3DReaderWrap::VtkMultiBlockPLOT3DReaderWrap()
@@ -234,7 +233,6 @@ void VtkMultiBlockPLOT3DReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TwoDimensionalGeometryOn", TwoDimensionalGeometryOn);
 	Nan::SetPrototypeMethod(tpl, "twoDimensionalGeometryOn", TwoDimensionalGeometryOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -785,7 +783,7 @@ void VtkMultiBlockPLOT3DReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiBlockPLOT3DReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiBlockPLOT3DReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiBlockPLOT3DReaderWrap *w = new VtkMultiBlockPLOT3DReaderWrap();
 	w->native.TakeReference(r);
@@ -844,7 +842,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMultiBlockPLOT3DReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMultiBlockPLOT3DReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMultiBlockPLOT3DReaderWrap *w = new VtkMultiBlockPLOT3DReaderWrap();
 		w->native.TakeReference(r);

@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkScalarsToColorsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkScalarsToColorsWrap::ptpl;
 
 VtkScalarsToColorsWrap::VtkScalarsToColorsWrap()
@@ -147,7 +146,6 @@ void VtkScalarsToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsingLogScale", UsingLogScale);
 	Nan::SetPrototypeMethod(tpl, "usingLogScale", UsingLogScale);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -212,7 +210,7 @@ void VtkScalarsToColorsWrap::ConvertUnsignedCharToRGBA(const Nan::FunctionCallba
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
-					Nan::New<v8::Function>(VtkUnsignedCharArrayWrap::constructor);
+					Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
 				w->native.TakeReference(r);
@@ -274,7 +272,7 @@ void VtkScalarsToColorsWrap::GetAnnotatedValues(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkScalarsToColorsWrap::GetAnnotations(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -503,7 +501,7 @@ void VtkScalarsToColorsWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Valu
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
-					Nan::New<v8::Function>(VtkUnsignedCharArrayWrap::constructor);
+					Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
 				w->native.TakeReference(r);
@@ -531,7 +529,7 @@ void VtkScalarsToColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -571,7 +569,7 @@ void VtkScalarsToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 		w->native.TakeReference(r);

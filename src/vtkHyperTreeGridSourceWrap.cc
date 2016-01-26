@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperTreeGridSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperTreeGridSourceWrap::ptpl;
 
 VtkHyperTreeGridSourceWrap::VtkHyperTreeGridSourceWrap()
@@ -120,7 +119,6 @@ void VtkHyperTreeGridSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseMaterialMaskOn", UseMaterialMaskOn);
 	Nan::SetPrototypeMethod(tpl, "useMaterialMaskOn", UseMaterialMaskOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -190,7 +188,7 @@ void VtkHyperTreeGridSourceWrap::GetDescriptorBits(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBitArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBitArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBitArrayWrap *w = new VtkBitArrayWrap();
 	w->native.TakeReference(r);
@@ -227,7 +225,7 @@ void VtkHyperTreeGridSourceWrap::GetMaterialMaskBits(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBitArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBitArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBitArrayWrap *w = new VtkBitArrayWrap();
 	w->native.TakeReference(r);
@@ -250,7 +248,7 @@ void VtkHyperTreeGridSourceWrap::GetQuadric(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuadricWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuadricWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuadricWrap *w = new VtkQuadricWrap();
 	w->native.TakeReference(r);
@@ -295,7 +293,7 @@ void VtkHyperTreeGridSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeGridSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeGridSourceWrap *w = new VtkHyperTreeGridSourceWrap();
 	w->native.TakeReference(r);
@@ -323,7 +321,7 @@ void VtkHyperTreeGridSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperTreeGridSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperTreeGridSourceWrap *w = new VtkHyperTreeGridSourceWrap();
 		w->native.TakeReference(r);

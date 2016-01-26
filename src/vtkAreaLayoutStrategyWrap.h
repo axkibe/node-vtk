@@ -24,7 +24,6 @@ class VtkAreaLayoutStrategyWrap : public VtkObjectWrap
 		VtkAreaLayoutStrategyWrap(vtkSmartPointer<vtkAreaLayoutStrategy>);
 		VtkAreaLayoutStrategyWrap();
 		~VtkAreaLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

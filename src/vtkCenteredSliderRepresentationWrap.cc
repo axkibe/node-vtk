@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCenteredSliderRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCenteredSliderRepresentationWrap::ptpl;
 
 VtkCenteredSliderRepresentationWrap::VtkCenteredSliderRepresentationWrap()
@@ -111,7 +110,6 @@ void VtkCenteredSliderRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTitleText", SetTitleText);
 	Nan::SetPrototypeMethod(tpl, "setTitleText", SetTitleText);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -228,7 +226,7 @@ void VtkCenteredSliderRepresentationWrap::GetLabelProperty(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -251,7 +249,7 @@ void VtkCenteredSliderRepresentationWrap::GetPoint1Coordinate(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoordinateWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoordinateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoordinateWrap *w = new VtkCoordinateWrap();
 	w->native.TakeReference(r);
@@ -274,7 +272,7 @@ void VtkCenteredSliderRepresentationWrap::GetPoint2Coordinate(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoordinateWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoordinateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoordinateWrap *w = new VtkCoordinateWrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkCenteredSliderRepresentationWrap::GetSelectedProperty(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -320,7 +318,7 @@ void VtkCenteredSliderRepresentationWrap::GetSliderProperty(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -357,7 +355,7 @@ void VtkCenteredSliderRepresentationWrap::GetTubeProperty(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -421,7 +419,7 @@ void VtkCenteredSliderRepresentationWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCenteredSliderRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCenteredSliderRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCenteredSliderRepresentationWrap *w = new VtkCenteredSliderRepresentationWrap();
 	w->native.TakeReference(r);
@@ -513,7 +511,7 @@ void VtkCenteredSliderRepresentationWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCenteredSliderRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCenteredSliderRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCenteredSliderRepresentationWrap *w = new VtkCenteredSliderRepresentationWrap();
 		w->native.TakeReference(r);

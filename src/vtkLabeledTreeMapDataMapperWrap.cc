@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLabeledTreeMapDataMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLabeledTreeMapDataMapperWrap::ptpl;
 
 VtkLabeledTreeMapDataMapperWrap::VtkLabeledTreeMapDataMapperWrap()
@@ -103,7 +102,6 @@ void VtkLabeledTreeMapDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRectanglesArrayName", SetRectanglesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setRectanglesArrayName", SetRectanglesArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -201,7 +199,7 @@ void VtkLabeledTreeMapDataMapperWrap::GetInputTree(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeWrap *w = new VtkTreeWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkLabeledTreeMapDataMapperWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabeledTreeMapDataMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabeledTreeMapDataMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabeledTreeMapDataMapperWrap *w = new VtkLabeledTreeMapDataMapperWrap();
 	w->native.TakeReference(r);
@@ -344,7 +342,7 @@ void VtkLabeledTreeMapDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLabeledTreeMapDataMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLabeledTreeMapDataMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabeledTreeMapDataMapperWrap *w = new VtkLabeledTreeMapDataMapperWrap();
 		w->native.TakeReference(r);

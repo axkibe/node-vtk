@@ -24,7 +24,6 @@ class VtkCellDerivativesWrap : public VtkDataSetAlgorithmWrap
 		VtkCellDerivativesWrap(vtkSmartPointer<vtkCellDerivatives>);
 		VtkCellDerivativesWrap();
 		~VtkCellDerivativesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

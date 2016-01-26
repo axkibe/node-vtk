@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLabelRenderStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLabelRenderStrategyWrap::ptpl;
 
 VtkLabelRenderStrategyWrap::VtkLabelRenderStrategyWrap()
@@ -83,7 +82,6 @@ void VtkLabelRenderStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartFrame", StartFrame);
 	Nan::SetPrototypeMethod(tpl, "startFrame", StartFrame);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -151,7 +149,7 @@ void VtkLabelRenderStrategyWrap::GetDefaultTextProperty(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -174,7 +172,7 @@ void VtkLabelRenderStrategyWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkLabelRenderStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelRenderStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelRenderStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelRenderStrategyWrap *w = new VtkLabelRenderStrategyWrap();
 	w->native.TakeReference(r);
@@ -267,7 +265,7 @@ void VtkLabelRenderStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLabelRenderStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLabelRenderStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabelRenderStrategyWrap *w = new VtkLabelRenderStrategyWrap();
 		w->native.TakeReference(r);

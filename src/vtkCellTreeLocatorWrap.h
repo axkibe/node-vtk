@@ -24,7 +24,6 @@ class VtkCellTreeLocatorWrap : public VtkAbstractCellLocatorWrap
 		VtkCellTreeLocatorWrap(vtkSmartPointer<vtkCellTreeLocator>);
 		VtkCellTreeLocatorWrap();
 		~VtkCellTreeLocatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

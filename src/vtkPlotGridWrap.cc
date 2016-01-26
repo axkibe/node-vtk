@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlotGridWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlotGridWrap::ptpl;
 
 VtkPlotGridWrap::VtkPlotGridWrap()
@@ -67,7 +66,6 @@ void VtkPlotGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetYAxis", SetYAxis);
 	Nan::SetPrototypeMethod(tpl, "setYAxis", SetYAxis);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -145,7 +143,7 @@ void VtkPlotGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlotGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlotGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlotGridWrap *w = new VtkPlotGridWrap();
 	w->native.TakeReference(r);
@@ -173,7 +171,7 @@ void VtkPlotGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlotGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlotGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotGridWrap *w = new VtkPlotGridWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkRungeKutta4Wrap : public VtkInitialValueProblemSolverWrap
 		VtkRungeKutta4Wrap(vtkSmartPointer<vtkRungeKutta4>);
 		VtkRungeKutta4Wrap();
 		~VtkRungeKutta4Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

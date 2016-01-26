@@ -24,7 +24,6 @@ class VtkXMLHyperOctreeReaderWrap : public VtkXMLDataReaderWrap
 		VtkXMLHyperOctreeReaderWrap(vtkSmartPointer<vtkXMLHyperOctreeReader>);
 		VtkXMLHyperOctreeReaderWrap();
 		~VtkXMLHyperOctreeReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

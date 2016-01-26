@@ -24,7 +24,6 @@ class VtkNewickTreeWriterWrap : public VtkDataWriterWrap
 		VtkNewickTreeWriterWrap(vtkSmartPointer<vtkNewickTreeWriter>);
 		VtkNewickTreeWriterWrap();
 		~VtkNewickTreeWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

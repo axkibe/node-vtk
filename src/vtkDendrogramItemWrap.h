@@ -24,7 +24,6 @@ class VtkDendrogramItemWrap : public VtkContextItemWrap
 		VtkDendrogramItemWrap(vtkSmartPointer<vtkDendrogramItem>);
 		VtkDendrogramItemWrap();
 		~VtkDendrogramItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

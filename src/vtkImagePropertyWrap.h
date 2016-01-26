@@ -24,7 +24,6 @@ class VtkImagePropertyWrap : public VtkObjectWrap
 		VtkImagePropertyWrap(vtkSmartPointer<vtkImageProperty>);
 		VtkImagePropertyWrap();
 		~VtkImagePropertyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

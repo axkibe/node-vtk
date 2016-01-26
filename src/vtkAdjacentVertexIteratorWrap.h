@@ -24,7 +24,6 @@ class VtkAdjacentVertexIteratorWrap : public VtkObjectWrap
 		VtkAdjacentVertexIteratorWrap(vtkSmartPointer<vtkAdjacentVertexIterator>);
 		VtkAdjacentVertexIteratorWrap();
 		~VtkAdjacentVertexIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

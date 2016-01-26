@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkArrowSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkArrowSourceWrap::ptpl;
 
 VtkArrowSourceWrap::VtkArrowSourceWrap()
@@ -126,7 +125,6 @@ void VtkArrowSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTipResolution", SetTipResolution);
 	Nan::SetPrototypeMethod(tpl, "setTipResolution", SetTipResolution);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -438,7 +436,7 @@ void VtkArrowSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkArrowSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkArrowSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkArrowSourceWrap *w = new VtkArrowSourceWrap();
 	w->native.TakeReference(r);
@@ -466,7 +464,7 @@ void VtkArrowSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkArrowSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkArrowSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkArrowSourceWrap *w = new VtkArrowSourceWrap();
 		w->native.TakeReference(r);

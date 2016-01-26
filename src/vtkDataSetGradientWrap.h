@@ -24,7 +24,6 @@ class VtkDataSetGradientWrap : public VtkDataSetAlgorithmWrap
 		VtkDataSetGradientWrap(vtkSmartPointer<vtkDataSetGradient>);
 		VtkDataSetGradientWrap();
 		~VtkDataSetGradientWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

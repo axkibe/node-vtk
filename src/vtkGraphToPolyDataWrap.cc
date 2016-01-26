@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGraphToPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGraphToPolyDataWrap::ptpl;
 
 VtkGraphToPolyDataWrap::VtkGraphToPolyDataWrap()
@@ -72,7 +71,6 @@ void VtkGraphToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEdgeGlyphPosition", SetEdgeGlyphPosition);
 	Nan::SetPrototypeMethod(tpl, "setEdgeGlyphPosition", SetEdgeGlyphPosition);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -188,7 +186,7 @@ void VtkGraphToPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphToPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphToPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphToPolyDataWrap *w = new VtkGraphToPolyDataWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkGraphToPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGraphToPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGraphToPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphToPolyDataWrap *w = new VtkGraphToPolyDataWrap();
 		w->native.TakeReference(r);

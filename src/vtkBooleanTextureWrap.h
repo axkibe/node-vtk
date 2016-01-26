@@ -24,7 +24,6 @@ class VtkBooleanTextureWrap : public VtkImageAlgorithmWrap
 		VtkBooleanTextureWrap(vtkSmartPointer<vtkBooleanTexture>);
 		VtkBooleanTextureWrap();
 		~VtkBooleanTextureWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

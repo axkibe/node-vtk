@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWindowWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWindowWrap::ptpl;
 
 VtkWindowWrap::VtkWindowWrap()
@@ -153,7 +152,6 @@ void VtkWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWindowName", SetWindowName);
 	Nan::SetPrototypeMethod(tpl, "setWindowName", SetWindowName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -469,7 +467,7 @@ void VtkWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowWrap *w = new VtkWindowWrap();
 	w->native.TakeReference(r);
@@ -533,7 +531,7 @@ void VtkWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWindowWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWindowWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWindowWrap *w = new VtkWindowWrap();
 		w->native.TakeReference(r);

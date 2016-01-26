@@ -24,7 +24,6 @@ class VtkMergeTablesWrap : public VtkTableAlgorithmWrap
 		VtkMergeTablesWrap(vtkSmartPointer<vtkMergeTables>);
 		VtkMergeTablesWrap();
 		~VtkMergeTablesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

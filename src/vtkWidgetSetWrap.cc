@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWidgetSetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWidgetSetWrap::ptpl;
 
 VtkWidgetSetWrap::VtkWidgetSetWrap()
@@ -75,7 +74,6 @@ void VtkWidgetSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEnabled", SetEnabled);
 	Nan::SetPrototypeMethod(tpl, "setEnabled", SetEnabled);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -197,7 +195,7 @@ void VtkWidgetSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWidgetSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWidgetSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWidgetSetWrap *w = new VtkWidgetSetWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkWidgetSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWidgetSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWidgetSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWidgetSetWrap *w = new VtkWidgetSetWrap();
 		w->native.TakeReference(r);

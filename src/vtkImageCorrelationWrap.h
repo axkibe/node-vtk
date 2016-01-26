@@ -24,7 +24,6 @@ class VtkImageCorrelationWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageCorrelationWrap(vtkSmartPointer<vtkImageCorrelation>);
 		VtkImageCorrelationWrap();
 		~VtkImageCorrelationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

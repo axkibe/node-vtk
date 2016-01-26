@@ -24,7 +24,6 @@ class VtkAutoCorrelativeStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		VtkAutoCorrelativeStatisticsWrap(vtkSmartPointer<vtkAutoCorrelativeStatistics>);
 		VtkAutoCorrelativeStatisticsWrap();
 		~VtkAutoCorrelativeStatisticsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

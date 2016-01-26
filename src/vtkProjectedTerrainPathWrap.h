@@ -24,7 +24,6 @@ class VtkProjectedTerrainPathWrap : public VtkPolyDataAlgorithmWrap
 		VtkProjectedTerrainPathWrap(vtkSmartPointer<vtkProjectedTerrainPath>);
 		VtkProjectedTerrainPathWrap();
 		~VtkProjectedTerrainPathWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

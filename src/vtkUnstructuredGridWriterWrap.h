@@ -24,7 +24,6 @@ class VtkUnstructuredGridWriterWrap : public VtkDataWriterWrap
 		VtkUnstructuredGridWriterWrap(vtkSmartPointer<vtkUnstructuredGridWriter>);
 		VtkUnstructuredGridWriterWrap();
 		~VtkUnstructuredGridWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

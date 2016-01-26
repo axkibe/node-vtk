@@ -24,7 +24,6 @@ class VtkProgressObserverWrap : public VtkObjectWrap
 		VtkProgressObserverWrap(vtkSmartPointer<vtkProgressObserver>);
 		VtkProgressObserverWrap();
 		~VtkProgressObserverWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

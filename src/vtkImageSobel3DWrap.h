@@ -24,7 +24,6 @@ class VtkImageSobel3DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageSobel3DWrap(vtkSmartPointer<vtkImageSobel3D>);
 		VtkImageSobel3DWrap();
 		~VtkImageSobel3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

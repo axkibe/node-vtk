@@ -24,7 +24,6 @@ class VtkOutlineCornerSourceWrap : public VtkOutlineSourceWrap
 		VtkOutlineCornerSourceWrap(vtkSmartPointer<vtkOutlineCornerSource>);
 		VtkOutlineCornerSourceWrap();
 		~VtkOutlineCornerSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

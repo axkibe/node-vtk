@@ -24,7 +24,6 @@ class VtkMedicalImageReader2Wrap : public VtkImageReader2Wrap
 		VtkMedicalImageReader2Wrap(vtkSmartPointer<vtkMedicalImageReader2>);
 		VtkMedicalImageReader2Wrap();
 		~VtkMedicalImageReader2Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

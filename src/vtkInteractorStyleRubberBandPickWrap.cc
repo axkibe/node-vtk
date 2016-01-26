@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleRubberBandPickWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleRubberBandPickWrap::ptpl;
 
 VtkInteractorStyleRubberBandPickWrap::VtkInteractorStyleRubberBandPickWrap()
@@ -75,7 +74,6 @@ void VtkInteractorStyleRubberBandPickWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartSelect", StartSelect);
 	Nan::SetPrototypeMethod(tpl, "startSelect", StartSelect);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -153,7 +151,7 @@ void VtkInteractorStyleRubberBandPickWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleRubberBandPickWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleRubberBandPickWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleRubberBandPickWrap *w = new VtkInteractorStyleRubberBandPickWrap();
 	w->native.TakeReference(r);
@@ -229,7 +227,7 @@ void VtkInteractorStyleRubberBandPickWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleRubberBandPickWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleRubberBandPickWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleRubberBandPickWrap *w = new VtkInteractorStyleRubberBandPickWrap();
 		w->native.TakeReference(r);

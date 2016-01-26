@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPieceScalarsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPieceScalarsWrap::ptpl;
 
 VtkPieceScalarsWrap::VtkPieceScalarsWrap()
@@ -81,7 +80,6 @@ void VtkPieceScalarsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarModeToPointData", SetScalarModeToPointData);
 	Nan::SetPrototypeMethod(tpl, "setScalarModeToPointData", SetScalarModeToPointData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -187,7 +185,7 @@ void VtkPieceScalarsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPieceScalarsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPieceScalarsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPieceScalarsWrap *w = new VtkPieceScalarsWrap();
 	w->native.TakeReference(r);
@@ -239,7 +237,7 @@ void VtkPieceScalarsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPieceScalarsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPieceScalarsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPieceScalarsWrap *w = new VtkPieceScalarsWrap();
 		w->native.TakeReference(r);

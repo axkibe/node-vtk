@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPassArraysWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPassArraysWrap::ptpl;
 
 VtkPassArraysWrap::VtkPassArraysWrap()
@@ -114,7 +113,6 @@ void VtkPassArraysWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseFieldTypesOn", UseFieldTypesOn);
 	Nan::SetPrototypeMethod(tpl, "useFieldTypesOn", UseFieldTypesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -355,7 +353,7 @@ void VtkPassArraysWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPassArraysWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPassArraysWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPassArraysWrap *w = new VtkPassArraysWrap();
 	w->native.TakeReference(r);
@@ -491,7 +489,7 @@ void VtkPassArraysWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPassArraysWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPassArraysWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPassArraysWrap *w = new VtkPassArraysWrap();
 		w->native.TakeReference(r);

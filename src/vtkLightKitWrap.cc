@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLightKitWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLightKitWrap::ptpl;
 
 VtkLightKitWrap::VtkLightKitWrap()
@@ -207,7 +206,6 @@ void VtkLightKitWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -718,7 +716,7 @@ void VtkLightKitWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLightKitWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLightKitWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightKitWrap *w = new VtkLightKitWrap();
 	w->native.TakeReference(r);
@@ -766,7 +764,7 @@ void VtkLightKitWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLightKitWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLightKitWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLightKitWrap *w = new VtkLightKitWrap();
 		w->native.TakeReference(r);

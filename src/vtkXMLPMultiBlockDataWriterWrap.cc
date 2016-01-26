@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLPMultiBlockDataWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLPMultiBlockDataWriterWrap::ptpl;
 
 VtkXMLPMultiBlockDataWriterWrap::VtkXMLPMultiBlockDataWriterWrap()
@@ -70,7 +69,6 @@ void VtkXMLPMultiBlockDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWriteMetaFile", SetWriteMetaFile);
 	Nan::SetPrototypeMethod(tpl, "setWriteMetaFile", SetWriteMetaFile);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkXMLPMultiBlockDataWriterWrap::GetController(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkXMLPMultiBlockDataWriterWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLPMultiBlockDataWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLPMultiBlockDataWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLPMultiBlockDataWriterWrap *w = new VtkXMLPMultiBlockDataWriterWrap();
 	w->native.TakeReference(r);
@@ -199,7 +197,7 @@ void VtkXMLPMultiBlockDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLPMultiBlockDataWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLPMultiBlockDataWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLPMultiBlockDataWriterWrap *w = new VtkXMLPMultiBlockDataWriterWrap();
 		w->native.TakeReference(r);

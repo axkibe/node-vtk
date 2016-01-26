@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageMaskBitsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageMaskBitsWrap::ptpl;
 
 VtkImageMaskBitsWrap::VtkImageMaskBitsWrap()
@@ -81,7 +80,6 @@ void VtkImageMaskBitsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOperationToXor", SetOperationToXor);
 	Nan::SetPrototypeMethod(tpl, "setOperationToXor", SetOperationToXor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -173,7 +171,7 @@ void VtkImageMaskBitsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageMaskBitsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageMaskBitsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMaskBitsWrap *w = new VtkImageMaskBitsWrap();
 	w->native.TakeReference(r);
@@ -201,7 +199,7 @@ void VtkImageMaskBitsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageMaskBitsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageMaskBitsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageMaskBitsWrap *w = new VtkImageMaskBitsWrap();
 		w->native.TakeReference(r);

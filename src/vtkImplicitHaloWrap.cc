@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImplicitHaloWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImplicitHaloWrap::ptpl;
 
 VtkImplicitHaloWrap::VtkImplicitHaloWrap()
@@ -78,7 +77,6 @@ void VtkImplicitHaloWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -213,7 +211,7 @@ void VtkImplicitHaloWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitHaloWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitHaloWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitHaloWrap *w = new VtkImplicitHaloWrap();
 	w->native.TakeReference(r);
@@ -241,7 +239,7 @@ void VtkImplicitHaloWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImplicitHaloWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImplicitHaloWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitHaloWrap *w = new VtkImplicitHaloWrap();
 		w->native.TakeReference(r);

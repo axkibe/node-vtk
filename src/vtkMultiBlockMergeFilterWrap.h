@@ -24,7 +24,6 @@ class VtkMultiBlockMergeFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkMultiBlockMergeFilterWrap(vtkSmartPointer<vtkMultiBlockMergeFilter>);
 		VtkMultiBlockMergeFilterWrap();
 		~VtkMultiBlockMergeFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

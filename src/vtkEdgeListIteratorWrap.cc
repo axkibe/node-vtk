@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEdgeListIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEdgeListIteratorWrap::ptpl;
 
 VtkEdgeListIteratorWrap::VtkEdgeListIteratorWrap()
@@ -70,7 +69,6 @@ void VtkEdgeListIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkEdgeListIteratorWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphWrap *w = new VtkGraphWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkEdgeListIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEdgeListIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEdgeListIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEdgeListIteratorWrap *w = new VtkEdgeListIteratorWrap();
 	w->native.TakeReference(r);
@@ -194,7 +192,7 @@ void VtkEdgeListIteratorWrap::NextGraphEdge(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphEdgeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphEdgeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphEdgeWrap *w = new VtkGraphEdgeWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkEdgeListIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEdgeListIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEdgeListIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEdgeListIteratorWrap *w = new VtkEdgeListIteratorWrap();
 		w->native.TakeReference(r);

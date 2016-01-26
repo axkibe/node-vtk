@@ -24,7 +24,6 @@ class VtkEdgeTableWrap : public VtkObjectWrap
 		VtkEdgeTableWrap(vtkSmartPointer<vtkEdgeTable>);
 		VtkEdgeTableWrap();
 		~VtkEdgeTableWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

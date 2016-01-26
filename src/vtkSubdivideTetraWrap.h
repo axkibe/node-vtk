@@ -24,7 +24,6 @@ class VtkSubdivideTetraWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkSubdivideTetraWrap(vtkSmartPointer<vtkSubdivideTetra>);
 		VtkSubdivideTetraWrap();
 		~VtkSubdivideTetraWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

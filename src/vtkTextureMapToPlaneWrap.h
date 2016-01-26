@@ -24,7 +24,6 @@ class VtkTextureMapToPlaneWrap : public VtkDataSetAlgorithmWrap
 		VtkTextureMapToPlaneWrap(vtkSmartPointer<vtkTextureMapToPlane>);
 		VtkTextureMapToPlaneWrap();
 		~VtkTextureMapToPlaneWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

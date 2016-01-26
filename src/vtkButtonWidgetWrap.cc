@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkButtonWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkButtonWidgetWrap::ptpl;
 
 VtkButtonWidgetWrap::VtkButtonWidgetWrap()
@@ -70,7 +69,6 @@ void VtkButtonWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkButtonWidgetWrap::GetSliderRepresentation(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkButtonRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkButtonRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkButtonRepresentationWrap *w = new VtkButtonRepresentationWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkButtonWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkButtonWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkButtonWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkButtonWidgetWrap *w = new VtkButtonWidgetWrap();
 	w->native.TakeReference(r);
@@ -211,7 +209,7 @@ void VtkButtonWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkButtonWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkButtonWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkButtonWidgetWrap *w = new VtkButtonWidgetWrap();
 		w->native.TakeReference(r);

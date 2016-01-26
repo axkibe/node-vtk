@@ -24,7 +24,6 @@ class VtkStructuredPointsWriterWrap : public VtkDataWriterWrap
 		VtkStructuredPointsWriterWrap(vtkSmartPointer<vtkStructuredPointsWriter>);
 		VtkStructuredPointsWriterWrap();
 		~VtkStructuredPointsWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

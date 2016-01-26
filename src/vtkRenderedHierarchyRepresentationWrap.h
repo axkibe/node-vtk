@@ -24,7 +24,6 @@ class VtkRenderedHierarchyRepresentationWrap : public VtkRenderedGraphRepresenta
 		VtkRenderedHierarchyRepresentationWrap(vtkSmartPointer<vtkRenderedHierarchyRepresentation>);
 		VtkRenderedHierarchyRepresentationWrap();
 		~VtkRenderedHierarchyRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

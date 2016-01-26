@@ -24,7 +24,6 @@ class VtkTableToTreeFilterWrap : public VtkTreeAlgorithmWrap
 		VtkTableToTreeFilterWrap(vtkSmartPointer<vtkTableToTreeFilter>);
 		VtkTableToTreeFilterWrap();
 		~VtkTableToTreeFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

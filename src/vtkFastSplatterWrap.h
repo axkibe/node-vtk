@@ -24,7 +24,6 @@ class VtkFastSplatterWrap : public VtkImageAlgorithmWrap
 		VtkFastSplatterWrap(vtkSmartPointer<vtkFastSplatter>);
 		VtkFastSplatterWrap();
 		~VtkFastSplatterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

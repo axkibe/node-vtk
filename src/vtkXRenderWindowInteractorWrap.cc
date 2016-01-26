@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXRenderWindowInteractorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXRenderWindowInteractorWrap::ptpl;
 
 VtkXRenderWindowInteractorWrap::VtkXRenderWindowInteractorWrap()
@@ -90,7 +89,6 @@ void VtkXRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateSize", UpdateSize);
 	Nan::SetPrototypeMethod(tpl, "updateSize", UpdateSize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -242,7 +240,7 @@ void VtkXRenderWindowInteractorWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXRenderWindowInteractorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXRenderWindowInteractorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXRenderWindowInteractorWrap *w = new VtkXRenderWindowInteractorWrap();
 	w->native.TakeReference(r);
@@ -270,7 +268,7 @@ void VtkXRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXRenderWindowInteractorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXRenderWindowInteractorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXRenderWindowInteractorWrap *w = new VtkXRenderWindowInteractorWrap();
 		w->native.TakeReference(r);

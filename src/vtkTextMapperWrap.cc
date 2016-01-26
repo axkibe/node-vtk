@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTextMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTextMapperWrap::ptpl;
 
 VtkTextMapperWrap::VtkTextMapperWrap()
@@ -100,7 +99,6 @@ void VtkTextMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -242,7 +240,7 @@ void VtkTextMapperWrap::GetTextProperty(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -309,7 +307,7 @@ void VtkTextMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextMapperWrap *w = new VtkTextMapperWrap();
 	w->native.TakeReference(r);
@@ -382,7 +380,7 @@ void VtkTextMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTextMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTextMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextMapperWrap *w = new VtkTextMapperWrap();
 		w->native.TakeReference(r);

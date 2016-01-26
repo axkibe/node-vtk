@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLUnstructuredDataReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLUnstructuredDataReaderWrap::ptpl;
 
 VtkXMLUnstructuredDataReaderWrap::VtkXMLUnstructuredDataReaderWrap()
@@ -67,7 +66,6 @@ void VtkXMLUnstructuredDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetupUpdateExtent", SetupUpdateExtent);
 	Nan::SetPrototypeMethod(tpl, "setupUpdateExtent", SetupUpdateExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -169,7 +167,7 @@ void VtkXMLUnstructuredDataReaderWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLUnstructuredDataReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLUnstructuredDataReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLUnstructuredDataReaderWrap *w = new VtkXMLUnstructuredDataReaderWrap();
 	w->native.TakeReference(r);
@@ -197,7 +195,7 @@ void VtkXMLUnstructuredDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLUnstructuredDataReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLUnstructuredDataReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLUnstructuredDataReaderWrap *w = new VtkXMLUnstructuredDataReaderWrap();
 		w->native.TakeReference(r);

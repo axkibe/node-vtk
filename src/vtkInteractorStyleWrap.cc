@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleWrap::ptpl;
 
 VtkInteractorStyleWrap::VtkInteractorStyleWrap()
@@ -272,7 +271,6 @@ void VtkInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -555,7 +553,7 @@ void VtkInteractorStyleWrap::GetTDxStyle(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTDxInteractorStyleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTDxInteractorStyleWrap *w = new VtkTDxInteractorStyleWrap();
 	w->native.TakeReference(r);
@@ -698,7 +696,7 @@ void VtkInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleWrap *w = new VtkInteractorStyleWrap();
 	w->native.TakeReference(r);
@@ -978,7 +976,7 @@ void VtkInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleWrap *w = new VtkInteractorStyleWrap();
 		w->native.TakeReference(r);

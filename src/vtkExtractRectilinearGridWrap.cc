@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractRectilinearGridWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractRectilinearGridWrap::ptpl;
 
 VtkExtractRectilinearGridWrap::VtkExtractRectilinearGridWrap()
@@ -78,7 +77,6 @@ void VtkExtractRectilinearGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVOI", SetVOI);
 	Nan::SetPrototypeMethod(tpl, "setVOI", SetVOI);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkExtractRectilinearGridWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractRectilinearGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractRectilinearGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractRectilinearGridWrap *w = new VtkExtractRectilinearGridWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkExtractRectilinearGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractRectilinearGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractRectilinearGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractRectilinearGridWrap *w = new VtkExtractRectilinearGridWrap();
 		w->native.TakeReference(r);

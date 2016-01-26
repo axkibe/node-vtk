@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLProjectedTetrahedraMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLProjectedTetrahedraMapperWrap::ptpl;
 
 VtkOpenGLProjectedTetrahedraMapperWrap::VtkOpenGLProjectedTetrahedraMapperWrap()
@@ -75,7 +74,6 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseFloatingPointFrameBufferOn", UseFloatingPointFrameBufferOn);
 	Nan::SetPrototypeMethod(tpl, "useFloatingPointFrameBufferOn", UseFloatingPointFrameBufferOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -153,7 +151,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLProjectedTetrahedraMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLProjectedTetrahedraMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLProjectedTetrahedraMapperWrap *w = new VtkOpenGLProjectedTetrahedraMapperWrap();
 	w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLProjectedTetrahedraMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLProjectedTetrahedraMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLProjectedTetrahedraMapperWrap *w = new VtkOpenGLProjectedTetrahedraMapperWrap();
 		w->native.TakeReference(r);

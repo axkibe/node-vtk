@@ -24,7 +24,6 @@ class VtkGraphReaderWrap : public VtkDataReaderWrap
 		VtkGraphReaderWrap(vtkSmartPointer<vtkGraphReader>);
 		VtkGraphReaderWrap();
 		~VtkGraphReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

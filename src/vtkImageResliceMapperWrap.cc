@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageResliceMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageResliceMapperWrap::ptpl;
 
 VtkImageResliceMapperWrap::VtkImageResliceMapperWrap()
@@ -182,7 +181,6 @@ void VtkImageResliceMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSlicePlane", SetSlicePlane);
 	Nan::SetPrototypeMethod(tpl, "setSlicePlane", SetSlicePlane);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -318,7 +316,7 @@ void VtkImageResliceMapperWrap::GetInterpolator(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractImageInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractImageInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractImageInterpolatorWrap *w = new VtkAbstractImageInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -541,7 +539,7 @@ void VtkImageResliceMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageResliceMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageResliceMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageResliceMapperWrap *w = new VtkImageResliceMapperWrap();
 	w->native.TakeReference(r);
@@ -638,7 +636,7 @@ void VtkImageResliceMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageResliceMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageResliceMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageResliceMapperWrap *w = new VtkImageResliceMapperWrap();
 		w->native.TakeReference(r);

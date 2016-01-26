@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageMedian3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageMedian3DWrap::ptpl;
 
 VtkImageMedian3DWrap::VtkImageMedian3DWrap()
@@ -66,7 +65,6 @@ void VtkImageMedian3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetKernelSize", SetKernelSize);
 	Nan::SetPrototypeMethod(tpl, "setKernelSize", SetKernelSize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkImageMedian3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageMedian3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageMedian3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMedian3DWrap *w = new VtkImageMedian3DWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkImageMedian3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageMedian3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageMedian3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageMedian3DWrap *w = new VtkImageMedian3DWrap();
 		w->native.TakeReference(r);

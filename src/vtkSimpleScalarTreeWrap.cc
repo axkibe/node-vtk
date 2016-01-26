@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSimpleScalarTreeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSimpleScalarTreeWrap::ptpl;
 
 VtkSimpleScalarTreeWrap::VtkSimpleScalarTreeWrap()
@@ -96,7 +95,6 @@ void VtkSimpleScalarTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaxLevel", SetMaxLevel);
 	Nan::SetPrototypeMethod(tpl, "setMaxLevel", SetMaxLevel);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -315,7 +313,7 @@ void VtkSimpleScalarTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSimpleScalarTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSimpleScalarTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSimpleScalarTreeWrap *w = new VtkSimpleScalarTreeWrap();
 	w->native.TakeReference(r);
@@ -343,7 +341,7 @@ void VtkSimpleScalarTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSimpleScalarTreeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSimpleScalarTreeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSimpleScalarTreeWrap *w = new VtkSimpleScalarTreeWrap();
 		w->native.TakeReference(r);

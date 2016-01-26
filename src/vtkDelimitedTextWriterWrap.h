@@ -24,7 +24,6 @@ class VtkDelimitedTextWriterWrap : public VtkWriterWrap
 		VtkDelimitedTextWriterWrap(vtkSmartPointer<vtkDelimitedTextWriter>);
 		VtkDelimitedTextWriterWrap();
 		~VtkDelimitedTextWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

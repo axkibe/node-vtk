@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkViewThemeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkViewThemeWrap::ptpl;
 
 VtkViewThemeWrap::VtkViewThemeWrap()
@@ -193,7 +192,6 @@ void VtkViewThemeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexLabelColor", SetVertexLabelColor);
 	Nan::SetPrototypeMethod(tpl, "setVertexLabelColor", SetVertexLabelColor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -235,7 +233,7 @@ void VtkViewThemeWrap::CreateMellowTheme(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkViewThemeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkViewThemeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewThemeWrap *w = new VtkViewThemeWrap();
 	w->native.TakeReference(r);
@@ -258,7 +256,7 @@ void VtkViewThemeWrap::CreateNeonTheme(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkViewThemeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkViewThemeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewThemeWrap *w = new VtkViewThemeWrap();
 	w->native.TakeReference(r);
@@ -281,7 +279,7 @@ void VtkViewThemeWrap::CreateOceanTheme(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkViewThemeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkViewThemeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewThemeWrap *w = new VtkViewThemeWrap();
 	w->native.TakeReference(r);
@@ -304,7 +302,7 @@ void VtkViewThemeWrap::GetCellLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -341,7 +339,7 @@ void VtkViewThemeWrap::GetCellTextProperty(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -392,7 +390,7 @@ void VtkViewThemeWrap::GetPointLookupTable(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -443,7 +441,7 @@ void VtkViewThemeWrap::GetPointTextProperty(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -516,7 +514,7 @@ void VtkViewThemeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkViewThemeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkViewThemeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewThemeWrap *w = new VtkViewThemeWrap();
 	w->native.TakeReference(r);
@@ -544,7 +542,7 @@ void VtkViewThemeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkViewThemeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkViewThemeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkViewThemeWrap *w = new VtkViewThemeWrap();
 		w->native.TakeReference(r);

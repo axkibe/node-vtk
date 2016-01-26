@@ -24,7 +24,6 @@ class VtkOpenGLRepresentationPainterWrap : public VtkRepresentationPainterWrap
 		VtkOpenGLRepresentationPainterWrap(vtkSmartPointer<vtkOpenGLRepresentationPainter>);
 		VtkOpenGLRepresentationPainterWrap();
 		~VtkOpenGLRepresentationPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

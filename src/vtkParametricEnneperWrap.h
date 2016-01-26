@@ -24,7 +24,6 @@ class VtkParametricEnneperWrap : public VtkParametricFunctionWrap
 		VtkParametricEnneperWrap(vtkSmartPointer<vtkParametricEnneper>);
 		VtkParametricEnneperWrap();
 		~VtkParametricEnneperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

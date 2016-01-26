@@ -24,7 +24,6 @@ class VtkImplicitBooleanWrap : public VtkImplicitFunctionWrap
 		VtkImplicitBooleanWrap(vtkSmartPointer<vtkImplicitBoolean>);
 		VtkImplicitBooleanWrap();
 		~VtkImplicitBooleanWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

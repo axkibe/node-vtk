@@ -24,7 +24,6 @@ class VtkXMLMultiBlockDataWriterWrap : public VtkXMLCompositeDataWriterWrap
 		VtkXMLMultiBlockDataWriterWrap(vtkSmartPointer<vtkXMLMultiBlockDataWriter>);
 		VtkXMLMultiBlockDataWriterWrap();
 		~VtkXMLMultiBlockDataWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

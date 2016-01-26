@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPickerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPickerWrap::ptpl;
 
 VtkPickerWrap::VtkPickerWrap()
@@ -90,7 +89,6 @@ void VtkPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -132,7 +130,7 @@ void VtkPickerWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActorCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActorCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActorCollectionWrap *w = new VtkActorCollectionWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkPickerWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkPickerWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractMapper3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractMapper3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractMapper3DWrap *w = new VtkAbstractMapper3DWrap();
 	w->native.TakeReference(r);
@@ -215,7 +213,7 @@ void VtkPickerWrap::GetPickedPositions(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -238,7 +236,7 @@ void VtkPickerWrap::GetProp3Ds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProp3DCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProp3DCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProp3DCollectionWrap *w = new VtkProp3DCollectionWrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPickerWrap *w = new VtkPickerWrap();
 	w->native.TakeReference(r);
@@ -359,7 +357,7 @@ void VtkPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPickerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPickerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPickerWrap *w = new VtkPickerWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkGESignaReaderWrap : public VtkMedicalImageReader2Wrap
 		VtkGESignaReaderWrap(vtkSmartPointer<vtkGESignaReader>);
 		VtkGESignaReaderWrap();
 		~VtkGESignaReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkOpenGLClipPlanesPainterWrap : public VtkClipPlanesPainterWrap
 		VtkOpenGLClipPlanesPainterWrap(vtkSmartPointer<vtkOpenGLClipPlanesPainter>);
 		VtkOpenGLClipPlanesPainterWrap();
 		~VtkOpenGLClipPlanesPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

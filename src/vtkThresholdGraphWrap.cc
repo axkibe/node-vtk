@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkThresholdGraphWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkThresholdGraphWrap::ptpl;
 
 VtkThresholdGraphWrap::VtkThresholdGraphWrap()
@@ -72,7 +71,6 @@ void VtkThresholdGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUpperThreshold", SetUpperThreshold);
 	Nan::SetPrototypeMethod(tpl, "setUpperThreshold", SetUpperThreshold);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -178,7 +176,7 @@ void VtkThresholdGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkThresholdGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkThresholdGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkThresholdGraphWrap *w = new VtkThresholdGraphWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkThresholdGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkThresholdGraphWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkThresholdGraphWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkThresholdGraphWrap *w = new VtkThresholdGraphWrap();
 		w->native.TakeReference(r);

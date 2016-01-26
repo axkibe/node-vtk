@@ -24,7 +24,6 @@ class VtkLinearSelectorWrap : public VtkSelectionAlgorithmWrap
 		VtkLinearSelectorWrap(vtkSmartPointer<vtkLinearSelector>);
 		VtkLinearSelectorWrap();
 		~VtkLinearSelectorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

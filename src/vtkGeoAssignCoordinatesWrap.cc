@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoAssignCoordinatesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoAssignCoordinatesWrap::ptpl;
 
 VtkGeoAssignCoordinatesWrap::VtkGeoAssignCoordinatesWrap()
@@ -91,7 +90,6 @@ void VtkGeoAssignCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -213,7 +211,7 @@ void VtkGeoAssignCoordinatesWrap::GetTransform(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -258,7 +256,7 @@ void VtkGeoAssignCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoAssignCoordinatesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoAssignCoordinatesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoAssignCoordinatesWrap *w = new VtkGeoAssignCoordinatesWrap();
 	w->native.TakeReference(r);
@@ -286,7 +284,7 @@ void VtkGeoAssignCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoAssignCoordinatesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoAssignCoordinatesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoAssignCoordinatesWrap *w = new VtkGeoAssignCoordinatesWrap();
 		w->native.TakeReference(r);

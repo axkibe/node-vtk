@@ -24,7 +24,6 @@ class VtkChartHistogram2DWrap : public VtkChartXYWrap
 		VtkChartHistogram2DWrap(vtkSmartPointer<vtkChartHistogram2D>);
 		VtkChartHistogram2DWrap();
 		~VtkChartHistogram2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkKdNodeWrap : public VtkObjectWrap
 		VtkKdNodeWrap(vtkSmartPointer<vtkKdNode>);
 		VtkKdNodeWrap();
 		~VtkKdNodeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUncertaintyTubeFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUncertaintyTubeFilterWrap::ptpl;
 
 VtkUncertaintyTubeFilterWrap::VtkUncertaintyTubeFilterWrap()
@@ -72,7 +71,6 @@ void VtkUncertaintyTubeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSides", SetNumberOfSides);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSides", SetNumberOfSides);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkUncertaintyTubeFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUncertaintyTubeFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUncertaintyTubeFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUncertaintyTubeFilterWrap *w = new VtkUncertaintyTubeFilterWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkUncertaintyTubeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUncertaintyTubeFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUncertaintyTubeFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUncertaintyTubeFilterWrap *w = new VtkUncertaintyTubeFilterWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkAnnotatedCubeActorWrap : public VtkProp3DWrap
 		VtkAnnotatedCubeActorWrap(vtkSmartPointer<vtkAnnotatedCubeActor>);
 		VtkAnnotatedCubeActorWrap();
 		~VtkAnnotatedCubeActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

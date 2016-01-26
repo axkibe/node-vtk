@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolygonalSurfacePointPlacerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolygonalSurfacePointPlacerWrap::ptpl;
 
 VtkPolygonalSurfacePointPlacerWrap::VtkPolygonalSurfacePointPlacerWrap()
@@ -96,7 +95,6 @@ void VtkPolygonalSurfacePointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SnapToClosestPointOn", SnapToClosestPointOn);
 	Nan::SetPrototypeMethod(tpl, "snapToClosestPointOn", SnapToClosestPointOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkPolygonalSurfacePointPlacerWrap::GetCellPicker(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellPickerWrap *w = new VtkCellPickerWrap();
 	w->native.TakeReference(r);
@@ -209,7 +207,7 @@ void VtkPolygonalSurfacePointPlacerWrap::GetPolys(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataCollectionWrap *w = new VtkPolyDataCollectionWrap();
 	w->native.TakeReference(r);
@@ -268,7 +266,7 @@ void VtkPolygonalSurfacePointPlacerWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolygonalSurfacePointPlacerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolygonalSurfacePointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolygonalSurfacePointPlacerWrap *w = new VtkPolygonalSurfacePointPlacerWrap();
 	w->native.TakeReference(r);
@@ -328,7 +326,7 @@ void VtkPolygonalSurfacePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolygonalSurfacePointPlacerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolygonalSurfacePointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolygonalSurfacePointPlacerWrap *w = new VtkPolygonalSurfacePointPlacerWrap();
 		w->native.TakeReference(r);

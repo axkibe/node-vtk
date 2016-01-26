@@ -24,7 +24,6 @@ class VtkImageMathematicsWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageMathematicsWrap(vtkSmartPointer<vtkImageMathematics>);
 		VtkImageMathematicsWrap();
 		~VtkImageMathematicsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

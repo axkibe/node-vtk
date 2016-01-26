@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDataRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDataRepresentationWrap::ptpl;
 
 VtkDataRepresentationWrap::VtkDataRepresentationWrap()
@@ -127,7 +126,6 @@ void VtkDataRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateSelection", UpdateSelection);
 	Nan::SetPrototypeMethod(tpl, "updateSelection", UpdateSelection);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -223,7 +221,7 @@ void VtkDataRepresentationWrap::ConvertSelection(const Nan::FunctionCallbackInfo
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkSelectionWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkSelectionWrap *w = new VtkSelectionWrap();
 			w->native.TakeReference(r);
@@ -250,7 +248,7 @@ void VtkDataRepresentationWrap::GetAnnotationLink(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAnnotationLinkWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAnnotationLinkWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLinkWrap *w = new VtkAnnotationLinkWrap();
 	w->native.TakeReference(r);
@@ -294,7 +292,7 @@ void VtkDataRepresentationWrap::GetInputConnection(const Nan::FunctionCallbackIn
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 			w->native.TakeReference(r);
@@ -328,7 +326,7 @@ void VtkDataRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Funct
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 			w->native.TakeReference(r);
@@ -349,7 +347,7 @@ void VtkDataRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Funct
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 		w->native.TakeReference(r);
@@ -368,7 +366,7 @@ void VtkDataRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Funct
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 	w->native.TakeReference(r);
@@ -398,7 +396,7 @@ void VtkDataRepresentationWrap::GetInternalOutputPort(const Nan::FunctionCallbac
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 			w->native.TakeReference(r);
@@ -419,7 +417,7 @@ void VtkDataRepresentationWrap::GetInternalOutputPort(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 		w->native.TakeReference(r);
@@ -438,7 +436,7 @@ void VtkDataRepresentationWrap::GetInternalOutputPort(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 	w->native.TakeReference(r);
@@ -468,7 +466,7 @@ void VtkDataRepresentationWrap::GetInternalSelectionOutputPort(const Nan::Functi
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 			w->native.TakeReference(r);
@@ -489,7 +487,7 @@ void VtkDataRepresentationWrap::GetInternalSelectionOutputPort(const Nan::Functi
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 		w->native.TakeReference(r);
@@ -508,7 +506,7 @@ void VtkDataRepresentationWrap::GetInternalSelectionOutputPort(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 	w->native.TakeReference(r);
@@ -545,7 +543,7 @@ void VtkDataRepresentationWrap::GetSelectionArrayNames(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -604,7 +602,7 @@ void VtkDataRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataRepresentationWrap *w = new VtkDataRepresentationWrap();
 	w->native.TakeReference(r);
@@ -632,7 +630,7 @@ void VtkDataRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataRepresentationWrap *w = new VtkDataRepresentationWrap();
 		w->native.TakeReference(r);

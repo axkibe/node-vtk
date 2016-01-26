@@ -24,7 +24,6 @@ class VtkImageHybridMedian2DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageHybridMedian2DWrap(vtkSmartPointer<vtkImageHybridMedian2D>);
 		VtkImageHybridMedian2DWrap();
 		~VtkImageHybridMedian2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLabelHierarchyIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLabelHierarchyIteratorWrap::ptpl;
 
 VtkLabelHierarchyIteratorWrap::VtkLabelHierarchyIteratorWrap()
@@ -92,7 +91,6 @@ void VtkLabelHierarchyIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTraversedBounds", SetTraversedBounds);
 	Nan::SetPrototypeMethod(tpl, "setTraversedBounds", SetTraversedBounds);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -214,7 +212,7 @@ void VtkLabelHierarchyIteratorWrap::GetHierarchy(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelHierarchyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelHierarchyWrap *w = new VtkLabelHierarchyWrap();
 	w->native.TakeReference(r);
@@ -287,7 +285,7 @@ void VtkLabelHierarchyIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelHierarchyIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelHierarchyIteratorWrap *w = new VtkLabelHierarchyIteratorWrap();
 	w->native.TakeReference(r);
@@ -327,7 +325,7 @@ void VtkLabelHierarchyIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLabelHierarchyIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabelHierarchyIteratorWrap *w = new VtkLabelHierarchyIteratorWrap();
 		w->native.TakeReference(r);

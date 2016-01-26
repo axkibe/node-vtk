@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDEMReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDEMReaderWrap::ptpl;
 
 VtkDEMReaderWrap::VtkDEMReaderWrap()
@@ -114,7 +113,6 @@ void VtkDEMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -388,7 +386,7 @@ void VtkDEMReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDEMReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDEMReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDEMReaderWrap *w = new VtkDEMReaderWrap();
 	w->native.TakeReference(r);
@@ -416,7 +414,7 @@ void VtkDEMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDEMReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDEMReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDEMReaderWrap *w = new VtkDEMReaderWrap();
 		w->native.TakeReference(r);

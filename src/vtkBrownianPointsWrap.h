@@ -24,7 +24,6 @@ class VtkBrownianPointsWrap : public VtkDataSetAlgorithmWrap
 		VtkBrownianPointsWrap(vtkSmartPointer<vtkBrownianPoints>);
 		VtkBrownianPointsWrap();
 		~VtkBrownianPointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

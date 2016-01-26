@@ -24,7 +24,6 @@ class VtkInstantiatorWrap : public VtkObjectWrap
 		VtkInstantiatorWrap(vtkSmartPointer<vtkInstantiator>);
 		VtkInstantiatorWrap();
 		~VtkInstantiatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

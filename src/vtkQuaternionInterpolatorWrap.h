@@ -24,7 +24,6 @@ class VtkQuaternionInterpolatorWrap : public VtkObjectWrap
 		VtkQuaternionInterpolatorWrap(vtkSmartPointer<vtkQuaternionInterpolator>);
 		VtkQuaternionInterpolatorWrap();
 		~VtkQuaternionInterpolatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

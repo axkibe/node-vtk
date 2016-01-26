@@ -21,7 +21,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAbstractPolygonalHandleRepresentation3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAbstractPolygonalHandleRepresentation3DWrap::ptpl;
 
 VtkAbstractPolygonalHandleRepresentation3DWrap::VtkAbstractPolygonalHandleRepresentation3DWrap()
@@ -170,7 +169,6 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SmoothMotionOn", SmoothMotionOn);
 	Nan::SetPrototypeMethod(tpl, "smoothMotionOn", SmoothMotionOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -307,7 +305,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetHandle(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -358,7 +356,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetLabelTextActor(const Nan
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFollowerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFollowerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFollowerWrap *w = new VtkFollowerWrap();
 	w->native.TakeReference(r);
@@ -395,7 +393,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetProperty(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -418,7 +416,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetSelectedProperty(const N
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -455,7 +453,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetTransform(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -581,7 +579,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::NewInstance(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractPolygonalHandleRepresentation3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractPolygonalHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractPolygonalHandleRepresentation3DWrap *w = new VtkAbstractPolygonalHandleRepresentation3DWrap();
 	w->native.TakeReference(r);
@@ -673,7 +671,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::Fun
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractPolygonalHandleRepresentation3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractPolygonalHandleRepresentation3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractPolygonalHandleRepresentation3DWrap *w = new VtkAbstractPolygonalHandleRepresentation3DWrap();
 		w->native.TakeReference(r);

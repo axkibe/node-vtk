@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkResliceCursorWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkResliceCursorWidgetWrap::ptpl;
 
 VtkResliceCursorWidgetWrap::VtkResliceCursorWidgetWrap()
@@ -88,7 +87,6 @@ void VtkResliceCursorWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -170,7 +168,7 @@ void VtkResliceCursorWidgetWrap::GetResliceCursorRepresentation(const Nan::Funct
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorRepresentationWrap *w = new VtkResliceCursorRepresentationWrap();
 	w->native.TakeReference(r);
@@ -239,7 +237,7 @@ void VtkResliceCursorWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorWidgetWrap *w = new VtkResliceCursorWidgetWrap();
 	w->native.TakeReference(r);
@@ -279,7 +277,7 @@ void VtkResliceCursorWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkResliceCursorWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkResliceCursorWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkResliceCursorWidgetWrap *w = new VtkResliceCursorWidgetWrap();
 		w->native.TakeReference(r);

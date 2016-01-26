@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContourGridWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContourGridWrap::ptpl;
 
 VtkContourGridWrap::VtkContourGridWrap()
@@ -151,7 +150,6 @@ void VtkContourGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseScalarTreeOn", UseScalarTreeOn);
 	Nan::SetPrototypeMethod(tpl, "useScalarTreeOn", UseScalarTreeOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -398,7 +396,7 @@ void VtkContourGridWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -506,7 +504,7 @@ void VtkContourGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContourGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContourGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContourGridWrap *w = new VtkContourGridWrap();
 	w->native.TakeReference(r);
@@ -534,7 +532,7 @@ void VtkContourGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContourGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContourGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContourGridWrap *w = new VtkContourGridWrap();
 		w->native.TakeReference(r);

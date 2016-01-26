@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridPreIntegrationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridPreIntegrationWrap::ptpl;
 
 VtkUnstructuredGridPreIntegrationWrap::VtkUnstructuredGridPreIntegrationWrap()
@@ -104,7 +103,6 @@ void VtkUnstructuredGridPreIntegrationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetIntegrator", SetIntegrator);
 	Nan::SetPrototypeMethod(tpl, "setIntegrator", SetIntegrator);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -258,7 +256,7 @@ void VtkUnstructuredGridPreIntegrationWrap::GetIntegrator(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridVolumeRayIntegratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeRayIntegratorWrap *w = new VtkUnstructuredGridVolumeRayIntegratorWrap();
 	w->native.TakeReference(r);
@@ -352,7 +350,7 @@ void VtkUnstructuredGridPreIntegrationWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridPreIntegrationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridPreIntegrationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridPreIntegrationWrap *w = new VtkUnstructuredGridPreIntegrationWrap();
 	w->native.TakeReference(r);
@@ -380,7 +378,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridPreIntegrationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridPreIntegrationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridPreIntegrationWrap *w = new VtkUnstructuredGridPreIntegrationWrap();
 		w->native.TakeReference(r);

@@ -21,7 +21,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCaptionActor2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCaptionActor2DWrap::ptpl;
 
 VtkCaptionActor2DWrap::VtkCaptionActor2DWrap()
@@ -200,7 +199,6 @@ void VtkCaptionActor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreeDimensionalLeaderOn", ThreeDimensionalLeaderOn);
 	Nan::SetPrototypeMethod(tpl, "threeDimensionalLeaderOn", ThreeDimensionalLeaderOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -304,7 +302,7 @@ void VtkCaptionActor2DWrap::GetAttachmentPointCoordinate(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoordinateWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoordinateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoordinateWrap *w = new VtkCoordinateWrap();
 	w->native.TakeReference(r);
@@ -355,7 +353,7 @@ void VtkCaptionActor2DWrap::GetCaptionTextProperty(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -406,7 +404,7 @@ void VtkCaptionActor2DWrap::GetLeaderGlyph(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -555,7 +553,7 @@ void VtkCaptionActor2DWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextActorWrap *w = new VtkTextActorWrap();
 	w->native.TakeReference(r);
@@ -652,7 +650,7 @@ void VtkCaptionActor2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCaptionActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCaptionActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCaptionActor2DWrap *w = new VtkCaptionActor2DWrap();
 	w->native.TakeReference(r);
@@ -766,7 +764,7 @@ void VtkCaptionActor2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCaptionActor2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCaptionActor2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCaptionActor2DWrap *w = new VtkCaptionActor2DWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridReaderWrap::ptpl;
 
 VtkUnstructuredGridReaderWrap::VtkUnstructuredGridReaderWrap()
@@ -67,7 +66,6 @@ void VtkUnstructuredGridReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -127,7 +125,7 @@ void VtkUnstructuredGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 		w->native.TakeReference(r);
@@ -146,7 +144,7 @@ void VtkUnstructuredGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -191,7 +189,7 @@ void VtkUnstructuredGridReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridReaderWrap *w = new VtkUnstructuredGridReaderWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkUnstructuredGridReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridReaderWrap *w = new VtkUnstructuredGridReaderWrap();
 		w->native.TakeReference(r);

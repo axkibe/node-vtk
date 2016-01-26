@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageInterpolatorWrap::ptpl;
 
 VtkImageInterpolatorWrap::VtkImageInterpolatorWrap()
@@ -78,7 +77,6 @@ void VtkImageInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInterpolationModeToNearest", SetInterpolationModeToNearest);
 	Nan::SetPrototypeMethod(tpl, "setInterpolationModeToNearest", SetInterpolationModeToNearest);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -184,7 +182,7 @@ void VtkImageInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageInterpolatorWrap *w = new VtkImageInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -212,7 +210,7 @@ void VtkImageInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageInterpolatorWrap *w = new VtkImageInterpolatorWrap();
 		w->native.TakeReference(r);

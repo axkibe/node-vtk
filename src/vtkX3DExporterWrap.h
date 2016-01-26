@@ -24,7 +24,6 @@ class VtkX3DExporterWrap : public VtkExporterWrap
 		VtkX3DExporterWrap(vtkSmartPointer<vtkX3DExporter>);
 		VtkX3DExporterWrap();
 		~VtkX3DExporterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

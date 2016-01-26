@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRectilinearWipeWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRectilinearWipeWidgetWrap::ptpl;
 
 VtkRectilinearWipeWidgetWrap::VtkRectilinearWipeWidgetWrap()
@@ -70,7 +69,6 @@ void VtkRectilinearWipeWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkRectilinearWipeWidgetWrap::GetRectilinearWipeRepresentation(const Nan::F
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearWipeRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearWipeRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearWipeRepresentationWrap *w = new VtkRectilinearWipeRepresentationWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkRectilinearWipeWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearWipeWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearWipeWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearWipeWidgetWrap *w = new VtkRectilinearWipeWidgetWrap();
 	w->native.TakeReference(r);
@@ -211,7 +209,7 @@ void VtkRectilinearWipeWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRectilinearWipeWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRectilinearWipeWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectilinearWipeWidgetWrap *w = new VtkRectilinearWipeWidgetWrap();
 		w->native.TakeReference(r);

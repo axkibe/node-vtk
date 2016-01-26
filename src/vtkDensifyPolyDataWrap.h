@@ -24,7 +24,6 @@ class VtkDensifyPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		VtkDensifyPolyDataWrap(vtkSmartPointer<vtkDensifyPolyData>);
 		VtkDensifyPolyDataWrap();
 		~VtkDensifyPolyDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

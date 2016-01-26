@@ -24,7 +24,6 @@ class VtkRecursiveDividingCubesWrap : public VtkPolyDataAlgorithmWrap
 		VtkRecursiveDividingCubesWrap(vtkSmartPointer<vtkRecursiveDividingCubes>);
 		VtkRecursiveDividingCubesWrap();
 		~VtkRecursiveDividingCubesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

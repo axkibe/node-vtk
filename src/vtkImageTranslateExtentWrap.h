@@ -24,7 +24,6 @@ class VtkImageTranslateExtentWrap : public VtkImageAlgorithmWrap
 		VtkImageTranslateExtentWrap(vtkSmartPointer<vtkImageTranslateExtent>);
 		VtkImageTranslateExtentWrap();
 		~VtkImageTranslateExtentWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

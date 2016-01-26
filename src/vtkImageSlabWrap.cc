@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageSlabWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageSlabWrap::ptpl;
 
 VtkImageSlabWrap::VtkImageSlabWrap()
@@ -147,7 +146,6 @@ void VtkImageSlabWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TrapezoidIntegrationOn", TrapezoidIntegrationOn);
 	Nan::SetPrototypeMethod(tpl, "trapezoidIntegrationOn", TrapezoidIntegrationOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -389,7 +387,7 @@ void VtkImageSlabWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageSlabWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageSlabWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSlabWrap *w = new VtkImageSlabWrap();
 	w->native.TakeReference(r);
@@ -417,7 +415,7 @@ void VtkImageSlabWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageSlabWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageSlabWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageSlabWrap *w = new VtkImageSlabWrap();
 		w->native.TakeReference(r);

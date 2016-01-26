@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMNIObjectWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMNIObjectWriterWrap::ptpl;
 
 VtkMNIObjectWriterWrap::VtkMNIObjectWriterWrap()
@@ -115,7 +114,6 @@ void VtkMNIObjectWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProperty", SetProperty);
 	Nan::SetPrototypeMethod(tpl, "setProperty", SetProperty);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -259,7 +257,7 @@ void VtkMNIObjectWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
 		w->native.TakeReference(r);
@@ -278,7 +276,7 @@ void VtkMNIObjectWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -301,7 +299,7 @@ void VtkMNIObjectWriterWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLookupTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLookupTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLookupTableWrap *w = new VtkLookupTableWrap();
 	w->native.TakeReference(r);
@@ -324,7 +322,7 @@ void VtkMNIObjectWriterWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMapperWrap *w = new VtkMapperWrap();
 	w->native.TakeReference(r);
@@ -347,7 +345,7 @@ void VtkMNIObjectWriterWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -392,7 +390,7 @@ void VtkMNIObjectWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMNIObjectWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMNIObjectWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMNIObjectWriterWrap *w = new VtkMNIObjectWriterWrap();
 	w->native.TakeReference(r);
@@ -420,7 +418,7 @@ void VtkMNIObjectWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMNIObjectWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMNIObjectWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMNIObjectWriterWrap *w = new VtkMNIObjectWriterWrap();
 		w->native.TakeReference(r);

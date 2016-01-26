@@ -24,7 +24,6 @@ class VtkUniformVariablesWrap : public VtkObjectWrap
 		VtkUniformVariablesWrap(vtkSmartPointer<vtkUniformVariables>);
 		VtkUniformVariablesWrap();
 		~VtkUniformVariablesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkArcSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkArcSourceWrap::ptpl;
 
 VtkArcSourceWrap::VtkArcSourceWrap()
@@ -117,7 +116,6 @@ void VtkArcSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseNormalAndAngleOn", UseNormalAndAngleOn);
 	Nan::SetPrototypeMethod(tpl, "useNormalAndAngleOn", UseNormalAndAngleOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -317,7 +315,7 @@ void VtkArcSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkArcSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkArcSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkArcSourceWrap *w = new VtkArcSourceWrap();
 	w->native.TakeReference(r);
@@ -345,7 +343,7 @@ void VtkArcSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkArcSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkArcSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkArcSourceWrap *w = new VtkArcSourceWrap();
 		w->native.TakeReference(r);

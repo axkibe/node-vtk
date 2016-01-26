@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPLinearExtrusionFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPLinearExtrusionFilterWrap::ptpl;
 
 VtkPLinearExtrusionFilterWrap::VtkPLinearExtrusionFilterWrap()
@@ -72,7 +71,6 @@ void VtkPLinearExtrusionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPieceInvariant", SetPieceInvariant);
 	Nan::SetPrototypeMethod(tpl, "setPieceInvariant", SetPieceInvariant);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -164,7 +162,7 @@ void VtkPLinearExtrusionFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPLinearExtrusionFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPLinearExtrusionFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPLinearExtrusionFilterWrap *w = new VtkPLinearExtrusionFilterWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkPLinearExtrusionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPLinearExtrusionFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPLinearExtrusionFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPLinearExtrusionFilterWrap *w = new VtkPLinearExtrusionFilterWrap();
 		w->native.TakeReference(r);

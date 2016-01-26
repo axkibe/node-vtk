@@ -24,7 +24,6 @@ class VtkFiniteDifferenceGradientEstimatorWrap : public VtkEncodedGradientEstima
 		VtkFiniteDifferenceGradientEstimatorWrap(vtkSmartPointer<vtkFiniteDifferenceGradientEstimator>);
 		VtkFiniteDifferenceGradientEstimatorWrap();
 		~VtkFiniteDifferenceGradientEstimatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

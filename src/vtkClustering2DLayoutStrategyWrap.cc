@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkClustering2DLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkClustering2DLayoutStrategyWrap::ptpl;
 
 VtkClustering2DLayoutStrategyWrap::VtkClustering2DLayoutStrategyWrap()
@@ -117,7 +116,6 @@ void VtkClustering2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRandomSeed", SetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "setRandomSeed", SetRandomSeed);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -401,7 +399,7 @@ void VtkClustering2DLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkClustering2DLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkClustering2DLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClustering2DLayoutStrategyWrap *w = new VtkClustering2DLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -429,7 +427,7 @@ void VtkClustering2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkClustering2DLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkClustering2DLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkClustering2DLayoutStrategyWrap *w = new VtkClustering2DLayoutStrategyWrap();
 		w->native.TakeReference(r);

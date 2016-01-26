@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageThresholdConnectivityWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageThresholdConnectivityWrap::ptpl;
 
 VtkImageThresholdConnectivityWrap::VtkImageThresholdConnectivityWrap()
@@ -158,7 +157,6 @@ void VtkImageThresholdConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThresholdByUpper", ThresholdByUpper);
 	Nan::SetPrototypeMethod(tpl, "thresholdByUpper", ThresholdByUpper);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -354,7 +352,7 @@ void VtkImageThresholdConnectivityWrap::GetSeedPoints(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -377,7 +375,7 @@ void VtkImageThresholdConnectivityWrap::GetStencil(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageStencilDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageStencilDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageStencilDataWrap *w = new VtkImageStencilDataWrap();
 	w->native.TakeReference(r);
@@ -436,7 +434,7 @@ void VtkImageThresholdConnectivityWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageThresholdConnectivityWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageThresholdConnectivityWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageThresholdConnectivityWrap *w = new VtkImageThresholdConnectivityWrap();
 	w->native.TakeReference(r);
@@ -512,7 +510,7 @@ void VtkImageThresholdConnectivityWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageThresholdConnectivityWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageThresholdConnectivityWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageThresholdConnectivityWrap *w = new VtkImageThresholdConnectivityWrap();
 		w->native.TakeReference(r);

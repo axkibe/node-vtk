@@ -24,7 +24,6 @@ class VtkTextSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkTextSourceWrap(vtkSmartPointer<vtkTextSource>);
 		VtkTextSourceWrap();
 		~VtkTextSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkCommunity2DLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		VtkCommunity2DLayoutStrategyWrap(vtkSmartPointer<vtkCommunity2DLayoutStrategy>);
 		VtkCommunity2DLayoutStrategyWrap();
 		~VtkCommunity2DLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

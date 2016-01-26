@@ -24,7 +24,6 @@ class VtkExtractVOIWrap : public VtkImageAlgorithmWrap
 		VtkExtractVOIWrap(vtkSmartPointer<vtkExtractVOI>);
 		VtkExtractVOIWrap();
 		~VtkExtractVOIWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

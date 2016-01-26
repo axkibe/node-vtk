@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeMapViewWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeMapViewWrap::ptpl;
 
 VtkTreeMapViewWrap::VtkTreeMapViewWrap()
@@ -76,7 +75,6 @@ void VtkTreeMapViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategyToSquarify", SetLayoutStrategyToSquarify);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategyToSquarify", SetLayoutStrategyToSquarify);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -154,7 +152,7 @@ void VtkTreeMapViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeMapViewWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeMapViewWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeMapViewWrap *w = new VtkTreeMapViewWrap();
 	w->native.TakeReference(r);
@@ -182,7 +180,7 @@ void VtkTreeMapViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeMapViewWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeMapViewWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeMapViewWrap *w = new VtkTreeMapViewWrap();
 		w->native.TakeReference(r);

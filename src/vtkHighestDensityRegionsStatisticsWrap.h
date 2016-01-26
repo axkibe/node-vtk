@@ -24,7 +24,6 @@ class VtkHighestDensityRegionsStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		VtkHighestDensityRegionsStatisticsWrap(vtkSmartPointer<vtkHighestDensityRegionsStatistics>);
 		VtkHighestDensityRegionsStatisticsWrap();
 		~VtkHighestDensityRegionsStatisticsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

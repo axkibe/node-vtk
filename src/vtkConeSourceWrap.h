@@ -24,7 +24,6 @@ class VtkConeSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkConeSourceWrap(vtkSmartPointer<vtkConeSource>);
 		VtkConeSourceWrap();
 		~VtkConeSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

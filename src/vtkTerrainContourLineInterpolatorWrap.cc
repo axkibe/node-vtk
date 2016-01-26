@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTerrainContourLineInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTerrainContourLineInterpolatorWrap::ptpl;
 
 VtkTerrainContourLineInterpolatorWrap::VtkTerrainContourLineInterpolatorWrap()
@@ -76,7 +75,6 @@ void VtkTerrainContourLineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImageData", SetImageData);
 	Nan::SetPrototypeMethod(tpl, "setImageData", SetImageData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -132,7 +130,7 @@ void VtkTerrainContourLineInterpolatorWrap::GetImageData(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -155,7 +153,7 @@ void VtkTerrainContourLineInterpolatorWrap::GetProjector(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProjectedTerrainPathWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProjectedTerrainPathWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProjectedTerrainPathWrap *w = new VtkProjectedTerrainPathWrap();
 	w->native.TakeReference(r);
@@ -235,7 +233,7 @@ void VtkTerrainContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTerrainContourLineInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTerrainContourLineInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTerrainContourLineInterpolatorWrap *w = new VtkTerrainContourLineInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -263,7 +261,7 @@ void VtkTerrainContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTerrainContourLineInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTerrainContourLineInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTerrainContourLineInterpolatorWrap *w = new VtkTerrainContourLineInterpolatorWrap();
 		w->native.TakeReference(r);

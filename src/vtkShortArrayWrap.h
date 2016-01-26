@@ -24,7 +24,6 @@ class VtkShortArrayWrap : public VtkDataArrayWrap
 		VtkShortArrayWrap(vtkSmartPointer<vtkShortArray>);
 		VtkShortArrayWrap();
 		~VtkShortArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

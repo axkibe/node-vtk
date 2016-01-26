@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLFileReadTesterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLFileReadTesterWrap::ptpl;
 
 VtkXMLFileReadTesterWrap::VtkXMLFileReadTesterWrap()
@@ -75,7 +74,6 @@ void VtkXMLFileReadTesterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TestReadFile", TestReadFile);
 	Nan::SetPrototypeMethod(tpl, "testReadFile", TestReadFile);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -195,7 +193,7 @@ void VtkXMLFileReadTesterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLFileReadTesterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLFileReadTesterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLFileReadTesterWrap *w = new VtkXMLFileReadTesterWrap();
 	w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkXMLFileReadTesterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLFileReadTesterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLFileReadTesterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLFileReadTesterWrap *w = new VtkXMLFileReadTesterWrap();
 		w->native.TakeReference(r);

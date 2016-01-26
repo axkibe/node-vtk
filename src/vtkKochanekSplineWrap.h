@@ -24,7 +24,6 @@ class VtkKochanekSplineWrap : public VtkSplineWrap
 		VtkKochanekSplineWrap(vtkSmartPointer<vtkKochanekSpline>);
 		VtkKochanekSplineWrap();
 		~VtkKochanekSplineWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTableExtentTranslatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTableExtentTranslatorWrap::ptpl;
 
 VtkTableExtentTranslatorWrap::VtkTableExtentTranslatorWrap()
@@ -87,7 +86,6 @@ void VtkTableExtentTranslatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPieceAvailable", SetPieceAvailable);
 	Nan::SetPrototypeMethod(tpl, "setPieceAvailable", SetPieceAvailable);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -214,7 +212,7 @@ void VtkTableExtentTranslatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableExtentTranslatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableExtentTranslatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableExtentTranslatorWrap *w = new VtkTableExtentTranslatorWrap();
 	w->native.TakeReference(r);
@@ -270,7 +268,7 @@ void VtkTableExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTableExtentTranslatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTableExtentTranslatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTableExtentTranslatorWrap *w = new VtkTableExtentTranslatorWrap();
 		w->native.TakeReference(r);

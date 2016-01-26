@@ -24,7 +24,6 @@ class VtkGenerateIndexArrayWrap : public VtkDataObjectAlgorithmWrap
 		VtkGenerateIndexArrayWrap(vtkSmartPointer<vtkGenerateIndexArray>);
 		VtkGenerateIndexArrayWrap();
 		~VtkGenerateIndexArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

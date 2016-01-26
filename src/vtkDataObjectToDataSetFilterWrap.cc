@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDataObjectToDataSetFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDataObjectToDataSetFilterWrap::ptpl;
 
 VtkDataObjectToDataSetFilterWrap::VtkDataObjectToDataSetFilterWrap()
@@ -247,7 +246,6 @@ void VtkDataObjectToDataSetFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertsComponent", SetVertsComponent);
 	Nan::SetPrototypeMethod(tpl, "setVertsComponent", SetVertsComponent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -467,7 +465,7 @@ void VtkDataObjectToDataSetFilterWrap::GetInput(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -550,7 +548,7 @@ void VtkDataObjectToDataSetFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataSetWrap *w = new VtkDataSetWrap();
 		w->native.TakeReference(r);
@@ -569,7 +567,7 @@ void VtkDataObjectToDataSetFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -697,7 +695,7 @@ void VtkDataObjectToDataSetFilterWrap::GetPolyDataOutput(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -776,7 +774,7 @@ void VtkDataObjectToDataSetFilterWrap::GetRectilinearGridOutput(const Nan::Funct
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearGridWrap *w = new VtkRectilinearGridWrap();
 	w->native.TakeReference(r);
@@ -855,7 +853,7 @@ void VtkDataObjectToDataSetFilterWrap::GetStructuredGridOutput(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridWrap *w = new VtkStructuredGridWrap();
 	w->native.TakeReference(r);
@@ -878,7 +876,7 @@ void VtkDataObjectToDataSetFilterWrap::GetStructuredPointsOutput(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredPointsWrap *w = new VtkStructuredPointsWrap();
 	w->native.TakeReference(r);
@@ -901,7 +899,7 @@ void VtkDataObjectToDataSetFilterWrap::GetUnstructuredGridOutput(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -1002,7 +1000,7 @@ void VtkDataObjectToDataSetFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectToDataSetFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectToDataSetFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectToDataSetFilterWrap *w = new VtkDataObjectToDataSetFilterWrap();
 	w->native.TakeReference(r);
@@ -1030,7 +1028,7 @@ void VtkDataObjectToDataSetFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectToDataSetFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectToDataSetFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectToDataSetFilterWrap *w = new VtkDataObjectToDataSetFilterWrap();
 		w->native.TakeReference(r);

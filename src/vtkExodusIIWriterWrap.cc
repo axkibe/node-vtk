@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExodusIIWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExodusIIWriterWrap::ptpl;
 
 VtkExodusIIWriterWrap::VtkExodusIIWriterWrap()
@@ -139,7 +138,6 @@ void VtkExodusIIWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteOutGlobalNodeIdArrayOn", WriteOutGlobalNodeIdArrayOn);
 	Nan::SetPrototypeMethod(tpl, "writeOutGlobalNodeIdArrayOn", WriteOutGlobalNodeIdArrayOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -237,7 +235,7 @@ void VtkExodusIIWriterWrap::GetModelMetadata(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkModelMetadataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkModelMetadataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkModelMetadataWrap *w = new VtkModelMetadataWrap();
 	w->native.TakeReference(r);
@@ -352,7 +350,7 @@ void VtkExodusIIWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExodusIIWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExodusIIWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExodusIIWriterWrap *w = new VtkExodusIIWriterWrap();
 	w->native.TakeReference(r);
@@ -380,7 +378,7 @@ void VtkExodusIIWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExodusIIWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExodusIIWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExodusIIWriterWrap *w = new VtkExodusIIWriterWrap();
 		w->native.TakeReference(r);

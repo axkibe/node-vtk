@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBivariateLinearTableThresholdWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBivariateLinearTableThresholdWrap::ptpl;
 
 VtkBivariateLinearTableThresholdWrap::VtkBivariateLinearTableThresholdWrap()
@@ -124,7 +123,6 @@ void VtkBivariateLinearTableThresholdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseNormalizedDistanceOn", UseNormalizedDistanceOn);
 	Nan::SetPrototypeMethod(tpl, "useNormalizedDistanceOn", UseNormalizedDistanceOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -291,7 +289,7 @@ void VtkBivariateLinearTableThresholdWrap::GetSelectedRowIds(const Nan::Function
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 		w->native.TakeReference(r);
@@ -365,7 +363,7 @@ void VtkBivariateLinearTableThresholdWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBivariateLinearTableThresholdWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBivariateLinearTableThresholdWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBivariateLinearTableThresholdWrap *w = new VtkBivariateLinearTableThresholdWrap();
 	w->native.TakeReference(r);
@@ -393,7 +391,7 @@ void VtkBivariateLinearTableThresholdWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBivariateLinearTableThresholdWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBivariateLinearTableThresholdWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBivariateLinearTableThresholdWrap *w = new VtkBivariateLinearTableThresholdWrap();
 		w->native.TakeReference(r);

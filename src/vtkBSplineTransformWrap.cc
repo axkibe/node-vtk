@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBSplineTransformWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBSplineTransformWrap::ptpl;
 
 VtkBSplineTransformWrap::VtkBSplineTransformWrap()
@@ -102,7 +101,6 @@ void VtkBSplineTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDisplacementScale", SetDisplacementScale);
 	Nan::SetPrototypeMethod(tpl, "setDisplacementScale", SetDisplacementScale);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -214,7 +212,7 @@ void VtkBSplineTransformWrap::GetCoefficientData(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -259,7 +257,7 @@ void VtkBSplineTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -282,7 +280,7 @@ void VtkBSplineTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBSplineTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBSplineTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBSplineTransformWrap *w = new VtkBSplineTransformWrap();
 	w->native.TakeReference(r);
@@ -310,7 +308,7 @@ void VtkBSplineTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBSplineTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBSplineTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBSplineTransformWrap *w = new VtkBSplineTransformWrap();
 		w->native.TakeReference(r);

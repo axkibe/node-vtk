@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPassThroughWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPassThroughWrap::ptpl;
 
 VtkPassThroughWrap::VtkPassThroughWrap()
@@ -76,7 +75,6 @@ void VtkPassThroughWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDeepCopyInput", SetDeepCopyInput);
 	Nan::SetPrototypeMethod(tpl, "setDeepCopyInput", SetDeepCopyInput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -218,7 +216,7 @@ void VtkPassThroughWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPassThroughWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPassThroughWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPassThroughWrap *w = new VtkPassThroughWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkPassThroughWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPassThroughWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPassThroughWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPassThroughWrap *w = new VtkPassThroughWrap();
 		w->native.TakeReference(r);

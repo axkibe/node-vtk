@@ -24,7 +24,6 @@ class VtkAddMembershipArrayWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkAddMembershipArrayWrap(vtkSmartPointer<vtkAddMembershipArray>);
 		VtkAddMembershipArrayWrap();
 		~VtkAddMembershipArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkWindowLevelLookupTableWrap : public VtkLookupTableWrap
 		VtkWindowLevelLookupTableWrap(vtkSmartPointer<vtkWindowLevelLookupTable>);
 		VtkWindowLevelLookupTableWrap();
 		~VtkWindowLevelLookupTableWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

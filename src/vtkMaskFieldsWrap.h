@@ -24,7 +24,6 @@ class VtkMaskFieldsWrap : public VtkDataSetAlgorithmWrap
 		VtkMaskFieldsWrap(vtkSmartPointer<vtkMaskFields>);
 		VtkMaskFieldsWrap();
 		~VtkMaskFieldsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

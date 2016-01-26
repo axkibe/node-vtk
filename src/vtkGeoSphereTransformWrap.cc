@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoSphereTransformWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoSphereTransformWrap::ptpl;
 
 VtkGeoSphereTransformWrap::VtkGeoSphereTransformWrap()
@@ -78,7 +77,6 @@ void VtkGeoSphereTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToRectangularOn", ToRectangularOn);
 	Nan::SetPrototypeMethod(tpl, "toRectangularOn", ToRectangularOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -182,7 +180,7 @@ void VtkGeoSphereTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkGeoSphereTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoSphereTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoSphereTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoSphereTransformWrap *w = new VtkGeoSphereTransformWrap();
 	w->native.TakeReference(r);
@@ -233,7 +231,7 @@ void VtkGeoSphereTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoSphereTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoSphereTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoSphereTransformWrap *w = new VtkGeoSphereTransformWrap();
 		w->native.TakeReference(r);

@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGraphLayoutWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGraphLayoutWrap::ptpl;
 
 VtkGraphLayoutWrap::VtkGraphLayoutWrap()
@@ -89,7 +88,6 @@ void VtkGraphLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseTransformOn", UseTransformOn);
 	Nan::SetPrototypeMethod(tpl, "useTransformOn", UseTransformOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -145,7 +143,7 @@ void VtkGraphLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphLayoutStrategyWrap *w = new VtkGraphLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkGraphLayoutWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -241,7 +239,7 @@ void VtkGraphLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphLayoutWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphLayoutWrap *w = new VtkGraphLayoutWrap();
 	w->native.TakeReference(r);
@@ -269,7 +267,7 @@ void VtkGraphLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGraphLayoutWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGraphLayoutWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphLayoutWrap *w = new VtkGraphLayoutWrap();
 		w->native.TakeReference(r);

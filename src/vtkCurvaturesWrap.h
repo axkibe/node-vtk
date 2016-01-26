@@ -24,7 +24,6 @@ class VtkCurvaturesWrap : public VtkPolyDataAlgorithmWrap
 		VtkCurvaturesWrap(vtkSmartPointer<vtkCurvatures>);
 		VtkCurvaturesWrap();
 		~VtkCurvaturesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

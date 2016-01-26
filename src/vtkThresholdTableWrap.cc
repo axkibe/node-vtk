@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkThresholdTableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkThresholdTableWrap::ptpl;
 
 VtkThresholdTableWrap::VtkThresholdTableWrap()
@@ -81,7 +80,6 @@ void VtkThresholdTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThresholdBetween", ThresholdBetween);
 	Nan::SetPrototypeMethod(tpl, "thresholdBetween", ThresholdBetween);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -201,7 +199,7 @@ void VtkThresholdTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkThresholdTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkThresholdTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkThresholdTableWrap *w = new VtkThresholdTableWrap();
 	w->native.TakeReference(r);
@@ -229,7 +227,7 @@ void VtkThresholdTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkThresholdTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkThresholdTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkThresholdTableWrap *w = new VtkThresholdTableWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkTreeMapViewWrap : public VtkTreeAreaViewWrap
 		VtkTreeMapViewWrap(vtkSmartPointer<vtkTreeMapView>);
 		VtkTreeMapViewWrap();
 		~VtkTreeMapViewWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

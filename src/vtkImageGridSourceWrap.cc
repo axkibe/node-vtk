@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageGridSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageGridSourceWrap::ptpl;
 
 VtkImageGridSourceWrap::VtkImageGridSourceWrap()
@@ -111,7 +110,6 @@ void VtkImageGridSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLineValue", SetLineValue);
 	Nan::SetPrototypeMethod(tpl, "setLineValue", SetLineValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -245,7 +243,7 @@ void VtkImageGridSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageGridSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageGridSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageGridSourceWrap *w = new VtkImageGridSourceWrap();
 	w->native.TakeReference(r);
@@ -273,7 +271,7 @@ void VtkImageGridSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageGridSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageGridSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageGridSourceWrap *w = new VtkImageGridSourceWrap();
 		w->native.TakeReference(r);

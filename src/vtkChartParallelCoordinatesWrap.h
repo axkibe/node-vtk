@@ -24,7 +24,6 @@ class VtkChartParallelCoordinatesWrap : public VtkChartWrap
 		VtkChartParallelCoordinatesWrap(vtkSmartPointer<vtkChartParallelCoordinates>);
 		VtkChartParallelCoordinatesWrap();
 		~VtkChartParallelCoordinatesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

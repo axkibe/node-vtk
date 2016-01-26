@@ -24,7 +24,6 @@ class VtkTriangleFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkTriangleFilterWrap(vtkSmartPointer<vtkTriangleFilter>);
 		VtkTriangleFilterWrap();
 		~VtkTriangleFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

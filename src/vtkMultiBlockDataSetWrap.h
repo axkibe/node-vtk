@@ -24,7 +24,6 @@ class VtkMultiBlockDataSetWrap : public VtkDataObjectTreeWrap
 		VtkMultiBlockDataSetWrap(vtkSmartPointer<vtkMultiBlockDataSet>);
 		VtkMultiBlockDataSetWrap();
 		~VtkMultiBlockDataSetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

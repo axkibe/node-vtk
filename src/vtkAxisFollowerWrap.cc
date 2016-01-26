@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAxisFollowerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAxisFollowerWrap::ptpl;
 
 VtkAxisFollowerWrap::VtkAxisFollowerWrap()
@@ -139,7 +138,6 @@ void VtkAxisFollowerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -239,7 +237,7 @@ void VtkAxisFollowerWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActorWrap *w = new VtkAxisActorWrap();
 	w->native.TakeReference(r);
@@ -424,7 +422,7 @@ void VtkAxisFollowerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisFollowerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisFollowerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisFollowerWrap *w = new VtkAxisFollowerWrap();
 	w->native.TakeReference(r);
@@ -516,7 +514,7 @@ void VtkAxisFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAxisFollowerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAxisFollowerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxisFollowerWrap *w = new VtkAxisFollowerWrap();
 		w->native.TakeReference(r);

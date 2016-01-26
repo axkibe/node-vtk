@@ -24,7 +24,6 @@ class VtkCosmicTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		VtkCosmicTreeLayoutStrategyWrap(vtkSmartPointer<vtkCosmicTreeLayoutStrategy>);
 		VtkCosmicTreeLayoutStrategyWrap();
 		~VtkCosmicTreeLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSplineFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSplineFilterWrap::ptpl;
 
 VtkSplineFilterWrap::VtkSplineFilterWrap()
@@ -163,7 +162,6 @@ void VtkSplineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextureLength", SetTextureLength);
 	Nan::SetPrototypeMethod(tpl, "setTextureLength", SetTextureLength);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -401,7 +399,7 @@ void VtkSplineFilterWrap::GetSpline(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplineWrap *w = new VtkSplineWrap();
 	w->native.TakeReference(r);
@@ -544,7 +542,7 @@ void VtkSplineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplineFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplineFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplineFilterWrap *w = new VtkSplineFilterWrap();
 	w->native.TakeReference(r);
@@ -572,7 +570,7 @@ void VtkSplineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSplineFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSplineFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSplineFilterWrap *w = new VtkSplineFilterWrap();
 		w->native.TakeReference(r);

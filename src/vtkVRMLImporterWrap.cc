@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVRMLImporterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVRMLImporterWrap::ptpl;
 
 VtkVRMLImporterWrap::VtkVRMLImporterWrap()
@@ -84,7 +83,6 @@ void VtkVRMLImporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "useNode", useNode);
 	Nan::SetPrototypeMethod(tpl, "useNode", useNode);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -159,7 +157,7 @@ void VtkVRMLImporterWrap::GetVRMLDEFObject(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkObjectWrap *w = new VtkObjectWrap();
 		w->native.TakeReference(r);
@@ -207,7 +205,7 @@ void VtkVRMLImporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVRMLImporterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVRMLImporterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVRMLImporterWrap *w = new VtkVRMLImporterWrap();
 	w->native.TakeReference(r);
@@ -235,7 +233,7 @@ void VtkVRMLImporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVRMLImporterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVRMLImporterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVRMLImporterWrap *w = new VtkVRMLImporterWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParametricTorusWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParametricTorusWrap::ptpl;
 
 VtkParametricTorusWrap::VtkParametricTorusWrap()
@@ -75,7 +74,6 @@ void VtkParametricTorusWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRingRadius", SetRingRadius);
 	Nan::SetPrototypeMethod(tpl, "setRingRadius", SetRingRadius);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -195,7 +193,7 @@ void VtkParametricTorusWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParametricTorusWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParametricTorusWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParametricTorusWrap *w = new VtkParametricTorusWrap();
 	w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkParametricTorusWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParametricTorusWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParametricTorusWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParametricTorusWrap *w = new VtkParametricTorusWrap();
 		w->native.TakeReference(r);

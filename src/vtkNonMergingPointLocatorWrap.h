@@ -24,7 +24,6 @@ class VtkNonMergingPointLocatorWrap : public VtkPointLocatorWrap
 		VtkNonMergingPointLocatorWrap(vtkSmartPointer<vtkNonMergingPointLocator>);
 		VtkNonMergingPointLocatorWrap();
 		~VtkNonMergingPointLocatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

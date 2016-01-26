@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDummyGPUInfoListWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDummyGPUInfoListWrap::ptpl;
 
 VtkDummyGPUInfoListWrap::VtkDummyGPUInfoListWrap()
@@ -63,7 +62,6 @@ void VtkDummyGPUInfoListWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkDummyGPUInfoListWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDummyGPUInfoListWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDummyGPUInfoListWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDummyGPUInfoListWrap *w = new VtkDummyGPUInfoListWrap();
 	w->native.TakeReference(r);
@@ -181,7 +179,7 @@ void VtkDummyGPUInfoListWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDummyGPUInfoListWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDummyGPUInfoListWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDummyGPUInfoListWrap *w = new VtkDummyGPUInfoListWrap();
 		w->native.TakeReference(r);

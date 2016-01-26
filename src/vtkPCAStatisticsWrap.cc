@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPCAStatisticsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPCAStatisticsWrap::ptpl;
 
 VtkPCAStatisticsWrap::VtkPCAStatisticsWrap()
@@ -122,7 +121,6 @@ void VtkPCAStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpecifiedNormalization", SetSpecifiedNormalization);
 	Nan::SetPrototypeMethod(tpl, "setSpecifiedNormalization", SetSpecifiedNormalization);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -456,7 +454,7 @@ void VtkPCAStatisticsWrap::GetSpecifiedNormalization(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
 	w->native.TakeReference(r);
@@ -501,7 +499,7 @@ void VtkPCAStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPCAStatisticsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPCAStatisticsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPCAStatisticsWrap *w = new VtkPCAStatisticsWrap();
 	w->native.TakeReference(r);
@@ -529,7 +527,7 @@ void VtkPCAStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPCAStatisticsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPCAStatisticsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPCAStatisticsWrap *w = new VtkPCAStatisticsWrap();
 		w->native.TakeReference(r);

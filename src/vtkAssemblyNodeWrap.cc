@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAssemblyNodeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAssemblyNodeWrap::ptpl;
 
 VtkAssemblyNodeWrap::VtkAssemblyNodeWrap()
@@ -73,7 +72,6 @@ void VtkAssemblyNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewProp", SetViewProp);
 	Nan::SetPrototypeMethod(tpl, "setViewProp", SetViewProp);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -129,7 +127,7 @@ void VtkAssemblyNodeWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrix4x4Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrix4x4Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
 	w->native.TakeReference(r);
@@ -152,7 +150,7 @@ void VtkAssemblyNodeWrap::GetViewProp(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropWrap *w = new VtkPropWrap();
 	w->native.TakeReference(r);
@@ -197,7 +195,7 @@ void VtkAssemblyNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAssemblyNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAssemblyNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAssemblyNodeWrap *w = new VtkAssemblyNodeWrap();
 	w->native.TakeReference(r);
@@ -225,7 +223,7 @@ void VtkAssemblyNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAssemblyNodeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAssemblyNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAssemblyNodeWrap *w = new VtkAssemblyNodeWrap();
 		w->native.TakeReference(r);

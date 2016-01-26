@@ -24,7 +24,6 @@ class VtkImageMapper3DWrap : public VtkAbstractMapper3DWrap
 		VtkImageMapper3DWrap(vtkSmartPointer<vtkImageMapper3D>);
 		VtkImageMapper3DWrap();
 		~VtkImageMapper3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkRayCastImageDisplayHelperWrap : public VtkObjectWrap
 		VtkRayCastImageDisplayHelperWrap(vtkSmartPointer<vtkRayCastImageDisplayHelper>);
 		VtkRayCastImageDisplayHelperWrap();
 		~VtkRayCastImageDisplayHelperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

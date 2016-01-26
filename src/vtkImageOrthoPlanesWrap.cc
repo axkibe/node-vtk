@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageOrthoPlanesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageOrthoPlanesWrap::ptpl;
 
 VtkImageOrthoPlanesWrap::VtkImageOrthoPlanesWrap()
@@ -76,7 +75,6 @@ void VtkImageOrthoPlanesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPlane", SetPlane);
 	Nan::SetPrototypeMethod(tpl, "setPlane", SetPlane);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -136,7 +134,7 @@ void VtkImageOrthoPlanesWrap::GetPlane(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImagePlaneWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImagePlaneWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImagePlaneWidgetWrap *w = new VtkImagePlaneWidgetWrap();
 		w->native.TakeReference(r);
@@ -162,7 +160,7 @@ void VtkImageOrthoPlanesWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransformWrap *w = new VtkTransformWrap();
 	w->native.TakeReference(r);
@@ -227,7 +225,7 @@ void VtkImageOrthoPlanesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageOrthoPlanesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageOrthoPlanesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageOrthoPlanesWrap *w = new VtkImageOrthoPlanesWrap();
 	w->native.TakeReference(r);
@@ -267,7 +265,7 @@ void VtkImageOrthoPlanesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageOrthoPlanesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageOrthoPlanesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageOrthoPlanesWrap *w = new VtkImageOrthoPlanesWrap();
 		w->native.TakeReference(r);

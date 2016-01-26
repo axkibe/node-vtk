@@ -24,7 +24,6 @@ class VtkOOGLExporterWrap : public VtkExporterWrap
 		VtkOOGLExporterWrap(vtkSmartPointer<vtkOOGLExporter>);
 		VtkOOGLExporterWrap();
 		~VtkOOGLExporterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

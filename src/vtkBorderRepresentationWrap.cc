@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBorderRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBorderRepresentationWrap::ptpl;
 
 VtkBorderRepresentationWrap::VtkBorderRepresentationWrap()
@@ -191,7 +190,6 @@ void VtkBorderRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -294,7 +292,7 @@ void VtkBorderRepresentationWrap::GetBorderProperty(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -345,7 +343,7 @@ void VtkBorderRepresentationWrap::GetPosition2Coordinate(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoordinateWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoordinateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoordinateWrap *w = new VtkCoordinateWrap();
 	w->native.TakeReference(r);
@@ -368,7 +366,7 @@ void VtkBorderRepresentationWrap::GetPositionCoordinate(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoordinateWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoordinateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoordinateWrap *w = new VtkCoordinateWrap();
 	w->native.TakeReference(r);
@@ -633,7 +631,7 @@ void VtkBorderRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBorderRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBorderRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBorderRepresentationWrap *w = new VtkBorderRepresentationWrap();
 	w->native.TakeReference(r);
@@ -771,7 +769,7 @@ void VtkBorderRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBorderRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBorderRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBorderRepresentationWrap *w = new VtkBorderRepresentationWrap();
 		w->native.TakeReference(r);

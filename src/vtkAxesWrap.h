@@ -24,7 +24,6 @@ class VtkAxesWrap : public VtkPolyDataAlgorithmWrap
 		VtkAxesWrap(vtkSmartPointer<vtkAxes>);
 		VtkAxesWrap();
 		~VtkAxesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

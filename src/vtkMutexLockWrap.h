@@ -24,7 +24,6 @@ class VtkMutexLockWrap : public VtkObjectWrap
 		VtkMutexLockWrap(vtkSmartPointer<vtkMutexLock>);
 		VtkMutexLockWrap();
 		~VtkMutexLockWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

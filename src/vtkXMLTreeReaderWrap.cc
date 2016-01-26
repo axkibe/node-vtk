@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLTreeReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLTreeReaderWrap::ptpl;
 
 VtkXMLTreeReaderWrap::VtkXMLTreeReaderWrap()
@@ -114,7 +113,6 @@ void VtkXMLTreeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXMLString", SetXMLString);
 	Nan::SetPrototypeMethod(tpl, "setXMLString", SetXMLString);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -320,7 +318,7 @@ void VtkXMLTreeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLTreeReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLTreeReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLTreeReaderWrap *w = new VtkXMLTreeReaderWrap();
 	w->native.TakeReference(r);
@@ -396,7 +394,7 @@ void VtkXMLTreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLTreeReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLTreeReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLTreeReaderWrap *w = new VtkXMLTreeReaderWrap();
 		w->native.TakeReference(r);

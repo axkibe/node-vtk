@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkQuadraticTetraWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkQuadraticTetraWrap::ptpl;
 
 VtkQuadraticTetraWrap::VtkQuadraticTetraWrap()
@@ -84,7 +83,6 @@ void VtkQuadraticTetraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -172,7 +170,7 @@ void VtkQuadraticTetraWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellWrap *w = new VtkCellWrap();
 		w->native.TakeReference(r);
@@ -202,7 +200,7 @@ void VtkQuadraticTetraWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellWrap *w = new VtkCellWrap();
 		w->native.TakeReference(r);
@@ -278,7 +276,7 @@ void VtkQuadraticTetraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuadraticTetraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuadraticTetraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuadraticTetraWrap *w = new VtkQuadraticTetraWrap();
 	w->native.TakeReference(r);
@@ -306,7 +304,7 @@ void VtkQuadraticTetraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkQuadraticTetraWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkQuadraticTetraWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkQuadraticTetraWrap *w = new VtkQuadraticTetraWrap();
 		w->native.TakeReference(r);

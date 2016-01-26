@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPixelBufferObjectWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPixelBufferObjectWrap::ptpl;
 
 VtkPixelBufferObjectWrap::VtkPixelBufferObjectWrap()
@@ -102,7 +101,6 @@ void VtkPixelBufferObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnmapUnpackedBuffer", UnmapUnpackedBuffer);
 	Nan::SetPrototypeMethod(tpl, "unmapUnpackedBuffer", UnmapUnpackedBuffer);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -196,7 +194,7 @@ void VtkPixelBufferObjectWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -269,7 +267,7 @@ void VtkPixelBufferObjectWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPixelBufferObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPixelBufferObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPixelBufferObjectWrap *w = new VtkPixelBufferObjectWrap();
 	w->native.TakeReference(r);
@@ -309,7 +307,7 @@ void VtkPixelBufferObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPixelBufferObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPixelBufferObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPixelBufferObjectWrap *w = new VtkPixelBufferObjectWrap();
 		w->native.TakeReference(r);

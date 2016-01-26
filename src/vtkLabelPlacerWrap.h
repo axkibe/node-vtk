@@ -24,7 +24,6 @@ class VtkLabelPlacerWrap : public VtkPolyDataAlgorithmWrap
 		VtkLabelPlacerWrap(vtkSmartPointer<vtkLabelPlacer>);
 		VtkLabelPlacerWrap();
 		~VtkLabelPlacerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

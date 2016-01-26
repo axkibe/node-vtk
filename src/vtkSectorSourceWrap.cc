@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSectorSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSectorSourceWrap::ptpl;
 
 VtkSectorSourceWrap::VtkSectorSourceWrap()
@@ -144,7 +143,6 @@ void VtkSectorSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZCoord", SetZCoord);
 	Nan::SetPrototypeMethod(tpl, "setZCoord", SetZCoord);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -516,7 +514,7 @@ void VtkSectorSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSectorSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSectorSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSectorSourceWrap *w = new VtkSectorSourceWrap();
 	w->native.TakeReference(r);
@@ -544,7 +542,7 @@ void VtkSectorSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSectorSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSectorSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSectorSourceWrap *w = new VtkSectorSourceWrap();
 		w->native.TakeReference(r);

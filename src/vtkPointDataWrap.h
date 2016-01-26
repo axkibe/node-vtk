@@ -24,7 +24,6 @@ class VtkPointDataWrap : public VtkDataSetAttributesWrap
 		VtkPointDataWrap(vtkSmartPointer<vtkPointData>);
 		VtkPointDataWrap();
 		~VtkPointDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

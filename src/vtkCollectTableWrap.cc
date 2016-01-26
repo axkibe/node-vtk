@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCollectTableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCollectTableWrap::ptpl;
 
 VtkCollectTableWrap::VtkCollectTableWrap()
@@ -86,7 +85,6 @@ void VtkCollectTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSocketController", SetSocketController);
 	Nan::SetPrototypeMethod(tpl, "setSocketController", SetSocketController);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkCollectTableWrap::GetController(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -179,7 +177,7 @@ void VtkCollectTableWrap::GetSocketController(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSocketControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSocketControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSocketControllerWrap *w = new VtkSocketControllerWrap();
 	w->native.TakeReference(r);
@@ -224,7 +222,7 @@ void VtkCollectTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCollectTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCollectTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCollectTableWrap *w = new VtkCollectTableWrap();
 	w->native.TakeReference(r);
@@ -276,7 +274,7 @@ void VtkCollectTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCollectTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCollectTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCollectTableWrap *w = new VtkCollectTableWrap();
 		w->native.TakeReference(r);

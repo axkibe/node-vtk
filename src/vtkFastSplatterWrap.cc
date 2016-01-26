@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFastSplatterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFastSplatterWrap::ptpl;
 
 VtkFastSplatterWrap::VtkFastSplatterWrap()
@@ -103,7 +102,6 @@ void VtkFastSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplatConnection", SetSplatConnection);
 	Nan::SetPrototypeMethod(tpl, "setSplatConnection", SetSplatConnection);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -237,7 +235,7 @@ void VtkFastSplatterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFastSplatterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFastSplatterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFastSplatterWrap *w = new VtkFastSplatterWrap();
 	w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkFastSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFastSplatterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFastSplatterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFastSplatterWrap *w = new VtkFastSplatterWrap();
 		w->native.TakeReference(r);

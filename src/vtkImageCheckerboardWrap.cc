@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageCheckerboardWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageCheckerboardWrap::ptpl;
 
 VtkImageCheckerboardWrap::VtkImageCheckerboardWrap()
@@ -70,7 +69,6 @@ void VtkImageCheckerboardWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfDivisions", SetNumberOfDivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfDivisions", SetNumberOfDivisions);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -148,7 +146,7 @@ void VtkImageCheckerboardWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageCheckerboardWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageCheckerboardWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageCheckerboardWrap *w = new VtkImageCheckerboardWrap();
 	w->native.TakeReference(r);
@@ -176,7 +174,7 @@ void VtkImageCheckerboardWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageCheckerboardWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageCheckerboardWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageCheckerboardWrap *w = new VtkImageCheckerboardWrap();
 		w->native.TakeReference(r);

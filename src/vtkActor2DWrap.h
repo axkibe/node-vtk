@@ -24,7 +24,6 @@ class VtkActor2DWrap : public VtkPropWrap
 		VtkActor2DWrap(vtkSmartPointer<vtkActor2D>);
 		VtkActor2DWrap();
 		~VtkActor2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

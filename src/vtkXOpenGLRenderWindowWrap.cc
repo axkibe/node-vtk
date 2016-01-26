@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXOpenGLRenderWindowWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXOpenGLRenderWindowWrap::ptpl;
 
 VtkXOpenGLRenderWindowWrap::VtkXOpenGLRenderWindowWrap()
@@ -141,7 +140,6 @@ void VtkXOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WindowRemap", WindowRemap);
 	Nan::SetPrototypeMethod(tpl, "windowRemap", WindowRemap);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -321,7 +319,7 @@ void VtkXOpenGLRenderWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXOpenGLRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXOpenGLRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXOpenGLRenderWindowWrap *w = new VtkXOpenGLRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -387,7 +385,7 @@ void VtkXOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXOpenGLRenderWindowWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXOpenGLRenderWindowWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXOpenGLRenderWindowWrap *w = new VtkXOpenGLRenderWindowWrap();
 		w->native.TakeReference(r);

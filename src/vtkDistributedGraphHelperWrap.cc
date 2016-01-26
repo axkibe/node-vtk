@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDistributedGraphHelperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDistributedGraphHelperWrap::ptpl;
 
 VtkDistributedGraphHelperWrap::VtkDistributedGraphHelperWrap()
@@ -70,7 +69,6 @@ void VtkDistributedGraphHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Synchronize", Synchronize);
 	Nan::SetPrototypeMethod(tpl, "synchronize", Synchronize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -112,7 +110,7 @@ void VtkDistributedGraphHelperWrap::Clone(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDistributedGraphHelperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDistributedGraphHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistributedGraphHelperWrap *w = new VtkDistributedGraphHelperWrap();
 	w->native.TakeReference(r);
@@ -135,7 +133,7 @@ void VtkDistributedGraphHelperWrap::DISTRIBUTEDEDGEIDS(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -158,7 +156,7 @@ void VtkDistributedGraphHelperWrap::DISTRIBUTEDVERTEXIDS(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -217,7 +215,7 @@ void VtkDistributedGraphHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDistributedGraphHelperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDistributedGraphHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistributedGraphHelperWrap *w = new VtkDistributedGraphHelperWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkDistributedGraphHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDistributedGraphHelperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDistributedGraphHelperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDistributedGraphHelperWrap *w = new VtkDistributedGraphHelperWrap();
 		w->native.TakeReference(r);

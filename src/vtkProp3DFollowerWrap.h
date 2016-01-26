@@ -24,7 +24,6 @@ class VtkProp3DFollowerWrap : public VtkProp3DWrap
 		VtkProp3DFollowerWrap(vtkSmartPointer<vtkProp3DFollower>);
 		VtkProp3DFollowerWrap();
 		~VtkProp3DFollowerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

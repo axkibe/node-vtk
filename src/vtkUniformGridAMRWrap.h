@@ -24,7 +24,6 @@ class VtkUniformGridAMRWrap : public VtkCompositeDataSetWrap
 		VtkUniformGridAMRWrap(vtkSmartPointer<vtkUniformGridAMR>);
 		VtkUniformGridAMRWrap();
 		~VtkUniformGridAMRWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

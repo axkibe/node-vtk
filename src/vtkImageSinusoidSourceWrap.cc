@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageSinusoidSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageSinusoidSourceWrap::ptpl;
 
 VtkImageSinusoidSourceWrap::VtkImageSinusoidSourceWrap()
@@ -84,7 +83,6 @@ void VtkImageSinusoidSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -204,7 +202,7 @@ void VtkImageSinusoidSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageSinusoidSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageSinusoidSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSinusoidSourceWrap *w = new VtkImageSinusoidSourceWrap();
 	w->native.TakeReference(r);
@@ -232,7 +230,7 @@ void VtkImageSinusoidSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageSinusoidSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageSinusoidSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageSinusoidSourceWrap *w = new VtkImageSinusoidSourceWrap();
 		w->native.TakeReference(r);

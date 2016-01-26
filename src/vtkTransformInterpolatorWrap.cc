@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransformInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransformInterpolatorWrap::ptpl;
 
 VtkTransformInterpolatorWrap::VtkTransformInterpolatorWrap()
@@ -124,7 +123,6 @@ void VtkTransformInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleInterpolator", SetScaleInterpolator);
 	Nan::SetPrototypeMethod(tpl, "setScaleInterpolator", SetScaleInterpolator);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -288,7 +286,7 @@ void VtkTransformInterpolatorWrap::GetPositionInterpolator(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTupleInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -311,7 +309,7 @@ void VtkTransformInterpolatorWrap::GetRotationInterpolator(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuaternionInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuaternionInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuaternionInterpolatorWrap *w = new VtkQuaternionInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -334,7 +332,7 @@ void VtkTransformInterpolatorWrap::GetScaleInterpolator(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTupleInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -415,7 +413,7 @@ void VtkTransformInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransformInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransformInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransformInterpolatorWrap *w = new VtkTransformInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -462,7 +460,7 @@ void VtkTransformInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransformInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransformInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransformInterpolatorWrap *w = new VtkTransformInterpolatorWrap();
 		w->native.TakeReference(r);

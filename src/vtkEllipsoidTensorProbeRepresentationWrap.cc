@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEllipsoidTensorProbeRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEllipsoidTensorProbeRepresentationWrap::ptpl;
 
 VtkEllipsoidTensorProbeRepresentationWrap::VtkEllipsoidTensorProbeRepresentationWrap()
@@ -75,7 +74,6 @@ void VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -185,7 +183,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::NewInstance(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEllipsoidTensorProbeRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEllipsoidTensorProbeRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEllipsoidTensorProbeRepresentationWrap *w = new VtkEllipsoidTensorProbeRepresentationWrap();
 	w->native.TakeReference(r);
@@ -255,7 +253,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::SafeDownCast(const Nan::Function
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEllipsoidTensorProbeRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEllipsoidTensorProbeRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEllipsoidTensorProbeRepresentationWrap *w = new VtkEllipsoidTensorProbeRepresentationWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkTensorGlyphWrap : public VtkPolyDataAlgorithmWrap
 		VtkTensorGlyphWrap(vtkSmartPointer<vtkTensorGlyph>);
 		VtkTensorGlyphWrap();
 		~VtkTensorGlyphWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

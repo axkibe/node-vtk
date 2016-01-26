@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFixedPointRayCastImageWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFixedPointRayCastImageWrap::ptpl;
 
 VtkFixedPointRayCastImageWrap::VtkFixedPointRayCastImageWrap()
@@ -104,7 +103,6 @@ void VtkFixedPointRayCastImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseZBufferOn", UseZBufferOn);
 	Nan::SetPrototypeMethod(tpl, "useZBufferOn", UseZBufferOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -260,7 +258,7 @@ void VtkFixedPointRayCastImageWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFixedPointRayCastImageWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFixedPointRayCastImageWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointRayCastImageWrap *w = new VtkFixedPointRayCastImageWrap();
 	w->native.TakeReference(r);
@@ -288,7 +286,7 @@ void VtkFixedPointRayCastImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFixedPointRayCastImageWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFixedPointRayCastImageWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFixedPointRayCastImageWrap *w = new VtkFixedPointRayCastImageWrap();
 		w->native.TakeReference(r);

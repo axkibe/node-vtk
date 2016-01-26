@@ -24,7 +24,6 @@ class VtkParallelCoordinatesViewWrap : public VtkRenderViewWrap
 		VtkParallelCoordinatesViewWrap(vtkSmartPointer<vtkParallelCoordinatesView>);
 		VtkParallelCoordinatesViewWrap();
 		~VtkParallelCoordinatesViewWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

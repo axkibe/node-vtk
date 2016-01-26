@@ -24,7 +24,6 @@ class VtkCirclePackToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		VtkCirclePackToPolyDataWrap(vtkSmartPointer<vtkCirclePackToPolyData>);
 		VtkCirclePackToPolyDataWrap();
 		~VtkCirclePackToPolyDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkKdTreeSelectorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkKdTreeSelectorWrap::ptpl;
 
 VtkKdTreeSelectorWrap::VtkKdTreeSelectorWrap()
@@ -94,7 +93,6 @@ void VtkKdTreeSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SingleSelectionOn", SingleSelectionOn);
 	Nan::SetPrototypeMethod(tpl, "singleSelectionOn", SingleSelectionOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -150,7 +148,7 @@ void VtkKdTreeSelectorWrap::GetKdTree(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKdTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKdTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKdTreeWrap *w = new VtkKdTreeWrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkKdTreeSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKdTreeSelectorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKdTreeSelectorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKdTreeSelectorWrap *w = new VtkKdTreeSelectorWrap();
 	w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkKdTreeSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkKdTreeSelectorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkKdTreeSelectorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKdTreeSelectorWrap *w = new VtkKdTreeSelectorWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDataSetGhostGeneratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDataSetGhostGeneratorWrap::ptpl;
 
 VtkDataSetGhostGeneratorWrap::VtkDataSetGhostGeneratorWrap()
@@ -73,7 +72,6 @@ void VtkDataSetGhostGeneratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfGhostLayers", SetNumberOfGhostLayers);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfGhostLayers", SetNumberOfGhostLayers);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -217,7 +215,7 @@ void VtkDataSetGhostGeneratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetGhostGeneratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetGhostGeneratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetGhostGeneratorWrap *w = new VtkDataSetGhostGeneratorWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkDataSetGhostGeneratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataSetGhostGeneratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataSetGhostGeneratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataSetGhostGeneratorWrap *w = new VtkDataSetGhostGeneratorWrap();
 		w->native.TakeReference(r);

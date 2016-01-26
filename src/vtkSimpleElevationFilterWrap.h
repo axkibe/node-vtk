@@ -24,7 +24,6 @@ class VtkSimpleElevationFilterWrap : public VtkDataSetAlgorithmWrap
 		VtkSimpleElevationFilterWrap(vtkSmartPointer<vtkSimpleElevationFilter>);
 		VtkSimpleElevationFilterWrap();
 		~VtkSimpleElevationFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

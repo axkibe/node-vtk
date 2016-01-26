@@ -24,7 +24,6 @@ class VtkHierarchicalGraphPipelineWrap : public VtkObjectWrap
 		VtkHierarchicalGraphPipelineWrap(vtkSmartPointer<vtkHierarchicalGraphPipeline>);
 		VtkHierarchicalGraphPipelineWrap();
 		~VtkHierarchicalGraphPipelineWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

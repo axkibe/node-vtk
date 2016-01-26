@@ -24,7 +24,6 @@ class VtkCirclePackFrontChainLayoutStrategyWrap : public VtkCirclePackLayoutStra
 		VtkCirclePackFrontChainLayoutStrategyWrap(vtkSmartPointer<vtkCirclePackFrontChainLayoutStrategy>);
 		VtkCirclePackFrontChainLayoutStrategyWrap();
 		~VtkCirclePackFrontChainLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

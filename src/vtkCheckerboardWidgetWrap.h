@@ -24,7 +24,6 @@ class VtkCheckerboardWidgetWrap : public VtkAbstractWidgetWrap
 		VtkCheckerboardWidgetWrap(vtkSmartPointer<vtkCheckerboardWidget>);
 		VtkCheckerboardWidgetWrap();
 		~VtkCheckerboardWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkPyramidWrap : public VtkCell3DWrap
 		VtkPyramidWrap(vtkSmartPointer<vtkPyramid>);
 		VtkPyramidWrap();
 		~VtkPyramidWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

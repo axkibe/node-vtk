@@ -24,7 +24,6 @@ class VtkImageGaussianSmoothWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageGaussianSmoothWrap(vtkSmartPointer<vtkImageGaussianSmooth>);
 		VtkImageGaussianSmoothWrap();
 		~VtkImageGaussianSmoothWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

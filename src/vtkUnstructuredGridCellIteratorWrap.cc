@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridCellIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridCellIteratorWrap::ptpl;
 
 VtkUnstructuredGridCellIteratorWrap::VtkUnstructuredGridCellIteratorWrap()
@@ -60,7 +59,6 @@ void VtkUnstructuredGridCellIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkUnstructuredGridCellIteratorWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridCellIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridCellIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridCellIteratorWrap *w = new VtkUnstructuredGridCellIteratorWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkUnstructuredGridCellIteratorWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridCellIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridCellIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridCellIteratorWrap *w = new VtkUnstructuredGridCellIteratorWrap();
 		w->native.TakeReference(r);

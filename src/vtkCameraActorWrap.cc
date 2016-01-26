@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCameraActorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCameraActorWrap::ptpl;
 
 VtkCameraActorWrap::VtkCameraActorWrap()
@@ -91,7 +90,6 @@ void VtkCameraActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidthByHeightRatio", SetWidthByHeightRatio);
 	Nan::SetPrototypeMethod(tpl, "setWidthByHeightRatio", SetWidthByHeightRatio);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -133,7 +131,7 @@ void VtkCameraActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
@@ -170,7 +168,7 @@ void VtkCameraActorWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -243,7 +241,7 @@ void VtkCameraActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraActorWrap *w = new VtkCameraActorWrap();
 	w->native.TakeReference(r);
@@ -313,7 +311,7 @@ void VtkCameraActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCameraActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCameraActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCameraActorWrap *w = new VtkCameraActorWrap();
 		w->native.TakeReference(r);

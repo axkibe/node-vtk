@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHardwareSelectionPolyDataPainterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHardwareSelectionPolyDataPainterWrap::ptpl;
 
 VtkHardwareSelectionPolyDataPainterWrap::VtkHardwareSelectionPolyDataPainterWrap()
@@ -96,7 +95,6 @@ void VtkHardwareSelectionPolyDataPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProcessIdArrayName", SetProcessIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setProcessIdArrayName", SetProcessIdArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -268,7 +266,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::NewInstance(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHardwareSelectionPolyDataPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHardwareSelectionPolyDataPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHardwareSelectionPolyDataPainterWrap *w = new VtkHardwareSelectionPolyDataPainterWrap();
 	w->native.TakeReference(r);
@@ -296,7 +294,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCa
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHardwareSelectionPolyDataPainterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHardwareSelectionPolyDataPainterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHardwareSelectionPolyDataPainterWrap *w = new VtkHardwareSelectionPolyDataPainterWrap();
 		w->native.TakeReference(r);

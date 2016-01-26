@@ -24,7 +24,6 @@ class VtkRandomGraphSourceWrap : public VtkGraphAlgorithmWrap
 		VtkRandomGraphSourceWrap(vtkSmartPointer<vtkRandomGraphSource>);
 		VtkRandomGraphSourceWrap();
 		~VtkRandomGraphSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

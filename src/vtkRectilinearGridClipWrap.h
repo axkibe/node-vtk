@@ -24,7 +24,6 @@ class VtkRectilinearGridClipWrap : public VtkRectilinearGridAlgorithmWrap
 		VtkRectilinearGridClipWrap(vtkSmartPointer<vtkRectilinearGridClip>);
 		VtkRectilinearGridClipWrap();
 		~VtkRectilinearGridClipWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

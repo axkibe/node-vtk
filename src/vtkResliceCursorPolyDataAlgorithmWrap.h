@@ -24,7 +24,6 @@ class VtkResliceCursorPolyDataAlgorithmWrap : public VtkPolyDataAlgorithmWrap
 		VtkResliceCursorPolyDataAlgorithmWrap(vtkSmartPointer<vtkResliceCursorPolyDataAlgorithm>);
 		VtkResliceCursorPolyDataAlgorithmWrap();
 		~VtkResliceCursorPolyDataAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

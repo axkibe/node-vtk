@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLProjectedAAHexahedraMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLProjectedAAHexahedraMapperWrap::ptpl;
 
 VtkOpenGLProjectedAAHexahedraMapperWrap::VtkOpenGLProjectedAAHexahedraMapperWrap()
@@ -69,7 +68,6 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -147,7 +145,7 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::NewInstance(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLProjectedAAHexahedraMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLProjectedAAHexahedraMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLProjectedAAHexahedraMapperWrap *w = new VtkOpenGLProjectedAAHexahedraMapperWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::SafeDownCast(const Nan::FunctionCa
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLProjectedAAHexahedraMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLProjectedAAHexahedraMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLProjectedAAHexahedraMapperWrap *w = new VtkOpenGLProjectedAAHexahedraMapperWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractLevelWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractLevelWrap::ptpl;
 
 VtkExtractLevelWrap::VtkExtractLevelWrap()
@@ -63,7 +62,6 @@ void VtkExtractLevelWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkExtractLevelWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractLevelWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractLevelWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractLevelWrap *w = new VtkExtractLevelWrap();
 	w->native.TakeReference(r);
@@ -181,7 +179,7 @@ void VtkExtractLevelWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractLevelWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractLevelWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractLevelWrap *w = new VtkExtractLevelWrap();
 		w->native.TakeReference(r);

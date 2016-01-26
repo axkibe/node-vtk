@@ -24,7 +24,6 @@ class VtkGraphToGlyphsWrap : public VtkPolyDataAlgorithmWrap
 		VtkGraphToGlyphsWrap(vtkSmartPointer<vtkGraphToGlyphs>);
 		VtkGraphToGlyphsWrap();
 		~VtkGraphToGlyphsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

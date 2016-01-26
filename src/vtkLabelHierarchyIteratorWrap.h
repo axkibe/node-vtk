@@ -24,7 +24,6 @@ class VtkLabelHierarchyIteratorWrap : public VtkObjectWrap
 		VtkLabelHierarchyIteratorWrap(vtkSmartPointer<vtkLabelHierarchyIterator>);
 		VtkLabelHierarchyIteratorWrap();
 		~VtkLabelHierarchyIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

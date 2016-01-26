@@ -24,7 +24,6 @@ class VtkImplicitPlaneRepresentationWrap : public VtkWidgetRepresentationWrap
 		VtkImplicitPlaneRepresentationWrap(vtkSmartPointer<vtkImplicitPlaneRepresentation>);
 		VtkImplicitPlaneRepresentationWrap();
 		~VtkImplicitPlaneRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

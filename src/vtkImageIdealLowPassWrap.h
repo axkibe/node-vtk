@@ -24,7 +24,6 @@ class VtkImageIdealLowPassWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageIdealLowPassWrap(vtkSmartPointer<vtkImageIdealLowPass>);
 		VtkImageIdealLowPassWrap();
 		~VtkImageIdealLowPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLStructuredDataWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLStructuredDataWriterWrap::ptpl;
 
 VtkXMLStructuredDataWriterWrap::VtkXMLStructuredDataWriterWrap()
@@ -76,7 +75,6 @@ void VtkXMLStructuredDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWriteExtent", SetWriteExtent);
 	Nan::SetPrototypeMethod(tpl, "setWriteExtent", SetWriteExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -132,7 +130,7 @@ void VtkXMLStructuredDataWriterWrap::GetExtentTranslator(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtentTranslatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtentTranslatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtentTranslatorWrap *w = new VtkExtentTranslatorWrap();
 	w->native.TakeReference(r);
@@ -191,7 +189,7 @@ void VtkXMLStructuredDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLStructuredDataWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLStructuredDataWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLStructuredDataWriterWrap *w = new VtkXMLStructuredDataWriterWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkXMLStructuredDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLStructuredDataWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLStructuredDataWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLStructuredDataWriterWrap *w = new VtkXMLStructuredDataWriterWrap();
 		w->native.TakeReference(r);

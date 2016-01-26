@@ -24,7 +24,6 @@ class VtkUnstructuredGridReaderWrap : public VtkDataReaderWrap
 		VtkUnstructuredGridReaderWrap(vtkSmartPointer<vtkUnstructuredGridReader>);
 		VtkUnstructuredGridReaderWrap();
 		~VtkUnstructuredGridReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

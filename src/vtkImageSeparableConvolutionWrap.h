@@ -24,7 +24,6 @@ class VtkImageSeparableConvolutionWrap : public VtkImageDecomposeFilterWrap
 		VtkImageSeparableConvolutionWrap(vtkSmartPointer<vtkImageSeparableConvolution>);
 		VtkImageSeparableConvolutionWrap();
 		~VtkImageSeparableConvolutionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

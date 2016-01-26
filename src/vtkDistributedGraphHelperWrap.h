@@ -24,7 +24,6 @@ class VtkDistributedGraphHelperWrap : public VtkObjectWrap
 		VtkDistributedGraphHelperWrap(vtkSmartPointer<vtkDistributedGraphHelper>);
 		VtkDistributedGraphHelperWrap();
 		~VtkDistributedGraphHelperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

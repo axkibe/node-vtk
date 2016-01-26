@@ -24,7 +24,6 @@ class VtkParallelCoordinatesInteractorStyleWrap : public VtkInteractorStyleTrack
 		VtkParallelCoordinatesInteractorStyleWrap(vtkSmartPointer<vtkParallelCoordinatesInteractorStyle>);
 		VtkParallelCoordinatesInteractorStyleWrap();
 		~VtkParallelCoordinatesInteractorStyleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

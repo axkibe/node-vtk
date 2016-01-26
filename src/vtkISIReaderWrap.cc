@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkISIReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkISIReaderWrap::ptpl;
 
 VtkISIReaderWrap::VtkISIReaderWrap()
@@ -78,7 +77,6 @@ void VtkISIReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaxRecords", SetMaxRecords);
 	Nan::SetPrototypeMethod(tpl, "setMaxRecords", SetMaxRecords);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -198,7 +196,7 @@ void VtkISIReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkISIReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkISIReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkISIReaderWrap *w = new VtkISIReaderWrap();
 	w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkISIReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkISIReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkISIReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkISIReaderWrap *w = new VtkISIReaderWrap();
 		w->native.TakeReference(r);

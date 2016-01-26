@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRenderedGraphRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRenderedGraphRepresentationWrap::ptpl;
 
 VtkRenderedGraphRepresentationWrap::VtkRenderedGraphRepresentationWrap()
@@ -389,7 +388,6 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VertexLabelVisibilityOn", VertexLabelVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "vertexLabelVisibilityOn", VertexLabelVisibilityOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -803,7 +801,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeLabelTextProperty(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -826,7 +824,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeLayoutStrategy(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEdgeLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEdgeLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEdgeLayoutStrategyWrap *w = new VtkEdgeLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -863,7 +861,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeScalarBar(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarBarWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarBarWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarWidgetWrap *w = new VtkScalarBarWidgetWrap();
 	w->native.TakeReference(r);
@@ -928,7 +926,7 @@ void VtkRenderedGraphRepresentationWrap::GetLayoutStrategy(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphLayoutStrategyWrap *w = new VtkGraphLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -1105,7 +1103,7 @@ void VtkRenderedGraphRepresentationWrap::GetVertexLabelTextProperty(const Nan::F
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -1128,7 +1126,7 @@ void VtkRenderedGraphRepresentationWrap::GetVertexScalarBar(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarBarWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarBarWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarWidgetWrap *w = new VtkScalarBarWidgetWrap();
 	w->native.TakeReference(r);
@@ -1235,7 +1233,7 @@ void VtkRenderedGraphRepresentationWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderedGraphRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderedGraphRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderedGraphRepresentationWrap *w = new VtkRenderedGraphRepresentationWrap();
 	w->native.TakeReference(r);
@@ -1263,7 +1261,7 @@ void VtkRenderedGraphRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRenderedGraphRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRenderedGraphRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderedGraphRepresentationWrap *w = new VtkRenderedGraphRepresentationWrap();
 		w->native.TakeReference(r);

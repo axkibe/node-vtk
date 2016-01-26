@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlatonicSolidSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlatonicSolidSourceWrap::ptpl;
 
 VtkPlatonicSolidSourceWrap::VtkPlatonicSolidSourceWrap()
@@ -93,7 +92,6 @@ void VtkPlatonicSolidSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSolidTypeToTetrahedron", SetSolidTypeToTetrahedron);
 	Nan::SetPrototypeMethod(tpl, "setSolidTypeToTetrahedron", SetSolidTypeToTetrahedron);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -227,7 +225,7 @@ void VtkPlatonicSolidSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlatonicSolidSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlatonicSolidSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlatonicSolidSourceWrap *w = new VtkPlatonicSolidSourceWrap();
 	w->native.TakeReference(r);
@@ -255,7 +253,7 @@ void VtkPlatonicSolidSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlatonicSolidSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlatonicSolidSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlatonicSolidSourceWrap *w = new VtkPlatonicSolidSourceWrap();
 		w->native.TakeReference(r);

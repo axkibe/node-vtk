@@ -24,7 +24,6 @@ class VtkOutputWindowWrap : public VtkObjectWrap
 		VtkOutputWindowWrap(vtkSmartPointer<vtkOutputWindow>);
 		VtkOutputWindowWrap();
 		~VtkOutputWindowWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

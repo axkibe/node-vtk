@@ -24,7 +24,6 @@ class VtkInputStreamWrap : public VtkObjectWrap
 		VtkInputStreamWrap(vtkSmartPointer<vtkInputStream>);
 		VtkInputStreamWrap();
 		~VtkInputStreamWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

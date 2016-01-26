@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLogoRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLogoRepresentationWrap::ptpl;
 
 VtkLogoRepresentationWrap::VtkLogoRepresentationWrap()
@@ -89,7 +88,6 @@ void VtkLogoRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImageProperty", SetImageProperty);
 	Nan::SetPrototypeMethod(tpl, "setImageProperty", SetImageProperty);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkLogoRepresentationWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -200,7 +198,7 @@ void VtkLogoRepresentationWrap::GetImageProperty(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkLogoRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLogoRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLogoRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLogoRepresentationWrap *w = new VtkLogoRepresentationWrap();
 	w->native.TakeReference(r);
@@ -315,7 +313,7 @@ void VtkLogoRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLogoRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLogoRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLogoRepresentationWrap *w = new VtkLogoRepresentationWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkImageContinuousErode3DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageContinuousErode3DWrap(vtkSmartPointer<vtkImageContinuousErode3D>);
 		VtkImageContinuousErode3DWrap();
 		~VtkImageContinuousErode3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

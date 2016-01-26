@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOnePieceExtentTranslatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOnePieceExtentTranslatorWrap::ptpl;
 
 VtkOnePieceExtentTranslatorWrap::VtkOnePieceExtentTranslatorWrap()
@@ -60,7 +59,6 @@ void VtkOnePieceExtentTranslatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkOnePieceExtentTranslatorWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOnePieceExtentTranslatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOnePieceExtentTranslatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOnePieceExtentTranslatorWrap *w = new VtkOnePieceExtentTranslatorWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkOnePieceExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOnePieceExtentTranslatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOnePieceExtentTranslatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOnePieceExtentTranslatorWrap *w = new VtkOnePieceExtentTranslatorWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkParametricSplineWrap : public VtkParametricFunctionWrap
 		VtkParametricSplineWrap(vtkSmartPointer<vtkParametricSpline>);
 		VtkParametricSplineWrap();
 		~VtkParametricSplineWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

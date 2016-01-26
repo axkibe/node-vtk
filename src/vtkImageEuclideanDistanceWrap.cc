@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageEuclideanDistanceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageEuclideanDistanceWrap::ptpl;
 
 VtkImageEuclideanDistanceWrap::VtkImageEuclideanDistanceWrap()
@@ -102,7 +101,6 @@ void VtkImageEuclideanDistanceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumDistance", SetMaximumDistance);
 	Nan::SetPrototypeMethod(tpl, "setMaximumDistance", SetMaximumDistance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -284,7 +282,7 @@ void VtkImageEuclideanDistanceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageEuclideanDistanceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageEuclideanDistanceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageEuclideanDistanceWrap *w = new VtkImageEuclideanDistanceWrap();
 	w->native.TakeReference(r);
@@ -312,7 +310,7 @@ void VtkImageEuclideanDistanceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageEuclideanDistanceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageEuclideanDistanceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageEuclideanDistanceWrap *w = new VtkImageEuclideanDistanceWrap();
 		w->native.TakeReference(r);

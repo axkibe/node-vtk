@@ -24,7 +24,6 @@ class VtkThresholdTableWrap : public VtkTableAlgorithmWrap
 		VtkThresholdTableWrap(vtkSmartPointer<vtkThresholdTable>);
 		VtkThresholdTableWrap();
 		~VtkThresholdTableWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

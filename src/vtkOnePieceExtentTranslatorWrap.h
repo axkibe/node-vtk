@@ -24,7 +24,6 @@ class VtkOnePieceExtentTranslatorWrap : public VtkExtentTranslatorWrap
 		VtkOnePieceExtentTranslatorWrap(vtkSmartPointer<vtkOnePieceExtentTranslator>);
 		VtkOnePieceExtentTranslatorWrap();
 		~VtkOnePieceExtentTranslatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

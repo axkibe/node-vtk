@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInformationInformationVectorKeyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInformationInformationVectorKeyWrap::ptpl;
 
 VtkInformationInformationVectorKeyWrap::VtkInformationInformationVectorKeyWrap()
@@ -78,7 +77,6 @@ void VtkInformationInformationVectorKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -150,7 +148,7 @@ void VtkInformationInformationVectorKeyWrap::Get(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationVectorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationVectorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationVectorWrap *w = new VtkInformationVectorWrap();
 		w->native.TakeReference(r);
@@ -212,7 +210,7 @@ void VtkInformationInformationVectorKeyWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationInformationVectorKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationInformationVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationInformationVectorKeyWrap *w = new VtkInformationInformationVectorKeyWrap();
 	w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkInformationInformationVectorKeyWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationInformationVectorKeyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationInformationVectorKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationInformationVectorKeyWrap *w = new VtkInformationInformationVectorKeyWrap();
 		w->native.TakeReference(r);

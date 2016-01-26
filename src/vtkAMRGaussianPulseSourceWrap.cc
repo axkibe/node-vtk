@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRGaussianPulseSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRGaussianPulseSourceWrap::ptpl;
 
 VtkAMRGaussianPulseSourceWrap::VtkAMRGaussianPulseSourceWrap()
@@ -102,7 +101,6 @@ void VtkAMRGaussianPulseSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZPulseWidth", SetZPulseWidth);
 	Nan::SetPrototypeMethod(tpl, "setZPulseWidth", SetZPulseWidth);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkAMRGaussianPulseSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRGaussianPulseSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRGaussianPulseSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRGaussianPulseSourceWrap *w = new VtkAMRGaussianPulseSourceWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkAMRGaussianPulseSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRGaussianPulseSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRGaussianPulseSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRGaussianPulseSourceWrap *w = new VtkAMRGaussianPulseSourceWrap();
 		w->native.TakeReference(r);

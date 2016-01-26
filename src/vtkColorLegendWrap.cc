@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkColorLegendWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkColorLegendWrap::ptpl;
 
 VtkColorLegendWrap::VtkColorLegendWrap()
@@ -82,7 +81,6 @@ void VtkColorLegendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -176,7 +174,7 @@ void VtkColorLegendWrap::GetTransferFunction(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -221,7 +219,7 @@ void VtkColorLegendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkColorLegendWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkColorLegendWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorLegendWrap *w = new VtkColorLegendWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkColorLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkColorLegendWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkColorLegendWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkColorLegendWrap *w = new VtkColorLegendWrap();
 		w->native.TakeReference(r);

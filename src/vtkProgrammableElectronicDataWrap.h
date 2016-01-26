@@ -24,7 +24,6 @@ class VtkProgrammableElectronicDataWrap : public VtkAbstractElectronicDataWrap
 		VtkProgrammableElectronicDataWrap(vtkSmartPointer<vtkProgrammableElectronicData>);
 		VtkProgrammableElectronicDataWrap();
 		~VtkProgrammableElectronicDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

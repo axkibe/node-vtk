@@ -24,7 +24,6 @@ class VtkImageToStructuredGridWrap : public VtkStructuredGridAlgorithmWrap
 		VtkImageToStructuredGridWrap(vtkSmartPointer<vtkImageToStructuredGrid>);
 		VtkImageToStructuredGridWrap();
 		~VtkImageToStructuredGridWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

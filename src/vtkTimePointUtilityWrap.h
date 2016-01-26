@@ -24,7 +24,6 @@ class VtkTimePointUtilityWrap : public VtkObjectWrap
 		VtkTimePointUtilityWrap(vtkSmartPointer<vtkTimePointUtility>);
 		VtkTimePointUtilityWrap();
 		~VtkTimePointUtilityWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

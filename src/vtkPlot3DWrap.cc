@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlot3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlot3DWrap::ptpl;
 
 VtkPlot3DWrap::VtkPlot3DWrap()
@@ -89,7 +88,6 @@ void VtkPlot3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelection", SetSelection);
 	Nan::SetPrototypeMethod(tpl, "setSelection", SetSelection);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -131,7 +129,7 @@ void VtkPlot3DWrap::GetChart(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChartXYZWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChartXYZWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartXYZWrap *w = new VtkChartXYZWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkPlot3DWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPenWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPenWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPenWrap *w = new VtkPenWrap();
 	w->native.TakeReference(r);
@@ -191,7 +189,7 @@ void VtkPlot3DWrap::GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 	w->native.TakeReference(r);
@@ -236,7 +234,7 @@ void VtkPlot3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlot3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlot3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlot3DWrap *w = new VtkPlot3DWrap();
 	w->native.TakeReference(r);
@@ -264,7 +262,7 @@ void VtkPlot3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlot3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlot3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlot3DWrap *w = new VtkPlot3DWrap();
 		w->native.TakeReference(r);

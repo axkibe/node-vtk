@@ -24,7 +24,6 @@ class VtkTransmitUnstructuredGridPieceWrap : public VtkUnstructuredGridAlgorithm
 		VtkTransmitUnstructuredGridPieceWrap(vtkSmartPointer<vtkTransmitUnstructuredGridPiece>);
 		VtkTransmitUnstructuredGridPieceWrap();
 		~VtkTransmitUnstructuredGridPieceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

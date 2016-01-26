@@ -24,7 +24,6 @@ class VtkSequencePassWrap : public VtkRenderPassWrap
 		VtkSequencePassWrap(vtkSmartPointer<vtkSequencePass>);
 		VtkSequencePassWrap();
 		~VtkSequencePassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

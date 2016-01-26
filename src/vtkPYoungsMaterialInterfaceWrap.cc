@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPYoungsMaterialInterfaceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPYoungsMaterialInterfaceWrap::ptpl;
 
 VtkPYoungsMaterialInterfaceWrap::VtkPYoungsMaterialInterfaceWrap()
@@ -67,7 +66,6 @@ void VtkPYoungsMaterialInterfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkPYoungsMaterialInterfaceWrap::GetController(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkPYoungsMaterialInterfaceWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPYoungsMaterialInterfaceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPYoungsMaterialInterfaceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPYoungsMaterialInterfaceWrap *w = new VtkPYoungsMaterialInterfaceWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkPYoungsMaterialInterfaceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPYoungsMaterialInterfaceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPYoungsMaterialInterfaceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPYoungsMaterialInterfaceWrap *w = new VtkPYoungsMaterialInterfaceWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkTStripsPainterWrap : public VtkPrimitivePainterWrap
 		VtkTStripsPainterWrap(vtkSmartPointer<vtkTStripsPainter>);
 		VtkTStripsPainterWrap();
 		~VtkTStripsPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

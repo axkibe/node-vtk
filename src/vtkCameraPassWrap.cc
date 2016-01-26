@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCameraPassWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCameraPassWrap::ptpl;
 
 VtkCameraPassWrap::VtkCameraPassWrap()
@@ -76,7 +75,6 @@ void VtkCameraPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDelegatePass", SetDelegatePass);
 	Nan::SetPrototypeMethod(tpl, "setDelegatePass", SetDelegatePass);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -146,7 +144,7 @@ void VtkCameraPassWrap::GetDelegatePass(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderPassWrap *w = new VtkRenderPassWrap();
 	w->native.TakeReference(r);
@@ -191,7 +189,7 @@ void VtkCameraPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraPassWrap *w = new VtkCameraPassWrap();
 	w->native.TakeReference(r);
@@ -239,7 +237,7 @@ void VtkCameraPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCameraPassWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCameraPassWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCameraPassWrap *w = new VtkCameraPassWrap();
 		w->native.TakeReference(r);

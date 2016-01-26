@@ -24,7 +24,6 @@ class VtkImageAccumulateWrap : public VtkImageAlgorithmWrap
 		VtkImageAccumulateWrap(vtkSmartPointer<vtkImageAccumulate>);
 		VtkImageAccumulateWrap();
 		~VtkImageAccumulateWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

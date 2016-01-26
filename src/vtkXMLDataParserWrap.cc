@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLDataParserWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLDataParserWrap::ptpl;
 
 VtkXMLDataParserWrap::VtkXMLDataParserWrap()
@@ -95,7 +94,6 @@ void VtkXMLDataParserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompressor", SetCompressor);
 	Nan::SetPrototypeMethod(tpl, "setCompressor", SetCompressor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -231,7 +229,7 @@ void VtkXMLDataParserWrap::GetCompressor(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataCompressorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataCompressorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataCompressorWrap *w = new VtkDataCompressorWrap();
 	w->native.TakeReference(r);
@@ -254,7 +252,7 @@ void VtkXMLDataParserWrap::GetRootElement(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLDataElementWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
 	w->native.TakeReference(r);
@@ -299,7 +297,7 @@ void VtkXMLDataParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLDataParserWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLDataParserWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLDataParserWrap *w = new VtkXMLDataParserWrap();
 	w->native.TakeReference(r);
@@ -341,7 +339,7 @@ void VtkXMLDataParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLDataParserWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLDataParserWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLDataParserWrap *w = new VtkXMLDataParserWrap();
 		w->native.TakeReference(r);

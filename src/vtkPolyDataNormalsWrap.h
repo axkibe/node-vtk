@@ -24,7 +24,6 @@ class VtkPolyDataNormalsWrap : public VtkPolyDataAlgorithmWrap
 		VtkPolyDataNormalsWrap(vtkSmartPointer<vtkPolyDataNormals>);
 		VtkPolyDataNormalsWrap();
 		~VtkPolyDataNormalsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

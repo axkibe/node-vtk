@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkConditionVariableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkConditionVariableWrap::ptpl;
 
 VtkConditionVariableWrap::VtkConditionVariableWrap()
@@ -69,7 +68,6 @@ void VtkConditionVariableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Wait", Wait);
 	Nan::SetPrototypeMethod(tpl, "wait", Wait);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -159,7 +157,7 @@ void VtkConditionVariableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkConditionVariableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkConditionVariableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkConditionVariableWrap *w = new VtkConditionVariableWrap();
 	w->native.TakeReference(r);
@@ -187,7 +185,7 @@ void VtkConditionVariableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkConditionVariableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkConditionVariableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkConditionVariableWrap *w = new VtkConditionVariableWrap();
 		w->native.TakeReference(r);

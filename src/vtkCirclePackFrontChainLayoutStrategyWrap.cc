@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCirclePackFrontChainLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCirclePackFrontChainLayoutStrategyWrap::ptpl;
 
 VtkCirclePackFrontChainLayoutStrategyWrap::VtkCirclePackFrontChainLayoutStrategyWrap()
@@ -77,7 +76,6 @@ void VtkCirclePackFrontChainLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -213,7 +211,7 @@ void VtkCirclePackFrontChainLayoutStrategyWrap::NewInstance(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCirclePackFrontChainLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCirclePackFrontChainLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCirclePackFrontChainLayoutStrategyWrap *w = new VtkCirclePackFrontChainLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -241,7 +239,7 @@ void VtkCirclePackFrontChainLayoutStrategyWrap::SafeDownCast(const Nan::Function
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCirclePackFrontChainLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCirclePackFrontChainLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCirclePackFrontChainLayoutStrategyWrap *w = new VtkCirclePackFrontChainLayoutStrategyWrap();
 		w->native.TakeReference(r);

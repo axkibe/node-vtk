@@ -24,7 +24,6 @@ class VtkIntersectionPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkIntersectionPolyDataFilterWrap(vtkSmartPointer<vtkIntersectionPolyDataFilter>);
 		VtkIntersectionPolyDataFilterWrap();
 		~VtkIntersectionPolyDataFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

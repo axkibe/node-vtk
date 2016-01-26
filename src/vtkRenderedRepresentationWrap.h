@@ -24,7 +24,6 @@ class VtkRenderedRepresentationWrap : public VtkDataRepresentationWrap
 		VtkRenderedRepresentationWrap(vtkSmartPointer<vtkRenderedRepresentation>);
 		VtkRenderedRepresentationWrap();
 		~VtkRenderedRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

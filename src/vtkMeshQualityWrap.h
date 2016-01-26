@@ -24,7 +24,6 @@ class VtkMeshQualityWrap : public VtkDataSetAlgorithmWrap
 		VtkMeshQualityWrap(vtkSmartPointer<vtkMeshQuality>);
 		VtkMeshQualityWrap();
 		~VtkMeshQualityWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

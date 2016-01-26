@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLinkEdgelsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLinkEdgelsWrap::ptpl;
 
 VtkLinkEdgelsWrap::VtkLinkEdgelsWrap()
@@ -78,7 +77,6 @@ void VtkLinkEdgelsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPhiThreshold", SetPhiThreshold);
 	Nan::SetPrototypeMethod(tpl, "setPhiThreshold", SetPhiThreshold);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -198,7 +196,7 @@ void VtkLinkEdgelsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLinkEdgelsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLinkEdgelsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLinkEdgelsWrap *w = new VtkLinkEdgelsWrap();
 	w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkLinkEdgelsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLinkEdgelsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLinkEdgelsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLinkEdgelsWrap *w = new VtkLinkEdgelsWrap();
 		w->native.TakeReference(r);

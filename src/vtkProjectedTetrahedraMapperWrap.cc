@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProjectedTetrahedraMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProjectedTetrahedraMapperWrap::ptpl;
 
 VtkProjectedTetrahedraMapperWrap::VtkProjectedTetrahedraMapperWrap()
@@ -72,7 +71,6 @@ void VtkProjectedTetrahedraMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVisibilitySort", SetVisibilitySort);
 	Nan::SetPrototypeMethod(tpl, "setVisibilitySort", SetVisibilitySort);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -128,7 +126,7 @@ void VtkProjectedTetrahedraMapperWrap::GetVisibilitySort(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVisibilitySortWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVisibilitySortWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVisibilitySortWrap *w = new VtkVisibilitySortWrap();
 	w->native.TakeReference(r);
@@ -203,7 +201,7 @@ void VtkProjectedTetrahedraMapperWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProjectedTetrahedraMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProjectedTetrahedraMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProjectedTetrahedraMapperWrap *w = new VtkProjectedTetrahedraMapperWrap();
 	w->native.TakeReference(r);
@@ -231,7 +229,7 @@ void VtkProjectedTetrahedraMapperWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProjectedTetrahedraMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProjectedTetrahedraMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProjectedTetrahedraMapperWrap *w = new VtkProjectedTetrahedraMapperWrap();
 		w->native.TakeReference(r);

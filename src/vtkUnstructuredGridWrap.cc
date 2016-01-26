@@ -22,7 +22,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridWrap::ptpl;
 
 VtkUnstructuredGridWrap::VtkUnstructuredGridWrap()
@@ -141,7 +140,6 @@ void VtkUnstructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -235,7 +233,7 @@ void VtkUnstructuredGridWrap::GetCellLinks(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellLinksWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellLinksWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellLinksWrap *w = new VtkCellLinksWrap();
 	w->native.TakeReference(r);
@@ -258,7 +256,7 @@ void VtkUnstructuredGridWrap::GetCellLocationsArray(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 	w->native.TakeReference(r);
@@ -281,7 +279,7 @@ void VtkUnstructuredGridWrap::GetCellTypesArray(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnsignedCharArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
 	w->native.TakeReference(r);
@@ -304,7 +302,7 @@ void VtkUnstructuredGridWrap::GetCells(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellArrayWrap *w = new VtkCellArrayWrap();
 	w->native.TakeReference(r);
@@ -349,7 +347,7 @@ void VtkUnstructuredGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 			w->native.TakeReference(r);
@@ -370,7 +368,7 @@ void VtkUnstructuredGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 		w->native.TakeReference(r);
@@ -410,7 +408,7 @@ void VtkUnstructuredGridWrap::GetFaceLocations(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 	w->native.TakeReference(r);
@@ -433,7 +431,7 @@ void VtkUnstructuredGridWrap::GetFaces(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 	w->native.TakeReference(r);
@@ -584,7 +582,7 @@ void VtkUnstructuredGridWrap::NewCellIterator(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellIteratorWrap *w = new VtkCellIteratorWrap();
 	w->native.TakeReference(r);
@@ -607,7 +605,7 @@ void VtkUnstructuredGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -666,7 +664,7 @@ void VtkUnstructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 		w->native.TakeReference(r);

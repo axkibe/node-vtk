@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoTerrain2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoTerrain2DWrap::ptpl;
 
 VtkGeoTerrain2DWrap::VtkGeoTerrain2DWrap()
@@ -76,7 +75,6 @@ void VtkGeoTerrain2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextureTolerance", SetTextureTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTextureTolerance", SetTextureTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -160,7 +158,7 @@ void VtkGeoTerrain2DWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkGeoTerrain2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoTerrain2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoTerrain2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoTerrain2DWrap *w = new VtkGeoTerrain2DWrap();
 	w->native.TakeReference(r);
@@ -233,7 +231,7 @@ void VtkGeoTerrain2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoTerrain2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoTerrain2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoTerrain2DWrap *w = new VtkGeoTerrain2DWrap();
 		w->native.TakeReference(r);

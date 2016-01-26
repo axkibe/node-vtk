@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMCubesWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMCubesWriterWrap::ptpl;
 
 VtkMCubesWriterWrap::VtkMCubesWriterWrap()
@@ -76,7 +75,6 @@ void VtkMCubesWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLimitsFileName", SetLimitsFileName);
 	Nan::SetPrototypeMethod(tpl, "setLimitsFileName", SetLimitsFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -150,7 +148,7 @@ void VtkMCubesWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
 		w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkMCubesWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkMCubesWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMCubesWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMCubesWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMCubesWriterWrap *w = new VtkMCubesWriterWrap();
 	w->native.TakeReference(r);
@@ -256,7 +254,7 @@ void VtkMCubesWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMCubesWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMCubesWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMCubesWriterWrap *w = new VtkMCubesWriterWrap();
 		w->native.TakeReference(r);

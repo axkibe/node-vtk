@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHullWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHullWrap::ptpl;
 
 VtkHullWrap::VtkHullWrap()
@@ -92,7 +91,6 @@ void VtkHullWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPlanes", SetPlanes);
 	Nan::SetPrototypeMethod(tpl, "setPlanes", SetPlanes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -329,7 +327,7 @@ void VtkHullWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHullWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHullWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHullWrap *w = new VtkHullWrap();
 	w->native.TakeReference(r);
@@ -369,7 +367,7 @@ void VtkHullWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHullWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHullWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHullWrap *w = new VtkHullWrap();
 		w->native.TakeReference(r);

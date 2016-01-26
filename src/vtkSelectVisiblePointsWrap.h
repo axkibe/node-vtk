@@ -24,7 +24,6 @@ class VtkSelectVisiblePointsWrap : public VtkPolyDataAlgorithmWrap
 		VtkSelectVisiblePointsWrap(vtkSmartPointer<vtkSelectVisiblePoints>);
 		VtkSelectVisiblePointsWrap();
 		~VtkSelectVisiblePointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

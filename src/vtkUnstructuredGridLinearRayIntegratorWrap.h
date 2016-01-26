@@ -24,7 +24,6 @@ class VtkUnstructuredGridLinearRayIntegratorWrap : public VtkUnstructuredGridVol
 		VtkUnstructuredGridLinearRayIntegratorWrap(vtkSmartPointer<vtkUnstructuredGridLinearRayIntegrator>);
 		VtkUnstructuredGridLinearRayIntegratorWrap();
 		~VtkUnstructuredGridLinearRayIntegratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

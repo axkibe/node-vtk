@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCellLocatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCellLocatorWrap::ptpl;
 
 VtkCellLocatorWrap::VtkCellLocatorWrap()
@@ -92,7 +91,6 @@ void VtkCellLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfCellsPerBucket", SetNumberOfCellsPerBucket);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfCellsPerBucket", SetNumberOfCellsPerBucket);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -222,7 +220,7 @@ void VtkCellLocatorWrap::GetCells(const Nan::FunctionCallbackInfo<v8::Value>& in
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdListWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdListWrap *w = new VtkIdListWrap();
 		w->native.TakeReference(r);
@@ -312,7 +310,7 @@ void VtkCellLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellLocatorWrap *w = new VtkCellLocatorWrap();
 	w->native.TakeReference(r);
@@ -340,7 +338,7 @@ void VtkCellLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellLocatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellLocatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellLocatorWrap *w = new VtkCellLocatorWrap();
 		w->native.TakeReference(r);

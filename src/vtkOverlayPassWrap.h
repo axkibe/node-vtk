@@ -24,7 +24,6 @@ class VtkOverlayPassWrap : public VtkDefaultPassWrap
 		VtkOverlayPassWrap(vtkSmartPointer<vtkOverlayPass>);
 		VtkOverlayPassWrap();
 		~VtkOverlayPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

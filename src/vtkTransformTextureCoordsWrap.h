@@ -24,7 +24,6 @@ class VtkTransformTextureCoordsWrap : public VtkDataSetAlgorithmWrap
 		VtkTransformTextureCoordsWrap(vtkSmartPointer<vtkTransformTextureCoords>);
 		VtkTransformTextureCoordsWrap();
 		~VtkTransformTextureCoordsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

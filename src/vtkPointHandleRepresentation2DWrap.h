@@ -24,7 +24,6 @@ class VtkPointHandleRepresentation2DWrap : public VtkHandleRepresentationWrap
 		VtkPointHandleRepresentation2DWrap(vtkSmartPointer<vtkPointHandleRepresentation2D>);
 		VtkPointHandleRepresentation2DWrap();
 		~VtkPointHandleRepresentation2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

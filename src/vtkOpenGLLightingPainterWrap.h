@@ -24,7 +24,6 @@ class VtkOpenGLLightingPainterWrap : public VtkLightingPainterWrap
 		VtkOpenGLLightingPainterWrap(vtkSmartPointer<vtkOpenGLLightingPainter>);
 		VtkOpenGLLightingPainterWrap();
 		~VtkOpenGLLightingPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

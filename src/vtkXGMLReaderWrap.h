@@ -24,7 +24,6 @@ class VtkXGMLReaderWrap : public VtkUndirectedGraphAlgorithmWrap
 		VtkXGMLReaderWrap(vtkSmartPointer<vtkXGMLReader>);
 		VtkXGMLReaderWrap();
 		~VtkXGMLReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

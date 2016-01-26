@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFacetWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFacetWriterWrap::ptpl;
 
 VtkFacetWriterWrap::VtkFacetWriterWrap()
@@ -69,7 +68,6 @@ void VtkFacetWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -161,7 +159,7 @@ void VtkFacetWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFacetWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFacetWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFacetWriterWrap *w = new VtkFacetWriterWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkFacetWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFacetWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFacetWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFacetWriterWrap *w = new VtkFacetWriterWrap();
 		w->native.TakeReference(r);

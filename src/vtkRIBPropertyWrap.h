@@ -24,7 +24,6 @@ class VtkRIBPropertyWrap : public VtkPropertyWrap
 		VtkRIBPropertyWrap(vtkSmartPointer<vtkRIBProperty>);
 		VtkRIBPropertyWrap();
 		~VtkRIBPropertyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoCameraWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoCameraWrap::ptpl;
 
 VtkGeoCameraWrap::VtkGeoCameraWrap()
@@ -118,7 +117,6 @@ void VtkGeoCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTilt", SetTilt);
 	Nan::SetPrototypeMethod(tpl, "setTilt", SetTilt);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -294,7 +292,7 @@ void VtkGeoCameraWrap::GetVTKCamera(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
@@ -363,7 +361,7 @@ void VtkGeoCameraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoCameraWrap *w = new VtkGeoCameraWrap();
 	w->native.TakeReference(r);
@@ -391,7 +389,7 @@ void VtkGeoCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoCameraWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoCameraWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoCameraWrap *w = new VtkGeoCameraWrap();
 		w->native.TakeReference(r);

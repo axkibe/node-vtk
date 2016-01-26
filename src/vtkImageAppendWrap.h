@@ -24,7 +24,6 @@ class VtkImageAppendWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageAppendWrap(vtkSmartPointer<vtkImageAppend>);
 		VtkImageAppendWrap();
 		~VtkImageAppendWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

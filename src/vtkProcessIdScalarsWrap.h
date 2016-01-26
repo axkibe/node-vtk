@@ -24,7 +24,6 @@ class VtkProcessIdScalarsWrap : public VtkDataSetAlgorithmWrap
 		VtkProcessIdScalarsWrap(vtkSmartPointer<vtkProcessIdScalars>);
 		VtkProcessIdScalarsWrap();
 		~VtkProcessIdScalarsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

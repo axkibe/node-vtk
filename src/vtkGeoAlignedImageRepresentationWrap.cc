@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoAlignedImageRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoAlignedImageRepresentationWrap::ptpl;
 
 VtkGeoAlignedImageRepresentationWrap::VtkGeoAlignedImageRepresentationWrap()
@@ -70,7 +69,6 @@ void VtkGeoAlignedImageRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSource", SetSource);
 	Nan::SetPrototypeMethod(tpl, "setSource", SetSource);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkGeoAlignedImageRepresentationWrap::GetSource(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoSourceWrap *w = new VtkGeoSourceWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkGeoAlignedImageRepresentationWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoAlignedImageRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoAlignedImageRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoAlignedImageRepresentationWrap *w = new VtkGeoAlignedImageRepresentationWrap();
 	w->native.TakeReference(r);
@@ -199,7 +197,7 @@ void VtkGeoAlignedImageRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoAlignedImageRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoAlignedImageRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoAlignedImageRepresentationWrap *w = new VtkGeoAlignedImageRepresentationWrap();
 		w->native.TakeReference(r);

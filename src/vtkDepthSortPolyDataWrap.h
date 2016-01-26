@@ -24,7 +24,6 @@ class VtkDepthSortPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		VtkDepthSortPolyDataWrap(vtkSmartPointer<vtkDepthSortPolyData>);
 		VtkDepthSortPolyDataWrap();
 		~VtkDepthSortPolyDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

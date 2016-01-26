@@ -24,7 +24,6 @@ class VtkContourRepresentationWrap : public VtkWidgetRepresentationWrap
 		VtkContourRepresentationWrap(vtkSmartPointer<vtkContourRepresentation>);
 		VtkContourRepresentationWrap();
 		~VtkContourRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

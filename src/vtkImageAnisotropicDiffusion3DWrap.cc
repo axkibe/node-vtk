@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageAnisotropicDiffusion3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageAnisotropicDiffusion3DWrap::ptpl;
 
 VtkImageAnisotropicDiffusion3DWrap::VtkImageAnisotropicDiffusion3DWrap()
@@ -126,7 +125,6 @@ void VtkImageAnisotropicDiffusion3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfIterations", SetNumberOfIterations);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfIterations", SetNumberOfIterations);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -398,7 +396,7 @@ void VtkImageAnisotropicDiffusion3DWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageAnisotropicDiffusion3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageAnisotropicDiffusion3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageAnisotropicDiffusion3DWrap *w = new VtkImageAnisotropicDiffusion3DWrap();
 	w->native.TakeReference(r);
@@ -426,7 +424,7 @@ void VtkImageAnisotropicDiffusion3DWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageAnisotropicDiffusion3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageAnisotropicDiffusion3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageAnisotropicDiffusion3DWrap *w = new VtkImageAnisotropicDiffusion3DWrap();
 		w->native.TakeReference(r);

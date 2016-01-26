@@ -24,7 +24,6 @@ class VtkQuadRotationalExtrusionFilterWrap : public VtkMultiBlockDataSetAlgorith
 		VtkQuadRotationalExtrusionFilterWrap(vtkSmartPointer<vtkQuadRotationalExtrusionFilter>);
 		VtkQuadRotationalExtrusionFilterWrap();
 		~VtkQuadRotationalExtrusionFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

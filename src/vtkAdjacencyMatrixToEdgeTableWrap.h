@@ -24,7 +24,6 @@ class VtkAdjacencyMatrixToEdgeTableWrap : public VtkTableAlgorithmWrap
 		VtkAdjacencyMatrixToEdgeTableWrap(vtkSmartPointer<vtkAdjacencyMatrixToEdgeTable>);
 		VtkAdjacencyMatrixToEdgeTableWrap();
 		~VtkAdjacencyMatrixToEdgeTableWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

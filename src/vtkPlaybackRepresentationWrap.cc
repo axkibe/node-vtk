@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlaybackRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlaybackRepresentationWrap::ptpl;
 
 VtkPlaybackRepresentationWrap::VtkPlaybackRepresentationWrap()
@@ -106,7 +105,6 @@ void VtkPlaybackRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -218,7 +216,7 @@ void VtkPlaybackRepresentationWrap::GetProperty(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -301,7 +299,7 @@ void VtkPlaybackRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlaybackRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlaybackRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaybackRepresentationWrap *w = new VtkPlaybackRepresentationWrap();
 	w->native.TakeReference(r);
@@ -427,7 +425,7 @@ void VtkPlaybackRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlaybackRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlaybackRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlaybackRepresentationWrap *w = new VtkPlaybackRepresentationWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkDelaunay3DWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkDelaunay3DWrap(vtkSmartPointer<vtkDelaunay3D>);
 		VtkDelaunay3DWrap();
 		~VtkDelaunay3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

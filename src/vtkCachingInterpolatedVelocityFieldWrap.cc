@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCachingInterpolatedVelocityFieldWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCachingInterpolatedVelocityFieldWrap::ptpl;
 
 VtkCachingInterpolatedVelocityFieldWrap::VtkCachingInterpolatedVelocityFieldWrap()
@@ -78,7 +77,6 @@ void VtkCachingInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SelectVectors", SelectVectors);
 	Nan::SetPrototypeMethod(tpl, "selectVectors", SelectVectors);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -224,7 +222,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCachingInterpolatedVelocityFieldWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCachingInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCachingInterpolatedVelocityFieldWrap *w = new VtkCachingInterpolatedVelocityFieldWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCa
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCachingInterpolatedVelocityFieldWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCachingInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCachingInterpolatedVelocityFieldWrap *w = new VtkCachingInterpolatedVelocityFieldWrap();
 		w->native.TakeReference(r);

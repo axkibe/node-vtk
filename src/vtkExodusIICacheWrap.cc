@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExodusIICacheWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExodusIICacheWrap::ptpl;
 
 VtkExodusIICacheWrap::VtkExodusIICacheWrap()
@@ -71,7 +70,6 @@ void VtkExodusIICacheWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCacheCapacity", SetCacheCapacity);
 	Nan::SetPrototypeMethod(tpl, "setCacheCapacity", SetCacheCapacity);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -175,7 +173,7 @@ void VtkExodusIICacheWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExodusIICacheWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExodusIICacheWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExodusIICacheWrap *w = new VtkExodusIICacheWrap();
 	w->native.TakeReference(r);
@@ -224,7 +222,7 @@ void VtkExodusIICacheWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExodusIICacheWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExodusIICacheWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExodusIICacheWrap *w = new VtkExodusIICacheWrap();
 		w->native.TakeReference(r);

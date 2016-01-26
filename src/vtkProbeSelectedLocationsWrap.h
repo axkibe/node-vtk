@@ -24,7 +24,6 @@ class VtkProbeSelectedLocationsWrap : public VtkExtractSelectionBaseWrap
 		VtkProbeSelectedLocationsWrap(vtkSmartPointer<vtkProbeSelectedLocations>);
 		VtkProbeSelectedLocationsWrap();
 		~VtkProbeSelectedLocationsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

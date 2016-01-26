@@ -24,7 +24,6 @@ class VtkGenericOutlineFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkGenericOutlineFilterWrap(vtkSmartPointer<vtkGenericOutlineFilter>);
 		VtkGenericOutlineFilterWrap();
 		~VtkGenericOutlineFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

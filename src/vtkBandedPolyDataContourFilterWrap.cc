@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBandedPolyDataContourFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBandedPolyDataContourFilterWrap::ptpl;
 
 VtkBandedPolyDataContourFilterWrap::VtkBandedPolyDataContourFilterWrap()
@@ -121,7 +120,6 @@ void VtkBandedPolyDataContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -266,7 +264,7 @@ void VtkBandedPolyDataContourFilterWrap::GetContourEdgesOutput(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -402,7 +400,7 @@ void VtkBandedPolyDataContourFilterWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBandedPolyDataContourFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBandedPolyDataContourFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBandedPolyDataContourFilterWrap *w = new VtkBandedPolyDataContourFilterWrap();
 	w->native.TakeReference(r);
@@ -430,7 +428,7 @@ void VtkBandedPolyDataContourFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBandedPolyDataContourFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBandedPolyDataContourFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBandedPolyDataContourFilterWrap *w = new VtkBandedPolyDataContourFilterWrap();
 		w->native.TakeReference(r);

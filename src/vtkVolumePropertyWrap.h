@@ -24,7 +24,6 @@ class VtkVolumePropertyWrap : public VtkObjectWrap
 		VtkVolumePropertyWrap(vtkSmartPointer<vtkVolumeProperty>);
 		VtkVolumePropertyWrap();
 		~VtkVolumePropertyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

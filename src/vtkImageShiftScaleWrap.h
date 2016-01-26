@@ -24,7 +24,6 @@ class VtkImageShiftScaleWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageShiftScaleWrap(vtkSmartPointer<vtkImageShiftScale>);
 		VtkImageShiftScaleWrap();
 		~VtkImageShiftScaleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

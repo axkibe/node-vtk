@@ -24,7 +24,6 @@ class VtkConditionVariableWrap : public VtkObjectWrap
 		VtkConditionVariableWrap(vtkSmartPointer<vtkConditionVariable>);
 		VtkConditionVariableWrap();
 		~VtkConditionVariableWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

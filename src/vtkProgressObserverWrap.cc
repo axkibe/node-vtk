@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProgressObserverWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProgressObserverWrap::ptpl;
 
 VtkProgressObserverWrap::VtkProgressObserverWrap()
@@ -65,7 +64,6 @@ void VtkProgressObserverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateProgress", UpdateProgress);
 	Nan::SetPrototypeMethod(tpl, "updateProgress", UpdateProgress);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -157,7 +155,7 @@ void VtkProgressObserverWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProgressObserverWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProgressObserverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProgressObserverWrap *w = new VtkProgressObserverWrap();
 	w->native.TakeReference(r);
@@ -185,7 +183,7 @@ void VtkProgressObserverWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProgressObserverWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProgressObserverWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProgressObserverWrap *w = new VtkProgressObserverWrap();
 		w->native.TakeReference(r);

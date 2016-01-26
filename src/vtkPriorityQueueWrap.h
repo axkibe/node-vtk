@@ -24,7 +24,6 @@ class VtkPriorityQueueWrap : public VtkObjectWrap
 		VtkPriorityQueueWrap(vtkSmartPointer<vtkPriorityQueue>);
 		VtkPriorityQueueWrap();
 		~VtkPriorityQueueWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

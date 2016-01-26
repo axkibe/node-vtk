@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeRingToPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeRingToPolyDataWrap::ptpl;
 
 VtkTreeRingToPolyDataWrap::VtkTreeRingToPolyDataWrap()
@@ -73,7 +72,6 @@ void VtkTreeRingToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShrinkPercentage", SetShrinkPercentage);
 	Nan::SetPrototypeMethod(tpl, "setShrinkPercentage", SetShrinkPercentage);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -191,7 +189,7 @@ void VtkTreeRingToPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeRingToPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeRingToPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeRingToPolyDataWrap *w = new VtkTreeRingToPolyDataWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkTreeRingToPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeRingToPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeRingToPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeRingToPolyDataWrap *w = new VtkTreeRingToPolyDataWrap();
 		w->native.TakeReference(r);

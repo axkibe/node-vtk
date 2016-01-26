@@ -24,7 +24,6 @@ class VtkUnstructuredGridPartialPreIntegrationWrap : public VtkUnstructuredGridV
 		VtkUnstructuredGridPartialPreIntegrationWrap(vtkSmartPointer<vtkUnstructuredGridPartialPreIntegration>);
 		VtkUnstructuredGridPartialPreIntegrationWrap();
 		~VtkUnstructuredGridPartialPreIntegrationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageGaussianSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageGaussianSourceWrap::ptpl;
 
 VtkImageGaussianSourceWrap::VtkImageGaussianSourceWrap()
@@ -78,7 +77,6 @@ void VtkImageGaussianSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -184,7 +182,7 @@ void VtkImageGaussianSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageGaussianSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageGaussianSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageGaussianSourceWrap *w = new VtkImageGaussianSourceWrap();
 	w->native.TakeReference(r);
@@ -212,7 +210,7 @@ void VtkImageGaussianSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageGaussianSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageGaussianSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageGaussianSourceWrap *w = new VtkImageGaussianSourceWrap();
 		w->native.TakeReference(r);

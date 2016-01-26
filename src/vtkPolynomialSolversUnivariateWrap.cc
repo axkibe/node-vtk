@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolynomialSolversUnivariateWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolynomialSolversUnivariateWrap::ptpl;
 
 VtkPolynomialSolversUnivariateWrap::VtkPolynomialSolversUnivariateWrap()
@@ -65,7 +64,6 @@ void VtkPolynomialSolversUnivariateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDivisionTolerance", SetDivisionTolerance);
 	Nan::SetPrototypeMethod(tpl, "setDivisionTolerance", SetDivisionTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -157,7 +155,7 @@ void VtkPolynomialSolversUnivariateWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolynomialSolversUnivariateWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolynomialSolversUnivariateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolynomialSolversUnivariateWrap *w = new VtkPolynomialSolversUnivariateWrap();
 	w->native.TakeReference(r);
@@ -185,7 +183,7 @@ void VtkPolynomialSolversUnivariateWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolynomialSolversUnivariateWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolynomialSolversUnivariateWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolynomialSolversUnivariateWrap *w = new VtkPolynomialSolversUnivariateWrap();
 		w->native.TakeReference(r);

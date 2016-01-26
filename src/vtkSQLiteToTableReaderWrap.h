@@ -24,7 +24,6 @@ class VtkSQLiteToTableReaderWrap : public VtkDatabaseToTableReaderWrap
 		VtkSQLiteToTableReaderWrap(vtkSmartPointer<vtkSQLiteToTableReader>);
 		VtkSQLiteToTableReaderWrap();
 		~VtkSQLiteToTableReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

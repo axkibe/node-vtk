@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleUserWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleUserWrap::ptpl;
 
 VtkInteractorStyleUserWrap::VtkInteractorStyleUserWrap()
@@ -120,7 +119,6 @@ void VtkInteractorStyleUserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -268,7 +266,7 @@ void VtkInteractorStyleUserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleUserWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleUserWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleUserWrap *w = new VtkInteractorStyleUserWrap();
 	w->native.TakeReference(r);
@@ -476,7 +474,7 @@ void VtkInteractorStyleUserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleUserWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleUserWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleUserWrap *w = new VtkInteractorStyleUserWrap();
 		w->native.TakeReference(r);

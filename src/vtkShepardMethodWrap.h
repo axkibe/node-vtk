@@ -24,7 +24,6 @@ class VtkShepardMethodWrap : public VtkImageAlgorithmWrap
 		VtkShepardMethodWrap(vtkSmartPointer<vtkShepardMethod>);
 		VtkShepardMethodWrap();
 		~VtkShepardMethodWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

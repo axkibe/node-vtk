@@ -24,7 +24,6 @@ class VtkXMLImageDataWriterWrap : public VtkXMLStructuredDataWriterWrap
 		VtkXMLImageDataWriterWrap(vtkSmartPointer<vtkXMLImageDataWriter>);
 		VtkXMLImageDataWriterWrap();
 		~VtkXMLImageDataWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

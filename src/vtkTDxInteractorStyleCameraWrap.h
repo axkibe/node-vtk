@@ -24,7 +24,6 @@ class VtkTDxInteractorStyleCameraWrap : public VtkTDxInteractorStyleWrap
 		VtkTDxInteractorStyleCameraWrap(vtkSmartPointer<vtkTDxInteractorStyleCamera>);
 		VtkTDxInteractorStyleCameraWrap();
 		~VtkTDxInteractorStyleCameraWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

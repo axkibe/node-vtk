@@ -24,7 +24,6 @@ class VtkImageDataLIC2DExtentTranslatorWrap : public VtkExtentTranslatorWrap
 		VtkImageDataLIC2DExtentTranslatorWrap(vtkSmartPointer<vtkImageDataLIC2DExtentTranslator>);
 		VtkImageDataLIC2DExtentTranslatorWrap();
 		~VtkImageDataLIC2DExtentTranslatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

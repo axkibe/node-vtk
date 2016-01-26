@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDuplicatePolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDuplicatePolyDataWrap::ptpl;
 
 VtkDuplicatePolyDataWrap::VtkDuplicatePolyDataWrap()
@@ -95,7 +94,6 @@ void VtkDuplicatePolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SynchronousOn", SynchronousOn);
 	Nan::SetPrototypeMethod(tpl, "synchronousOn", SynchronousOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -165,7 +163,7 @@ void VtkDuplicatePolyDataWrap::GetController(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkDuplicatePolyDataWrap::GetSocketController(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSocketControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSocketControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSocketControllerWrap *w = new VtkSocketControllerWrap();
 	w->native.TakeReference(r);
@@ -266,7 +264,7 @@ void VtkDuplicatePolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDuplicatePolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDuplicatePolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDuplicatePolyDataWrap *w = new VtkDuplicatePolyDataWrap();
 	w->native.TakeReference(r);
@@ -294,7 +292,7 @@ void VtkDuplicatePolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDuplicatePolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDuplicatePolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDuplicatePolyDataWrap *w = new VtkDuplicatePolyDataWrap();
 		w->native.TakeReference(r);

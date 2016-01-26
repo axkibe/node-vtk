@@ -24,7 +24,6 @@ class VtkChacoReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkChacoReaderWrap(vtkSmartPointer<vtkChacoReader>);
 		VtkChacoReaderWrap();
 		~VtkChacoReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

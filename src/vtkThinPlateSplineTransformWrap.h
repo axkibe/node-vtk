@@ -24,7 +24,6 @@ class VtkThinPlateSplineTransformWrap : public VtkWarpTransformWrap
 		VtkThinPlateSplineTransformWrap(vtkSmartPointer<vtkThinPlateSplineTransform>);
 		VtkThinPlateSplineTransformWrap();
 		~VtkThinPlateSplineTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

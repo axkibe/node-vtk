@@ -24,7 +24,6 @@ class VtkLabelPlacementMapperWrap : public VtkMapper2DWrap
 		VtkLabelPlacementMapperWrap(vtkSmartPointer<vtkLabelPlacementMapper>);
 		VtkLabelPlacementMapperWrap();
 		~VtkLabelPlacementMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

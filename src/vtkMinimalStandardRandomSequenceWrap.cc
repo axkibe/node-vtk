@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMinimalStandardRandomSequenceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMinimalStandardRandomSequenceWrap::ptpl;
 
 VtkMinimalStandardRandomSequenceWrap::VtkMinimalStandardRandomSequenceWrap()
@@ -78,7 +77,6 @@ void VtkMinimalStandardRandomSequenceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSeedOnly", SetSeedOnly);
 	Nan::SetPrototypeMethod(tpl, "setSeedOnly", SetSeedOnly);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -209,7 +207,7 @@ void VtkMinimalStandardRandomSequenceWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMinimalStandardRandomSequenceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMinimalStandardRandomSequenceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMinimalStandardRandomSequenceWrap *w = new VtkMinimalStandardRandomSequenceWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkMinimalStandardRandomSequenceWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMinimalStandardRandomSequenceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMinimalStandardRandomSequenceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMinimalStandardRandomSequenceWrap *w = new VtkMinimalStandardRandomSequenceWrap();
 		w->native.TakeReference(r);

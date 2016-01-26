@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeRingViewWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeRingViewWrap::ptpl;
 
 VtkTreeRingViewWrap::VtkTreeRingViewWrap()
@@ -87,7 +86,6 @@ void VtkTreeRingViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRootAngles", SetRootAngles);
 	Nan::SetPrototypeMethod(tpl, "setRootAngles", SetRootAngles);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -207,7 +205,7 @@ void VtkTreeRingViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeRingViewWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeRingViewWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeRingViewWrap *w = new VtkTreeRingViewWrap();
 	w->native.TakeReference(r);
@@ -259,7 +257,7 @@ void VtkTreeRingViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeRingViewWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeRingViewWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeRingViewWrap *w = new VtkTreeRingViewWrap();
 		w->native.TakeReference(r);

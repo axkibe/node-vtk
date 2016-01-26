@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyDataSourceWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyDataSourceWidgetWrap::ptpl;
 
 VtkPolyDataSourceWidgetWrap::VtkPolyDataSourceWidgetWrap()
@@ -70,7 +69,6 @@ void VtkPolyDataSourceWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdatePlacement", UpdatePlacement);
 	Nan::SetPrototypeMethod(tpl, "updatePlacement", UpdatePlacement);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkPolyDataSourceWidgetWrap::GetPolyDataAlgorithm(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataAlgorithmWrap *w = new VtkPolyDataAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkPolyDataSourceWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataSourceWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataSourceWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataSourceWidgetWrap *w = new VtkPolyDataSourceWidgetWrap();
 	w->native.TakeReference(r);
@@ -243,7 +241,7 @@ void VtkPolyDataSourceWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataSourceWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataSourceWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataSourceWidgetWrap *w = new VtkPolyDataSourceWidgetWrap();
 		w->native.TakeReference(r);

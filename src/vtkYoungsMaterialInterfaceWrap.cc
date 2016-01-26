@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkYoungsMaterialInterfaceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkYoungsMaterialInterfaceWrap::ptpl;
 
 VtkYoungsMaterialInterfaceWrap::VtkYoungsMaterialInterfaceWrap()
@@ -171,7 +170,6 @@ void VtkYoungsMaterialInterfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseFractionAsDistanceOn", UseFractionAsDistanceOn);
 	Nan::SetPrototypeMethod(tpl, "useFractionAsDistanceOn", UseFractionAsDistanceOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -452,7 +450,7 @@ void VtkYoungsMaterialInterfaceWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkYoungsMaterialInterfaceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkYoungsMaterialInterfaceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkYoungsMaterialInterfaceWrap *w = new VtkYoungsMaterialInterfaceWrap();
 	w->native.TakeReference(r);
@@ -552,7 +550,7 @@ void VtkYoungsMaterialInterfaceWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkYoungsMaterialInterfaceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkYoungsMaterialInterfaceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkYoungsMaterialInterfaceWrap *w = new VtkYoungsMaterialInterfaceWrap();
 		w->native.TakeReference(r);

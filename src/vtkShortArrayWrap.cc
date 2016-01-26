@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkShortArrayWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkShortArrayWrap::ptpl;
 
 VtkShortArrayWrap::VtkShortArrayWrap()
@@ -63,7 +62,6 @@ void VtkShortArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkShortArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkShortArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkShortArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkShortArrayWrap *w = new VtkShortArrayWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkShortArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkShortArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkShortArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkShortArrayWrap *w = new VtkShortArrayWrap();
 		w->native.TakeReference(r);

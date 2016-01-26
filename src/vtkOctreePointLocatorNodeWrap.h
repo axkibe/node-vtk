@@ -24,7 +24,6 @@ class VtkOctreePointLocatorNodeWrap : public VtkObjectWrap
 		VtkOctreePointLocatorNodeWrap(vtkSmartPointer<vtkOctreePointLocatorNode>);
 		VtkOctreePointLocatorNodeWrap();
 		~VtkOctreePointLocatorNodeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

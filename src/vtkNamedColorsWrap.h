@@ -24,7 +24,6 @@ class VtkNamedColorsWrap : public VtkObjectWrap
 		VtkNamedColorsWrap(vtkSmartPointer<vtkNamedColors>);
 		VtkNamedColorsWrap();
 		~VtkNamedColorsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

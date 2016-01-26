@@ -24,7 +24,6 @@ class VtkContourLineInterpolatorWrap : public VtkObjectWrap
 		VtkContourLineInterpolatorWrap(vtkSmartPointer<vtkContourLineInterpolator>);
 		VtkContourLineInterpolatorWrap();
 		~VtkContourLineInterpolatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

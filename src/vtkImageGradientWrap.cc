@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageGradientWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageGradientWrap::ptpl;
 
 VtkImageGradientWrap::VtkImageGradientWrap()
@@ -84,7 +83,6 @@ void VtkImageGradientWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHandleBoundaries", SetHandleBoundaries);
 	Nan::SetPrototypeMethod(tpl, "setHandleBoundaries", SetHandleBoundaries);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -242,7 +240,7 @@ void VtkImageGradientWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageGradientWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageGradientWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageGradientWrap *w = new VtkImageGradientWrap();
 	w->native.TakeReference(r);
@@ -270,7 +268,7 @@ void VtkImageGradientWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageGradientWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageGradientWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageGradientWrap *w = new VtkImageGradientWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTIFFReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTIFFReaderWrap::ptpl;
 
 VtkTIFFReaderWrap::VtkTIFFReaderWrap()
@@ -84,7 +83,6 @@ void VtkTIFFReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SpacingSpecifiedFlagOn", SpacingSpecifiedFlagOn);
 	Nan::SetPrototypeMethod(tpl, "spacingSpecifiedFlagOn", SpacingSpecifiedFlagOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -224,7 +222,7 @@ void VtkTIFFReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTIFFReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTIFFReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTIFFReaderWrap *w = new VtkTIFFReaderWrap();
 	w->native.TakeReference(r);
@@ -276,7 +274,7 @@ void VtkTIFFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTIFFReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTIFFReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTIFFReaderWrap *w = new VtkTIFFReaderWrap();
 		w->native.TakeReference(r);

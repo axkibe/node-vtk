@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProgrammableAttributeDataFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProgrammableAttributeDataFilterWrap::ptpl;
 
 VtkProgrammableAttributeDataFilterWrap::VtkProgrammableAttributeDataFilterWrap()
@@ -71,7 +70,6 @@ void VtkProgrammableAttributeDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -147,7 +145,7 @@ void VtkProgrammableAttributeDataFilterWrap::GetInputList(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetCollectionWrap *w = new VtkDataSetCollectionWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkProgrammableAttributeDataFilterWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProgrammableAttributeDataFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProgrammableAttributeDataFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProgrammableAttributeDataFilterWrap *w = new VtkProgrammableAttributeDataFilterWrap();
 	w->native.TakeReference(r);
@@ -240,7 +238,7 @@ void VtkProgrammableAttributeDataFilterWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProgrammableAttributeDataFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProgrammableAttributeDataFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProgrammableAttributeDataFilterWrap *w = new VtkProgrammableAttributeDataFilterWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkPiecewiseFunctionWrap : public VtkDataObjectWrap
 		VtkPiecewiseFunctionWrap(vtkSmartPointer<vtkPiecewiseFunction>);
 		VtkPiecewiseFunctionWrap();
 		~VtkPiecewiseFunctionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkArrayWriterWrap : public VtkWriterWrap
 		VtkArrayWriterWrap(vtkSmartPointer<vtkArrayWriter>);
 		VtkArrayWriterWrap();
 		~VtkArrayWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

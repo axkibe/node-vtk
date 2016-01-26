@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXYZMolReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXYZMolReaderWrap::ptpl;
 
 VtkXYZMolReaderWrap::VtkXYZMolReaderWrap()
@@ -72,7 +71,6 @@ void VtkXYZMolReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeStep", SetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "setTimeStep", SetTimeStep);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -200,7 +198,7 @@ void VtkXYZMolReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXYZMolReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXYZMolReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXYZMolReaderWrap *w = new VtkXYZMolReaderWrap();
 	w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkXYZMolReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXYZMolReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXYZMolReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXYZMolReaderWrap *w = new VtkXYZMolReaderWrap();
 		w->native.TakeReference(r);

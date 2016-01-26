@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageSeparableConvolutionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageSeparableConvolutionWrap::ptpl;
 
 VtkImageSeparableConvolutionWrap::VtkImageSeparableConvolutionWrap()
@@ -79,7 +78,6 @@ void VtkImageSeparableConvolutionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZKernel", SetZKernel);
 	Nan::SetPrototypeMethod(tpl, "setZKernel", SetZKernel);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -135,7 +133,7 @@ void VtkImageSeparableConvolutionWrap::GetXKernel(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFloatArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFloatArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFloatArrayWrap *w = new VtkFloatArrayWrap();
 	w->native.TakeReference(r);
@@ -158,7 +156,7 @@ void VtkImageSeparableConvolutionWrap::GetYKernel(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFloatArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFloatArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFloatArrayWrap *w = new VtkFloatArrayWrap();
 	w->native.TakeReference(r);
@@ -181,7 +179,7 @@ void VtkImageSeparableConvolutionWrap::GetZKernel(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFloatArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFloatArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFloatArrayWrap *w = new VtkFloatArrayWrap();
 	w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkImageSeparableConvolutionWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageSeparableConvolutionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageSeparableConvolutionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSeparableConvolutionWrap *w = new VtkImageSeparableConvolutionWrap();
 	w->native.TakeReference(r);
@@ -254,7 +252,7 @@ void VtkImageSeparableConvolutionWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageSeparableConvolutionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageSeparableConvolutionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageSeparableConvolutionWrap *w = new VtkImageSeparableConvolutionWrap();
 		w->native.TakeReference(r);

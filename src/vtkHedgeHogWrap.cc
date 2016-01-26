@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHedgeHogWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHedgeHogWrap::ptpl;
 
 VtkHedgeHogWrap::VtkHedgeHogWrap()
@@ -87,7 +86,6 @@ void VtkHedgeHogWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorModeToUseVector", SetVectorModeToUseVector);
 	Nan::SetPrototypeMethod(tpl, "setVectorModeToUseVector", SetVectorModeToUseVector);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -221,7 +219,7 @@ void VtkHedgeHogWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHedgeHogWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHedgeHogWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHedgeHogWrap *w = new VtkHedgeHogWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkHedgeHogWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHedgeHogWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHedgeHogWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHedgeHogWrap *w = new VtkHedgeHogWrap();
 		w->native.TakeReference(r);

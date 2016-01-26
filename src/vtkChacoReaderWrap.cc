@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkChacoReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkChacoReaderWrap::ptpl;
 
 VtkChacoReaderWrap::VtkChacoReaderWrap()
@@ -141,7 +140,6 @@ void VtkChacoReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGenerateVertexWeightArrays", SetGenerateVertexWeightArrays);
 	Nan::SetPrototypeMethod(tpl, "setGenerateVertexWeightArrays", SetGenerateVertexWeightArrays);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -525,7 +523,7 @@ void VtkChacoReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChacoReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChacoReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChacoReaderWrap *w = new VtkChacoReaderWrap();
 	w->native.TakeReference(r);
@@ -553,7 +551,7 @@ void VtkChacoReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkChacoReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkChacoReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkChacoReaderWrap *w = new VtkChacoReaderWrap();
 		w->native.TakeReference(r);

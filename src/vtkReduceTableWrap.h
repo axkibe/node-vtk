@@ -24,7 +24,6 @@ class VtkReduceTableWrap : public VtkTableAlgorithmWrap
 		VtkReduceTableWrap(vtkSmartPointer<vtkReduceTable>);
 		VtkReduceTableWrap();
 		~VtkReduceTableWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

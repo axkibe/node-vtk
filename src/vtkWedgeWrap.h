@@ -24,7 +24,6 @@ class VtkWedgeWrap : public VtkCell3DWrap
 		VtkWedgeWrap(vtkSmartPointer<vtkWedge>);
 		VtkWedgeWrap();
 		~VtkWedgeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

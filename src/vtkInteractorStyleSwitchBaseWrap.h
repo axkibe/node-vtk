@@ -24,7 +24,6 @@ class VtkInteractorStyleSwitchBaseWrap : public VtkInteractorStyleWrap
 		VtkInteractorStyleSwitchBaseWrap(vtkSmartPointer<vtkInteractorStyleSwitchBase>);
 		VtkInteractorStyleSwitchBaseWrap();
 		~VtkInteractorStyleSwitchBaseWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkParametricKleinWrap : public VtkParametricFunctionWrap
 		VtkParametricKleinWrap(vtkSmartPointer<vtkParametricKlein>);
 		VtkParametricKleinWrap();
 		~VtkParametricKleinWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

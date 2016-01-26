@@ -24,7 +24,6 @@ class VtkAppendFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkAppendFilterWrap(vtkSmartPointer<vtkAppendFilter>);
 		VtkAppendFilterWrap();
 		~VtkAppendFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

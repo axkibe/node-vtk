@@ -24,7 +24,6 @@ class VtkMoleculeReaderBaseWrap : public VtkPolyDataAlgorithmWrap
 		VtkMoleculeReaderBaseWrap(vtkSmartPointer<vtkMoleculeReaderBase>);
 		VtkMoleculeReaderBaseWrap();
 		~VtkMoleculeReaderBaseWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

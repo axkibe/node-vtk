@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSuperquadricSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSuperquadricSourceWrap::ptpl;
 
 VtkSuperquadricSourceWrap::VtkSuperquadricSourceWrap()
@@ -141,7 +140,6 @@ void VtkSuperquadricSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToroidalOn", ToroidalOn);
 	Nan::SetPrototypeMethod(tpl, "toroidalOn", ToroidalOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -373,7 +371,7 @@ void VtkSuperquadricSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSuperquadricSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSuperquadricSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSuperquadricSourceWrap *w = new VtkSuperquadricSourceWrap();
 	w->native.TakeReference(r);
@@ -401,7 +399,7 @@ void VtkSuperquadricSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSuperquadricSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSuperquadricSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSuperquadricSourceWrap *w = new VtkSuperquadricSourceWrap();
 		w->native.TakeReference(r);

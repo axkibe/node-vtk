@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageAppendWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageAppendWrap::ptpl;
 
 VtkImageAppendWrap::VtkImageAppendWrap()
@@ -92,7 +91,6 @@ void VtkImageAppendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreserveExtents", SetPreserveExtents);
 	Nan::SetPrototypeMethod(tpl, "setPreserveExtents", SetPreserveExtents);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -166,7 +164,7 @@ void VtkImageAppendWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -185,7 +183,7 @@ void VtkImageAppendWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -258,7 +256,7 @@ void VtkImageAppendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageAppendWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageAppendWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageAppendWrap *w = new VtkImageAppendWrap();
 	w->native.TakeReference(r);
@@ -334,7 +332,7 @@ void VtkImageAppendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageAppendWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageAppendWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageAppendWrap *w = new VtkImageAppendWrap();
 		w->native.TakeReference(r);

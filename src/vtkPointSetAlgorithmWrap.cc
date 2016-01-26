@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPointSetAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPointSetAlgorithmWrap::ptpl;
 
 VtkPointSetAlgorithmWrap::VtkPointSetAlgorithmWrap()
@@ -86,7 +85,6 @@ void VtkPointSetAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkPointSetAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkPointSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointSetWrap *w = new VtkPointSetWrap();
 		w->native.TakeReference(r);
@@ -225,7 +223,7 @@ void VtkPointSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointSetWrap *w = new VtkPointSetWrap();
 	w->native.TakeReference(r);
@@ -248,7 +246,7 @@ void VtkPointSetAlgorithmWrap::GetPolyDataOutput(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -271,7 +269,7 @@ void VtkPointSetAlgorithmWrap::GetStructuredGridOutput(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridWrap *w = new VtkStructuredGridWrap();
 	w->native.TakeReference(r);
@@ -294,7 +292,7 @@ void VtkPointSetAlgorithmWrap::GetUnstructuredGridOutput(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -339,7 +337,7 @@ void VtkPointSetAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointSetAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointSetAlgorithmWrap *w = new VtkPointSetAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -367,7 +365,7 @@ void VtkPointSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointSetAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointSetAlgorithmWrap *w = new VtkPointSetAlgorithmWrap();
 		w->native.TakeReference(r);

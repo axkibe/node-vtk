@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleTreeMapHoverWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleTreeMapHoverWrap::ptpl;
 
 VtkInteractorStyleTreeMapHoverWrap::VtkInteractorStyleTreeMapHoverWrap()
@@ -111,7 +110,6 @@ void VtkInteractorStyleTreeMapHoverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTreeMapToPolyData", SetTreeMapToPolyData);
 	Nan::SetPrototypeMethod(tpl, "setTreeMapToPolyData", SetTreeMapToPolyData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -195,7 +193,7 @@ void VtkInteractorStyleTreeMapHoverWrap::GetLayout(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeMapLayoutWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeMapLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeMapLayoutWrap *w = new VtkTreeMapLayoutWrap();
 	w->native.TakeReference(r);
@@ -232,7 +230,7 @@ void VtkInteractorStyleTreeMapHoverWrap::GetTreeMapToPolyData(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeMapToPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeMapToPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeMapToPolyDataWrap *w = new VtkTreeMapToPolyDataWrap();
 	w->native.TakeReference(r);
@@ -289,7 +287,7 @@ void VtkInteractorStyleTreeMapHoverWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleTreeMapHoverWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTreeMapHoverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleTreeMapHoverWrap *w = new VtkInteractorStyleTreeMapHoverWrap();
 	w->native.TakeReference(r);
@@ -341,7 +339,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleTreeMapHoverWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTreeMapHoverWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleTreeMapHoverWrap *w = new VtkInteractorStyleTreeMapHoverWrap();
 		w->native.TakeReference(r);

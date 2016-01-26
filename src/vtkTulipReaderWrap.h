@@ -24,7 +24,6 @@ class VtkTulipReaderWrap : public VtkUndirectedGraphAlgorithmWrap
 		VtkTulipReaderWrap(vtkSmartPointer<vtkTulipReader>);
 		VtkTulipReaderWrap();
 		~VtkTulipReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

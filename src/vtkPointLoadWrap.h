@@ -24,7 +24,6 @@ class VtkPointLoadWrap : public VtkImageAlgorithmWrap
 		VtkPointLoadWrap(vtkSmartPointer<vtkPointLoad>);
 		VtkPointLoadWrap();
 		~VtkPointLoadWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBMPReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBMPReaderWrap::ptpl;
 
 VtkBMPReaderWrap::VtkBMPReaderWrap()
@@ -88,7 +87,6 @@ void VtkBMPReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAllow8BitBMP", SetAllow8BitBMP);
 	Nan::SetPrototypeMethod(tpl, "setAllow8BitBMP", SetAllow8BitBMP);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -246,7 +244,7 @@ void VtkBMPReaderWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLookupTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLookupTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLookupTableWrap *w = new VtkLookupTableWrap();
 	w->native.TakeReference(r);
@@ -291,7 +289,7 @@ void VtkBMPReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBMPReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBMPReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBMPReaderWrap *w = new VtkBMPReaderWrap();
 	w->native.TakeReference(r);
@@ -319,7 +317,7 @@ void VtkBMPReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBMPReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBMPReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBMPReaderWrap *w = new VtkBMPReaderWrap();
 		w->native.TakeReference(r);

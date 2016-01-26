@@ -24,7 +24,6 @@ class VtkGeoViewWrap : public VtkRenderViewWrap
 		VtkGeoViewWrap(vtkSmartPointer<vtkGeoView>);
 		VtkGeoViewWrap();
 		~VtkGeoViewWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

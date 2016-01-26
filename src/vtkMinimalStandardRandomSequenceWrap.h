@@ -24,7 +24,6 @@ class VtkMinimalStandardRandomSequenceWrap : public VtkRandomSequenceWrap
 		VtkMinimalStandardRandomSequenceWrap(vtkSmartPointer<vtkMinimalStandardRandomSequence>);
 		VtkMinimalStandardRandomSequenceWrap();
 		~VtkMinimalStandardRandomSequenceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContext2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContext2DWrap::ptpl;
 
 VtkContext2DWrap::VtkContext2DWrap()
@@ -136,7 +135,6 @@ void VtkContext2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -545,7 +543,7 @@ void VtkContext2DWrap::GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBrushWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBrushWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBrushWrap *w = new VtkBrushWrap();
 	w->native.TakeReference(r);
@@ -582,7 +580,7 @@ void VtkContext2DWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPenWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPenWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPenWrap *w = new VtkPenWrap();
 	w->native.TakeReference(r);
@@ -605,7 +603,7 @@ void VtkContext2DWrap::GetTextProp(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -628,7 +626,7 @@ void VtkContext2DWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransform2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransform2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransform2DWrap *w = new VtkTransform2DWrap();
 	w->native.TakeReference(r);
@@ -673,7 +671,7 @@ void VtkContext2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContext2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContext2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContext2DWrap *w = new VtkContext2DWrap();
 	w->native.TakeReference(r);
@@ -725,7 +723,7 @@ void VtkContext2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContext2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContext2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContext2DWrap *w = new VtkContext2DWrap();
 		w->native.TakeReference(r);

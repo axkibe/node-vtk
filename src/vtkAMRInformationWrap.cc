@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRInformationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRInformationWrap::ptpl;
 
 VtkAMRInformationWrap::VtkAMRInformationWrap()
@@ -80,7 +79,6 @@ void VtkAMRInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGridDescription", SetGridDescription);
 	Nan::SetPrototypeMethod(tpl, "setGridDescription", SetGridDescription);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -237,7 +235,7 @@ void VtkAMRInformationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRInformationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRInformationWrap *w = new VtkAMRInformationWrap();
 	w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkAMRInformationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRInformationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRInformationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRInformationWrap *w = new VtkAMRInformationWrap();
 		w->native.TakeReference(r);

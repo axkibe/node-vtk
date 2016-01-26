@@ -24,7 +24,6 @@ class VtkInformationExecutivePortKeyWrap : public VtkInformationKeyWrap
 		VtkInformationExecutivePortKeyWrap(vtkSmartPointer<vtkInformationExecutivePortKey>);
 		VtkInformationExecutivePortKeyWrap();
 		~VtkInformationExecutivePortKeyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

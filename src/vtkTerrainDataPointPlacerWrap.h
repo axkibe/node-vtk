@@ -24,7 +24,6 @@ class VtkTerrainDataPointPlacerWrap : public VtkPointPlacerWrap
 		VtkTerrainDataPointPlacerWrap(vtkSmartPointer<vtkTerrainDataPointPlacer>);
 		VtkTerrainDataPointPlacerWrap();
 		~VtkTerrainDataPointPlacerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkPruneTreeFilterWrap : public VtkTreeAlgorithmWrap
 		VtkPruneTreeFilterWrap(vtkSmartPointer<vtkPruneTreeFilter>);
 		VtkPruneTreeFilterWrap();
 		~VtkPruneTreeFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkMathTextUtilitiesWrap : public VtkObjectWrap
 		VtkMathTextUtilitiesWrap(vtkSmartPointer<vtkMathTextUtilities>);
 		VtkMathTextUtilitiesWrap();
 		~VtkMathTextUtilitiesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

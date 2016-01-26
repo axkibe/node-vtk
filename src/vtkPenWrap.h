@@ -24,7 +24,6 @@ class VtkPenWrap : public VtkObjectWrap
 		VtkPenWrap(vtkSmartPointer<vtkPen>);
 		VtkPenWrap();
 		~VtkPenWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

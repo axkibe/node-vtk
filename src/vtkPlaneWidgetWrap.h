@@ -24,7 +24,6 @@ class VtkPlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 		VtkPlaneWidgetWrap(vtkSmartPointer<vtkPlaneWidget>);
 		VtkPlaneWidgetWrap();
 		~VtkPlaneWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

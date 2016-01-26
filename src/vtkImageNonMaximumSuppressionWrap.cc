@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageNonMaximumSuppressionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageNonMaximumSuppressionWrap::ptpl;
 
 VtkImageNonMaximumSuppressionWrap::VtkImageNonMaximumSuppressionWrap()
@@ -91,7 +90,6 @@ void VtkImageNonMaximumSuppressionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorInputData", SetVectorInputData);
 	Nan::SetPrototypeMethod(tpl, "setVectorInputData", SetVectorInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -249,7 +247,7 @@ void VtkImageNonMaximumSuppressionWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageNonMaximumSuppressionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageNonMaximumSuppressionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageNonMaximumSuppressionWrap *w = new VtkImageNonMaximumSuppressionWrap();
 	w->native.TakeReference(r);
@@ -277,7 +275,7 @@ void VtkImageNonMaximumSuppressionWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageNonMaximumSuppressionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageNonMaximumSuppressionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageNonMaximumSuppressionWrap *w = new VtkImageNonMaximumSuppressionWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleTerrainWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleTerrainWrap::ptpl;
 
 VtkInteractorStyleTerrainWrap::VtkInteractorStyleTerrainWrap()
@@ -105,7 +104,6 @@ void VtkInteractorStyleTerrainWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLatLongLines", SetLatLongLines);
 	Nan::SetPrototypeMethod(tpl, "setLatLongLines", SetLatLongLines);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -233,7 +231,7 @@ void VtkInteractorStyleTerrainWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleTerrainWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTerrainWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleTerrainWrap *w = new VtkInteractorStyleTerrainWrap();
 	w->native.TakeReference(r);
@@ -381,7 +379,7 @@ void VtkInteractorStyleTerrainWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleTerrainWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTerrainWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleTerrainWrap *w = new VtkInteractorStyleTerrainWrap();
 		w->native.TakeReference(r);

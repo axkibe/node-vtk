@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSynchronizedTemplates3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSynchronizedTemplates3DWrap::ptpl;
 
 VtkSynchronizedTemplates3DWrap::VtkSynchronizedTemplates3DWrap()
@@ -135,7 +134,6 @@ void VtkSynchronizedTemplates3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreadedExecute", ThreadedExecute);
 	Nan::SetPrototypeMethod(tpl, "threadedExecute", ThreadedExecute);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -441,7 +439,7 @@ void VtkSynchronizedTemplates3DWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSynchronizedTemplates3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSynchronizedTemplates3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSynchronizedTemplates3DWrap *w = new VtkSynchronizedTemplates3DWrap();
 	w->native.TakeReference(r);
@@ -469,7 +467,7 @@ void VtkSynchronizedTemplates3DWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSynchronizedTemplates3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSynchronizedTemplates3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSynchronizedTemplates3DWrap *w = new VtkSynchronizedTemplates3DWrap();
 		w->native.TakeReference(r);

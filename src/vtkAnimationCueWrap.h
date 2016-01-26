@@ -24,7 +24,6 @@ class VtkAnimationCueWrap : public VtkObjectWrap
 		VtkAnimationCueWrap(vtkSmartPointer<vtkAnimationCue>);
 		VtkAnimationCueWrap();
 		~VtkAnimationCueWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

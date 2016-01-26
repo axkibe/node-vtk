@@ -24,7 +24,6 @@ class VtkPlotLine3DWrap : public VtkPlotPoints3DWrap
 		VtkPlotLine3DWrap(vtkSmartPointer<vtkPlotLine3D>);
 		VtkPlotLine3DWrap();
 		~VtkPlotLine3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

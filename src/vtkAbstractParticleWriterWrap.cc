@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAbstractParticleWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAbstractParticleWriterWrap::ptpl;
 
 VtkAbstractParticleWriterWrap::VtkAbstractParticleWriterWrap()
@@ -93,7 +92,6 @@ void VtkAbstractParticleWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWriteModeToIndependent", SetWriteModeToIndependent);
 	Nan::SetPrototypeMethod(tpl, "setWriteModeToIndependent", SetWriteModeToIndependent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -239,7 +237,7 @@ void VtkAbstractParticleWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractParticleWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractParticleWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractParticleWriterWrap *w = new VtkAbstractParticleWriterWrap();
 	w->native.TakeReference(r);
@@ -267,7 +265,7 @@ void VtkAbstractParticleWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractParticleWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractParticleWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractParticleWriterWrap *w = new VtkAbstractParticleWriterWrap();
 		w->native.TakeReference(r);

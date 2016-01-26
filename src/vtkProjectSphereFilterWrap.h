@@ -24,7 +24,6 @@ class VtkProjectSphereFilterWrap : public VtkPointSetAlgorithmWrap
 		VtkProjectSphereFilterWrap(vtkSmartPointer<vtkProjectSphereFilter>);
 		VtkProjectSphereFilterWrap();
 		~VtkProjectSphereFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

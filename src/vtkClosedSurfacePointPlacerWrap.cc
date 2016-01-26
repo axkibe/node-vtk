@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkClosedSurfacePointPlacerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkClosedSurfacePointPlacerWrap::ptpl;
 
 VtkClosedSurfacePointPlacerWrap::VtkClosedSurfacePointPlacerWrap()
@@ -90,7 +89,6 @@ void VtkClosedSurfacePointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMinimumDistance", SetMinimumDistance);
 	Nan::SetPrototypeMethod(tpl, "setMinimumDistance", SetMinimumDistance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -152,7 +150,7 @@ void VtkClosedSurfacePointPlacerWrap::GetBoundingPlanes(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlaneCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
 	w->native.TakeReference(r);
@@ -253,7 +251,7 @@ void VtkClosedSurfacePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkClosedSurfacePointPlacerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkClosedSurfacePointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClosedSurfacePointPlacerWrap *w = new VtkClosedSurfacePointPlacerWrap();
 	w->native.TakeReference(r);
@@ -313,7 +311,7 @@ void VtkClosedSurfacePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkClosedSurfacePointPlacerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkClosedSurfacePointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkClosedSurfacePointPlacerWrap *w = new VtkClosedSurfacePointPlacerWrap();
 		w->native.TakeReference(r);

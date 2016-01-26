@@ -24,7 +24,6 @@ class VtkTypeUInt64ArrayWrap : public VtkUnsignedLongLongArrayWrap
 		VtkTypeUInt64ArrayWrap(vtkSmartPointer<vtkTypeUInt64Array>);
 		VtkTypeUInt64ArrayWrap();
 		~VtkTypeUInt64ArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

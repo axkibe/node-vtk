@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericSubdivisionErrorMetricWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericSubdivisionErrorMetricWrap::ptpl;
 
 VtkGenericSubdivisionErrorMetricWrap::VtkGenericSubdivisionErrorMetricWrap()
@@ -73,7 +72,6 @@ void VtkGenericSubdivisionErrorMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGenericCell", SetGenericCell);
 	Nan::SetPrototypeMethod(tpl, "setGenericCell", SetGenericCell);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -129,7 +127,7 @@ void VtkGenericSubdivisionErrorMetricWrap::GetDataSet(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericDataSetWrap *w = new VtkGenericDataSetWrap();
 	w->native.TakeReference(r);
@@ -152,7 +150,7 @@ void VtkGenericSubdivisionErrorMetricWrap::GetGenericCell(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericAdaptorCellWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericAdaptorCellWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericAdaptorCellWrap *w = new VtkGenericAdaptorCellWrap();
 	w->native.TakeReference(r);
@@ -197,7 +195,7 @@ void VtkGenericSubdivisionErrorMetricWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericSubdivisionErrorMetricWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericSubdivisionErrorMetricWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericSubdivisionErrorMetricWrap *w = new VtkGenericSubdivisionErrorMetricWrap();
 	w->native.TakeReference(r);
@@ -225,7 +223,7 @@ void VtkGenericSubdivisionErrorMetricWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericSubdivisionErrorMetricWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericSubdivisionErrorMetricWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericSubdivisionErrorMetricWrap *w = new VtkGenericSubdivisionErrorMetricWrap();
 		w->native.TakeReference(r);

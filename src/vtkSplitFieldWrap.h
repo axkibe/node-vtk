@@ -24,7 +24,6 @@ class VtkSplitFieldWrap : public VtkDataSetAlgorithmWrap
 		VtkSplitFieldWrap(vtkSmartPointer<vtkSplitField>);
 		VtkSplitFieldWrap();
 		~VtkSplitFieldWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWeightedTransformFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWeightedTransformFilterWrap::ptpl;
 
 VtkWeightedTransformFilterWrap::VtkWeightedTransformFilterWrap()
@@ -109,7 +108,6 @@ void VtkWeightedTransformFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWeightArray", SetWeightArray);
 	Nan::SetPrototypeMethod(tpl, "setWeightArray", SetWeightArray);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -249,7 +247,7 @@ void VtkWeightedTransformFilterWrap::GetTransform(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 		w->native.TakeReference(r);
@@ -325,7 +323,7 @@ void VtkWeightedTransformFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWeightedTransformFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWeightedTransformFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWeightedTransformFilterWrap *w = new VtkWeightedTransformFilterWrap();
 	w->native.TakeReference(r);
@@ -353,7 +351,7 @@ void VtkWeightedTransformFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWeightedTransformFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWeightedTransformFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWeightedTransformFilterWrap *w = new VtkWeightedTransformFilterWrap();
 		w->native.TakeReference(r);

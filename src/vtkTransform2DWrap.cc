@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransform2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransform2DWrap::ptpl;
 
 VtkTransform2DWrap::VtkTransform2DWrap()
@@ -94,7 +93,6 @@ void VtkTransform2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -183,7 +181,7 @@ void VtkTransform2DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrix3x3Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrix3x3Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrix3x3Wrap *w = new VtkMatrix3x3Wrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkTransform2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransform2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransform2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransform2DWrap *w = new VtkTransform2DWrap();
 	w->native.TakeReference(r);
@@ -344,7 +342,7 @@ void VtkTransform2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransform2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransform2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransform2DWrap *w = new VtkTransform2DWrap();
 		w->native.TakeReference(r);

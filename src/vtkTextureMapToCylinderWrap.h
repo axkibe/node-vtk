@@ -24,7 +24,6 @@ class VtkTextureMapToCylinderWrap : public VtkDataSetAlgorithmWrap
 		VtkTextureMapToCylinderWrap(vtkSmartPointer<vtkTextureMapToCylinder>);
 		VtkTextureMapToCylinderWrap();
 		~VtkTextureMapToCylinderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

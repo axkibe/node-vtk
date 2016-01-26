@@ -24,7 +24,6 @@ class VtkClientSocketWrap : public VtkSocketWrap
 		VtkClientSocketWrap(vtkSmartPointer<vtkClientSocket>);
 		VtkClientSocketWrap();
 		~VtkClientSocketWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

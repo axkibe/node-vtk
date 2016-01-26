@@ -24,7 +24,6 @@ class VtkProStarReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkProStarReaderWrap(vtkSmartPointer<vtkProStarReader>);
 		VtkProStarReaderWrap();
 		~VtkProStarReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

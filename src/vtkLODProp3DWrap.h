@@ -24,7 +24,6 @@ class VtkLODProp3DWrap : public VtkProp3DWrap
 		VtkLODProp3DWrap(vtkSmartPointer<vtkLODProp3D>);
 		VtkLODProp3DWrap();
 		~VtkLODProp3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

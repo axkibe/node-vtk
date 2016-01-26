@@ -24,7 +24,6 @@ class VtkStructuredGridPartitionerWrap : public VtkMultiBlockDataSetAlgorithmWra
 		VtkStructuredGridPartitionerWrap(vtkSmartPointer<vtkStructuredGridPartitioner>);
 		VtkStructuredGridPartitionerWrap();
 		~VtkStructuredGridPartitionerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractVOIWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractVOIWrap::ptpl;
 
 VtkExtractVOIWrap::VtkExtractVOIWrap()
@@ -66,7 +65,6 @@ void VtkExtractVOIWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVOI", SetVOI);
 	Nan::SetPrototypeMethod(tpl, "setVOI", SetVOI);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -144,7 +142,7 @@ void VtkExtractVOIWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractVOIWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractVOIWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractVOIWrap *w = new VtkExtractVOIWrap();
 	w->native.TakeReference(r);
@@ -172,7 +170,7 @@ void VtkExtractVOIWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractVOIWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractVOIWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractVOIWrap *w = new VtkExtractVOIWrap();
 		w->native.TakeReference(r);

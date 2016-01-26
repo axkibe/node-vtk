@@ -24,7 +24,6 @@ class VtkAMRToMultiBlockFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkAMRToMultiBlockFilterWrap(vtkSmartPointer<vtkAMRToMultiBlockFilter>);
 		VtkAMRToMultiBlockFilterWrap();
 		~VtkAMRToMultiBlockFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

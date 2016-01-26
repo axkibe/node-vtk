@@ -24,7 +24,6 @@ class VtkRenderbufferWrap : public VtkObjectWrap
 		VtkRenderbufferWrap(vtkSmartPointer<vtkRenderbuffer>);
 		VtkRenderbufferWrap();
 		~VtkRenderbufferWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

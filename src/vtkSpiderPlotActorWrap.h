@@ -24,7 +24,6 @@ class VtkSpiderPlotActorWrap : public VtkActor2DWrap
 		VtkSpiderPlotActorWrap(vtkSmartPointer<vtkSpiderPlotActor>);
 		VtkSpiderPlotActorWrap();
 		~VtkSpiderPlotActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

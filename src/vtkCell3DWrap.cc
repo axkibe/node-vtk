@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCell3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCell3DWrap::ptpl;
 
 VtkCell3DWrap::VtkCell3DWrap()
@@ -75,7 +74,6 @@ void VtkCell3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMergeTolerance", SetMergeTolerance);
 	Nan::SetPrototypeMethod(tpl, "setMergeTolerance", SetMergeTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -209,7 +207,7 @@ void VtkCell3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCell3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCell3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCell3DWrap *w = new VtkCell3DWrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkCell3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCell3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCell3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCell3DWrap *w = new VtkCell3DWrap();
 		w->native.TakeReference(r);

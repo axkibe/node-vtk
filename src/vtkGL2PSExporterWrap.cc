@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGL2PSExporterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGL2PSExporterWrap::ptpl;
 
 VtkGL2PSExporterWrap::VtkGL2PSExporterWrap()
@@ -262,7 +261,6 @@ void VtkGL2PSExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write3DPropsAsRasterImageOn", Write3DPropsAsRasterImageOn);
 	Nan::SetPrototypeMethod(tpl, "write3DPropsAsRasterImageOn", Write3DPropsAsRasterImageOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -544,7 +542,7 @@ void VtkGL2PSExporterWrap::GetRasterExclusions(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
 	w->native.TakeReference(r);
@@ -739,7 +737,7 @@ void VtkGL2PSExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGL2PSExporterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGL2PSExporterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGL2PSExporterWrap *w = new VtkGL2PSExporterWrap();
 	w->native.TakeReference(r);
@@ -815,7 +813,7 @@ void VtkGL2PSExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGL2PSExporterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGL2PSExporterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGL2PSExporterWrap *w = new VtkGL2PSExporterWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkPointPickerWrap : public VtkPickerWrap
 		VtkPointPickerWrap(vtkSmartPointer<vtkPointPicker>);
 		VtkPointPickerWrap();
 		~VtkPointPickerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

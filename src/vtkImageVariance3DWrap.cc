@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageVariance3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageVariance3DWrap::ptpl;
 
 VtkImageVariance3DWrap::VtkImageVariance3DWrap()
@@ -63,7 +62,6 @@ void VtkImageVariance3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetKernelSize", SetKernelSize);
 	Nan::SetPrototypeMethod(tpl, "setKernelSize", SetKernelSize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkImageVariance3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageVariance3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageVariance3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageVariance3DWrap *w = new VtkImageVariance3DWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkImageVariance3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageVariance3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageVariance3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageVariance3DWrap *w = new VtkImageVariance3DWrap();
 		w->native.TakeReference(r);

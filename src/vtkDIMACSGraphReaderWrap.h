@@ -24,7 +24,6 @@ class VtkDIMACSGraphReaderWrap : public VtkGraphAlgorithmWrap
 		VtkDIMACSGraphReaderWrap(vtkSmartPointer<vtkDIMACSGraphReader>);
 		VtkDIMACSGraphReaderWrap();
 		~VtkDIMACSGraphReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

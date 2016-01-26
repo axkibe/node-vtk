@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSliceAndDiceLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSliceAndDiceLayoutStrategyWrap::ptpl;
 
 VtkSliceAndDiceLayoutStrategyWrap::VtkSliceAndDiceLayoutStrategyWrap()
@@ -65,7 +64,6 @@ void VtkSliceAndDiceLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -173,7 +171,7 @@ void VtkSliceAndDiceLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSliceAndDiceLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSliceAndDiceLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSliceAndDiceLayoutStrategyWrap *w = new VtkSliceAndDiceLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -201,7 +199,7 @@ void VtkSliceAndDiceLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSliceAndDiceLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSliceAndDiceLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSliceAndDiceLayoutStrategyWrap *w = new VtkSliceAndDiceLayoutStrategyWrap();
 		w->native.TakeReference(r);

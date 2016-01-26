@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOverlappingAMRWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOverlappingAMRWrap::ptpl;
 
 VtkOverlappingAMRWrap::VtkOverlappingAMRWrap()
@@ -91,7 +90,6 @@ void VtkOverlappingAMRWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAMRInfo", SetAMRInfo);
 	Nan::SetPrototypeMethod(tpl, "setAMRInfo", SetAMRInfo);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -157,7 +155,7 @@ void VtkOverlappingAMRWrap::GetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRInformationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRInformationWrap *w = new VtkAMRInformationWrap();
 	w->native.TakeReference(r);
@@ -202,7 +200,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkOverlappingAMRWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
 			w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOverlappingAMRWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
 		w->native.TakeReference(r);
@@ -307,7 +305,7 @@ void VtkOverlappingAMRWrap::NUMBER_OF_BLANKED_POINTS(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIdTypeKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIdTypeKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIdTypeKeyWrap *w = new VtkInformationIdTypeKeyWrap();
 	w->native.TakeReference(r);
@@ -330,7 +328,7 @@ void VtkOverlappingAMRWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOverlappingAMRWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
 	w->native.TakeReference(r);
@@ -353,7 +351,7 @@ void VtkOverlappingAMRWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeDataIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataIteratorWrap *w = new VtkCompositeDataIteratorWrap();
 	w->native.TakeReference(r);
@@ -381,7 +379,7 @@ void VtkOverlappingAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOverlappingAMRWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
 		w->native.TakeReference(r);

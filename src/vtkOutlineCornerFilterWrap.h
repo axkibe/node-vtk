@@ -24,7 +24,6 @@ class VtkOutlineCornerFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkOutlineCornerFilterWrap(vtkSmartPointer<vtkOutlineCornerFilter>);
 		VtkOutlineCornerFilterWrap();
 		~VtkOutlineCornerFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

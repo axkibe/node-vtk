@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericStreamTracerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericStreamTracerWrap::ptpl;
 
 VtkGenericStreamTracerWrap::VtkGenericStreamTracerWrap()
@@ -252,7 +251,6 @@ void VtkGenericStreamTracerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerminalSpeed", SetTerminalSpeed);
 	Nan::SetPrototypeMethod(tpl, "setTerminalSpeed", SetTerminalSpeed);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -476,7 +474,7 @@ void VtkGenericStreamTracerWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInitialValueProblemSolverWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
 	w->native.TakeReference(r);
@@ -625,7 +623,7 @@ void VtkGenericStreamTracerWrap::GetSource(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -684,7 +682,7 @@ void VtkGenericStreamTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericStreamTracerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericStreamTracerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericStreamTracerWrap *w = new VtkGenericStreamTracerWrap();
 	w->native.TakeReference(r);
@@ -712,7 +710,7 @@ void VtkGenericStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericStreamTracerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericStreamTracerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericStreamTracerWrap *w = new VtkGenericStreamTracerWrap();
 		w->native.TakeReference(r);

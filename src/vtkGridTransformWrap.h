@@ -24,7 +24,6 @@ class VtkGridTransformWrap : public VtkWarpTransformWrap
 		VtkGridTransformWrap(vtkSmartPointer<vtkGridTransform>);
 		VtkGridTransformWrap();
 		~VtkGridTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

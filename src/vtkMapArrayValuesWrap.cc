@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMapArrayValuesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMapArrayValuesWrap::ptpl;
 
 VtkMapArrayValuesWrap::VtkMapArrayValuesWrap()
@@ -111,7 +110,6 @@ void VtkMapArrayValuesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassArray", SetPassArray);
 	Nan::SetPrototypeMethod(tpl, "setPassArray", SetPassArray);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -367,7 +365,7 @@ void VtkMapArrayValuesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMapArrayValuesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMapArrayValuesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMapArrayValuesWrap *w = new VtkMapArrayValuesWrap();
 	w->native.TakeReference(r);
@@ -419,7 +417,7 @@ void VtkMapArrayValuesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMapArrayValuesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMapArrayValuesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMapArrayValuesWrap *w = new VtkMapArrayValuesWrap();
 		w->native.TakeReference(r);

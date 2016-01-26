@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkColorSeriesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkColorSeriesWrap::ptpl;
 
 VtkColorSeriesWrap::VtkColorSeriesWrap()
@@ -90,7 +89,6 @@ void VtkColorSeriesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfColors", SetNumberOfColors);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfColors", SetNumberOfColors);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -164,7 +162,7 @@ void VtkColorSeriesWrap::CreateLookupTable(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLookupTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLookupTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLookupTableWrap *w = new VtkLookupTableWrap();
 	w->native.TakeReference(r);
@@ -285,7 +283,7 @@ void VtkColorSeriesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkColorSeriesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkColorSeriesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorSeriesWrap *w = new VtkColorSeriesWrap();
 	w->native.TakeReference(r);
@@ -332,7 +330,7 @@ void VtkColorSeriesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkColorSeriesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkColorSeriesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkColorSeriesWrap *w = new VtkColorSeriesWrap();
 		w->native.TakeReference(r);

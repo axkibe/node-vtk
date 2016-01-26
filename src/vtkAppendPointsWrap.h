@@ -24,7 +24,6 @@ class VtkAppendPointsWrap : public VtkPolyDataAlgorithmWrap
 		VtkAppendPointsWrap(vtkSmartPointer<vtkAppendPoints>);
 		VtkAppendPointsWrap();
 		~VtkAppendPointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

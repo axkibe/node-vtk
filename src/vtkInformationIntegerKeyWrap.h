@@ -24,7 +24,6 @@ class VtkInformationIntegerKeyWrap : public VtkInformationKeyWrap
 		VtkInformationIntegerKeyWrap(vtkSmartPointer<vtkInformationIntegerKey>);
 		VtkInformationIntegerKeyWrap();
 		~VtkInformationIntegerKeyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

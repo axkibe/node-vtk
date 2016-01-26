@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLHardwareSelectorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLHardwareSelectorWrap::ptpl;
 
 VtkOpenGLHardwareSelectorWrap::VtkOpenGLHardwareSelectorWrap()
@@ -66,7 +65,6 @@ void VtkOpenGLHardwareSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -168,7 +166,7 @@ void VtkOpenGLHardwareSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLHardwareSelectorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLHardwareSelectorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLHardwareSelectorWrap *w = new VtkOpenGLHardwareSelectorWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkOpenGLHardwareSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLHardwareSelectorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLHardwareSelectorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLHardwareSelectorWrap *w = new VtkOpenGLHardwareSelectorWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPointLoadWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPointLoadWrap::ptpl;
 
 VtkPointLoadWrap::VtkPointLoadWrap()
@@ -90,7 +89,6 @@ void VtkPointLoadWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSampleDimensions", SetSampleDimensions);
 	Nan::SetPrototypeMethod(tpl, "setSampleDimensions", SetSampleDimensions);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -234,7 +232,7 @@ void VtkPointLoadWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointLoadWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointLoadWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointLoadWrap *w = new VtkPointLoadWrap();
 	w->native.TakeReference(r);
@@ -262,7 +260,7 @@ void VtkPointLoadWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointLoadWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointLoadWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointLoadWrap *w = new VtkPointLoadWrap();
 		w->native.TakeReference(r);

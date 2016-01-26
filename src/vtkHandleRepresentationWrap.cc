@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHandleRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHandleRepresentationWrap::ptpl;
 
 VtkHandleRepresentationWrap::VtkHandleRepresentationWrap()
@@ -123,7 +122,6 @@ void VtkHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -303,7 +301,7 @@ void VtkHandleRepresentationWrap::GetPointPlacer(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointPlacerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointPlacerWrap *w = new VtkPointPlacerWrap();
 	w->native.TakeReference(r);
@@ -390,7 +388,7 @@ void VtkHandleRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHandleRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
 	w->native.TakeReference(r);
@@ -418,7 +416,7 @@ void VtkHandleRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHandleRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFocalPlaneContourRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFocalPlaneContourRepresentationWrap::ptpl;
 
 VtkFocalPlaneContourRepresentationWrap::VtkFocalPlaneContourRepresentationWrap()
@@ -69,7 +68,6 @@ void VtkFocalPlaneContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateLines", UpdateLines);
 	Nan::SetPrototypeMethod(tpl, "updateLines", UpdateLines);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -147,7 +145,7 @@ void VtkFocalPlaneContourRepresentationWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFocalPlaneContourRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFocalPlaneContourRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFocalPlaneContourRepresentationWrap *w = new VtkFocalPlaneContourRepresentationWrap();
 	w->native.TakeReference(r);
@@ -175,7 +173,7 @@ void VtkFocalPlaneContourRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFocalPlaneContourRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFocalPlaneContourRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFocalPlaneContourRepresentationWrap *w = new VtkFocalPlaneContourRepresentationWrap();
 		w->native.TakeReference(r);

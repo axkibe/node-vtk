@@ -24,7 +24,6 @@ class VtkExtractTemporalFieldDataWrap : public VtkTableAlgorithmWrap
 		VtkExtractTemporalFieldDataWrap(vtkSmartPointer<vtkExtractTemporalFieldData>);
 		VtkExtractTemporalFieldDataWrap();
 		~VtkExtractTemporalFieldDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

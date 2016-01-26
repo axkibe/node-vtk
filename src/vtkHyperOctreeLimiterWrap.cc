@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperOctreeLimiterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeLimiterWrap::ptpl;
 
 VtkHyperOctreeLimiterWrap::VtkHyperOctreeLimiterWrap()
@@ -66,7 +65,6 @@ void VtkHyperOctreeLimiterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumLevel", SetMaximumLevel);
 	Nan::SetPrototypeMethod(tpl, "setMaximumLevel", SetMaximumLevel);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkHyperOctreeLimiterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeLimiterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeLimiterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeLimiterWrap *w = new VtkHyperOctreeLimiterWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkHyperOctreeLimiterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeLimiterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeLimiterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeLimiterWrap *w = new VtkHyperOctreeLimiterWrap();
 		w->native.TakeReference(r);

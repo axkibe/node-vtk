@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRungeKutta4Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRungeKutta4Wrap::ptpl;
 
 VtkRungeKutta4Wrap::VtkRungeKutta4Wrap()
@@ -60,7 +59,6 @@ void VtkRungeKutta4Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkRungeKutta4Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRungeKutta4Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRungeKutta4Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRungeKutta4Wrap *w = new VtkRungeKutta4Wrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkRungeKutta4Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRungeKutta4Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRungeKutta4Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRungeKutta4Wrap *w = new VtkRungeKutta4Wrap();
 		w->native.TakeReference(r);

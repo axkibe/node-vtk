@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImplicitFunctionToImageStencilWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImplicitFunctionToImageStencilWrap::ptpl;
 
 VtkImplicitFunctionToImageStencilWrap::VtkImplicitFunctionToImageStencilWrap()
@@ -73,7 +72,6 @@ void VtkImplicitFunctionToImageStencilWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetThreshold", SetThreshold);
 	Nan::SetPrototypeMethod(tpl, "setThreshold", SetThreshold);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -129,7 +127,7 @@ void VtkImplicitFunctionToImageStencilWrap::GetInput(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkImplicitFunctionToImageStencilWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionToImageStencilWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionToImageStencilWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionToImageStencilWrap *w = new VtkImplicitFunctionToImageStencilWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkImplicitFunctionToImageStencilWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImplicitFunctionToImageStencilWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionToImageStencilWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitFunctionToImageStencilWrap *w = new VtkImplicitFunctionToImageStencilWrap();
 		w->native.TakeReference(r);

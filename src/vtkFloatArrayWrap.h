@@ -24,7 +24,6 @@ class VtkFloatArrayWrap : public VtkDataArrayWrap
 		VtkFloatArrayWrap(vtkSmartPointer<vtkFloatArray>);
 		VtkFloatArrayWrap();
 		~VtkFloatArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

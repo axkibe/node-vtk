@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransmitRectilinearGridPieceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransmitRectilinearGridPieceWrap::ptpl;
 
 VtkTransmitRectilinearGridPieceWrap::VtkTransmitRectilinearGridPieceWrap()
@@ -79,7 +78,6 @@ void VtkTransmitRectilinearGridPieceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCreateGhostCells", SetCreateGhostCells);
 	Nan::SetPrototypeMethod(tpl, "setCreateGhostCells", SetCreateGhostCells);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -159,7 +157,7 @@ void VtkTransmitRectilinearGridPieceWrap::GetController(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkTransmitRectilinearGridPieceWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransmitRectilinearGridPieceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransmitRectilinearGridPieceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransmitRectilinearGridPieceWrap *w = new VtkTransmitRectilinearGridPieceWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkTransmitRectilinearGridPieceWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransmitRectilinearGridPieceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransmitRectilinearGridPieceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransmitRectilinearGridPieceWrap *w = new VtkTransmitRectilinearGridPieceWrap();
 		w->native.TakeReference(r);

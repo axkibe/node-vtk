@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCylinderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCylinderWrap::ptpl;
 
 VtkCylinderWrap::VtkCylinderWrap()
@@ -72,7 +71,6 @@ void VtkCylinderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -193,7 +191,7 @@ void VtkCylinderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCylinderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCylinderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCylinderWrap *w = new VtkCylinderWrap();
 	w->native.TakeReference(r);
@@ -221,7 +219,7 @@ void VtkCylinderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCylinderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCylinderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCylinderWrap *w = new VtkCylinderWrap();
 		w->native.TakeReference(r);

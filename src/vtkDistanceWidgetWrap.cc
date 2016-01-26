@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDistanceWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDistanceWidgetWrap::ptpl;
 
 VtkDistanceWidgetWrap::VtkDistanceWidgetWrap()
@@ -85,7 +84,6 @@ void VtkDistanceWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidgetStateToStart", SetWidgetStateToStart);
 	Nan::SetPrototypeMethod(tpl, "setWidgetStateToStart", SetWidgetStateToStart);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -153,7 +151,7 @@ void VtkDistanceWidgetWrap::GetDistanceRepresentation(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDistanceRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDistanceRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistanceRepresentationWrap *w = new VtkDistanceRepresentationWrap();
 	w->native.TakeReference(r);
@@ -212,7 +210,7 @@ void VtkDistanceWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDistanceWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDistanceWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistanceWidgetWrap *w = new VtkDistanceWidgetWrap();
 	w->native.TakeReference(r);
@@ -240,7 +238,7 @@ void VtkDistanceWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDistanceWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDistanceWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDistanceWidgetWrap *w = new VtkDistanceWidgetWrap();
 		w->native.TakeReference(r);

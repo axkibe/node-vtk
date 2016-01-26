@@ -24,7 +24,6 @@ class VtkPassThroughLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		VtkPassThroughLayoutStrategyWrap(vtkSmartPointer<vtkPassThroughLayoutStrategy>);
 		VtkPassThroughLayoutStrategyWrap();
 		~VtkPassThroughLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkTexturedButtonRepresentationWrap : public VtkButtonRepresentationWrap
 		VtkTexturedButtonRepresentationWrap(vtkSmartPointer<vtkTexturedButtonRepresentation>);
 		VtkTexturedButtonRepresentationWrap();
 		~VtkTexturedButtonRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

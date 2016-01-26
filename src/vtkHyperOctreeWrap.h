@@ -24,7 +24,6 @@ class VtkHyperOctreeWrap : public VtkDataSetWrap
 		VtkHyperOctreeWrap(vtkSmartPointer<vtkHyperOctree>);
 		VtkHyperOctreeWrap();
 		~VtkHyperOctreeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDistanceRepresentation3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDistanceRepresentation3DWrap::ptpl;
 
 VtkDistanceRepresentation3DWrap::VtkDistanceRepresentation3DWrap()
@@ -119,7 +118,6 @@ void VtkDistanceRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfRulerTicks", SetMaximumNumberOfRulerTicks);
 	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfRulerTicks", SetMaximumNumberOfRulerTicks);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -201,7 +199,7 @@ void VtkDistanceRepresentation3DWrap::GetGlyphActor(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActorWrap *w = new VtkActorWrap();
 	w->native.TakeReference(r);
@@ -238,7 +236,7 @@ void VtkDistanceRepresentation3DWrap::GetLabelActor(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFollowerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFollowerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFollowerWrap *w = new VtkFollowerWrap();
 	w->native.TakeReference(r);
@@ -275,7 +273,7 @@ void VtkDistanceRepresentation3DWrap::GetLabelProperty(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -298,7 +296,7 @@ void VtkDistanceRepresentation3DWrap::GetLineProperty(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -385,7 +383,7 @@ void VtkDistanceRepresentation3DWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDistanceRepresentation3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDistanceRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistanceRepresentation3DWrap *w = new VtkDistanceRepresentation3DWrap();
 	w->native.TakeReference(r);
@@ -477,7 +475,7 @@ void VtkDistanceRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDistanceRepresentation3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDistanceRepresentation3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDistanceRepresentation3DWrap *w = new VtkDistanceRepresentation3DWrap();
 		w->native.TakeReference(r);

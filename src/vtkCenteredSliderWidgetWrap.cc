@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCenteredSliderWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCenteredSliderWidgetWrap::ptpl;
 
 VtkCenteredSliderWidgetWrap::VtkCenteredSliderWidgetWrap()
@@ -73,7 +72,6 @@ void VtkCenteredSliderWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkCenteredSliderWidgetWrap::GetSliderRepresentation(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSliderRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSliderRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSliderRepresentationWrap *w = new VtkSliderRepresentationWrap();
 	w->native.TakeReference(r);
@@ -200,7 +198,7 @@ void VtkCenteredSliderWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCenteredSliderWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCenteredSliderWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCenteredSliderWidgetWrap *w = new VtkCenteredSliderWidgetWrap();
 	w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkCenteredSliderWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCenteredSliderWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCenteredSliderWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCenteredSliderWidgetWrap *w = new VtkCenteredSliderWidgetWrap();
 		w->native.TakeReference(r);

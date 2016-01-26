@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperOctreeAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeAlgorithmWrap::ptpl;
 
 VtkHyperOctreeAlgorithmWrap::VtkHyperOctreeAlgorithmWrap()
@@ -80,7 +79,6 @@ void VtkHyperOctreeAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkHyperOctreeAlgorithmWrap::GetHyperOctreeInput(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeWrap *w = new VtkHyperOctreeWrap();
 		w->native.TakeReference(r);
@@ -207,7 +205,7 @@ void VtkHyperOctreeAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkHyperOctreeAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -253,7 +251,7 @@ void VtkHyperOctreeAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeWrap *w = new VtkHyperOctreeWrap();
 		w->native.TakeReference(r);
@@ -272,7 +270,7 @@ void VtkHyperOctreeAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeWrap *w = new VtkHyperOctreeWrap();
 	w->native.TakeReference(r);
@@ -317,7 +315,7 @@ void VtkHyperOctreeAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeAlgorithmWrap *w = new VtkHyperOctreeAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -345,7 +343,7 @@ void VtkHyperOctreeAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeAlgorithmWrap *w = new VtkHyperOctreeAlgorithmWrap();
 		w->native.TakeReference(r);

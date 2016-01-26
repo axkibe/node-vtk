@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLPUniformGridAMRWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLPUniformGridAMRWriterWrap::ptpl;
 
 VtkXMLPUniformGridAMRWriterWrap::VtkXMLPUniformGridAMRWriterWrap()
@@ -70,7 +69,6 @@ void VtkXMLPUniformGridAMRWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWriteMetaFile", SetWriteMetaFile);
 	Nan::SetPrototypeMethod(tpl, "setWriteMetaFile", SetWriteMetaFile);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkXMLPUniformGridAMRWriterWrap::GetController(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkXMLPUniformGridAMRWriterWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLPUniformGridAMRWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLPUniformGridAMRWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLPUniformGridAMRWriterWrap *w = new VtkXMLPUniformGridAMRWriterWrap();
 	w->native.TakeReference(r);
@@ -199,7 +197,7 @@ void VtkXMLPUniformGridAMRWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLPUniformGridAMRWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLPUniformGridAMRWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLPUniformGridAMRWriterWrap *w = new VtkXMLPUniformGridAMRWriterWrap();
 		w->native.TakeReference(r);

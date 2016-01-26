@@ -24,7 +24,6 @@ class VtkXYZMolReaderWrap : public VtkMoleculeReaderBaseWrap
 		VtkXYZMolReaderWrap(vtkSmartPointer<vtkXYZMolReader>);
 		VtkXYZMolReaderWrap();
 		~VtkXYZMolReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

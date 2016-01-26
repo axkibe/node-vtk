@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInformationIntegerVectorKeyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInformationIntegerVectorKeyWrap::ptpl;
 
 VtkInformationIntegerVectorKeyWrap::VtkInformationIntegerVectorKeyWrap()
@@ -76,7 +75,6 @@ void VtkInformationIntegerVectorKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -226,7 +224,7 @@ void VtkInformationIntegerVectorKeyWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerVectorKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerVectorKeyWrap *w = new VtkInformationIntegerVectorKeyWrap();
 	w->native.TakeReference(r);
@@ -254,7 +252,7 @@ void VtkInformationIntegerVectorKeyWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationIntegerVectorKeyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationIntegerVectorKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationIntegerVectorKeyWrap *w = new VtkInformationIntegerVectorKeyWrap();
 		w->native.TakeReference(r);

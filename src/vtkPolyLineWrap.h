@@ -24,7 +24,6 @@ class VtkPolyLineWrap : public VtkCellWrap
 		VtkPolyLineWrap(vtkSmartPointer<vtkPolyLine>);
 		VtkPolyLineWrap();
 		~VtkPolyLineWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

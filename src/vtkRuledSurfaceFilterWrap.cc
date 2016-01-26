@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRuledSurfaceFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRuledSurfaceFilterWrap::ptpl;
 
 VtkRuledSurfaceFilterWrap::VtkRuledSurfaceFilterWrap()
@@ -156,7 +155,6 @@ void VtkRuledSurfaceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRuledModeToResample", SetRuledModeToResample);
 	Nan::SetPrototypeMethod(tpl, "setRuledModeToResample", SetRuledModeToResample);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -482,7 +480,7 @@ void VtkRuledSurfaceFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRuledSurfaceFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRuledSurfaceFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRuledSurfaceFilterWrap *w = new VtkRuledSurfaceFilterWrap();
 	w->native.TakeReference(r);
@@ -558,7 +556,7 @@ void VtkRuledSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRuledSurfaceFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRuledSurfaceFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRuledSurfaceFilterWrap *w = new VtkRuledSurfaceFilterWrap();
 		w->native.TakeReference(r);

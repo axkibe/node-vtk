@@ -24,7 +24,6 @@ class VtkPixelWrap : public VtkCellWrap
 		VtkPixelWrap(vtkSmartPointer<vtkPixel>);
 		VtkPixelWrap();
 		~VtkPixelWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkParticleTracerWrap : public VtkParticleTracerBaseWrap
 		VtkParticleTracerWrap(vtkSmartPointer<vtkParticleTracer>);
 		VtkParticleTracerWrap();
 		~VtkParticleTracerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

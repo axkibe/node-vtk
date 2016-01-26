@@ -24,7 +24,6 @@ class VtkOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkOutlineSourceWrap(vtkSmartPointer<vtkOutlineSource>);
 		VtkOutlineSourceWrap();
 		~VtkOutlineSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

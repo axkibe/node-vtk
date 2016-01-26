@@ -24,7 +24,6 @@ class VtkSliceCubesWrap : public VtkObjectWrap
 		VtkSliceCubesWrap(vtkSmartPointer<vtkSliceCubes>);
 		VtkSliceCubesWrap();
 		~VtkSliceCubesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

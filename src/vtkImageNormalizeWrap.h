@@ -24,7 +24,6 @@ class VtkImageNormalizeWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageNormalizeWrap(vtkSmartPointer<vtkImageNormalize>);
 		VtkImageNormalizeWrap();
 		~VtkImageNormalizeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

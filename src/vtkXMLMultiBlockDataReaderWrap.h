@@ -24,7 +24,6 @@ class VtkXMLMultiBlockDataReaderWrap : public VtkXMLCompositeDataReaderWrap
 		VtkXMLMultiBlockDataReaderWrap(vtkSmartPointer<vtkXMLMultiBlockDataReader>);
 		VtkXMLMultiBlockDataReaderWrap();
 		~VtkXMLMultiBlockDataReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

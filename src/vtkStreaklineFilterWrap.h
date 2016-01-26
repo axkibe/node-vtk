@@ -24,7 +24,6 @@ class VtkStreaklineFilterWrap : public VtkParticleTracerBaseWrap
 		VtkStreaklineFilterWrap(vtkSmartPointer<vtkStreaklineFilter>);
 		VtkStreaklineFilterWrap();
 		~VtkStreaklineFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

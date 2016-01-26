@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMultiNewickTreeReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMultiNewickTreeReaderWrap::ptpl;
 
 VtkMultiNewickTreeReaderWrap::VtkMultiNewickTreeReaderWrap()
@@ -67,7 +66,6 @@ void VtkMultiNewickTreeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -127,7 +125,7 @@ void VtkMultiNewickTreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMultiPieceDataSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMultiPieceDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMultiPieceDataSetWrap *w = new VtkMultiPieceDataSetWrap();
 		w->native.TakeReference(r);
@@ -146,7 +144,7 @@ void VtkMultiNewickTreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiPieceDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiPieceDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiPieceDataSetWrap *w = new VtkMultiPieceDataSetWrap();
 	w->native.TakeReference(r);
@@ -191,7 +189,7 @@ void VtkMultiNewickTreeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiNewickTreeReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiNewickTreeReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiNewickTreeReaderWrap *w = new VtkMultiNewickTreeReaderWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkMultiNewickTreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMultiNewickTreeReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMultiNewickTreeReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMultiNewickTreeReaderWrap *w = new VtkMultiNewickTreeReaderWrap();
 		w->native.TakeReference(r);

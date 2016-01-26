@@ -24,7 +24,6 @@ class VtkPolygonalSurfacePointPlacerWrap : public VtkPolyDataPointPlacerWrap
 		VtkPolygonalSurfacePointPlacerWrap(vtkSmartPointer<vtkPolygonalSurfacePointPlacer>);
 		VtkPolygonalSurfacePointPlacerWrap();
 		~VtkPolygonalSurfacePointPlacerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkPolygonWrap : public VtkCellWrap
 		VtkPolygonWrap(vtkSmartPointer<vtkPolygon>);
 		VtkPolygonWrap();
 		~VtkPolygonWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

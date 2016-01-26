@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridVolumeZSweepMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridVolumeZSweepMapperWrap::ptpl;
 
 VtkUnstructuredGridVolumeZSweepMapperWrap::VtkUnstructuredGridVolumeZSweepMapperWrap()
@@ -114,7 +113,6 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRayIntegrator", SetRayIntegrator);
 	Nan::SetPrototypeMethod(tpl, "setRayIntegrator", SetRayIntegrator);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -292,7 +290,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::GetRayIntegrator(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridVolumeRayIntegratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeRayIntegratorWrap *w = new VtkUnstructuredGridVolumeRayIntegratorWrap();
 	w->native.TakeReference(r);
@@ -361,7 +359,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::NewInstance(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridVolumeZSweepMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeZSweepMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeZSweepMapperWrap *w = new VtkUnstructuredGridVolumeZSweepMapperWrap();
 	w->native.TakeReference(r);
@@ -414,7 +412,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::SafeDownCast(const Nan::Function
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridVolumeZSweepMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeZSweepMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridVolumeZSweepMapperWrap *w = new VtkUnstructuredGridVolumeZSweepMapperWrap();
 		w->native.TakeReference(r);

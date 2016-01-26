@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCompositeDataSetAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCompositeDataSetAlgorithmWrap::ptpl;
 
 VtkCompositeDataSetAlgorithmWrap::VtkCompositeDataSetAlgorithmWrap()
@@ -68,7 +67,6 @@ void VtkCompositeDataSetAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -128,7 +126,7 @@ void VtkCompositeDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCompositeDataSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCompositeDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeDataSetWrap *w = new VtkCompositeDataSetWrap();
 		w->native.TakeReference(r);
@@ -147,7 +145,7 @@ void VtkCompositeDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataSetWrap *w = new VtkCompositeDataSetWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkCompositeDataSetAlgorithmWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeDataSetAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeDataSetAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataSetAlgorithmWrap *w = new VtkCompositeDataSetAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkCompositeDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCompositeDataSetAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCompositeDataSetAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeDataSetAlgorithmWrap *w = new VtkCompositeDataSetAlgorithmWrap();
 		w->native.TakeReference(r);

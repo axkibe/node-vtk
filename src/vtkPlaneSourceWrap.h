@@ -24,7 +24,6 @@ class VtkPlaneSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkPlaneSourceWrap(vtkSmartPointer<vtkPlaneSource>);
 		VtkPlaneSourceWrap();
 		~VtkPlaneSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

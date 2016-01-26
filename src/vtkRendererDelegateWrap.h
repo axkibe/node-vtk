@@ -24,7 +24,6 @@ class VtkRendererDelegateWrap : public VtkObjectWrap
 		VtkRendererDelegateWrap(vtkSmartPointer<vtkRendererDelegate>);
 		VtkRendererDelegateWrap();
 		~VtkRendererDelegateWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkRTAnalyticSourceWrap : public VtkImageAlgorithmWrap
 		VtkRTAnalyticSourceWrap(vtkSmartPointer<vtkRTAnalyticSource>);
 		VtkRTAnalyticSourceWrap();
 		~VtkRTAnalyticSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

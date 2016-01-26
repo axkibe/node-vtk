@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEnSightReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEnSightReaderWrap::ptpl;
 
 VtkEnSightReaderWrap::VtkEnSightReaderWrap()
@@ -78,7 +77,6 @@ void VtkEnSightReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetParticleCoordinatesByIndex", SetParticleCoordinatesByIndex);
 	Nan::SetPrototypeMethod(tpl, "setParticleCoordinatesByIndex", SetParticleCoordinatesByIndex);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -198,7 +196,7 @@ void VtkEnSightReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEnSightReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEnSightReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEnSightReaderWrap *w = new VtkEnSightReaderWrap();
 	w->native.TakeReference(r);
@@ -250,7 +248,7 @@ void VtkEnSightReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEnSightReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEnSightReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEnSightReaderWrap *w = new VtkEnSightReaderWrap();
 		w->native.TakeReference(r);

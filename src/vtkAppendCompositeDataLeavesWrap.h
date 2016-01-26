@@ -24,7 +24,6 @@ class VtkAppendCompositeDataLeavesWrap : public VtkCompositeDataSetAlgorithmWrap
 		VtkAppendCompositeDataLeavesWrap(vtkSmartPointer<vtkAppendCompositeDataLeaves>);
 		VtkAppendCompositeDataLeavesWrap();
 		~VtkAppendCompositeDataLeavesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

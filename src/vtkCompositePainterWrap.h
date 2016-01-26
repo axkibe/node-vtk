@@ -24,7 +24,6 @@ class VtkCompositePainterWrap : public VtkPainterWrap
 		VtkCompositePainterWrap(vtkSmartPointer<vtkCompositePainter>);
 		VtkCompositePainterWrap();
 		~VtkCompositePainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageSeedConnectivityWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageSeedConnectivityWrap::ptpl;
 
 VtkImageSeedConnectivityWrap::VtkImageSeedConnectivityWrap()
@@ -94,7 +93,6 @@ void VtkImageSeedConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputUnconnectedValue", SetOutputUnconnectedValue);
 	Nan::SetPrototypeMethod(tpl, "setOutputUnconnectedValue", SetOutputUnconnectedValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -187,7 +185,7 @@ void VtkImageSeedConnectivityWrap::GetConnector(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageConnectorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageConnectorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageConnectorWrap *w = new VtkImageConnectorWrap();
 	w->native.TakeReference(r);
@@ -288,7 +286,7 @@ void VtkImageSeedConnectivityWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageSeedConnectivityWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageSeedConnectivityWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSeedConnectivityWrap *w = new VtkImageSeedConnectivityWrap();
 	w->native.TakeReference(r);
@@ -328,7 +326,7 @@ void VtkImageSeedConnectivityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageSeedConnectivityWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageSeedConnectivityWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageSeedConnectivityWrap *w = new VtkImageSeedConnectivityWrap();
 		w->native.TakeReference(r);

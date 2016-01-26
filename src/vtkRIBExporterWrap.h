@@ -24,7 +24,6 @@ class VtkRIBExporterWrap : public VtkExporterWrap
 		VtkRIBExporterWrap(vtkSmartPointer<vtkRIBExporter>);
 		VtkRIBExporterWrap();
 		~VtkRIBExporterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

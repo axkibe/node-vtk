@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWidgetRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWidgetRepresentationWrap::ptpl;
 
 VtkWidgetRepresentationWrap::VtkWidgetRepresentationWrap()
@@ -160,7 +159,6 @@ void VtkWidgetRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -437,7 +435,7 @@ void VtkWidgetRepresentationWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
@@ -559,7 +557,7 @@ void VtkWidgetRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWidgetRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWidgetRepresentationWrap *w = new VtkWidgetRepresentationWrap();
 	w->native.TakeReference(r);
@@ -719,7 +717,7 @@ void VtkWidgetRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWidgetRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWidgetRepresentationWrap *w = new VtkWidgetRepresentationWrap();
 		w->native.TakeReference(r);

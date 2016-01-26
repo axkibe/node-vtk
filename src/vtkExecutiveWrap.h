@@ -24,7 +24,6 @@ class VtkExecutiveWrap : public VtkObjectWrap
 		VtkExecutiveWrap(vtkSmartPointer<vtkExecutive>);
 		VtkExecutiveWrap();
 		~VtkExecutiveWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDelimitedTextReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDelimitedTextReaderWrap::ptpl;
 
 VtkDelimitedTextReaderWrap::VtkDelimitedTextReaderWrap()
@@ -183,7 +182,6 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseStringDelimiterOn", UseStringDelimiterOn);
 	Nan::SetPrototypeMethod(tpl, "useStringDelimiterOn", UseStringDelimiterOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -539,7 +537,7 @@ void VtkDelimitedTextReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDelimitedTextReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDelimitedTextReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDelimitedTextReaderWrap *w = new VtkDelimitedTextReaderWrap();
 	w->native.TakeReference(r);
@@ -615,7 +613,7 @@ void VtkDelimitedTextReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDelimitedTextReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDelimitedTextReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDelimitedTextReaderWrap *w = new VtkDelimitedTextReaderWrap();
 		w->native.TakeReference(r);

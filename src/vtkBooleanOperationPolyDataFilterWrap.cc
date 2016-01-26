@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBooleanOperationPolyDataFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBooleanOperationPolyDataFilterWrap::ptpl;
 
 VtkBooleanOperationPolyDataFilterWrap::VtkBooleanOperationPolyDataFilterWrap()
@@ -99,7 +98,6 @@ void VtkBooleanOperationPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -247,7 +245,7 @@ void VtkBooleanOperationPolyDataFilterWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBooleanOperationPolyDataFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBooleanOperationPolyDataFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBooleanOperationPolyDataFilterWrap *w = new VtkBooleanOperationPolyDataFilterWrap();
 	w->native.TakeReference(r);
@@ -299,7 +297,7 @@ void VtkBooleanOperationPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBooleanOperationPolyDataFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBooleanOperationPolyDataFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBooleanOperationPolyDataFilterWrap *w = new VtkBooleanOperationPolyDataFilterWrap();
 		w->native.TakeReference(r);

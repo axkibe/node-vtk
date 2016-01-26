@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCellCentersWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCellCentersWrap::ptpl;
 
 VtkCellCentersWrap::VtkCellCentersWrap()
@@ -72,7 +71,6 @@ void VtkCellCentersWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VertexCellsOn", VertexCellsOn);
 	Nan::SetPrototypeMethod(tpl, "vertexCellsOn", VertexCellsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -164,7 +162,7 @@ void VtkCellCentersWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellCentersWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellCentersWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellCentersWrap *w = new VtkCellCentersWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkCellCentersWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellCentersWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellCentersWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellCentersWrap *w = new VtkCellCentersWrap();
 		w->native.TakeReference(r);

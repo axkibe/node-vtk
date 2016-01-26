@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTDxInteractorStyleWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTDxInteractorStyleWrap::ptpl;
 
 VtkTDxInteractorStyleWrap::VtkTDxInteractorStyleWrap()
@@ -72,7 +71,6 @@ void VtkTDxInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSettings", SetSettings);
 	Nan::SetPrototypeMethod(tpl, "setSettings", SetSettings);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -128,7 +126,7 @@ void VtkTDxInteractorStyleWrap::GetSettings(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTDxInteractorStyleSettingsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleSettingsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTDxInteractorStyleSettingsWrap *w = new VtkTDxInteractorStyleSettingsWrap();
 	w->native.TakeReference(r);
@@ -173,7 +171,7 @@ void VtkTDxInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTDxInteractorStyleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTDxInteractorStyleWrap *w = new VtkTDxInteractorStyleWrap();
 	w->native.TakeReference(r);
@@ -239,7 +237,7 @@ void VtkTDxInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTDxInteractorStyleWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTDxInteractorStyleWrap *w = new VtkTDxInteractorStyleWrap();
 		w->native.TakeReference(r);

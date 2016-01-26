@@ -24,7 +24,6 @@ class VtkHyperOctreeContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkHyperOctreeContourFilterWrap(vtkSmartPointer<vtkHyperOctreeContourFilter>);
 		VtkHyperOctreeContourFilterWrap();
 		~VtkHyperOctreeContourFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

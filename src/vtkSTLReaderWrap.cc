@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSTLReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSTLReaderWrap::ptpl;
 
 VtkSTLReaderWrap::VtkSTLReaderWrap()
@@ -97,7 +96,6 @@ void VtkSTLReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarTags", SetScalarTags);
 	Nan::SetPrototypeMethod(tpl, "setScalarTags", SetScalarTags);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -167,7 +165,7 @@ void VtkSTLReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -264,7 +262,7 @@ void VtkSTLReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSTLReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSTLReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSTLReaderWrap *w = new VtkSTLReaderWrap();
 	w->native.TakeReference(r);
@@ -292,7 +290,7 @@ void VtkSTLReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSTLReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSTLReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSTLReaderWrap *w = new VtkSTLReaderWrap();
 		w->native.TakeReference(r);

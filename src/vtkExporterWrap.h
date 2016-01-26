@@ -24,7 +24,6 @@ class VtkExporterWrap : public VtkObjectWrap
 		VtkExporterWrap(vtkSmartPointer<vtkExporter>);
 		VtkExporterWrap();
 		~VtkExporterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

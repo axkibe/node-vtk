@@ -24,7 +24,6 @@ class VtkKdTreeSelectorWrap : public VtkSelectionAlgorithmWrap
 		VtkKdTreeSelectorWrap(vtkSmartPointer<vtkKdTreeSelector>);
 		VtkKdTreeSelectorWrap();
 		~VtkKdTreeSelectorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

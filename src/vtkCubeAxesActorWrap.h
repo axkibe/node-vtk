@@ -24,7 +24,6 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		VtkCubeAxesActorWrap(vtkSmartPointer<vtkCubeAxesActor>);
 		VtkCubeAxesActorWrap();
 		~VtkCubeAxesActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

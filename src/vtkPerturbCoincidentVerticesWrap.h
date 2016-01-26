@@ -24,7 +24,6 @@ class VtkPerturbCoincidentVerticesWrap : public VtkGraphAlgorithmWrap
 		VtkPerturbCoincidentVerticesWrap(vtkSmartPointer<vtkPerturbCoincidentVertices>);
 		VtkPerturbCoincidentVerticesWrap();
 		~VtkPerturbCoincidentVerticesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

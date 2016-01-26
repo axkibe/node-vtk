@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoInteractorStyleWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoInteractorStyleWrap::ptpl;
 
 VtkGeoInteractorStyleWrap::VtkGeoInteractorStyleWrap()
@@ -132,7 +131,6 @@ void VtkGeoInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
 	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -200,7 +198,7 @@ void VtkGeoInteractorStyleWrap::GetGeoCamera(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoCameraWrap *w = new VtkGeoCameraWrap();
 	w->native.TakeReference(r);
@@ -269,7 +267,7 @@ void VtkGeoInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoInteractorStyleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoInteractorStyleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoInteractorStyleWrap *w = new VtkGeoInteractorStyleWrap();
 	w->native.TakeReference(r);
@@ -477,7 +475,7 @@ void VtkGeoInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoInteractorStyleWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoInteractorStyleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoInteractorStyleWrap *w = new VtkGeoInteractorStyleWrap();
 		w->native.TakeReference(r);

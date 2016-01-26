@@ -24,7 +24,6 @@ class VtkSpherePuzzleArrowsWrap : public VtkPolyDataAlgorithmWrap
 		VtkSpherePuzzleArrowsWrap(vtkSmartPointer<vtkSpherePuzzleArrows>);
 		VtkSpherePuzzleArrowsWrap();
 		~VtkSpherePuzzleArrowsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

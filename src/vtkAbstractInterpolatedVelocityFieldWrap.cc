@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAbstractInterpolatedVelocityFieldWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAbstractInterpolatedVelocityFieldWrap::ptpl;
 
 VtkAbstractInterpolatedVelocityFieldWrap::VtkAbstractInterpolatedVelocityFieldWrap()
@@ -85,7 +84,6 @@ void VtkAbstractInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SelectVectors", SelectVectors);
 	Nan::SetPrototypeMethod(tpl, "selectVectors", SelectVectors);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -201,7 +199,7 @@ void VtkAbstractInterpolatedVelocityFieldWrap::GetLastDataSet(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -274,7 +272,7 @@ void VtkAbstractInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractInterpolatedVelocityFieldWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractInterpolatedVelocityFieldWrap *w = new VtkAbstractInterpolatedVelocityFieldWrap();
 	w->native.TakeReference(r);
@@ -302,7 +300,7 @@ void VtkAbstractInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionC
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractInterpolatedVelocityFieldWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractInterpolatedVelocityFieldWrap *w = new VtkAbstractInterpolatedVelocityFieldWrap();
 		w->native.TakeReference(r);

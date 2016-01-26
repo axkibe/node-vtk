@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkNetCDFPOPReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkNetCDFPOPReaderWrap::ptpl;
 
 VtkNetCDFPOPReaderWrap::VtkNetCDFPOPReaderWrap()
@@ -81,7 +80,6 @@ void VtkNetCDFPOPReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVariableArrayStatus", SetVariableArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setVariableArrayStatus", SetVariableArrayStatus);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -230,7 +228,7 @@ void VtkNetCDFPOPReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkNetCDFPOPReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkNetCDFPOPReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkNetCDFPOPReaderWrap *w = new VtkNetCDFPOPReaderWrap();
 	w->native.TakeReference(r);
@@ -258,7 +256,7 @@ void VtkNetCDFPOPReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkNetCDFPOPReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkNetCDFPOPReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkNetCDFPOPReaderWrap *w = new VtkNetCDFPOPReaderWrap();
 		w->native.TakeReference(r);

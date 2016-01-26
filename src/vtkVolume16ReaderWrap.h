@@ -24,7 +24,6 @@ class VtkVolume16ReaderWrap : public VtkVolumeReaderWrap
 		VtkVolume16ReaderWrap(vtkSmartPointer<vtkVolume16Reader>);
 		VtkVolume16ReaderWrap();
 		~VtkVolume16ReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

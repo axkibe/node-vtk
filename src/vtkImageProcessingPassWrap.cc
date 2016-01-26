@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageProcessingPassWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageProcessingPassWrap::ptpl;
 
 VtkImageProcessingPassWrap::VtkImageProcessingPassWrap()
@@ -70,7 +69,6 @@ void VtkImageProcessingPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDelegatePass", SetDelegatePass);
 	Nan::SetPrototypeMethod(tpl, "setDelegatePass", SetDelegatePass);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkImageProcessingPassWrap::GetDelegatePass(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderPassWrap *w = new VtkRenderPassWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkImageProcessingPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageProcessingPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageProcessingPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageProcessingPassWrap *w = new VtkImageProcessingPassWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkImageProcessingPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageProcessingPassWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageProcessingPassWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageProcessingPassWrap *w = new VtkImageProcessingPassWrap();
 		w->native.TakeReference(r);

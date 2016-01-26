@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMergeCellsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMergeCellsWrap::ptpl;
 
 VtkMergeCellsWrap::VtkMergeCellsWrap()
@@ -103,7 +102,6 @@ void VtkMergeCellsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseGlobalIds", SetUseGlobalIds);
 	Nan::SetPrototypeMethod(tpl, "setUseGlobalIds", SetUseGlobalIds);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -199,7 +197,7 @@ void VtkMergeCellsWrap::GetUnstructuredGrid(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -318,7 +316,7 @@ void VtkMergeCellsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMergeCellsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMergeCellsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMergeCellsWrap *w = new VtkMergeCellsWrap();
 	w->native.TakeReference(r);
@@ -346,7 +344,7 @@ void VtkMergeCellsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMergeCellsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMergeCellsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMergeCellsWrap *w = new VtkMergeCellsWrap();
 		w->native.TakeReference(r);

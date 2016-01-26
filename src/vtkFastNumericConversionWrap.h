@@ -24,7 +24,6 @@ class VtkFastNumericConversionWrap : public VtkObjectWrap
 		VtkFastNumericConversionWrap(vtkSmartPointer<vtkFastNumericConversion>);
 		VtkFastNumericConversionWrap();
 		~VtkFastNumericConversionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

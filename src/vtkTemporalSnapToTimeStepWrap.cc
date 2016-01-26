@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTemporalSnapToTimeStepWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTemporalSnapToTimeStepWrap::ptpl;
 
 VtkTemporalSnapToTimeStepWrap::VtkTemporalSnapToTimeStepWrap()
@@ -75,7 +74,6 @@ void VtkTemporalSnapToTimeStepWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSnapModeToNextBelowOrEqual", SetSnapModeToNextBelowOrEqual);
 	Nan::SetPrototypeMethod(tpl, "setSnapModeToNextBelowOrEqual", SetSnapModeToNextBelowOrEqual);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -167,7 +165,7 @@ void VtkTemporalSnapToTimeStepWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTemporalSnapToTimeStepWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTemporalSnapToTimeStepWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTemporalSnapToTimeStepWrap *w = new VtkTemporalSnapToTimeStepWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkTemporalSnapToTimeStepWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTemporalSnapToTimeStepWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTemporalSnapToTimeStepWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTemporalSnapToTimeStepWrap *w = new VtkTemporalSnapToTimeStepWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkImageNonMaximumSuppressionWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageNonMaximumSuppressionWrap(vtkSmartPointer<vtkImageNonMaximumSuppression>);
 		VtkImageNonMaximumSuppressionWrap();
 		~VtkImageNonMaximumSuppressionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

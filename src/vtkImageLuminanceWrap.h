@@ -24,7 +24,6 @@ class VtkImageLuminanceWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageLuminanceWrap(vtkSmartPointer<vtkImageLuminance>);
 		VtkImageLuminanceWrap();
 		~VtkImageLuminanceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

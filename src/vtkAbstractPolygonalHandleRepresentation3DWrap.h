@@ -24,7 +24,6 @@ class VtkAbstractPolygonalHandleRepresentation3DWrap : public VtkHandleRepresent
 		VtkAbstractPolygonalHandleRepresentation3DWrap(vtkSmartPointer<vtkAbstractPolygonalHandleRepresentation3D>);
 		VtkAbstractPolygonalHandleRepresentation3DWrap();
 		~VtkAbstractPolygonalHandleRepresentation3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

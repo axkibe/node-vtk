@@ -24,7 +24,6 @@ class VtkAMREnzoReaderWrap : public VtkAMRBaseReaderWrap
 		VtkAMREnzoReaderWrap(vtkSmartPointer<vtkAMREnzoReader>);
 		VtkAMREnzoReaderWrap();
 		~VtkAMREnzoReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

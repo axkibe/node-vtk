@@ -24,7 +24,6 @@ class VtkXMLUnstructuredDataReaderWrap : public VtkXMLDataReaderWrap
 		VtkXMLUnstructuredDataReaderWrap(vtkSmartPointer<vtkXMLUnstructuredDataReader>);
 		VtkXMLUnstructuredDataReaderWrap();
 		~VtkXMLUnstructuredDataReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

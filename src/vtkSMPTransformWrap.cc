@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSMPTransformWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSMPTransformWrap::ptpl;
 
 VtkSMPTransformWrap::VtkSMPTransformWrap()
@@ -74,7 +73,6 @@ void VtkSMPTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TransformVectors", TransformVectors);
 	Nan::SetPrototypeMethod(tpl, "transformVectors", TransformVectors);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -152,7 +150,7 @@ void VtkSMPTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSMPTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSMPTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSMPTransformWrap *w = new VtkSMPTransformWrap();
 	w->native.TakeReference(r);
@@ -180,7 +178,7 @@ void VtkSMPTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSMPTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSMPTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSMPTransformWrap *w = new VtkSMPTransformWrap();
 		w->native.TakeReference(r);

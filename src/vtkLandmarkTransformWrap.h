@@ -24,7 +24,6 @@ class VtkLandmarkTransformWrap : public VtkLinearTransformWrap
 		VtkLandmarkTransformWrap(vtkSmartPointer<vtkLandmarkTransform>);
 		VtkLandmarkTransformWrap();
 		~VtkLandmarkTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

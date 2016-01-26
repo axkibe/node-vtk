@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBiDimensionalRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBiDimensionalRepresentationWrap::ptpl;
 
 VtkBiDimensionalRepresentationWrap::VtkBiDimensionalRepresentationWrap()
@@ -142,7 +141,6 @@ void VtkBiDimensionalRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowLabelAboveWidgetOn", ShowLabelAboveWidgetOn);
 	Nan::SetPrototypeMethod(tpl, "showLabelAboveWidgetOn", ShowLabelAboveWidgetOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -282,7 +280,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint1Representation(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHandleRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
 	w->native.TakeReference(r);
@@ -305,7 +303,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint2Representation(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHandleRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
 	w->native.TakeReference(r);
@@ -328,7 +326,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint3Representation(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHandleRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
 	w->native.TakeReference(r);
@@ -351,7 +349,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint4Representation(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHandleRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
 	w->native.TakeReference(r);
@@ -512,7 +510,7 @@ void VtkBiDimensionalRepresentationWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBiDimensionalRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBiDimensionalRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBiDimensionalRepresentationWrap *w = new VtkBiDimensionalRepresentationWrap();
 	w->native.TakeReference(r);
@@ -540,7 +538,7 @@ void VtkBiDimensionalRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBiDimensionalRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBiDimensionalRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBiDimensionalRepresentationWrap *w = new VtkBiDimensionalRepresentationWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkReduceTableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkReduceTableWrap::ptpl;
 
 VtkReduceTableWrap::VtkReduceTableWrap()
@@ -72,7 +71,6 @@ void VtkReduceTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumericalReductionMethod", SetNumericalReductionMethod);
 	Nan::SetPrototypeMethod(tpl, "setNumericalReductionMethod", SetNumericalReductionMethod);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -178,7 +176,7 @@ void VtkReduceTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkReduceTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkReduceTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkReduceTableWrap *w = new VtkReduceTableWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkReduceTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkReduceTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkReduceTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkReduceTableWrap *w = new VtkReduceTableWrap();
 		w->native.TakeReference(r);

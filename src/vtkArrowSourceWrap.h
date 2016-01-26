@@ -24,7 +24,6 @@ class VtkArrowSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkArrowSourceWrap(vtkSmartPointer<vtkArrowSource>);
 		VtkArrowSourceWrap();
 		~VtkArrowSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

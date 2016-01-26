@@ -24,7 +24,6 @@ class VtkMergeGraphsWrap : public VtkGraphAlgorithmWrap
 		VtkMergeGraphsWrap(vtkSmartPointer<vtkMergeGraphs>);
 		VtkMergeGraphsWrap();
 		~VtkMergeGraphsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

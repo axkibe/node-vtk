@@ -24,7 +24,6 @@ class VtkXMLStructuredGridReaderWrap : public VtkXMLStructuredDataReaderWrap
 		VtkXMLStructuredGridReaderWrap(vtkSmartPointer<vtkXMLStructuredGridReader>);
 		VtkXMLStructuredGridReaderWrap();
 		~VtkXMLStructuredGridReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

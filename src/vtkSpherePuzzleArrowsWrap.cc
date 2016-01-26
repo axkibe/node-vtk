@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSpherePuzzleArrowsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSpherePuzzleArrowsWrap::ptpl;
 
 VtkSpherePuzzleArrowsWrap::VtkSpherePuzzleArrowsWrap()
@@ -67,7 +66,6 @@ void VtkSpherePuzzleArrowsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPermutationComponent", SetPermutationComponent);
 	Nan::SetPrototypeMethod(tpl, "setPermutationComponent", SetPermutationComponent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -145,7 +143,7 @@ void VtkSpherePuzzleArrowsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSpherePuzzleArrowsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSpherePuzzleArrowsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSpherePuzzleArrowsWrap *w = new VtkSpherePuzzleArrowsWrap();
 	w->native.TakeReference(r);
@@ -173,7 +171,7 @@ void VtkSpherePuzzleArrowsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSpherePuzzleArrowsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSpherePuzzleArrowsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSpherePuzzleArrowsWrap *w = new VtkSpherePuzzleArrowsWrap();
 		w->native.TakeReference(r);

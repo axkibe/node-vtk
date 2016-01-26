@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAutoCorrelativeStatisticsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAutoCorrelativeStatisticsWrap::ptpl;
 
 VtkAutoCorrelativeStatisticsWrap::VtkAutoCorrelativeStatisticsWrap()
@@ -65,7 +64,6 @@ void VtkAutoCorrelativeStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -168,7 +166,7 @@ void VtkAutoCorrelativeStatisticsWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAutoCorrelativeStatisticsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAutoCorrelativeStatisticsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAutoCorrelativeStatisticsWrap *w = new VtkAutoCorrelativeStatisticsWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkAutoCorrelativeStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAutoCorrelativeStatisticsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAutoCorrelativeStatisticsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAutoCorrelativeStatisticsWrap *w = new VtkAutoCorrelativeStatisticsWrap();
 		w->native.TakeReference(r);

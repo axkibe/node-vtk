@@ -24,7 +24,6 @@ class VtkTableExtentTranslatorWrap : public VtkExtentTranslatorWrap
 		VtkTableExtentTranslatorWrap(vtkSmartPointer<vtkTableExtentTranslator>);
 		VtkTableExtentTranslatorWrap();
 		~VtkTableExtentTranslatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

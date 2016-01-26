@@ -24,7 +24,6 @@ class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		VtkFixedPointVolumeRayCastMapperWrap(vtkSmartPointer<vtkFixedPointVolumeRayCastMapper>);
 		VtkFixedPointVolumeRayCastMapperWrap();
 		~VtkFixedPointVolumeRayCastMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

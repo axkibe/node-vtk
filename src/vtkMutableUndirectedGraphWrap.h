@@ -24,7 +24,6 @@ class VtkMutableUndirectedGraphWrap : public VtkUndirectedGraphWrap
 		VtkMutableUndirectedGraphWrap(vtkSmartPointer<vtkMutableUndirectedGraph>);
 		VtkMutableUndirectedGraphWrap();
 		~VtkMutableUndirectedGraphWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

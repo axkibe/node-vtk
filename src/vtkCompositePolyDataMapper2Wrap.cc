@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCompositePolyDataMapper2Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCompositePolyDataMapper2Wrap::ptpl;
 
 VtkCompositePolyDataMapper2Wrap::VtkCompositePolyDataMapper2Wrap()
@@ -76,7 +75,6 @@ void VtkCompositePolyDataMapper2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 	Nan::SetPrototypeMethod(tpl, "setCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -132,7 +130,7 @@ void VtkCompositePolyDataMapper2Wrap::GetCompositeDataDisplayAttributes(const Na
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeDataDisplayAttributesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeDataDisplayAttributesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataDisplayAttributesWrap *w = new VtkCompositeDataDisplayAttributesWrap();
 	w->native.TakeReference(r);
@@ -177,7 +175,7 @@ void VtkCompositePolyDataMapper2Wrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositePolyDataMapper2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositePolyDataMapper2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositePolyDataMapper2Wrap *w = new VtkCompositePolyDataMapper2Wrap();
 	w->native.TakeReference(r);
@@ -241,7 +239,7 @@ void VtkCompositePolyDataMapper2Wrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCompositePolyDataMapper2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCompositePolyDataMapper2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositePolyDataMapper2Wrap *w = new VtkCompositePolyDataMapper2Wrap();
 		w->native.TakeReference(r);

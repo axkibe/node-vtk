@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCameraRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCameraRepresentationWrap::ptpl;
 
 VtkCameraRepresentationWrap::VtkCameraRepresentationWrap()
@@ -124,7 +123,6 @@ void VtkCameraRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfFrames", SetNumberOfFrames);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfFrames", SetNumberOfFrames);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -230,7 +228,7 @@ void VtkCameraRepresentationWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
@@ -267,7 +265,7 @@ void VtkCameraRepresentationWrap::GetInterpolator(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraInterpolatorWrap *w = new VtkCameraInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -332,7 +330,7 @@ void VtkCameraRepresentationWrap::GetProperty(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -403,7 +401,7 @@ void VtkCameraRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraRepresentationWrap *w = new VtkCameraRepresentationWrap();
 	w->native.TakeReference(r);
@@ -517,7 +515,7 @@ void VtkCameraRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCameraRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCameraRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCameraRepresentationWrap *w = new VtkCameraRepresentationWrap();
 		w->native.TakeReference(r);

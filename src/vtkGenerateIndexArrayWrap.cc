@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenerateIndexArrayWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenerateIndexArrayWrap::ptpl;
 
 VtkGenerateIndexArrayWrap::VtkGenerateIndexArrayWrap()
@@ -84,7 +83,6 @@ void VtkGenerateIndexArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReferenceArrayName", SetReferenceArrayName);
 	Nan::SetPrototypeMethod(tpl, "setReferenceArrayName", SetReferenceArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -218,7 +216,7 @@ void VtkGenerateIndexArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenerateIndexArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenerateIndexArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenerateIndexArrayWrap *w = new VtkGenerateIndexArrayWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkGenerateIndexArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenerateIndexArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenerateIndexArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenerateIndexArrayWrap *w = new VtkGenerateIndexArrayWrap();
 		w->native.TakeReference(r);

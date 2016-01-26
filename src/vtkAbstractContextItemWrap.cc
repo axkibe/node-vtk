@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAbstractContextItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAbstractContextItemWrap::ptpl;
 
 VtkAbstractContextItemWrap::VtkAbstractContextItemWrap()
@@ -81,7 +80,6 @@ void VtkAbstractContextItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -149,7 +147,7 @@ void VtkAbstractContextItemWrap::GetParent(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractContextItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractContextItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractContextItemWrap *w = new VtkAbstractContextItemWrap();
 	w->native.TakeReference(r);
@@ -172,7 +170,7 @@ void VtkAbstractContextItemWrap::GetScene(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContextSceneWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContextSceneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContextSceneWrap *w = new VtkContextSceneWrap();
 	w->native.TakeReference(r);
@@ -217,7 +215,7 @@ void VtkAbstractContextItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractContextItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractContextItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractContextItemWrap *w = new VtkAbstractContextItemWrap();
 	w->native.TakeReference(r);
@@ -257,7 +255,7 @@ void VtkAbstractContextItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractContextItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractContextItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractContextItemWrap *w = new VtkAbstractContextItemWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkGeoRandomGraphSourceWrap : public VtkRandomGraphSourceWrap
 		VtkGeoRandomGraphSourceWrap(vtkSmartPointer<vtkGeoRandomGraphSource>);
 		VtkGeoRandomGraphSourceWrap();
 		~VtkGeoRandomGraphSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

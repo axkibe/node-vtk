@@ -24,7 +24,6 @@ class VtkResliceCursorPickerWrap : public VtkPickerWrap
 		VtkResliceCursorPickerWrap(vtkSmartPointer<vtkResliceCursorPicker>);
 		VtkResliceCursorPickerWrap();
 		~VtkResliceCursorPickerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

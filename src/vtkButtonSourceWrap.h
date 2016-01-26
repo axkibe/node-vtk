@@ -24,7 +24,6 @@ class VtkButtonSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkButtonSourceWrap(vtkSmartPointer<vtkButtonSource>);
 		VtkButtonSourceWrap();
 		~VtkButtonSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

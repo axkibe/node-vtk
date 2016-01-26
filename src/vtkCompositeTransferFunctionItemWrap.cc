@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCompositeTransferFunctionItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCompositeTransferFunctionItemWrap::ptpl;
 
 VtkCompositeTransferFunctionItemWrap::VtkCompositeTransferFunctionItemWrap()
@@ -67,7 +66,6 @@ void VtkCompositeTransferFunctionItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOpacityFunction", SetOpacityFunction);
 	Nan::SetPrototypeMethod(tpl, "setOpacityFunction", SetOpacityFunction);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkCompositeTransferFunctionItemWrap::GetOpacityFunction(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkCompositeTransferFunctionItemWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeTransferFunctionItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeTransferFunctionItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeTransferFunctionItemWrap *w = new VtkCompositeTransferFunctionItemWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkCompositeTransferFunctionItemWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCompositeTransferFunctionItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCompositeTransferFunctionItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeTransferFunctionItemWrap *w = new VtkCompositeTransferFunctionItemWrap();
 		w->native.TakeReference(r);

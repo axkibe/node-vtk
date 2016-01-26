@@ -24,7 +24,6 @@ class VtkTriangleStripWrap : public VtkCellWrap
 		VtkTriangleStripWrap(vtkSmartPointer<vtkTriangleStrip>);
 		VtkTriangleStripWrap();
 		~VtkTriangleStripWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

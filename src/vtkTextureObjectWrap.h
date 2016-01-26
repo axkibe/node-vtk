@@ -24,7 +24,6 @@ class VtkTextureObjectWrap : public VtkObjectWrap
 		VtkTextureObjectWrap(vtkSmartPointer<vtkTextureObject>);
 		VtkTextureObjectWrap();
 		~VtkTextureObjectWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

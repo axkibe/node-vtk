@@ -24,7 +24,6 @@ class VtkContourGridWrap : public VtkPolyDataAlgorithmWrap
 		VtkContourGridWrap(vtkSmartPointer<vtkContourGrid>);
 		VtkContourGridWrap();
 		~VtkContourGridWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkMoleculeToBondStickFilterWrap : public VtkMoleculeToPolyDataFilterWrap
 		VtkMoleculeToBondStickFilterWrap(vtkSmartPointer<vtkMoleculeToBondStickFilter>);
 		VtkMoleculeToBondStickFilterWrap();
 		~VtkMoleculeToBondStickFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

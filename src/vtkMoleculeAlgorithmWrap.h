@@ -24,7 +24,6 @@ class VtkMoleculeAlgorithmWrap : public VtkAlgorithmWrap
 		VtkMoleculeAlgorithmWrap(vtkSmartPointer<vtkMoleculeAlgorithm>);
 		VtkMoleculeAlgorithmWrap();
 		~VtkMoleculeAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

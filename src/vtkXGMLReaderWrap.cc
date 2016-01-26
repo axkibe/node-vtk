@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXGMLReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXGMLReaderWrap::ptpl;
 
 VtkXGMLReaderWrap::VtkXGMLReaderWrap()
@@ -66,7 +65,6 @@ void VtkXGMLReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkXGMLReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXGMLReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXGMLReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXGMLReaderWrap *w = new VtkXGMLReaderWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkXGMLReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXGMLReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXGMLReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXGMLReaderWrap *w = new VtkXGMLReaderWrap();
 		w->native.TakeReference(r);

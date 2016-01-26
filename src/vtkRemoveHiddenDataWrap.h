@@ -24,7 +24,6 @@ class VtkRemoveHiddenDataWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkRemoveHiddenDataWrap(vtkSmartPointer<vtkRemoveHiddenData>);
 		VtkRemoveHiddenDataWrap();
 		~VtkRemoveHiddenDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

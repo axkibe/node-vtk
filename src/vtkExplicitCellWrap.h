@@ -24,7 +24,6 @@ class VtkExplicitCellWrap : public VtkNonLinearCellWrap
 		VtkExplicitCellWrap(vtkSmartPointer<vtkExplicitCell>);
 		VtkExplicitCellWrap();
 		~VtkExplicitCellWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

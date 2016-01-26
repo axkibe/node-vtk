@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContextTransformWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContextTransformWrap::ptpl;
 
 VtkContextTransformWrap::VtkContextTransformWrap()
@@ -127,7 +126,6 @@ void VtkContextTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ZoomOnMouseWheelOn", ZoomOnMouseWheelOn);
 	Nan::SetPrototypeMethod(tpl, "zoomOnMouseWheelOn", ZoomOnMouseWheelOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -267,7 +265,7 @@ void VtkContextTransformWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransform2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransform2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransform2DWrap *w = new VtkTransform2DWrap();
 	w->native.TakeReference(r);
@@ -340,7 +338,7 @@ void VtkContextTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContextTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContextTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContextTransformWrap *w = new VtkContextTransformWrap();
 	w->native.TakeReference(r);
@@ -392,7 +390,7 @@ void VtkContextTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContextTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContextTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContextTransformWrap *w = new VtkContextTransformWrap();
 		w->native.TakeReference(r);

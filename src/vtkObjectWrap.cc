@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkObjectWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkObjectWrap::ptpl;
 
 VtkObjectWrap::VtkObjectWrap()
@@ -99,7 +98,6 @@ void VtkObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGlobalWarningDisplay", SetGlobalWarningDisplay);
 	Nan::SetPrototypeMethod(tpl, "setGlobalWarningDisplay", SetGlobalWarningDisplay);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -323,7 +321,7 @@ void VtkObjectWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkObjectWrap *w = new VtkObjectWrap();
 	w->native.TakeReference(r);
@@ -417,7 +415,7 @@ void VtkObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkObjectWrap *w = new VtkObjectWrap();
 		w->native.TakeReference(r);

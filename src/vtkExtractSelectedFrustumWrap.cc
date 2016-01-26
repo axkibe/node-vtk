@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractSelectedFrustumWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractSelectedFrustumWrap::ptpl;
 
 VtkExtractSelectedFrustumWrap::VtkExtractSelectedFrustumWrap()
@@ -107,7 +106,6 @@ void VtkExtractSelectedFrustumWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowBoundsOn", ShowBoundsOn);
 	Nan::SetPrototypeMethod(tpl, "showBoundsOn", ShowBoundsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -163,7 +161,7 @@ void VtkExtractSelectedFrustumWrap::GetClipPoints(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -214,7 +212,7 @@ void VtkExtractSelectedFrustumWrap::GetFrustum(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlanesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlanesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlanesWrap *w = new VtkPlanesWrap();
 	w->native.TakeReference(r);
@@ -311,7 +309,7 @@ void VtkExtractSelectedFrustumWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractSelectedFrustumWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractSelectedFrustumWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractSelectedFrustumWrap *w = new VtkExtractSelectedFrustumWrap();
 	w->native.TakeReference(r);
@@ -339,7 +337,7 @@ void VtkExtractSelectedFrustumWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractSelectedFrustumWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractSelectedFrustumWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractSelectedFrustumWrap *w = new VtkExtractSelectedFrustumWrap();
 		w->native.TakeReference(r);

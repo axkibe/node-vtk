@@ -24,7 +24,6 @@ class VtkImageStackWrap : public VtkImageSliceWrap
 		VtkImageStackWrap(vtkSmartPointer<vtkImageStack>);
 		VtkImageStackWrap();
 		~VtkImageStackWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

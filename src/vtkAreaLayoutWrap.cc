@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAreaLayoutWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAreaLayoutWrap::ptpl;
 
 VtkAreaLayoutWrap::VtkAreaLayoutWrap()
@@ -82,7 +81,6 @@ void VtkAreaLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSizeArrayName", SetSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setSizeArrayName", SetSizeArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -176,7 +174,7 @@ void VtkAreaLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAreaLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAreaLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAreaLayoutStrategyWrap *w = new VtkAreaLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -221,7 +219,7 @@ void VtkAreaLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAreaLayoutWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAreaLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAreaLayoutWrap *w = new VtkAreaLayoutWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkAreaLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAreaLayoutWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAreaLayoutWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAreaLayoutWrap *w = new VtkAreaLayoutWrap();
 		w->native.TakeReference(r);

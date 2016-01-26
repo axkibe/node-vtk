@@ -24,7 +24,6 @@ class VtkCameraPassWrap : public VtkRenderPassWrap
 		VtkCameraPassWrap(vtkSmartPointer<vtkCameraPass>);
 		VtkCameraPassWrap();
 		~VtkCameraPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

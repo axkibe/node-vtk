@@ -24,7 +24,6 @@ class VtkClearZPassWrap : public VtkRenderPassWrap
 		VtkClearZPassWrap(vtkSmartPointer<vtkClearZPass>);
 		VtkClearZPassWrap();
 		~VtkClearZPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

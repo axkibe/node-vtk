@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFixedPointVolumeRayCastCompositeGOHelperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFixedPointVolumeRayCastCompositeGOHelperWrap::ptpl;
 
 VtkFixedPointVolumeRayCastCompositeGOHelperWrap::VtkFixedPointVolumeRayCastCompositeGOHelperWrap()
@@ -65,7 +64,6 @@ void VtkFixedPointVolumeRayCastCompositeGOHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -176,7 +174,7 @@ void VtkFixedPointVolumeRayCastCompositeGOHelperWrap::NewInstance(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFixedPointVolumeRayCastCompositeGOHelperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeGOHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastCompositeGOHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeGOHelperWrap();
 	w->native.TakeReference(r);
@@ -204,7 +202,7 @@ void VtkFixedPointVolumeRayCastCompositeGOHelperWrap::SafeDownCast(const Nan::Fu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFixedPointVolumeRayCastCompositeGOHelperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeGOHelperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFixedPointVolumeRayCastCompositeGOHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeGOHelperWrap();
 		w->native.TakeReference(r);

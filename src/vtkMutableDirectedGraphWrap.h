@@ -24,7 +24,6 @@ class VtkMutableDirectedGraphWrap : public VtkDirectedGraphWrap
 		VtkMutableDirectedGraphWrap(vtkSmartPointer<vtkMutableDirectedGraph>);
 		VtkMutableDirectedGraphWrap();
 		~VtkMutableDirectedGraphWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

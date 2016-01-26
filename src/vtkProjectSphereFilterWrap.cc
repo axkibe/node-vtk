@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProjectSphereFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProjectSphereFilterWrap::ptpl;
 
 VtkProjectSphereFilterWrap::VtkProjectSphereFilterWrap()
@@ -75,7 +74,6 @@ void VtkProjectSphereFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TranslateZOn", TranslateZOn);
 	Nan::SetPrototypeMethod(tpl, "translateZOn", TranslateZOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkProjectSphereFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProjectSphereFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProjectSphereFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProjectSphereFilterWrap *w = new VtkProjectSphereFilterWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkProjectSphereFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProjectSphereFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProjectSphereFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProjectSphereFilterWrap *w = new VtkProjectSphereFilterWrap();
 		w->native.TakeReference(r);

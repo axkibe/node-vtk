@@ -24,7 +24,6 @@ class VtkDecimatePolylineFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkDecimatePolylineFilterWrap(vtkSmartPointer<vtkDecimatePolylineFilter>);
 		VtkDecimatePolylineFilterWrap();
 		~VtkDecimatePolylineFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

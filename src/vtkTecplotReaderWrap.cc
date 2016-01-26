@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTecplotReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTecplotReaderWrap::ptpl;
 
 VtkTecplotReaderWrap::VtkTecplotReaderWrap()
@@ -96,7 +95,6 @@ void VtkTecplotReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -365,7 +363,7 @@ void VtkTecplotReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTecplotReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTecplotReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTecplotReaderWrap *w = new VtkTecplotReaderWrap();
 	w->native.TakeReference(r);
@@ -393,7 +391,7 @@ void VtkTecplotReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTecplotReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTecplotReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTecplotReaderWrap *w = new VtkTecplotReaderWrap();
 		w->native.TakeReference(r);

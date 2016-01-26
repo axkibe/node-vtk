@@ -24,7 +24,6 @@ class VtkExtractSelectedGraphWrap : public VtkGraphAlgorithmWrap
 		VtkExtractSelectedGraphWrap(vtkSmartPointer<vtkExtractSelectedGraph>);
 		VtkExtractSelectedGraphWrap();
 		~VtkExtractSelectedGraphWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

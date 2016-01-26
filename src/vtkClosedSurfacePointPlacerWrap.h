@@ -24,7 +24,6 @@ class VtkClosedSurfacePointPlacerWrap : public VtkPointPlacerWrap
 		VtkClosedSurfacePointPlacerWrap(vtkSmartPointer<vtkClosedSurfacePointPlacer>);
 		VtkClosedSurfacePointPlacerWrap();
 		~VtkClosedSurfacePointPlacerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

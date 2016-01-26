@@ -24,7 +24,6 @@ class VtkImageEuclideanDistanceWrap : public VtkImageDecomposeFilterWrap
 		VtkImageEuclideanDistanceWrap(vtkSmartPointer<vtkImageEuclideanDistance>);
 		VtkImageEuclideanDistanceWrap();
 		~VtkImageEuclideanDistanceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

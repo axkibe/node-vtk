@@ -24,7 +24,6 @@ class VtkHyperTreeGridAlgorithmWrap : public VtkAlgorithmWrap
 		VtkHyperTreeGridAlgorithmWrap(vtkSmartPointer<vtkHyperTreeGridAlgorithm>);
 		VtkHyperTreeGridAlgorithmWrap();
 		~VtkHyperTreeGridAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

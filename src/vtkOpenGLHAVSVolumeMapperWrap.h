@@ -24,7 +24,6 @@ class VtkOpenGLHAVSVolumeMapperWrap : public VtkHAVSVolumeMapperWrap
 		VtkOpenGLHAVSVolumeMapperWrap(vtkSmartPointer<vtkOpenGLHAVSVolumeMapper>);
 		VtkOpenGLHAVSVolumeMapperWrap();
 		~VtkOpenGLHAVSVolumeMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

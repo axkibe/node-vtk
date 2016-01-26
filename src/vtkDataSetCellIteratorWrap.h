@@ -24,7 +24,6 @@ class VtkDataSetCellIteratorWrap : public VtkCellIteratorWrap
 		VtkDataSetCellIteratorWrap(vtkSmartPointer<vtkDataSetCellIterator>);
 		VtkDataSetCellIteratorWrap();
 		~VtkDataSetCellIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

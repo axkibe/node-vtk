@@ -24,7 +24,6 @@ class VtkTreeBFSIteratorWrap : public VtkTreeIteratorWrap
 		VtkTreeBFSIteratorWrap(vtkSmartPointer<vtkTreeBFSIterator>);
 		VtkTreeBFSIteratorWrap();
 		~VtkTreeBFSIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

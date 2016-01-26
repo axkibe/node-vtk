@@ -24,7 +24,6 @@ class VtkApplyIconsWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkApplyIconsWrap(vtkSmartPointer<vtkApplyIcons>);
 		VtkApplyIconsWrap();
 		~VtkApplyIconsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

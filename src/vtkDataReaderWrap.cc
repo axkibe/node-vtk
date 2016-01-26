@@ -22,7 +22,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDataReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDataReaderWrap::ptpl;
 
 VtkDataReaderWrap::VtkDataReaderWrap()
@@ -333,7 +332,6 @@ void VtkDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorsName", SetVectorsName);
 	Nan::SetPrototypeMethod(tpl, "setVectorsName", SetVectorsName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -478,7 +476,7 @@ void VtkDataReaderWrap::GetInputArray(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCharArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCharArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCharArrayWrap *w = new VtkCharArrayWrap();
 	w->native.TakeReference(r);
@@ -1028,7 +1026,7 @@ void VtkDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataReaderWrap *w = new VtkDataReaderWrap();
 	w->native.TakeReference(r);
@@ -1266,7 +1264,7 @@ void VtkDataReaderWrap::ReadArray(const Nan::FunctionCallbackInfo<v8::Value>& in
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
-					Nan::New<v8::Function>(VtkAbstractArrayWrap::constructor);
+					Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
 				w->native.TakeReference(r);
@@ -1376,7 +1374,7 @@ void VtkDataReaderWrap::ReadFieldData(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFieldDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFieldDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFieldDataWrap *w = new VtkFieldDataWrap();
 	w->native.TakeReference(r);
@@ -1568,7 +1566,7 @@ void VtkDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataReaderWrap *w = new VtkDataReaderWrap();
 		w->native.TakeReference(r);

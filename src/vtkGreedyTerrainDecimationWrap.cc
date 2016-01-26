@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGreedyTerrainDecimationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGreedyTerrainDecimationWrap::ptpl;
 
 VtkGreedyTerrainDecimationWrap::VtkGreedyTerrainDecimationWrap()
@@ -144,7 +143,6 @@ void VtkGreedyTerrainDecimationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRelativeError", SetRelativeError);
 	Nan::SetPrototypeMethod(tpl, "setRelativeError", SetRelativeError);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -466,7 +464,7 @@ void VtkGreedyTerrainDecimationWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGreedyTerrainDecimationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGreedyTerrainDecimationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGreedyTerrainDecimationWrap *w = new VtkGreedyTerrainDecimationWrap();
 	w->native.TakeReference(r);
@@ -494,7 +492,7 @@ void VtkGreedyTerrainDecimationWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGreedyTerrainDecimationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGreedyTerrainDecimationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGreedyTerrainDecimationWrap *w = new VtkGreedyTerrainDecimationWrap();
 		w->native.TakeReference(r);

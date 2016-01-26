@@ -24,7 +24,6 @@ class VtkOrientationMarkerWidgetWrap : public VtkInteractorObserverWrap
 		VtkOrientationMarkerWidgetWrap(vtkSmartPointer<vtkOrientationMarkerWidget>);
 		VtkOrientationMarkerWidgetWrap();
 		~VtkOrientationMarkerWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

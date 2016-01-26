@@ -24,7 +24,6 @@ class VtkGPUInfoWrap : public VtkObjectWrap
 		VtkGPUInfoWrap(vtkSmartPointer<vtkGPUInfo>);
 		VtkGPUInfoWrap();
 		~VtkGPUInfoWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

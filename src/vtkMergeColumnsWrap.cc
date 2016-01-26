@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMergeColumnsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMergeColumnsWrap::ptpl;
 
 VtkMergeColumnsWrap::VtkMergeColumnsWrap()
@@ -66,7 +65,6 @@ void VtkMergeColumnsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMergedColumnName", SetMergedColumnName);
 	Nan::SetPrototypeMethod(tpl, "setMergedColumnName", SetMergedColumnName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkMergeColumnsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMergeColumnsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMergeColumnsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMergeColumnsWrap *w = new VtkMergeColumnsWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkMergeColumnsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMergeColumnsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMergeColumnsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMergeColumnsWrap *w = new VtkMergeColumnsWrap();
 		w->native.TakeReference(r);

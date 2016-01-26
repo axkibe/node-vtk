@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCylinderSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCylinderSourceWrap::ptpl;
 
 VtkCylinderSourceWrap::VtkCylinderSourceWrap()
@@ -117,7 +116,6 @@ void VtkCylinderSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -373,7 +371,7 @@ void VtkCylinderSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCylinderSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCylinderSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCylinderSourceWrap *w = new VtkCylinderSourceWrap();
 	w->native.TakeReference(r);
@@ -401,7 +399,7 @@ void VtkCylinderSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCylinderSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCylinderSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCylinderSourceWrap *w = new VtkCylinderSourceWrap();
 		w->native.TakeReference(r);

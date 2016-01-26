@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFunctionParserWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFunctionParserWrap::ptpl;
 
 VtkFunctionParserWrap::VtkFunctionParserWrap()
@@ -125,7 +124,6 @@ void VtkFunctionParserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorVariableValue", SetVectorVariableValue);
 	Nan::SetPrototypeMethod(tpl, "setVectorVariableValue", SetVectorVariableValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -405,7 +403,7 @@ void VtkFunctionParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFunctionParserWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFunctionParserWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFunctionParserWrap *w = new VtkFunctionParserWrap();
 	w->native.TakeReference(r);
@@ -493,7 +491,7 @@ void VtkFunctionParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFunctionParserWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFunctionParserWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFunctionParserWrap *w = new VtkFunctionParserWrap();
 		w->native.TakeReference(r);

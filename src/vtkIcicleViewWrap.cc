@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkIcicleViewWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkIcicleViewWrap::ptpl;
 
 VtkIcicleViewWrap::VtkIcicleViewWrap()
@@ -84,7 +83,6 @@ void VtkIcicleViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseGradientColoringOn", UseGradientColoringOn);
 	Nan::SetPrototypeMethod(tpl, "useGradientColoringOn", UseGradientColoringOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -190,7 +188,7 @@ void VtkIcicleViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIcicleViewWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIcicleViewWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIcicleViewWrap *w = new VtkIcicleViewWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkIcicleViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIcicleViewWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIcicleViewWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIcicleViewWrap *w = new VtkIcicleViewWrap();
 		w->native.TakeReference(r);

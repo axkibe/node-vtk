@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAlgorithmOutputWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAlgorithmOutputWrap::ptpl;
 
 VtkAlgorithmOutputWrap::VtkAlgorithmOutputWrap()
@@ -72,7 +71,6 @@ void VtkAlgorithmOutputWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProducer", SetProducer);
 	Nan::SetPrototypeMethod(tpl, "setProducer", SetProducer);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkAlgorithmOutputWrap::GetProducer(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmWrap *w = new VtkAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -187,7 +185,7 @@ void VtkAlgorithmOutputWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 	w->native.TakeReference(r);
@@ -215,7 +213,7 @@ void VtkAlgorithmOutputWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAlgorithmOutputWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
 		w->native.TakeReference(r);

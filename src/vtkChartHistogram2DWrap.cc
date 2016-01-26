@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkChartHistogram2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkChartHistogram2DWrap::ptpl;
 
 VtkChartHistogram2DWrap::VtkChartHistogram2DWrap()
@@ -67,7 +66,6 @@ void VtkChartHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -145,7 +143,7 @@ void VtkChartHistogram2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChartHistogram2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChartHistogram2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartHistogram2DWrap *w = new VtkChartHistogram2DWrap();
 	w->native.TakeReference(r);
@@ -173,7 +171,7 @@ void VtkChartHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkChartHistogram2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkChartHistogram2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkChartHistogram2DWrap *w = new VtkChartHistogram2DWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkByteSwapWrap : public VtkObjectWrap
 		VtkByteSwapWrap(vtkSmartPointer<vtkByteSwap>);
 		VtkByteSwapWrap();
 		~VtkByteSwapWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

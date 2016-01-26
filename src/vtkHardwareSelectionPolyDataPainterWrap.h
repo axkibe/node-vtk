@@ -24,7 +24,6 @@ class VtkHardwareSelectionPolyDataPainterWrap : public VtkStandardPolyDataPainte
 		VtkHardwareSelectionPolyDataPainterWrap(vtkSmartPointer<vtkHardwareSelectionPolyDataPainter>);
 		VtkHardwareSelectionPolyDataPainterWrap();
 		~VtkHardwareSelectionPolyDataPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

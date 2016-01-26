@@ -24,7 +24,6 @@ class VtkResliceCursorActorWrap : public VtkProp3DWrap
 		VtkResliceCursorActorWrap(vtkSmartPointer<vtkResliceCursorActor>);
 		VtkResliceCursorActorWrap();
 		~VtkResliceCursorActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

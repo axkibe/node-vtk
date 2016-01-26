@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeAreaViewWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeAreaViewWrap::ptpl;
 
 VtkTreeAreaViewWrap::VtkTreeAreaViewWrap()
@@ -182,7 +181,6 @@ void VtkTreeAreaViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -474,7 +472,7 @@ void VtkTreeAreaViewWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAreaLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAreaLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAreaLayoutStrategyWrap *w = new VtkAreaLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -533,7 +531,7 @@ void VtkTreeAreaViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeAreaViewWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeAreaViewWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeAreaViewWrap *w = new VtkTreeAreaViewWrap();
 	w->native.TakeReference(r);
@@ -561,7 +559,7 @@ void VtkTreeAreaViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeAreaViewWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeAreaViewWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeAreaViewWrap *w = new VtkTreeAreaViewWrap();
 		w->native.TakeReference(r);
@@ -781,7 +779,7 @@ void VtkTreeAreaViewWrap::SetGraphFromInput(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataRepresentationWrap *w = new VtkDataRepresentationWrap();
 		w->native.TakeReference(r);
@@ -812,7 +810,7 @@ void VtkTreeAreaViewWrap::SetGraphFromInputConnection(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataRepresentationWrap *w = new VtkDataRepresentationWrap();
 		w->native.TakeReference(r);
@@ -902,7 +900,7 @@ void VtkTreeAreaViewWrap::SetTreeFromInput(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataRepresentationWrap *w = new VtkDataRepresentationWrap();
 		w->native.TakeReference(r);
@@ -933,7 +931,7 @@ void VtkTreeAreaViewWrap::SetTreeFromInputConnection(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataRepresentationWrap *w = new VtkDataRepresentationWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridGeometryFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridGeometryFilterWrap::ptpl;
 
 VtkUnstructuredGridGeometryFilterWrap::VtkUnstructuredGridGeometryFilterWrap()
@@ -157,7 +156,6 @@ void VtkUnstructuredGridGeometryFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointClipping", SetPointClipping);
 	Nan::SetPrototypeMethod(tpl, "setPointClipping", SetPointClipping);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -301,7 +299,7 @@ void VtkUnstructuredGridGeometryFilterWrap::GetLocator(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -454,7 +452,7 @@ void VtkUnstructuredGridGeometryFilterWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridGeometryFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridGeometryFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridGeometryFilterWrap *w = new VtkUnstructuredGridGeometryFilterWrap();
 	w->native.TakeReference(r);
@@ -554,7 +552,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridGeometryFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridGeometryFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridGeometryFilterWrap *w = new VtkUnstructuredGridGeometryFilterWrap();
 		w->native.TakeReference(r);

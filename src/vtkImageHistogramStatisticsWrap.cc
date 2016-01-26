@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageHistogramStatisticsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageHistogramStatisticsWrap::ptpl;
 
 VtkImageHistogramStatisticsWrap::VtkImageHistogramStatisticsWrap()
@@ -81,7 +80,6 @@ void VtkImageHistogramStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAutoRangePercentiles", SetAutoRangePercentiles);
 	Nan::SetPrototypeMethod(tpl, "setAutoRangePercentiles", SetAutoRangePercentiles);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -229,7 +227,7 @@ void VtkImageHistogramStatisticsWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageHistogramStatisticsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageHistogramStatisticsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageHistogramStatisticsWrap *w = new VtkImageHistogramStatisticsWrap();
 	w->native.TakeReference(r);
@@ -257,7 +255,7 @@ void VtkImageHistogramStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageHistogramStatisticsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageHistogramStatisticsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageHistogramStatisticsWrap *w = new VtkImageHistogramStatisticsWrap();
 		w->native.TakeReference(r);

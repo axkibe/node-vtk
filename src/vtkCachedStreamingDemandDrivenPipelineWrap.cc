@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCachedStreamingDemandDrivenPipelineWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCachedStreamingDemandDrivenPipelineWrap::ptpl;
 
 VtkCachedStreamingDemandDrivenPipelineWrap::VtkCachedStreamingDemandDrivenPipelineWrap()
@@ -69,7 +68,6 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -161,7 +159,7 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::NewInstance(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCachedStreamingDemandDrivenPipelineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCachedStreamingDemandDrivenPipelineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCachedStreamingDemandDrivenPipelineWrap *w = new VtkCachedStreamingDemandDrivenPipelineWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::SafeDownCast(const Nan::Functio
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCachedStreamingDemandDrivenPipelineWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCachedStreamingDemandDrivenPipelineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCachedStreamingDemandDrivenPipelineWrap *w = new VtkCachedStreamingDemandDrivenPipelineWrap();
 		w->native.TakeReference(r);

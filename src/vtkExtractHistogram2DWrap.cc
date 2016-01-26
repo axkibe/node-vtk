@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractHistogram2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractHistogram2DWrap::ptpl;
 
 VtkExtractHistogram2DWrap::VtkExtractHistogram2DWrap()
@@ -136,7 +135,6 @@ void VtkExtractHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseCustomHistogramExtentsOn", UseCustomHistogramExtentsOn);
 	Nan::SetPrototypeMethod(tpl, "useCustomHistogramExtentsOn", UseCustomHistogramExtentsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -231,7 +229,7 @@ void VtkExtractHistogram2DWrap::GetOutputHistogramImage(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -254,7 +252,7 @@ void VtkExtractHistogram2DWrap::GetRowMask(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArrayWrap *w = new VtkDataArrayWrap();
 	w->native.TakeReference(r);
@@ -341,7 +339,7 @@ void VtkExtractHistogram2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractHistogram2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractHistogram2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractHistogram2DWrap *w = new VtkExtractHistogram2DWrap();
 	w->native.TakeReference(r);
@@ -369,7 +367,7 @@ void VtkExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractHistogram2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractHistogram2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractHistogram2DWrap *w = new VtkExtractHistogram2DWrap();
 		w->native.TakeReference(r);

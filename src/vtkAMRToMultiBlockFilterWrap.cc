@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRToMultiBlockFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRToMultiBlockFilterWrap::ptpl;
 
 VtkAMRToMultiBlockFilterWrap::VtkAMRToMultiBlockFilterWrap()
@@ -74,7 +73,6 @@ void VtkAMRToMultiBlockFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -182,7 +180,7 @@ void VtkAMRToMultiBlockFilterWrap::GetController(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -227,7 +225,7 @@ void VtkAMRToMultiBlockFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRToMultiBlockFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRToMultiBlockFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRToMultiBlockFilterWrap *w = new VtkAMRToMultiBlockFilterWrap();
 	w->native.TakeReference(r);
@@ -255,7 +253,7 @@ void VtkAMRToMultiBlockFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRToMultiBlockFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRToMultiBlockFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRToMultiBlockFilterWrap *w = new VtkAMRToMultiBlockFilterWrap();
 		w->native.TakeReference(r);

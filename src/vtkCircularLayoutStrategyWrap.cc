@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCircularLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCircularLayoutStrategyWrap::ptpl;
 
 VtkCircularLayoutStrategyWrap::VtkCircularLayoutStrategyWrap()
@@ -63,7 +62,6 @@ void VtkCircularLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -153,7 +151,7 @@ void VtkCircularLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCircularLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCircularLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCircularLayoutStrategyWrap *w = new VtkCircularLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -181,7 +179,7 @@ void VtkCircularLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCircularLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCircularLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCircularLayoutStrategyWrap *w = new VtkCircularLayoutStrategyWrap();
 		w->native.TakeReference(r);

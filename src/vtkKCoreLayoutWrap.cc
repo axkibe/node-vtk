@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkKCoreLayoutWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkKCoreLayoutWrap::ptpl;
 
 VtkKCoreLayoutWrap::VtkKCoreLayoutWrap()
@@ -107,7 +106,6 @@ void VtkKCoreLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPolarCoordsRadiusArrayName", SetPolarCoordsRadiusArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPolarCoordsRadiusArrayName", SetPolarCoordsRadiusArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -291,7 +289,7 @@ void VtkKCoreLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKCoreLayoutWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKCoreLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKCoreLayoutWrap *w = new VtkKCoreLayoutWrap();
 	w->native.TakeReference(r);
@@ -343,7 +341,7 @@ void VtkKCoreLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkKCoreLayoutWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkKCoreLayoutWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKCoreLayoutWrap *w = new VtkKCoreLayoutWrap();
 		w->native.TakeReference(r);

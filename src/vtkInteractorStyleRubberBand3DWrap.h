@@ -24,7 +24,6 @@ class VtkInteractorStyleRubberBand3DWrap : public VtkInteractorStyleTrackballCam
 		VtkInteractorStyleRubberBand3DWrap(vtkSmartPointer<vtkInteractorStyleRubberBand3D>);
 		VtkInteractorStyleRubberBand3DWrap();
 		~VtkInteractorStyleRubberBand3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

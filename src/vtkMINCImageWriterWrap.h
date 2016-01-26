@@ -24,7 +24,6 @@ class VtkMINCImageWriterWrap : public VtkImageWriterWrap
 		VtkMINCImageWriterWrap(vtkSmartPointer<vtkMINCImageWriter>);
 		VtkMINCImageWriterWrap();
 		~VtkMINCImageWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

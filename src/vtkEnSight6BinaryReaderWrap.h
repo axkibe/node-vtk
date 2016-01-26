@@ -24,7 +24,6 @@ class VtkEnSight6BinaryReaderWrap : public VtkEnSightReaderWrap
 		VtkEnSight6BinaryReaderWrap(vtkSmartPointer<vtkEnSight6BinaryReader>);
 		VtkEnSight6BinaryReaderWrap();
 		~VtkEnSight6BinaryReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

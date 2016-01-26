@@ -24,7 +24,6 @@ class VtkClipHyperOctreeWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkClipHyperOctreeWrap(vtkSmartPointer<vtkClipHyperOctree>);
 		VtkClipHyperOctreeWrap();
 		~VtkClipHyperOctreeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

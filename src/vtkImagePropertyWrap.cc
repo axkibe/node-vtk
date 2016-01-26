@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImagePropertyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImagePropertyWrap::ptpl;
 
 VtkImagePropertyWrap::VtkImagePropertyWrap()
@@ -192,7 +191,6 @@ void VtkImagePropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -526,7 +524,7 @@ void VtkImagePropertyWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -627,7 +625,7 @@ void VtkImagePropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImagePropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImagePropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImagePropertyWrap *w = new VtkImagePropertyWrap();
 	w->native.TakeReference(r);
@@ -655,7 +653,7 @@ void VtkImagePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImagePropertyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImagePropertyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImagePropertyWrap *w = new VtkImagePropertyWrap();
 		w->native.TakeReference(r);

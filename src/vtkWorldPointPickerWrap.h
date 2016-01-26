@@ -24,7 +24,6 @@ class VtkWorldPointPickerWrap : public VtkAbstractPickerWrap
 		VtkWorldPointPickerWrap(vtkSmartPointer<vtkWorldPointPicker>);
 		VtkWorldPointPickerWrap();
 		~VtkWorldPointPickerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRotationFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRotationFilterWrap::ptpl;
 
 VtkRotationFilterWrap::VtkRotationFilterWrap()
@@ -108,7 +107,6 @@ void VtkRotationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfCopies", SetNumberOfCopies);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfCopies", SetNumberOfCopies);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -294,7 +292,7 @@ void VtkRotationFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRotationFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRotationFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRotationFilterWrap *w = new VtkRotationFilterWrap();
 	w->native.TakeReference(r);
@@ -322,7 +320,7 @@ void VtkRotationFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRotationFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRotationFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRotationFilterWrap *w = new VtkRotationFilterWrap();
 		w->native.TakeReference(r);

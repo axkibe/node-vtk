@@ -24,7 +24,6 @@ class VtkCutterWrap : public VtkPolyDataAlgorithmWrap
 		VtkCutterWrap(vtkSmartPointer<vtkCutter>);
 		VtkCutterWrap();
 		~VtkCutterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

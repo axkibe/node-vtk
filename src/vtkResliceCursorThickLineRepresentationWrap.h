@@ -24,7 +24,6 @@ class VtkResliceCursorThickLineRepresentationWrap : public VtkResliceCursorLineR
 		VtkResliceCursorThickLineRepresentationWrap(vtkSmartPointer<vtkResliceCursorThickLineRepresentation>);
 		VtkResliceCursorThickLineRepresentationWrap();
 		~VtkResliceCursorThickLineRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEnSightGoldReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEnSightGoldReaderWrap::ptpl;
 
 VtkEnSightGoldReaderWrap::VtkEnSightGoldReaderWrap()
@@ -60,7 +59,6 @@ void VtkEnSightGoldReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkEnSightGoldReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEnSightGoldReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEnSightGoldReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEnSightGoldReaderWrap *w = new VtkEnSightGoldReaderWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkEnSightGoldReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEnSightGoldReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEnSightGoldReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEnSightGoldReaderWrap *w = new VtkEnSightGoldReaderWrap();
 		w->native.TakeReference(r);

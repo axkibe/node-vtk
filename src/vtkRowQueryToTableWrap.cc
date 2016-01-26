@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRowQueryToTableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRowQueryToTableWrap::ptpl;
 
 VtkRowQueryToTableWrap::VtkRowQueryToTableWrap()
@@ -67,7 +66,6 @@ void VtkRowQueryToTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetQuery", SetQuery);
 	Nan::SetPrototypeMethod(tpl, "setQuery", SetQuery);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkRowQueryToTableWrap::GetQuery(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRowQueryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRowQueryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRowQueryWrap *w = new VtkRowQueryWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkRowQueryToTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRowQueryToTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRowQueryToTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRowQueryToTableWrap *w = new VtkRowQueryToTableWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkRowQueryToTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRowQueryToTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRowQueryToTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRowQueryToTableWrap *w = new VtkRowQueryToTableWrap();
 		w->native.TakeReference(r);

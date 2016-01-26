@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyDataConnectivityFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyDataConnectivityFilterWrap::ptpl;
 
 VtkPolyDataConnectivityFilterWrap::VtkPolyDataConnectivityFilterWrap()
@@ -182,7 +181,6 @@ void VtkPolyDataConnectivityFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -488,7 +486,7 @@ void VtkPolyDataConnectivityFilterWrap::GetRegionSizes(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 	w->native.TakeReference(r);
@@ -525,7 +523,7 @@ void VtkPolyDataConnectivityFilterWrap::GetVisitedPointIds(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdListWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdListWrap *w = new VtkIdListWrap();
 	w->native.TakeReference(r);
@@ -618,7 +616,7 @@ void VtkPolyDataConnectivityFilterWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataConnectivityFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataConnectivityFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataConnectivityFilterWrap *w = new VtkPolyDataConnectivityFilterWrap();
 	w->native.TakeReference(r);
@@ -646,7 +644,7 @@ void VtkPolyDataConnectivityFilterWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataConnectivityFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataConnectivityFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataConnectivityFilterWrap *w = new VtkPolyDataConnectivityFilterWrap();
 		w->native.TakeReference(r);

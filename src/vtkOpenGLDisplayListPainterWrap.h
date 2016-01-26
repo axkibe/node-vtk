@@ -24,7 +24,6 @@ class VtkOpenGLDisplayListPainterWrap : public VtkDisplayListPainterWrap
 		VtkOpenGLDisplayListPainterWrap(vtkSmartPointer<vtkOpenGLDisplayListPainter>);
 		VtkOpenGLDisplayListPainterWrap();
 		~VtkOpenGLDisplayListPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

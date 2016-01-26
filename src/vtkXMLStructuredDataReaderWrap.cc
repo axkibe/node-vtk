@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLStructuredDataReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLStructuredDataReaderWrap::ptpl;
 
 VtkXMLStructuredDataReaderWrap::VtkXMLStructuredDataReaderWrap()
@@ -76,7 +75,6 @@ void VtkXMLStructuredDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WholeSlicesOn", WholeSlicesOn);
 	Nan::SetPrototypeMethod(tpl, "wholeSlicesOn", WholeSlicesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkXMLStructuredDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLStructuredDataReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLStructuredDataReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLStructuredDataReaderWrap *w = new VtkXMLStructuredDataReaderWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkXMLStructuredDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLStructuredDataReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLStructuredDataReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLStructuredDataReaderWrap *w = new VtkXMLStructuredDataReaderWrap();
 		w->native.TakeReference(r);

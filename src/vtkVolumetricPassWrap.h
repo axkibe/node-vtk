@@ -24,7 +24,6 @@ class VtkVolumetricPassWrap : public VtkDefaultPassWrap
 		VtkVolumetricPassWrap(vtkSmartPointer<vtkVolumetricPass>);
 		VtkVolumetricPassWrap();
 		~VtkVolumetricPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

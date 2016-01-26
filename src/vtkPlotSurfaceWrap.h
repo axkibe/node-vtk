@@ -24,7 +24,6 @@ class VtkPlotSurfaceWrap : public VtkPlot3DWrap
 		VtkPlotSurfaceWrap(vtkSmartPointer<vtkPlotSurface>);
 		VtkPlotSurfaceWrap();
 		~VtkPlotSurfaceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

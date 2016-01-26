@@ -24,7 +24,6 @@ class VtkRendererSourceWrap : public VtkAlgorithmWrap
 		VtkRendererSourceWrap(vtkSmartPointer<vtkRendererSource>);
 		VtkRendererSourceWrap();
 		~VtkRendererSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

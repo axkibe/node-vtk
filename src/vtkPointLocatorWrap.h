@@ -24,7 +24,6 @@ class VtkPointLocatorWrap : public VtkIncrementalPointLocatorWrap
 		VtkPointLocatorWrap(vtkSmartPointer<vtkPointLocator>);
 		VtkPointLocatorWrap();
 		~VtkPointLocatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

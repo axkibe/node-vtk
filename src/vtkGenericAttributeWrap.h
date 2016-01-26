@@ -24,7 +24,6 @@ class VtkGenericAttributeWrap : public VtkObjectWrap
 		VtkGenericAttributeWrap(vtkSmartPointer<vtkGenericAttribute>);
 		VtkGenericAttributeWrap();
 		~VtkGenericAttributeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

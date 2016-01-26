@@ -24,7 +24,6 @@ class VtkParallelopipedRepresentationWrap : public VtkWidgetRepresentationWrap
 		VtkParallelopipedRepresentationWrap(vtkSmartPointer<vtkParallelopipedRepresentation>);
 		VtkParallelopipedRepresentationWrap();
 		~VtkParallelopipedRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

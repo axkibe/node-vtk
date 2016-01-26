@@ -24,7 +24,6 @@ class VtkXMLWriterWrap : public VtkAlgorithmWrap
 		VtkXMLWriterWrap(vtkSmartPointer<vtkXMLWriter>);
 		VtkXMLWriterWrap();
 		~VtkXMLWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

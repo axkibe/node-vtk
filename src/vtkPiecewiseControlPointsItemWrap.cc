@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPiecewiseControlPointsItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPiecewiseControlPointsItemWrap::ptpl;
 
 VtkPiecewiseControlPointsItemWrap::VtkPiecewiseControlPointsItemWrap()
@@ -67,7 +66,6 @@ void VtkPiecewiseControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPiecewiseFunction", SetPiecewiseFunction);
 	Nan::SetPrototypeMethod(tpl, "setPiecewiseFunction", SetPiecewiseFunction);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkPiecewiseControlPointsItemWrap::GetPiecewiseFunction(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkPiecewiseControlPointsItemWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseControlPointsItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseControlPointsItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseControlPointsItemWrap *w = new VtkPiecewiseControlPointsItemWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkPiecewiseControlPointsItemWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPiecewiseControlPointsItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPiecewiseControlPointsItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseControlPointsItemWrap *w = new VtkPiecewiseControlPointsItemWrap();
 		w->native.TakeReference(r);

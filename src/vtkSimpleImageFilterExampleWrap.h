@@ -24,7 +24,6 @@ class VtkSimpleImageFilterExampleWrap : public VtkSimpleImageToImageFilterWrap
 		VtkSimpleImageFilterExampleWrap(vtkSmartPointer<vtkSimpleImageFilterExample>);
 		VtkSimpleImageFilterExampleWrap();
 		~VtkSimpleImageFilterExampleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

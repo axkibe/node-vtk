@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEnSightWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEnSightWriterWrap::ptpl;
 
 VtkEnSightWriterWrap::VtkEnSightWriterWrap()
@@ -115,7 +114,6 @@ void VtkEnSightWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteSOSCaseFile", WriteSOSCaseFile);
 	Nan::SetPrototypeMethod(tpl, "writeSOSCaseFile", WriteSOSCaseFile);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -213,7 +211,7 @@ void VtkEnSightWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -314,7 +312,7 @@ void VtkEnSightWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEnSightWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEnSightWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEnSightWriterWrap *w = new VtkEnSightWriterWrap();
 	w->native.TakeReference(r);
@@ -342,7 +340,7 @@ void VtkEnSightWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEnSightWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEnSightWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEnSightWriterWrap *w = new VtkEnSightWriterWrap();
 		w->native.TakeReference(r);

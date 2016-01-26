@@ -24,7 +24,6 @@ class VtkMultiCorrelativeStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		VtkMultiCorrelativeStatisticsWrap(vtkSmartPointer<vtkMultiCorrelativeStatistics>);
 		VtkMultiCorrelativeStatisticsWrap();
 		~VtkMultiCorrelativeStatisticsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkHyperOctreeLimiterWrap : public VtkDataSetAlgorithmWrap
 		VtkHyperOctreeLimiterWrap(vtkSmartPointer<vtkHyperOctreeLimiter>);
 		VtkHyperOctreeLimiterWrap();
 		~VtkHyperOctreeLimiterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

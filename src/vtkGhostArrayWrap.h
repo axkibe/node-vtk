@@ -24,7 +24,6 @@ class VtkGhostArrayWrap : public VtkObjectWrap
 		VtkGhostArrayWrap(vtkSmartPointer<vtkGhostArray>);
 		VtkGhostArrayWrap();
 		~VtkGhostArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

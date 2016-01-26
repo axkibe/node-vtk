@@ -24,7 +24,6 @@ class VtkImplicitWindowFunctionWrap : public VtkImplicitFunctionWrap
 		VtkImplicitWindowFunctionWrap(vtkSmartPointer<vtkImplicitWindowFunction>);
 		VtkImplicitWindowFunctionWrap();
 		~VtkImplicitWindowFunctionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

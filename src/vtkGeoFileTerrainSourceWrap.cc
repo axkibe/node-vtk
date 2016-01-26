@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoFileTerrainSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoFileTerrainSourceWrap::ptpl;
 
 VtkGeoFileTerrainSourceWrap::VtkGeoFileTerrainSourceWrap()
@@ -66,7 +65,6 @@ void VtkGeoFileTerrainSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPath", SetPath);
 	Nan::SetPrototypeMethod(tpl, "setPath", SetPath);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkGeoFileTerrainSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoFileTerrainSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoFileTerrainSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoFileTerrainSourceWrap *w = new VtkGeoFileTerrainSourceWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkGeoFileTerrainSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoFileTerrainSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoFileTerrainSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoFileTerrainSourceWrap *w = new VtkGeoFileTerrainSourceWrap();
 		w->native.TakeReference(r);

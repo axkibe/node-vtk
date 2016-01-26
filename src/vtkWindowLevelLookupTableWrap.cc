@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWindowLevelLookupTableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWindowLevelLookupTableWrap::ptpl;
 
 VtkWindowLevelLookupTableWrap::VtkWindowLevelLookupTableWrap()
@@ -93,7 +92,6 @@ void VtkWindowLevelLookupTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWindow", SetWindow);
 	Nan::SetPrototypeMethod(tpl, "setWindow", SetWindow);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -249,7 +247,7 @@ void VtkWindowLevelLookupTableWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWindowLevelLookupTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWindowLevelLookupTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowLevelLookupTableWrap *w = new VtkWindowLevelLookupTableWrap();
 	w->native.TakeReference(r);
@@ -277,7 +275,7 @@ void VtkWindowLevelLookupTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWindowLevelLookupTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWindowLevelLookupTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWindowLevelLookupTableWrap *w = new VtkWindowLevelLookupTableWrap();
 		w->native.TakeReference(r);

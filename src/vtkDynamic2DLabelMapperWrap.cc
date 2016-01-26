@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDynamic2DLabelMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDynamic2DLabelMapperWrap::ptpl;
 
 VtkDynamic2DLabelMapperWrap::VtkDynamic2DLabelMapperWrap()
@@ -77,7 +76,6 @@ void VtkDynamic2DLabelMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPriorityArrayName", SetPriorityArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPriorityArrayName", SetPriorityArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkDynamic2DLabelMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDynamic2DLabelMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDynamic2DLabelMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDynamic2DLabelMapperWrap *w = new VtkDynamic2DLabelMapperWrap();
 	w->native.TakeReference(r);
@@ -257,7 +255,7 @@ void VtkDynamic2DLabelMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDynamic2DLabelMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDynamic2DLabelMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDynamic2DLabelMapperWrap *w = new VtkDynamic2DLabelMapperWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkPassInputTypeAlgorithmWrap : public VtkAlgorithmWrap
 		VtkPassInputTypeAlgorithmWrap(vtkSmartPointer<vtkPassInputTypeAlgorithm>);
 		VtkPassInputTypeAlgorithmWrap();
 		~VtkPassInputTypeAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

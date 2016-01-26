@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkQuadraticLinearWedgeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkQuadraticLinearWedgeWrap::ptpl;
 
 VtkQuadraticLinearWedgeWrap::VtkQuadraticLinearWedgeWrap()
@@ -84,7 +83,6 @@ void VtkQuadraticLinearWedgeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -172,7 +170,7 @@ void VtkQuadraticLinearWedgeWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellWrap *w = new VtkCellWrap();
 		w->native.TakeReference(r);
@@ -202,7 +200,7 @@ void VtkQuadraticLinearWedgeWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellWrap *w = new VtkCellWrap();
 		w->native.TakeReference(r);
@@ -278,7 +276,7 @@ void VtkQuadraticLinearWedgeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuadraticLinearWedgeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuadraticLinearWedgeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuadraticLinearWedgeWrap *w = new VtkQuadraticLinearWedgeWrap();
 	w->native.TakeReference(r);
@@ -306,7 +304,7 @@ void VtkQuadraticLinearWedgeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkQuadraticLinearWedgeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkQuadraticLinearWedgeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkQuadraticLinearWedgeWrap *w = new VtkQuadraticLinearWedgeWrap();
 		w->native.TakeReference(r);

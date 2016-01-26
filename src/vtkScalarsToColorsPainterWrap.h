@@ -24,7 +24,6 @@ class VtkScalarsToColorsPainterWrap : public VtkPainterWrap
 		VtkScalarsToColorsPainterWrap(vtkSmartPointer<vtkScalarsToColorsPainter>);
 		VtkScalarsToColorsPainterWrap();
 		~VtkScalarsToColorsPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

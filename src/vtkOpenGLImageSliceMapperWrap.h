@@ -24,7 +24,6 @@ class VtkOpenGLImageSliceMapperWrap : public VtkImageSliceMapperWrap
 		VtkOpenGLImageSliceMapperWrap(vtkSmartPointer<vtkOpenGLImageSliceMapper>);
 		VtkOpenGLImageSliceMapperWrap();
 		~VtkOpenGLImageSliceMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

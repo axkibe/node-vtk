@@ -24,7 +24,6 @@ class VtkXMLHyperOctreeWriterWrap : public VtkXMLWriterWrap
 		VtkXMLHyperOctreeWriterWrap(vtkSmartPointer<vtkXMLHyperOctreeWriter>);
 		VtkXMLHyperOctreeWriterWrap();
 		~VtkXMLHyperOctreeWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

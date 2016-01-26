@@ -24,7 +24,6 @@ class VtkTreeHeatmapItemWrap : public VtkContextItemWrap
 		VtkTreeHeatmapItemWrap(vtkSmartPointer<vtkTreeHeatmapItem>);
 		VtkTreeHeatmapItemWrap();
 		~VtkTreeHeatmapItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

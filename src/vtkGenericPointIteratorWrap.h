@@ -24,7 +24,6 @@ class VtkGenericPointIteratorWrap : public VtkObjectWrap
 		VtkGenericPointIteratorWrap(vtkSmartPointer<vtkGenericPointIterator>);
 		VtkGenericPointIteratorWrap();
 		~VtkGenericPointIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

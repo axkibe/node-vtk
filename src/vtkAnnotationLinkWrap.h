@@ -24,7 +24,6 @@ class VtkAnnotationLinkWrap : public VtkAnnotationLayersAlgorithmWrap
 		VtkAnnotationLinkWrap(vtkSmartPointer<vtkAnnotationLink>);
 		VtkAnnotationLinkWrap();
 		~VtkAnnotationLinkWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

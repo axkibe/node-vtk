@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperTreeCursorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperTreeCursorWrap::ptpl;
 
 VtkHyperTreeCursorWrap::VtkHyperTreeCursorWrap()
@@ -96,7 +95,6 @@ void VtkHyperTreeCursorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToSameNode", ToSameNode);
 	Nan::SetPrototypeMethod(tpl, "toSameNode", ToSameNode);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkHyperTreeCursorWrap::Clone(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeCursorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeCursorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeCursorWrap *w = new VtkHyperTreeCursorWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkHyperTreeCursorWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeWrap *w = new VtkHyperTreeWrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkHyperTreeCursorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeCursorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeCursorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeCursorWrap *w = new VtkHyperTreeCursorWrap();
 	w->native.TakeReference(r);
@@ -325,7 +323,7 @@ void VtkHyperTreeCursorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperTreeCursorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperTreeCursorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperTreeCursorWrap *w = new VtkHyperTreeCursorWrap();
 		w->native.TakeReference(r);

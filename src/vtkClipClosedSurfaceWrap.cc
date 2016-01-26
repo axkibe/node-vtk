@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkClipClosedSurfaceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkClipClosedSurfaceWrap::ptpl;
 
 VtkClipClosedSurfaceWrap::VtkClipClosedSurfaceWrap()
@@ -160,7 +159,6 @@ void VtkClipClosedSurfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TriangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 	Nan::SetPrototypeMethod(tpl, "triangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -278,7 +276,7 @@ void VtkClipClosedSurfaceWrap::GetClippingPlanes(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlaneCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
 	w->native.TakeReference(r);
@@ -449,7 +447,7 @@ void VtkClipClosedSurfaceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkClipClosedSurfaceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkClipClosedSurfaceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClipClosedSurfaceWrap *w = new VtkClipClosedSurfaceWrap();
 	w->native.TakeReference(r);
@@ -501,7 +499,7 @@ void VtkClipClosedSurfaceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkClipClosedSurfaceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkClipClosedSurfaceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkClipClosedSurfaceWrap *w = new VtkClipClosedSurfaceWrap();
 		w->native.TakeReference(r);

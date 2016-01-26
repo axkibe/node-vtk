@@ -24,7 +24,6 @@ class VtkRectilinearGridToPointSetWrap : public VtkStructuredGridAlgorithmWrap
 		VtkRectilinearGridToPointSetWrap(vtkSmartPointer<vtkRectilinearGridToPointSet>);
 		VtkRectilinearGridToPointSetWrap();
 		~VtkRectilinearGridToPointSetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

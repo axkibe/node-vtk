@@ -24,7 +24,6 @@ class VtkSLACParticleReaderWrap : public VtkPolyDataAlgorithmWrap
 		VtkSLACParticleReaderWrap(vtkSmartPointer<vtkSLACParticleReader>);
 		VtkSLACParticleReaderWrap();
 		~VtkSLACParticleReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

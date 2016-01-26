@@ -24,7 +24,6 @@ class VtkGeoFileTerrainSourceWrap : public VtkGeoSourceWrap
 		VtkGeoFileTerrainSourceWrap(vtkSmartPointer<vtkGeoFileTerrainSource>);
 		VtkGeoFileTerrainSourceWrap();
 		~VtkGeoFileTerrainSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlotSurfaceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlotSurfaceWrap::ptpl;
 
 VtkPlotSurfaceWrap::VtkPlotSurfaceWrap()
@@ -64,7 +63,6 @@ void VtkPlotSurfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkPlotSurfaceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlotSurfaceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlotSurfaceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlotSurfaceWrap *w = new VtkPlotSurfaceWrap();
 	w->native.TakeReference(r);
@@ -170,7 +168,7 @@ void VtkPlotSurfaceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlotSurfaceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlotSurfaceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotSurfaceWrap *w = new VtkPlotSurfaceWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoEdgeStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoEdgeStrategyWrap::ptpl;
 
 VtkGeoEdgeStrategyWrap::VtkGeoEdgeStrategyWrap()
@@ -81,7 +80,6 @@ void VtkGeoEdgeStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSubdivisions", SetNumberOfSubdivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSubdivisions", SetNumberOfSubdivisions);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -213,7 +211,7 @@ void VtkGeoEdgeStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoEdgeStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoEdgeStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoEdgeStrategyWrap *w = new VtkGeoEdgeStrategyWrap();
 	w->native.TakeReference(r);
@@ -241,7 +239,7 @@ void VtkGeoEdgeStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoEdgeStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoEdgeStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoEdgeStrategyWrap *w = new VtkGeoEdgeStrategyWrap();
 		w->native.TakeReference(r);

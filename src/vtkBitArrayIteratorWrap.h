@@ -24,7 +24,6 @@ class VtkBitArrayIteratorWrap : public VtkArrayIteratorWrap
 		VtkBitArrayIteratorWrap(vtkSmartPointer<vtkBitArrayIterator>);
 		VtkBitArrayIteratorWrap();
 		~VtkBitArrayIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

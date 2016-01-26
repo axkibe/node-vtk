@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAreaContourSpectrumFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAreaContourSpectrumFilterWrap::ptpl;
 
 VtkAreaContourSpectrumFilterWrap::VtkAreaContourSpectrumFilterWrap()
@@ -70,7 +69,6 @@ void VtkAreaContourSpectrumFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSamples", SetNumberOfSamples);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSamples", SetNumberOfSamples);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -140,7 +138,7 @@ void VtkAreaContourSpectrumFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
 	w->native.TakeReference(r);
@@ -185,7 +183,7 @@ void VtkAreaContourSpectrumFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAreaContourSpectrumFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAreaContourSpectrumFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAreaContourSpectrumFilterWrap *w = new VtkAreaContourSpectrumFilterWrap();
 	w->native.TakeReference(r);
@@ -213,7 +211,7 @@ void VtkAreaContourSpectrumFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAreaContourSpectrumFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAreaContourSpectrumFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAreaContourSpectrumFilterWrap *w = new VtkAreaContourSpectrumFilterWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkRandomLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		VtkRandomLayoutStrategyWrap(vtkSmartPointer<vtkRandomLayoutStrategy>);
 		VtkRandomLayoutStrategyWrap();
 		~VtkRandomLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

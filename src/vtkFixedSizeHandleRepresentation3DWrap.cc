@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFixedSizeHandleRepresentation3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFixedSizeHandleRepresentation3DWrap::ptpl;
 
 VtkFixedSizeHandleRepresentation3DWrap::VtkFixedSizeHandleRepresentation3DWrap()
@@ -76,7 +75,6 @@ void VtkFixedSizeHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHandleSizeToleranceInPixels", SetHandleSizeToleranceInPixels);
 	Nan::SetPrototypeMethod(tpl, "setHandleSizeToleranceInPixels", SetHandleSizeToleranceInPixels);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -160,7 +158,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::GetSphereSource(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSphereSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSphereSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSphereSourceWrap *w = new VtkSphereSourceWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFixedSizeHandleRepresentation3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFixedSizeHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedSizeHandleRepresentation3DWrap *w = new VtkFixedSizeHandleRepresentation3DWrap();
 	w->native.TakeReference(r);
@@ -233,7 +231,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFixedSizeHandleRepresentation3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFixedSizeHandleRepresentation3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFixedSizeHandleRepresentation3DWrap *w = new VtkFixedSizeHandleRepresentation3DWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRectangularButtonSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRectangularButtonSourceWrap::ptpl;
 
 VtkRectangularButtonSourceWrap::VtkRectangularButtonSourceWrap()
@@ -138,7 +137,6 @@ void VtkRectangularButtonSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -482,7 +480,7 @@ void VtkRectangularButtonSourceWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectangularButtonSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectangularButtonSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectangularButtonSourceWrap *w = new VtkRectangularButtonSourceWrap();
 	w->native.TakeReference(r);
@@ -510,7 +508,7 @@ void VtkRectangularButtonSourceWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRectangularButtonSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRectangularButtonSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectangularButtonSourceWrap *w = new VtkRectangularButtonSourceWrap();
 		w->native.TakeReference(r);

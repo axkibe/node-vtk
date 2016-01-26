@@ -24,7 +24,6 @@ class VtkXMLUniformGridAMRReaderWrap : public VtkXMLCompositeDataReaderWrap
 		VtkXMLUniformGridAMRReaderWrap(vtkSmartPointer<vtkXMLUniformGridAMRReader>);
 		VtkXMLUniformGridAMRReaderWrap();
 		~VtkXMLUniformGridAMRReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

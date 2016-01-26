@@ -24,7 +24,6 @@ class VtkFixedPointVolumeRayCastMIPHelperWrap : public VtkFixedPointVolumeRayCas
 		VtkFixedPointVolumeRayCastMIPHelperWrap(vtkSmartPointer<vtkFixedPointVolumeRayCastMIPHelper>);
 		VtkFixedPointVolumeRayCastMIPHelperWrap();
 		~VtkFixedPointVolumeRayCastMIPHelperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

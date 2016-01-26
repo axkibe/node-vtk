@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProcrustesAlignmentFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProcrustesAlignmentFilterWrap::ptpl;
 
 VtkProcrustesAlignmentFilterWrap::VtkProcrustesAlignmentFilterWrap()
@@ -80,7 +79,6 @@ void VtkProcrustesAlignmentFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartFromCentroidOn", StartFromCentroidOn);
 	Nan::SetPrototypeMethod(tpl, "startFromCentroidOn", StartFromCentroidOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -136,7 +134,7 @@ void VtkProcrustesAlignmentFilterWrap::GetLandmarkTransform(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLandmarkTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLandmarkTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLandmarkTransformWrap *w = new VtkLandmarkTransformWrap();
 	w->native.TakeReference(r);
@@ -159,7 +157,7 @@ void VtkProcrustesAlignmentFilterWrap::GetMeanPoints(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkProcrustesAlignmentFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProcrustesAlignmentFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProcrustesAlignmentFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProcrustesAlignmentFilterWrap *w = new VtkProcrustesAlignmentFilterWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkProcrustesAlignmentFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProcrustesAlignmentFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProcrustesAlignmentFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProcrustesAlignmentFilterWrap *w = new VtkProcrustesAlignmentFilterWrap();
 		w->native.TakeReference(r);

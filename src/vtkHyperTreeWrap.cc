@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperTreeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperTreeWrap::ptpl;
 
 VtkHyperTreeWrap::VtkHyperTreeWrap()
@@ -75,7 +74,6 @@ void VtkHyperTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SubdivideLeaf", SubdivideLeaf);
 	Nan::SetPrototypeMethod(tpl, "subdivideLeaf", SubdivideLeaf);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -193,7 +191,7 @@ void VtkHyperTreeWrap::NewCursor(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeCursorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeCursorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeCursorWrap *w = new VtkHyperTreeCursorWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkHyperTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeWrap *w = new VtkHyperTreeWrap();
 	w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkHyperTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperTreeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperTreeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperTreeWrap *w = new VtkHyperTreeWrap();
 		w->native.TakeReference(r);

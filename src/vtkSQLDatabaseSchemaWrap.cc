@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSQLDatabaseSchemaWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSQLDatabaseSchemaWrap::ptpl;
 
 VtkSQLDatabaseSchemaWrap::VtkSQLDatabaseSchemaWrap()
@@ -179,7 +178,6 @@ void VtkSQLDatabaseSchemaWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetName", SetName);
 	Nan::SetPrototypeMethod(tpl, "setName", SetName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -1332,7 +1330,7 @@ void VtkSQLDatabaseSchemaWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSQLDatabaseSchemaWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSQLDatabaseSchemaWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSQLDatabaseSchemaWrap *w = new VtkSQLDatabaseSchemaWrap();
 	w->native.TakeReference(r);
@@ -1372,7 +1370,7 @@ void VtkSQLDatabaseSchemaWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSQLDatabaseSchemaWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSQLDatabaseSchemaWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSQLDatabaseSchemaWrap *w = new VtkSQLDatabaseSchemaWrap();
 		w->native.TakeReference(r);

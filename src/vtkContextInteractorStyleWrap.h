@@ -24,7 +24,6 @@ class VtkContextInteractorStyleWrap : public VtkInteractorStyleWrap
 		VtkContextInteractorStyleWrap(vtkSmartPointer<vtkContextInteractorStyle>);
 		VtkContextInteractorStyleWrap();
 		~VtkContextInteractorStyleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

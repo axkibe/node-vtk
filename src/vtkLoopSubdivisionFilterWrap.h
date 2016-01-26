@@ -24,7 +24,6 @@ class VtkLoopSubdivisionFilterWrap : public VtkApproximatingSubdivisionFilterWra
 		VtkLoopSubdivisionFilterWrap(vtkSmartPointer<vtkLoopSubdivisionFilter>);
 		VtkLoopSubdivisionFilterWrap();
 		~VtkLoopSubdivisionFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

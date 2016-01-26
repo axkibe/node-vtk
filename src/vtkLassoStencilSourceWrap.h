@@ -24,7 +24,6 @@ class VtkLassoStencilSourceWrap : public VtkImageStencilSourceWrap
 		VtkLassoStencilSourceWrap(vtkSmartPointer<vtkLassoStencilSource>);
 		VtkLassoStencilSourceWrap();
 		~VtkLassoStencilSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

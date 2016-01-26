@@ -24,7 +24,6 @@ class VtkXMLFileReadTesterWrap : public VtkXMLParserWrap
 		VtkXMLFileReadTesterWrap(vtkSmartPointer<vtkXMLFileReadTester>);
 		VtkXMLFileReadTesterWrap();
 		~VtkXMLFileReadTesterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

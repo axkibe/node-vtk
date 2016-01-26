@@ -24,7 +24,6 @@ class VtkMergeFilterWrap : public VtkDataSetAlgorithmWrap
 		VtkMergeFilterWrap(vtkSmartPointer<vtkMergeFilter>);
 		VtkMergeFilterWrap();
 		~VtkMergeFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

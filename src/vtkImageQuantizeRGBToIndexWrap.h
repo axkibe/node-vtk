@@ -24,7 +24,6 @@ class VtkImageQuantizeRGBToIndexWrap : public VtkImageAlgorithmWrap
 		VtkImageQuantizeRGBToIndexWrap(vtkSmartPointer<vtkImageQuantizeRGBToIndex>);
 		VtkImageQuantizeRGBToIndexWrap();
 		~VtkImageQuantizeRGBToIndexWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

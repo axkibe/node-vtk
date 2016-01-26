@@ -24,7 +24,6 @@ class VtkFixedPointVolumeRayCastCompositeGOHelperWrap : public VtkFixedPointVolu
 		VtkFixedPointVolumeRayCastCompositeGOHelperWrap(vtkSmartPointer<vtkFixedPointVolumeRayCastCompositeGOHelper>);
 		VtkFixedPointVolumeRayCastCompositeGOHelperWrap();
 		~VtkFixedPointVolumeRayCastCompositeGOHelperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

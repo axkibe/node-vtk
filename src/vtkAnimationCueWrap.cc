@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAnimationCueWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAnimationCueWrap::ptpl;
 
 VtkAnimationCueWrap::VtkAnimationCueWrap()
@@ -101,7 +100,6 @@ void VtkAnimationCueWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Tick", Tick);
 	Nan::SetPrototypeMethod(tpl, "tick", Tick);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -287,7 +285,7 @@ void VtkAnimationCueWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAnimationCueWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAnimationCueWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnimationCueWrap *w = new VtkAnimationCueWrap();
 	w->native.TakeReference(r);
@@ -315,7 +313,7 @@ void VtkAnimationCueWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAnimationCueWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAnimationCueWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAnimationCueWrap *w = new VtkAnimationCueWrap();
 		w->native.TakeReference(r);

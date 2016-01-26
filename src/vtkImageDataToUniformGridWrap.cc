@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageDataToUniformGridWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageDataToUniformGridWrap::ptpl;
 
 VtkImageDataToUniformGridWrap::VtkImageDataToUniformGridWrap()
@@ -78,7 +77,6 @@ void VtkImageDataToUniformGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReverse", SetReverse);
 	Nan::SetPrototypeMethod(tpl, "setReverse", SetReverse);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -198,7 +196,7 @@ void VtkImageDataToUniformGridWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataToUniformGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataToUniformGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataToUniformGridWrap *w = new VtkImageDataToUniformGridWrap();
 	w->native.TakeReference(r);
@@ -250,7 +248,7 @@ void VtkImageDataToUniformGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageDataToUniformGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageDataToUniformGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataToUniformGridWrap *w = new VtkImageDataToUniformGridWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkImageChangeInformationWrap : public VtkImageAlgorithmWrap
 		VtkImageChangeInformationWrap(vtkSmartPointer<vtkImageChangeInformation>);
 		VtkImageChangeInformationWrap();
 		~VtkImageChangeInformationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

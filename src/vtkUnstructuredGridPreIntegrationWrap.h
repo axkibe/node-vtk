@@ -24,7 +24,6 @@ class VtkUnstructuredGridPreIntegrationWrap : public VtkUnstructuredGridVolumeRa
 		VtkUnstructuredGridPreIntegrationWrap(vtkSmartPointer<vtkUnstructuredGridPreIntegration>);
 		VtkUnstructuredGridPreIntegrationWrap();
 		~VtkUnstructuredGridPreIntegrationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

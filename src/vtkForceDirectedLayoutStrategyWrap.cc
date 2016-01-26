@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkForceDirectedLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkForceDirectedLayoutStrategyWrap::ptpl;
 
 VtkForceDirectedLayoutStrategyWrap::VtkForceDirectedLayoutStrategyWrap()
@@ -156,7 +155,6 @@ void VtkForceDirectedLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 	Nan::SetPrototypeMethod(tpl, "threeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -506,7 +504,7 @@ void VtkForceDirectedLayoutStrategyWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkForceDirectedLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkForceDirectedLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkForceDirectedLayoutStrategyWrap *w = new VtkForceDirectedLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -558,7 +556,7 @@ void VtkForceDirectedLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkForceDirectedLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkForceDirectedLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkForceDirectedLayoutStrategyWrap *w = new VtkForceDirectedLayoutStrategyWrap();
 		w->native.TakeReference(r);

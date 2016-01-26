@@ -24,7 +24,6 @@ class VtkDataSetGhostGeneratorWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkDataSetGhostGeneratorWrap(vtkSmartPointer<vtkDataSetGhostGenerator>);
 		VtkDataSetGhostGeneratorWrap();
 		~VtkDataSetGhostGeneratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkAbstractVolumeMapperWrap : public VtkAbstractMapper3DWrap
 		VtkAbstractVolumeMapperWrap(vtkSmartPointer<vtkAbstractVolumeMapper>);
 		VtkAbstractVolumeMapperWrap();
 		~VtkAbstractVolumeMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDSPFilterGroupWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDSPFilterGroupWrap::ptpl;
 
 VtkDSPFilterGroupWrap::VtkDSPFilterGroupWrap()
@@ -88,7 +87,6 @@ void VtkDSPFilterGroupWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -206,7 +204,7 @@ void VtkDSPFilterGroupWrap::GetCachedInput(const Nan::FunctionCallbackInfo<v8::V
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkFloatArrayWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkFloatArrayWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkFloatArrayWrap *w = new VtkFloatArrayWrap();
 			w->native.TakeReference(r);
@@ -240,7 +238,7 @@ void VtkDSPFilterGroupWrap::GetCachedOutput(const Nan::FunctionCallbackInfo<v8::
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkFloatArrayWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkFloatArrayWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkFloatArrayWrap *w = new VtkFloatArrayWrap();
 			w->native.TakeReference(r);
@@ -285,7 +283,7 @@ void VtkDSPFilterGroupWrap::GetFilter(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDSPFilterDefinitionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDSPFilterDefinitionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDSPFilterDefinitionWrap *w = new VtkDSPFilterDefinitionWrap();
 		w->native.TakeReference(r);
@@ -368,7 +366,7 @@ void VtkDSPFilterGroupWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDSPFilterGroupWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDSPFilterGroupWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDSPFilterGroupWrap *w = new VtkDSPFilterGroupWrap();
 	w->native.TakeReference(r);
@@ -416,7 +414,7 @@ void VtkDSPFilterGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDSPFilterGroupWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDSPFilterGroupWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDSPFilterGroupWrap *w = new VtkDSPFilterGroupWrap();
 		w->native.TakeReference(r);

@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCompositeDataPipelineWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCompositeDataPipelineWrap::ptpl;
 
 VtkCompositeDataPipelineWrap::VtkCompositeDataPipelineWrap()
@@ -75,7 +74,6 @@ void VtkCompositeDataPipelineWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "UPDATE_COMPOSITE_INDICES", UPDATE_COMPOSITE_INDICES);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -117,7 +115,7 @@ void VtkCompositeDataPipelineWrap::COMPOSITE_DATA_META_DATA(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationObjectBaseKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationObjectBaseKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationObjectBaseKeyWrap *w = new VtkInformationObjectBaseKeyWrap();
 	w->native.TakeReference(r);
@@ -140,7 +138,7 @@ void VtkCompositeDataPipelineWrap::COMPOSITE_INDICES(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerVectorKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerVectorKeyWrap *w = new VtkInformationIntegerVectorKeyWrap();
 	w->native.TakeReference(r);
@@ -181,7 +179,7 @@ void VtkCompositeDataPipelineWrap::GetCompositeOutputData(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -229,7 +227,7 @@ void VtkCompositeDataPipelineWrap::LOAD_REQUESTED_BLOCKS(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkCompositeDataPipelineWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeDataPipelineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeDataPipelineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataPipelineWrap *w = new VtkCompositeDataPipelineWrap();
 	w->native.TakeReference(r);
@@ -280,7 +278,7 @@ void VtkCompositeDataPipelineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCompositeDataPipelineWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCompositeDataPipelineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeDataPipelineWrap *w = new VtkCompositeDataPipelineWrap();
 		w->native.TakeReference(r);
@@ -306,7 +304,7 @@ void VtkCompositeDataPipelineWrap::UPDATE_COMPOSITE_INDICES(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerVectorKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerVectorKeyWrap *w = new VtkInformationIntegerVectorKeyWrap();
 	w->native.TakeReference(r);

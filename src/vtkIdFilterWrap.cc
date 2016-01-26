@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkIdFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkIdFilterWrap::ptpl;
 
 VtkIdFilterWrap::VtkIdFilterWrap()
@@ -102,7 +101,6 @@ void VtkIdFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointIds", SetPointIds);
 	Nan::SetPrototypeMethod(tpl, "setPointIds", SetPointIds);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -284,7 +282,7 @@ void VtkIdFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdFilterWrap *w = new VtkIdFilterWrap();
 	w->native.TakeReference(r);
@@ -336,7 +334,7 @@ void VtkIdFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdFilterWrap *w = new VtkIdFilterWrap();
 		w->native.TakeReference(r);

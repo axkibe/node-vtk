@@ -24,7 +24,6 @@ class VtkImageConnectorWrap : public VtkObjectWrap
 		VtkImageConnectorWrap(vtkSmartPointer<vtkImageConnector>);
 		VtkImageConnectorWrap();
 		~VtkImageConnectorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

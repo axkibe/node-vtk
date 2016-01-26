@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMPASReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMPASReaderWrap::ptpl;
 
 VtkMPASReaderWrap::VtkMPASReaderWrap()
@@ -130,7 +129,6 @@ void VtkMPASReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVerticalLevel", SetVerticalLevel);
 	Nan::SetPrototypeMethod(tpl, "setVerticalLevel", SetVerticalLevel);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -401,7 +399,7 @@ void VtkMPASReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 		w->native.TakeReference(r);
@@ -420,7 +418,7 @@ void VtkMPASReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -508,7 +506,7 @@ void VtkMPASReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMPASReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMPASReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMPASReaderWrap *w = new VtkMPASReaderWrap();
 	w->native.TakeReference(r);
@@ -536,7 +534,7 @@ void VtkMPASReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMPASReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMPASReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMPASReaderWrap *w = new VtkMPASReaderWrap();
 		w->native.TakeReference(r);

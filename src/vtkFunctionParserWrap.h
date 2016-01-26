@@ -24,7 +24,6 @@ class VtkFunctionParserWrap : public VtkObjectWrap
 		VtkFunctionParserWrap(vtkSmartPointer<vtkFunctionParser>);
 		VtkFunctionParserWrap();
 		~VtkFunctionParserWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

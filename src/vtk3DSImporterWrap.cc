@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> Vtk3DSImporterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> Vtk3DSImporterWrap::ptpl;
 
 Vtk3DSImporterWrap::Vtk3DSImporterWrap()
@@ -78,7 +77,6 @@ void Vtk3DSImporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -208,7 +206,7 @@ void Vtk3DSImporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(Vtk3DSImporterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(Vtk3DSImporterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	Vtk3DSImporterWrap *w = new Vtk3DSImporterWrap();
 	w->native.TakeReference(r);
@@ -236,7 +234,7 @@ void Vtk3DSImporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(Vtk3DSImporterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(Vtk3DSImporterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		Vtk3DSImporterWrap *w = new Vtk3DSImporterWrap();
 		w->native.TakeReference(r);

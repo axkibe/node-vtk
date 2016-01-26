@@ -24,7 +24,6 @@ class VtkImageDataToUniformGridWrap : public VtkDataObjectAlgorithmWrap
 		VtkImageDataToUniformGridWrap(vtkSmartPointer<vtkImageDataToUniformGrid>);
 		VtkImageDataToUniformGridWrap();
 		~VtkImageDataToUniformGridWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

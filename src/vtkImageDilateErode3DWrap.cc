@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageDilateErode3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageDilateErode3DWrap::ptpl;
 
 VtkImageDilateErode3DWrap::VtkImageDilateErode3DWrap()
@@ -75,7 +74,6 @@ void VtkImageDilateErode3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetKernelSize", SetKernelSize);
 	Nan::SetPrototypeMethod(tpl, "setKernelSize", SetKernelSize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -181,7 +179,7 @@ void VtkImageDilateErode3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDilateErode3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDilateErode3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDilateErode3DWrap *w = new VtkImageDilateErode3DWrap();
 	w->native.TakeReference(r);
@@ -209,7 +207,7 @@ void VtkImageDilateErode3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageDilateErode3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageDilateErode3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDilateErode3DWrap *w = new VtkImageDilateErode3DWrap();
 		w->native.TakeReference(r);

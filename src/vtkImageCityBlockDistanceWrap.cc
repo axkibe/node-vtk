@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageCityBlockDistanceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageCityBlockDistanceWrap::ptpl;
 
 VtkImageCityBlockDistanceWrap::VtkImageCityBlockDistanceWrap()
@@ -60,7 +59,6 @@ void VtkImageCityBlockDistanceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkImageCityBlockDistanceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageCityBlockDistanceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageCityBlockDistanceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageCityBlockDistanceWrap *w = new VtkImageCityBlockDistanceWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkImageCityBlockDistanceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageCityBlockDistanceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageCityBlockDistanceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageCityBlockDistanceWrap *w = new VtkImageCityBlockDistanceWrap();
 		w->native.TakeReference(r);

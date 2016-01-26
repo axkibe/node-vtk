@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractCTHPartWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractCTHPartWrap::ptpl;
 
 VtkExtractCTHPartWrap::VtkExtractCTHPartWrap()
@@ -116,7 +115,6 @@ void VtkExtractCTHPartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVolumeFractionSurfaceValue", SetVolumeFractionSurfaceValue);
 	Nan::SetPrototypeMethod(tpl, "setVolumeFractionSurfaceValue", SetVolumeFractionSurfaceValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -240,7 +238,7 @@ void VtkExtractCTHPartWrap::GetClipPlane(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlaneWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlaneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneWrap *w = new VtkPlaneWrap();
 	w->native.TakeReference(r);
@@ -263,7 +261,7 @@ void VtkExtractCTHPartWrap::GetController(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -385,7 +383,7 @@ void VtkExtractCTHPartWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractCTHPartWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractCTHPartWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractCTHPartWrap *w = new VtkExtractCTHPartWrap();
 	w->native.TakeReference(r);
@@ -449,7 +447,7 @@ void VtkExtractCTHPartWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractCTHPartWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractCTHPartWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractCTHPartWrap *w = new VtkExtractCTHPartWrap();
 		w->native.TakeReference(r);

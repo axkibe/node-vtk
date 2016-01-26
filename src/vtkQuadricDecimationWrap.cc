@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkQuadricDecimationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkQuadricDecimationWrap::ptpl;
 
 VtkQuadricDecimationWrap::VtkQuadricDecimationWrap()
@@ -177,7 +176,6 @@ void VtkQuadricDecimationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VectorsAttributeOn", VectorsAttributeOn);
 	Nan::SetPrototypeMethod(tpl, "vectorsAttributeOn", VectorsAttributeOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -489,7 +487,7 @@ void VtkQuadricDecimationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuadricDecimationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuadricDecimationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuadricDecimationWrap *w = new VtkQuadricDecimationWrap();
 	w->native.TakeReference(r);
@@ -541,7 +539,7 @@ void VtkQuadricDecimationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkQuadricDecimationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkQuadricDecimationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkQuadricDecimationWrap *w = new VtkQuadricDecimationWrap();
 		w->native.TakeReference(r);

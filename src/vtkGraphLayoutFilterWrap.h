@@ -24,7 +24,6 @@ class VtkGraphLayoutFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkGraphLayoutFilterWrap(vtkSmartPointer<vtkGraphLayoutFilter>);
 		VtkGraphLayoutFilterWrap();
 		~VtkGraphLayoutFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

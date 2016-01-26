@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRIBExporterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRIBExporterWrap::ptpl;
 
 VtkRIBExporterWrap::VtkRIBExporterWrap()
@@ -108,7 +107,6 @@ void VtkRIBExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTexturePrefix", SetTexturePrefix);
 	Nan::SetPrototypeMethod(tpl, "setTexturePrefix", SetTexturePrefix);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -318,7 +316,7 @@ void VtkRIBExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRIBExporterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRIBExporterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRIBExporterWrap *w = new VtkRIBExporterWrap();
 	w->native.TakeReference(r);
@@ -346,7 +344,7 @@ void VtkRIBExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRIBExporterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRIBExporterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRIBExporterWrap *w = new VtkRIBExporterWrap();
 		w->native.TakeReference(r);

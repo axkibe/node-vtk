@@ -24,7 +24,6 @@ class VtkChartPieWrap : public VtkChartWrap
 		VtkChartPieWrap(vtkSmartPointer<vtkChartPie>);
 		VtkChartPieWrap();
 		~VtkChartPieWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

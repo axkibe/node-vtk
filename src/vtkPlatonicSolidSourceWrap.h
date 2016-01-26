@@ -24,7 +24,6 @@ class VtkPlatonicSolidSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkPlatonicSolidSourceWrap(vtkSmartPointer<vtkPlatonicSolidSource>);
 		VtkPlatonicSolidSourceWrap();
 		~VtkPlatonicSolidSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

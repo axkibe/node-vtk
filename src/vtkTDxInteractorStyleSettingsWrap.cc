@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTDxInteractorStyleSettingsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTDxInteractorStyleSettingsWrap::ptpl;
 
 VtkTDxInteractorStyleSettingsWrap::VtkTDxInteractorStyleSettingsWrap()
@@ -83,7 +82,6 @@ void VtkTDxInteractorStyleSettingsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTranslationZSensitivity", SetTranslationZSensitivity);
 	Nan::SetPrototypeMethod(tpl, "setTranslationZSensitivity", SetTranslationZSensitivity);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -217,7 +215,7 @@ void VtkTDxInteractorStyleSettingsWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTDxInteractorStyleSettingsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleSettingsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTDxInteractorStyleSettingsWrap *w = new VtkTDxInteractorStyleSettingsWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkTDxInteractorStyleSettingsWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTDxInteractorStyleSettingsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleSettingsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTDxInteractorStyleSettingsWrap *w = new VtkTDxInteractorStyleSettingsWrap();
 		w->native.TakeReference(r);

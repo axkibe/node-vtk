@@ -24,7 +24,6 @@ class VtkUnsignedCharArrayWrap : public VtkDataArrayWrap
 		VtkUnsignedCharArrayWrap(vtkSmartPointer<vtkUnsignedCharArray>);
 		VtkUnsignedCharArrayWrap();
 		~VtkUnsignedCharArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkContinuousValueWidgetWrap : public VtkAbstractWidgetWrap
 		VtkContinuousValueWidgetWrap(vtkSmartPointer<vtkContinuousValueWidget>);
 		VtkContinuousValueWidgetWrap();
 		~VtkContinuousValueWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

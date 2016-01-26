@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkApplyColorsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkApplyColorsWrap::ptpl;
 
 VtkApplyColorsWrap::VtkApplyColorsWrap()
@@ -151,7 +150,6 @@ void VtkApplyColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsePointLookupTableOn", UsePointLookupTableOn);
 	Nan::SetPrototypeMethod(tpl, "usePointLookupTableOn", UsePointLookupTableOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -207,7 +205,7 @@ void VtkApplyColorsWrap::GetCellLookupTable(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -286,7 +284,7 @@ void VtkApplyColorsWrap::GetPointLookupTable(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -359,7 +357,7 @@ void VtkApplyColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkApplyColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkApplyColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkApplyColorsWrap *w = new VtkApplyColorsWrap();
 	w->native.TakeReference(r);
@@ -387,7 +385,7 @@ void VtkApplyColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkApplyColorsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkApplyColorsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkApplyColorsWrap *w = new VtkApplyColorsWrap();
 		w->native.TakeReference(r);

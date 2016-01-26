@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAppendPointsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAppendPointsWrap::ptpl;
 
 VtkAppendPointsWrap::VtkAppendPointsWrap()
@@ -72,7 +71,6 @@ void VtkAppendPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -178,7 +176,7 @@ void VtkAppendPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAppendPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAppendPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAppendPointsWrap *w = new VtkAppendPointsWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkAppendPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAppendPointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAppendPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAppendPointsWrap *w = new VtkAppendPointsWrap();
 		w->native.TakeReference(r);

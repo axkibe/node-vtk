@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParallelCoordinatesRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParallelCoordinatesRepresentationWrap::ptpl;
 
 VtkParallelCoordinatesRepresentationWrap::VtkParallelCoordinatesRepresentationWrap()
@@ -158,7 +157,6 @@ void VtkParallelCoordinatesRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseCurvesOn", UseCurvesOn);
 	Nan::SetPrototypeMethod(tpl, "useCurvesOn", UseCurvesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -482,7 +480,7 @@ void VtkParallelCoordinatesRepresentationWrap::NewInstance(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParallelCoordinatesRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParallelCoordinatesRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParallelCoordinatesRepresentationWrap *w = new VtkParallelCoordinatesRepresentationWrap();
 	w->native.TakeReference(r);
@@ -522,7 +520,7 @@ void VtkParallelCoordinatesRepresentationWrap::SafeDownCast(const Nan::FunctionC
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParallelCoordinatesRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParallelCoordinatesRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParallelCoordinatesRepresentationWrap *w = new VtkParallelCoordinatesRepresentationWrap();
 		w->native.TakeReference(r);

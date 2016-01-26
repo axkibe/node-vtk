@@ -24,7 +24,6 @@ class VtkExtractSelectedIdsWrap : public VtkExtractSelectionBaseWrap
 		VtkExtractSelectedIdsWrap(vtkSmartPointer<vtkExtractSelectedIds>);
 		VtkExtractSelectedIdsWrap();
 		~VtkExtractSelectedIdsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

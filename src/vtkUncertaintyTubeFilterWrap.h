@@ -24,7 +24,6 @@ class VtkUncertaintyTubeFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkUncertaintyTubeFilterWrap(vtkSmartPointer<vtkUncertaintyTubeFilter>);
 		VtkUncertaintyTubeFilterWrap();
 		~VtkUncertaintyTubeFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

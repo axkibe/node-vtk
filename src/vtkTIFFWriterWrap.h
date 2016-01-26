@@ -24,7 +24,6 @@ class VtkTIFFWriterWrap : public VtkImageWriterWrap
 		VtkTIFFWriterWrap(vtkSmartPointer<vtkTIFFWriter>);
 		VtkTIFFWriterWrap();
 		~VtkTIFFWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

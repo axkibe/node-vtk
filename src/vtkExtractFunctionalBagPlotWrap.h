@@ -24,7 +24,6 @@ class VtkExtractFunctionalBagPlotWrap : public VtkTableAlgorithmWrap
 		VtkExtractFunctionalBagPlotWrap(vtkSmartPointer<vtkExtractFunctionalBagPlot>);
 		VtkExtractFunctionalBagPlotWrap();
 		~VtkExtractFunctionalBagPlotWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

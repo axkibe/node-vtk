@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInformationVectorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInformationVectorWrap::ptpl;
 
 VtkInformationVectorWrap::VtkInformationVectorWrap()
@@ -81,7 +80,6 @@ void VtkInformationVectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfInformationObjects", SetNumberOfInformationObjects);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfInformationObjects", SetNumberOfInformationObjects);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -185,7 +183,7 @@ void VtkInformationVectorWrap::GetInformationObject(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationWrap *w = new VtkInformationWrap();
 		w->native.TakeReference(r);
@@ -247,7 +245,7 @@ void VtkInformationVectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationVectorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationVectorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationVectorWrap *w = new VtkInformationVectorWrap();
 	w->native.TakeReference(r);
@@ -307,7 +305,7 @@ void VtkInformationVectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationVectorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationVectorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationVectorWrap *w = new VtkInformationVectorWrap();
 		w->native.TakeReference(r);

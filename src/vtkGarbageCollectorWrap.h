@@ -24,7 +24,6 @@ class VtkGarbageCollectorWrap : public VtkObjectWrap
 		VtkGarbageCollectorWrap(vtkSmartPointer<vtkGarbageCollector>);
 		VtkGarbageCollectorWrap();
 		~VtkGarbageCollectorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkUTF8TextCodecWrap : public VtkTextCodecWrap
 		VtkUTF8TextCodecWrap(vtkSmartPointer<vtkUTF8TextCodec>);
 		VtkUTF8TextCodecWrap();
 		~VtkUTF8TextCodecWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

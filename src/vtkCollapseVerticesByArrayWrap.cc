@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCollapseVerticesByArrayWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCollapseVerticesByArrayWrap::ptpl;
 
 VtkCollapseVerticesByArrayWrap::VtkCollapseVerticesByArrayWrap()
@@ -102,7 +101,6 @@ void VtkCollapseVerticesByArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVerticesCollapsedArray", SetVerticesCollapsedArray);
 	Nan::SetPrototypeMethod(tpl, "setVerticesCollapsedArray", SetVerticesCollapsedArray);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -326,7 +324,7 @@ void VtkCollapseVerticesByArrayWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCollapseVerticesByArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCollapseVerticesByArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCollapseVerticesByArrayWrap *w = new VtkCollapseVerticesByArrayWrap();
 	w->native.TakeReference(r);
@@ -354,7 +352,7 @@ void VtkCollapseVerticesByArrayWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCollapseVerticesByArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCollapseVerticesByArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCollapseVerticesByArrayWrap *w = new VtkCollapseVerticesByArrayWrap();
 		w->native.TakeReference(r);

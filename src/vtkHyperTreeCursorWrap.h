@@ -24,7 +24,6 @@ class VtkHyperTreeCursorWrap : public VtkObjectWrap
 		VtkHyperTreeCursorWrap(vtkSmartPointer<vtkHyperTreeCursor>);
 		VtkHyperTreeCursorWrap();
 		~VtkHyperTreeCursorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

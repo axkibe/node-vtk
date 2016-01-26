@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGradientFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGradientFilterWrap::ptpl;
 
 VtkGradientFilterWrap::VtkGradientFilterWrap()
@@ -117,7 +116,6 @@ void VtkGradientFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVorticityArrayName", SetVorticityArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVorticityArrayName", SetVorticityArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -351,7 +349,7 @@ void VtkGradientFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGradientFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGradientFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGradientFilterWrap *w = new VtkGradientFilterWrap();
 	w->native.TakeReference(r);
@@ -379,7 +377,7 @@ void VtkGradientFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGradientFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGradientFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGradientFilterWrap *w = new VtkGradientFilterWrap();
 		w->native.TakeReference(r);

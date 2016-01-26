@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransformPolyDataFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransformPolyDataFilterWrap::ptpl;
 
 VtkTransformPolyDataFilterWrap::VtkTransformPolyDataFilterWrap()
@@ -73,7 +72,6 @@ void VtkTransformPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkTransformPolyDataFilterWrap::GetTransform(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkTransformPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransformPolyDataFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransformPolyDataFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransformPolyDataFilterWrap *w = new VtkTransformPolyDataFilterWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkTransformPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransformPolyDataFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransformPolyDataFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransformPolyDataFilterWrap *w = new VtkTransformPolyDataFilterWrap();
 		w->native.TakeReference(r);

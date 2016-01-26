@@ -24,7 +24,6 @@ class Vtk3DSImporterWrap : public VtkImporterWrap
 		Vtk3DSImporterWrap(vtkSmartPointer<vtk3DSImporter>);
 		Vtk3DSImporterWrap();
 		~Vtk3DSImporterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

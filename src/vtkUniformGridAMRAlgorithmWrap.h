@@ -24,7 +24,6 @@ class VtkUniformGridAMRAlgorithmWrap : public VtkAlgorithmWrap
 		VtkUniformGridAMRAlgorithmWrap(vtkSmartPointer<vtkUniformGridAMRAlgorithm>);
 		VtkUniformGridAMRAlgorithmWrap();
 		~VtkUniformGridAMRAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

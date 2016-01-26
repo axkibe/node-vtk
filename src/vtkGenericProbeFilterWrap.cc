@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericProbeFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericProbeFilterWrap::ptpl;
 
 VtkGenericProbeFilterWrap::VtkGenericProbeFilterWrap()
@@ -71,7 +70,6 @@ void VtkGenericProbeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -127,7 +125,7 @@ void VtkGenericProbeFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericDataSetWrap *w = new VtkGenericDataSetWrap();
 	w->native.TakeReference(r);
@@ -150,7 +148,7 @@ void VtkGenericProbeFilterWrap::GetValidPoints(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkGenericProbeFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericProbeFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericProbeFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericProbeFilterWrap *w = new VtkGenericProbeFilterWrap();
 	w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkGenericProbeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericProbeFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericProbeFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericProbeFilterWrap *w = new VtkGenericProbeFilterWrap();
 		w->native.TakeReference(r);

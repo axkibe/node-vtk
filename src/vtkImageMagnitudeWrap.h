@@ -24,7 +24,6 @@ class VtkImageMagnitudeWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageMagnitudeWrap(vtkSmartPointer<vtkImageMagnitude>);
 		VtkImageMagnitudeWrap();
 		~VtkImageMagnitudeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

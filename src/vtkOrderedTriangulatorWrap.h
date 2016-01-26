@@ -24,7 +24,6 @@ class VtkOrderedTriangulatorWrap : public VtkObjectWrap
 		VtkOrderedTriangulatorWrap(vtkSmartPointer<vtkOrderedTriangulator>);
 		VtkOrderedTriangulatorWrap();
 		~VtkOrderedTriangulatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

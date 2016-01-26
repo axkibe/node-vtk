@@ -24,7 +24,6 @@ class VtkTreeMapToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		VtkTreeMapToPolyDataWrap(vtkSmartPointer<vtkTreeMapToPolyData>);
 		VtkTreeMapToPolyDataWrap();
 		~VtkTreeMapToPolyDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

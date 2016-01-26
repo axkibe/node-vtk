@@ -24,7 +24,6 @@ class VtkLineWidgetWrap : public Vtk3DWidgetWrap
 		VtkLineWidgetWrap(vtkSmartPointer<vtkLineWidget>);
 		VtkLineWidgetWrap();
 		~VtkLineWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkGenericStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 		VtkGenericStreamTracerWrap(vtkSmartPointer<vtkGenericStreamTracer>);
 		VtkGenericStreamTracerWrap();
 		~VtkGenericStreamTracerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

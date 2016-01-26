@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkKCoreDecompositionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkKCoreDecompositionWrap::ptpl;
 
 VtkKCoreDecompositionWrap::VtkKCoreDecompositionWrap()
@@ -81,7 +80,6 @@ void VtkKCoreDecompositionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseOutDegreeNeighborsOn", UseOutDegreeNeighborsOn);
 	Nan::SetPrototypeMethod(tpl, "useOutDegreeNeighborsOn", UseOutDegreeNeighborsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -183,7 +181,7 @@ void VtkKCoreDecompositionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKCoreDecompositionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKCoreDecompositionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKCoreDecompositionWrap *w = new VtkKCoreDecompositionWrap();
 	w->native.TakeReference(r);
@@ -211,7 +209,7 @@ void VtkKCoreDecompositionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkKCoreDecompositionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkKCoreDecompositionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKCoreDecompositionWrap *w = new VtkKCoreDecompositionWrap();
 		w->native.TakeReference(r);

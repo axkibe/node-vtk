@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkConeLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkConeLayoutStrategyWrap::ptpl;
 
 VtkConeLayoutStrategyWrap::VtkConeLayoutStrategyWrap()
@@ -75,7 +74,6 @@ void VtkConeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompression", SetCompression);
 	Nan::SetPrototypeMethod(tpl, "setCompression", SetCompression);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -203,7 +201,7 @@ void VtkConeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkConeLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkConeLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkConeLayoutStrategyWrap *w = new VtkConeLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -231,7 +229,7 @@ void VtkConeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkConeLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkConeLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkConeLayoutStrategyWrap *w = new VtkConeLayoutStrategyWrap();
 		w->native.TakeReference(r);

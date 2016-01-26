@@ -24,7 +24,6 @@ class VtkBase64UtilitiesWrap : public VtkObjectWrap
 		VtkBase64UtilitiesWrap(vtkSmartPointer<vtkBase64Utilities>);
 		VtkBase64UtilitiesWrap();
 		~VtkBase64UtilitiesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

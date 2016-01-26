@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEncodedGradientShaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEncodedGradientShaderWrap::ptpl;
 
 VtkEncodedGradientShaderWrap::VtkEncodedGradientShaderWrap()
@@ -77,7 +76,6 @@ void VtkEncodedGradientShaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateShadingTable", UpdateShadingTable);
 	Nan::SetPrototypeMethod(tpl, "updateShadingTable", UpdateShadingTable);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -197,7 +195,7 @@ void VtkEncodedGradientShaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEncodedGradientShaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEncodedGradientShaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEncodedGradientShaderWrap *w = new VtkEncodedGradientShaderWrap();
 	w->native.TakeReference(r);
@@ -225,7 +223,7 @@ void VtkEncodedGradientShaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEncodedGradientShaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEncodedGradientShaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEncodedGradientShaderWrap *w = new VtkEncodedGradientShaderWrap();
 		w->native.TakeReference(r);

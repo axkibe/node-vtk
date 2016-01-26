@@ -24,7 +24,6 @@ class VtkParametricRandomHillsWrap : public VtkParametricFunctionWrap
 		VtkParametricRandomHillsWrap(vtkSmartPointer<vtkParametricRandomHills>);
 		VtkParametricRandomHillsWrap();
 		~VtkParametricRandomHillsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkViewportWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkViewportWrap::ptpl;
 
 VtkViewportWrap::VtkViewportWrap()
@@ -184,7 +183,6 @@ void VtkViewportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
 	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -302,7 +300,7 @@ void VtkViewportWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActor2DCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActor2DCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActor2DCollectionWrap *w = new VtkActor2DCollectionWrap();
 	w->native.TakeReference(r);
@@ -367,7 +365,7 @@ void VtkViewportWrap::GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
 	w->native.TakeReference(r);
@@ -502,7 +500,7 @@ void VtkViewportWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowWrap *w = new VtkWindowWrap();
 	w->native.TakeReference(r);
@@ -525,7 +523,7 @@ void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
 	w->native.TakeReference(r);
@@ -641,7 +639,7 @@ void VtkViewportWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkViewportWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkViewportWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewportWrap *w = new VtkViewportWrap();
 	w->native.TakeReference(r);
@@ -671,7 +669,7 @@ void VtkViewportWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
 			w->native.TakeReference(r);
@@ -709,7 +707,7 @@ void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& i
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
-					Nan::New<v8::Function>(VtkAssemblyPathWrap::constructor);
+					Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
 				w->native.TakeReference(r);
@@ -794,7 +792,7 @@ void VtkViewportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkViewportWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkViewportWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkViewportWrap *w = new VtkViewportWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHAVSVolumeMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHAVSVolumeMapperWrap::ptpl;
 
 VtkHAVSVolumeMapperWrap::VtkHAVSVolumeMapperWrap()
@@ -84,7 +83,6 @@ void VtkHAVSVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLevelOfDetailMethodField", SetLevelOfDetailMethodField);
 	Nan::SetPrototypeMethod(tpl, "setLevelOfDetailMethodField", SetLevelOfDetailMethodField);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -190,7 +188,7 @@ void VtkHAVSVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHAVSVolumeMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHAVSVolumeMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHAVSVolumeMapperWrap *w = new VtkHAVSVolumeMapperWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHAVSVolumeMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHAVSVolumeMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHAVSVolumeMapperWrap *w = new VtkHAVSVolumeMapperWrap();
 		w->native.TakeReference(r);

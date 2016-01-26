@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkReebGraphSimplificationMetricWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkReebGraphSimplificationMetricWrap::ptpl;
 
 VtkReebGraphSimplificationMetricWrap::VtkReebGraphSimplificationMetricWrap()
@@ -71,7 +70,6 @@ void VtkReebGraphSimplificationMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUpperBound", SetUpperBound);
 	Nan::SetPrototypeMethod(tpl, "setUpperBound", SetUpperBound);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkReebGraphSimplificationMetricWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkReebGraphSimplificationMetricWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkReebGraphSimplificationMetricWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkReebGraphSimplificationMetricWrap *w = new VtkReebGraphSimplificationMetricWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkReebGraphSimplificationMetricWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkReebGraphSimplificationMetricWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkReebGraphSimplificationMetricWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkReebGraphSimplificationMetricWrap *w = new VtkReebGraphSimplificationMetricWrap();
 		w->native.TakeReference(r);

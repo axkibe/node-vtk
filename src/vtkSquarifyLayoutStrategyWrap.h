@@ -24,7 +24,6 @@ class VtkSquarifyLayoutStrategyWrap : public VtkTreeMapLayoutStrategyWrap
 		VtkSquarifyLayoutStrategyWrap(vtkSmartPointer<vtkSquarifyLayoutStrategy>);
 		VtkSquarifyLayoutStrategyWrap();
 		~VtkSquarifyLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkMultiProcessControllerWrap : public VtkObjectWrap
 		VtkMultiProcessControllerWrap(vtkSmartPointer<vtkMultiProcessController>);
 		VtkMultiProcessControllerWrap();
 		~VtkMultiProcessControllerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDummyControllerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDummyControllerWrap::ptpl;
 
 VtkDummyControllerWrap::VtkDummyControllerWrap()
@@ -88,7 +87,6 @@ void VtkDummyControllerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SingleMethodExecute", SingleMethodExecute);
 	Nan::SetPrototypeMethod(tpl, "singleMethodExecute", SingleMethodExecute);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -180,7 +178,7 @@ void VtkDummyControllerWrap::GetCommunicator(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCommunicatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCommunicatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCommunicatorWrap *w = new VtkCommunicatorWrap();
 	w->native.TakeReference(r);
@@ -217,7 +215,7 @@ void VtkDummyControllerWrap::GetRMICommunicator(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCommunicatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCommunicatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCommunicatorWrap *w = new VtkCommunicatorWrap();
 	w->native.TakeReference(r);
@@ -274,7 +272,7 @@ void VtkDummyControllerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDummyControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDummyControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDummyControllerWrap *w = new VtkDummyControllerWrap();
 	w->native.TakeReference(r);
@@ -302,7 +300,7 @@ void VtkDummyControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDummyControllerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDummyControllerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDummyControllerWrap *w = new VtkDummyControllerWrap();
 		w->native.TakeReference(r);

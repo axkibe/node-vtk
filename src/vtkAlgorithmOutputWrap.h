@@ -24,7 +24,6 @@ class VtkAlgorithmOutputWrap : public VtkObjectWrap
 		VtkAlgorithmOutputWrap(vtkSmartPointer<vtkAlgorithmOutput>);
 		VtkAlgorithmOutputWrap();
 		~VtkAlgorithmOutputWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

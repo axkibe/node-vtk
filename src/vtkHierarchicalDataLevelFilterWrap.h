@@ -24,7 +24,6 @@ class VtkHierarchicalDataLevelFilterWrap : public VtkLevelIdScalarsWrap
 		VtkHierarchicalDataLevelFilterWrap(vtkSmartPointer<vtkHierarchicalDataLevelFilter>);
 		VtkHierarchicalDataLevelFilterWrap();
 		~VtkHierarchicalDataLevelFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

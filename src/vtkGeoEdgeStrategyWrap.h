@@ -24,7 +24,6 @@ class VtkGeoEdgeStrategyWrap : public VtkEdgeLayoutStrategyWrap
 		VtkGeoEdgeStrategyWrap(vtkSmartPointer<vtkGeoEdgeStrategy>);
 		VtkGeoEdgeStrategyWrap();
 		~VtkGeoEdgeStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

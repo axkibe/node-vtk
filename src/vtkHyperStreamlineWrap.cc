@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperStreamlineWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperStreamlineWrap::ptpl;
 
 VtkHyperStreamlineWrap::VtkHyperStreamlineWrap()
@@ -198,7 +197,6 @@ void VtkHyperStreamlineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerminalEigenvalue", SetTerminalEigenvalue);
 	Nan::SetPrototypeMethod(tpl, "setTerminalEigenvalue", SetTerminalEigenvalue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -686,7 +684,7 @@ void VtkHyperStreamlineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperStreamlineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperStreamlineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperStreamlineWrap *w = new VtkHyperStreamlineWrap();
 	w->native.TakeReference(r);
@@ -714,7 +712,7 @@ void VtkHyperStreamlineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperStreamlineWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperStreamlineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperStreamlineWrap *w = new VtkHyperStreamlineWrap();
 		w->native.TakeReference(r);

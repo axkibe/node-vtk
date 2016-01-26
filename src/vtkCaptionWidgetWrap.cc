@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCaptionWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCaptionWidgetWrap::ptpl;
 
 VtkCaptionWidgetWrap::VtkCaptionWidgetWrap()
@@ -77,7 +76,6 @@ void VtkCaptionWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -131,7 +129,7 @@ void VtkCaptionWidgetWrap::GetCaptionActor2D(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCaptionActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCaptionActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCaptionActor2DWrap *w = new VtkCaptionActor2DWrap();
 	w->native.TakeReference(r);
@@ -190,7 +188,7 @@ void VtkCaptionWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCaptionWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCaptionWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCaptionWidgetWrap *w = new VtkCaptionWidgetWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkCaptionWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCaptionWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCaptionWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCaptionWidgetWrap *w = new VtkCaptionWidgetWrap();
 		w->native.TakeReference(r);

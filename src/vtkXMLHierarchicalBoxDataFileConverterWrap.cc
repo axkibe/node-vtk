@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLHierarchicalBoxDataFileConverterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLHierarchicalBoxDataFileConverterWrap::ptpl;
 
 VtkXMLHierarchicalBoxDataFileConverterWrap::VtkXMLHierarchicalBoxDataFileConverterWrap()
@@ -71,7 +70,6 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputFileName", SetOutputFileName);
 	Nan::SetPrototypeMethod(tpl, "setOutputFileName", SetOutputFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::NewInstance(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLHierarchicalBoxDataFileConverterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLHierarchicalBoxDataFileConverterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLHierarchicalBoxDataFileConverterWrap *w = new VtkXMLHierarchicalBoxDataFileConverterWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::SafeDownCast(const Nan::Functio
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLHierarchicalBoxDataFileConverterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLHierarchicalBoxDataFileConverterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLHierarchicalBoxDataFileConverterWrap *w = new VtkXMLHierarchicalBoxDataFileConverterWrap();
 		w->native.TakeReference(r);

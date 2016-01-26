@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTextCodecFactoryWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTextCodecFactoryWrap::ptpl;
 
 VtkTextCodecFactoryWrap::VtkTextCodecFactoryWrap()
@@ -69,7 +68,6 @@ void VtkTextCodecFactoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnRegisterAllCreateCallbacks", UnRegisterAllCreateCallbacks);
 	Nan::SetPrototypeMethod(tpl, "unRegisterAllCreateCallbacks", UnRegisterAllCreateCallbacks);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -116,7 +114,7 @@ void VtkTextCodecFactoryWrap::CodecForName(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTextCodecWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTextCodecWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextCodecWrap *w = new VtkTextCodecWrap();
 		w->native.TakeReference(r);
@@ -190,7 +188,7 @@ void VtkTextCodecFactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextCodecFactoryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextCodecFactoryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextCodecFactoryWrap *w = new VtkTextCodecFactoryWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkTextCodecFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTextCodecFactoryWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTextCodecFactoryWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextCodecFactoryWrap *w = new VtkTextCodecFactoryWrap();
 		w->native.TakeReference(r);

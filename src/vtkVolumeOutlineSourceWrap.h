@@ -24,7 +24,6 @@ class VtkVolumeOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkVolumeOutlineSourceWrap(vtkSmartPointer<vtkVolumeOutlineSource>);
 		VtkVolumeOutlineSourceWrap();
 		~VtkVolumeOutlineSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

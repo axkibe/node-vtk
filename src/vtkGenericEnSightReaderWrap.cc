@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericEnSightReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericEnSightReaderWrap::ptpl;
 
 VtkGenericEnSightReaderWrap::VtkGenericEnSightReaderWrap()
@@ -215,7 +214,6 @@ void VtkGenericEnSightReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReadAllVariables", SetReadAllVariables);
 	Nan::SetPrototypeMethod(tpl, "setReadAllVariables", SetReadAllVariables);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -385,7 +383,7 @@ void VtkGenericEnSightReaderWrap::GetCellDataArraySelection(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArraySelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArraySelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArraySelectionWrap *w = new VtkDataArraySelectionWrap();
 	w->native.TakeReference(r);
@@ -837,7 +835,7 @@ void VtkGenericEnSightReaderWrap::GetPointDataArraySelection(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArraySelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArraySelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArraySelectionWrap *w = new VtkDataArraySelectionWrap();
 	w->native.TakeReference(r);
@@ -874,7 +872,7 @@ void VtkGenericEnSightReaderWrap::GetReader(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericEnSightReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericEnSightReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericEnSightReaderWrap *w = new VtkGenericEnSightReaderWrap();
 	w->native.TakeReference(r);
@@ -897,7 +895,7 @@ void VtkGenericEnSightReaderWrap::GetTimeSets(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArrayCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArrayCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArrayCollectionWrap *w = new VtkDataArrayCollectionWrap();
 	w->native.TakeReference(r);
@@ -963,7 +961,7 @@ void VtkGenericEnSightReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericEnSightReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericEnSightReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericEnSightReaderWrap *w = new VtkGenericEnSightReaderWrap();
 	w->native.TakeReference(r);
@@ -1039,7 +1037,7 @@ void VtkGenericEnSightReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericEnSightReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericEnSightReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericEnSightReaderWrap *w = new VtkGenericEnSightReaderWrap();
 		w->native.TakeReference(r);

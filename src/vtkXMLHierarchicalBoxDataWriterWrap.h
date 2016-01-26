@@ -24,7 +24,6 @@ class VtkXMLHierarchicalBoxDataWriterWrap : public VtkXMLUniformGridAMRWriterWra
 		VtkXMLHierarchicalBoxDataWriterWrap(vtkSmartPointer<vtkXMLHierarchicalBoxDataWriter>);
 		VtkXMLHierarchicalBoxDataWriterWrap();
 		~VtkXMLHierarchicalBoxDataWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

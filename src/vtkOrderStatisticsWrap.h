@@ -24,7 +24,6 @@ class VtkOrderStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		VtkOrderStatisticsWrap(vtkSmartPointer<vtkOrderStatistics>);
 		VtkOrderStatisticsWrap();
 		~VtkOrderStatisticsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

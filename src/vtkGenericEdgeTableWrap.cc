@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericEdgeTableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericEdgeTableWrap::ptpl;
 
 VtkGenericEdgeTableWrap::VtkGenericEdgeTableWrap()
@@ -71,7 +70,6 @@ void VtkGenericEdgeTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfComponents", SetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfComponents", SetNumberOfComponents);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -187,7 +185,7 @@ void VtkGenericEdgeTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericEdgeTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericEdgeTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericEdgeTableWrap *w = new VtkGenericEdgeTableWrap();
 	w->native.TakeReference(r);
@@ -215,7 +213,7 @@ void VtkGenericEdgeTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericEdgeTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericEdgeTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericEdgeTableWrap *w = new VtkGenericEdgeTableWrap();
 		w->native.TakeReference(r);

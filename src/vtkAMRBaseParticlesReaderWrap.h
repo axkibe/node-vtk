@@ -24,7 +24,6 @@ class VtkAMRBaseParticlesReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkAMRBaseParticlesReaderWrap(vtkSmartPointer<vtkAMRBaseParticlesReader>);
 		VtkAMRBaseParticlesReaderWrap();
 		~VtkAMRBaseParticlesReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkArrayNormWrap : public VtkArrayDataAlgorithmWrap
 		VtkArrayNormWrap(vtkSmartPointer<vtkArrayNorm>);
 		VtkArrayNormWrap();
 		~VtkArrayNormWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

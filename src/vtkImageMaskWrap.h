@@ -24,7 +24,6 @@ class VtkImageMaskWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageMaskWrap(vtkSmartPointer<vtkImageMask>);
 		VtkImageMaskWrap();
 		~VtkImageMaskWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVolumeRayCastCompositeFunctionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVolumeRayCastCompositeFunctionWrap::ptpl;
 
 VtkVolumeRayCastCompositeFunctionWrap::VtkVolumeRayCastCompositeFunctionWrap()
@@ -81,7 +80,6 @@ void VtkVolumeRayCastCompositeFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompositeMethodToInterpolateFirst", SetCompositeMethodToInterpolateFirst);
 	Nan::SetPrototypeMethod(tpl, "setCompositeMethodToInterpolateFirst", SetCompositeMethodToInterpolateFirst);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -215,7 +213,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVolumeRayCastCompositeFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastCompositeFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeRayCastCompositeFunctionWrap *w = new VtkVolumeRayCastCompositeFunctionWrap();
 	w->native.TakeReference(r);
@@ -243,7 +241,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVolumeRayCastCompositeFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastCompositeFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeRayCastCompositeFunctionWrap *w = new VtkVolumeRayCastCompositeFunctionWrap();
 		w->native.TakeReference(r);

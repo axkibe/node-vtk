@@ -24,7 +24,6 @@ class VtkTransposeTableWrap : public VtkTableAlgorithmWrap
 		VtkTransposeTableWrap(vtkSmartPointer<vtkTransposeTable>);
 		VtkTransposeTableWrap();
 		~VtkTransposeTableWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

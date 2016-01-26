@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUTF16TextCodecWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUTF16TextCodecWrap::ptpl;
 
 VtkUTF16TextCodecWrap::VtkUTF16TextCodecWrap()
@@ -63,7 +62,6 @@ void VtkUTF16TextCodecWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkUTF16TextCodecWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUTF16TextCodecWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUTF16TextCodecWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUTF16TextCodecWrap *w = new VtkUTF16TextCodecWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkUTF16TextCodecWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUTF16TextCodecWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUTF16TextCodecWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUTF16TextCodecWrap *w = new VtkUTF16TextCodecWrap();
 		w->native.TakeReference(r);

@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTemporalPathLineFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTemporalPathLineFilterWrap::ptpl;
 
 VtkTemporalPathLineFilterWrap::VtkTemporalPathLineFilterWrap()
@@ -92,7 +91,6 @@ void VtkTemporalPathLineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionData", SetSelectionData);
 	Nan::SetPrototypeMethod(tpl, "setSelectionData", SetSelectionData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -224,7 +222,7 @@ void VtkTemporalPathLineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTemporalPathLineFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTemporalPathLineFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTemporalPathLineFilterWrap *w = new VtkTemporalPathLineFilterWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkTemporalPathLineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTemporalPathLineFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTemporalPathLineFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTemporalPathLineFilterWrap *w = new VtkTemporalPathLineFilterWrap();
 		w->native.TakeReference(r);

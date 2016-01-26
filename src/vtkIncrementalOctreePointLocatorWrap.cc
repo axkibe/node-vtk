@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkIncrementalOctreePointLocatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkIncrementalOctreePointLocatorWrap::ptpl;
 
 VtkIncrementalOctreePointLocatorWrap::VtkIncrementalOctreePointLocatorWrap()
@@ -104,7 +103,6 @@ void VtkIncrementalOctreePointLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaxPointsPerLeaf", SetMaxPointsPerLeaf);
 	Nan::SetPrototypeMethod(tpl, "setMaxPointsPerLeaf", SetMaxPointsPerLeaf);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -246,7 +244,7 @@ void VtkIncrementalOctreePointLocatorWrap::GetLocatorPoints(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -359,7 +357,7 @@ void VtkIncrementalOctreePointLocatorWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalOctreePointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalOctreePointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalOctreePointLocatorWrap *w = new VtkIncrementalOctreePointLocatorWrap();
 	w->native.TakeReference(r);
@@ -387,7 +385,7 @@ void VtkIncrementalOctreePointLocatorWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIncrementalOctreePointLocatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIncrementalOctreePointLocatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIncrementalOctreePointLocatorWrap *w = new VtkIncrementalOctreePointLocatorWrap();
 		w->native.TakeReference(r);

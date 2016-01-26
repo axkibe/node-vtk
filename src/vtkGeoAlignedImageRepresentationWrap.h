@@ -24,7 +24,6 @@ class VtkGeoAlignedImageRepresentationWrap : public VtkDataRepresentationWrap
 		VtkGeoAlignedImageRepresentationWrap(vtkSmartPointer<vtkGeoAlignedImageRepresentation>);
 		VtkGeoAlignedImageRepresentationWrap();
 		~VtkGeoAlignedImageRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

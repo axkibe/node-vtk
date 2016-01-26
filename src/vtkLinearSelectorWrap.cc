@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLinearSelectorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLinearSelectorWrap::ptpl;
 
 VtkLinearSelectorWrap::VtkLinearSelectorWrap()
@@ -97,7 +96,6 @@ void VtkLinearSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexEliminationTolerance", SetVertexEliminationTolerance);
 	Nan::SetPrototypeMethod(tpl, "setVertexEliminationTolerance", SetVertexEliminationTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -153,7 +151,7 @@ void VtkLinearSelectorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -278,7 +276,7 @@ void VtkLinearSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLinearSelectorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLinearSelectorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLinearSelectorWrap *w = new VtkLinearSelectorWrap();
 	w->native.TakeReference(r);
@@ -306,7 +304,7 @@ void VtkLinearSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLinearSelectorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLinearSelectorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLinearSelectorWrap *w = new VtkLinearSelectorWrap();
 		w->native.TakeReference(r);

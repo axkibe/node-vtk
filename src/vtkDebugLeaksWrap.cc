@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDebugLeaksWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDebugLeaksWrap::ptpl;
 
 VtkDebugLeaksWrap::VtkDebugLeaksWrap()
@@ -74,7 +73,6 @@ void VtkDebugLeaksWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetExitError", SetExitError);
 	Nan::SetPrototypeMethod(tpl, "setExitError", SetExitError);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -206,7 +204,7 @@ void VtkDebugLeaksWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDebugLeaksWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDebugLeaksWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDebugLeaksWrap *w = new VtkDebugLeaksWrap();
 	w->native.TakeReference(r);
@@ -248,7 +246,7 @@ void VtkDebugLeaksWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDebugLeaksWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDebugLeaksWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDebugLeaksWrap *w = new VtkDebugLeaksWrap();
 		w->native.TakeReference(r);

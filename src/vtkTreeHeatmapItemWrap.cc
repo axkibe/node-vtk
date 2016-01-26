@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeHeatmapItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeHeatmapItemWrap::ptpl;
 
 VtkTreeHeatmapItemWrap::VtkTreeHeatmapItemWrap()
@@ -101,7 +100,6 @@ void VtkTreeHeatmapItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTreeColorArray", SetTreeColorArray);
 	Nan::SetPrototypeMethod(tpl, "setTreeColorArray", SetTreeColorArray);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -157,7 +155,7 @@ void VtkTreeHeatmapItemWrap::GetColumnTree(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeWrap *w = new VtkTreeWrap();
 	w->native.TakeReference(r);
@@ -194,7 +192,7 @@ void VtkTreeHeatmapItemWrap::GetPrunedTree(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeWrap *w = new VtkTreeWrap();
 	w->native.TakeReference(r);
@@ -217,7 +215,7 @@ void VtkTreeHeatmapItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
 	w->native.TakeReference(r);
@@ -240,7 +238,7 @@ void VtkTreeHeatmapItemWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeWrap *w = new VtkTreeWrap();
 	w->native.TakeReference(r);
@@ -285,7 +283,7 @@ void VtkTreeHeatmapItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeHeatmapItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeHeatmapItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeHeatmapItemWrap *w = new VtkTreeHeatmapItemWrap();
 	w->native.TakeReference(r);
@@ -349,7 +347,7 @@ void VtkTreeHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeHeatmapItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeHeatmapItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeHeatmapItemWrap *w = new VtkTreeHeatmapItemWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkMINCImageReaderWrap : public VtkImageReader2Wrap
 		VtkMINCImageReaderWrap(vtkSmartPointer<vtkMINCImageReader>);
 		VtkMINCImageReaderWrap();
 		~VtkMINCImageReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

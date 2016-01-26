@@ -24,7 +24,6 @@ class VtkImageIterateFilterWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageIterateFilterWrap(vtkSmartPointer<vtkImageIterateFilter>);
 		VtkImageIterateFilterWrap();
 		~VtkImageIterateFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

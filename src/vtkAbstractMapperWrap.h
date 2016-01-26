@@ -24,7 +24,6 @@ class VtkAbstractMapperWrap : public VtkAlgorithmWrap
 		VtkAbstractMapperWrap(vtkSmartPointer<vtkAbstractMapper>);
 		VtkAbstractMapperWrap();
 		~VtkAbstractMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

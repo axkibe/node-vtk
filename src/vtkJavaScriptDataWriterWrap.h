@@ -24,7 +24,6 @@ class VtkJavaScriptDataWriterWrap : public VtkWriterWrap
 		VtkJavaScriptDataWriterWrap(vtkSmartPointer<vtkJavaScriptDataWriter>);
 		VtkJavaScriptDataWriterWrap();
 		~VtkJavaScriptDataWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPiecewiseFunctionItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPiecewiseFunctionItemWrap::ptpl;
 
 VtkPiecewiseFunctionItemWrap::VtkPiecewiseFunctionItemWrap()
@@ -67,7 +66,6 @@ void VtkPiecewiseFunctionItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPiecewiseFunction", SetPiecewiseFunction);
 	Nan::SetPrototypeMethod(tpl, "setPiecewiseFunction", SetPiecewiseFunction);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkPiecewiseFunctionItemWrap::GetPiecewiseFunction(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkPiecewiseFunctionItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionItemWrap *w = new VtkPiecewiseFunctionItemWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkPiecewiseFunctionItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPiecewiseFunctionItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionItemWrap *w = new VtkPiecewiseFunctionItemWrap();
 		w->native.TakeReference(r);

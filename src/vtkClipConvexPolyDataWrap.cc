@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkClipConvexPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkClipConvexPolyDataWrap::ptpl;
 
 VtkClipConvexPolyDataWrap::VtkClipConvexPolyDataWrap()
@@ -67,7 +66,6 @@ void VtkClipConvexPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPlanes", SetPlanes);
 	Nan::SetPrototypeMethod(tpl, "setPlanes", SetPlanes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkClipConvexPolyDataWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlaneCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkClipConvexPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkClipConvexPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkClipConvexPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClipConvexPolyDataWrap *w = new VtkClipConvexPolyDataWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkClipConvexPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkClipConvexPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkClipConvexPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkClipConvexPolyDataWrap *w = new VtkClipConvexPolyDataWrap();
 		w->native.TakeReference(r);

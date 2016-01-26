@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImplicitPlaneWidget2Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImplicitPlaneWidget2Wrap::ptpl;
 
 VtkImplicitPlaneWidget2Wrap::VtkImplicitPlaneWidget2Wrap()
@@ -76,7 +75,6 @@ void VtkImplicitPlaneWidget2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -144,7 +142,7 @@ void VtkImplicitPlaneWidget2Wrap::GetImplicitPlaneRepresentation(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitPlaneRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitPlaneRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitPlaneRepresentationWrap *w = new VtkImplicitPlaneRepresentationWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkImplicitPlaneWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitPlaneWidget2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitPlaneWidget2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitPlaneWidget2Wrap *w = new VtkImplicitPlaneWidget2Wrap();
 	w->native.TakeReference(r);
@@ -217,7 +215,7 @@ void VtkImplicitPlaneWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImplicitPlaneWidget2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImplicitPlaneWidget2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitPlaneWidget2Wrap *w = new VtkImplicitPlaneWidget2Wrap();
 		w->native.TakeReference(r);

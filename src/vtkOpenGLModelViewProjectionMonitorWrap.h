@@ -24,7 +24,6 @@ class VtkOpenGLModelViewProjectionMonitorWrap : public VtkObjectWrap
 		VtkOpenGLModelViewProjectionMonitorWrap(vtkSmartPointer<vtkOpenGLModelViewProjectionMonitor>);
 		VtkOpenGLModelViewProjectionMonitorWrap();
 		~VtkOpenGLModelViewProjectionMonitorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

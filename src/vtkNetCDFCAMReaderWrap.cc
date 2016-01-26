@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkNetCDFCAMReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkNetCDFCAMReaderWrap::ptpl;
 
 VtkNetCDFCAMReaderWrap::VtkNetCDFCAMReaderWrap()
@@ -99,7 +98,6 @@ void VtkNetCDFCAMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SingleLevelOn", SingleLevelOn);
 	Nan::SetPrototypeMethod(tpl, "singleLevelOn", SingleLevelOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -283,7 +281,7 @@ void VtkNetCDFCAMReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkNetCDFCAMReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkNetCDFCAMReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkNetCDFCAMReaderWrap *w = new VtkNetCDFCAMReaderWrap();
 	w->native.TakeReference(r);
@@ -311,7 +309,7 @@ void VtkNetCDFCAMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkNetCDFCAMReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkNetCDFCAMReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkNetCDFCAMReaderWrap *w = new VtkNetCDFCAMReaderWrap();
 		w->native.TakeReference(r);

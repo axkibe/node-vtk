@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorEventRecorderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorEventRecorderWrap::ptpl;
 
 VtkInteractorEventRecorderWrap::VtkInteractorEventRecorderWrap()
@@ -103,7 +102,6 @@ void VtkInteractorEventRecorderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -223,7 +221,7 @@ void VtkInteractorEventRecorderWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorEventRecorderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorEventRecorderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorEventRecorderWrap *w = new VtkInteractorEventRecorderWrap();
 	w->native.TakeReference(r);
@@ -311,7 +309,7 @@ void VtkInteractorEventRecorderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorEventRecorderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorEventRecorderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorEventRecorderWrap *w = new VtkInteractorEventRecorderWrap();
 		w->native.TakeReference(r);

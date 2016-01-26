@@ -24,7 +24,6 @@ class VtkLineRepresentationWrap : public VtkWidgetRepresentationWrap
 		VtkLineRepresentationWrap(vtkSmartPointer<vtkLineRepresentation>);
 		VtkLineRepresentationWrap();
 		~VtkLineRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

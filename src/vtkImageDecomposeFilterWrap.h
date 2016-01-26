@@ -24,7 +24,6 @@ class VtkImageDecomposeFilterWrap : public VtkImageIterateFilterWrap
 		VtkImageDecomposeFilterWrap(vtkSmartPointer<vtkImageDecomposeFilter>);
 		VtkImageDecomposeFilterWrap();
 		~VtkImageDecomposeFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

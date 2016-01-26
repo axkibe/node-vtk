@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkComputeHistogram2DOutliersWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkComputeHistogram2DOutliersWrap::ptpl;
 
 VtkComputeHistogram2DOutliersWrap::VtkComputeHistogram2DOutliersWrap()
@@ -80,7 +79,6 @@ void VtkComputeHistogram2DOutliersWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreferredNumberOfOutliers", SetPreferredNumberOfOutliers);
 	Nan::SetPrototypeMethod(tpl, "setPreferredNumberOfOutliers", SetPreferredNumberOfOutliers);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -136,7 +134,7 @@ void VtkComputeHistogram2DOutliersWrap::GetOutputTable(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkComputeHistogram2DOutliersWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkComputeHistogram2DOutliersWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkComputeHistogram2DOutliersWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkComputeHistogram2DOutliersWrap *w = new VtkComputeHistogram2DOutliersWrap();
 	w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkComputeHistogram2DOutliersWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkComputeHistogram2DOutliersWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkComputeHistogram2DOutliersWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkComputeHistogram2DOutliersWrap *w = new VtkComputeHistogram2DOutliersWrap();
 		w->native.TakeReference(r);

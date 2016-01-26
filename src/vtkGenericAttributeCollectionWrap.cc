@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericAttributeCollectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericAttributeCollectionWrap::ptpl;
 
 VtkGenericAttributeCollectionWrap::VtkGenericAttributeCollectionWrap()
@@ -117,7 +116,6 @@ void VtkGenericAttributeCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -233,7 +231,7 @@ void VtkGenericAttributeCollectionWrap::GetAttribute(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericAttributeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericAttributeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericAttributeWrap *w = new VtkGenericAttributeWrap();
 		w->native.TakeReference(r);
@@ -444,7 +442,7 @@ void VtkGenericAttributeCollectionWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericAttributeCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericAttributeCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericAttributeCollectionWrap *w = new VtkGenericAttributeCollectionWrap();
 	w->native.TakeReference(r);
@@ -503,7 +501,7 @@ void VtkGenericAttributeCollectionWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericAttributeCollectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericAttributeCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericAttributeCollectionWrap *w = new VtkGenericAttributeCollectionWrap();
 		w->native.TakeReference(r);

@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkIdentityTransformWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkIdentityTransformWrap::ptpl;
 
 VtkIdentityTransformWrap::VtkIdentityTransformWrap()
@@ -81,7 +80,6 @@ void VtkIdentityTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TransformVectors", TransformVectors);
 	Nan::SetPrototypeMethod(tpl, "transformVectors", TransformVectors);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -171,7 +169,7 @@ void VtkIdentityTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -194,7 +192,7 @@ void VtkIdentityTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdentityTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdentityTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdentityTransformWrap *w = new VtkIdentityTransformWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkIdentityTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdentityTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdentityTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdentityTransformWrap *w = new VtkIdentityTransformWrap();
 		w->native.TakeReference(r);

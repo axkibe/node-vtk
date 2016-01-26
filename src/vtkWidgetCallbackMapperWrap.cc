@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWidgetCallbackMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWidgetCallbackMapperWrap::ptpl;
 
 VtkWidgetCallbackMapperWrap::VtkWidgetCallbackMapperWrap()
@@ -66,7 +65,6 @@ void VtkWidgetCallbackMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEventTranslator", SetEventTranslator);
 	Nan::SetPrototypeMethod(tpl, "setEventTranslator", SetEventTranslator);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -122,7 +120,7 @@ void VtkWidgetCallbackMapperWrap::GetEventTranslator(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWidgetEventTranslatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWidgetEventTranslatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWidgetEventTranslatorWrap *w = new VtkWidgetEventTranslatorWrap();
 	w->native.TakeReference(r);
@@ -167,7 +165,7 @@ void VtkWidgetCallbackMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWidgetCallbackMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWidgetCallbackMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWidgetCallbackMapperWrap *w = new VtkWidgetCallbackMapperWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkWidgetCallbackMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWidgetCallbackMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWidgetCallbackMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWidgetCallbackMapperWrap *w = new VtkWidgetCallbackMapperWrap();
 		w->native.TakeReference(r);

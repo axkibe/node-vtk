@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCoincidentPointsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCoincidentPointsWrap::ptpl;
 
 VtkCoincidentPointsWrap::VtkCoincidentPointsWrap()
@@ -72,7 +71,6 @@ void VtkCoincidentPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -140,7 +138,7 @@ void VtkCoincidentPointsWrap::GetNextCoincidentPointIds(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdListWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdListWrap *w = new VtkIdListWrap();
 	w->native.TakeReference(r);
@@ -197,7 +195,7 @@ void VtkCoincidentPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoincidentPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoincidentPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoincidentPointsWrap *w = new VtkCoincidentPointsWrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkCoincidentPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCoincidentPointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCoincidentPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCoincidentPointsWrap *w = new VtkCoincidentPointsWrap();
 		w->native.TakeReference(r);

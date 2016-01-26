@@ -24,7 +24,6 @@ class VtkWindowToImageFilterWrap : public VtkAlgorithmWrap
 		VtkWindowToImageFilterWrap(vtkSmartPointer<vtkWindowToImageFilter>);
 		VtkWindowToImageFilterWrap();
 		~VtkWindowToImageFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

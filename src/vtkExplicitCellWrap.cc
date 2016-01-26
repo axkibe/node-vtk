@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExplicitCellWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExplicitCellWrap::ptpl;
 
 VtkExplicitCellWrap::VtkExplicitCellWrap()
@@ -70,7 +69,6 @@ void VtkExplicitCellWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDataSet", SetDataSet);
 	Nan::SetPrototypeMethod(tpl, "setDataSet", SetDataSet);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkExplicitCellWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -185,7 +183,7 @@ void VtkExplicitCellWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExplicitCellWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExplicitCellWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExplicitCellWrap *w = new VtkExplicitCellWrap();
 	w->native.TakeReference(r);
@@ -213,7 +211,7 @@ void VtkExplicitCellWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExplicitCellWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExplicitCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExplicitCellWrap *w = new VtkExplicitCellWrap();
 		w->native.TakeReference(r);

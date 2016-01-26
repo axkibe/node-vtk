@@ -24,7 +24,6 @@ class VtkWidgetEventTranslatorWrap : public VtkObjectWrap
 		VtkWidgetEventTranslatorWrap(vtkSmartPointer<vtkWidgetEventTranslator>);
 		VtkWidgetEventTranslatorWrap();
 		~VtkWidgetEventTranslatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

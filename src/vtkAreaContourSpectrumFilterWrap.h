@@ -24,7 +24,6 @@ class VtkAreaContourSpectrumFilterWrap : public VtkDataObjectAlgorithmWrap
 		VtkAreaContourSpectrumFilterWrap(vtkSmartPointer<vtkAreaContourSpectrumFilter>);
 		VtkAreaContourSpectrumFilterWrap();
 		~VtkAreaContourSpectrumFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

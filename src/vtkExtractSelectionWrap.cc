@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractSelectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractSelectionWrap::ptpl;
 
 VtkExtractSelectionWrap::VtkExtractSelectionWrap()
@@ -84,7 +83,6 @@ void VtkExtractSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseProbeForLocationsOn", UseProbeForLocationsOn);
 	Nan::SetPrototypeMethod(tpl, "useProbeForLocationsOn", UseProbeForLocationsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -190,7 +188,7 @@ void VtkExtractSelectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractSelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractSelectionWrap *w = new VtkExtractSelectionWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkExtractSelectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractSelectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractSelectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractSelectionWrap *w = new VtkExtractSelectionWrap();
 		w->native.TakeReference(r);

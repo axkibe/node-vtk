@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkResliceCursorPickerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkResliceCursorPickerWrap::ptpl;
 
 VtkResliceCursorPickerWrap::VtkResliceCursorPickerWrap()
@@ -84,7 +83,6 @@ void VtkResliceCursorPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransformMatrix", SetTransformMatrix);
 	Nan::SetPrototypeMethod(tpl, "setTransformMatrix", SetTransformMatrix);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -182,7 +180,7 @@ void VtkResliceCursorPickerWrap::GetResliceCursorAlgorithm(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorPolyDataAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorPolyDataAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorPolyDataAlgorithmWrap *w = new VtkResliceCursorPolyDataAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -227,7 +225,7 @@ void VtkResliceCursorPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorPickerWrap *w = new VtkResliceCursorPickerWrap();
 	w->native.TakeReference(r);
@@ -289,7 +287,7 @@ void VtkResliceCursorPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkResliceCursorPickerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkResliceCursorPickerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkResliceCursorPickerWrap *w = new VtkResliceCursorPickerWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSelectVisiblePointsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSelectVisiblePointsWrap::ptpl;
 
 VtkSelectVisiblePointsWrap::VtkSelectVisiblePointsWrap()
@@ -106,7 +105,6 @@ void VtkSelectVisiblePointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -162,7 +160,7 @@ void VtkSelectVisiblePointsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
@@ -277,7 +275,7 @@ void VtkSelectVisiblePointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSelectVisiblePointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSelectVisiblePointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectVisiblePointsWrap *w = new VtkSelectVisiblePointsWrap();
 	w->native.TakeReference(r);
@@ -305,7 +303,7 @@ void VtkSelectVisiblePointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSelectVisiblePointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSelectVisiblePointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSelectVisiblePointsWrap *w = new VtkSelectVisiblePointsWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCutMaterialWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCutMaterialWrap::ptpl;
 
 VtkCutMaterialWrap::VtkCutMaterialWrap()
@@ -81,7 +80,6 @@ void VtkCutMaterialWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUpVector", SetUpVector);
 	Nan::SetPrototypeMethod(tpl, "setUpVector", SetUpVector);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -201,7 +199,7 @@ void VtkCutMaterialWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCutMaterialWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCutMaterialWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCutMaterialWrap *w = new VtkCutMaterialWrap();
 	w->native.TakeReference(r);
@@ -229,7 +227,7 @@ void VtkCutMaterialWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCutMaterialWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCutMaterialWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCutMaterialWrap *w = new VtkCutMaterialWrap();
 		w->native.TakeReference(r);

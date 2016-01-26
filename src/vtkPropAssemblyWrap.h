@@ -24,7 +24,6 @@ class VtkPropAssemblyWrap : public VtkPropWrap
 		VtkPropAssemblyWrap(vtkSmartPointer<vtkPropAssembly>);
 		VtkPropAssemblyWrap();
 		~VtkPropAssemblyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

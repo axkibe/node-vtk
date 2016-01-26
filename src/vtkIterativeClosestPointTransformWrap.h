@@ -24,7 +24,6 @@ class VtkIterativeClosestPointTransformWrap : public VtkLinearTransformWrap
 		VtkIterativeClosestPointTransformWrap(vtkSmartPointer<vtkIterativeClosestPointTransform>);
 		VtkIterativeClosestPointTransformWrap();
 		~VtkIterativeClosestPointTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

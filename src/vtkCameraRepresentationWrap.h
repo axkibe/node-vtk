@@ -24,7 +24,6 @@ class VtkCameraRepresentationWrap : public VtkBorderRepresentationWrap
 		VtkCameraRepresentationWrap(vtkSmartPointer<vtkCameraRepresentation>);
 		VtkCameraRepresentationWrap();
 		~VtkCameraRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

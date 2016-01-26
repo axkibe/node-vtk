@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkChartXYZWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkChartXYZWrap::ptpl;
 
 VtkChartXYZWrap::VtkChartXYZWrap()
@@ -83,7 +82,6 @@ void VtkChartXYZWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkChartXYZWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAxisWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAxisWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxisWrap *w = new VtkAxisWrap();
 		w->native.TakeReference(r);
@@ -203,7 +201,7 @@ void VtkChartXYZWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChartXYZWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChartXYZWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartXYZWrap *w = new VtkChartXYZWrap();
 	w->native.TakeReference(r);
@@ -255,7 +253,7 @@ void VtkChartXYZWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkChartXYZWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkChartXYZWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkChartXYZWrap *w = new VtkChartXYZWrap();
 		w->native.TakeReference(r);

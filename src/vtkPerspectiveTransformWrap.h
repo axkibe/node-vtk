@@ -24,7 +24,6 @@ class VtkPerspectiveTransformWrap : public VtkHomogeneousTransformWrap
 		VtkPerspectiveTransformWrap(vtkSmartPointer<vtkPerspectiveTransform>);
 		VtkPerspectiveTransformWrap();
 		~VtkPerspectiveTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

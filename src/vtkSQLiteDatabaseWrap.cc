@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSQLiteDatabaseWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSQLiteDatabaseWrap::ptpl;
 
 VtkSQLiteDatabaseWrap::VtkSQLiteDatabaseWrap()
@@ -86,7 +85,6 @@ void VtkSQLiteDatabaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDatabaseFileName", SetDatabaseFileName);
 	Nan::SetPrototypeMethod(tpl, "setDatabaseFileName", SetDatabaseFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -196,7 +194,7 @@ void VtkSQLiteDatabaseWrap::GetQueryInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSQLQueryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSQLQueryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSQLQueryWrap *w = new VtkSQLQueryWrap();
 	w->native.TakeReference(r);
@@ -224,7 +222,7 @@ void VtkSQLiteDatabaseWrap::GetRecord(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStringArrayWrap *w = new VtkStringArrayWrap();
 		w->native.TakeReference(r);
@@ -250,7 +248,7 @@ void VtkSQLiteDatabaseWrap::GetTables(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -295,7 +293,7 @@ void VtkSQLiteDatabaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSQLiteDatabaseWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSQLiteDatabaseWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSQLiteDatabaseWrap *w = new VtkSQLiteDatabaseWrap();
 	w->native.TakeReference(r);
@@ -323,7 +321,7 @@ void VtkSQLiteDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSQLiteDatabaseWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSQLiteDatabaseWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSQLiteDatabaseWrap *w = new VtkSQLiteDatabaseWrap();
 		w->native.TakeReference(r);

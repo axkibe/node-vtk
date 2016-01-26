@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStackedTreeLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStackedTreeLayoutStrategyWrap::ptpl;
 
 VtkStackedTreeLayoutStrategyWrap::VtkStackedTreeLayoutStrategyWrap()
@@ -110,7 +109,6 @@ void VtkStackedTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -323,7 +321,7 @@ void VtkStackedTreeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStackedTreeLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStackedTreeLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStackedTreeLayoutStrategyWrap *w = new VtkStackedTreeLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -375,7 +373,7 @@ void VtkStackedTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStackedTreeLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStackedTreeLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStackedTreeLayoutStrategyWrap *w = new VtkStackedTreeLayoutStrategyWrap();
 		w->native.TakeReference(r);

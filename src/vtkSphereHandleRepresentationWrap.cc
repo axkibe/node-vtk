@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSphereHandleRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSphereHandleRepresentationWrap::ptpl;
 
 VtkSphereHandleRepresentationWrap::VtkSphereHandleRepresentationWrap()
@@ -140,7 +139,6 @@ void VtkSphereHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TranslationModeOn", TranslationModeOn);
 	Nan::SetPrototypeMethod(tpl, "translationModeOn", TranslationModeOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -319,7 +317,7 @@ void VtkSphereHandleRepresentationWrap::GetProperty(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -342,7 +340,7 @@ void VtkSphereHandleRepresentationWrap::GetSelectedProperty(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -448,7 +446,7 @@ void VtkSphereHandleRepresentationWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSphereHandleRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSphereHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSphereHandleRepresentationWrap *w = new VtkSphereHandleRepresentationWrap();
 	w->native.TakeReference(r);
@@ -540,7 +538,7 @@ void VtkSphereHandleRepresentationWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSphereHandleRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSphereHandleRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSphereHandleRepresentationWrap *w = new VtkSphereHandleRepresentationWrap();
 		w->native.TakeReference(r);

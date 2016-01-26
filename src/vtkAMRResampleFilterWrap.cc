@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRResampleFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRResampleFilterWrap::ptpl;
 
 VtkAMRResampleFilterWrap::VtkAMRResampleFilterWrap()
@@ -104,7 +103,6 @@ void VtkAMRResampleFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransferToNodes", SetTransferToNodes);
 	Nan::SetPrototypeMethod(tpl, "setTransferToNodes", SetTransferToNodes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -212,7 +210,7 @@ void VtkAMRResampleFilterWrap::GetController(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -299,7 +297,7 @@ void VtkAMRResampleFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRResampleFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRResampleFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRResampleFilterWrap *w = new VtkAMRResampleFilterWrap();
 	w->native.TakeReference(r);
@@ -327,7 +325,7 @@ void VtkAMRResampleFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRResampleFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRResampleFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRResampleFilterWrap *w = new VtkAMRResampleFilterWrap();
 		w->native.TakeReference(r);

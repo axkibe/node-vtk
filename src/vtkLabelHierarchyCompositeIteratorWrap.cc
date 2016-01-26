@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLabelHierarchyCompositeIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLabelHierarchyCompositeIteratorWrap::ptpl;
 
 VtkLabelHierarchyCompositeIteratorWrap::VtkLabelHierarchyCompositeIteratorWrap()
@@ -84,7 +83,6 @@ void VtkLabelHierarchyCompositeIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -237,7 +235,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::GetHierarchy(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelHierarchyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelHierarchyWrap *w = new VtkLabelHierarchyWrap();
 	w->native.TakeReference(r);
@@ -282,7 +280,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelHierarchyCompositeIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyCompositeIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelHierarchyCompositeIteratorWrap *w = new VtkLabelHierarchyCompositeIteratorWrap();
 	w->native.TakeReference(r);
@@ -322,7 +320,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLabelHierarchyCompositeIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyCompositeIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabelHierarchyCompositeIteratorWrap *w = new VtkLabelHierarchyCompositeIteratorWrap();
 		w->native.TakeReference(r);

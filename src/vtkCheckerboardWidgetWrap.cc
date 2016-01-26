@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCheckerboardWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCheckerboardWidgetWrap::ptpl;
 
 VtkCheckerboardWidgetWrap::VtkCheckerboardWidgetWrap()
@@ -73,7 +72,6 @@ void VtkCheckerboardWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -127,7 +125,7 @@ void VtkCheckerboardWidgetWrap::GetCheckerboardRepresentation(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCheckerboardRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCheckerboardRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCheckerboardRepresentationWrap *w = new VtkCheckerboardRepresentationWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkCheckerboardWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCheckerboardWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCheckerboardWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCheckerboardWidgetWrap *w = new VtkCheckerboardWidgetWrap();
 	w->native.TakeReference(r);
@@ -214,7 +212,7 @@ void VtkCheckerboardWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCheckerboardWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCheckerboardWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCheckerboardWidgetWrap *w = new VtkCheckerboardWidgetWrap();
 		w->native.TakeReference(r);

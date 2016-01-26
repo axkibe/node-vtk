@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOrderedTriangulatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOrderedTriangulatorWrap::ptpl;
 
 VtkOrderedTriangulatorWrap::VtkOrderedTriangulatorWrap()
@@ -116,7 +115,6 @@ void VtkOrderedTriangulatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseTwoSortIdsOn", UseTwoSortIdsOn);
 	Nan::SetPrototypeMethod(tpl, "useTwoSortIdsOn", UseTwoSortIdsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -341,7 +339,7 @@ void VtkOrderedTriangulatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOrderedTriangulatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOrderedTriangulatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOrderedTriangulatorWrap *w = new VtkOrderedTriangulatorWrap();
 	w->native.TakeReference(r);
@@ -393,7 +391,7 @@ void VtkOrderedTriangulatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOrderedTriangulatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOrderedTriangulatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOrderedTriangulatorWrap *w = new VtkOrderedTriangulatorWrap();
 		w->native.TakeReference(r);

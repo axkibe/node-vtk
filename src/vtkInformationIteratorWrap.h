@@ -24,7 +24,6 @@ class VtkInformationIteratorWrap : public VtkObjectWrap
 		VtkInformationIteratorWrap(vtkSmartPointer<vtkInformationIterator>);
 		VtkInformationIteratorWrap();
 		~VtkInformationIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

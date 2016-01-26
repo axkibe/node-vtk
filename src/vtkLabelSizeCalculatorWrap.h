@@ -24,7 +24,6 @@ class VtkLabelSizeCalculatorWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkLabelSizeCalculatorWrap(vtkSmartPointer<vtkLabelSizeCalculator>);
 		VtkLabelSizeCalculatorWrap();
 		~VtkLabelSizeCalculatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

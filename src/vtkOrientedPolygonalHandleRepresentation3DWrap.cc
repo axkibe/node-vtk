@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOrientedPolygonalHandleRepresentation3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOrientedPolygonalHandleRepresentation3DWrap::ptpl;
 
 VtkOrientedPolygonalHandleRepresentation3DWrap::VtkOrientedPolygonalHandleRepresentation3DWrap()
@@ -60,7 +59,6 @@ void VtkOrientedPolygonalHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkOrientedPolygonalHandleRepresentation3DWrap::NewInstance(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOrientedPolygonalHandleRepresentation3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOrientedPolygonalHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOrientedPolygonalHandleRepresentation3DWrap *w = new VtkOrientedPolygonalHandleRepresentation3DWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkOrientedPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::Fun
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOrientedPolygonalHandleRepresentation3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOrientedPolygonalHandleRepresentation3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOrientedPolygonalHandleRepresentation3DWrap *w = new VtkOrientedPolygonalHandleRepresentation3DWrap();
 		w->native.TakeReference(r);

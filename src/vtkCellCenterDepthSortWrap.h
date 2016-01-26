@@ -24,7 +24,6 @@ class VtkCellCenterDepthSortWrap : public VtkVisibilitySortWrap
 		VtkCellCenterDepthSortWrap(vtkSmartPointer<vtkCellCenterDepthSort>);
 		VtkCellCenterDepthSortWrap();
 		~VtkCellCenterDepthSortWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

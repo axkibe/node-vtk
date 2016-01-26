@@ -24,7 +24,6 @@ class VtkImageOrthoPlanesWrap : public VtkObjectWrap
 		VtkImageOrthoPlanesWrap(vtkSmartPointer<vtkImageOrthoPlanes>);
 		VtkImageOrthoPlanesWrap();
 		~VtkImageOrthoPlanesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkExtractSelectedPolyDataIdsWrap : public VtkPolyDataAlgorithmWrap
 		VtkExtractSelectedPolyDataIdsWrap(vtkSmartPointer<vtkExtractSelectedPolyDataIds>);
 		VtkExtractSelectedPolyDataIdsWrap();
 		~VtkExtractSelectedPolyDataIdsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

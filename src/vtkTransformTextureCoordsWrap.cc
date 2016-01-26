@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransformTextureCoordsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransformTextureCoordsWrap::ptpl;
 
 VtkTransformTextureCoordsWrap::VtkTransformTextureCoordsWrap()
@@ -108,7 +107,6 @@ void VtkTransformTextureCoordsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
 	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -327,7 +325,7 @@ void VtkTransformTextureCoordsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransformTextureCoordsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransformTextureCoordsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransformTextureCoordsWrap *w = new VtkTransformTextureCoordsWrap();
 	w->native.TakeReference(r);
@@ -355,7 +353,7 @@ void VtkTransformTextureCoordsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransformTextureCoordsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransformTextureCoordsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransformTextureCoordsWrap *w = new VtkTransformTextureCoordsWrap();
 		w->native.TakeReference(r);

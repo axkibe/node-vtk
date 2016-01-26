@@ -24,7 +24,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXYPlotActorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXYPlotActorWrap::ptpl;
 
 VtkXYPlotActorWrap::VtkXYPlotActorWrap()
@@ -680,7 +679,6 @@ void VtkXYPlotActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ViewportToPlotCoordinate", ViewportToPlotCoordinate);
 	Nan::SetPrototypeMethod(tpl, "viewportToPlotCoordinate", ViewportToPlotCoordinate);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -1017,7 +1015,7 @@ void VtkXYPlotActorWrap::GetAxisLabelTextProperty(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -1040,7 +1038,7 @@ void VtkXYPlotActorWrap::GetAxisTitleTextProperty(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -1133,7 +1131,7 @@ void VtkXYPlotActorWrap::GetChartBoxProperty(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -1324,7 +1322,7 @@ void VtkXYPlotActorWrap::GetGlyphSource(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGlyphSource2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGlyphSource2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGlyphSource2DWrap *w = new VtkGlyphSource2DWrap();
 	w->native.TakeReference(r);
@@ -1375,7 +1373,7 @@ void VtkXYPlotActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLegendBoxActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLegendBoxActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLegendBoxActorWrap *w = new VtkLegendBoxActorWrap();
 	w->native.TakeReference(r);
@@ -1633,7 +1631,7 @@ void VtkXYPlotActorWrap::GetPlotSymbol(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
 		w->native.TakeReference(r);
@@ -1778,7 +1776,7 @@ void VtkXYPlotActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -1801,7 +1799,7 @@ void VtkXYPlotActorWrap::GetXAxisActor2D(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
 	w->native.TakeReference(r);
@@ -1922,7 +1920,7 @@ void VtkXYPlotActorWrap::GetYAxisActor2D(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
 	w->native.TakeReference(r);
@@ -2101,7 +2099,7 @@ void VtkXYPlotActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXYPlotActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXYPlotActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXYPlotActorWrap *w = new VtkXYPlotActorWrap();
 	w->native.TakeReference(r);
@@ -2519,7 +2517,7 @@ void VtkXYPlotActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXYPlotActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXYPlotActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXYPlotActorWrap *w = new VtkXYPlotActorWrap();
 		w->native.TakeReference(r);

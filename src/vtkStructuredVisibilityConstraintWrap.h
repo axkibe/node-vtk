@@ -24,7 +24,6 @@ class VtkStructuredVisibilityConstraintWrap : public VtkObjectWrap
 		VtkStructuredVisibilityConstraintWrap(vtkSmartPointer<vtkStructuredVisibilityConstraint>);
 		VtkStructuredVisibilityConstraintWrap();
 		~VtkStructuredVisibilityConstraintWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

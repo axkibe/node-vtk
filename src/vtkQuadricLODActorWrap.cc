@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkQuadricLODActorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkQuadricLODActorWrap::ptpl;
 
 VtkQuadricLODActorWrap::VtkQuadricLODActorWrap()
@@ -193,7 +192,6 @@ void VtkQuadricLODActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StaticOn", StaticOn);
 	Nan::SetPrototypeMethod(tpl, "staticOn", StaticOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -259,7 +257,7 @@ void VtkQuadricLODActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
@@ -394,7 +392,7 @@ void VtkQuadricLODActorWrap::GetLODFilter(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuadricClusteringWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuadricClusteringWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuadricClusteringWrap *w = new VtkQuadricClusteringWrap();
 	w->native.TakeReference(r);
@@ -537,7 +535,7 @@ void VtkQuadricLODActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuadricLODActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuadricLODActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuadricLODActorWrap *w = new VtkQuadricLODActorWrap();
 	w->native.TakeReference(r);
@@ -632,7 +630,7 @@ void VtkQuadricLODActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkQuadricLODActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkQuadricLODActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkQuadricLODActorWrap *w = new VtkQuadricLODActorWrap();
 		w->native.TakeReference(r);

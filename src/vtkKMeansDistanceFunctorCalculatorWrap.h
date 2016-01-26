@@ -24,7 +24,6 @@ class VtkKMeansDistanceFunctorCalculatorWrap : public VtkKMeansDistanceFunctorWr
 		VtkKMeansDistanceFunctorCalculatorWrap(vtkSmartPointer<vtkKMeansDistanceFunctorCalculator>);
 		VtkKMeansDistanceFunctorCalculatorWrap();
 		~VtkKMeansDistanceFunctorCalculatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

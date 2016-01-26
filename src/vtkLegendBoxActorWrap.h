@@ -24,7 +24,6 @@ class VtkLegendBoxActorWrap : public VtkActor2DWrap
 		VtkLegendBoxActorWrap(vtkSmartPointer<vtkLegendBoxActor>);
 		VtkLegendBoxActorWrap();
 		~VtkLegendBoxActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

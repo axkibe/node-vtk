@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAngleRepresentation3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAngleRepresentation3DWrap::ptpl;
 
 VtkAngleRepresentation3DWrap::VtkAngleRepresentation3DWrap()
@@ -94,7 +93,6 @@ void VtkAngleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -162,7 +160,7 @@ void VtkAngleRepresentation3DWrap::GetArc(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActorWrap *w = new VtkActorWrap();
 	w->native.TakeReference(r);
@@ -199,7 +197,7 @@ void VtkAngleRepresentation3DWrap::GetRay1(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActorWrap *w = new VtkActorWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkAngleRepresentation3DWrap::GetRay2(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActorWrap *w = new VtkActorWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkAngleRepresentation3DWrap::GetTextActor(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFollowerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFollowerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFollowerWrap *w = new VtkFollowerWrap();
 	w->native.TakeReference(r);
@@ -304,7 +302,7 @@ void VtkAngleRepresentation3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAngleRepresentation3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAngleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAngleRepresentation3DWrap *w = new VtkAngleRepresentation3DWrap();
 	w->native.TakeReference(r);
@@ -396,7 +394,7 @@ void VtkAngleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAngleRepresentation3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAngleRepresentation3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAngleRepresentation3DWrap *w = new VtkAngleRepresentation3DWrap();
 		w->native.TakeReference(r);

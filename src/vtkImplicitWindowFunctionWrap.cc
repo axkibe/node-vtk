@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImplicitWindowFunctionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImplicitWindowFunctionWrap::ptpl;
 
 VtkImplicitWindowFunctionWrap::VtkImplicitWindowFunctionWrap()
@@ -75,7 +74,6 @@ void VtkImplicitWindowFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWindowValues", SetWindowValues);
 	Nan::SetPrototypeMethod(tpl, "setWindowValues", SetWindowValues);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -160,7 +158,7 @@ void VtkImplicitWindowFunctionWrap::GetImplicitFunction(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkImplicitWindowFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitWindowFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitWindowFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitWindowFunctionWrap *w = new VtkImplicitWindowFunctionWrap();
 	w->native.TakeReference(r);
@@ -233,7 +231,7 @@ void VtkImplicitWindowFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImplicitWindowFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImplicitWindowFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitWindowFunctionWrap *w = new VtkImplicitWindowFunctionWrap();
 		w->native.TakeReference(r);

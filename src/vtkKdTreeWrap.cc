@@ -22,7 +22,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkKdTreeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkKdTreeWrap::ptpl;
 
 VtkKdTreeWrap::VtkKdTreeWrap()
@@ -231,7 +230,6 @@ void VtkKdTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TimingOn", TimingOn);
 	Nan::SetPrototypeMethod(tpl, "timingOn", TimingOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -330,7 +328,7 @@ void VtkKdTreeWrap::CopyTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkKdNodeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkKdNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKdNodeWrap *w = new VtkKdNodeWrap();
 		w->native.TakeReference(r);
@@ -444,7 +442,7 @@ void VtkKdTreeWrap::GetBoundaryCellList(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdListWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdListWrap *w = new VtkIdListWrap();
 		w->native.TakeReference(r);
@@ -474,7 +472,7 @@ void VtkKdTreeWrap::GetCellList(const Nan::FunctionCallbackInfo<v8::Value>& info
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdListWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdListWrap *w = new VtkIdListWrap();
 		w->native.TakeReference(r);
@@ -514,7 +512,7 @@ void VtkKdTreeWrap::GetCuts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBSPCutsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBSPCutsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBSPCutsWrap *w = new VtkBSPCutsWrap();
 	w->native.TakeReference(r);
@@ -541,7 +539,7 @@ void VtkKdTreeWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataSetWrap *w = new VtkDataSetWrap();
 		w->native.TakeReference(r);
@@ -560,7 +558,7 @@ void VtkKdTreeWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -605,7 +603,7 @@ void VtkKdTreeWrap::GetDataSets(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetCollectionWrap *w = new VtkDataSetCollectionWrap();
 	w->native.TakeReference(r);
@@ -744,7 +742,7 @@ void VtkKdTreeWrap::GetPointsInRegion(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 		w->native.TakeReference(r);
@@ -885,7 +883,7 @@ void VtkKdTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKdTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKdTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKdTreeWrap *w = new VtkKdTreeWrap();
 	w->native.TakeReference(r);
@@ -1084,7 +1082,7 @@ void VtkKdTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkKdTreeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkKdTreeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKdTreeWrap *w = new VtkKdTreeWrap();
 		w->native.TakeReference(r);

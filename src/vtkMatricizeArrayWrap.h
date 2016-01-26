@@ -24,7 +24,6 @@ class VtkMatricizeArrayWrap : public VtkArrayDataAlgorithmWrap
 		VtkMatricizeArrayWrap(vtkSmartPointer<vtkMatricizeArray>);
 		VtkMatricizeArrayWrap();
 		~VtkMatricizeArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

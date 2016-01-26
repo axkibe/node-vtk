@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLCompositeDataWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLCompositeDataWriterWrap::ptpl;
 
 VtkXMLCompositeDataWriterWrap::VtkXMLCompositeDataWriterWrap()
@@ -75,7 +74,6 @@ void VtkXMLCompositeDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWriteMetaFile", SetWriteMetaFile);
 	Nan::SetPrototypeMethod(tpl, "setWriteMetaFile", SetWriteMetaFile);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -195,7 +193,7 @@ void VtkXMLCompositeDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLCompositeDataWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLCompositeDataWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLCompositeDataWriterWrap *w = new VtkXMLCompositeDataWriterWrap();
 	w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkXMLCompositeDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLCompositeDataWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLCompositeDataWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLCompositeDataWriterWrap *w = new VtkXMLCompositeDataWriterWrap();
 		w->native.TakeReference(r);

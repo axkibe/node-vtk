@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPReflectionFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPReflectionFilterWrap::ptpl;
 
 VtkPReflectionFilterWrap::VtkPReflectionFilterWrap()
@@ -67,7 +66,6 @@ void VtkPReflectionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkPReflectionFilterWrap::GetController(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkPReflectionFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPReflectionFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPReflectionFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPReflectionFilterWrap *w = new VtkPReflectionFilterWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkPReflectionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPReflectionFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPReflectionFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPReflectionFilterWrap *w = new VtkPReflectionFilterWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkGraphToPointsWrap : public VtkPolyDataAlgorithmWrap
 		VtkGraphToPointsWrap(vtkSmartPointer<vtkGraphToPoints>);
 		VtkGraphToPointsWrap();
 		~VtkGraphToPointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

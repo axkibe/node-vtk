@@ -24,7 +24,6 @@ class VtkAngleRepresentation3DWrap : public VtkAngleRepresentationWrap
 		VtkAngleRepresentation3DWrap(vtkSmartPointer<vtkAngleRepresentation3D>);
 		VtkAngleRepresentation3DWrap();
 		~VtkAngleRepresentation3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

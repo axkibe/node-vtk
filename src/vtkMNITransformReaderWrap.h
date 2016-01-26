@@ -24,7 +24,6 @@ class VtkMNITransformReaderWrap : public VtkAlgorithmWrap
 		VtkMNITransformReaderWrap(vtkSmartPointer<vtkMNITransformReader>);
 		VtkMNITransformReaderWrap();
 		~VtkMNITransformReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

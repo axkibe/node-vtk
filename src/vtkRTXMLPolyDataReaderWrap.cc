@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRTXMLPolyDataReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRTXMLPolyDataReaderWrap::ptpl;
 
 VtkRTXMLPolyDataReaderWrap::VtkRTXMLPolyDataReaderWrap()
@@ -78,7 +77,6 @@ void VtkRTXMLPolyDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateToNextFile", UpdateToNextFile);
 	Nan::SetPrototypeMethod(tpl, "updateToNextFile", UpdateToNextFile);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -198,7 +196,7 @@ void VtkRTXMLPolyDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRTXMLPolyDataReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRTXMLPolyDataReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRTXMLPolyDataReaderWrap *w = new VtkRTXMLPolyDataReaderWrap();
 	w->native.TakeReference(r);
@@ -238,7 +236,7 @@ void VtkRTXMLPolyDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRTXMLPolyDataReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRTXMLPolyDataReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRTXMLPolyDataReaderWrap *w = new VtkRTXMLPolyDataReaderWrap();
 		w->native.TakeReference(r);

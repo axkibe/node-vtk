@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAssignCoordinatesLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAssignCoordinatesLayoutStrategyWrap::ptpl;
 
 VtkAssignCoordinatesLayoutStrategyWrap::VtkAssignCoordinatesLayoutStrategyWrap()
@@ -81,7 +80,6 @@ void VtkAssignCoordinatesLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZCoordArrayName", SetZCoordArrayName);
 	Nan::SetPrototypeMethod(tpl, "setZCoordArrayName", SetZCoordArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -213,7 +211,7 @@ void VtkAssignCoordinatesLayoutStrategyWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAssignCoordinatesLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAssignCoordinatesLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAssignCoordinatesLayoutStrategyWrap *w = new VtkAssignCoordinatesLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -241,7 +239,7 @@ void VtkAssignCoordinatesLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAssignCoordinatesLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAssignCoordinatesLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAssignCoordinatesLayoutStrategyWrap *w = new VtkAssignCoordinatesLayoutStrategyWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkParametricFunctionSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkParametricFunctionSourceWrap(vtkSmartPointer<vtkParametricFunctionSource>);
 		VtkParametricFunctionSourceWrap();
 		~VtkParametricFunctionSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

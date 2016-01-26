@@ -24,7 +24,6 @@ class VtkPlaneWrap : public VtkImplicitFunctionWrap
 		VtkPlaneWrap(vtkSmartPointer<vtkPlane>);
 		VtkPlaneWrap();
 		~VtkPlaneWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

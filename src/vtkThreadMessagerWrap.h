@@ -24,7 +24,6 @@ class VtkThreadMessagerWrap : public VtkObjectWrap
 		VtkThreadMessagerWrap(vtkSmartPointer<vtkThreadMessager>);
 		VtkThreadMessagerWrap();
 		~VtkThreadMessagerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkXMLHierarchicalDataReaderWrap : public VtkXMLMultiGroupDataReaderWrap
 		VtkXMLHierarchicalDataReaderWrap(vtkSmartPointer<vtkXMLHierarchicalDataReader>);
 		VtkXMLHierarchicalDataReaderWrap();
 		~VtkXMLHierarchicalDataReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

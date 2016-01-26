@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageResliceToColorsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageResliceToColorsWrap::ptpl;
 
 VtkImageResliceToColorsWrap::VtkImageResliceToColorsWrap()
@@ -103,7 +102,6 @@ void VtkImageResliceToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputFormatToRGBA", SetOutputFormatToRGBA);
 	Nan::SetPrototypeMethod(tpl, "setOutputFormatToRGBA", SetOutputFormatToRGBA);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -197,7 +195,7 @@ void VtkImageResliceToColorsWrap::GetLookupTable(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -284,7 +282,7 @@ void VtkImageResliceToColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageResliceToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageResliceToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageResliceToColorsWrap *w = new VtkImageResliceToColorsWrap();
 	w->native.TakeReference(r);
@@ -312,7 +310,7 @@ void VtkImageResliceToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageResliceToColorsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageResliceToColorsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageResliceToColorsWrap *w = new VtkImageResliceToColorsWrap();
 		w->native.TakeReference(r);

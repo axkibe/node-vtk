@@ -24,7 +24,6 @@ class VtkRecursiveSphereDirectionEncoderWrap : public VtkDirectionEncoderWrap
 		VtkRecursiveSphereDirectionEncoderWrap(vtkSmartPointer<vtkRecursiveSphereDirectionEncoder>);
 		VtkRecursiveSphereDirectionEncoderWrap();
 		~VtkRecursiveSphereDirectionEncoderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

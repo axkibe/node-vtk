@@ -24,7 +24,6 @@ class VtkViewWrap : public VtkObjectWrap
 		VtkViewWrap(vtkSmartPointer<vtkView>);
 		VtkViewWrap();
 		~VtkViewWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

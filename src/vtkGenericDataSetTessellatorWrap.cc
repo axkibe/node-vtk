@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericDataSetTessellatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericDataSetTessellatorWrap::ptpl;
 
 VtkGenericDataSetTessellatorWrap::VtkGenericDataSetTessellatorWrap()
@@ -94,7 +93,6 @@ void VtkGenericDataSetTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMerging", SetMerging);
 	Nan::SetPrototypeMethod(tpl, "setMerging", SetMerging);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -176,7 +174,7 @@ void VtkGenericDataSetTessellatorWrap::GetLocator(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -283,7 +281,7 @@ void VtkGenericDataSetTessellatorWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericDataSetTessellatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericDataSetTessellatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericDataSetTessellatorWrap *w = new VtkGenericDataSetTessellatorWrap();
 	w->native.TakeReference(r);
@@ -311,7 +309,7 @@ void VtkGenericDataSetTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericDataSetTessellatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericDataSetTessellatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericDataSetTessellatorWrap *w = new VtkGenericDataSetTessellatorWrap();
 		w->native.TakeReference(r);

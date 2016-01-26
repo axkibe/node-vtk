@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLPStructuredGridWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLPStructuredGridWriterWrap::ptpl;
 
 VtkXMLPStructuredGridWriterWrap::VtkXMLPStructuredGridWriterWrap()
@@ -67,7 +66,6 @@ void VtkXMLPStructuredGridWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -137,7 +135,7 @@ void VtkXMLPStructuredGridWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridWrap *w = new VtkStructuredGridWrap();
 	w->native.TakeReference(r);
@@ -182,7 +180,7 @@ void VtkXMLPStructuredGridWriterWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLPStructuredGridWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLPStructuredGridWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLPStructuredGridWriterWrap *w = new VtkXMLPStructuredGridWriterWrap();
 	w->native.TakeReference(r);
@@ -210,7 +208,7 @@ void VtkXMLPStructuredGridWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLPStructuredGridWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLPStructuredGridWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLPStructuredGridWriterWrap *w = new VtkXMLPStructuredGridWriterWrap();
 		w->native.TakeReference(r);

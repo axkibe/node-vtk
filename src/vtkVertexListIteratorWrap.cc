@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVertexListIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVertexListIteratorWrap::ptpl;
 
 VtkVertexListIteratorWrap::VtkVertexListIteratorWrap()
@@ -66,7 +65,6 @@ void VtkVertexListIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -122,7 +120,7 @@ void VtkVertexListIteratorWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphWrap *w = new VtkGraphWrap();
 	w->native.TakeReference(r);
@@ -167,7 +165,7 @@ void VtkVertexListIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVertexListIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVertexListIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVertexListIteratorWrap *w = new VtkVertexListIteratorWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkVertexListIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVertexListIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVertexListIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVertexListIteratorWrap *w = new VtkVertexListIteratorWrap();
 		w->native.TakeReference(r);

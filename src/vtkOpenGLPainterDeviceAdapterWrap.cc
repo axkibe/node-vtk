@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLPainterDeviceAdapterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLPainterDeviceAdapterWrap::ptpl;
 
 VtkOpenGLPainterDeviceAdapterWrap::VtkOpenGLPainterDeviceAdapterWrap()
@@ -100,7 +99,6 @@ void VtkOpenGLPainterDeviceAdapterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Stencil", Stencil);
 	Nan::SetPrototypeMethod(tpl, "stencil", Stencil);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -347,7 +345,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLPainterDeviceAdapterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLPainterDeviceAdapterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLPainterDeviceAdapterWrap *w = new VtkOpenGLPainterDeviceAdapterWrap();
 	w->native.TakeReference(r);
@@ -417,7 +415,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLPainterDeviceAdapterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLPainterDeviceAdapterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLPainterDeviceAdapterWrap *w = new VtkOpenGLPainterDeviceAdapterWrap();
 		w->native.TakeReference(r);

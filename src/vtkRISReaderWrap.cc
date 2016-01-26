@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRISReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRISReaderWrap::ptpl;
 
 VtkRISReaderWrap::VtkRISReaderWrap()
@@ -78,7 +77,6 @@ void VtkRISReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaxRecords", SetMaxRecords);
 	Nan::SetPrototypeMethod(tpl, "setMaxRecords", SetMaxRecords);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -198,7 +196,7 @@ void VtkRISReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRISReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRISReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRISReaderWrap *w = new VtkRISReaderWrap();
 	w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkRISReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRISReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRISReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRISReaderWrap *w = new VtkRISReaderWrap();
 		w->native.TakeReference(r);

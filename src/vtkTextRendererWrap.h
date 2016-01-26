@@ -24,7 +24,6 @@ class VtkTextRendererWrap : public VtkObjectWrap
 		VtkTextRendererWrap(vtkSmartPointer<vtkTextRenderer>);
 		VtkTextRendererWrap();
 		~VtkTextRendererWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

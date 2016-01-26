@@ -24,7 +24,6 @@ class VtkAxisExtendedWrap : public VtkObjectWrap
 		VtkAxisExtendedWrap(vtkSmartPointer<vtkAxisExtended>);
 		VtkAxisExtendedWrap();
 		~VtkAxisExtendedWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

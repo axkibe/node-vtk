@@ -24,7 +24,6 @@ class VtkImageMapToColorsWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageMapToColorsWrap(vtkSmartPointer<vtkImageMapToColors>);
 		VtkImageMapToColorsWrap();
 		~VtkImageMapToColorsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

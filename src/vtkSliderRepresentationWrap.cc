@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSliderRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSliderRepresentationWrap::ptpl;
 
 VtkSliderRepresentationWrap::VtkSliderRepresentationWrap()
@@ -192,7 +191,6 @@ void VtkSliderRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowSliderLabelOn", ShowSliderLabelOn);
 	Nan::SetPrototypeMethod(tpl, "showSliderLabelOn", ShowSliderLabelOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -676,7 +674,7 @@ void VtkSliderRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSliderRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSliderRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSliderRepresentationWrap *w = new VtkSliderRepresentationWrap();
 	w->native.TakeReference(r);
@@ -704,7 +702,7 @@ void VtkSliderRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSliderRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSliderRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSliderRepresentationWrap *w = new VtkSliderRepresentationWrap();
 		w->native.TakeReference(r);

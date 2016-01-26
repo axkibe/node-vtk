@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlot3DMetaReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlot3DMetaReaderWrap::ptpl;
 
 VtkPlot3DMetaReaderWrap::VtkPlot3DMetaReaderWrap()
@@ -66,7 +65,6 @@ void VtkPlot3DMetaReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkPlot3DMetaReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlot3DMetaReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlot3DMetaReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlot3DMetaReaderWrap *w = new VtkPlot3DMetaReaderWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkPlot3DMetaReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlot3DMetaReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlot3DMetaReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlot3DMetaReaderWrap *w = new VtkPlot3DMetaReaderWrap();
 		w->native.TakeReference(r);

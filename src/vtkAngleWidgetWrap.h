@@ -24,7 +24,6 @@ class VtkAngleWidgetWrap : public VtkAbstractWidgetWrap
 		VtkAngleWidgetWrap(vtkSmartPointer<vtkAngleWidget>);
 		VtkAngleWidgetWrap();
 		~VtkAngleWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

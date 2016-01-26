@@ -24,7 +24,6 @@ class VtkImageThresholdConnectivityWrap : public VtkImageAlgorithmWrap
 		VtkImageThresholdConnectivityWrap(vtkSmartPointer<vtkImageThresholdConnectivity>);
 		VtkImageThresholdConnectivityWrap();
 		~VtkImageThresholdConnectivityWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

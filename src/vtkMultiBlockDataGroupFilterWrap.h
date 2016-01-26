@@ -24,7 +24,6 @@ class VtkMultiBlockDataGroupFilterWrap : public VtkMultiBlockDataSetAlgorithmWra
 		VtkMultiBlockDataGroupFilterWrap(vtkSmartPointer<vtkMultiBlockDataGroupFilter>);
 		VtkMultiBlockDataGroupFilterWrap();
 		~VtkMultiBlockDataGroupFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

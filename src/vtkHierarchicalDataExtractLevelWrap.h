@@ -24,7 +24,6 @@ class VtkHierarchicalDataExtractLevelWrap : public VtkExtractLevelWrap
 		VtkHierarchicalDataExtractLevelWrap(vtkSmartPointer<vtkHierarchicalDataExtractLevel>);
 		VtkHierarchicalDataExtractLevelWrap();
 		~VtkHierarchicalDataExtractLevelWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

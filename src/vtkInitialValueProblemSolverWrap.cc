@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInitialValueProblemSolverWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInitialValueProblemSolverWrap::ptpl;
 
 VtkInitialValueProblemSolverWrap::VtkInitialValueProblemSolverWrap()
@@ -69,7 +68,6 @@ void VtkInitialValueProblemSolverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFunctionSet", SetFunctionSet);
 	Nan::SetPrototypeMethod(tpl, "setFunctionSet", SetFunctionSet);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -125,7 +123,7 @@ void VtkInitialValueProblemSolverWrap::GetFunctionSet(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFunctionSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFunctionSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFunctionSetWrap *w = new VtkFunctionSetWrap();
 	w->native.TakeReference(r);
@@ -184,7 +182,7 @@ void VtkInitialValueProblemSolverWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInitialValueProblemSolverWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
 	w->native.TakeReference(r);
@@ -212,7 +210,7 @@ void VtkInitialValueProblemSolverWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInitialValueProblemSolverWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
 		w->native.TakeReference(r);

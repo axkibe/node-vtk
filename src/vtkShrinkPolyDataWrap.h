@@ -24,7 +24,6 @@ class VtkShrinkPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		VtkShrinkPolyDataWrap(vtkSmartPointer<vtkShrinkPolyData>);
 		VtkShrinkPolyDataWrap();
 		~VtkShrinkPolyDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDecimateProWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDecimateProWrap::ptpl;
 
 VtkDecimateProWrap::VtkDecimateProWrap()
@@ -216,7 +215,6 @@ void VtkDecimateProWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SplittingOn", SplittingOn);
 	Nan::SetPrototypeMethod(tpl, "splittingOn", SplittingOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -734,7 +732,7 @@ void VtkDecimateProWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDecimateProWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDecimateProWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDecimateProWrap *w = new VtkDecimateProWrap();
 	w->native.TakeReference(r);
@@ -810,7 +808,7 @@ void VtkDecimateProWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDecimateProWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDecimateProWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDecimateProWrap *w = new VtkDecimateProWrap();
 		w->native.TakeReference(r);

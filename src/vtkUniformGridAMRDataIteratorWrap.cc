@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUniformGridAMRDataIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUniformGridAMRDataIteratorWrap::ptpl;
 
 VtkUniformGridAMRDataIteratorWrap::VtkUniformGridAMRDataIteratorWrap()
@@ -80,7 +79,6 @@ void VtkUniformGridAMRDataIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -136,7 +134,7 @@ void VtkUniformGridAMRDataIteratorWrap::GetCurrentDataObject(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -159,7 +157,7 @@ void VtkUniformGridAMRDataIteratorWrap::GetCurrentMetaData(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationWrap *w = new VtkInformationWrap();
 	w->native.TakeReference(r);
@@ -256,7 +254,7 @@ void VtkUniformGridAMRDataIteratorWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUniformGridAMRDataIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUniformGridAMRDataIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUniformGridAMRDataIteratorWrap *w = new VtkUniformGridAMRDataIteratorWrap();
 	w->native.TakeReference(r);
@@ -284,7 +282,7 @@ void VtkUniformGridAMRDataIteratorWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUniformGridAMRDataIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUniformGridAMRDataIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUniformGridAMRDataIteratorWrap *w = new VtkUniformGridAMRDataIteratorWrap();
 		w->native.TakeReference(r);

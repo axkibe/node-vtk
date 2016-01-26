@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCirclePackToPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCirclePackToPolyDataWrap::ptpl;
 
 VtkCirclePackToPolyDataWrap::VtkCirclePackToPolyDataWrap()
@@ -67,7 +66,6 @@ void VtkCirclePackToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCirclesArrayName", SetCirclesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setCirclesArrayName", SetCirclesArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -171,7 +169,7 @@ void VtkCirclePackToPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCirclePackToPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCirclePackToPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCirclePackToPolyDataWrap *w = new VtkCirclePackToPolyDataWrap();
 	w->native.TakeReference(r);
@@ -199,7 +197,7 @@ void VtkCirclePackToPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCirclePackToPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCirclePackToPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCirclePackToPolyDataWrap *w = new VtkCirclePackToPolyDataWrap();
 		w->native.TakeReference(r);

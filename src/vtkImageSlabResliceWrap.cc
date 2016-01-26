@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageSlabResliceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageSlabResliceWrap::ptpl;
 
 VtkImageSlabResliceWrap::VtkImageSlabResliceWrap()
@@ -90,7 +89,6 @@ void VtkImageSlabResliceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSlabThickness", SetSlabThickness);
 	Nan::SetPrototypeMethod(tpl, "setSlabThickness", SetSlabThickness);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -224,7 +222,7 @@ void VtkImageSlabResliceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageSlabResliceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageSlabResliceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSlabResliceWrap *w = new VtkImageSlabResliceWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkImageSlabResliceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageSlabResliceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageSlabResliceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageSlabResliceWrap *w = new VtkImageSlabResliceWrap();
 		w->native.TakeReference(r);

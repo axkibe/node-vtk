@@ -24,7 +24,6 @@ class VtkSampleFunctionWrap : public VtkImageAlgorithmWrap
 		VtkSampleFunctionWrap(vtkSmartPointer<vtkSampleFunction>);
 		VtkSampleFunctionWrap();
 		~VtkSampleFunctionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

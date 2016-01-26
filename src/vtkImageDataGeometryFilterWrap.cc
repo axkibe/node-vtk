@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageDataGeometryFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageDataGeometryFilterWrap::ptpl;
 
 VtkImageDataGeometryFilterWrap::VtkImageDataGeometryFilterWrap()
@@ -99,7 +98,6 @@ void VtkImageDataGeometryFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThresholdValueOn", ThresholdValueOn);
 	Nan::SetPrototypeMethod(tpl, "thresholdValueOn", ThresholdValueOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -219,7 +217,7 @@ void VtkImageDataGeometryFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataGeometryFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataGeometryFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataGeometryFilterWrap *w = new VtkImageDataGeometryFilterWrap();
 	w->native.TakeReference(r);
@@ -271,7 +269,7 @@ void VtkImageDataGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageDataGeometryFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageDataGeometryFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataGeometryFilterWrap *w = new VtkImageDataGeometryFilterWrap();
 		w->native.TakeReference(r);

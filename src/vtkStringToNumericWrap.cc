@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStringToNumericWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStringToNumericWrap::ptpl;
 
 VtkStringToNumericWrap::VtkStringToNumericWrap()
@@ -120,7 +119,6 @@ void VtkStringToNumericWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TrimWhitespacePriorToNumericConversionOn", TrimWhitespacePriorToNumericConversionOn);
 	Nan::SetPrototypeMethod(tpl, "trimWhitespacePriorToNumericConversionOn", TrimWhitespacePriorToNumericConversionOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -394,7 +392,7 @@ void VtkStringToNumericWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringToNumericWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringToNumericWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringToNumericWrap *w = new VtkStringToNumericWrap();
 	w->native.TakeReference(r);
@@ -422,7 +420,7 @@ void VtkStringToNumericWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStringToNumericWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStringToNumericWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStringToNumericWrap *w = new VtkStringToNumericWrap();
 		w->native.TakeReference(r);

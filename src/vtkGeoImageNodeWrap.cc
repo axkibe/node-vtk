@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoImageNodeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoImageNodeWrap::ptpl;
 
 VtkGeoImageNodeWrap::VtkGeoImageNodeWrap()
@@ -92,7 +91,6 @@ void VtkGeoImageNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -170,7 +168,7 @@ void VtkGeoImageNodeWrap::GetChild(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoImageNodeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoImageNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoImageNodeWrap *w = new VtkGeoImageNodeWrap();
 		w->native.TakeReference(r);
@@ -210,7 +208,7 @@ void VtkGeoImageNodeWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -233,7 +231,7 @@ void VtkGeoImageNodeWrap::GetParent(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoImageNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoImageNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoImageNodeWrap *w = new VtkGeoImageNodeWrap();
 	w->native.TakeReference(r);
@@ -256,7 +254,7 @@ void VtkGeoImageNodeWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextureWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextureWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextureWrap *w = new VtkTextureWrap();
 	w->native.TakeReference(r);
@@ -321,7 +319,7 @@ void VtkGeoImageNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoImageNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoImageNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoImageNodeWrap *w = new VtkGeoImageNodeWrap();
 	w->native.TakeReference(r);
@@ -349,7 +347,7 @@ void VtkGeoImageNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoImageNodeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoImageNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoImageNodeWrap *w = new VtkGeoImageNodeWrap();
 		w->native.TakeReference(r);

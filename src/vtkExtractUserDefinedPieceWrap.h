@@ -24,7 +24,6 @@ class VtkExtractUserDefinedPieceWrap : public VtkExtractUnstructuredGridPieceWra
 		VtkExtractUserDefinedPieceWrap(vtkSmartPointer<vtkExtractUserDefinedPiece>);
 		VtkExtractUserDefinedPieceWrap();
 		~VtkExtractUserDefinedPieceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

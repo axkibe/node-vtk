@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMedicalImageReader2Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMedicalImageReader2Wrap::ptpl;
 
 VtkMedicalImageReader2Wrap::VtkMedicalImageReader2Wrap()
@@ -106,7 +105,6 @@ void VtkMedicalImageReader2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStudy", SetStudy);
 	Nan::SetPrototypeMethod(tpl, "setStudy", SetStudy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -190,7 +188,7 @@ void VtkMedicalImageReader2Wrap::GetMedicalImageProperties(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMedicalImagePropertiesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMedicalImagePropertiesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMedicalImagePropertiesWrap *w = new VtkMedicalImagePropertiesWrap();
 	w->native.TakeReference(r);
@@ -305,7 +303,7 @@ void VtkMedicalImageReader2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMedicalImageReader2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMedicalImageReader2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMedicalImageReader2Wrap *w = new VtkMedicalImageReader2Wrap();
 	w->native.TakeReference(r);
@@ -333,7 +331,7 @@ void VtkMedicalImageReader2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMedicalImageReader2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMedicalImageReader2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMedicalImageReader2Wrap *w = new VtkMedicalImageReader2Wrap();
 		w->native.TakeReference(r);

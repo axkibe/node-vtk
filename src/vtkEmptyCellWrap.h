@@ -24,7 +24,6 @@ class VtkEmptyCellWrap : public VtkCellWrap
 		VtkEmptyCellWrap(vtkSmartPointer<vtkEmptyCell>);
 		VtkEmptyCellWrap();
 		~VtkEmptyCellWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

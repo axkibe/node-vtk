@@ -24,7 +24,6 @@ class VtkImageRGBToHSVWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageRGBToHSVWrap(vtkSmartPointer<vtkImageRGBToHSV>);
 		VtkImageRGBToHSVWrap();
 		~VtkImageRGBToHSVWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

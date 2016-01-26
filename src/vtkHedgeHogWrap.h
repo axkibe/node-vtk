@@ -24,7 +24,6 @@ class VtkHedgeHogWrap : public VtkPolyDataAlgorithmWrap
 		VtkHedgeHogWrap(vtkSmartPointer<vtkHedgeHog>);
 		VtkHedgeHogWrap();
 		~VtkHedgeHogWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

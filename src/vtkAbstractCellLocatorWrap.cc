@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAbstractCellLocatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAbstractCellLocatorWrap::ptpl;
 
 VtkAbstractCellLocatorWrap::VtkAbstractCellLocatorWrap()
@@ -120,7 +119,6 @@ void VtkAbstractCellLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseExistingSearchStructureOn", UseExistingSearchStructureOn);
 	Nan::SetPrototypeMethod(tpl, "useExistingSearchStructureOn", UseExistingSearchStructureOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -344,7 +342,7 @@ void VtkAbstractCellLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractCellLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractCellLocatorWrap *w = new VtkAbstractCellLocatorWrap();
 	w->native.TakeReference(r);
@@ -396,7 +394,7 @@ void VtkAbstractCellLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractCellLocatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractCellLocatorWrap *w = new VtkAbstractCellLocatorWrap();
 		w->native.TakeReference(r);

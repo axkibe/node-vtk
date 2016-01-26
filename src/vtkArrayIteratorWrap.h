@@ -24,7 +24,6 @@ class VtkArrayIteratorWrap : public VtkObjectWrap
 		VtkArrayIteratorWrap(vtkSmartPointer<vtkArrayIterator>);
 		VtkArrayIteratorWrap();
 		~VtkArrayIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkImageExportWrap : public VtkImageAlgorithmWrap
 		VtkImageExportWrap(vtkSmartPointer<vtkImageExport>);
 		VtkImageExportWrap();
 		~VtkImageExportWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

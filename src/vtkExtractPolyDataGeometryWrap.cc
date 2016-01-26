@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractPolyDataGeometryWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractPolyDataGeometryWrap::ptpl;
 
 VtkExtractPolyDataGeometryWrap::VtkExtractPolyDataGeometryWrap()
@@ -91,7 +90,6 @@ void VtkExtractPolyDataGeometryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImplicitFunction", SetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "setImplicitFunction", SetImplicitFunction);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -223,7 +221,7 @@ void VtkExtractPolyDataGeometryWrap::GetImplicitFunction(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
 	w->native.TakeReference(r);
@@ -268,7 +266,7 @@ void VtkExtractPolyDataGeometryWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractPolyDataGeometryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractPolyDataGeometryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractPolyDataGeometryWrap *w = new VtkExtractPolyDataGeometryWrap();
 	w->native.TakeReference(r);
@@ -296,7 +294,7 @@ void VtkExtractPolyDataGeometryWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractPolyDataGeometryWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractPolyDataGeometryWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractPolyDataGeometryWrap *w = new VtkExtractPolyDataGeometryWrap();
 		w->native.TakeReference(r);

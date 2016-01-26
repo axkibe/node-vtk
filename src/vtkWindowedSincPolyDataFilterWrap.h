@@ -24,7 +24,6 @@ class VtkWindowedSincPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkWindowedSincPolyDataFilterWrap(vtkSmartPointer<vtkWindowedSincPolyDataFilter>);
 		VtkWindowedSincPolyDataFilterWrap();
 		~VtkWindowedSincPolyDataFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

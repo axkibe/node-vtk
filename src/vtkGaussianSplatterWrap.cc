@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGaussianSplatterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGaussianSplatterWrap::ptpl;
 
 VtkGaussianSplatterWrap::VtkGaussianSplatterWrap()
@@ -186,7 +185,6 @@ void VtkGaussianSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleFactor", SetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setScaleFactor", SetScaleFactor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -584,7 +582,7 @@ void VtkGaussianSplatterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGaussianSplatterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGaussianSplatterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGaussianSplatterWrap *w = new VtkGaussianSplatterWrap();
 	w->native.TakeReference(r);
@@ -636,7 +634,7 @@ void VtkGaussianSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGaussianSplatterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGaussianSplatterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGaussianSplatterWrap *w = new VtkGaussianSplatterWrap();
 		w->native.TakeReference(r);

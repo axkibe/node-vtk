@@ -24,7 +24,6 @@ class VtkGlyph3DWrap : public VtkPolyDataAlgorithmWrap
 		VtkGlyph3DWrap(vtkSmartPointer<vtkGlyph3D>);
 		VtkGlyph3DWrap();
 		~VtkGlyph3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

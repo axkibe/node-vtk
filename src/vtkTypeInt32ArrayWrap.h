@@ -24,7 +24,6 @@ class VtkTypeInt32ArrayWrap : public VtkIntArrayWrap
 		VtkTypeInt32ArrayWrap(vtkSmartPointer<vtkTypeInt32Array>);
 		VtkTypeInt32ArrayWrap();
 		~VtkTypeInt32ArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

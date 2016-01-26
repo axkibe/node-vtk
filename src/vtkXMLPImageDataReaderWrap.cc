@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLPImageDataReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLPImageDataReaderWrap::ptpl;
 
 VtkXMLPImageDataReaderWrap::VtkXMLPImageDataReaderWrap()
@@ -68,7 +67,6 @@ void VtkXMLPImageDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -152,7 +150,7 @@ void VtkXMLPImageDataReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataWrap *w = new VtkImageDataWrap();
 		w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkXMLPImageDataReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkXMLPImageDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLPImageDataReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLPImageDataReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLPImageDataReaderWrap *w = new VtkXMLPImageDataReaderWrap();
 	w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkXMLPImageDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLPImageDataReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLPImageDataReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLPImageDataReaderWrap *w = new VtkXMLPImageDataReaderWrap();
 		w->native.TakeReference(r);

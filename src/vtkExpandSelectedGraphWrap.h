@@ -24,7 +24,6 @@ class VtkExpandSelectedGraphWrap : public VtkSelectionAlgorithmWrap
 		VtkExpandSelectedGraphWrap(vtkSmartPointer<vtkExpandSelectedGraph>);
 		VtkExpandSelectedGraphWrap();
 		~VtkExpandSelectedGraphWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkHyperOctreePointsGrabberWrap : public VtkObjectWrap
 		VtkHyperOctreePointsGrabberWrap(vtkSmartPointer<vtkHyperOctreePointsGrabber>);
 		VtkHyperOctreePointsGrabberWrap();
 		~VtkHyperOctreePointsGrabberWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

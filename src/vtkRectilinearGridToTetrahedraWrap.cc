@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRectilinearGridToTetrahedraWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRectilinearGridToTetrahedraWrap::ptpl;
 
 VtkRectilinearGridToTetrahedraWrap::VtkRectilinearGridToTetrahedraWrap()
@@ -93,7 +92,6 @@ void VtkRectilinearGridToTetrahedraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTetraPerCellTo6", SetTetraPerCellTo6);
 	Nan::SetPrototypeMethod(tpl, "setTetraPerCellTo6", SetTetraPerCellTo6);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -199,7 +197,7 @@ void VtkRectilinearGridToTetrahedraWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearGridToTetrahedraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearGridToTetrahedraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearGridToTetrahedraWrap *w = new VtkRectilinearGridToTetrahedraWrap();
 	w->native.TakeReference(r);
@@ -251,7 +249,7 @@ void VtkRectilinearGridToTetrahedraWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRectilinearGridToTetrahedraWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRectilinearGridToTetrahedraWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectilinearGridToTetrahedraWrap *w = new VtkRectilinearGridToTetrahedraWrap();
 		w->native.TakeReference(r);

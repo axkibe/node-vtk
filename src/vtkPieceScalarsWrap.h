@@ -24,7 +24,6 @@ class VtkPieceScalarsWrap : public VtkDataSetAlgorithmWrap
 		VtkPieceScalarsWrap(vtkSmartPointer<vtkPieceScalars>);
 		VtkPieceScalarsWrap();
 		~VtkPieceScalarsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

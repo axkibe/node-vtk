@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInformationExecutivePortKeyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInformationExecutivePortKeyWrap::ptpl;
 
 VtkInformationExecutivePortKeyWrap::VtkInformationExecutivePortKeyWrap()
@@ -78,7 +77,6 @@ void VtkInformationExecutivePortKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -139,7 +137,7 @@ void VtkInformationExecutivePortKeyWrap::GetExecutive(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExecutiveWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExecutiveWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExecutiveWrap *w = new VtkExecutiveWrap();
 		w->native.TakeReference(r);
@@ -209,7 +207,7 @@ void VtkInformationExecutivePortKeyWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationExecutivePortKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationExecutivePortKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationExecutivePortKeyWrap *w = new VtkInformationExecutivePortKeyWrap();
 	w->native.TakeReference(r);
@@ -262,7 +260,7 @@ void VtkInformationExecutivePortKeyWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationExecutivePortKeyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationExecutivePortKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationExecutivePortKeyWrap *w = new VtkInformationExecutivePortKeyWrap();
 		w->native.TakeReference(r);

@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoProjectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoProjectionWrap::ptpl;
 
 VtkGeoProjectionWrap::VtkGeoProjectionWrap()
@@ -104,7 +103,6 @@ void VtkGeoProjectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOptionalParameter", SetOptionalParameter);
 	Nan::SetPrototypeMethod(tpl, "setOptionalParameter", SetOptionalParameter);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -362,7 +360,7 @@ void VtkGeoProjectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoProjectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoProjectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoProjectionWrap *w = new VtkGeoProjectionWrap();
 	w->native.TakeReference(r);
@@ -410,7 +408,7 @@ void VtkGeoProjectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoProjectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoProjectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoProjectionWrap *w = new VtkGeoProjectionWrap();
 		w->native.TakeReference(r);

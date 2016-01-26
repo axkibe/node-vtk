@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTimeSourceExampleWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTimeSourceExampleWrap::ptpl;
 
 VtkTimeSourceExampleWrap::VtkTimeSourceExampleWrap()
@@ -108,7 +107,6 @@ void VtkTimeSourceExampleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetYAmplitude", SetYAmplitude);
 	Nan::SetPrototypeMethod(tpl, "setYAmplitude", SetYAmplitude);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -346,7 +344,7 @@ void VtkTimeSourceExampleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTimeSourceExampleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTimeSourceExampleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTimeSourceExampleWrap *w = new VtkTimeSourceExampleWrap();
 	w->native.TakeReference(r);
@@ -374,7 +372,7 @@ void VtkTimeSourceExampleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTimeSourceExampleWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTimeSourceExampleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTimeSourceExampleWrap *w = new VtkTimeSourceExampleWrap();
 		w->native.TakeReference(r);

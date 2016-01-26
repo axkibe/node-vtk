@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLRenderWindowWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLRenderWindowWrap::ptpl;
 
 VtkOpenGLRenderWindowWrap::VtkOpenGLRenderWindowWrap()
@@ -127,7 +126,6 @@ void VtkOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WaitForCompletion", WaitForCompletion);
 	Nan::SetPrototypeMethod(tpl, "waitForCompletion", WaitForCompletion);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -209,7 +207,7 @@ void VtkOpenGLRenderWindowWrap::GetExtensionManager(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLExtensionManagerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLExtensionManagerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLExtensionManagerWrap *w = new VtkOpenGLExtensionManagerWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkOpenGLRenderWindowWrap::GetHardwareSupport(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLHardwareSupportWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLHardwareSupportWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLHardwareSupportWrap *w = new VtkOpenGLHardwareSupportWrap();
 	w->native.TakeReference(r);
@@ -483,7 +481,7 @@ void VtkOpenGLRenderWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLRenderWindowWrap *w = new VtkOpenGLRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -547,7 +545,7 @@ void VtkOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLRenderWindowWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLRenderWindowWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLRenderWindowWrap *w = new VtkOpenGLRenderWindowWrap();
 		w->native.TakeReference(r);

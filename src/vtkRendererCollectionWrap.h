@@ -24,7 +24,6 @@ class VtkRendererCollectionWrap : public VtkCollectionWrap
 		VtkRendererCollectionWrap(vtkSmartPointer<vtkRendererCollection>);
 		VtkRendererCollectionWrap();
 		~VtkRendererCollectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

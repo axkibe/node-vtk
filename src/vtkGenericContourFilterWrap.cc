@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericContourFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericContourFilterWrap::ptpl;
 
 VtkGenericContourFilterWrap::VtkGenericContourFilterWrap()
@@ -124,7 +123,6 @@ void VtkGenericContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfContours", SetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfContours", SetNumberOfContours);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -347,7 +345,7 @@ void VtkGenericContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -427,7 +425,7 @@ void VtkGenericContourFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericContourFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericContourFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericContourFilterWrap *w = new VtkGenericContourFilterWrap();
 	w->native.TakeReference(r);
@@ -455,7 +453,7 @@ void VtkGenericContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericContourFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericContourFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericContourFilterWrap *w = new VtkGenericContourFilterWrap();
 		w->native.TakeReference(r);

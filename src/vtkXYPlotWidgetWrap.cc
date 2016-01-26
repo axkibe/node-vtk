@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXYPlotWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXYPlotWidgetWrap::ptpl;
 
 VtkXYPlotWidgetWrap::VtkXYPlotWidgetWrap()
@@ -70,7 +69,6 @@ void VtkXYPlotWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXYPlotActor", SetXYPlotActor);
 	Nan::SetPrototypeMethod(tpl, "setXYPlotActor", SetXYPlotActor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkXYPlotWidgetWrap::GetXYPlotActor(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXYPlotActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXYPlotActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXYPlotActorWrap *w = new VtkXYPlotActorWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkXYPlotWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXYPlotWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXYPlotWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXYPlotWidgetWrap *w = new VtkXYPlotWidgetWrap();
 	w->native.TakeReference(r);
@@ -199,7 +197,7 @@ void VtkXYPlotWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXYPlotWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXYPlotWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXYPlotWidgetWrap *w = new VtkXYPlotWidgetWrap();
 		w->native.TakeReference(r);

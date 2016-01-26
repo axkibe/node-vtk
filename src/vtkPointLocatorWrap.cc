@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPointLocatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPointLocatorWrap::ptpl;
 
 VtkPointLocatorWrap::VtkPointLocatorWrap()
@@ -96,7 +95,6 @@ void VtkPointLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPointsPerBucket", SetNumberOfPointsPerBucket);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPointsPerBucket", SetNumberOfPointsPerBucket);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -282,7 +280,7 @@ void VtkPointLocatorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -339,7 +337,7 @@ void VtkPointLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointLocatorWrap *w = new VtkPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -367,7 +365,7 @@ void VtkPointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointLocatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointLocatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointLocatorWrap *w = new VtkPointLocatorWrap();
 		w->native.TakeReference(r);

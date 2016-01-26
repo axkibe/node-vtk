@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVectorDotWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVectorDotWrap::ptpl;
 
 VtkVectorDotWrap::VtkVectorDotWrap()
@@ -63,7 +62,6 @@ void VtkVectorDotWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkVectorDotWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVectorDotWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVectorDotWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVectorDotWrap *w = new VtkVectorDotWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkVectorDotWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVectorDotWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVectorDotWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVectorDotWrap *w = new VtkVectorDotWrap();
 		w->native.TakeReference(r);

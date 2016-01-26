@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoTreeNodeCacheWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoTreeNodeCacheWrap::ptpl;
 
 VtkGeoTreeNodeCacheWrap::VtkGeoTreeNodeCacheWrap()
@@ -81,7 +80,6 @@ void VtkGeoTreeNodeCacheWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCacheMinimumLimit", SetCacheMinimumLimit);
 	Nan::SetPrototypeMethod(tpl, "setCacheMinimumLimit", SetCacheMinimumLimit);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -201,7 +199,7 @@ void VtkGeoTreeNodeCacheWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoTreeNodeCacheWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoTreeNodeCacheWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoTreeNodeCacheWrap *w = new VtkGeoTreeNodeCacheWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkGeoTreeNodeCacheWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoTreeNodeCacheWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoTreeNodeCacheWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoTreeNodeCacheWrap *w = new VtkGeoTreeNodeCacheWrap();
 		w->native.TakeReference(r);

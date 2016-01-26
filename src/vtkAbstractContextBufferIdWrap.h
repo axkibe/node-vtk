@@ -24,7 +24,6 @@ class VtkAbstractContextBufferIdWrap : public VtkObjectWrap
 		VtkAbstractContextBufferIdWrap(vtkSmartPointer<vtkAbstractContextBufferId>);
 		VtkAbstractContextBufferIdWrap();
 		~VtkAbstractContextBufferIdWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

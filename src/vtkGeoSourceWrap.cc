@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoSourceWrap::ptpl;
 
 VtkGeoSourceWrap::VtkGeoSourceWrap()
@@ -80,7 +79,6 @@ void VtkGeoSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WorkerThread", WorkerThread);
 	Nan::SetPrototypeMethod(tpl, "workerThread", WorkerThread);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkGeoSourceWrap::GetRequestedNodes(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCollectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCollectionWrap *w = new VtkCollectionWrap();
 		w->native.TakeReference(r);
@@ -167,7 +165,7 @@ void VtkGeoSourceWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -231,7 +229,7 @@ void VtkGeoSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoSourceWrap *w = new VtkGeoSourceWrap();
 	w->native.TakeReference(r);
@@ -279,7 +277,7 @@ void VtkGeoSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoSourceWrap *w = new VtkGeoSourceWrap();
 		w->native.TakeReference(r);

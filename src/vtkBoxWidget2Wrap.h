@@ -24,7 +24,6 @@ class VtkBoxWidget2Wrap : public VtkAbstractWidgetWrap
 		VtkBoxWidget2Wrap(vtkSmartPointer<vtkBoxWidget2>);
 		VtkBoxWidget2Wrap();
 		~VtkBoxWidget2Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

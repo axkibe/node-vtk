@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPointHandleRepresentation3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPointHandleRepresentation3DWrap::ptpl;
 
 VtkPointHandleRepresentation3DWrap::VtkPointHandleRepresentation3DWrap()
@@ -200,7 +199,6 @@ void VtkPointHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ZShadowsOn", ZShadowsOn);
 	Nan::SetPrototypeMethod(tpl, "zShadowsOn", ZShadowsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -417,7 +415,7 @@ void VtkPointHandleRepresentation3DWrap::GetProperty(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -440,7 +438,7 @@ void VtkPointHandleRepresentation3DWrap::GetSelectedProperty(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -588,7 +586,7 @@ void VtkPointHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointHandleRepresentation3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointHandleRepresentation3DWrap *w = new VtkPointHandleRepresentation3DWrap();
 	w->native.TakeReference(r);
@@ -704,7 +702,7 @@ void VtkPointHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointHandleRepresentation3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointHandleRepresentation3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointHandleRepresentation3DWrap *w = new VtkPointHandleRepresentation3DWrap();
 		w->native.TakeReference(r);

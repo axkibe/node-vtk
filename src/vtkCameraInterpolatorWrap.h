@@ -24,7 +24,6 @@ class VtkCameraInterpolatorWrap : public VtkObjectWrap
 		VtkCameraInterpolatorWrap(vtkSmartPointer<vtkCameraInterpolator>);
 		VtkCameraInterpolatorWrap();
 		~VtkCameraInterpolatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

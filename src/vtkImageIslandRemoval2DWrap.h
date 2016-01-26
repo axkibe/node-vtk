@@ -24,7 +24,6 @@ class VtkImageIslandRemoval2DWrap : public VtkImageAlgorithmWrap
 		VtkImageIslandRemoval2DWrap(vtkSmartPointer<vtkImageIslandRemoval2D>);
 		VtkImageIslandRemoval2DWrap();
 		~VtkImageIslandRemoval2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

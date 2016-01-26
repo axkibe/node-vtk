@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFileOutputWindowWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFileOutputWindowWrap::ptpl;
 
 VtkFileOutputWindowWrap::VtkFileOutputWindowWrap()
@@ -93,7 +92,6 @@ void VtkFileOutputWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFlush", SetFlush);
 	Nan::SetPrototypeMethod(tpl, "setFlush", SetFlush);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -281,7 +279,7 @@ void VtkFileOutputWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFileOutputWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFileOutputWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFileOutputWindowWrap *w = new VtkFileOutputWindowWrap();
 	w->native.TakeReference(r);
@@ -309,7 +307,7 @@ void VtkFileOutputWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFileOutputWindowWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFileOutputWindowWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFileOutputWindowWrap *w = new VtkFileOutputWindowWrap();
 		w->native.TakeReference(r);

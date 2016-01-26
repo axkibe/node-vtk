@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericGlyph3DFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericGlyph3DFilterWrap::ptpl;
 
 VtkGenericGlyph3DFilterWrap::VtkGenericGlyph3DFilterWrap()
@@ -223,7 +222,6 @@ void VtkGenericGlyph3DFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorModeToVectorRotationOff", SetVectorModeToVectorRotationOff);
 	Nan::SetPrototypeMethod(tpl, "setVectorModeToVectorRotationOff", SetVectorModeToVectorRotationOff);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -541,7 +539,7 @@ void VtkGenericGlyph3DFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
 		w->native.TakeReference(r);
@@ -617,7 +615,7 @@ void VtkGenericGlyph3DFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericGlyph3DFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericGlyph3DFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericGlyph3DFilterWrap *w = new VtkGenericGlyph3DFilterWrap();
 	w->native.TakeReference(r);
@@ -669,7 +667,7 @@ void VtkGenericGlyph3DFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericGlyph3DFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericGlyph3DFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericGlyph3DFilterWrap *w = new VtkGenericGlyph3DFilterWrap();
 		w->native.TakeReference(r);

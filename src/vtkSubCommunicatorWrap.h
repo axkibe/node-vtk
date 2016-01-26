@@ -24,7 +24,6 @@ class VtkSubCommunicatorWrap : public VtkCommunicatorWrap
 		VtkSubCommunicatorWrap(vtkSmartPointer<vtkSubCommunicator>);
 		VtkSubCommunicatorWrap();
 		~VtkSubCommunicatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

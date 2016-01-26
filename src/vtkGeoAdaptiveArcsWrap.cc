@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoAdaptiveArcsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoAdaptiveArcsWrap::ptpl;
 
 VtkGeoAdaptiveArcsWrap::VtkGeoAdaptiveArcsWrap()
@@ -85,7 +84,6 @@ void VtkGeoAdaptiveArcsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -183,7 +181,7 @@ void VtkGeoAdaptiveArcsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkGeoAdaptiveArcsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoAdaptiveArcsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoAdaptiveArcsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoAdaptiveArcsWrap *w = new VtkGeoAdaptiveArcsWrap();
 	w->native.TakeReference(r);
@@ -256,7 +254,7 @@ void VtkGeoAdaptiveArcsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoAdaptiveArcsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoAdaptiveArcsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoAdaptiveArcsWrap *w = new VtkGeoAdaptiveArcsWrap();
 		w->native.TakeReference(r);

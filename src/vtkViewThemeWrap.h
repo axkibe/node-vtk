@@ -24,7 +24,6 @@ class VtkViewThemeWrap : public VtkObjectWrap
 		VtkViewThemeWrap(vtkSmartPointer<vtkViewTheme>);
 		VtkViewThemeWrap();
 		~VtkViewThemeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

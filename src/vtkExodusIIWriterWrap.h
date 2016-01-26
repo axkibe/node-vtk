@@ -24,7 +24,6 @@ class VtkExodusIIWriterWrap : public VtkWriterWrap
 		VtkExodusIIWriterWrap(vtkSmartPointer<vtkExodusIIWriter>);
 		VtkExodusIIWriterWrap();
 		~VtkExodusIIWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

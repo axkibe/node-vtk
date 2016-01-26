@@ -24,7 +24,6 @@ class VtkInformationDataObjectKeyWrap : public VtkInformationKeyWrap
 		VtkInformationDataObjectKeyWrap(vtkSmartPointer<vtkInformationDataObjectKey>);
 		VtkInformationDataObjectKeyWrap();
 		~VtkInformationDataObjectKeyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

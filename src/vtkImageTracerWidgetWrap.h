@@ -24,7 +24,6 @@ class VtkImageTracerWidgetWrap : public Vtk3DWidgetWrap
 		VtkImageTracerWidgetWrap(vtkSmartPointer<vtkImageTracerWidget>);
 		VtkImageTracerWidgetWrap();
 		~VtkImageTracerWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

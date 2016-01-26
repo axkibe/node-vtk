@@ -24,7 +24,6 @@ class VtkMaskPointsWrap : public VtkPolyDataAlgorithmWrap
 		VtkMaskPointsWrap(vtkSmartPointer<vtkMaskPoints>);
 		VtkMaskPointsWrap();
 		~VtkMaskPointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

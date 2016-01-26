@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeLayoutStrategyWrap::ptpl;
 
 VtkTreeLayoutStrategyWrap::VtkTreeLayoutStrategyWrap()
@@ -117,7 +116,6 @@ void VtkTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRotation", SetRotation);
 	Nan::SetPrototypeMethod(tpl, "setRotation", SetRotation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -333,7 +331,7 @@ void VtkTreeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeLayoutStrategyWrap *w = new VtkTreeLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -409,7 +407,7 @@ void VtkTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeLayoutStrategyWrap *w = new VtkTreeLayoutStrategyWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkImplicitSelectionLoopWrap : public VtkImplicitFunctionWrap
 		VtkImplicitSelectionLoopWrap(vtkSmartPointer<vtkImplicitSelectionLoop>);
 		VtkImplicitSelectionLoopWrap();
 		~VtkImplicitSelectionLoopWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

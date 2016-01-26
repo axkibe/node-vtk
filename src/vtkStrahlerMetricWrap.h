@@ -24,7 +24,6 @@ class VtkStrahlerMetricWrap : public VtkTreeAlgorithmWrap
 		VtkStrahlerMetricWrap(vtkSmartPointer<vtkStrahlerMetric>);
 		VtkStrahlerMetricWrap();
 		~VtkStrahlerMetricWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkDSPFilterGroupWrap : public VtkObjectWrap
 		VtkDSPFilterGroupWrap(vtkSmartPointer<vtkDSPFilterGroup>);
 		VtkDSPFilterGroupWrap();
 		~VtkDSPFilterGroupWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

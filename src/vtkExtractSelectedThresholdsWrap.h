@@ -24,7 +24,6 @@ class VtkExtractSelectedThresholdsWrap : public VtkExtractSelectionBaseWrap
 		VtkExtractSelectedThresholdsWrap(vtkSmartPointer<vtkExtractSelectedThresholds>);
 		VtkExtractSelectedThresholdsWrap();
 		~VtkExtractSelectedThresholdsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkAMRBaseReaderWrap : public VtkOverlappingAMRAlgorithmWrap
 		VtkAMRBaseReaderWrap(vtkSmartPointer<vtkAMRBaseReader>);
 		VtkAMRBaseReaderWrap();
 		~VtkAMRBaseReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

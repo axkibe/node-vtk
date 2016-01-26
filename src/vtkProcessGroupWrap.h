@@ -24,7 +24,6 @@ class VtkProcessGroupWrap : public VtkObjectWrap
 		VtkProcessGroupWrap(vtkSmartPointer<vtkProcessGroup>);
 		VtkProcessGroupWrap();
 		~VtkProcessGroupWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

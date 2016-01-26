@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInterpolateDataSetAttributesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInterpolateDataSetAttributesWrap::ptpl;
 
 VtkInterpolateDataSetAttributesWrap::VtkInterpolateDataSetAttributesWrap()
@@ -76,7 +75,6 @@ void VtkInterpolateDataSetAttributesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetT", SetT);
 	Nan::SetPrototypeMethod(tpl, "setT", SetT);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -132,7 +130,7 @@ void VtkInterpolateDataSetAttributesWrap::GetInputList(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetCollectionWrap *w = new VtkDataSetCollectionWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkInterpolateDataSetAttributesWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInterpolateDataSetAttributesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInterpolateDataSetAttributesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInterpolateDataSetAttributesWrap *w = new VtkInterpolateDataSetAttributesWrap();
 	w->native.TakeReference(r);
@@ -247,7 +245,7 @@ void VtkInterpolateDataSetAttributesWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInterpolateDataSetAttributesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInterpolateDataSetAttributesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInterpolateDataSetAttributesWrap *w = new VtkInterpolateDataSetAttributesWrap();
 		w->native.TakeReference(r);

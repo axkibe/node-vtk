@@ -24,7 +24,6 @@ class VtkDummyCommunicatorWrap : public VtkCommunicatorWrap
 		VtkDummyCommunicatorWrap(vtkSmartPointer<vtkDummyCommunicator>);
 		VtkDummyCommunicatorWrap();
 		~VtkDummyCommunicatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

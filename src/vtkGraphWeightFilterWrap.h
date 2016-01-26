@@ -24,7 +24,6 @@ class VtkGraphWeightFilterWrap : public VtkGraphAlgorithmWrap
 		VtkGraphWeightFilterWrap(vtkSmartPointer<vtkGraphWeightFilter>);
 		VtkGraphWeightFilterWrap();
 		~VtkGraphWeightFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

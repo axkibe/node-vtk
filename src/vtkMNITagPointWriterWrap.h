@@ -24,7 +24,6 @@ class VtkMNITagPointWriterWrap : public VtkWriterWrap
 		VtkMNITagPointWriterWrap(vtkSmartPointer<vtkMNITagPointWriter>);
 		VtkMNITagPointWriterWrap();
 		~VtkMNITagPointWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkKochanekSplineWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkKochanekSplineWrap::ptpl;
 
 VtkKochanekSplineWrap::VtkKochanekSplineWrap()
@@ -87,7 +86,6 @@ void VtkKochanekSplineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDefaultTension", SetDefaultTension);
 	Nan::SetPrototypeMethod(tpl, "setDefaultTension", SetDefaultTension);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -260,7 +258,7 @@ void VtkKochanekSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKochanekSplineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKochanekSplineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKochanekSplineWrap *w = new VtkKochanekSplineWrap();
 	w->native.TakeReference(r);
@@ -288,7 +286,7 @@ void VtkKochanekSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkKochanekSplineWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkKochanekSplineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKochanekSplineWrap *w = new VtkKochanekSplineWrap();
 		w->native.TakeReference(r);

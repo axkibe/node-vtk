@@ -24,7 +24,6 @@ class VtkMINCImageAttributesWrap : public VtkObjectWrap
 		VtkMINCImageAttributesWrap(vtkSmartPointer<vtkMINCImageAttributes>);
 		VtkMINCImageAttributesWrap();
 		~VtkMINCImageAttributesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

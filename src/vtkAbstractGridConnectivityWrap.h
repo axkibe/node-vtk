@@ -24,7 +24,6 @@ class VtkAbstractGridConnectivityWrap : public VtkObjectWrap
 		VtkAbstractGridConnectivityWrap(vtkSmartPointer<vtkAbstractGridConnectivity>);
 		VtkAbstractGridConnectivityWrap();
 		~VtkAbstractGridConnectivityWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

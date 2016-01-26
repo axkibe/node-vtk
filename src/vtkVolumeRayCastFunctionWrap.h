@@ -24,7 +24,6 @@ class VtkVolumeRayCastFunctionWrap : public VtkObjectWrap
 		VtkVolumeRayCastFunctionWrap(vtkSmartPointer<vtkVolumeRayCastFunction>);
 		VtkVolumeRayCastFunctionWrap();
 		~VtkVolumeRayCastFunctionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

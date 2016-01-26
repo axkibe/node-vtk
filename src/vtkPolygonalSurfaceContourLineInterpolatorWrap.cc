@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolygonalSurfaceContourLineInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolygonalSurfaceContourLineInterpolatorWrap::ptpl;
 
 VtkPolygonalSurfaceContourLineInterpolatorWrap::VtkPolygonalSurfaceContourLineInterpolatorWrap()
@@ -75,7 +74,6 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDistanceOffset", SetDistanceOffset);
 	Nan::SetPrototypeMethod(tpl, "setDistanceOffset", SetDistanceOffset);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -227,7 +225,7 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::NewInstance(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolygonalSurfaceContourLineInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolygonalSurfaceContourLineInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolygonalSurfaceContourLineInterpolatorWrap *w = new VtkPolygonalSurfaceContourLineInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -255,7 +253,7 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::SafeDownCast(const Nan::Fun
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolygonalSurfaceContourLineInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolygonalSurfaceContourLineInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolygonalSurfaceContourLineInterpolatorWrap *w = new VtkPolygonalSurfaceContourLineInterpolatorWrap();
 		w->native.TakeReference(r);

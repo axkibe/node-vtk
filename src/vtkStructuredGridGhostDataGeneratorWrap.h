@@ -24,7 +24,6 @@ class VtkStructuredGridGhostDataGeneratorWrap : public VtkDataSetGhostGeneratorW
 		VtkStructuredGridGhostDataGeneratorWrap(vtkSmartPointer<vtkStructuredGridGhostDataGenerator>);
 		VtkStructuredGridGhostDataGeneratorWrap();
 		~VtkStructuredGridGhostDataGeneratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

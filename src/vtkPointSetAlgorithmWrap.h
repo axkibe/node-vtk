@@ -24,7 +24,6 @@ class VtkPointSetAlgorithmWrap : public VtkAlgorithmWrap
 		VtkPointSetAlgorithmWrap(vtkSmartPointer<vtkPointSetAlgorithm>);
 		VtkPointSetAlgorithmWrap();
 		~VtkPointSetAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

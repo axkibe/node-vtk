@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSubCommunicatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSubCommunicatorWrap::ptpl;
 
 VtkSubCommunicatorWrap::VtkSubCommunicatorWrap()
@@ -67,7 +66,6 @@ void VtkSubCommunicatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGroup", SetGroup);
 	Nan::SetPrototypeMethod(tpl, "setGroup", SetGroup);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkSubCommunicatorWrap::GetGroup(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProcessGroupWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProcessGroupWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProcessGroupWrap *w = new VtkProcessGroupWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkSubCommunicatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSubCommunicatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSubCommunicatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSubCommunicatorWrap *w = new VtkSubCommunicatorWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkSubCommunicatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSubCommunicatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSubCommunicatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSubCommunicatorWrap *w = new VtkSubCommunicatorWrap();
 		w->native.TakeReference(r);

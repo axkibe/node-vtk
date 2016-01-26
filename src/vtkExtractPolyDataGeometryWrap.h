@@ -24,7 +24,6 @@ class VtkExtractPolyDataGeometryWrap : public VtkPolyDataAlgorithmWrap
 		VtkExtractPolyDataGeometryWrap(vtkSmartPointer<vtkExtractPolyDataGeometry>);
 		VtkExtractPolyDataGeometryWrap();
 		~VtkExtractPolyDataGeometryWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

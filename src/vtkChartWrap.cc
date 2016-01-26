@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkChartWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkChartWrap::ptpl;
 
 VtkChartWrap::VtkChartWrap()
@@ -150,7 +149,6 @@ void VtkChartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTopBorder", SetTopBorder);
 	Nan::SetPrototypeMethod(tpl, "setTopBorder", SetTopBorder);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -196,7 +194,7 @@ void VtkChartWrap::AddPlot(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlotWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlotWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotWrap *w = new VtkPlotWrap();
 		w->native.TakeReference(r);
@@ -255,7 +253,7 @@ void VtkChartWrap::GetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAnnotationLinkWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAnnotationLinkWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLinkWrap *w = new VtkAnnotationLinkWrap();
 	w->native.TakeReference(r);
@@ -282,7 +280,7 @@ void VtkChartWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAxisWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAxisWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxisWrap *w = new VtkAxisWrap();
 		w->native.TakeReference(r);
@@ -308,7 +306,7 @@ void VtkChartWrap::GetBackgroundBrush(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBrushWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBrushWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBrushWrap *w = new VtkBrushWrap();
 	w->native.TakeReference(r);
@@ -380,7 +378,7 @@ void VtkChartWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChartLegendWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChartLegendWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartLegendWrap *w = new VtkChartLegendWrap();
 	w->native.TakeReference(r);
@@ -431,7 +429,7 @@ void VtkChartWrap::GetTitleProperties(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -476,7 +474,7 @@ void VtkChartWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChartWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChartWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartWrap *w = new VtkChartWrap();
 	w->native.TakeReference(r);
@@ -516,7 +514,7 @@ void VtkChartWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkChartWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkChartWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkChartWrap *w = new VtkChartWrap();
 		w->native.TakeReference(r);

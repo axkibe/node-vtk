@@ -24,7 +24,6 @@ class VtkBalloonWidgetWrap : public VtkHoverWidgetWrap
 		VtkBalloonWidgetWrap(vtkSmartPointer<vtkBalloonWidget>);
 		VtkBalloonWidgetWrap();
 		~VtkBalloonWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

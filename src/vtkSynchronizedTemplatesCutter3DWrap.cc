@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSynchronizedTemplatesCutter3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSynchronizedTemplatesCutter3DWrap::ptpl;
 
 VtkSynchronizedTemplatesCutter3DWrap::VtkSynchronizedTemplatesCutter3DWrap()
@@ -84,7 +83,6 @@ void VtkSynchronizedTemplatesCutter3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreadedExecute", ThreadedExecute);
 	Nan::SetPrototypeMethod(tpl, "threadedExecute", ThreadedExecute);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -140,7 +138,7 @@ void VtkSynchronizedTemplatesCutter3DWrap::GetCutFunction(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
 	w->native.TakeReference(r);
@@ -227,7 +225,7 @@ void VtkSynchronizedTemplatesCutter3DWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSynchronizedTemplatesCutter3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSynchronizedTemplatesCutter3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSynchronizedTemplatesCutter3DWrap *w = new VtkSynchronizedTemplatesCutter3DWrap();
 	w->native.TakeReference(r);
@@ -255,7 +253,7 @@ void VtkSynchronizedTemplatesCutter3DWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSynchronizedTemplatesCutter3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSynchronizedTemplatesCutter3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSynchronizedTemplatesCutter3DWrap *w = new VtkSynchronizedTemplatesCutter3DWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkPassThroughEdgeStrategyWrap : public VtkEdgeLayoutStrategyWrap
 		VtkPassThroughEdgeStrategyWrap(vtkSmartPointer<vtkPassThroughEdgeStrategy>);
 		VtkPassThroughEdgeStrategyWrap();
 		~VtkPassThroughEdgeStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

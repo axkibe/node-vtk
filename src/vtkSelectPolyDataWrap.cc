@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSelectPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSelectPolyDataWrap::ptpl;
 
 VtkSelectPolyDataWrap::VtkSelectPolyDataWrap()
@@ -137,7 +136,6 @@ void VtkSelectPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionModeToSmallestRegion", SetSelectionModeToSmallestRegion);
 	Nan::SetPrototypeMethod(tpl, "setSelectionModeToSmallestRegion", SetSelectionModeToSmallestRegion);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -283,7 +281,7 @@ void VtkSelectPolyDataWrap::GetLoop(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -306,7 +304,7 @@ void VtkSelectPolyDataWrap::GetSelectionEdges(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -385,7 +383,7 @@ void VtkSelectPolyDataWrap::GetUnselectedOutput(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -454,7 +452,7 @@ void VtkSelectPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSelectPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSelectPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectPolyDataWrap *w = new VtkSelectPolyDataWrap();
 	w->native.TakeReference(r);
@@ -482,7 +480,7 @@ void VtkSelectPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSelectPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSelectPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSelectPolyDataWrap *w = new VtkSelectPolyDataWrap();
 		w->native.TakeReference(r);

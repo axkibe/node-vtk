@@ -24,7 +24,6 @@ class VtkSurfaceReconstructionFilterWrap : public VtkImageAlgorithmWrap
 		VtkSurfaceReconstructionFilterWrap(vtkSmartPointer<vtkSurfaceReconstructionFilter>);
 		VtkSurfaceReconstructionFilterWrap();
 		~VtkSurfaceReconstructionFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

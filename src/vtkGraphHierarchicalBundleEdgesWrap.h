@@ -24,7 +24,6 @@ class VtkGraphHierarchicalBundleEdgesWrap : public VtkGraphAlgorithmWrap
 		VtkGraphHierarchicalBundleEdgesWrap(vtkSmartPointer<vtkGraphHierarchicalBundleEdges>);
 		VtkGraphHierarchicalBundleEdgesWrap();
 		~VtkGraphHierarchicalBundleEdgesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

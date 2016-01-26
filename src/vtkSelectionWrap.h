@@ -24,7 +24,6 @@ class VtkSelectionWrap : public VtkDataObjectWrap
 		VtkSelectionWrap(vtkSmartPointer<vtkSelection>);
 		VtkSelectionWrap();
 		~VtkSelectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

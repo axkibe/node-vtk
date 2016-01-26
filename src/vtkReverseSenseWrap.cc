@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkReverseSenseWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkReverseSenseWrap::ptpl;
 
 VtkReverseSenseWrap::VtkReverseSenseWrap()
@@ -84,7 +83,6 @@ void VtkReverseSenseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReverseNormals", SetReverseNormals);
 	Nan::SetPrototypeMethod(tpl, "setReverseNormals", SetReverseNormals);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -190,7 +188,7 @@ void VtkReverseSenseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkReverseSenseWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkReverseSenseWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkReverseSenseWrap *w = new VtkReverseSenseWrap();
 	w->native.TakeReference(r);
@@ -266,7 +264,7 @@ void VtkReverseSenseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkReverseSenseWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkReverseSenseWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkReverseSenseWrap *w = new VtkReverseSenseWrap();
 		w->native.TakeReference(r);

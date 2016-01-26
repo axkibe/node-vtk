@@ -24,7 +24,6 @@ class VtkClipVolumeWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkClipVolumeWrap(vtkSmartPointer<vtkClipVolume>);
 		VtkClipVolumeWrap();
 		~VtkClipVolumeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkSmoothPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkSmoothPolyDataFilterWrap(vtkSmartPointer<vtkSmoothPolyDataFilter>);
 		VtkSmoothPolyDataFilterWrap();
 		~VtkSmoothPolyDataFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

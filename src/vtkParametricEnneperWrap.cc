@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParametricEnneperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParametricEnneperWrap::ptpl;
 
 VtkParametricEnneperWrap::VtkParametricEnneperWrap()
@@ -63,7 +62,6 @@ void VtkParametricEnneperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkParametricEnneperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParametricEnneperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParametricEnneperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParametricEnneperWrap *w = new VtkParametricEnneperWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkParametricEnneperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParametricEnneperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParametricEnneperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParametricEnneperWrap *w = new VtkParametricEnneperWrap();
 		w->native.TakeReference(r);

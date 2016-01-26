@@ -24,7 +24,6 @@ class VtkImageInPlaceFilterWrap : public VtkImageAlgorithmWrap
 		VtkImageInPlaceFilterWrap(vtkSmartPointer<vtkImageInPlaceFilter>);
 		VtkImageInPlaceFilterWrap();
 		~VtkImageInPlaceFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

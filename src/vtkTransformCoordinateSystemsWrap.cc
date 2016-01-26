@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransformCoordinateSystemsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransformCoordinateSystemsWrap::ptpl;
 
 VtkTransformCoordinateSystemsWrap::VtkTransformCoordinateSystemsWrap()
@@ -97,7 +96,6 @@ void VtkTransformCoordinateSystemsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
 	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -181,7 +179,7 @@ void VtkTransformCoordinateSystemsWrap::GetViewport(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkViewportWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkViewportWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewportWrap *w = new VtkViewportWrap();
 	w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkTransformCoordinateSystemsWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransformCoordinateSystemsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransformCoordinateSystemsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransformCoordinateSystemsWrap *w = new VtkTransformCoordinateSystemsWrap();
 	w->native.TakeReference(r);
@@ -254,7 +252,7 @@ void VtkTransformCoordinateSystemsWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransformCoordinateSystemsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransformCoordinateSystemsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransformCoordinateSystemsWrap *w = new VtkTransformCoordinateSystemsWrap();
 		w->native.TakeReference(r);

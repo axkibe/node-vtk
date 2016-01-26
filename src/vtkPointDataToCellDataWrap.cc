@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPointDataToCellDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPointDataToCellDataWrap::ptpl;
 
 VtkPointDataToCellDataWrap::VtkPointDataToCellDataWrap()
@@ -72,7 +71,6 @@ void VtkPointDataToCellDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassPointData", SetPassPointData);
 	Nan::SetPrototypeMethod(tpl, "setPassPointData", SetPassPointData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -164,7 +162,7 @@ void VtkPointDataToCellDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointDataToCellDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointDataToCellDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointDataToCellDataWrap *w = new VtkPointDataToCellDataWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkPointDataToCellDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointDataToCellDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointDataToCellDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointDataToCellDataWrap *w = new VtkPointDataToCellDataWrap();
 		w->native.TakeReference(r);

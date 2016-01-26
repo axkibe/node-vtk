@@ -24,7 +24,6 @@ class VtkControlPointsItemWrap : public VtkPlotWrap
 		VtkControlPointsItemWrap(vtkSmartPointer<vtkControlPointsItem>);
 		VtkControlPointsItemWrap();
 		~VtkControlPointsItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

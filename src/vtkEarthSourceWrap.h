@@ -24,7 +24,6 @@ class VtkEarthSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkEarthSourceWrap(vtkSmartPointer<vtkEarthSource>);
 		VtkEarthSourceWrap();
 		~VtkEarthSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDataSetGradientWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDataSetGradientWrap::ptpl;
 
 VtkDataSetGradientWrap::VtkDataSetGradientWrap()
@@ -66,7 +65,6 @@ void VtkDataSetGradientWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResultArrayName", SetResultArrayName);
 	Nan::SetPrototypeMethod(tpl, "setResultArrayName", SetResultArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkDataSetGradientWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetGradientWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetGradientWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetGradientWrap *w = new VtkDataSetGradientWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkDataSetGradientWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataSetGradientWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataSetGradientWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataSetGradientWrap *w = new VtkDataSetGradientWrap();
 		w->native.TakeReference(r);

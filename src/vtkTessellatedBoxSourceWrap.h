@@ -24,7 +24,6 @@ class VtkTessellatedBoxSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkTessellatedBoxSourceWrap(vtkSmartPointer<vtkTessellatedBoxSource>);
 		VtkTessellatedBoxSourceWrap();
 		~VtkTessellatedBoxSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

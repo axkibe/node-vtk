@@ -24,7 +24,6 @@ class VtkGeoInteractorStyleWrap : public VtkInteractorStyleTrackballCameraWrap
 		VtkGeoInteractorStyleWrap(vtkSmartPointer<vtkGeoInteractorStyle>);
 		VtkGeoInteractorStyleWrap();
 		~VtkGeoInteractorStyleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

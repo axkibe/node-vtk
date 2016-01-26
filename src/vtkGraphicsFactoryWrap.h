@@ -24,7 +24,6 @@ class VtkGraphicsFactoryWrap : public VtkObjectWrap
 		VtkGraphicsFactoryWrap(vtkSmartPointer<vtkGraphicsFactory>);
 		VtkGraphicsFactoryWrap();
 		~VtkGraphicsFactoryWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkSynchronizedTemplatesCutter3DWrap : public VtkSynchronizedTemplates3DWr
 		VtkSynchronizedTemplatesCutter3DWrap(vtkSmartPointer<vtkSynchronizedTemplatesCutter3D>);
 		VtkSynchronizedTemplatesCutter3DWrap();
 		~VtkSynchronizedTemplatesCutter3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

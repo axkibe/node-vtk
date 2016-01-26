@@ -24,7 +24,6 @@ class VtkPCellDataToPointDataWrap : public VtkCellDataToPointDataWrap
 		VtkPCellDataToPointDataWrap(vtkSmartPointer<vtkPCellDataToPointData>);
 		VtkPCellDataToPointDataWrap();
 		~VtkPCellDataToPointDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

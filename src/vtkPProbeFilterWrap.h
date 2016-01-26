@@ -24,7 +24,6 @@ class VtkPProbeFilterWrap : public VtkCompositeDataProbeFilterWrap
 		VtkPProbeFilterWrap(vtkSmartPointer<vtkPProbeFilter>);
 		VtkPProbeFilterWrap();
 		~VtkPProbeFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

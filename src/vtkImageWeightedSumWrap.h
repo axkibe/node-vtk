@@ -24,7 +24,6 @@ class VtkImageWeightedSumWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageWeightedSumWrap(vtkSmartPointer<vtkImageWeightedSum>);
 		VtkImageWeightedSumWrap();
 		~VtkImageWeightedSumWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

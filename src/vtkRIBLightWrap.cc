@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRIBLightWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRIBLightWrap::ptpl;
 
 VtkRIBLightWrap::VtkRIBLightWrap()
@@ -76,7 +75,6 @@ void VtkRIBLightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShadowsOn", ShadowsOn);
 	Nan::SetPrototypeMethod(tpl, "shadowsOn", ShadowsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -168,7 +166,7 @@ void VtkRIBLightWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRIBLightWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRIBLightWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRIBLightWrap *w = new VtkRIBLightWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkRIBLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRIBLightWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRIBLightWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRIBLightWrap *w = new VtkRIBLightWrap();
 		w->native.TakeReference(r);

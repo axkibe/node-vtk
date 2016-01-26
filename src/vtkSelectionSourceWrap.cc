@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSelectionSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSelectionSourceWrap::ptpl;
 
 VtkSelectionSourceWrap::VtkSelectionSourceWrap()
@@ -141,7 +140,6 @@ void VtkSelectionSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetQueryString", SetQueryString);
 	Nan::SetPrototypeMethod(tpl, "setQueryString", SetQueryString);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -409,7 +407,7 @@ void VtkSelectionSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSelectionSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSelectionSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectionSourceWrap *w = new VtkSelectionSourceWrap();
 	w->native.TakeReference(r);
@@ -497,7 +495,7 @@ void VtkSelectionSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSelectionSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSelectionSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSelectionSourceWrap *w = new VtkSelectionSourceWrap();
 		w->native.TakeReference(r);

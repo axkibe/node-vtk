@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRenderbufferWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRenderbufferWrap::ptpl;
 
 VtkRenderbufferWrap::VtkRenderbufferWrap()
@@ -66,7 +65,6 @@ void VtkRenderbufferWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetContext", SetContext);
 	Nan::SetPrototypeMethod(tpl, "setContext", SetContext);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -122,7 +120,7 @@ void VtkRenderbufferWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -167,7 +165,7 @@ void VtkRenderbufferWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderbufferWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderbufferWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderbufferWrap *w = new VtkRenderbufferWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkRenderbufferWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRenderbufferWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRenderbufferWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderbufferWrap *w = new VtkRenderbufferWrap();
 		w->native.TakeReference(r);

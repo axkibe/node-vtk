@@ -24,7 +24,6 @@ class VtkCompositeDataSetWrap : public VtkDataObjectWrap
 		VtkCompositeDataSetWrap(vtkSmartPointer<vtkCompositeDataSet>);
 		VtkCompositeDataSetWrap();
 		~VtkCompositeDataSetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

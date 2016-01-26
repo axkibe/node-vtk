@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProbePolyhedronWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProbePolyhedronWrap::ptpl;
 
 VtkProbePolyhedronWrap::VtkProbePolyhedronWrap()
@@ -95,7 +94,6 @@ void VtkProbePolyhedronWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkProbePolyhedronWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -224,7 +222,7 @@ void VtkProbePolyhedronWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProbePolyhedronWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProbePolyhedronWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProbePolyhedronWrap *w = new VtkProbePolyhedronWrap();
 	w->native.TakeReference(r);
@@ -300,7 +298,7 @@ void VtkProbePolyhedronWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProbePolyhedronWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProbePolyhedronWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProbePolyhedronWrap *w = new VtkProbePolyhedronWrap();
 		w->native.TakeReference(r);

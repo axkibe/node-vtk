@@ -24,7 +24,6 @@ class VtkKCoreLayoutWrap : public VtkGraphAlgorithmWrap
 		VtkKCoreLayoutWrap(vtkSmartPointer<vtkKCoreLayout>);
 		VtkKCoreLayoutWrap();
 		~VtkKCoreLayoutWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

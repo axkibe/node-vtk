@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRTAnalyticSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRTAnalyticSourceWrap::ptpl;
 
 VtkRTAnalyticSourceWrap::VtkRTAnalyticSourceWrap()
@@ -120,7 +119,6 @@ void VtkRTAnalyticSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZMag", SetZMag);
 	Nan::SetPrototypeMethod(tpl, "setZMag", SetZMag);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -324,7 +322,7 @@ void VtkRTAnalyticSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRTAnalyticSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRTAnalyticSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRTAnalyticSourceWrap *w = new VtkRTAnalyticSourceWrap();
 	w->native.TakeReference(r);
@@ -352,7 +350,7 @@ void VtkRTAnalyticSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRTAnalyticSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRTAnalyticSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRTAnalyticSourceWrap *w = new VtkRTAnalyticSourceWrap();
 		w->native.TakeReference(r);

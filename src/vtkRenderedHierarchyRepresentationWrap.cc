@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRenderedHierarchyRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRenderedHierarchyRepresentationWrap::ptpl;
 
 VtkRenderedHierarchyRepresentationWrap::VtkRenderedHierarchyRepresentationWrap()
@@ -111,7 +110,6 @@ void VtkRenderedHierarchyRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraphSplineType", SetGraphSplineType);
 	Nan::SetPrototypeMethod(tpl, "setGraphSplineType", SetGraphSplineType);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -394,7 +392,7 @@ void VtkRenderedHierarchyRepresentationWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderedHierarchyRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderedHierarchyRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderedHierarchyRepresentationWrap *w = new VtkRenderedHierarchyRepresentationWrap();
 	w->native.TakeReference(r);
@@ -422,7 +420,7 @@ void VtkRenderedHierarchyRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRenderedHierarchyRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRenderedHierarchyRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderedHierarchyRepresentationWrap *w = new VtkRenderedHierarchyRepresentationWrap();
 		w->native.TakeReference(r);

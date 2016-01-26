@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageWeightedSumWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageWeightedSumWrap::ptpl;
 
 VtkImageWeightedSumWrap::VtkImageWeightedSumWrap()
@@ -88,7 +87,6 @@ void VtkImageWeightedSumWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWeights", SetWeights);
 	Nan::SetPrototypeMethod(tpl, "setWeights", SetWeights);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -200,7 +198,7 @@ void VtkImageWeightedSumWrap::GetWeights(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDoubleArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDoubleArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDoubleArrayWrap *w = new VtkDoubleArrayWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkImageWeightedSumWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageWeightedSumWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageWeightedSumWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageWeightedSumWrap *w = new VtkImageWeightedSumWrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkImageWeightedSumWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageWeightedSumWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageWeightedSumWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageWeightedSumWrap *w = new VtkImageWeightedSumWrap();
 		w->native.TakeReference(r);

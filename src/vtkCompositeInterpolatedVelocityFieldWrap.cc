@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCompositeInterpolatedVelocityFieldWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCompositeInterpolatedVelocityFieldWrap::ptpl;
 
 VtkCompositeInterpolatedVelocityFieldWrap::VtkCompositeInterpolatedVelocityFieldWrap()
@@ -70,7 +69,6 @@ void VtkCompositeInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -146,7 +144,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::GetLastDataSet(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeInterpolatedVelocityFieldWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeInterpolatedVelocityFieldWrap *w = new VtkCompositeInterpolatedVelocityFieldWrap();
 	w->native.TakeReference(r);
@@ -233,7 +231,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::Function
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCompositeInterpolatedVelocityFieldWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCompositeInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeInterpolatedVelocityFieldWrap *w = new VtkCompositeInterpolatedVelocityFieldWrap();
 		w->native.TakeReference(r);

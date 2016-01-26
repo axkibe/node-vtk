@@ -24,7 +24,6 @@ class VtkImageSobel2DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageSobel2DWrap(vtkSmartPointer<vtkImageSobel2D>);
 		VtkImageSobel2DWrap();
 		~VtkImageSobel2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

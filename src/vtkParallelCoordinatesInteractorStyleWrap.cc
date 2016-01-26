@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParallelCoordinatesInteractorStyleWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParallelCoordinatesInteractorStyleWrap::ptpl;
 
 VtkParallelCoordinatesInteractorStyleWrap::VtkParallelCoordinatesInteractorStyleWrap()
@@ -114,7 +113,6 @@ void VtkParallelCoordinatesInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -251,7 +249,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::NewInstance(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParallelCoordinatesInteractorStyleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParallelCoordinatesInteractorStyleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParallelCoordinatesInteractorStyleWrap *w = new VtkParallelCoordinatesInteractorStyleWrap();
 	w->native.TakeReference(r);
@@ -399,7 +397,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::SafeDownCast(const Nan::Function
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParallelCoordinatesInteractorStyleWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParallelCoordinatesInteractorStyleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParallelCoordinatesInteractorStyleWrap *w = new VtkParallelCoordinatesInteractorStyleWrap();
 		w->native.TakeReference(r);

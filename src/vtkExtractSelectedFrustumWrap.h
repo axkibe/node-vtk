@@ -24,7 +24,6 @@ class VtkExtractSelectedFrustumWrap : public VtkExtractSelectionBaseWrap
 		VtkExtractSelectedFrustumWrap(vtkSmartPointer<vtkExtractSelectedFrustum>);
 		VtkExtractSelectedFrustumWrap();
 		~VtkExtractSelectedFrustumWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

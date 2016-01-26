@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStreamGraphWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStreamGraphWrap::ptpl;
 
 VtkStreamGraphWrap::VtkStreamGraphWrap()
@@ -78,7 +77,6 @@ void VtkStreamGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseEdgeWindowOn", UseEdgeWindowOn);
 	Nan::SetPrototypeMethod(tpl, "useEdgeWindowOn", UseEdgeWindowOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -184,7 +182,7 @@ void VtkStreamGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStreamGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStreamGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStreamGraphWrap *w = new VtkStreamGraphWrap();
 	w->native.TakeReference(r);
@@ -212,7 +210,7 @@ void VtkStreamGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStreamGraphWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStreamGraphWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStreamGraphWrap *w = new VtkStreamGraphWrap();
 		w->native.TakeReference(r);

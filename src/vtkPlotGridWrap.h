@@ -24,7 +24,6 @@ class VtkPlotGridWrap : public VtkContextItemWrap
 		VtkPlotGridWrap(vtkSmartPointer<vtkPlotGrid>);
 		VtkPlotGridWrap();
 		~VtkPlotGridWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

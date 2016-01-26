@@ -24,7 +24,6 @@ class VtkCPExodusIIElementBlockWrap : public VtkUnstructuredGridBaseWrap
 		VtkCPExodusIIElementBlockWrap(vtkSmartPointer<vtkCPExodusIIElementBlock>);
 		VtkCPExodusIIElementBlockWrap();
 		~VtkCPExodusIIElementBlockWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

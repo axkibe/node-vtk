@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBoxClipDataSetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBoxClipDataSetWrap::ptpl;
 
 VtkBoxClipDataSetWrap::VtkBoxClipDataSetWrap()
@@ -104,7 +103,6 @@ void VtkBoxClipDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLocator", SetLocator);
 	Nan::SetPrototypeMethod(tpl, "setLocator", SetLocator);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -220,7 +218,7 @@ void VtkBoxClipDataSetWrap::GetClippedOutput(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
 	w->native.TakeReference(r);
@@ -271,7 +269,7 @@ void VtkBoxClipDataSetWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -330,7 +328,7 @@ void VtkBoxClipDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBoxClipDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBoxClipDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBoxClipDataSetWrap *w = new VtkBoxClipDataSetWrap();
 	w->native.TakeReference(r);
@@ -358,7 +356,7 @@ void VtkBoxClipDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBoxClipDataSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBoxClipDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBoxClipDataSetWrap *w = new VtkBoxClipDataSetWrap();
 		w->native.TakeReference(r);

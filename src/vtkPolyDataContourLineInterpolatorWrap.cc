@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyDataContourLineInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyDataContourLineInterpolatorWrap::ptpl;
 
 VtkPolyDataContourLineInterpolatorWrap::VtkPolyDataContourLineInterpolatorWrap()
@@ -69,7 +68,6 @@ void VtkPolyDataContourLineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -125,7 +123,7 @@ void VtkPolyDataContourLineInterpolatorWrap::GetPolys(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataCollectionWrap *w = new VtkPolyDataCollectionWrap();
 	w->native.TakeReference(r);
@@ -205,7 +203,7 @@ void VtkPolyDataContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataContourLineInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataContourLineInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataContourLineInterpolatorWrap *w = new VtkPolyDataContourLineInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -233,7 +231,7 @@ void VtkPolyDataContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataContourLineInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataContourLineInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataContourLineInterpolatorWrap *w = new VtkPolyDataContourLineInterpolatorWrap();
 		w->native.TakeReference(r);

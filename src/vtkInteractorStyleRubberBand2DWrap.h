@@ -24,7 +24,6 @@ class VtkInteractorStyleRubberBand2DWrap : public VtkInteractorStyleWrap
 		VtkInteractorStyleRubberBand2DWrap(vtkSmartPointer<vtkInteractorStyleRubberBand2D>);
 		VtkInteractorStyleRubberBand2DWrap();
 		~VtkInteractorStyleRubberBand2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

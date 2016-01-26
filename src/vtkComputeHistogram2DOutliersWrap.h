@@ -24,7 +24,6 @@ class VtkComputeHistogram2DOutliersWrap : public VtkSelectionAlgorithmWrap
 		VtkComputeHistogram2DOutliersWrap(vtkSmartPointer<vtkComputeHistogram2DOutliers>);
 		VtkComputeHistogram2DOutliersWrap();
 		~VtkComputeHistogram2DOutliersWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

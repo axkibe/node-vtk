@@ -24,7 +24,6 @@ class VtkParametricCrossCapWrap : public VtkParametricFunctionWrap
 		VtkParametricCrossCapWrap(vtkSmartPointer<vtkParametricCrossCap>);
 		VtkParametricCrossCapWrap();
 		~VtkParametricCrossCapWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

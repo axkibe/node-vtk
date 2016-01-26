@@ -24,7 +24,6 @@ class VtkTableToStructuredGridWrap : public VtkStructuredGridAlgorithmWrap
 		VtkTableToStructuredGridWrap(vtkSmartPointer<vtkTableToStructuredGrid>);
 		VtkTableToStructuredGridWrap();
 		~VtkTableToStructuredGridWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

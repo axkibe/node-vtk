@@ -24,7 +24,6 @@ class VtkOBBDicerWrap : public VtkDicerWrap
 		VtkOBBDicerWrap(vtkSmartPointer<vtkOBBDicer>);
 		VtkOBBDicerWrap();
 		~VtkOBBDicerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

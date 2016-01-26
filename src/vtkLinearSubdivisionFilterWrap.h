@@ -24,7 +24,6 @@ class VtkLinearSubdivisionFilterWrap : public VtkInterpolatingSubdivisionFilterW
 		VtkLinearSubdivisionFilterWrap(vtkSmartPointer<vtkLinearSubdivisionFilter>);
 		VtkLinearSubdivisionFilterWrap();
 		~VtkLinearSubdivisionFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

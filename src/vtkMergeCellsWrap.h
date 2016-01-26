@@ -24,7 +24,6 @@ class VtkMergeCellsWrap : public VtkObjectWrap
 		VtkMergeCellsWrap(vtkSmartPointer<vtkMergeCells>);
 		VtkMergeCellsWrap();
 		~VtkMergeCellsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkTransposeMatrixWrap : public VtkArrayDataAlgorithmWrap
 		VtkTransposeMatrixWrap(vtkSmartPointer<vtkTransposeMatrix>);
 		VtkTransposeMatrixWrap();
 		~VtkTransposeMatrixWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStructuredVisibilityConstraintWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStructuredVisibilityConstraintWrap::ptpl;
 
 VtkStructuredVisibilityConstraintWrap::VtkStructuredVisibilityConstraintWrap()
@@ -75,7 +74,6 @@ void VtkStructuredVisibilityConstraintWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -163,7 +161,7 @@ void VtkStructuredVisibilityConstraintWrap::GetVisibilityById(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnsignedCharArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
 	w->native.TakeReference(r);
@@ -208,7 +206,7 @@ void VtkStructuredVisibilityConstraintWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredVisibilityConstraintWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredVisibilityConstraintWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredVisibilityConstraintWrap *w = new VtkStructuredVisibilityConstraintWrap();
 	w->native.TakeReference(r);
@@ -236,7 +234,7 @@ void VtkStructuredVisibilityConstraintWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStructuredVisibilityConstraintWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStructuredVisibilityConstraintWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStructuredVisibilityConstraintWrap *w = new VtkStructuredVisibilityConstraintWrap();
 		w->native.TakeReference(r);

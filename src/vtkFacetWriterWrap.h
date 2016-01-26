@@ -24,7 +24,6 @@ class VtkFacetWriterWrap : public VtkPolyDataAlgorithmWrap
 		VtkFacetWriterWrap(vtkSmartPointer<vtkFacetWriter>);
 		VtkFacetWriterWrap();
 		~VtkFacetWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

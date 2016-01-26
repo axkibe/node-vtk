@@ -24,7 +24,6 @@ class VtkScalarBarRepresentationWrap : public VtkBorderRepresentationWrap
 		VtkScalarBarRepresentationWrap(vtkSmartPointer<vtkScalarBarRepresentation>);
 		VtkScalarBarRepresentationWrap();
 		~VtkScalarBarRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

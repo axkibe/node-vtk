@@ -24,7 +24,6 @@ class VtkEllipsoidTensorProbeRepresentationWrap : public VtkTensorProbeRepresent
 		VtkEllipsoidTensorProbeRepresentationWrap(vtkSmartPointer<vtkEllipsoidTensorProbeRepresentation>);
 		VtkEllipsoidTensorProbeRepresentationWrap();
 		~VtkEllipsoidTensorProbeRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkTensorProbeWidgetWrap : public VtkAbstractWidgetWrap
 		VtkTensorProbeWidgetWrap(vtkSmartPointer<vtkTensorProbeWidget>);
 		VtkTensorProbeWidgetWrap();
 		~VtkTensorProbeWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyDataPointPlacerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyDataPointPlacerWrap::ptpl;
 
 VtkPolyDataPointPlacerWrap::VtkPolyDataPointPlacerWrap()
@@ -80,7 +79,6 @@ void VtkPolyDataPointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -170,7 +168,7 @@ void VtkPolyDataPointPlacerWrap::GetPropPicker(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropPickerWrap *w = new VtkPropPickerWrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkPolyDataPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataPointPlacerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataPointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataPointPlacerWrap *w = new VtkPolyDataPointPlacerWrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkPolyDataPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataPointPlacerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataPointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataPointPlacerWrap *w = new VtkPolyDataPointPlacerWrap();
 		w->native.TakeReference(r);

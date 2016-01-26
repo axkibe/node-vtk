@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLReaderWrap::ptpl;
 
 VtkXMLReaderWrap::VtkXMLReaderWrap()
@@ -124,7 +123,6 @@ void VtkXMLReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeStepRange", SetTimeStepRange);
 	Nan::SetPrototypeMethod(tpl, "setTimeStepRange", SetTimeStepRange);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -255,7 +253,7 @@ void VtkXMLReaderWrap::GetCellDataArraySelection(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArraySelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArraySelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArraySelectionWrap *w = new VtkDataArraySelectionWrap();
 	w->native.TakeReference(r);
@@ -352,7 +350,7 @@ void VtkXMLReaderWrap::GetOutputAsDataSet(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataSetWrap *w = new VtkDataSetWrap();
 		w->native.TakeReference(r);
@@ -371,7 +369,7 @@ void VtkXMLReaderWrap::GetOutputAsDataSet(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -437,7 +435,7 @@ void VtkXMLReaderWrap::GetPointDataArraySelection(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArraySelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArraySelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArraySelectionWrap *w = new VtkDataArraySelectionWrap();
 	w->native.TakeReference(r);
@@ -474,7 +472,7 @@ void VtkXMLReaderWrap::GetXMLParser(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLDataParserWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLDataParserWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLDataParserWrap *w = new VtkXMLDataParserWrap();
 	w->native.TakeReference(r);
@@ -519,7 +517,7 @@ void VtkXMLReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLReaderWrap *w = new VtkXMLReaderWrap();
 	w->native.TakeReference(r);
@@ -547,7 +545,7 @@ void VtkXMLReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLReaderWrap *w = new VtkXMLReaderWrap();
 		w->native.TakeReference(r);

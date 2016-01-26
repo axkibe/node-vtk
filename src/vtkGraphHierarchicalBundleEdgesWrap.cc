@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGraphHierarchicalBundleEdgesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGraphHierarchicalBundleEdgesWrap::ptpl;
 
 VtkGraphHierarchicalBundleEdgesWrap::VtkGraphHierarchicalBundleEdgesWrap()
@@ -82,7 +81,6 @@ void VtkGraphHierarchicalBundleEdgesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBundlingStrength", SetBundlingStrength);
 	Nan::SetPrototypeMethod(tpl, "setBundlingStrength", SetBundlingStrength);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -252,7 +250,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphHierarchicalBundleEdgesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphHierarchicalBundleEdgesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphHierarchicalBundleEdgesWrap *w = new VtkGraphHierarchicalBundleEdgesWrap();
 	w->native.TakeReference(r);
@@ -280,7 +278,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGraphHierarchicalBundleEdgesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGraphHierarchicalBundleEdgesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphHierarchicalBundleEdgesWrap *w = new VtkGraphHierarchicalBundleEdgesWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkQuantizePolyDataPointsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkQuantizePolyDataPointsWrap::ptpl;
 
 VtkQuantizePolyDataPointsWrap::VtkQuantizePolyDataPointsWrap()
@@ -72,7 +71,6 @@ void VtkQuantizePolyDataPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetQFactor", SetQFactor);
 	Nan::SetPrototypeMethod(tpl, "setQFactor", SetQFactor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkQuantizePolyDataPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuantizePolyDataPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuantizePolyDataPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuantizePolyDataPointsWrap *w = new VtkQuantizePolyDataPointsWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkQuantizePolyDataPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkQuantizePolyDataPointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkQuantizePolyDataPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkQuantizePolyDataPointsWrap *w = new VtkQuantizePolyDataPointsWrap();
 		w->native.TakeReference(r);

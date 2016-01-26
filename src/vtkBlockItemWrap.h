@@ -24,7 +24,6 @@ class VtkBlockItemWrap : public VtkContextItemWrap
 		VtkBlockItemWrap(vtkSmartPointer<vtkBlockItem>);
 		VtkBlockItemWrap();
 		~VtkBlockItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

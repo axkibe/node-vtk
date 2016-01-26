@@ -24,7 +24,6 @@ class VtkTextCodecWrap : public VtkObjectWrap
 		VtkTextCodecWrap(vtkSmartPointer<vtkTextCodec>);
 		VtkTextCodecWrap();
 		~VtkTextCodecWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

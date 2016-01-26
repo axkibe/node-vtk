@@ -24,7 +24,6 @@ class VtkCollectTableWrap : public VtkTableAlgorithmWrap
 		VtkCollectTableWrap(vtkSmartPointer<vtkCollectTable>);
 		VtkCollectTableWrap();
 		~VtkCollectTableWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

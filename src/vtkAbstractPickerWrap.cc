@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAbstractPickerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAbstractPickerWrap::ptpl;
 
 VtkAbstractPickerWrap::VtkAbstractPickerWrap()
@@ -92,7 +91,6 @@ void VtkAbstractPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPickFromList", SetPickFromList);
 	Nan::SetPrototypeMethod(tpl, "setPickFromList", SetPickFromList);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -202,7 +200,7 @@ void VtkAbstractPickerWrap::GetPickList(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
 	w->native.TakeReference(r);
@@ -225,7 +223,7 @@ void VtkAbstractPickerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
@@ -282,7 +280,7 @@ void VtkAbstractPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractPickerWrap *w = new VtkAbstractPickerWrap();
 	w->native.TakeReference(r);
@@ -368,7 +366,7 @@ void VtkAbstractPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractPickerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractPickerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractPickerWrap *w = new VtkAbstractPickerWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkSurfaceLICPainterWrap : public VtkPainterWrap
 		VtkSurfaceLICPainterWrap(vtkSmartPointer<vtkSurfaceLICPainter>);
 		VtkSurfaceLICPainterWrap();
 		~VtkSurfaceLICPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGlyph3DMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGlyph3DMapperWrap::ptpl;
 
 VtkGlyph3DMapperWrap::VtkGlyph3DMapperWrap()
@@ -188,7 +187,6 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseSelectionIdsOn", UseSelectionIdsOn);
 	Nan::SetPrototypeMethod(tpl, "useSelectionIdsOn", UseSelectionIdsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -370,7 +368,7 @@ void VtkGlyph3DMapperWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
 		w->native.TakeReference(r);
@@ -466,7 +464,7 @@ void VtkGlyph3DMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGlyph3DMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGlyph3DMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGlyph3DMapperWrap *w = new VtkGlyph3DMapperWrap();
 	w->native.TakeReference(r);
@@ -543,7 +541,7 @@ void VtkGlyph3DMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGlyph3DMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGlyph3DMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGlyph3DMapperWrap *w = new VtkGlyph3DMapperWrap();
 		w->native.TakeReference(r);

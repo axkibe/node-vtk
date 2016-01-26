@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDendrogramItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDendrogramItemWrap::ptpl;
 
 VtkDendrogramItemWrap::VtkDendrogramItemWrap()
@@ -116,7 +115,6 @@ void VtkDendrogramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTree", SetTree);
 	Nan::SetPrototypeMethod(tpl, "setTree", SetTree);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -313,7 +311,7 @@ void VtkDendrogramItemWrap::GetPrunedTree(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeWrap *w = new VtkTreeWrap();
 	w->native.TakeReference(r);
@@ -357,7 +355,7 @@ void VtkDendrogramItemWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeWrap *w = new VtkTreeWrap();
 	w->native.TakeReference(r);
@@ -402,7 +400,7 @@ void VtkDendrogramItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDendrogramItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDendrogramItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDendrogramItemWrap *w = new VtkDendrogramItemWrap();
 	w->native.TakeReference(r);
@@ -450,7 +448,7 @@ void VtkDendrogramItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDendrogramItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDendrogramItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDendrogramItemWrap *w = new VtkDendrogramItemWrap();
 		w->native.TakeReference(r);

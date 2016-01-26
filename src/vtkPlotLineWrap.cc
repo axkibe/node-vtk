@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlotLineWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlotLineWrap::ptpl;
 
 VtkPlotLineWrap::VtkPlotLineWrap()
@@ -60,7 +59,6 @@ void VtkPlotLineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkPlotLineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlotLineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlotLineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlotLineWrap *w = new VtkPlotLineWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkPlotLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlotLineWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlotLineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotLineWrap *w = new VtkPlotLineWrap();
 		w->native.TakeReference(r);

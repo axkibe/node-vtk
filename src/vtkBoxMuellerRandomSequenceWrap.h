@@ -24,7 +24,6 @@ class VtkBoxMuellerRandomSequenceWrap : public VtkGaussianRandomSequenceWrap
 		VtkBoxMuellerRandomSequenceWrap(vtkSmartPointer<vtkBoxMuellerRandomSequence>);
 		VtkBoxMuellerRandomSequenceWrap();
 		~VtkBoxMuellerRandomSequenceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

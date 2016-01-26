@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTextureMapToPlaneWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTextureMapToPlaneWrap::ptpl;
 
 VtkTextureMapToPlaneWrap::VtkTextureMapToPlaneWrap()
@@ -90,7 +89,6 @@ void VtkTextureMapToPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTRange", SetTRange);
 	Nan::SetPrototypeMethod(tpl, "setTRange", SetTRange);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -206,7 +204,7 @@ void VtkTextureMapToPlaneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextureMapToPlaneWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextureMapToPlaneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextureMapToPlaneWrap *w = new VtkTextureMapToPlaneWrap();
 	w->native.TakeReference(r);
@@ -234,7 +232,7 @@ void VtkTextureMapToPlaneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTextureMapToPlaneWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTextureMapToPlaneWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextureMapToPlaneWrap *w = new VtkTextureMapToPlaneWrap();
 		w->native.TakeReference(r);

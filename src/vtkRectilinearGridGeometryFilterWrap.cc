@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRectilinearGridGeometryFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRectilinearGridGeometryFilterWrap::ptpl;
 
 VtkRectilinearGridGeometryFilterWrap::VtkRectilinearGridGeometryFilterWrap()
@@ -63,7 +62,6 @@ void VtkRectilinearGridGeometryFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetExtent", SetExtent);
 	Nan::SetPrototypeMethod(tpl, "setExtent", SetExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkRectilinearGridGeometryFilterWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearGridGeometryFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearGridGeometryFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearGridGeometryFilterWrap *w = new VtkRectilinearGridGeometryFilterWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkRectilinearGridGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRectilinearGridGeometryFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRectilinearGridGeometryFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectilinearGridGeometryFilterWrap *w = new VtkRectilinearGridGeometryFilterWrap();
 		w->native.TakeReference(r);

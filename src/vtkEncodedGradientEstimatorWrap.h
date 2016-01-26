@@ -24,7 +24,6 @@ class VtkEncodedGradientEstimatorWrap : public VtkObjectWrap
 		VtkEncodedGradientEstimatorWrap(vtkSmartPointer<vtkEncodedGradientEstimator>);
 		VtkEncodedGradientEstimatorWrap();
 		~VtkEncodedGradientEstimatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

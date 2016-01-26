@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkReflectionFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkReflectionFilterWrap::ptpl;
 
 VtkReflectionFilterWrap::VtkReflectionFilterWrap()
@@ -117,7 +116,6 @@ void VtkReflectionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPlaneToZMin", SetPlaneToZMin);
 	Nan::SetPrototypeMethod(tpl, "setPlaneToZMin", SetPlaneToZMin);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -289,7 +287,7 @@ void VtkReflectionFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkReflectionFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkReflectionFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkReflectionFilterWrap *w = new VtkReflectionFilterWrap();
 	w->native.TakeReference(r);
@@ -317,7 +315,7 @@ void VtkReflectionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkReflectionFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkReflectionFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkReflectionFilterWrap *w = new VtkReflectionFilterWrap();
 		w->native.TakeReference(r);

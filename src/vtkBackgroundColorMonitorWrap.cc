@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBackgroundColorMonitorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBackgroundColorMonitorWrap::ptpl;
 
 VtkBackgroundColorMonitorWrap::VtkBackgroundColorMonitorWrap()
@@ -63,7 +62,6 @@ void VtkBackgroundColorMonitorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkBackgroundColorMonitorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBackgroundColorMonitorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBackgroundColorMonitorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBackgroundColorMonitorWrap *w = new VtkBackgroundColorMonitorWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkBackgroundColorMonitorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBackgroundColorMonitorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBackgroundColorMonitorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBackgroundColorMonitorWrap *w = new VtkBackgroundColorMonitorWrap();
 		w->native.TakeReference(r);

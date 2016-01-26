@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageSincInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageSincInterpolatorWrap::ptpl;
 
 VtkImageSincInterpolatorWrap::VtkImageSincInterpolatorWrap()
@@ -153,7 +152,6 @@ void VtkImageSincInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseWindowParameterOn", UseWindowParameterOn);
 	Nan::SetPrototypeMethod(tpl, "useWindowParameterOn", UseWindowParameterOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -353,7 +351,7 @@ void VtkImageSincInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageSincInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageSincInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSincInterpolatorWrap *w = new VtkImageSincInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -405,7 +403,7 @@ void VtkImageSincInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageSincInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageSincInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageSincInterpolatorWrap *w = new VtkImageSincInterpolatorWrap();
 		w->native.TakeReference(r);

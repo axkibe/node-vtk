@@ -24,7 +24,6 @@ class VtkBoxWrap : public VtkImplicitFunctionWrap
 		VtkBoxWrap(vtkSmartPointer<vtkBox>);
 		VtkBoxWrap();
 		~VtkBoxWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

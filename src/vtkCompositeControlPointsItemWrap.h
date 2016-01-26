@@ -24,7 +24,6 @@ class VtkCompositeControlPointsItemWrap : public VtkColorTransferControlPointsIt
 		VtkCompositeControlPointsItemWrap(vtkSmartPointer<vtkCompositeControlPointsItem>);
 		VtkCompositeControlPointsItemWrap();
 		~VtkCompositeControlPointsItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

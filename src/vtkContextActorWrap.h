@@ -24,7 +24,6 @@ class VtkContextActorWrap : public VtkPropWrap
 		VtkContextActorWrap(vtkSmartPointer<vtkContextActor>);
 		VtkContextActorWrap();
 		~VtkContextActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

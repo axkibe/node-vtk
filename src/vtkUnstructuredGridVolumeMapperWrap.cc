@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridVolumeMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridVolumeMapperWrap::ptpl;
 
 VtkUnstructuredGridVolumeMapperWrap::VtkUnstructuredGridVolumeMapperWrap()
@@ -89,7 +88,6 @@ void VtkUnstructuredGridVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -159,7 +157,7 @@ void VtkUnstructuredGridVolumeMapperWrap::GetInput(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridBaseWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridBaseWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridBaseWrap *w = new VtkUnstructuredGridBaseWrap();
 	w->native.TakeReference(r);
@@ -204,7 +202,7 @@ void VtkUnstructuredGridVolumeMapperWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridVolumeMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeMapperWrap *w = new VtkUnstructuredGridVolumeMapperWrap();
 	w->native.TakeReference(r);
@@ -277,7 +275,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridVolumeMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridVolumeMapperWrap *w = new VtkUnstructuredGridVolumeMapperWrap();
 		w->native.TakeReference(r);

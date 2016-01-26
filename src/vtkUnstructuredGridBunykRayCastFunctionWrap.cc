@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridBunykRayCastFunctionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridBunykRayCastFunctionWrap::ptpl;
 
 VtkUnstructuredGridBunykRayCastFunctionWrap::VtkUnstructuredGridBunykRayCastFunctionWrap()
@@ -76,7 +75,6 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -144,7 +142,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::GetViewToWorldMatrix(const Nan
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrix4x4Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrix4x4Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
 	w->native.TakeReference(r);
@@ -214,7 +212,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::NewInstance(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridBunykRayCastFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridBunykRayCastFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridBunykRayCastFunctionWrap *w = new VtkUnstructuredGridBunykRayCastFunctionWrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::NewIterator(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridVolumeRayCastIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayCastIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeRayCastIteratorWrap *w = new VtkUnstructuredGridVolumeRayCastIteratorWrap();
 	w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::SafeDownCast(const Nan::Functi
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridBunykRayCastFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridBunykRayCastFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridBunykRayCastFunctionWrap *w = new VtkUnstructuredGridBunykRayCastFunctionWrap();
 		w->native.TakeReference(r);

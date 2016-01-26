@@ -24,7 +24,6 @@ class VtkResliceCursorWrap : public VtkObjectWrap
 		VtkResliceCursorWrap(vtkSmartPointer<vtkResliceCursor>);
 		VtkResliceCursorWrap();
 		~VtkResliceCursorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

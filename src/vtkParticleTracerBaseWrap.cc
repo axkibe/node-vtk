@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParticleTracerBaseWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParticleTracerBaseWrap::ptpl;
 
 VtkParticleTracerBaseWrap::VtkParticleTracerBaseWrap()
@@ -174,7 +173,6 @@ void VtkParticleTracerBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerminationTime", SetTerminationTime);
 	Nan::SetPrototypeMethod(tpl, "setTerminationTime", SetTerminationTime);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -354,7 +352,7 @@ void VtkParticleTracerBaseWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInitialValueProblemSolverWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
 	w->native.TakeReference(r);
@@ -405,7 +403,7 @@ void VtkParticleTracerBaseWrap::GetParticleWriter(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractParticleWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractParticleWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractParticleWriterWrap *w = new VtkAbstractParticleWriterWrap();
 	w->native.TakeReference(r);
@@ -558,7 +556,7 @@ void VtkParticleTracerBaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParticleTracerBaseWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParticleTracerBaseWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParticleTracerBaseWrap *w = new VtkParticleTracerBaseWrap();
 	w->native.TakeReference(r);
@@ -610,7 +608,7 @@ void VtkParticleTracerBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParticleTracerBaseWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParticleTracerBaseWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParticleTracerBaseWrap *w = new VtkParticleTracerBaseWrap();
 		w->native.TakeReference(r);

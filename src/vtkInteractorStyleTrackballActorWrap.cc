@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleTrackballActorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleTrackballActorWrap::ptpl;
 
 VtkInteractorStyleTrackballActorWrap::VtkInteractorStyleTrackballActorWrap()
@@ -96,7 +95,6 @@ void VtkInteractorStyleTrackballActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UniformScale", UniformScale);
 	Nan::SetPrototypeMethod(tpl, "uniformScale", UniformScale);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -186,7 +184,7 @@ void VtkInteractorStyleTrackballActorWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleTrackballActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTrackballActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleTrackballActorWrap *w = new VtkInteractorStyleTrackballActorWrap();
 	w->native.TakeReference(r);
@@ -322,7 +320,7 @@ void VtkInteractorStyleTrackballActorWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleTrackballActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTrackballActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleTrackballActorWrap *w = new VtkInteractorStyleTrackballActorWrap();
 		w->native.TakeReference(r);

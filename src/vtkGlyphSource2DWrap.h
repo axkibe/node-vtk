@@ -24,7 +24,6 @@ class VtkGlyphSource2DWrap : public VtkPolyDataAlgorithmWrap
 		VtkGlyphSource2DWrap(vtkSmartPointer<vtkGlyphSource2D>);
 		VtkGlyphSource2DWrap();
 		~VtkGlyphSource2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

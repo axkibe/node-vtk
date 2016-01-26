@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRendererDelegateWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRendererDelegateWrap::ptpl;
 
 VtkRendererDelegateWrap::VtkRendererDelegateWrap()
@@ -69,7 +68,6 @@ void VtkRendererDelegateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsedOn", UsedOn);
 	Nan::SetPrototypeMethod(tpl, "usedOn", UsedOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -147,7 +145,7 @@ void VtkRendererDelegateWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererDelegateWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererDelegateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererDelegateWrap *w = new VtkRendererDelegateWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkRendererDelegateWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRendererDelegateWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRendererDelegateWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRendererDelegateWrap *w = new VtkRendererDelegateWrap();
 		w->native.TakeReference(r);

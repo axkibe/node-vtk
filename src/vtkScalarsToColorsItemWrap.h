@@ -24,7 +24,6 @@ class VtkScalarsToColorsItemWrap : public VtkPlotWrap
 		VtkScalarsToColorsItemWrap(vtkSmartPointer<vtkScalarsToColorsItem>);
 		VtkScalarsToColorsItemWrap();
 		~VtkScalarsToColorsItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

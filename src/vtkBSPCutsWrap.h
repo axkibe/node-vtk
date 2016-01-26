@@ -24,7 +24,6 @@ class VtkBSPCutsWrap : public VtkDataObjectWrap
 		VtkBSPCutsWrap(vtkSmartPointer<vtkBSPCuts>);
 		VtkBSPCutsWrap();
 		~VtkBSPCutsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

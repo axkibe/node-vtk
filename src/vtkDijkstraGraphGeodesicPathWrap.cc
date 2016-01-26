@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDijkstraGraphGeodesicPathWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDijkstraGraphGeodesicPathWrap::ptpl;
 
 VtkDijkstraGraphGeodesicPathWrap::VtkDijkstraGraphGeodesicPathWrap()
@@ -111,7 +110,6 @@ void VtkDijkstraGraphGeodesicPathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseScalarWeightsOn", UseScalarWeightsOn);
 	Nan::SetPrototypeMethod(tpl, "useScalarWeightsOn", UseScalarWeightsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -187,7 +185,7 @@ void VtkDijkstraGraphGeodesicPathWrap::GetIdList(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdListWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdListWrap *w = new VtkIdListWrap();
 	w->native.TakeReference(r);
@@ -224,7 +222,7 @@ void VtkDijkstraGraphGeodesicPathWrap::GetRepelVertices(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkDijkstraGraphGeodesicPathWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDijkstraGraphGeodesicPathWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDijkstraGraphGeodesicPathWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDijkstraGraphGeodesicPathWrap *w = new VtkDijkstraGraphGeodesicPathWrap();
 	w->native.TakeReference(r);
@@ -349,7 +347,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDijkstraGraphGeodesicPathWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDijkstraGraphGeodesicPathWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDijkstraGraphGeodesicPathWrap *w = new VtkDijkstraGraphGeodesicPathWrap();
 		w->native.TakeReference(r);

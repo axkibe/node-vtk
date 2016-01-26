@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContextBufferIdWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContextBufferIdWrap::ptpl;
 
 VtkContextBufferIdWrap::VtkContextBufferIdWrap()
@@ -66,7 +65,6 @@ void VtkContextBufferIdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValues", SetValues);
 	Nan::SetPrototypeMethod(tpl, "setValues", SetValues);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -156,7 +154,7 @@ void VtkContextBufferIdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContextBufferIdWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContextBufferIdWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContextBufferIdWrap *w = new VtkContextBufferIdWrap();
 	w->native.TakeReference(r);
@@ -184,7 +182,7 @@ void VtkContextBufferIdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContextBufferIdWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContextBufferIdWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContextBufferIdWrap *w = new VtkContextBufferIdWrap();
 		w->native.TakeReference(r);

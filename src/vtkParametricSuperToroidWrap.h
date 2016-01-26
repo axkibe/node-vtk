@@ -24,7 +24,6 @@ class VtkParametricSuperToroidWrap : public VtkParametricFunctionWrap
 		VtkParametricSuperToroidWrap(vtkSmartPointer<vtkParametricSuperToroid>);
 		VtkParametricSuperToroidWrap();
 		~VtkParametricSuperToroidWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

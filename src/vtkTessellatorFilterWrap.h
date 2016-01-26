@@ -24,7 +24,6 @@ class VtkTessellatorFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkTessellatorFilterWrap(vtkSmartPointer<vtkTessellatorFilter>);
 		VtkTessellatorFilterWrap();
 		~VtkTessellatorFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

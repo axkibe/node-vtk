@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMoleculeMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMoleculeMapperWrap::ptpl;
 
 VtkMoleculeMapperWrap::VtkMoleculeMapperWrap()
@@ -154,7 +153,6 @@ void VtkMoleculeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseVDWSpheresSettings", UseVDWSpheresSettings);
 	Nan::SetPrototypeMethod(tpl, "useVDWSpheresSettings", UseVDWSpheresSettings);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -292,7 +290,7 @@ void VtkMoleculeMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMoleculeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMoleculeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMoleculeWrap *w = new VtkMoleculeWrap();
 	w->native.TakeReference(r);
@@ -417,7 +415,7 @@ void VtkMoleculeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMoleculeMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMoleculeMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMoleculeMapperWrap *w = new VtkMoleculeMapperWrap();
 	w->native.TakeReference(r);
@@ -538,7 +536,7 @@ void VtkMoleculeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMoleculeMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMoleculeMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMoleculeMapperWrap *w = new VtkMoleculeMapperWrap();
 		w->native.TakeReference(r);

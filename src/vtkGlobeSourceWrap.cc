@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGlobeSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGlobeSourceWrap::ptpl;
 
 VtkGlobeSourceWrap::VtkGlobeSourceWrap()
@@ -165,7 +164,6 @@ void VtkGlobeSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStartLongitude", SetStartLongitude);
 	Nan::SetPrototypeMethod(tpl, "setStartLongitude", SetStartLongitude);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -561,7 +559,7 @@ void VtkGlobeSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGlobeSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGlobeSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGlobeSourceWrap *w = new VtkGlobeSourceWrap();
 	w->native.TakeReference(r);
@@ -613,7 +611,7 @@ void VtkGlobeSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGlobeSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGlobeSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGlobeSourceWrap *w = new VtkGlobeSourceWrap();
 		w->native.TakeReference(r);

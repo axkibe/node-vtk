@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkChartParallelCoordinatesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkChartParallelCoordinatesWrap::ptpl;
 
 VtkChartParallelCoordinatesWrap::VtkChartParallelCoordinatesWrap()
@@ -78,7 +77,6 @@ void VtkChartParallelCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -124,7 +122,7 @@ void VtkChartParallelCoordinatesWrap::GetAxis(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAxisWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAxisWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxisWrap *w = new VtkAxisWrap();
 		w->native.TakeReference(r);
@@ -164,7 +162,7 @@ void VtkChartParallelCoordinatesWrap::GetVisibleColumns(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -209,7 +207,7 @@ void VtkChartParallelCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChartParallelCoordinatesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChartParallelCoordinatesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartParallelCoordinatesWrap *w = new VtkChartParallelCoordinatesWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkChartParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkChartParallelCoordinatesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkChartParallelCoordinatesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkChartParallelCoordinatesWrap *w = new VtkChartParallelCoordinatesWrap();
 		w->native.TakeReference(r);

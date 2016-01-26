@@ -10,7 +10,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkObjectBaseWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkObjectBaseWrap::ptpl;
 
 VtkObjectBaseWrap::VtkObjectBaseWrap()
@@ -52,7 +51,6 @@ void VtkObjectBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsTypeOf", IsTypeOf);
 	Nan::SetPrototypeMethod(tpl, "isTypeOf", IsTypeOf);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 

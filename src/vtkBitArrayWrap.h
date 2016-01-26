@@ -24,7 +24,6 @@ class VtkBitArrayWrap : public VtkDataArrayWrap
 		VtkBitArrayWrap(vtkSmartPointer<vtkBitArray>);
 		VtkBitArrayWrap();
 		~VtkBitArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

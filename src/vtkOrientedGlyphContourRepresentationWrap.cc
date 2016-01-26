@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOrientedGlyphContourRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOrientedGlyphContourRepresentationWrap::ptpl;
 
 VtkOrientedGlyphContourRepresentationWrap::VtkOrientedGlyphContourRepresentationWrap()
@@ -135,7 +134,6 @@ void VtkOrientedGlyphContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShowSelectedNodes", SetShowSelectedNodes);
 	Nan::SetPrototypeMethod(tpl, "setShowSelectedNodes", SetShowSelectedNodes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -242,7 +240,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetActiveCursorShape(const Nan::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetActiveProperty(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -336,7 +334,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetContourRepresentationAsPolyDa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -359,7 +357,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetCursorShape(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -382,7 +380,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetLinesProperty(const Nan::Func
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -405,7 +403,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetProperty(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -464,7 +462,7 @@ void VtkOrientedGlyphContourRepresentationWrap::NewInstance(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOrientedGlyphContourRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOrientedGlyphContourRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOrientedGlyphContourRepresentationWrap *w = new VtkOrientedGlyphContourRepresentationWrap();
 	w->native.TakeReference(r);
@@ -578,7 +576,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SafeDownCast(const Nan::Function
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOrientedGlyphContourRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOrientedGlyphContourRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOrientedGlyphContourRepresentationWrap *w = new VtkOrientedGlyphContourRepresentationWrap();
 		w->native.TakeReference(r);

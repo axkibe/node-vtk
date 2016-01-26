@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOutputWindowWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOutputWindowWrap::ptpl;
 
 VtkOutputWindowWrap::VtkOutputWindowWrap()
@@ -89,7 +88,6 @@ void VtkOutputWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPromptUser", SetPromptUser);
 	Nan::SetPrototypeMethod(tpl, "setPromptUser", SetPromptUser);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -245,7 +243,7 @@ void VtkOutputWindowWrap::GetInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOutputWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOutputWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOutputWindowWrap *w = new VtkOutputWindowWrap();
 	w->native.TakeReference(r);
@@ -290,7 +288,7 @@ void VtkOutputWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOutputWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOutputWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOutputWindowWrap *w = new VtkOutputWindowWrap();
 	w->native.TakeReference(r);
@@ -342,7 +340,7 @@ void VtkOutputWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOutputWindowWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOutputWindowWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOutputWindowWrap *w = new VtkOutputWindowWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTextureObjectWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTextureObjectWrap::ptpl;
 
 VtkTextureObjectWrap::VtkTextureObjectWrap()
@@ -154,7 +153,6 @@ void VtkTextureObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnBind", UnBind);
 	Nan::SetPrototypeMethod(tpl, "unBind", UnBind);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -294,7 +292,7 @@ void VtkTextureObjectWrap::Download(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPixelBufferObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPixelBufferObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPixelBufferObjectWrap *w = new VtkPixelBufferObjectWrap();
 	w->native.TakeReference(r);
@@ -373,7 +371,7 @@ void VtkTextureObjectWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -558,7 +556,7 @@ void VtkTextureObjectWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextureObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextureObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextureObjectWrap *w = new VtkTextureObjectWrap();
 	w->native.TakeReference(r);
@@ -586,7 +584,7 @@ void VtkTextureObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTextureObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTextureObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextureObjectWrap *w = new VtkTextureObjectWrap();
 		w->native.TakeReference(r);

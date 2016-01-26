@@ -24,7 +24,6 @@ class VtkVectorTextWrap : public VtkPolyDataAlgorithmWrap
 		VtkVectorTextWrap(vtkSmartPointer<vtkVectorText>);
 		VtkVectorTextWrap();
 		~VtkVectorTextWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

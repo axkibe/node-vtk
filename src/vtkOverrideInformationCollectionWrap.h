@@ -24,7 +24,6 @@ class VtkOverrideInformationCollectionWrap : public VtkCollectionWrap
 		VtkOverrideInformationCollectionWrap(vtkSmartPointer<vtkOverrideInformationCollection>);
 		VtkOverrideInformationCollectionWrap();
 		~VtkOverrideInformationCollectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

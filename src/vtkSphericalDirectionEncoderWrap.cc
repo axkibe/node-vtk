@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSphericalDirectionEncoderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSphericalDirectionEncoderWrap::ptpl;
 
 VtkSphericalDirectionEncoderWrap::VtkSphericalDirectionEncoderWrap()
@@ -63,7 +62,6 @@ void VtkSphericalDirectionEncoderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkSphericalDirectionEncoderWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSphericalDirectionEncoderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSphericalDirectionEncoderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSphericalDirectionEncoderWrap *w = new VtkSphericalDirectionEncoderWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkSphericalDirectionEncoderWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSphericalDirectionEncoderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSphericalDirectionEncoderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSphericalDirectionEncoderWrap *w = new VtkSphericalDirectionEncoderWrap();
 		w->native.TakeReference(r);

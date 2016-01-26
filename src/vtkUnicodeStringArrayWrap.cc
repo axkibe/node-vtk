@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnicodeStringArrayWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnicodeStringArrayWrap::ptpl;
 
 VtkUnicodeStringArrayWrap::VtkUnicodeStringArrayWrap()
@@ -98,7 +97,6 @@ void VtkUnicodeStringArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -338,7 +336,7 @@ void VtkUnicodeStringArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnicodeStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnicodeStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnicodeStringArrayWrap *w = new VtkUnicodeStringArrayWrap();
 	w->native.TakeReference(r);
@@ -361,7 +359,7 @@ void VtkUnicodeStringArrayWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkArrayIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkArrayIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkArrayIteratorWrap *w = new VtkArrayIteratorWrap();
 	w->native.TakeReference(r);
@@ -389,7 +387,7 @@ void VtkUnicodeStringArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnicodeStringArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnicodeStringArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnicodeStringArrayWrap *w = new VtkUnicodeStringArrayWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBorderWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBorderWidgetWrap::ptpl;
 
 VtkBorderWidgetWrap::VtkBorderWidgetWrap()
@@ -94,7 +93,6 @@ void VtkBorderWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectable", SetSelectable);
 	Nan::SetPrototypeMethod(tpl, "setSelectable", SetSelectable);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -148,7 +146,7 @@ void VtkBorderWidgetWrap::GetBorderRepresentation(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBorderRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBorderRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBorderRepresentationWrap *w = new VtkBorderRepresentationWrap();
 	w->native.TakeReference(r);
@@ -235,7 +233,7 @@ void VtkBorderWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBorderWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBorderWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBorderWidgetWrap *w = new VtkBorderWidgetWrap();
 	w->native.TakeReference(r);
@@ -287,7 +285,7 @@ void VtkBorderWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBorderWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBorderWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBorderWidgetWrap *w = new VtkBorderWidgetWrap();
 		w->native.TakeReference(r);

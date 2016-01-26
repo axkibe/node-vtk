@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMatrixToLinearTransformWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMatrixToLinearTransformWrap::ptpl;
 
 VtkMatrixToLinearTransformWrap::VtkMatrixToLinearTransformWrap()
@@ -74,7 +73,6 @@ void VtkMatrixToLinearTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -130,7 +128,7 @@ void VtkMatrixToLinearTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrix4x4Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrix4x4Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
 	w->native.TakeReference(r);
@@ -187,7 +185,7 @@ void VtkMatrixToLinearTransformWrap::MakeTransform(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -210,7 +208,7 @@ void VtkMatrixToLinearTransformWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrixToLinearTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrixToLinearTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrixToLinearTransformWrap *w = new VtkMatrixToLinearTransformWrap();
 	w->native.TakeReference(r);
@@ -238,7 +236,7 @@ void VtkMatrixToLinearTransformWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMatrixToLinearTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMatrixToLinearTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMatrixToLinearTransformWrap *w = new VtkMatrixToLinearTransformWrap();
 		w->native.TakeReference(r);

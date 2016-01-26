@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkNonOverlappingAMRAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkNonOverlappingAMRAlgorithmWrap::ptpl;
 
 VtkNonOverlappingAMRAlgorithmWrap::VtkNonOverlappingAMRAlgorithmWrap()
@@ -64,7 +63,6 @@ void VtkNonOverlappingAMRAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -124,7 +122,7 @@ void VtkNonOverlappingAMRAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkNonOverlappingAMRWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkNonOverlappingAMRWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkNonOverlappingAMRWrap *w = new VtkNonOverlappingAMRWrap();
 		w->native.TakeReference(r);
@@ -143,7 +141,7 @@ void VtkNonOverlappingAMRAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkNonOverlappingAMRWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkNonOverlappingAMRWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkNonOverlappingAMRWrap *w = new VtkNonOverlappingAMRWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkNonOverlappingAMRAlgorithmWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkNonOverlappingAMRAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkNonOverlappingAMRAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkNonOverlappingAMRAlgorithmWrap *w = new VtkNonOverlappingAMRAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkNonOverlappingAMRAlgorithmWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkNonOverlappingAMRAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkNonOverlappingAMRAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkNonOverlappingAMRAlgorithmWrap *w = new VtkNonOverlappingAMRAlgorithmWrap();
 		w->native.TakeReference(r);

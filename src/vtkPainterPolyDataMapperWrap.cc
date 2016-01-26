@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPainterPolyDataMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPainterPolyDataMapperWrap::ptpl;
 
 VtkPainterPolyDataMapperWrap::VtkPainterPolyDataMapperWrap()
@@ -94,7 +93,6 @@ void VtkPainterPolyDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionPainter", SetSelectionPainter);
 	Nan::SetPrototypeMethod(tpl, "setSelectionPainter", SetSelectionPainter);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -150,7 +148,7 @@ void VtkPainterPolyDataMapperWrap::GetPainter(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPainterWrap *w = new VtkPainterWrap();
 	w->native.TakeReference(r);
@@ -173,7 +171,7 @@ void VtkPainterPolyDataMapperWrap::GetSelectionPainter(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPainterWrap *w = new VtkPainterWrap();
 	w->native.TakeReference(r);
@@ -283,7 +281,7 @@ void VtkPainterPolyDataMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPainterPolyDataMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPainterPolyDataMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPainterPolyDataMapperWrap *w = new VtkPainterPolyDataMapperWrap();
 	w->native.TakeReference(r);
@@ -388,7 +386,7 @@ void VtkPainterPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPainterPolyDataMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPainterPolyDataMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPainterPolyDataMapperWrap *w = new VtkPainterPolyDataMapperWrap();
 		w->native.TakeReference(r);

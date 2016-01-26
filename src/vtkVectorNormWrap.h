@@ -24,7 +24,6 @@ class VtkVectorNormWrap : public VtkDataSetAlgorithmWrap
 		VtkVectorNormWrap(vtkSmartPointer<vtkVectorNorm>);
 		VtkVectorNormWrap();
 		~VtkVectorNormWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

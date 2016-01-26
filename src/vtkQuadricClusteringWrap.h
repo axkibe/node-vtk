@@ -24,7 +24,6 @@ class VtkQuadricClusteringWrap : public VtkPolyDataAlgorithmWrap
 		VtkQuadricClusteringWrap(vtkSmartPointer<vtkQuadricClustering>);
 		VtkQuadricClusteringWrap();
 		~VtkQuadricClusteringWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

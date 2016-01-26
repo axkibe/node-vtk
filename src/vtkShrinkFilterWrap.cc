@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkShrinkFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkShrinkFilterWrap::ptpl;
 
 VtkShrinkFilterWrap::VtkShrinkFilterWrap()
@@ -72,7 +71,6 @@ void VtkShrinkFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShrinkFactor", SetShrinkFactor);
 	Nan::SetPrototypeMethod(tpl, "setShrinkFactor", SetShrinkFactor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkShrinkFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkShrinkFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkShrinkFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkShrinkFilterWrap *w = new VtkShrinkFilterWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkShrinkFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkShrinkFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkShrinkFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkShrinkFilterWrap *w = new VtkShrinkFilterWrap();
 		w->native.TakeReference(r);

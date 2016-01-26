@@ -24,7 +24,6 @@ class VtkSphereRepresentationWrap : public VtkWidgetRepresentationWrap
 		VtkSphereRepresentationWrap(vtkSmartPointer<vtkSphereRepresentation>);
 		VtkSphereRepresentationWrap();
 		~VtkSphereRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

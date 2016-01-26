@@ -24,7 +24,6 @@ class VtkWeightedTransformFilterWrap : public VtkPointSetAlgorithmWrap
 		VtkWeightedTransformFilterWrap(vtkSmartPointer<vtkWeightedTransformFilter>);
 		VtkWeightedTransformFilterWrap();
 		~VtkWeightedTransformFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

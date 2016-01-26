@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDistanceToCameraWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDistanceToCameraWrap::ptpl;
 
 VtkDistanceToCameraWrap::VtkDistanceToCameraWrap()
@@ -79,7 +78,6 @@ void VtkDistanceToCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScreenSize", SetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "setScreenSize", SetScreenSize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -135,7 +133,7 @@ void VtkDistanceToCameraWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
@@ -194,7 +192,7 @@ void VtkDistanceToCameraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDistanceToCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDistanceToCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistanceToCameraWrap *w = new VtkDistanceToCameraWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkDistanceToCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDistanceToCameraWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDistanceToCameraWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDistanceToCameraWrap *w = new VtkDistanceToCameraWrap();
 		w->native.TakeReference(r);

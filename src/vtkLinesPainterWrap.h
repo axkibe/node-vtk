@@ -24,7 +24,6 @@ class VtkLinesPainterWrap : public VtkPrimitivePainterWrap
 		VtkLinesPainterWrap(vtkSmartPointer<vtkLinesPainter>);
 		VtkLinesPainterWrap();
 		~VtkLinesPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

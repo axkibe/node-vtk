@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTexturedSphereSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTexturedSphereSourceWrap::ptpl;
 
 VtkTexturedSphereSourceWrap::VtkTexturedSphereSourceWrap()
@@ -126,7 +125,6 @@ void VtkTexturedSphereSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetThetaResolution", SetThetaResolution);
 	Nan::SetPrototypeMethod(tpl, "setThetaResolution", SetThetaResolution);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -428,7 +426,7 @@ void VtkTexturedSphereSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTexturedSphereSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTexturedSphereSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTexturedSphereSourceWrap *w = new VtkTexturedSphereSourceWrap();
 	w->native.TakeReference(r);
@@ -456,7 +454,7 @@ void VtkTexturedSphereSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTexturedSphereSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTexturedSphereSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTexturedSphereSourceWrap *w = new VtkTexturedSphereSourceWrap();
 		w->native.TakeReference(r);

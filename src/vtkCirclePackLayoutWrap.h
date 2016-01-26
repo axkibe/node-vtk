@@ -24,7 +24,6 @@ class VtkCirclePackLayoutWrap : public VtkTreeAlgorithmWrap
 		VtkCirclePackLayoutWrap(vtkSmartPointer<vtkCirclePackLayout>);
 		VtkCirclePackLayoutWrap();
 		~VtkCirclePackLayoutWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

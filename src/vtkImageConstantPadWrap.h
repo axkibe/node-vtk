@@ -24,7 +24,6 @@ class VtkImageConstantPadWrap : public VtkImagePadFilterWrap
 		VtkImageConstantPadWrap(vtkSmartPointer<vtkImageConstantPad>);
 		VtkImageConstantPadWrap();
 		~VtkImageConstantPadWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEdgeLayoutWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEdgeLayoutWrap::ptpl;
 
 VtkEdgeLayoutWrap::VtkEdgeLayoutWrap()
@@ -67,7 +66,6 @@ void VtkEdgeLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategy", SetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategy", SetLayoutStrategy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkEdgeLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEdgeLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEdgeLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEdgeLayoutStrategyWrap *w = new VtkEdgeLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkEdgeLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEdgeLayoutWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEdgeLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEdgeLayoutWrap *w = new VtkEdgeLayoutWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkEdgeLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEdgeLayoutWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEdgeLayoutWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEdgeLayoutWrap *w = new VtkEdgeLayoutWrap();
 		w->native.TakeReference(r);

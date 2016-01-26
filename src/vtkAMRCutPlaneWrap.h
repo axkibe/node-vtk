@@ -24,7 +24,6 @@ class VtkAMRCutPlaneWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkAMRCutPlaneWrap(vtkSmartPointer<vtkAMRCutPlane>);
 		VtkAMRCutPlaneWrap();
 		~VtkAMRCutPlaneWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

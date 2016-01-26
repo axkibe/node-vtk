@@ -24,7 +24,6 @@ class VtkAbstractPropPickerWrap : public VtkAbstractPickerWrap
 		VtkAbstractPropPickerWrap(vtkSmartPointer<vtkAbstractPropPicker>);
 		VtkAbstractPropPickerWrap();
 		~VtkAbstractPropPickerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

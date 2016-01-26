@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperOctreeSampleFunctionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeSampleFunctionWrap::ptpl;
 
 VtkHyperOctreeSampleFunctionWrap::VtkHyperOctreeSampleFunctionWrap()
@@ -151,7 +150,6 @@ void VtkHyperOctreeSampleFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -249,7 +247,7 @@ void VtkHyperOctreeSampleFunctionWrap::GetImplicitFunction(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
 	w->native.TakeReference(r);
@@ -364,7 +362,7 @@ void VtkHyperOctreeSampleFunctionWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeSampleFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeSampleFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeSampleFunctionWrap *w = new VtkHyperOctreeSampleFunctionWrap();
 	w->native.TakeReference(r);
@@ -392,7 +390,7 @@ void VtkHyperOctreeSampleFunctionWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeSampleFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeSampleFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeSampleFunctionWrap *w = new VtkHyperOctreeSampleFunctionWrap();
 		w->native.TakeReference(r);

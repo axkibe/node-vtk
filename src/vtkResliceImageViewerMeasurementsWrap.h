@@ -24,7 +24,6 @@ class VtkResliceImageViewerMeasurementsWrap : public VtkObjectWrap
 		VtkResliceImageViewerMeasurementsWrap(vtkSmartPointer<vtkResliceImageViewerMeasurements>);
 		VtkResliceImageViewerMeasurementsWrap();
 		~VtkResliceImageViewerMeasurementsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

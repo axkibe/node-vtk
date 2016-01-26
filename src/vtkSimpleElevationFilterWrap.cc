@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSimpleElevationFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSimpleElevationFilterWrap::ptpl;
 
 VtkSimpleElevationFilterWrap::VtkSimpleElevationFilterWrap()
@@ -63,7 +62,6 @@ void VtkSimpleElevationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVector", SetVector);
 	Nan::SetPrototypeMethod(tpl, "setVector", SetVector);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkSimpleElevationFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSimpleElevationFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSimpleElevationFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSimpleElevationFilterWrap *w = new VtkSimpleElevationFilterWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkSimpleElevationFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSimpleElevationFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSimpleElevationFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSimpleElevationFilterWrap *w = new VtkSimpleElevationFilterWrap();
 		w->native.TakeReference(r);

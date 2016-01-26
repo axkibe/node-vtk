@@ -24,7 +24,6 @@ class VtkGenericSubdivisionErrorMetricWrap : public VtkObjectWrap
 		VtkGenericSubdivisionErrorMetricWrap(vtkSmartPointer<vtkGenericSubdivisionErrorMetric>);
 		VtkGenericSubdivisionErrorMetricWrap();
 		~VtkGenericSubdivisionErrorMetricWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

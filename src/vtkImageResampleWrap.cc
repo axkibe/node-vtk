@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageResampleWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageResampleWrap::ptpl;
 
 VtkImageResampleWrap::VtkImageResampleWrap()
@@ -76,7 +75,6 @@ void VtkImageResampleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDimensionality", SetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "setDimensionality", SetDimensionality);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkImageResampleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageResampleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageResampleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageResampleWrap *w = new VtkImageResampleWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkImageResampleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageResampleWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageResampleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageResampleWrap *w = new VtkImageResampleWrap();
 		w->native.TakeReference(r);

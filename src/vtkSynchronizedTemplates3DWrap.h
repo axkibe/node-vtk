@@ -24,7 +24,6 @@ class VtkSynchronizedTemplates3DWrap : public VtkPolyDataAlgorithmWrap
 		VtkSynchronizedTemplates3DWrap(vtkSmartPointer<vtkSynchronizedTemplates3D>);
 		VtkSynchronizedTemplates3DWrap();
 		~VtkSynchronizedTemplates3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

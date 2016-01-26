@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageConstantPadWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageConstantPadWrap::ptpl;
 
 VtkImageConstantPadWrap::VtkImageConstantPadWrap()
@@ -66,7 +65,6 @@ void VtkImageConstantPadWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetConstant", SetConstant);
 	Nan::SetPrototypeMethod(tpl, "setConstant", SetConstant);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkImageConstantPadWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageConstantPadWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageConstantPadWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageConstantPadWrap *w = new VtkImageConstantPadWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkImageConstantPadWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageConstantPadWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageConstantPadWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageConstantPadWrap *w = new VtkImageConstantPadWrap();
 		w->native.TakeReference(r);

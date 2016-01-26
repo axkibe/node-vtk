@@ -24,7 +24,6 @@ class VtkImageHistogramWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageHistogramWrap(vtkSmartPointer<vtkImageHistogram>);
 		VtkImageHistogramWrap();
 		~VtkImageHistogramWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkWarpVectorWrap : public VtkPointSetAlgorithmWrap
 		VtkWarpVectorWrap(vtkSmartPointer<vtkWarpVector>);
 		VtkWarpVectorWrap();
 		~VtkWarpVectorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

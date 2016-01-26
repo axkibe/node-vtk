@@ -24,7 +24,6 @@ class VtkInformationUnsignedLongKeyWrap : public VtkInformationKeyWrap
 		VtkInformationUnsignedLongKeyWrap(vtkSmartPointer<vtkInformationUnsignedLongKey>);
 		VtkInformationUnsignedLongKeyWrap();
 		~VtkInformationUnsignedLongKeyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

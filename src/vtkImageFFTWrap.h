@@ -24,7 +24,6 @@ class VtkImageFFTWrap : public VtkImageFourierFilterWrap
 		VtkImageFFTWrap(vtkSmartPointer<vtkImageFFT>);
 		VtkImageFFTWrap();
 		~VtkImageFFTWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

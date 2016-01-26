@@ -24,7 +24,6 @@ class VtkRISReaderWrap : public VtkTableAlgorithmWrap
 		VtkRISReaderWrap(vtkSmartPointer<vtkRISReader>);
 		VtkRISReaderWrap();
 		~VtkRISReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkNetworkHierarchyWrap : public VtkTreeAlgorithmWrap
 		VtkNetworkHierarchyWrap(vtkSmartPointer<vtkNetworkHierarchy>);
 		VtkNetworkHierarchyWrap();
 		~VtkNetworkHierarchyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

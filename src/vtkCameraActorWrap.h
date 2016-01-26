@@ -24,7 +24,6 @@ class VtkCameraActorWrap : public VtkProp3DWrap
 		VtkCameraActorWrap(vtkSmartPointer<vtkCameraActor>);
 		VtkCameraActorWrap();
 		~VtkCameraActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

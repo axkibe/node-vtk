@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWarpVectorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWarpVectorWrap::ptpl;
 
 VtkWarpVectorWrap::VtkWarpVectorWrap()
@@ -70,7 +69,6 @@ void VtkWarpVectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleFactor", SetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setScaleFactor", SetScaleFactor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -188,7 +186,7 @@ void VtkWarpVectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWarpVectorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWarpVectorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWarpVectorWrap *w = new VtkWarpVectorWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkWarpVectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWarpVectorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWarpVectorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWarpVectorWrap *w = new VtkWarpVectorWrap();
 		w->native.TakeReference(r);

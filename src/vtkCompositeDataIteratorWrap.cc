@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCompositeDataIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCompositeDataIteratorWrap::ptpl;
 
 VtkCompositeDataIteratorWrap::VtkCompositeDataIteratorWrap()
@@ -107,7 +106,6 @@ void VtkCompositeDataIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SkipEmptyNodesOn", SkipEmptyNodesOn);
 	Nan::SetPrototypeMethod(tpl, "skipEmptyNodesOn", SkipEmptyNodesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -163,7 +161,7 @@ void VtkCompositeDataIteratorWrap::GetCurrentDataObject(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkCompositeDataIteratorWrap::GetCurrentMetaData(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationWrap *w = new VtkInformationWrap();
 	w->native.TakeReference(r);
@@ -209,7 +207,7 @@ void VtkCompositeDataIteratorWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataSetWrap *w = new VtkCompositeDataSetWrap();
 	w->native.TakeReference(r);
@@ -358,7 +356,7 @@ void VtkCompositeDataIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCompositeDataIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataIteratorWrap *w = new VtkCompositeDataIteratorWrap();
 	w->native.TakeReference(r);
@@ -386,7 +384,7 @@ void VtkCompositeDataIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCompositeDataIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeDataIteratorWrap *w = new VtkCompositeDataIteratorWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkAxesTransformWidgetWrap : public VtkAbstractWidgetWrap
 		VtkAxesTransformWidgetWrap(vtkSmartPointer<vtkAxesTransformWidget>);
 		VtkAxesTransformWidgetWrap();
 		~VtkAxesTransformWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

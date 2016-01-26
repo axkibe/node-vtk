@@ -24,7 +24,6 @@ class VtkSobelGradientMagnitudePassWrap : public VtkImageProcessingPassWrap
 		VtkSobelGradientMagnitudePassWrap(vtkSmartPointer<vtkSobelGradientMagnitudePass>);
 		VtkSobelGradientMagnitudePassWrap();
 		~VtkSobelGradientMagnitudePassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageImportWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageImportWrap::ptpl;
 
 VtkImageImportWrap::VtkImageImportWrap()
@@ -129,7 +128,6 @@ void VtkImageImportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -325,7 +323,7 @@ void VtkImageImportWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageImportWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageImportWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageImportWrap *w = new VtkImageImportWrap();
 	w->native.TakeReference(r);
@@ -353,7 +351,7 @@ void VtkImageImportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageImportWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageImportWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageImportWrap *w = new VtkImageImportWrap();
 		w->native.TakeReference(r);

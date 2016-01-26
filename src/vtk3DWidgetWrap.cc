@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> Vtk3DWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> Vtk3DWidgetWrap::ptpl;
 
 Vtk3DWidgetWrap::Vtk3DWidgetWrap()
@@ -105,7 +104,6 @@ void Vtk3DWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProp3D", SetProp3D);
 	Nan::SetPrototypeMethod(tpl, "setProp3D", SetProp3D);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -203,7 +201,7 @@ void Vtk3DWidgetWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
 	w->native.TakeReference(r);
@@ -268,7 +266,7 @@ void Vtk3DWidgetWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProp3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProp3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProp3DWrap *w = new VtkProp3DWrap();
 	w->native.TakeReference(r);
@@ -313,7 +311,7 @@ void Vtk3DWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(Vtk3DWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(Vtk3DWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	Vtk3DWidgetWrap *w = new Vtk3DWidgetWrap();
 	w->native.TakeReference(r);
@@ -385,7 +383,7 @@ void Vtk3DWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(Vtk3DWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(Vtk3DWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		Vtk3DWidgetWrap *w = new Vtk3DWidgetWrap();
 		w->native.TakeReference(r);

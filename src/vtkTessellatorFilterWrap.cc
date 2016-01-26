@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTessellatorFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTessellatorFilterWrap::ptpl;
 
 VtkTessellatorFilterWrap::VtkTessellatorFilterWrap()
@@ -116,7 +115,6 @@ void VtkTessellatorFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTessellator", SetTessellator);
 	Nan::SetPrototypeMethod(tpl, "setTessellator", SetTessellator);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -256,7 +254,7 @@ void VtkTessellatorFilterWrap::GetSubdivider(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataSetEdgeSubdivisionCriterionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataSetEdgeSubdivisionCriterionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetEdgeSubdivisionCriterionWrap *w = new VtkDataSetEdgeSubdivisionCriterionWrap();
 	w->native.TakeReference(r);
@@ -279,7 +277,7 @@ void VtkTessellatorFilterWrap::GetTessellator(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStreamingTessellatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStreamingTessellatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStreamingTessellatorWrap *w = new VtkStreamingTessellatorWrap();
 	w->native.TakeReference(r);
@@ -348,7 +346,7 @@ void VtkTessellatorFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTessellatorFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTessellatorFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTessellatorFilterWrap *w = new VtkTessellatorFilterWrap();
 	w->native.TakeReference(r);
@@ -388,7 +386,7 @@ void VtkTessellatorFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTessellatorFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTessellatorFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTessellatorFilterWrap *w = new VtkTessellatorFilterWrap();
 		w->native.TakeReference(r);

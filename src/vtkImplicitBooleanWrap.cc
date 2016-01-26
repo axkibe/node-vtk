@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImplicitBooleanWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImplicitBooleanWrap::ptpl;
 
 VtkImplicitBooleanWrap::VtkImplicitBooleanWrap()
@@ -100,7 +99,6 @@ void VtkImplicitBooleanWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOperationTypeToUnionOfMagnitudes", SetOperationTypeToUnionOfMagnitudes);
 	Nan::SetPrototypeMethod(tpl, "setOperationTypeToUnionOfMagnitudes", SetOperationTypeToUnionOfMagnitudes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -205,7 +203,7 @@ void VtkImplicitBooleanWrap::GetFunction(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitFunctionCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionCollectionWrap *w = new VtkImplicitFunctionCollectionWrap();
 	w->native.TakeReference(r);
@@ -306,7 +304,7 @@ void VtkImplicitBooleanWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitBooleanWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitBooleanWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitBooleanWrap *w = new VtkImplicitBooleanWrap();
 	w->native.TakeReference(r);
@@ -354,7 +352,7 @@ void VtkImplicitBooleanWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImplicitBooleanWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImplicitBooleanWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitBooleanWrap *w = new VtkImplicitBooleanWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkQuadricWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkQuadricWrap::ptpl;
 
 VtkQuadricWrap::VtkQuadricWrap()
@@ -66,7 +65,6 @@ void VtkQuadricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCoefficients", SetCoefficients);
 	Nan::SetPrototypeMethod(tpl, "setCoefficients", SetCoefficients);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -173,7 +171,7 @@ void VtkQuadricWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuadricWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuadricWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuadricWrap *w = new VtkQuadricWrap();
 	w->native.TakeReference(r);
@@ -201,7 +199,7 @@ void VtkQuadricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkQuadricWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkQuadricWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkQuadricWrap *w = new VtkQuadricWrap();
 		w->native.TakeReference(r);

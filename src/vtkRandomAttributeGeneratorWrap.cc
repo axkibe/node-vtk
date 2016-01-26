@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRandomAttributeGeneratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRandomAttributeGeneratorWrap::ptpl;
 
 VtkRandomAttributeGeneratorWrap::VtkRandomAttributeGeneratorWrap()
@@ -306,7 +305,6 @@ void VtkRandomAttributeGeneratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfComponents", SetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfComponents", SetNumberOfComponents);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -1058,7 +1056,7 @@ void VtkRandomAttributeGeneratorWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRandomAttributeGeneratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRandomAttributeGeneratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRandomAttributeGeneratorWrap *w = new VtkRandomAttributeGeneratorWrap();
 	w->native.TakeReference(r);
@@ -1086,7 +1084,7 @@ void VtkRandomAttributeGeneratorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRandomAttributeGeneratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRandomAttributeGeneratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRandomAttributeGeneratorWrap *w = new VtkRandomAttributeGeneratorWrap();
 		w->native.TakeReference(r);

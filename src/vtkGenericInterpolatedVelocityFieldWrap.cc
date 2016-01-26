@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericInterpolatedVelocityFieldWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericInterpolatedVelocityFieldWrap::ptpl;
 
 VtkGenericInterpolatedVelocityFieldWrap::VtkGenericInterpolatedVelocityFieldWrap()
@@ -101,7 +100,6 @@ void VtkGenericInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCaching", SetCaching);
 	Nan::SetPrototypeMethod(tpl, "setCaching", SetCaching);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -275,7 +273,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::GetLastCell(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericAdaptorCellWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericAdaptorCellWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericAdaptorCellWrap *w = new VtkGenericAdaptorCellWrap();
 	w->native.TakeReference(r);
@@ -298,7 +296,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::GetLastDataSet(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericDataSetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericDataSetWrap *w = new VtkGenericDataSetWrap();
 	w->native.TakeReference(r);
@@ -357,7 +355,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericInterpolatedVelocityFieldWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericInterpolatedVelocityFieldWrap *w = new VtkGenericInterpolatedVelocityFieldWrap();
 	w->native.TakeReference(r);
@@ -385,7 +383,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCa
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericInterpolatedVelocityFieldWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericInterpolatedVelocityFieldWrap *w = new VtkGenericInterpolatedVelocityFieldWrap();
 		w->native.TakeReference(r);

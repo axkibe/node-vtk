@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRecursiveDividingCubesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRecursiveDividingCubesWrap::ptpl;
 
 VtkRecursiveDividingCubesWrap::VtkRecursiveDividingCubesWrap()
@@ -90,7 +89,6 @@ void VtkRecursiveDividingCubesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -266,7 +264,7 @@ void VtkRecursiveDividingCubesWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRecursiveDividingCubesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRecursiveDividingCubesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRecursiveDividingCubesWrap *w = new VtkRecursiveDividingCubesWrap();
 	w->native.TakeReference(r);
@@ -294,7 +292,7 @@ void VtkRecursiveDividingCubesWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRecursiveDividingCubesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRecursiveDividingCubesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRecursiveDividingCubesWrap *w = new VtkRecursiveDividingCubesWrap();
 		w->native.TakeReference(r);

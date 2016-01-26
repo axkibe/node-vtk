@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlotStackedWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlotStackedWrap::ptpl;
 
 VtkPlotStackedWrap::VtkPlotStackedWrap()
@@ -77,7 +76,6 @@ void VtkPlotStackedWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -133,7 +131,7 @@ void VtkPlotStackedWrap::GetColorSeries(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkColorSeriesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkColorSeriesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorSeriesWrap *w = new VtkColorSeriesWrap();
 	w->native.TakeReference(r);
@@ -156,7 +154,7 @@ void VtkPlotStackedWrap::GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -201,7 +199,7 @@ void VtkPlotStackedWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlotStackedWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlotStackedWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlotStackedWrap *w = new VtkPlotStackedWrap();
 	w->native.TakeReference(r);
@@ -229,7 +227,7 @@ void VtkPlotStackedWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlotStackedWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlotStackedWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotStackedWrap *w = new VtkPlotStackedWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkGeodesicPathWrap : public VtkPolyDataAlgorithmWrap
 		VtkGeodesicPathWrap(vtkSmartPointer<vtkGeodesicPath>);
 		VtkGeodesicPathWrap();
 		~VtkGeodesicPathWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

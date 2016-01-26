@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTransmitUnstructuredGridPieceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTransmitUnstructuredGridPieceWrap::ptpl;
 
 VtkTransmitUnstructuredGridPieceWrap::VtkTransmitUnstructuredGridPieceWrap()
@@ -79,7 +78,6 @@ void VtkTransmitUnstructuredGridPieceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCreateGhostCells", SetCreateGhostCells);
 	Nan::SetPrototypeMethod(tpl, "setCreateGhostCells", SetCreateGhostCells);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -159,7 +157,7 @@ void VtkTransmitUnstructuredGridPieceWrap::GetController(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkTransmitUnstructuredGridPieceWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTransmitUnstructuredGridPieceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTransmitUnstructuredGridPieceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransmitUnstructuredGridPieceWrap *w = new VtkTransmitUnstructuredGridPieceWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkTransmitUnstructuredGridPieceWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTransmitUnstructuredGridPieceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTransmitUnstructuredGridPieceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransmitUnstructuredGridPieceWrap *w = new VtkTransmitUnstructuredGridPieceWrap();
 		w->native.TakeReference(r);

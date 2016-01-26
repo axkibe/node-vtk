@@ -24,7 +24,6 @@ class VtkVoxelContoursToSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkVoxelContoursToSurfaceFilterWrap(vtkSmartPointer<vtkVoxelContoursToSurfaceFilter>);
 		VtkVoxelContoursToSurfaceFilterWrap();
 		~VtkVoxelContoursToSurfaceFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

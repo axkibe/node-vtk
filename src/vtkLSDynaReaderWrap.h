@@ -24,7 +24,6 @@ class VtkLSDynaReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkLSDynaReaderWrap(vtkSmartPointer<vtkLSDynaReader>);
 		VtkLSDynaReaderWrap();
 		~VtkLSDynaReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

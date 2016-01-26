@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkViewDependentErrorMetricWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkViewDependentErrorMetricWrap::ptpl;
 
 VtkViewDependentErrorMetricWrap::VtkViewDependentErrorMetricWrap()
@@ -73,7 +72,6 @@ void VtkViewDependentErrorMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
 	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkViewDependentErrorMetricWrap::GetViewport(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkViewportWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkViewportWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewportWrap *w = new VtkViewportWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkViewDependentErrorMetricWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkViewDependentErrorMetricWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkViewDependentErrorMetricWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewDependentErrorMetricWrap *w = new VtkViewDependentErrorMetricWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkViewDependentErrorMetricWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkViewDependentErrorMetricWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkViewDependentErrorMetricWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkViewDependentErrorMetricWrap *w = new VtkViewDependentErrorMetricWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkCellDistanceSelectorWrap : public VtkSelectionAlgorithmWrap
 		VtkCellDistanceSelectorWrap(vtkSmartPointer<vtkCellDistanceSelector>);
 		VtkCellDistanceSelectorWrap();
 		~VtkCellDistanceSelectorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

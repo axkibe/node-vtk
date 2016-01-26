@@ -24,7 +24,6 @@ class VtkVolumePickerWrap : public VtkCellPickerWrap
 		VtkVolumePickerWrap(vtkSmartPointer<vtkVolumePicker>);
 		VtkVolumePickerWrap();
 		~VtkVolumePickerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

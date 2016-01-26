@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageShrink3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageShrink3DWrap::ptpl;
 
 VtkImageShrink3DWrap::VtkImageShrink3DWrap()
@@ -126,7 +125,6 @@ void VtkImageShrink3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShrinkFactors", SetShrinkFactors);
 	Nan::SetPrototypeMethod(tpl, "setShrinkFactors", SetShrinkFactors);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -394,7 +392,7 @@ void VtkImageShrink3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageShrink3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageShrink3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageShrink3DWrap *w = new VtkImageShrink3DWrap();
 	w->native.TakeReference(r);
@@ -422,7 +420,7 @@ void VtkImageShrink3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageShrink3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageShrink3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageShrink3DWrap *w = new VtkImageShrink3DWrap();
 		w->native.TakeReference(r);

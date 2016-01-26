@@ -24,7 +24,6 @@ class VtkOpenGLGPUVolumeRayCastMapperWrap : public VtkGPUVolumeRayCastMapperWrap
 		VtkOpenGLGPUVolumeRayCastMapperWrap(vtkSmartPointer<vtkOpenGLGPUVolumeRayCastMapper>);
 		VtkOpenGLGPUVolumeRayCastMapperWrap();
 		~VtkOpenGLGPUVolumeRayCastMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

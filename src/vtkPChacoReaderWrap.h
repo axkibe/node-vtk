@@ -24,7 +24,6 @@ class VtkPChacoReaderWrap : public VtkChacoReaderWrap
 		VtkPChacoReaderWrap(vtkSmartPointer<vtkPChacoReader>);
 		VtkPChacoReaderWrap();
 		~VtkPChacoReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

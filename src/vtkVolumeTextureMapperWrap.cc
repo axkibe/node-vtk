@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVolumeTextureMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVolumeTextureMapperWrap::ptpl;
 
 VtkVolumeTextureMapperWrap::VtkVolumeTextureMapperWrap()
@@ -86,7 +85,6 @@ void VtkVolumeTextureMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkVolumeTextureMapperWrap::GetGradientEstimator(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEncodedGradientEstimatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEncodedGradientEstimatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEncodedGradientEstimatorWrap *w = new VtkEncodedGradientEstimatorWrap();
 	w->native.TakeReference(r);
@@ -165,7 +163,7 @@ void VtkVolumeTextureMapperWrap::GetGradientShader(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEncodedGradientShaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEncodedGradientShaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEncodedGradientShaderWrap *w = new VtkEncodedGradientShaderWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkVolumeTextureMapperWrap::GetRenderWindow(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -247,7 +245,7 @@ void VtkVolumeTextureMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVolumeTextureMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVolumeTextureMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeTextureMapperWrap *w = new VtkVolumeTextureMapperWrap();
 	w->native.TakeReference(r);
@@ -300,7 +298,7 @@ void VtkVolumeTextureMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVolumeTextureMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVolumeTextureMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeTextureMapperWrap *w = new VtkVolumeTextureMapperWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkImageInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 		VtkImageInterpolatorWrap(vtkSmartPointer<vtkImageInterpolator>);
 		VtkImageInterpolatorWrap();
 		~VtkImageInterpolatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

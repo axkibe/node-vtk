@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkChacoGraphReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkChacoGraphReaderWrap::ptpl;
 
 VtkChacoGraphReaderWrap::VtkChacoGraphReaderWrap()
@@ -66,7 +65,6 @@ void VtkChacoGraphReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkChacoGraphReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChacoGraphReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChacoGraphReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChacoGraphReaderWrap *w = new VtkChacoGraphReaderWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkChacoGraphReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkChacoGraphReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkChacoGraphReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkChacoGraphReaderWrap *w = new VtkChacoGraphReaderWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkConnectivityFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkConnectivityFilterWrap(vtkSmartPointer<vtkConnectivityFilter>);
 		VtkConnectivityFilterWrap();
 		~VtkConnectivityFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkStackedTreeLayoutStrategyWrap : public VtkAreaLayoutStrategyWrap
 		VtkStackedTreeLayoutStrategyWrap(vtkSmartPointer<vtkStackedTreeLayoutStrategy>);
 		VtkStackedTreeLayoutStrategyWrap();
 		~VtkStackedTreeLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

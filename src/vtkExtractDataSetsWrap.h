@@ -24,7 +24,6 @@ class VtkExtractDataSetsWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkExtractDataSetsWrap(vtkSmartPointer<vtkExtractDataSets>);
 		VtkExtractDataSetsWrap();
 		~VtkExtractDataSetsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

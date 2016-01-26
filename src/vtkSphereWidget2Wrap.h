@@ -24,7 +24,6 @@ class VtkSphereWidget2Wrap : public VtkAbstractWidgetWrap
 		VtkSphereWidget2Wrap(vtkSmartPointer<vtkSphereWidget2>);
 		VtkSphereWidget2Wrap();
 		~VtkSphereWidget2Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

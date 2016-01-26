@@ -24,7 +24,6 @@ class VtkKCoreDecompositionWrap : public VtkGraphAlgorithmWrap
 		VtkKCoreDecompositionWrap(vtkSmartPointer<vtkKCoreDecomposition>);
 		VtkKCoreDecompositionWrap();
 		~VtkKCoreDecompositionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

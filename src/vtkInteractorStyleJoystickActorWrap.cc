@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleJoystickActorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleJoystickActorWrap::ptpl;
 
 VtkInteractorStyleJoystickActorWrap::VtkInteractorStyleJoystickActorWrap()
@@ -96,7 +95,6 @@ void VtkInteractorStyleJoystickActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UniformScale", UniformScale);
 	Nan::SetPrototypeMethod(tpl, "uniformScale", UniformScale);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -186,7 +184,7 @@ void VtkInteractorStyleJoystickActorWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleJoystickActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleJoystickActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleJoystickActorWrap *w = new VtkInteractorStyleJoystickActorWrap();
 	w->native.TakeReference(r);
@@ -322,7 +320,7 @@ void VtkInteractorStyleJoystickActorWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleJoystickActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleJoystickActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleJoystickActorWrap *w = new VtkInteractorStyleJoystickActorWrap();
 		w->native.TakeReference(r);

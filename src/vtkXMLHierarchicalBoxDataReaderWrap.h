@@ -24,7 +24,6 @@ class VtkXMLHierarchicalBoxDataReaderWrap : public VtkXMLUniformGridAMRReaderWra
 		VtkXMLHierarchicalBoxDataReaderWrap(vtkSmartPointer<vtkXMLHierarchicalBoxDataReader>);
 		VtkXMLHierarchicalBoxDataReaderWrap();
 		~VtkXMLHierarchicalBoxDataReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

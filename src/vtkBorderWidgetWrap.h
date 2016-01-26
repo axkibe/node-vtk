@@ -24,7 +24,6 @@ class VtkBorderWidgetWrap : public VtkAbstractWidgetWrap
 		VtkBorderWidgetWrap(vtkSmartPointer<vtkBorderWidget>);
 		VtkBorderWidgetWrap();
 		~VtkBorderWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

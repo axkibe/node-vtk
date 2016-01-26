@@ -24,7 +24,6 @@ class VtkCoincidentPointsWrap : public VtkObjectWrap
 		VtkCoincidentPointsWrap(vtkSmartPointer<vtkCoincidentPoints>);
 		VtkCoincidentPointsWrap();
 		~VtkCoincidentPointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

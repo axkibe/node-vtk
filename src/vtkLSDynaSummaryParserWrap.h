@@ -24,7 +24,6 @@ class VtkLSDynaSummaryParserWrap : public VtkXMLParserWrap
 		VtkLSDynaSummaryParserWrap(vtkSmartPointer<vtkLSDynaSummaryParser>);
 		VtkLSDynaSummaryParserWrap();
 		~VtkLSDynaSummaryParserWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

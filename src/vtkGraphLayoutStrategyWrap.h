@@ -24,7 +24,6 @@ class VtkGraphLayoutStrategyWrap : public VtkObjectWrap
 		VtkGraphLayoutStrategyWrap(vtkSmartPointer<vtkGraphLayoutStrategy>);
 		VtkGraphLayoutStrategyWrap();
 		~VtkGraphLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

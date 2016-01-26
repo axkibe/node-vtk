@@ -24,7 +24,6 @@ class VtkGeoGlobeSourceWrap : public VtkGeoSourceWrap
 		VtkGeoGlobeSourceWrap(vtkSmartPointer<vtkGeoGlobeSource>);
 		VtkGeoGlobeSourceWrap();
 		~VtkGeoGlobeSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

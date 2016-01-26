@@ -24,7 +24,6 @@ class VtkSliderWidgetWrap : public VtkAbstractWidgetWrap
 		VtkSliderWidgetWrap(vtkSmartPointer<vtkSliderWidget>);
 		VtkSliderWidgetWrap();
 		~VtkSliderWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

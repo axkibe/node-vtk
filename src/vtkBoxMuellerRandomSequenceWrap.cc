@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBoxMuellerRandomSequenceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBoxMuellerRandomSequenceWrap::ptpl;
 
 VtkBoxMuellerRandomSequenceWrap::VtkBoxMuellerRandomSequenceWrap()
@@ -73,7 +72,6 @@ void VtkBoxMuellerRandomSequenceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUniformSequence", SetUniformSequence);
 	Nan::SetPrototypeMethod(tpl, "setUniformSequence", SetUniformSequence);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -129,7 +127,7 @@ void VtkBoxMuellerRandomSequenceWrap::GetUniformSequence(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRandomSequenceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRandomSequenceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRandomSequenceWrap *w = new VtkRandomSequenceWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkBoxMuellerRandomSequenceWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBoxMuellerRandomSequenceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBoxMuellerRandomSequenceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBoxMuellerRandomSequenceWrap *w = new VtkBoxMuellerRandomSequenceWrap();
 	w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkBoxMuellerRandomSequenceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBoxMuellerRandomSequenceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBoxMuellerRandomSequenceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBoxMuellerRandomSequenceWrap *w = new VtkBoxMuellerRandomSequenceWrap();
 		w->native.TakeReference(r);

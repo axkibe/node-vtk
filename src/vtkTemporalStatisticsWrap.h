@@ -24,7 +24,6 @@ class VtkTemporalStatisticsWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkTemporalStatisticsWrap(vtkSmartPointer<vtkTemporalStatistics>);
 		VtkTemporalStatisticsWrap();
 		~VtkTemporalStatisticsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

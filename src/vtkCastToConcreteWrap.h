@@ -24,7 +24,6 @@ class VtkCastToConcreteWrap : public VtkDataSetAlgorithmWrap
 		VtkCastToConcreteWrap(vtkSmartPointer<vtkCastToConcrete>);
 		VtkCastToConcreteWrap();
 		~VtkCastToConcreteWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

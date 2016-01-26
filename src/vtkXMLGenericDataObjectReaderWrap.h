@@ -24,7 +24,6 @@ class VtkXMLGenericDataObjectReaderWrap : public VtkXMLDataReaderWrap
 		VtkXMLGenericDataObjectReaderWrap(vtkSmartPointer<vtkXMLGenericDataObjectReader>);
 		VtkXMLGenericDataObjectReaderWrap();
 		~VtkXMLGenericDataObjectReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

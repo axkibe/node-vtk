@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContextViewWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContextViewWrap::ptpl;
 
 VtkContextViewWrap::VtkContextViewWrap()
@@ -74,7 +73,6 @@ void VtkContextViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScene", SetScene);
 	Nan::SetPrototypeMethod(tpl, "setScene", SetScene);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -130,7 +128,7 @@ void VtkContextViewWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContext2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContext2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContext2DWrap *w = new VtkContext2DWrap();
 	w->native.TakeReference(r);
@@ -153,7 +151,7 @@ void VtkContextViewWrap::GetScene(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContextSceneWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContextSceneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContextSceneWrap *w = new VtkContextSceneWrap();
 	w->native.TakeReference(r);
@@ -198,7 +196,7 @@ void VtkContextViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContextViewWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContextViewWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContextViewWrap *w = new VtkContextViewWrap();
 	w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkContextViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContextViewWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContextViewWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContextViewWrap *w = new VtkContextViewWrap();
 		w->native.TakeReference(r);

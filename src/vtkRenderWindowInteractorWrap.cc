@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRenderWindowInteractorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRenderWindowInteractorWrap::ptpl;
 
 VtkRenderWindowInteractorWrap::VtkRenderWindowInteractorWrap()
@@ -363,7 +362,6 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UserCallback", UserCallback);
 	Nan::SetPrototypeMethod(tpl, "userCallback", UserCallback);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -429,7 +427,7 @@ void VtkRenderWindowInteractorWrap::CreateDefaultPicker(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractPropPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractPropPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractPropPickerWrap *w = new VtkAbstractPropPickerWrap();
 	w->native.TakeReference(r);
@@ -616,7 +614,7 @@ void VtkRenderWindowInteractorWrap::FindPokedRenderer(const Nan::FunctionCallbac
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkRendererWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkRendererWrap *w = new VtkRendererWrap();
 			w->native.TakeReference(r);
@@ -829,7 +827,7 @@ void VtkRenderWindowInteractorWrap::GetInteractorStyle(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorObserverWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorObserverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorObserverWrap *w = new VtkInteractorObserverWrap();
 	w->native.TakeReference(r);
@@ -936,7 +934,7 @@ void VtkRenderWindowInteractorWrap::GetObserverMediator(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkObserverMediatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkObserverMediatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkObserverMediatorWrap *w = new VtkObserverMediatorWrap();
 	w->native.TakeReference(r);
@@ -959,7 +957,7 @@ void VtkRenderWindowInteractorWrap::GetPicker(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractPickerWrap *w = new VtkAbstractPickerWrap();
 	w->native.TakeReference(r);
@@ -982,7 +980,7 @@ void VtkRenderWindowInteractorWrap::GetPickingManager(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPickingManagerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPickingManagerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPickingManagerWrap *w = new VtkPickingManagerWrap();
 	w->native.TakeReference(r);
@@ -1005,7 +1003,7 @@ void VtkRenderWindowInteractorWrap::GetRenderWindow(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -1386,7 +1384,7 @@ void VtkRenderWindowInteractorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowInteractorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowInteractorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
 	w->native.TakeReference(r);
@@ -1483,7 +1481,7 @@ void VtkRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRenderWindowInteractorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRenderWindowInteractorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
 		w->native.TakeReference(r);

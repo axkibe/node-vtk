@@ -24,7 +24,6 @@ class VtkSimple3DCirclesStrategyWrap : public VtkGraphLayoutStrategyWrap
 		VtkSimple3DCirclesStrategyWrap(vtkSmartPointer<vtkSimple3DCirclesStrategy>);
 		VtkSimple3DCirclesStrategyWrap();
 		~VtkSimple3DCirclesStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

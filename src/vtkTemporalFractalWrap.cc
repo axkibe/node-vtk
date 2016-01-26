@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTemporalFractalWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTemporalFractalWrap::ptpl;
 
 VtkTemporalFractalWrap::VtkTemporalFractalWrap()
@@ -138,7 +137,6 @@ void VtkTemporalFractalWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TwoDimensionalOn", TwoDimensionalOn);
 	Nan::SetPrototypeMethod(tpl, "twoDimensionalOn", TwoDimensionalOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -424,7 +422,7 @@ void VtkTemporalFractalWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTemporalFractalWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTemporalFractalWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTemporalFractalWrap *w = new VtkTemporalFractalWrap();
 	w->native.TakeReference(r);
@@ -452,7 +450,7 @@ void VtkTemporalFractalWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTemporalFractalWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTemporalFractalWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTemporalFractalWrap *w = new VtkTemporalFractalWrap();
 		w->native.TakeReference(r);

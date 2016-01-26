@@ -24,7 +24,6 @@ class VtkParallelCoordinatesRepresentationWrap : public VtkRenderedRepresentatio
 		VtkParallelCoordinatesRepresentationWrap(vtkSmartPointer<vtkParallelCoordinatesRepresentation>);
 		VtkParallelCoordinatesRepresentationWrap();
 		~VtkParallelCoordinatesRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

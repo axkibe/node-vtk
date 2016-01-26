@@ -24,7 +24,6 @@ class VtkSubGroupWrap : public VtkObjectWrap
 		VtkSubGroupWrap(vtkSmartPointer<vtkSubGroup>);
 		VtkSubGroupWrap();
 		~VtkSubGroupWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

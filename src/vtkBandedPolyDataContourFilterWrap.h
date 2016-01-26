@@ -24,7 +24,6 @@ class VtkBandedPolyDataContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkBandedPolyDataContourFilterWrap(vtkSmartPointer<vtkBandedPolyDataContourFilter>);
 		VtkBandedPolyDataContourFilterWrap();
 		~VtkBandedPolyDataContourFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

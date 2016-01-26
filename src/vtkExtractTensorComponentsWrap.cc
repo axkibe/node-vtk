@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractTensorComponentsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractTensorComponentsWrap::ptpl;
 
 VtkExtractTensorComponentsWrap::VtkExtractTensorComponentsWrap()
@@ -180,7 +179,6 @@ void VtkExtractTensorComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorComponents", SetVectorComponents);
 	Nan::SetPrototypeMethod(tpl, "setVectorComponents", SetVectorComponents);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -494,7 +492,7 @@ void VtkExtractTensorComponentsWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractTensorComponentsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractTensorComponentsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractTensorComponentsWrap *w = new VtkExtractTensorComponentsWrap();
 	w->native.TakeReference(r);
@@ -570,7 +568,7 @@ void VtkExtractTensorComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractTensorComponentsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractTensorComponentsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractTensorComponentsWrap *w = new VtkExtractTensorComponentsWrap();
 		w->native.TakeReference(r);

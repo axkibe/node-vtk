@@ -24,7 +24,6 @@ class VtkImageHSIToRGBWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageHSIToRGBWrap(vtkSmartPointer<vtkImageHSIToRGB>);
 		VtkImageHSIToRGBWrap();
 		~VtkImageHSIToRGBWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

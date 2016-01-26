@@ -24,7 +24,6 @@ class VtkPickingManagerWrap : public VtkObjectWrap
 		VtkPickingManagerWrap(vtkSmartPointer<vtkPickingManager>);
 		VtkPickingManagerWrap();
 		~VtkPickingManagerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

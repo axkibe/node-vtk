@@ -24,7 +24,6 @@ class VtkDelimitedTextReaderWrap : public VtkTableAlgorithmWrap
 		VtkDelimitedTextReaderWrap(vtkSmartPointer<vtkDelimitedTextReader>);
 		VtkDelimitedTextReaderWrap();
 		~VtkDelimitedTextReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

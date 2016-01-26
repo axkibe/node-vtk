@@ -24,7 +24,6 @@ class VtkDistancePolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkDistancePolyDataFilterWrap(vtkSmartPointer<vtkDistancePolyDataFilter>);
 		VtkDistancePolyDataFilterWrap();
 		~VtkDistancePolyDataFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

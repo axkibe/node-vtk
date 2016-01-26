@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlaneSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlaneSourceWrap::ptpl;
 
 VtkPlaneSourceWrap::VtkPlaneSourceWrap()
@@ -99,7 +98,6 @@ void VtkPlaneSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetYResolution", SetYResolution);
 	Nan::SetPrototypeMethod(tpl, "setYResolution", SetYResolution);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -219,7 +217,7 @@ void VtkPlaneSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlaneSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlaneSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneSourceWrap *w = new VtkPlaneSourceWrap();
 	w->native.TakeReference(r);
@@ -266,7 +264,7 @@ void VtkPlaneSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlaneSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlaneSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlaneSourceWrap *w = new VtkPlaneSourceWrap();
 		w->native.TakeReference(r);

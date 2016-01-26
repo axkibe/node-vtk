@@ -24,7 +24,6 @@ class VtkConeWrap : public VtkImplicitFunctionWrap
 		VtkConeWrap(vtkSmartPointer<vtkCone>);
 		VtkConeWrap();
 		~VtkConeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCubeSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCubeSourceWrap::ptpl;
 
 VtkCubeSourceWrap::VtkCubeSourceWrap()
@@ -108,7 +107,6 @@ void VtkCubeSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZLength", SetZLength);
 	Nan::SetPrototypeMethod(tpl, "setZLength", SetZLength);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -326,7 +324,7 @@ void VtkCubeSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCubeSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCubeSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCubeSourceWrap *w = new VtkCubeSourceWrap();
 	w->native.TakeReference(r);
@@ -354,7 +352,7 @@ void VtkCubeSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCubeSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCubeSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCubeSourceWrap *w = new VtkCubeSourceWrap();
 		w->native.TakeReference(r);

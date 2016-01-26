@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageOpenClose3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageOpenClose3DWrap::ptpl;
 
 VtkImageOpenClose3DWrap::VtkImageOpenClose3DWrap()
@@ -91,7 +90,6 @@ void VtkImageOpenClose3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOpenValue", SetOpenValue);
 	Nan::SetPrototypeMethod(tpl, "setOpenValue", SetOpenValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -185,7 +183,7 @@ void VtkImageOpenClose3DWrap::GetFilter0(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDilateErode3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDilateErode3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDilateErode3DWrap *w = new VtkImageDilateErode3DWrap();
 	w->native.TakeReference(r);
@@ -208,7 +206,7 @@ void VtkImageOpenClose3DWrap::GetFilter1(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDilateErode3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDilateErode3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDilateErode3DWrap *w = new VtkImageDilateErode3DWrap();
 	w->native.TakeReference(r);
@@ -279,7 +277,7 @@ void VtkImageOpenClose3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageOpenClose3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageOpenClose3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageOpenClose3DWrap *w = new VtkImageOpenClose3DWrap();
 	w->native.TakeReference(r);
@@ -307,7 +305,7 @@ void VtkImageOpenClose3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageOpenClose3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageOpenClose3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageOpenClose3DWrap *w = new VtkImageOpenClose3DWrap();
 		w->native.TakeReference(r);

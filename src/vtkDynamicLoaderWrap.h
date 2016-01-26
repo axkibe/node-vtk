@@ -24,7 +24,6 @@ class VtkDynamicLoaderWrap : public VtkObjectWrap
 		VtkDynamicLoaderWrap(vtkSmartPointer<vtkDynamicLoader>);
 		VtkDynamicLoaderWrap();
 		~VtkDynamicLoaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

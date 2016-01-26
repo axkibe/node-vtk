@@ -24,7 +24,6 @@ class VtkUnstructuredGridVolumeRayCastIteratorWrap : public VtkObjectWrap
 		VtkUnstructuredGridVolumeRayCastIteratorWrap(vtkSmartPointer<vtkUnstructuredGridVolumeRayCastIterator>);
 		VtkUnstructuredGridVolumeRayCastIteratorWrap();
 		~VtkUnstructuredGridVolumeRayCastIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

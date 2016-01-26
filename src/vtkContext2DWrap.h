@@ -24,7 +24,6 @@ class VtkContext2DWrap : public VtkObjectWrap
 		VtkContext2DWrap(vtkSmartPointer<vtkContext2D>);
 		VtkContext2DWrap();
 		~VtkContext2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

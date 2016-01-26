@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyPlaneWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyPlaneWrap::ptpl;
 
 VtkPolyPlaneWrap::VtkPolyPlaneWrap()
@@ -70,7 +69,6 @@ void VtkPolyPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPolyLine", SetPolyLine);
 	Nan::SetPrototypeMethod(tpl, "setPolyLine", SetPolyLine);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkPolyPlaneWrap::GetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyLineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyLineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyLineWrap *w = new VtkPolyLineWrap();
 	w->native.TakeReference(r);
@@ -200,7 +198,7 @@ void VtkPolyPlaneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyPlaneWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyPlaneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyPlaneWrap *w = new VtkPolyPlaneWrap();
 	w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkPolyPlaneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyPlaneWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyPlaneWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyPlaneWrap *w = new VtkPolyPlaneWrap();
 		w->native.TakeReference(r);

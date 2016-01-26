@@ -24,7 +24,6 @@ class VtkImageClipWrap : public VtkImageAlgorithmWrap
 		VtkImageClipWrap(vtkSmartPointer<vtkImageClip>);
 		VtkImageClipWrap();
 		~VtkImageClipWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

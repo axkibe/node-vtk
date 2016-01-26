@@ -24,7 +24,6 @@ class VtkTooltipItemWrap : public VtkContextItemWrap
 		VtkTooltipItemWrap(vtkSmartPointer<vtkTooltipItem>);
 		VtkTooltipItemWrap();
 		~VtkTooltipItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

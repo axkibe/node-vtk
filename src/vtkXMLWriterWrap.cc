@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLWriterWrap::ptpl;
 
 VtkXMLWriterWrap::VtkXMLWriterWrap()
@@ -182,7 +181,6 @@ void VtkXMLWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteNextTime", WriteNextTime);
 	Nan::SetPrototypeMethod(tpl, "writeNextTime", WriteNextTime);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -276,7 +274,7 @@ void VtkXMLWriterWrap::GetCompressor(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataCompressorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataCompressorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataCompressorWrap *w = new VtkDataCompressorWrap();
 	w->native.TakeReference(r);
@@ -387,7 +385,7 @@ void VtkXMLWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -406,7 +404,7 @@ void VtkXMLWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -479,7 +477,7 @@ void VtkXMLWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLWriterWrap *w = new VtkXMLWriterWrap();
 	w->native.TakeReference(r);
@@ -507,7 +505,7 @@ void VtkXMLWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLWriterWrap *w = new VtkXMLWriterWrap();
 		w->native.TakeReference(r);

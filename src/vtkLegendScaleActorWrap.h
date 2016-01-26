@@ -24,7 +24,6 @@ class VtkLegendScaleActorWrap : public VtkPropWrap
 		VtkLegendScaleActorWrap(vtkSmartPointer<vtkLegendScaleActor>);
 		VtkLegendScaleActorWrap();
 		~VtkLegendScaleActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

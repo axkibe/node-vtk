@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProStarReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProStarReaderWrap::ptpl;
 
 VtkProStarReaderWrap::VtkProStarReaderWrap()
@@ -78,7 +77,6 @@ void VtkProStarReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleFactor", SetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setScaleFactor", SetScaleFactor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -212,7 +210,7 @@ void VtkProStarReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProStarReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProStarReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProStarReaderWrap *w = new VtkProStarReaderWrap();
 	w->native.TakeReference(r);
@@ -240,7 +238,7 @@ void VtkProStarReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProStarReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProStarReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProStarReaderWrap *w = new VtkProStarReaderWrap();
 		w->native.TakeReference(r);

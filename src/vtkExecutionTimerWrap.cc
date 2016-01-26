@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExecutionTimerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExecutionTimerWrap::ptpl;
 
 VtkExecutionTimerWrap::VtkExecutionTimerWrap()
@@ -72,7 +71,6 @@ void VtkExecutionTimerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFilter", SetFilter);
 	Nan::SetPrototypeMethod(tpl, "setFilter", SetFilter);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -156,7 +154,7 @@ void VtkExecutionTimerWrap::GetFilter(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmWrap *w = new VtkAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -201,7 +199,7 @@ void VtkExecutionTimerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExecutionTimerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExecutionTimerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExecutionTimerWrap *w = new VtkExecutionTimerWrap();
 	w->native.TakeReference(r);
@@ -229,7 +227,7 @@ void VtkExecutionTimerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExecutionTimerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExecutionTimerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExecutionTimerWrap *w = new VtkExecutionTimerWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkThreadedCompositeDataPipelineWrap : public VtkCompositeDataPipelineWrap
 		VtkThreadedCompositeDataPipelineWrap(vtkSmartPointer<vtkThreadedCompositeDataPipeline>);
 		VtkThreadedCompositeDataPipelineWrap();
 		~VtkThreadedCompositeDataPipelineWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

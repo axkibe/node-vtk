@@ -24,7 +24,6 @@ class VtkXMLPImageDataReaderWrap : public VtkXMLPStructuredDataReaderWrap
 		VtkXMLPImageDataReaderWrap(vtkSmartPointer<vtkXMLPImageDataReader>);
 		VtkXMLPImageDataReaderWrap();
 		~VtkXMLPImageDataReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

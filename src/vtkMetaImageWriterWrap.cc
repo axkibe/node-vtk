@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMetaImageWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMetaImageWriterWrap::ptpl;
 
 VtkMetaImageWriterWrap::VtkMetaImageWriterWrap()
@@ -75,7 +74,6 @@ void VtkMetaImageWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -181,7 +179,7 @@ void VtkMetaImageWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMetaImageWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMetaImageWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMetaImageWriterWrap *w = new VtkMetaImageWriterWrap();
 	w->native.TakeReference(r);
@@ -209,7 +207,7 @@ void VtkMetaImageWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMetaImageWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMetaImageWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMetaImageWriterWrap *w = new VtkMetaImageWriterWrap();
 		w->native.TakeReference(r);

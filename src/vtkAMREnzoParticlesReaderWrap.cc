@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMREnzoParticlesReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMREnzoParticlesReaderWrap::ptpl;
 
 VtkAMREnzoParticlesReaderWrap::VtkAMREnzoParticlesReaderWrap()
@@ -69,7 +68,6 @@ void VtkAMREnzoParticlesReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetParticleType", SetParticleType);
 	Nan::SetPrototypeMethod(tpl, "setParticleType", SetParticleType);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -175,7 +173,7 @@ void VtkAMREnzoParticlesReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMREnzoParticlesReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMREnzoParticlesReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMREnzoParticlesReaderWrap *w = new VtkAMREnzoParticlesReaderWrap();
 	w->native.TakeReference(r);
@@ -203,7 +201,7 @@ void VtkAMREnzoParticlesReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMREnzoParticlesReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMREnzoParticlesReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMREnzoParticlesReaderWrap *w = new VtkAMREnzoParticlesReaderWrap();
 		w->native.TakeReference(r);

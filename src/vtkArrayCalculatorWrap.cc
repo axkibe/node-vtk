@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkArrayCalculatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkArrayCalculatorWrap::ptpl;
 
 VtkArrayCalculatorWrap::VtkArrayCalculatorWrap()
@@ -198,7 +197,6 @@ void VtkArrayCalculatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResultArrayType", SetResultArrayType);
 	Nan::SetPrototypeMethod(tpl, "setResultArrayType", SetResultArrayType);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -723,7 +721,7 @@ void VtkArrayCalculatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkArrayCalculatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkArrayCalculatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkArrayCalculatorWrap *w = new VtkArrayCalculatorWrap();
 	w->native.TakeReference(r);
@@ -883,7 +881,7 @@ void VtkArrayCalculatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkArrayCalculatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkArrayCalculatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkArrayCalculatorWrap *w = new VtkArrayCalculatorWrap();
 		w->native.TakeReference(r);

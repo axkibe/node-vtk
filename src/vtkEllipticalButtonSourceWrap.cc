@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEllipticalButtonSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEllipticalButtonSourceWrap::ptpl;
 
 VtkEllipticalButtonSourceWrap::VtkEllipticalButtonSourceWrap()
@@ -150,7 +149,6 @@ void VtkEllipticalButtonSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -536,7 +534,7 @@ void VtkEllipticalButtonSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEllipticalButtonSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEllipticalButtonSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEllipticalButtonSourceWrap *w = new VtkEllipticalButtonSourceWrap();
 	w->native.TakeReference(r);
@@ -564,7 +562,7 @@ void VtkEllipticalButtonSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEllipticalButtonSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEllipticalButtonSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEllipticalButtonSourceWrap *w = new VtkEllipticalButtonSourceWrap();
 		w->native.TakeReference(r);

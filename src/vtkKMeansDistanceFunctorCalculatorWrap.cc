@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkKMeansDistanceFunctorCalculatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkKMeansDistanceFunctorCalculatorWrap::ptpl;
 
 VtkKMeansDistanceFunctorCalculatorWrap::VtkKMeansDistanceFunctorCalculatorWrap()
@@ -73,7 +72,6 @@ void VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFunctionParser", SetFunctionParser);
 	Nan::SetPrototypeMethod(tpl, "setFunctionParser", SetFunctionParser);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::GetFunctionParser(const Nan::Functi
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFunctionParserWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFunctionParserWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFunctionParserWrap *w = new VtkFunctionParserWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKMeansDistanceFunctorCalculatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKMeansDistanceFunctorCalculatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKMeansDistanceFunctorCalculatorWrap *w = new VtkKMeansDistanceFunctorCalculatorWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkKMeansDistanceFunctorCalculatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkKMeansDistanceFunctorCalculatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKMeansDistanceFunctorCalculatorWrap *w = new VtkKMeansDistanceFunctorCalculatorWrap();
 		w->native.TakeReference(r);

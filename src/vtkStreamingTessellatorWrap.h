@@ -24,7 +24,6 @@ class VtkStreamingTessellatorWrap : public VtkObjectWrap
 		VtkStreamingTessellatorWrap(vtkSmartPointer<vtkStreamingTessellator>);
 		VtkStreamingTessellatorWrap();
 		~VtkStreamingTessellatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericGeometryFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericGeometryFilterWrap::ptpl;
 
 VtkGenericGeometryFilterWrap::VtkGenericGeometryFilterWrap()
@@ -133,7 +132,6 @@ void VtkGenericGeometryFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointClipping", SetPointClipping);
 	Nan::SetPrototypeMethod(tpl, "setPointClipping", SetPointClipping);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -277,7 +275,7 @@ void VtkGenericGeometryFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -388,7 +386,7 @@ void VtkGenericGeometryFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericGeometryFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericGeometryFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericGeometryFilterWrap *w = new VtkGenericGeometryFilterWrap();
 	w->native.TakeReference(r);
@@ -464,7 +462,7 @@ void VtkGenericGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericGeometryFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericGeometryFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericGeometryFilterWrap *w = new VtkGenericGeometryFilterWrap();
 		w->native.TakeReference(r);

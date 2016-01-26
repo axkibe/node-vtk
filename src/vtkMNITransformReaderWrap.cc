@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMNITransformReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMNITransformReaderWrap::ptpl;
 
 VtkMNITransformReaderWrap::VtkMNITransformReaderWrap()
@@ -88,7 +87,6 @@ void VtkMNITransformReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -226,7 +224,7 @@ void VtkMNITransformReaderWrap::GetNthTransform(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 		w->native.TakeReference(r);
@@ -266,7 +264,7 @@ void VtkMNITransformReaderWrap::GetTransform(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -311,7 +309,7 @@ void VtkMNITransformReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMNITransformReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMNITransformReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMNITransformReaderWrap *w = new VtkMNITransformReaderWrap();
 	w->native.TakeReference(r);
@@ -339,7 +337,7 @@ void VtkMNITransformReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMNITransformReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMNITransformReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMNITransformReaderWrap *w = new VtkMNITransformReaderWrap();
 		w->native.TakeReference(r);

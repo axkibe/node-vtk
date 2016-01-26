@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEncodedGradientEstimatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEncodedGradientEstimatorWrap::ptpl;
 
 VtkEncodedGradientEstimatorWrap::VtkEncodedGradientEstimatorWrap()
@@ -157,7 +156,6 @@ void VtkEncodedGradientEstimatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ZeroPadOn", ZeroPadOn);
 	Nan::SetPrototypeMethod(tpl, "zeroPadOn", ZeroPadOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -355,7 +353,7 @@ void VtkEncodedGradientEstimatorWrap::GetDirectionEncoder(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDirectionEncoderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDirectionEncoderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDirectionEncoderWrap *w = new VtkDirectionEncoderWrap();
 	w->native.TakeReference(r);
@@ -407,7 +405,7 @@ void VtkEncodedGradientEstimatorWrap::GetInputData(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -550,7 +548,7 @@ void VtkEncodedGradientEstimatorWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEncodedGradientEstimatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEncodedGradientEstimatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEncodedGradientEstimatorWrap *w = new VtkEncodedGradientEstimatorWrap();
 	w->native.TakeReference(r);
@@ -578,7 +576,7 @@ void VtkEncodedGradientEstimatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEncodedGradientEstimatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEncodedGradientEstimatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEncodedGradientEstimatorWrap *w = new VtkEncodedGradientEstimatorWrap();
 		w->native.TakeReference(r);

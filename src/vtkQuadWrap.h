@@ -24,7 +24,6 @@ class VtkQuadWrap : public VtkCellWrap
 		VtkQuadWrap(vtkSmartPointer<vtkQuad>);
 		VtkQuadWrap();
 		~VtkQuadWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

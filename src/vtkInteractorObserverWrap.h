@@ -24,7 +24,6 @@ class VtkInteractorObserverWrap : public VtkObjectWrap
 		VtkInteractorObserverWrap(vtkSmartPointer<vtkInteractorObserver>);
 		VtkInteractorObserverWrap();
 		~VtkInteractorObserverWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

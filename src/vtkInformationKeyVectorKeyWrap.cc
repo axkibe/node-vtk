@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInformationKeyVectorKeyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInformationKeyVectorKeyWrap::ptpl;
 
 VtkInformationKeyVectorKeyWrap::VtkInformationKeyVectorKeyWrap()
@@ -79,7 +78,6 @@ void VtkInformationKeyVectorKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkInformationKeyVectorKeyWrap::Get(const Nan::FunctionCallbackInfo<v8::Val
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkInformationKeyWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
 			w->native.TakeReference(r);
@@ -264,7 +262,7 @@ void VtkInformationKeyVectorKeyWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationKeyVectorKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationKeyVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationKeyVectorKeyWrap *w = new VtkInformationKeyVectorKeyWrap();
 	w->native.TakeReference(r);
@@ -317,7 +315,7 @@ void VtkInformationKeyVectorKeyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationKeyVectorKeyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyVectorKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationKeyVectorKeyWrap *w = new VtkInformationKeyVectorKeyWrap();
 		w->native.TakeReference(r);

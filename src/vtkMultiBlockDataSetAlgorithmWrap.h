@@ -24,7 +24,6 @@ class VtkMultiBlockDataSetAlgorithmWrap : public VtkAlgorithmWrap
 		VtkMultiBlockDataSetAlgorithmWrap(vtkSmartPointer<vtkMultiBlockDataSetAlgorithm>);
 		VtkMultiBlockDataSetAlgorithmWrap();
 		~VtkMultiBlockDataSetAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

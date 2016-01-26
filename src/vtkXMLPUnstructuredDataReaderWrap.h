@@ -24,7 +24,6 @@ class VtkXMLPUnstructuredDataReaderWrap : public VtkXMLPDataReaderWrap
 		VtkXMLPUnstructuredDataReaderWrap(vtkSmartPointer<vtkXMLPUnstructuredDataReader>);
 		VtkXMLPUnstructuredDataReaderWrap();
 		~VtkXMLPUnstructuredDataReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

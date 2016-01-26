@@ -24,7 +24,6 @@ class VtkImageNoiseSourceWrap : public VtkImageAlgorithmWrap
 		VtkImageNoiseSourceWrap(vtkSmartPointer<vtkImageNoiseSource>);
 		VtkImageNoiseSourceWrap();
 		~VtkImageNoiseSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

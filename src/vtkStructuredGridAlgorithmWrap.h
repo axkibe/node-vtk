@@ -24,7 +24,6 @@ class VtkStructuredGridAlgorithmWrap : public VtkAlgorithmWrap
 		VtkStructuredGridAlgorithmWrap(vtkSmartPointer<vtkStructuredGridAlgorithm>);
 		VtkStructuredGridAlgorithmWrap();
 		~VtkStructuredGridAlgorithmWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

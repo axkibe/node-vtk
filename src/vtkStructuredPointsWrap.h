@@ -24,7 +24,6 @@ class VtkStructuredPointsWrap : public VtkImageDataWrap
 		VtkStructuredPointsWrap(vtkSmartPointer<vtkStructuredPoints>);
 		VtkStructuredPointsWrap();
 		~VtkStructuredPointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

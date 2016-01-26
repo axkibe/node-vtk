@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSplitColumnComponentsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSplitColumnComponentsWrap::ptpl;
 
 VtkSplitColumnComponentsWrap::VtkSplitColumnComponentsWrap()
@@ -84,7 +83,6 @@ void VtkSplitColumnComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNamingModeToNumberWithUnderscores", SetNamingModeToNumberWithUnderscores);
 	Nan::SetPrototypeMethod(tpl, "setNamingModeToNumberWithUnderscores", SetNamingModeToNumberWithUnderscores);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -204,7 +202,7 @@ void VtkSplitColumnComponentsWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplitColumnComponentsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplitColumnComponentsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplitColumnComponentsWrap *w = new VtkSplitColumnComponentsWrap();
 	w->native.TakeReference(r);
@@ -232,7 +230,7 @@ void VtkSplitColumnComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSplitColumnComponentsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSplitColumnComponentsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSplitColumnComponentsWrap *w = new VtkSplitColumnComponentsWrap();
 		w->native.TakeReference(r);

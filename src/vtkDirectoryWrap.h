@@ -24,7 +24,6 @@ class VtkDirectoryWrap : public VtkObjectWrap
 		VtkDirectoryWrap(vtkSmartPointer<vtkDirectory>);
 		VtkDirectoryWrap();
 		~VtkDirectoryWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

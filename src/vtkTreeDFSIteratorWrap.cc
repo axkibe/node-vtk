@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeDFSIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeDFSIteratorWrap::ptpl;
 
 VtkTreeDFSIteratorWrap::VtkTreeDFSIteratorWrap()
@@ -66,7 +65,6 @@ void VtkTreeDFSIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMode", SetMode);
 	Nan::SetPrototypeMethod(tpl, "setMode", SetMode);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkTreeDFSIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeDFSIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeDFSIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeDFSIteratorWrap *w = new VtkTreeDFSIteratorWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkTreeDFSIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeDFSIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeDFSIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeDFSIteratorWrap *w = new VtkTreeDFSIteratorWrap();
 		w->native.TakeReference(r);

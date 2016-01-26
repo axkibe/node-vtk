@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCosmicTreeLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCosmicTreeLayoutStrategyWrap::ptpl;
 
 VtkCosmicTreeLayoutStrategyWrap::VtkCosmicTreeLayoutStrategyWrap()
@@ -87,7 +86,6 @@ void VtkCosmicTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SizeLeafNodesOnlyOn", SizeLeafNodesOnlyOn);
 	Nan::SetPrototypeMethod(tpl, "sizeLeafNodesOnlyOn", SizeLeafNodesOnlyOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -219,7 +217,7 @@ void VtkCosmicTreeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCosmicTreeLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCosmicTreeLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCosmicTreeLayoutStrategyWrap *w = new VtkCosmicTreeLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -247,7 +245,7 @@ void VtkCosmicTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCosmicTreeLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCosmicTreeLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCosmicTreeLayoutStrategyWrap *w = new VtkCosmicTreeLayoutStrategyWrap();
 		w->native.TakeReference(r);

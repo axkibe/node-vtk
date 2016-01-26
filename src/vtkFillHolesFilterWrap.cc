@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFillHolesFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFillHolesFilterWrap::ptpl;
 
 VtkFillHolesFilterWrap::VtkFillHolesFilterWrap()
@@ -72,7 +71,6 @@ void VtkFillHolesFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHoleSize", SetHoleSize);
 	Nan::SetPrototypeMethod(tpl, "setHoleSize", SetHoleSize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkFillHolesFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFillHolesFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFillHolesFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFillHolesFilterWrap *w = new VtkFillHolesFilterWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkFillHolesFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFillHolesFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFillHolesFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFillHolesFilterWrap *w = new VtkFillHolesFilterWrap();
 		w->native.TakeReference(r);

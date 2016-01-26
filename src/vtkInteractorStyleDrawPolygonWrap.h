@@ -24,7 +24,6 @@ class VtkInteractorStyleDrawPolygonWrap : public VtkInteractorStyleWrap
 		VtkInteractorStyleDrawPolygonWrap(vtkSmartPointer<vtkInteractorStyleDrawPolygon>);
 		VtkInteractorStyleDrawPolygonWrap();
 		~VtkInteractorStyleDrawPolygonWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

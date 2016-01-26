@@ -24,7 +24,6 @@ class VtkEventWrap : public VtkObjectWrap
 		VtkEventWrap(vtkSmartPointer<vtkEvent>);
 		VtkEventWrap();
 		~VtkEventWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

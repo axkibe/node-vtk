@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlanesIntersectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlanesIntersectionWrap::ptpl;
 
 VtkPlanesIntersectionWrap::VtkPlanesIntersectionWrap()
@@ -61,7 +60,6 @@ void VtkPlanesIntersectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRegionVertices", SetRegionVertices);
 	Nan::SetPrototypeMethod(tpl, "setRegionVertices", SetRegionVertices);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -108,7 +106,7 @@ void VtkPlanesIntersectionWrap::Convert3DCell(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlanesIntersectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlanesIntersectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlanesIntersectionWrap *w = new VtkPlanesIntersectionWrap();
 		w->native.TakeReference(r);

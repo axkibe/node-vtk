@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageToPolyDataFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageToPolyDataFilterWrap::ptpl;
 
 VtkImageToPolyDataFilterWrap::VtkImageToPolyDataFilterWrap()
@@ -178,7 +177,6 @@ void VtkImageToPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SmoothingOn", SmoothingOn);
 	Nan::SetPrototypeMethod(tpl, "smoothingOn", SmoothingOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -398,7 +396,7 @@ void VtkImageToPolyDataFilterWrap::GetLookupTable(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -583,7 +581,7 @@ void VtkImageToPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageToPolyDataFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageToPolyDataFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageToPolyDataFilterWrap *w = new VtkImageToPolyDataFilterWrap();
 	w->native.TakeReference(r);
@@ -611,7 +609,7 @@ void VtkImageToPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageToPolyDataFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageToPolyDataFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageToPolyDataFilterWrap *w = new VtkImageToPolyDataFilterWrap();
 		w->native.TakeReference(r);

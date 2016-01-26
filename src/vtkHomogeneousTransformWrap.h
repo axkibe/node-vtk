@@ -24,7 +24,6 @@ class VtkHomogeneousTransformWrap : public VtkAbstractTransformWrap
 		VtkHomogeneousTransformWrap(vtkSmartPointer<vtkHomogeneousTransform>);
 		VtkHomogeneousTransformWrap();
 		~VtkHomogeneousTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkImageResizeWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageResizeWrap(vtkSmartPointer<vtkImageResize>);
 		VtkImageResizeWrap();
 		~VtkImageResizeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

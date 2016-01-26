@@ -24,7 +24,6 @@ class VtkRowQueryWrap : public VtkObjectWrap
 		VtkRowQueryWrap(vtkSmartPointer<vtkRowQuery>);
 		VtkRowQueryWrap();
 		~VtkRowQueryWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

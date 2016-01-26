@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkConnectivityFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkConnectivityFilterWrap::ptpl;
 
 VtkConnectivityFilterWrap::VtkConnectivityFilterWrap()
@@ -144,7 +143,6 @@ void VtkConnectivityFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -420,7 +418,7 @@ void VtkConnectivityFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkConnectivityFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkConnectivityFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkConnectivityFilterWrap *w = new VtkConnectivityFilterWrap();
 	w->native.TakeReference(r);
@@ -448,7 +446,7 @@ void VtkConnectivityFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkConnectivityFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkConnectivityFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkConnectivityFilterWrap *w = new VtkConnectivityFilterWrap();
 		w->native.TakeReference(r);

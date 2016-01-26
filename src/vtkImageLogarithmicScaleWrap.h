@@ -24,7 +24,6 @@ class VtkImageLogarithmicScaleWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageLogarithmicScaleWrap(vtkSmartPointer<vtkImageLogarithmicScale>);
 		VtkImageLogarithmicScaleWrap();
 		~VtkImageLogarithmicScaleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

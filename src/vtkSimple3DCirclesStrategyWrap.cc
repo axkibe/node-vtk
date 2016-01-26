@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSimple3DCirclesStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSimple3DCirclesStrategyWrap::ptpl;
 
 VtkSimple3DCirclesStrategyWrap::VtkSimple3DCirclesStrategyWrap()
@@ -148,7 +147,6 @@ void VtkSimple3DCirclesStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -294,7 +292,7 @@ void VtkSimple3DCirclesStrategyWrap::GetHierarchicalLayers(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIntArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIntArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIntArrayWrap *w = new VtkIntArrayWrap();
 	w->native.TakeReference(r);
@@ -317,7 +315,7 @@ void VtkSimple3DCirclesStrategyWrap::GetHierarchicalOrder(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 	w->native.TakeReference(r);
@@ -340,7 +338,7 @@ void VtkSimple3DCirclesStrategyWrap::GetMarkedStartVertices(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
 	w->native.TakeReference(r);
@@ -453,7 +451,7 @@ void VtkSimple3DCirclesStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSimple3DCirclesStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSimple3DCirclesStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSimple3DCirclesStrategyWrap *w = new VtkSimple3DCirclesStrategyWrap();
 	w->native.TakeReference(r);
@@ -481,7 +479,7 @@ void VtkSimple3DCirclesStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSimple3DCirclesStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSimple3DCirclesStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSimple3DCirclesStrategyWrap *w = new VtkSimple3DCirclesStrategyWrap();
 		w->native.TakeReference(r);

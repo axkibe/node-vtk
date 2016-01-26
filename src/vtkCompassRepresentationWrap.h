@@ -24,7 +24,6 @@ class VtkCompassRepresentationWrap : public VtkContinuousValueWidgetRepresentati
 		VtkCompassRepresentationWrap(vtkSmartPointer<vtkCompassRepresentation>);
 		VtkCompassRepresentationWrap();
 		~VtkCompassRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

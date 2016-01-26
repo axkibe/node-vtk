@@ -24,7 +24,6 @@ class VtkFrameBufferObject2Wrap : public VtkObjectWrap
 		VtkFrameBufferObject2Wrap(vtkSmartPointer<vtkFrameBufferObject2>);
 		VtkFrameBufferObject2Wrap();
 		~VtkFrameBufferObject2Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

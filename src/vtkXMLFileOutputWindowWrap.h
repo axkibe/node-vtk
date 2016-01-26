@@ -24,7 +24,6 @@ class VtkXMLFileOutputWindowWrap : public VtkFileOutputWindowWrap
 		VtkXMLFileOutputWindowWrap(vtkSmartPointer<vtkXMLFileOutputWindow>);
 		VtkXMLFileOutputWindowWrap();
 		~VtkXMLFileOutputWindowWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

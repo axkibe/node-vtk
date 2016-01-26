@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParametricFunctionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParametricFunctionWrap::ptpl;
 
 VtkParametricFunctionWrap::VtkParametricFunctionWrap()
@@ -170,7 +169,6 @@ void VtkParametricFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TwistVOn", TwistVOn);
 	Nan::SetPrototypeMethod(tpl, "twistVOn", TwistVOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -526,7 +524,7 @@ void VtkParametricFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParametricFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParametricFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParametricFunctionWrap *w = new VtkParametricFunctionWrap();
 	w->native.TakeReference(r);
@@ -554,7 +552,7 @@ void VtkParametricFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParametricFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParametricFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParametricFunctionWrap *w = new VtkParametricFunctionWrap();
 		w->native.TakeReference(r);

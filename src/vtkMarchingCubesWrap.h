@@ -24,7 +24,6 @@ class VtkMarchingCubesWrap : public VtkPolyDataAlgorithmWrap
 		VtkMarchingCubesWrap(vtkSmartPointer<vtkMarchingCubes>);
 		VtkMarchingCubesWrap();
 		~VtkMarchingCubesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

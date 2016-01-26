@@ -24,7 +24,6 @@ class VtkHierarchicalGraphViewWrap : public VtkGraphLayoutViewWrap
 		VtkHierarchicalGraphViewWrap(vtkSmartPointer<vtkHierarchicalGraphView>);
 		VtkHierarchicalGraphViewWrap();
 		~VtkHierarchicalGraphViewWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

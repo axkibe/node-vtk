@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRFlashReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRFlashReaderWrap::ptpl;
 
 VtkAMRFlashReaderWrap::VtkAMRFlashReaderWrap()
@@ -69,7 +68,6 @@ void VtkAMRFlashReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -175,7 +173,7 @@ void VtkAMRFlashReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRFlashReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRFlashReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRFlashReaderWrap *w = new VtkAMRFlashReaderWrap();
 	w->native.TakeReference(r);
@@ -203,7 +201,7 @@ void VtkAMRFlashReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRFlashReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRFlashReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRFlashReaderWrap *w = new VtkAMRFlashReaderWrap();
 		w->native.TakeReference(r);

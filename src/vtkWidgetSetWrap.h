@@ -24,7 +24,6 @@ class VtkWidgetSetWrap : public VtkObjectWrap
 		VtkWidgetSetWrap(vtkSmartPointer<vtkWidgetSet>);
 		VtkWidgetSetWrap();
 		~VtkWidgetSetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

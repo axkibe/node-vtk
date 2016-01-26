@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLGPUVolumeRayCastMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLGPUVolumeRayCastMapperWrap::ptpl;
 
 VtkOpenGLGPUVolumeRayCastMapperWrap::VtkOpenGLGPUVolumeRayCastMapperWrap()
@@ -72,7 +71,6 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLGPUVolumeRayCastMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLGPUVolumeRayCastMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLGPUVolumeRayCastMapperWrap *w = new VtkOpenGLGPUVolumeRayCastMapperWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLGPUVolumeRayCastMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLGPUVolumeRayCastMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLGPUVolumeRayCastMapperWrap *w = new VtkOpenGLGPUVolumeRayCastMapperWrap();
 		w->native.TakeReference(r);

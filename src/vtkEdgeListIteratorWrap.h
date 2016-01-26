@@ -24,7 +24,6 @@ class VtkEdgeListIteratorWrap : public VtkObjectWrap
 		VtkEdgeListIteratorWrap(vtkSmartPointer<vtkEdgeListIterator>);
 		VtkEdgeListIteratorWrap();
 		~VtkEdgeListIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

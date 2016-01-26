@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVectorNormWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVectorNormWrap::ptpl;
 
 VtkVectorNormWrap::VtkVectorNormWrap()
@@ -90,7 +89,6 @@ void VtkVectorNormWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNormalize", SetNormalize);
 	Nan::SetPrototypeMethod(tpl, "setNormalize", SetNormalize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -210,7 +208,7 @@ void VtkVectorNormWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVectorNormWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVectorNormWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVectorNormWrap *w = new VtkVectorNormWrap();
 	w->native.TakeReference(r);
@@ -262,7 +260,7 @@ void VtkVectorNormWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVectorNormWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVectorNormWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVectorNormWrap *w = new VtkVectorNormWrap();
 		w->native.TakeReference(r);

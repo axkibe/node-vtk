@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAnnotationLinkWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAnnotationLinkWrap::ptpl;
 
 VtkAnnotationLinkWrap::VtkAnnotationLinkWrap()
@@ -90,7 +89,6 @@ void VtkAnnotationLinkWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCurrentSelection", SetCurrentSelection);
 	Nan::SetPrototypeMethod(tpl, "setCurrentSelection", SetCurrentSelection);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -152,7 +150,7 @@ void VtkAnnotationLinkWrap::GetAnnotationLayers(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAnnotationLayersWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLayersWrap *w = new VtkAnnotationLayersWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkAnnotationLinkWrap::GetCurrentSelection(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectionWrap *w = new VtkSelectionWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkAnnotationLinkWrap::GetDomainMap(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTableWrap *w = new VtkTableWrap();
 		w->native.TakeReference(r);
@@ -278,7 +276,7 @@ void VtkAnnotationLinkWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAnnotationLinkWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAnnotationLinkWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLinkWrap *w = new VtkAnnotationLinkWrap();
 	w->native.TakeReference(r);
@@ -338,7 +336,7 @@ void VtkAnnotationLinkWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAnnotationLinkWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAnnotationLinkWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAnnotationLinkWrap *w = new VtkAnnotationLinkWrap();
 		w->native.TakeReference(r);

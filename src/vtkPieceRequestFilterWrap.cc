@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPieceRequestFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPieceRequestFilterWrap::ptpl;
 
 VtkPieceRequestFilterWrap::VtkPieceRequestFilterWrap()
@@ -91,7 +90,6 @@ void VtkPieceRequestFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPiece", SetPiece);
 	Nan::SetPrototypeMethod(tpl, "setPiece", SetPiece);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -193,7 +191,7 @@ void VtkPieceRequestFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -212,7 +210,7 @@ void VtkPieceRequestFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -299,7 +297,7 @@ void VtkPieceRequestFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPieceRequestFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPieceRequestFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPieceRequestFilterWrap *w = new VtkPieceRequestFilterWrap();
 	w->native.TakeReference(r);
@@ -327,7 +325,7 @@ void VtkPieceRequestFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPieceRequestFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPieceRequestFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPieceRequestFilterWrap *w = new VtkPieceRequestFilterWrap();
 		w->native.TakeReference(r);

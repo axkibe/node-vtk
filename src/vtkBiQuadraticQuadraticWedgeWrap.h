@@ -24,7 +24,6 @@ class VtkBiQuadraticQuadraticWedgeWrap : public VtkNonLinearCellWrap
 		VtkBiQuadraticQuadraticWedgeWrap(vtkSmartPointer<vtkBiQuadraticQuadraticWedge>);
 		VtkBiQuadraticQuadraticWedgeWrap();
 		~VtkBiQuadraticQuadraticWedgeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

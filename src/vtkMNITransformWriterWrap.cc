@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMNITransformWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMNITransformWriterWrap::ptpl;
 
 VtkMNITransformWriterWrap::VtkMNITransformWriterWrap()
@@ -94,7 +93,6 @@ void VtkMNITransformWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -240,7 +238,7 @@ void VtkMNITransformWriterWrap::GetTransform(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -285,7 +283,7 @@ void VtkMNITransformWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMNITransformWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMNITransformWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMNITransformWriterWrap *w = new VtkMNITransformWriterWrap();
 	w->native.TakeReference(r);
@@ -313,7 +311,7 @@ void VtkMNITransformWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMNITransformWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMNITransformWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMNITransformWriterWrap *w = new VtkMNITransformWriterWrap();
 		w->native.TakeReference(r);

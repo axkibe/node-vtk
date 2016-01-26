@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStructuredGridLIC2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStructuredGridLIC2DWrap::ptpl;
 
 VtkStructuredGridLIC2DWrap::VtkStructuredGridLIC2DWrap()
@@ -100,7 +99,6 @@ void VtkStructuredGridLIC2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSteps", SetSteps);
 	Nan::SetPrototypeMethod(tpl, "setSteps", SetSteps);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -156,7 +154,7 @@ void VtkStructuredGridLIC2DWrap::GetContext(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -313,7 +311,7 @@ void VtkStructuredGridLIC2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredGridLIC2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredGridLIC2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridLIC2DWrap *w = new VtkStructuredGridLIC2DWrap();
 	w->native.TakeReference(r);
@@ -341,7 +339,7 @@ void VtkStructuredGridLIC2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStructuredGridLIC2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStructuredGridLIC2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStructuredGridLIC2DWrap *w = new VtkStructuredGridLIC2DWrap();
 		w->native.TakeReference(r);

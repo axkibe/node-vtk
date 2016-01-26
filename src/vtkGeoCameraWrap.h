@@ -24,7 +24,6 @@ class VtkGeoCameraWrap : public VtkObjectWrap
 		VtkGeoCameraWrap(vtkSmartPointer<vtkGeoCamera>);
 		VtkGeoCameraWrap();
 		~VtkGeoCameraWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

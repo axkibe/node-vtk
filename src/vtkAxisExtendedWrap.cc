@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAxisExtendedWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAxisExtendedWrap::ptpl;
 
 VtkAxisExtendedWrap::VtkAxisExtendedWrap()
@@ -113,7 +112,6 @@ void VtkAxisExtendedWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SimplicityMax", SimplicityMax);
 	Nan::SetPrototypeMethod(tpl, "simplicityMax", SimplicityMax);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -443,7 +441,7 @@ void VtkAxisExtendedWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisExtendedWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisExtendedWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisExtendedWrap *w = new VtkAxisExtendedWrap();
 	w->native.TakeReference(r);
@@ -471,7 +469,7 @@ void VtkAxisExtendedWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAxisExtendedWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAxisExtendedWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxisExtendedWrap *w = new VtkAxisExtendedWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkTemporalDataSetCacheWrap : public VtkAlgorithmWrap
 		VtkTemporalDataSetCacheWrap(vtkSmartPointer<vtkTemporalDataSetCache>);
 		VtkTemporalDataSetCacheWrap();
 		~VtkTemporalDataSetCacheWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

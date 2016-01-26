@@ -24,7 +24,6 @@ class VtkImageDataStreamerWrap : public VtkImageAlgorithmWrap
 		VtkImageDataStreamerWrap(vtkSmartPointer<vtkImageDataStreamer>);
 		VtkImageDataStreamerWrap();
 		~VtkImageDataStreamerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

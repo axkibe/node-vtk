@@ -24,7 +24,6 @@ class VtkContextTransformWrap : public VtkAbstractContextItemWrap
 		VtkContextTransformWrap(vtkSmartPointer<vtkContextTransform>);
 		VtkContextTransformWrap();
 		~VtkContextTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

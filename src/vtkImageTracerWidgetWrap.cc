@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageTracerWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageTracerWidgetWrap::ptpl;
 
 VtkImageTracerWidgetWrap::VtkImageTracerWidgetWrap()
@@ -248,7 +247,6 @@ void VtkImageTracerWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SnapToImageOn", SnapToImageOn);
 	Nan::SetPrototypeMethod(tpl, "snapToImageOn", SnapToImageOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -356,7 +354,7 @@ void VtkImageTracerWidgetWrap::GetGlyphSource(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGlyphSource2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGlyphSource2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGlyphSource2DWrap *w = new VtkGlyphSource2DWrap();
 	w->native.TakeReference(r);
@@ -407,7 +405,7 @@ void VtkImageTracerWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -500,7 +498,7 @@ void VtkImageTracerWidgetWrap::GetLineProperty(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -627,7 +625,7 @@ void VtkImageTracerWidgetWrap::GetSelectedHandleProperty(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -650,7 +648,7 @@ void VtkImageTracerWidgetWrap::GetSelectedLineProperty(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
 	w->native.TakeReference(r);
@@ -839,7 +837,7 @@ void VtkImageTracerWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageTracerWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageTracerWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageTracerWidgetWrap *w = new VtkImageTracerWidgetWrap();
 	w->native.TakeReference(r);
@@ -935,7 +933,7 @@ void VtkImageTracerWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageTracerWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageTracerWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageTracerWidgetWrap *w = new VtkImageTracerWidgetWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMarchingContourFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMarchingContourFilterWrap::ptpl;
 
 VtkMarchingContourFilterWrap::VtkMarchingContourFilterWrap()
@@ -133,7 +132,6 @@ void VtkMarchingContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseScalarTreeOn", UseScalarTreeOn);
 	Nan::SetPrototypeMethod(tpl, "useScalarTreeOn", UseScalarTreeOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -342,7 +340,7 @@ void VtkMarchingContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -436,7 +434,7 @@ void VtkMarchingContourFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMarchingContourFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMarchingContourFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMarchingContourFilterWrap *w = new VtkMarchingContourFilterWrap();
 	w->native.TakeReference(r);
@@ -464,7 +462,7 @@ void VtkMarchingContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMarchingContourFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMarchingContourFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMarchingContourFilterWrap *w = new VtkMarchingContourFilterWrap();
 		w->native.TakeReference(r);

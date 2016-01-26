@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkThresholdWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkThresholdWrap::ptpl;
 
 VtkThresholdWrap::VtkThresholdWrap()
@@ -171,7 +170,6 @@ void VtkThresholdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseContinuousCellRangeOn", UseContinuousCellRangeOn);
 	Nan::SetPrototypeMethod(tpl, "useContinuousCellRangeOn", UseContinuousCellRangeOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -483,7 +481,7 @@ void VtkThresholdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkThresholdWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkThresholdWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkThresholdWrap *w = new VtkThresholdWrap();
 	w->native.TakeReference(r);
@@ -511,7 +509,7 @@ void VtkThresholdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkThresholdWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkThresholdWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkThresholdWrap *w = new VtkThresholdWrap();
 		w->native.TakeReference(r);

@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGenericCellTessellatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGenericCellTessellatorWrap::ptpl;
 
 VtkGenericCellTessellatorWrap::VtkGenericCellTessellatorWrap()
@@ -90,7 +89,6 @@ void VtkGenericCellTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -146,7 +144,7 @@ void VtkGenericCellTessellatorWrap::GetErrorMetrics(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCollectionWrap *w = new VtkCollectionWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkGenericCellTessellatorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGenericCellTessellatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGenericCellTessellatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericCellTessellatorWrap *w = new VtkGenericCellTessellatorWrap();
 	w->native.TakeReference(r);
@@ -273,7 +271,7 @@ void VtkGenericCellTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGenericCellTessellatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGenericCellTessellatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericCellTessellatorWrap *w = new VtkGenericCellTessellatorWrap();
 		w->native.TakeReference(r);

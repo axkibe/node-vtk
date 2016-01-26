@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkApplyIconsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkApplyIconsWrap::ptpl;
 
 VtkApplyIconsWrap::VtkApplyIconsWrap()
@@ -114,7 +113,6 @@ void VtkApplyIconsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableOn", UseLookupTableOn);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableOn", UseLookupTableOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -274,7 +272,7 @@ void VtkApplyIconsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkApplyIconsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkApplyIconsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkApplyIconsWrap *w = new VtkApplyIconsWrap();
 	w->native.TakeReference(r);
@@ -302,7 +300,7 @@ void VtkApplyIconsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkApplyIconsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkApplyIconsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkApplyIconsWrap *w = new VtkApplyIconsWrap();
 		w->native.TakeReference(r);

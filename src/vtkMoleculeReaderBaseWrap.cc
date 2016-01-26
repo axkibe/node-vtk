@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMoleculeReaderBaseWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMoleculeReaderBaseWrap::ptpl;
 
 VtkMoleculeReaderBaseWrap::VtkMoleculeReaderBaseWrap()
@@ -81,7 +80,6 @@ void VtkMoleculeReaderBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHBScale", SetHBScale);
 	Nan::SetPrototypeMethod(tpl, "setHBScale", SetHBScale);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -215,7 +213,7 @@ void VtkMoleculeReaderBaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMoleculeReaderBaseWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMoleculeReaderBaseWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMoleculeReaderBaseWrap *w = new VtkMoleculeReaderBaseWrap();
 	w->native.TakeReference(r);
@@ -243,7 +241,7 @@ void VtkMoleculeReaderBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMoleculeReaderBaseWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMoleculeReaderBaseWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMoleculeReaderBaseWrap *w = new VtkMoleculeReaderBaseWrap();
 		w->native.TakeReference(r);

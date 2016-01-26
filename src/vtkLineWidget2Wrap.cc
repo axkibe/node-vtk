@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLineWidget2Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLineWidget2Wrap::ptpl;
 
 VtkLineWidget2Wrap::VtkLineWidget2Wrap()
@@ -76,7 +75,6 @@ void VtkLineWidget2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -144,7 +142,7 @@ void VtkLineWidget2Wrap::GetLineRepresentation(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLineRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLineRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLineRepresentationWrap *w = new VtkLineRepresentationWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkLineWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLineWidget2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLineWidget2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLineWidget2Wrap *w = new VtkLineWidget2Wrap();
 	w->native.TakeReference(r);
@@ -217,7 +215,7 @@ void VtkLineWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLineWidget2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLineWidget2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLineWidget2Wrap *w = new VtkLineWidget2Wrap();
 		w->native.TakeReference(r);

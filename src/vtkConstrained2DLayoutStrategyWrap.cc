@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkConstrained2DLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkConstrained2DLayoutStrategyWrap::ptpl;
 
 VtkConstrained2DLayoutStrategyWrap::VtkConstrained2DLayoutStrategyWrap()
@@ -123,7 +122,6 @@ void VtkConstrained2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRandomSeed", SetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "setRandomSeed", SetRandomSeed);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -421,7 +419,7 @@ void VtkConstrained2DLayoutStrategyWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkConstrained2DLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkConstrained2DLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkConstrained2DLayoutStrategyWrap *w = new VtkConstrained2DLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -449,7 +447,7 @@ void VtkConstrained2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkConstrained2DLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkConstrained2DLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkConstrained2DLayoutStrategyWrap *w = new VtkConstrained2DLayoutStrategyWrap();
 		w->native.TakeReference(r);

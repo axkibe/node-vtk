@@ -24,7 +24,6 @@ class VtkXMLPUnstructuredGridWriterWrap : public VtkXMLPUnstructuredDataWriterWr
 		VtkXMLPUnstructuredGridWriterWrap(vtkSmartPointer<vtkXMLPUnstructuredGridWriter>);
 		VtkXMLPUnstructuredGridWriterWrap();
 		~VtkXMLPUnstructuredGridWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageBSplineInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageBSplineInterpolatorWrap::ptpl;
 
 VtkImageBSplineInterpolatorWrap::VtkImageBSplineInterpolatorWrap()
@@ -72,7 +71,6 @@ void VtkImageBSplineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplineDegree", SetSplineDegree);
 	Nan::SetPrototypeMethod(tpl, "setSplineDegree", SetSplineDegree);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkImageBSplineInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageBSplineInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageBSplineInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageBSplineInterpolatorWrap *w = new VtkImageBSplineInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkImageBSplineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageBSplineInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageBSplineInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageBSplineInterpolatorWrap *w = new VtkImageBSplineInterpolatorWrap();
 		w->native.TakeReference(r);

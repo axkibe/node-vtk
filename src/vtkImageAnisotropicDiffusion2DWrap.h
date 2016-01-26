@@ -24,7 +24,6 @@ class VtkImageAnisotropicDiffusion2DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageAnisotropicDiffusion2DWrap(vtkSmartPointer<vtkImageAnisotropicDiffusion2D>);
 		VtkImageAnisotropicDiffusion2DWrap();
 		~VtkImageAnisotropicDiffusion2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

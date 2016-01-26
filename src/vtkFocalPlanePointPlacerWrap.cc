@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFocalPlanePointPlacerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFocalPlanePointPlacerWrap::ptpl;
 
 VtkFocalPlanePointPlacerWrap::VtkFocalPlanePointPlacerWrap()
@@ -69,7 +68,6 @@ void VtkFocalPlanePointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointBounds", SetPointBounds);
 	Nan::SetPrototypeMethod(tpl, "setPointBounds", SetPointBounds);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -161,7 +159,7 @@ void VtkFocalPlanePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFocalPlanePointPlacerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFocalPlanePointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFocalPlanePointPlacerWrap *w = new VtkFocalPlanePointPlacerWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkFocalPlanePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFocalPlanePointPlacerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFocalPlanePointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFocalPlanePointPlacerWrap *w = new VtkFocalPlanePointPlacerWrap();
 		w->native.TakeReference(r);

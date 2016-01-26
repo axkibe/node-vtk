@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTextRendererStringToImageWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTextRendererStringToImageWrap::ptpl;
 
 VtkTextRendererStringToImageWrap::VtkTextRendererStringToImageWrap()
@@ -63,7 +62,6 @@ void VtkTextRendererStringToImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -161,7 +159,7 @@ void VtkTextRendererStringToImageWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextRendererStringToImageWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextRendererStringToImageWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextRendererStringToImageWrap *w = new VtkTextRendererStringToImageWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkTextRendererStringToImageWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTextRendererStringToImageWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTextRendererStringToImageWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextRendererStringToImageWrap *w = new VtkTextRendererStringToImageWrap();
 		w->native.TakeReference(r);

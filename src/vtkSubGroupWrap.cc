@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSubGroupWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSubGroupWrap::ptpl;
 
 VtkSubGroupWrap::VtkSubGroupWrap()
@@ -81,7 +80,6 @@ void VtkSubGroupWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "setGatherPattern", setGatherPattern);
 	Nan::SetPrototypeMethod(tpl, "setGatherPattern", setGatherPattern);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -276,7 +274,7 @@ void VtkSubGroupWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSubGroupWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSubGroupWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSubGroupWrap *w = new VtkSubGroupWrap();
 	w->native.TakeReference(r);
@@ -316,7 +314,7 @@ void VtkSubGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSubGroupWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSubGroupWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSubGroupWrap *w = new VtkSubGroupWrap();
 		w->native.TakeReference(r);

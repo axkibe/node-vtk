@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRectilinearWipeRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRectilinearWipeRepresentationWrap::ptpl;
 
 VtkRectilinearWipeRepresentationWrap::VtkRectilinearWipeRepresentationWrap()
@@ -117,7 +116,6 @@ void VtkRectilinearWipeRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -234,7 +232,7 @@ void VtkRectilinearWipeRepresentationWrap::GetImageActor(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageActorWrap *w = new VtkImageActorWrap();
 	w->native.TakeReference(r);
@@ -257,7 +255,7 @@ void VtkRectilinearWipeRepresentationWrap::GetProperty(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -280,7 +278,7 @@ void VtkRectilinearWipeRepresentationWrap::GetRectilinearWipe(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageRectilinearWipeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageRectilinearWipeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageRectilinearWipeWrap *w = new VtkImageRectilinearWipeWrap();
 	w->native.TakeReference(r);
@@ -381,7 +379,7 @@ void VtkRectilinearWipeRepresentationWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearWipeRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearWipeRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearWipeRepresentationWrap *w = new VtkRectilinearWipeRepresentationWrap();
 	w->native.TakeReference(r);
@@ -495,7 +493,7 @@ void VtkRectilinearWipeRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRectilinearWipeRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRectilinearWipeRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectilinearWipeRepresentationWrap *w = new VtkRectilinearWipeRepresentationWrap();
 		w->native.TakeReference(r);

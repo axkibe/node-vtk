@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLabelPlacementMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLabelPlacementMapperWrap::ptpl;
 
 VtkLabelPlacementMapperWrap::VtkLabelPlacementMapperWrap()
@@ -190,7 +189,6 @@ void VtkLabelPlacementMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseUnicodeStringsOn", UseUnicodeStringsOn);
 	Nan::SetPrototypeMethod(tpl, "useUnicodeStringsOn", UseUnicodeStringsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -256,7 +254,7 @@ void VtkLabelPlacementMapperWrap::GetAnchorTransform(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoordinateWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoordinateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoordinateWrap *w = new VtkCoordinateWrap();
 	w->native.TakeReference(r);
@@ -405,7 +403,7 @@ void VtkLabelPlacementMapperWrap::GetRenderStrategy(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelRenderStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelRenderStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelRenderStrategyWrap *w = new VtkLabelRenderStrategyWrap();
 	w->native.TakeReference(r);
@@ -534,7 +532,7 @@ void VtkLabelPlacementMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelPlacementMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelPlacementMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelPlacementMapperWrap *w = new VtkLabelPlacementMapperWrap();
 	w->native.TakeReference(r);
@@ -659,7 +657,7 @@ void VtkLabelPlacementMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLabelPlacementMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLabelPlacementMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabelPlacementMapperWrap *w = new VtkLabelPlacementMapperWrap();
 		w->native.TakeReference(r);

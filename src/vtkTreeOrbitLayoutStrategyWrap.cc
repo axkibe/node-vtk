@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeOrbitLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeOrbitLayoutStrategyWrap::ptpl;
 
 VtkTreeOrbitLayoutStrategyWrap::VtkTreeOrbitLayoutStrategyWrap()
@@ -87,7 +86,6 @@ void VtkTreeOrbitLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLogSpacingValue", SetLogSpacingValue);
 	Nan::SetPrototypeMethod(tpl, "setLogSpacingValue", SetLogSpacingValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -247,7 +245,7 @@ void VtkTreeOrbitLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeOrbitLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeOrbitLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeOrbitLayoutStrategyWrap *w = new VtkTreeOrbitLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -275,7 +273,7 @@ void VtkTreeOrbitLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeOrbitLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeOrbitLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeOrbitLayoutStrategyWrap *w = new VtkTreeOrbitLayoutStrategyWrap();
 		w->native.TakeReference(r);

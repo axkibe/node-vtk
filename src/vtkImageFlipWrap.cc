@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageFlipWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageFlipWrap::ptpl;
 
 VtkImageFlipWrap::VtkImageFlipWrap()
@@ -96,7 +95,6 @@ void VtkImageFlipWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreserveImageExtent", SetPreserveImageExtent);
 	Nan::SetPrototypeMethod(tpl, "setPreserveImageExtent", SetPreserveImageExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -254,7 +252,7 @@ void VtkImageFlipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageFlipWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageFlipWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageFlipWrap *w = new VtkImageFlipWrap();
 	w->native.TakeReference(r);
@@ -306,7 +304,7 @@ void VtkImageFlipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageFlipWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageFlipWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageFlipWrap *w = new VtkImageFlipWrap();
 		w->native.TakeReference(r);

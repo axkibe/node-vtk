@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGlobFileNamesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGlobFileNamesWrap::ptpl;
 
 VtkGlobFileNamesWrap::VtkGlobFileNamesWrap()
@@ -93,7 +92,6 @@ void VtkGlobFileNamesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRecurse", SetRecurse);
 	Nan::SetPrototypeMethod(tpl, "setRecurse", SetRecurse);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -185,7 +183,7 @@ void VtkGlobFileNamesWrap::GetFileNames(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -279,7 +277,7 @@ void VtkGlobFileNamesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGlobFileNamesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGlobFileNamesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGlobFileNamesWrap *w = new VtkGlobFileNamesWrap();
 	w->native.TakeReference(r);
@@ -343,7 +341,7 @@ void VtkGlobFileNamesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGlobFileNamesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGlobFileNamesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGlobFileNamesWrap *w = new VtkGlobFileNamesWrap();
 		w->native.TakeReference(r);

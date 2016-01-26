@@ -24,7 +24,6 @@ class VtkImageExtractComponentsWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageExtractComponentsWrap(vtkSmartPointer<vtkImageExtractComponents>);
 		VtkImageExtractComponentsWrap();
 		~VtkImageExtractComponentsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

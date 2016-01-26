@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSobelGradientMagnitudePassWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSobelGradientMagnitudePassWrap::ptpl;
 
 VtkSobelGradientMagnitudePassWrap::VtkSobelGradientMagnitudePassWrap()
@@ -64,7 +63,6 @@ void VtkSobelGradientMagnitudePassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkSobelGradientMagnitudePassWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSobelGradientMagnitudePassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSobelGradientMagnitudePassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSobelGradientMagnitudePassWrap *w = new VtkSobelGradientMagnitudePassWrap();
 	w->native.TakeReference(r);
@@ -190,7 +188,7 @@ void VtkSobelGradientMagnitudePassWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSobelGradientMagnitudePassWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSobelGradientMagnitudePassWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSobelGradientMagnitudePassWrap *w = new VtkSobelGradientMagnitudePassWrap();
 		w->native.TakeReference(r);

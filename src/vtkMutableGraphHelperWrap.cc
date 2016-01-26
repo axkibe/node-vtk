@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMutableGraphHelperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMutableGraphHelperWrap::ptpl;
 
 VtkMutableGraphHelperWrap::VtkMutableGraphHelperWrap()
@@ -73,7 +72,6 @@ void VtkMutableGraphHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -129,7 +127,7 @@ void VtkMutableGraphHelperWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphWrap *w = new VtkGraphWrap();
 	w->native.TakeReference(r);
@@ -174,7 +172,7 @@ void VtkMutableGraphHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMutableGraphHelperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMutableGraphHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMutableGraphHelperWrap *w = new VtkMutableGraphHelperWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkMutableGraphHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMutableGraphHelperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMutableGraphHelperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMutableGraphHelperWrap *w = new VtkMutableGraphHelperWrap();
 		w->native.TakeReference(r);

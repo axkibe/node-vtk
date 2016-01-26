@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRenderWindowCollectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRenderWindowCollectionWrap::ptpl;
 
 VtkRenderWindowCollectionWrap::VtkRenderWindowCollectionWrap()
@@ -67,7 +66,6 @@ void VtkRenderWindowCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkRenderWindowCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkRenderWindowCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowCollectionWrap *w = new VtkRenderWindowCollectionWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkRenderWindowCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRenderWindowCollectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRenderWindowCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderWindowCollectionWrap *w = new VtkRenderWindowCollectionWrap();
 		w->native.TakeReference(r);

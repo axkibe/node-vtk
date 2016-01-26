@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMatrix3x3Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMatrix3x3Wrap::ptpl;
 
 VtkMatrix3x3Wrap::VtkMatrix3x3Wrap()
@@ -89,7 +88,6 @@ void VtkMatrix3x3Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zero", Zero);
 	Nan::SetPrototypeMethod(tpl, "zero", Zero);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -338,7 +336,7 @@ void VtkMatrix3x3Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrix3x3Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrix3x3Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrix3x3Wrap *w = new VtkMatrix3x3Wrap();
 	w->native.TakeReference(r);
@@ -366,7 +364,7 @@ void VtkMatrix3x3Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMatrix3x3Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMatrix3x3Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMatrix3x3Wrap *w = new VtkMatrix3x3Wrap();
 		w->native.TakeReference(r);

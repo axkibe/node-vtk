@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSocketCommunicatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSocketCommunicatorWrap::ptpl;
 
 VtkSocketCommunicatorWrap::VtkSocketCommunicatorWrap()
@@ -133,7 +132,6 @@ void VtkSocketCommunicatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WaitForConnection", WaitForConnection);
 	Nan::SetPrototypeMethod(tpl, "waitForConnection", WaitForConnection);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -349,7 +347,7 @@ void VtkSocketCommunicatorWrap::GetSocket(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkClientSocketWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkClientSocketWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClientSocketWrap *w = new VtkClientSocketWrap();
 	w->native.TakeReference(r);
@@ -473,7 +471,7 @@ void VtkSocketCommunicatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSocketCommunicatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSocketCommunicatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSocketCommunicatorWrap *w = new VtkSocketCommunicatorWrap();
 	w->native.TakeReference(r);
@@ -525,7 +523,7 @@ void VtkSocketCommunicatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSocketCommunicatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSocketCommunicatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSocketCommunicatorWrap *w = new VtkSocketCommunicatorWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAppendCompositeDataLeavesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAppendCompositeDataLeavesWrap::ptpl;
 
 VtkAppendCompositeDataLeavesWrap::VtkAppendCompositeDataLeavesWrap()
@@ -72,7 +71,6 @@ void VtkAppendCompositeDataLeavesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAppendFieldData", SetAppendFieldData);
 	Nan::SetPrototypeMethod(tpl, "setAppendFieldData", SetAppendFieldData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -188,7 +186,7 @@ void VtkAppendCompositeDataLeavesWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAppendCompositeDataLeavesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAppendCompositeDataLeavesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAppendCompositeDataLeavesWrap *w = new VtkAppendCompositeDataLeavesWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkAppendCompositeDataLeavesWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAppendCompositeDataLeavesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAppendCompositeDataLeavesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAppendCompositeDataLeavesWrap *w = new VtkAppendCompositeDataLeavesWrap();
 		w->native.TakeReference(r);

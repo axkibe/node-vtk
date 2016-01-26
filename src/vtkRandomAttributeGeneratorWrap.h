@@ -24,7 +24,6 @@ class VtkRandomAttributeGeneratorWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkRandomAttributeGeneratorWrap(vtkSmartPointer<vtkRandomAttributeGenerator>);
 		VtkRandomAttributeGeneratorWrap();
 		~VtkRandomAttributeGeneratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

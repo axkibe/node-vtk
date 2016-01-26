@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVolumeRayCastMIPFunctionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVolumeRayCastMIPFunctionWrap::ptpl;
 
 VtkVolumeRayCastMIPFunctionWrap::VtkVolumeRayCastMIPFunctionWrap()
@@ -81,7 +80,6 @@ void VtkVolumeRayCastMIPFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximizeMethodToScalarValue", SetMaximizeMethodToScalarValue);
 	Nan::SetPrototypeMethod(tpl, "setMaximizeMethodToScalarValue", SetMaximizeMethodToScalarValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -215,7 +213,7 @@ void VtkVolumeRayCastMIPFunctionWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVolumeRayCastMIPFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastMIPFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeRayCastMIPFunctionWrap *w = new VtkVolumeRayCastMIPFunctionWrap();
 	w->native.TakeReference(r);
@@ -243,7 +241,7 @@ void VtkVolumeRayCastMIPFunctionWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVolumeRayCastMIPFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastMIPFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeRayCastMIPFunctionWrap *w = new VtkVolumeRayCastMIPFunctionWrap();
 		w->native.TakeReference(r);

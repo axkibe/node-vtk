@@ -24,7 +24,6 @@ class VtkMatrix4x4Wrap : public VtkObjectWrap
 		VtkMatrix4x4Wrap(vtkSmartPointer<vtkMatrix4x4>);
 		VtkMatrix4x4Wrap();
 		~VtkMatrix4x4Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

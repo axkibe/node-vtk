@@ -24,7 +24,6 @@ class VtkMemoryLimitImageDataStreamerWrap : public VtkImageDataStreamerWrap
 		VtkMemoryLimitImageDataStreamerWrap(vtkSmartPointer<vtkMemoryLimitImageDataStreamer>);
 		VtkMemoryLimitImageDataStreamerWrap();
 		~VtkMemoryLimitImageDataStreamerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

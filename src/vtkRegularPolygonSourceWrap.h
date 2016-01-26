@@ -24,7 +24,6 @@ class VtkRegularPolygonSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkRegularPolygonSourceWrap(vtkSmartPointer<vtkRegularPolygonSource>);
 		VtkRegularPolygonSourceWrap();
 		~VtkRegularPolygonSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

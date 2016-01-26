@@ -24,7 +24,6 @@ class VtkMathTextFreeTypeTextRendererWrap : public VtkTextRendererWrap
 		VtkMathTextFreeTypeTextRendererWrap(vtkSmartPointer<vtkMathTextFreeTypeTextRenderer>);
 		VtkMathTextFreeTypeTextRendererWrap();
 		~VtkMathTextFreeTypeTextRendererWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

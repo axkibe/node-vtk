@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGraphAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGraphAlgorithmWrap::ptpl;
 
 VtkGraphAlgorithmWrap::VtkGraphAlgorithmWrap()
@@ -68,7 +67,6 @@ void VtkGraphAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -128,7 +126,7 @@ void VtkGraphAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGraphWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphWrap *w = new VtkGraphWrap();
 		w->native.TakeReference(r);
@@ -147,7 +145,7 @@ void VtkGraphAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphWrap *w = new VtkGraphWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkGraphAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphAlgorithmWrap *w = new VtkGraphAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkGraphAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGraphAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphAlgorithmWrap *w = new VtkGraphAlgorithmWrap();
 		w->native.TakeReference(r);

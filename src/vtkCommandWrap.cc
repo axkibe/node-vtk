@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCommandWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCommandWrap::ptpl;
 
 VtkCommandWrap::VtkCommandWrap()
@@ -84,7 +83,6 @@ void VtkCommandWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassiveObserver", SetPassiveObserver);
 	Nan::SetPrototypeMethod(tpl, "setPassiveObserver", SetPassiveObserver);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -214,7 +212,7 @@ void VtkCommandWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCommandWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCommandWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCommandWrap *w = new VtkCommandWrap();
 	w->native.TakeReference(r);
@@ -266,7 +264,7 @@ void VtkCommandWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCommandWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCommandWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCommandWrap *w = new VtkCommandWrap();
 		w->native.TakeReference(r);

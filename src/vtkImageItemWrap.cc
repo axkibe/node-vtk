@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageItemWrap::ptpl;
 
 VtkImageItemWrap::VtkImageItemWrap()
@@ -67,7 +66,6 @@ void VtkImageItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImage", SetImage);
 	Nan::SetPrototypeMethod(tpl, "setImage", SetImage);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkImageItemWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkImageItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageItemWrap *w = new VtkImageItemWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkImageItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageItemWrap *w = new VtkImageItemWrap();
 		w->native.TakeReference(r);

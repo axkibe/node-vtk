@@ -24,7 +24,6 @@ class VtkImageDataLIC2DWrap : public VtkImageAlgorithmWrap
 		VtkImageDataLIC2DWrap(vtkSmartPointer<vtkImageDataLIC2D>);
 		VtkImageDataLIC2DWrap();
 		~VtkImageDataLIC2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

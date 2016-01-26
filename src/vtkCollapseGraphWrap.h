@@ -24,7 +24,6 @@ class VtkCollapseGraphWrap : public VtkGraphAlgorithmWrap
 		VtkCollapseGraphWrap(vtkSmartPointer<vtkCollapseGraph>);
 		VtkCollapseGraphWrap();
 		~VtkCollapseGraphWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkPolarAxesActorWrap : public VtkActorWrap
 		VtkPolarAxesActorWrap(vtkSmartPointer<vtkPolarAxesActor>);
 		VtkPolarAxesActorWrap();
 		~VtkPolarAxesActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

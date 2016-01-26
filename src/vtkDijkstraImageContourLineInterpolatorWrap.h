@@ -24,7 +24,6 @@ class VtkDijkstraImageContourLineInterpolatorWrap : public VtkContourLineInterpo
 		VtkDijkstraImageContourLineInterpolatorWrap(vtkSmartPointer<vtkDijkstraImageContourLineInterpolator>);
 		VtkDijkstraImageContourLineInterpolatorWrap();
 		~VtkDijkstraImageContourLineInterpolatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

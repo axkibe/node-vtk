@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAxesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAxesWrap::ptpl;
 
 VtkAxesWrap::VtkAxesWrap()
@@ -93,7 +92,6 @@ void VtkAxesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SymmetricOn", SymmetricOn);
 	Nan::SetPrototypeMethod(tpl, "symmetricOn", SymmetricOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -237,7 +235,7 @@ void VtkAxesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxesWrap *w = new VtkAxesWrap();
 	w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkAxesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAxesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAxesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxesWrap *w = new VtkAxesWrap();
 		w->native.TakeReference(r);

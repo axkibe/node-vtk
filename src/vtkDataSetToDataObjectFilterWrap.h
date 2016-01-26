@@ -24,7 +24,6 @@ class VtkDataSetToDataObjectFilterWrap : public VtkDataObjectAlgorithmWrap
 		VtkDataSetToDataObjectFilterWrap(vtkSmartPointer<vtkDataSetToDataObjectFilter>);
 		VtkDataSetToDataObjectFilterWrap();
 		~VtkDataSetToDataObjectFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

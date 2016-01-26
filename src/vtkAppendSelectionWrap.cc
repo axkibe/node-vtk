@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAppendSelectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAppendSelectionWrap::ptpl;
 
 VtkAppendSelectionWrap::VtkAppendSelectionWrap()
@@ -101,7 +100,6 @@ void VtkAppendSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UserManagedInputsOn", UserManagedInputsOn);
 	Nan::SetPrototypeMethod(tpl, "userManagedInputsOn", UserManagedInputsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -219,7 +217,7 @@ void VtkAppendSelectionWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSelectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSelectionWrap *w = new VtkSelectionWrap();
 		w->native.TakeReference(r);
@@ -238,7 +236,7 @@ void VtkAppendSelectionWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectionWrap *w = new VtkSelectionWrap();
 	w->native.TakeReference(r);
@@ -297,7 +295,7 @@ void VtkAppendSelectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAppendSelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAppendSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAppendSelectionWrap *w = new VtkAppendSelectionWrap();
 	w->native.TakeReference(r);
@@ -345,7 +343,7 @@ void VtkAppendSelectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAppendSelectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAppendSelectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAppendSelectionWrap *w = new VtkAppendSelectionWrap();
 		w->native.TakeReference(r);

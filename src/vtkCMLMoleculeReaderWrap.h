@@ -24,7 +24,6 @@ class VtkCMLMoleculeReaderWrap : public VtkMoleculeAlgorithmWrap
 		VtkCMLMoleculeReaderWrap(vtkSmartPointer<vtkCMLMoleculeReader>);
 		VtkCMLMoleculeReaderWrap();
 		~VtkCMLMoleculeReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

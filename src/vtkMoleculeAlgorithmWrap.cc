@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMoleculeAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMoleculeAlgorithmWrap::ptpl;
 
 VtkMoleculeAlgorithmWrap::VtkMoleculeAlgorithmWrap()
@@ -80,7 +79,6 @@ void VtkMoleculeAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkMoleculeAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkMoleculeAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkMoleculeAlgorithmWrap::GetMoleculeInput(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMoleculeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMoleculeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMoleculeWrap *w = new VtkMoleculeWrap();
 		w->native.TakeReference(r);
@@ -253,7 +251,7 @@ void VtkMoleculeAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMoleculeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMoleculeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMoleculeWrap *w = new VtkMoleculeWrap();
 		w->native.TakeReference(r);
@@ -272,7 +270,7 @@ void VtkMoleculeAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMoleculeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMoleculeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMoleculeWrap *w = new VtkMoleculeWrap();
 	w->native.TakeReference(r);
@@ -317,7 +315,7 @@ void VtkMoleculeAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMoleculeAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMoleculeAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMoleculeAlgorithmWrap *w = new VtkMoleculeAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -345,7 +343,7 @@ void VtkMoleculeAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMoleculeAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMoleculeAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMoleculeAlgorithmWrap *w = new VtkMoleculeAlgorithmWrap();
 		w->native.TakeReference(r);

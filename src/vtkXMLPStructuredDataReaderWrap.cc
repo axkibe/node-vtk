@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLPStructuredDataReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLPStructuredDataReaderWrap::ptpl;
 
 VtkXMLPStructuredDataReaderWrap::VtkXMLPStructuredDataReaderWrap()
@@ -68,7 +67,6 @@ void VtkXMLPStructuredDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -148,7 +146,7 @@ void VtkXMLPStructuredDataReaderWrap::GetExtentTranslator(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtentTranslatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtentTranslatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtentTranslatorWrap *w = new VtkExtentTranslatorWrap();
 	w->native.TakeReference(r);
@@ -193,7 +191,7 @@ void VtkXMLPStructuredDataReaderWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLPStructuredDataReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLPStructuredDataReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLPStructuredDataReaderWrap *w = new VtkXMLPStructuredDataReaderWrap();
 	w->native.TakeReference(r);
@@ -221,7 +219,7 @@ void VtkXMLPStructuredDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLPStructuredDataReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLPStructuredDataReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLPStructuredDataReaderWrap *w = new VtkXMLPStructuredDataReaderWrap();
 		w->native.TakeReference(r);

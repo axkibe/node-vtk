@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperTreeGridGeometryWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperTreeGridGeometryWrap::ptpl;
 
 VtkHyperTreeGridGeometryWrap::VtkHyperTreeGridGeometryWrap()
@@ -60,7 +59,6 @@ void VtkHyperTreeGridGeometryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkHyperTreeGridGeometryWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeGridGeometryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridGeometryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeGridGeometryWrap *w = new VtkHyperTreeGridGeometryWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkHyperTreeGridGeometryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperTreeGridGeometryWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridGeometryWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperTreeGridGeometryWrap *w = new VtkHyperTreeGridGeometryWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkExecutionTimerWrap : public VtkObjectWrap
 		VtkExecutionTimerWrap(vtkSmartPointer<vtkExecutionTimer>);
 		VtkExecutionTimerWrap();
 		~VtkExecutionTimerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkInteractorStyleTerrainWrap : public VtkInteractorStyleWrap
 		VtkInteractorStyleTerrainWrap(vtkSmartPointer<vtkInteractorStyleTerrain>);
 		VtkInteractorStyleTerrainWrap();
 		~VtkInteractorStyleTerrainWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

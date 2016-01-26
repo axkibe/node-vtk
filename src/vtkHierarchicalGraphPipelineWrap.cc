@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHierarchicalGraphPipelineWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHierarchicalGraphPipelineWrap::ptpl;
 
 VtkHierarchicalGraphPipelineWrap::VtkHierarchicalGraphPipelineWrap()
@@ -139,7 +138,6 @@ void VtkHierarchicalGraphPipelineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VisibilityOn", VisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "visibilityOn", VisibilityOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -234,7 +232,7 @@ void VtkHierarchicalGraphPipelineWrap::ConvertSelection(const Nan::FunctionCallb
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkSelectionWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkSelectionWrap *w = new VtkSelectionWrap();
 			w->native.TakeReference(r);
@@ -261,7 +259,7 @@ void VtkHierarchicalGraphPipelineWrap::GetActor(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActorWrap *w = new VtkActorWrap();
 	w->native.TakeReference(r);
@@ -340,7 +338,7 @@ void VtkHierarchicalGraphPipelineWrap::GetLabelActor(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActor2DWrap *w = new VtkActor2DWrap();
 	w->native.TakeReference(r);
@@ -377,7 +375,7 @@ void VtkHierarchicalGraphPipelineWrap::GetLabelTextProperty(const Nan::FunctionC
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -460,7 +458,7 @@ void VtkHierarchicalGraphPipelineWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHierarchicalGraphPipelineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHierarchicalGraphPipelineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHierarchicalGraphPipelineWrap *w = new VtkHierarchicalGraphPipelineWrap();
 	w->native.TakeReference(r);
@@ -538,7 +536,7 @@ void VtkHierarchicalGraphPipelineWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHierarchicalGraphPipelineWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHierarchicalGraphPipelineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalGraphPipelineWrap *w = new VtkHierarchicalGraphPipelineWrap();
 		w->native.TakeReference(r);

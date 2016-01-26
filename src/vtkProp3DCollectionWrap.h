@@ -24,7 +24,6 @@ class VtkProp3DCollectionWrap : public VtkPropCollectionWrap
 		VtkProp3DCollectionWrap(vtkSmartPointer<vtkProp3DCollection>);
 		VtkProp3DCollectionWrap();
 		~VtkProp3DCollectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

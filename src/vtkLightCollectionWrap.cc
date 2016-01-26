@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLightCollectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLightCollectionWrap::ptpl;
 
 VtkLightCollectionWrap::VtkLightCollectionWrap()
@@ -67,7 +66,6 @@ void VtkLightCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkLightCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLightWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLightWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightWrap *w = new VtkLightWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkLightCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLightCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLightCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightCollectionWrap *w = new VtkLightCollectionWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkLightCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLightCollectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLightCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLightCollectionWrap *w = new VtkLightCollectionWrap();
 		w->native.TakeReference(r);

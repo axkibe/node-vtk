@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSimpleImageToImageFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSimpleImageToImageFilterWrap::ptpl;
 
 VtkSimpleImageToImageFilterWrap::VtkSimpleImageToImageFilterWrap()
@@ -60,7 +59,6 @@ void VtkSimpleImageToImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkSimpleImageToImageFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSimpleImageToImageFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSimpleImageToImageFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSimpleImageToImageFilterWrap *w = new VtkSimpleImageToImageFilterWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkSimpleImageToImageFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSimpleImageToImageFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSimpleImageToImageFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSimpleImageToImageFilterWrap *w = new VtkSimpleImageToImageFilterWrap();
 		w->native.TakeReference(r);

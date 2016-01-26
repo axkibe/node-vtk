@@ -24,7 +24,6 @@ class VtkGenericDataObjectWriterWrap : public VtkDataWriterWrap
 		VtkGenericDataObjectWriterWrap(vtkSmartPointer<vtkGenericDataObjectWriter>);
 		VtkGenericDataObjectWriterWrap();
 		~VtkGenericDataObjectWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperOctreeDualGridContourFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeDualGridContourFilterWrap::ptpl;
 
 VtkHyperOctreeDualGridContourFilterWrap::VtkHyperOctreeDualGridContourFilterWrap()
@@ -85,7 +84,6 @@ void VtkHyperOctreeDualGridContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -180,7 +178,7 @@ void VtkHyperOctreeDualGridContourFilterWrap::GetLocator(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -260,7 +258,7 @@ void VtkHyperOctreeDualGridContourFilterWrap::NewInstance(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeDualGridContourFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeDualGridContourFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeDualGridContourFilterWrap *w = new VtkHyperOctreeDualGridContourFilterWrap();
 	w->native.TakeReference(r);
@@ -288,7 +286,7 @@ void VtkHyperOctreeDualGridContourFilterWrap::SafeDownCast(const Nan::FunctionCa
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeDualGridContourFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeDualGridContourFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeDualGridContourFilterWrap *w = new VtkHyperOctreeDualGridContourFilterWrap();
 		w->native.TakeReference(r);

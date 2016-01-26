@@ -24,7 +24,6 @@ class VtkPPairwiseExtractHistogram2DWrap : public VtkPairwiseExtractHistogram2DW
 		VtkPPairwiseExtractHistogram2DWrap(vtkSmartPointer<vtkPPairwiseExtractHistogram2D>);
 		VtkPPairwiseExtractHistogram2DWrap();
 		~VtkPPairwiseExtractHistogram2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

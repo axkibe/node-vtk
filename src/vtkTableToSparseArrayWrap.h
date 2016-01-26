@@ -24,7 +24,6 @@ class VtkTableToSparseArrayWrap : public VtkArrayDataAlgorithmWrap
 		VtkTableToSparseArrayWrap(vtkSmartPointer<vtkTableToSparseArray>);
 		VtkTableToSparseArrayWrap();
 		~VtkTableToSparseArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

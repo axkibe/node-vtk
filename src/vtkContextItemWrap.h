@@ -24,7 +24,6 @@ class VtkContextItemWrap : public VtkAbstractContextItemWrap
 		VtkContextItemWrap(vtkSmartPointer<vtkContextItem>);
 		VtkContextItemWrap();
 		~VtkContextItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFrustumSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFrustumSourceWrap::ptpl;
 
 VtkFrustumSourceWrap::VtkFrustumSourceWrap()
@@ -85,7 +84,6 @@ void VtkFrustumSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowLinesOn", ShowLinesOn);
 	Nan::SetPrototypeMethod(tpl, "showLinesOn", ShowLinesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -169,7 +167,7 @@ void VtkFrustumSourceWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlanesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlanesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlanesWrap *w = new VtkPlanesWrap();
 	w->native.TakeReference(r);
@@ -214,7 +212,7 @@ void VtkFrustumSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFrustumSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFrustumSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFrustumSourceWrap *w = new VtkFrustumSourceWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkFrustumSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFrustumSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFrustumSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFrustumSourceWrap *w = new VtkFrustumSourceWrap();
 		w->native.TakeReference(r);

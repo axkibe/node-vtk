@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBlankStructuredGridWithImageWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBlankStructuredGridWithImageWrap::ptpl;
 
 VtkBlankStructuredGridWithImageWrap::VtkBlankStructuredGridWithImageWrap()
@@ -67,7 +66,6 @@ void VtkBlankStructuredGridWithImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBlankingInputData", SetBlankingInputData);
 	Nan::SetPrototypeMethod(tpl, "setBlankingInputData", SetBlankingInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -109,7 +107,7 @@ void VtkBlankStructuredGridWithImageWrap::GetBlankingInput(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkBlankStructuredGridWithImageWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBlankStructuredGridWithImageWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBlankStructuredGridWithImageWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBlankStructuredGridWithImageWrap *w = new VtkBlankStructuredGridWithImageWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkBlankStructuredGridWithImageWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBlankStructuredGridWithImageWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBlankStructuredGridWithImageWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBlankStructuredGridWithImageWrap *w = new VtkBlankStructuredGridWithImageWrap();
 		w->native.TakeReference(r);

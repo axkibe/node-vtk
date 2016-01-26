@@ -24,7 +24,6 @@ class VtkTextMapperWrap : public VtkMapper2DWrap
 		VtkTextMapperWrap(vtkSmartPointer<vtkTextMapper>);
 		VtkTextMapperWrap();
 		~VtkTextMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

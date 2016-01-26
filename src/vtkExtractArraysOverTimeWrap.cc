@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractArraysOverTimeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractArraysOverTimeWrap::ptpl;
 
 VtkExtractArraysOverTimeWrap::VtkExtractArraysOverTimeWrap()
@@ -86,7 +85,6 @@ void VtkExtractArraysOverTimeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionExtractor", SetSelectionExtractor);
 	Nan::SetPrototypeMethod(tpl, "setSelectionExtractor", SetSelectionExtractor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -170,7 +168,7 @@ void VtkExtractArraysOverTimeWrap::GetSelectionExtractor(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractSelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractSelectionWrap *w = new VtkExtractSelectionWrap();
 	w->native.TakeReference(r);
@@ -215,7 +213,7 @@ void VtkExtractArraysOverTimeWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractArraysOverTimeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractArraysOverTimeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractArraysOverTimeWrap *w = new VtkExtractArraysOverTimeWrap();
 	w->native.TakeReference(r);
@@ -267,7 +265,7 @@ void VtkExtractArraysOverTimeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractArraysOverTimeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractArraysOverTimeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractArraysOverTimeWrap *w = new VtkExtractArraysOverTimeWrap();
 		w->native.TakeReference(r);

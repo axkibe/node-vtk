@@ -24,7 +24,6 @@ class VtkImageBlendWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageBlendWrap(vtkSmartPointer<vtkImageBlend>);
 		VtkImageBlendWrap();
 		~VtkImageBlendWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

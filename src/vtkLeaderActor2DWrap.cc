@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLeaderActor2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLeaderActor2DWrap::ptpl;
 
 VtkLeaderActor2DWrap::VtkLeaderActor2DWrap()
@@ -229,7 +228,6 @@ void VtkLeaderActor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -575,7 +573,7 @@ void VtkLeaderActor2DWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -746,7 +744,7 @@ void VtkLeaderActor2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLeaderActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLeaderActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLeaderActor2DWrap *w = new VtkLeaderActor2DWrap();
 	w->native.TakeReference(r);
@@ -860,7 +858,7 @@ void VtkLeaderActor2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLeaderActor2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLeaderActor2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLeaderActor2DWrap *w = new VtkLeaderActor2DWrap();
 		w->native.TakeReference(r);

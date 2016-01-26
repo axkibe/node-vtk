@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVideoSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVideoSourceWrap::ptpl;
 
 VtkVideoSourceWrap::VtkVideoSourceWrap()
@@ -171,7 +170,6 @@ void VtkVideoSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -489,7 +487,7 @@ void VtkVideoSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVideoSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVideoSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVideoSourceWrap *w = new VtkVideoSourceWrap();
 	w->native.TakeReference(r);
@@ -565,7 +563,7 @@ void VtkVideoSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVideoSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVideoSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVideoSourceWrap *w = new VtkVideoSourceWrap();
 		w->native.TakeReference(r);

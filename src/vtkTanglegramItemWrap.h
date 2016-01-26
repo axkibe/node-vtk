@@ -24,7 +24,6 @@ class VtkTanglegramItemWrap : public VtkContextItemWrap
 		VtkTanglegramItemWrap(vtkSmartPointer<vtkTanglegramItem>);
 		VtkTanglegramItemWrap();
 		~VtkTanglegramItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

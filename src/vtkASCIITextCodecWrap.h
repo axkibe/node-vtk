@@ -24,7 +24,6 @@ class VtkASCIITextCodecWrap : public VtkTextCodecWrap
 		VtkASCIITextCodecWrap(vtkSmartPointer<vtkASCIITextCodec>);
 		VtkASCIITextCodecWrap();
 		~VtkASCIITextCodecWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

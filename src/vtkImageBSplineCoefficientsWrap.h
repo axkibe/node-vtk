@@ -24,7 +24,6 @@ class VtkImageBSplineCoefficientsWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageBSplineCoefficientsWrap(vtkSmartPointer<vtkImageBSplineCoefficients>);
 		VtkImageBSplineCoefficientsWrap();
 		~VtkImageBSplineCoefficientsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

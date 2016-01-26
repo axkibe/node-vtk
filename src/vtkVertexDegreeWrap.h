@@ -24,7 +24,6 @@ class VtkVertexDegreeWrap : public VtkGraphAlgorithmWrap
 		VtkVertexDegreeWrap(vtkSmartPointer<vtkVertexDegree>);
 		VtkVertexDegreeWrap();
 		~VtkVertexDegreeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

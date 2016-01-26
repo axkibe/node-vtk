@@ -24,7 +24,6 @@ class VtkPerlinNoiseWrap : public VtkImplicitFunctionWrap
 		VtkPerlinNoiseWrap(vtkSmartPointer<vtkPerlinNoise>);
 		VtkPerlinNoiseWrap();
 		~VtkPerlinNoiseWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

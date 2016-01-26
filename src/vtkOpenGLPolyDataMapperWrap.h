@@ -24,7 +24,6 @@ class VtkOpenGLPolyDataMapperWrap : public VtkPolyDataMapperWrap
 		VtkOpenGLPolyDataMapperWrap(vtkSmartPointer<vtkOpenGLPolyDataMapper>);
 		VtkOpenGLPolyDataMapperWrap();
 		~VtkOpenGLPolyDataMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

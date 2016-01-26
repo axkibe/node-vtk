@@ -24,7 +24,6 @@ class VtkGeoAdaptiveArcsWrap : public VtkPolyDataAlgorithmWrap
 		VtkGeoAdaptiveArcsWrap(vtkSmartPointer<vtkGeoAdaptiveArcs>);
 		VtkGeoAdaptiveArcsWrap();
 		~VtkGeoAdaptiveArcsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

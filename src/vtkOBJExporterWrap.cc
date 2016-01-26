@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOBJExporterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOBJExporterWrap::ptpl;
 
 VtkOBJExporterWrap::VtkOBJExporterWrap()
@@ -66,7 +65,6 @@ void VtkOBJExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFilePrefix", SetFilePrefix);
 	Nan::SetPrototypeMethod(tpl, "setFilePrefix", SetFilePrefix);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkOBJExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOBJExporterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOBJExporterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOBJExporterWrap *w = new VtkOBJExporterWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkOBJExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOBJExporterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOBJExporterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOBJExporterWrap *w = new VtkOBJExporterWrap();
 		w->native.TakeReference(r);

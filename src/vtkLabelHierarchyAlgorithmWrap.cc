@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLabelHierarchyAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLabelHierarchyAlgorithmWrap::ptpl;
 
 VtkLabelHierarchyAlgorithmWrap::VtkLabelHierarchyAlgorithmWrap()
@@ -80,7 +79,6 @@ void VtkLabelHierarchyAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -223,7 +221,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetLabelHierarchyInput(const Nan::FunctionC
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLabelHierarchyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabelHierarchyWrap *w = new VtkLabelHierarchyWrap();
 		w->native.TakeReference(r);
@@ -253,7 +251,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLabelHierarchyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabelHierarchyWrap *w = new VtkLabelHierarchyWrap();
 		w->native.TakeReference(r);
@@ -272,7 +270,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelHierarchyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelHierarchyWrap *w = new VtkLabelHierarchyWrap();
 	w->native.TakeReference(r);
@@ -317,7 +315,7 @@ void VtkLabelHierarchyAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLabelHierarchyAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelHierarchyAlgorithmWrap *w = new VtkLabelHierarchyAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -345,7 +343,7 @@ void VtkLabelHierarchyAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLabelHierarchyAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabelHierarchyAlgorithmWrap *w = new VtkLabelHierarchyAlgorithmWrap();
 		w->native.TakeReference(r);

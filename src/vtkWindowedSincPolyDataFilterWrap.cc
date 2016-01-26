@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWindowedSincPolyDataFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWindowedSincPolyDataFilterWrap::ptpl;
 
 VtkWindowedSincPolyDataFilterWrap::VtkWindowedSincPolyDataFilterWrap()
@@ -180,7 +179,6 @@ void VtkWindowedSincPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassBand", SetPassBand);
 	Nan::SetPrototypeMethod(tpl, "setPassBand", SetPassBand);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -606,7 +604,7 @@ void VtkWindowedSincPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWindowedSincPolyDataFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWindowedSincPolyDataFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowedSincPolyDataFilterWrap *w = new VtkWindowedSincPolyDataFilterWrap();
 	w->native.TakeReference(r);
@@ -682,7 +680,7 @@ void VtkWindowedSincPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWindowedSincPolyDataFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWindowedSincPolyDataFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWindowedSincPolyDataFilterWrap *w = new VtkWindowedSincPolyDataFilterWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkFeatureEdgesWrap : public VtkPolyDataAlgorithmWrap
 		VtkFeatureEdgesWrap(vtkSmartPointer<vtkFeatureEdges>);
 		VtkFeatureEdgesWrap();
 		~VtkFeatureEdgesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

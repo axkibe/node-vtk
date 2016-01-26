@@ -24,7 +24,6 @@ class VtkImageGaussianSourceWrap : public VtkImageAlgorithmWrap
 		VtkImageGaussianSourceWrap(vtkSmartPointer<vtkImageGaussianSource>);
 		VtkImageGaussianSourceWrap();
 		~VtkImageGaussianSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

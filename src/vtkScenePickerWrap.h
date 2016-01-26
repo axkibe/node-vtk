@@ -24,7 +24,6 @@ class VtkScenePickerWrap : public VtkObjectWrap
 		VtkScenePickerWrap(vtkSmartPointer<vtkScenePicker>);
 		VtkScenePickerWrap();
 		~VtkScenePickerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

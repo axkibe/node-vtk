@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSubPixelPositionEdgelsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSubPixelPositionEdgelsWrap::ptpl;
 
 VtkSubPixelPositionEdgelsWrap::VtkSubPixelPositionEdgelsWrap()
@@ -85,7 +84,6 @@ void VtkSubPixelPositionEdgelsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TargetFlagOn", TargetFlagOn);
 	Nan::SetPrototypeMethod(tpl, "targetFlagOn", TargetFlagOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkSubPixelPositionEdgelsWrap::GetGradMaps(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredPointsWrap *w = new VtkStructuredPointsWrap();
 	w->native.TakeReference(r);
@@ -214,7 +212,7 @@ void VtkSubPixelPositionEdgelsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSubPixelPositionEdgelsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSubPixelPositionEdgelsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSubPixelPositionEdgelsWrap *w = new VtkSubPixelPositionEdgelsWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkSubPixelPositionEdgelsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSubPixelPositionEdgelsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSubPixelPositionEdgelsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSubPixelPositionEdgelsWrap *w = new VtkSubPixelPositionEdgelsWrap();
 		w->native.TakeReference(r);

@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDataObjectTreeIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDataObjectTreeIteratorWrap::ptpl;
 
 VtkDataObjectTreeIteratorWrap::VtkDataObjectTreeIteratorWrap()
@@ -104,7 +103,6 @@ void VtkDataObjectTreeIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VisitOnlyLeavesOn", VisitOnlyLeavesOn);
 	Nan::SetPrototypeMethod(tpl, "visitOnlyLeavesOn", VisitOnlyLeavesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -160,7 +158,7 @@ void VtkDataObjectTreeIteratorWrap::GetCurrentDataObject(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkDataObjectTreeIteratorWrap::GetCurrentMetaData(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationWrap *w = new VtkInformationWrap();
 	w->native.TakeReference(r);
@@ -308,7 +306,7 @@ void VtkDataObjectTreeIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectTreeIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectTreeIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectTreeIteratorWrap *w = new VtkDataObjectTreeIteratorWrap();
 	w->native.TakeReference(r);
@@ -336,7 +334,7 @@ void VtkDataObjectTreeIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectTreeIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectTreeIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectTreeIteratorWrap *w = new VtkDataObjectTreeIteratorWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImplicitModellerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImplicitModellerWrap::ptpl;
 
 VtkImplicitModellerWrap::VtkImplicitModellerWrap()
@@ -220,7 +219,6 @@ void VtkImplicitModellerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartAppend", StartAppend);
 	Nan::SetPrototypeMethod(tpl, "startAppend", StartAppend);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -666,7 +664,7 @@ void VtkImplicitModellerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitModellerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitModellerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitModellerWrap *w = new VtkImplicitModellerWrap();
 	w->native.TakeReference(r);
@@ -694,7 +692,7 @@ void VtkImplicitModellerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImplicitModellerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImplicitModellerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitModellerWrap *w = new VtkImplicitModellerWrap();
 		w->native.TakeReference(r);

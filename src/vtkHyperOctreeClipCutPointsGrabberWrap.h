@@ -24,7 +24,6 @@ class VtkHyperOctreeClipCutPointsGrabberWrap : public VtkHyperOctreePointsGrabbe
 		VtkHyperOctreeClipCutPointsGrabberWrap(vtkSmartPointer<vtkHyperOctreeClipCutPointsGrabber>);
 		VtkHyperOctreeClipCutPointsGrabberWrap();
 		~VtkHyperOctreeClipCutPointsGrabberWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

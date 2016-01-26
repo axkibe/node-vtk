@@ -24,7 +24,6 @@ class VtkCircularLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		VtkCircularLayoutStrategyWrap(vtkSmartPointer<vtkCircularLayoutStrategy>);
 		VtkCircularLayoutStrategyWrap();
 		~VtkCircularLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

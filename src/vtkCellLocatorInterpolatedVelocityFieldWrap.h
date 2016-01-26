@@ -24,7 +24,6 @@ class VtkCellLocatorInterpolatedVelocityFieldWrap : public VtkCompositeInterpola
 		VtkCellLocatorInterpolatedVelocityFieldWrap(vtkSmartPointer<vtkCellLocatorInterpolatedVelocityField>);
 		VtkCellLocatorInterpolatedVelocityFieldWrap();
 		~VtkCellLocatorInterpolatedVelocityFieldWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

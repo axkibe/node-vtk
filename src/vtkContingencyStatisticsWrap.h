@@ -24,7 +24,6 @@ class VtkContingencyStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		VtkContingencyStatisticsWrap(vtkSmartPointer<vtkContingencyStatistics>);
 		VtkContingencyStatisticsWrap();
 		~VtkContingencyStatisticsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

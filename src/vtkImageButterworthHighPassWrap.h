@@ -24,7 +24,6 @@ class VtkImageButterworthHighPassWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageButterworthHighPassWrap(vtkSmartPointer<vtkImageButterworthHighPass>);
 		VtkImageButterworthHighPassWrap();
 		~VtkImageButterworthHighPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

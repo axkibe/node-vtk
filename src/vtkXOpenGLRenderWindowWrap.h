@@ -24,7 +24,6 @@ class VtkXOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 		VtkXOpenGLRenderWindowWrap(vtkSmartPointer<vtkXOpenGLRenderWindow>);
 		VtkXOpenGLRenderWindowWrap();
 		~VtkXOpenGLRenderWindowWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

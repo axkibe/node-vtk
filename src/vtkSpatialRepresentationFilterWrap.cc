@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSpatialRepresentationFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSpatialRepresentationFilterWrap::ptpl;
 
 VtkSpatialRepresentationFilterWrap::VtkSpatialRepresentationFilterWrap()
@@ -82,7 +81,6 @@ void VtkSpatialRepresentationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpatialRepresentation", SetSpatialRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setSpatialRepresentation", SetSpatialRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -195,7 +193,7 @@ void VtkSpatialRepresentationFilterWrap::GetSpatialRepresentation(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLocatorWrap *w = new VtkLocatorWrap();
 	w->native.TakeReference(r);
@@ -240,7 +238,7 @@ void VtkSpatialRepresentationFilterWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSpatialRepresentationFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSpatialRepresentationFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSpatialRepresentationFilterWrap *w = new VtkSpatialRepresentationFilterWrap();
 	w->native.TakeReference(r);
@@ -280,7 +278,7 @@ void VtkSpatialRepresentationFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSpatialRepresentationFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSpatialRepresentationFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSpatialRepresentationFilterWrap *w = new VtkSpatialRepresentationFilterWrap();
 		w->native.TakeReference(r);

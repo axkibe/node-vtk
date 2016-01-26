@@ -24,7 +24,6 @@ class VtkParametricConicSpiralWrap : public VtkParametricFunctionWrap
 		VtkParametricConicSpiralWrap(vtkSmartPointer<vtkParametricConicSpiral>);
 		VtkParametricConicSpiralWrap();
 		~VtkParametricConicSpiralWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

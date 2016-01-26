@@ -24,7 +24,6 @@ class VtkPolygonsPainterWrap : public VtkPrimitivePainterWrap
 		VtkPolygonsPainterWrap(vtkSmartPointer<vtkPolygonsPainter>);
 		VtkPolygonsPainterWrap();
 		~VtkPolygonsPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

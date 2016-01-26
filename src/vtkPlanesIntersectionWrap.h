@@ -24,7 +24,6 @@ class VtkPlanesIntersectionWrap : public VtkPlanesWrap
 		VtkPlanesIntersectionWrap(vtkSmartPointer<vtkPlanesIntersection>);
 		VtkPlanesIntersectionWrap();
 		~VtkPlanesIntersectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

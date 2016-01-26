@@ -24,7 +24,6 @@ class VtkPointHandleRepresentation3DWrap : public VtkHandleRepresentationWrap
 		VtkPointHandleRepresentation3DWrap(vtkSmartPointer<vtkPointHandleRepresentation3D>);
 		VtkPointHandleRepresentation3DWrap();
 		~VtkPointHandleRepresentation3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

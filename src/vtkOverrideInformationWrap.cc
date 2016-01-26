@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOverrideInformationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOverrideInformationWrap::ptpl;
 
 VtkOverrideInformationWrap::VtkOverrideInformationWrap()
@@ -81,7 +80,6 @@ void VtkOverrideInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDescription", SetDescription);
 	Nan::SetPrototypeMethod(tpl, "setDescription", SetDescription);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkOverrideInformationWrap::GetObjectFactory(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkObjectFactoryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkObjectFactoryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkObjectFactoryWrap *w = new VtkObjectFactoryWrap();
 	w->native.TakeReference(r);
@@ -224,7 +222,7 @@ void VtkOverrideInformationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOverrideInformationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOverrideInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOverrideInformationWrap *w = new VtkOverrideInformationWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkOverrideInformationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOverrideInformationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOverrideInformationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOverrideInformationWrap *w = new VtkOverrideInformationWrap();
 		w->native.TakeReference(r);

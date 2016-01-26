@@ -24,7 +24,6 @@ class VtkStringToImageWrap : public VtkObjectWrap
 		VtkStringToImageWrap(vtkSmartPointer<vtkStringToImage>);
 		VtkStringToImageWrap();
 		~VtkStringToImageWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

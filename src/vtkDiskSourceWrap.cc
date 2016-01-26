@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDiskSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDiskSourceWrap::ptpl;
 
 VtkDiskSourceWrap::VtkDiskSourceWrap()
@@ -114,7 +113,6 @@ void VtkDiskSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadialResolution", SetRadialResolution);
 	Nan::SetPrototypeMethod(tpl, "setRadialResolution", SetRadialResolution);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -374,7 +372,7 @@ void VtkDiskSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDiskSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDiskSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDiskSourceWrap *w = new VtkDiskSourceWrap();
 	w->native.TakeReference(r);
@@ -402,7 +400,7 @@ void VtkDiskSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDiskSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDiskSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDiskSourceWrap *w = new VtkDiskSourceWrap();
 		w->native.TakeReference(r);

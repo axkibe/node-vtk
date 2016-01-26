@@ -24,7 +24,6 @@ class VtkImageDifferenceWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageDifferenceWrap(vtkSmartPointer<vtkImageDifference>);
 		VtkImageDifferenceWrap();
 		~VtkImageDifferenceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

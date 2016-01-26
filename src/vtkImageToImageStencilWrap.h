@@ -24,7 +24,6 @@ class VtkImageToImageStencilWrap : public VtkImageStencilAlgorithmWrap
 		VtkImageToImageStencilWrap(vtkSmartPointer<vtkImageToImageStencil>);
 		VtkImageToImageStencilWrap();
 		~VtkImageToImageStencilWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

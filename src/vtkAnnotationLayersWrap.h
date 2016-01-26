@@ -24,7 +24,6 @@ class VtkAnnotationLayersWrap : public VtkDataObjectWrap
 		VtkAnnotationLayersWrap(vtkSmartPointer<vtkAnnotationLayers>);
 		VtkAnnotationLayersWrap();
 		~VtkAnnotationLayersWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

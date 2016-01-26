@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAdjacentVertexIteratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAdjacentVertexIteratorWrap::ptpl;
 
 VtkAdjacentVertexIteratorWrap::VtkAdjacentVertexIteratorWrap()
@@ -63,7 +62,6 @@ void VtkAdjacentVertexIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -119,7 +117,7 @@ void VtkAdjacentVertexIteratorWrap::GetGraph(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphWrap *w = new VtkGraphWrap();
 	w->native.TakeReference(r);
@@ -164,7 +162,7 @@ void VtkAdjacentVertexIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAdjacentVertexIteratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAdjacentVertexIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAdjacentVertexIteratorWrap *w = new VtkAdjacentVertexIteratorWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkAdjacentVertexIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAdjacentVertexIteratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAdjacentVertexIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAdjacentVertexIteratorWrap *w = new VtkAdjacentVertexIteratorWrap();
 		w->native.TakeReference(r);

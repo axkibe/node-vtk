@@ -24,7 +24,6 @@ class VtkBarChartActorWrap : public VtkActor2DWrap
 		VtkBarChartActorWrap(vtkSmartPointer<vtkBarChartActor>);
 		VtkBarChartActorWrap();
 		~VtkBarChartActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

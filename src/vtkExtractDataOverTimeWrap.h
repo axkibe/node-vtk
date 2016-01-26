@@ -24,7 +24,6 @@ class VtkExtractDataOverTimeWrap : public VtkPointSetAlgorithmWrap
 		VtkExtractDataOverTimeWrap(vtkSmartPointer<vtkExtractDataOverTime>);
 		VtkExtractDataOverTimeWrap();
 		~VtkExtractDataOverTimeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

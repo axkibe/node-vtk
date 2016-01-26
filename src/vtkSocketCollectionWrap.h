@@ -24,7 +24,6 @@ class VtkSocketCollectionWrap : public VtkCollectionWrap
 		VtkSocketCollectionWrap(vtkSmartPointer<vtkSocketCollection>);
 		VtkSocketCollectionWrap();
 		~VtkSocketCollectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

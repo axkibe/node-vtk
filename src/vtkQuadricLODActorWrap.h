@@ -24,7 +24,6 @@ class VtkQuadricLODActorWrap : public VtkActorWrap
 		VtkQuadricLODActorWrap(vtkSmartPointer<vtkQuadricLODActor>);
 		VtkQuadricLODActorWrap();
 		~VtkQuadricLODActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

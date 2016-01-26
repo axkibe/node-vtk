@@ -24,7 +24,6 @@ class VtkImageLaplacianWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageLaplacianWrap(vtkSmartPointer<vtkImageLaplacian>);
 		VtkImageLaplacianWrap();
 		~VtkImageLaplacianWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkMultiBlockPLOT3DReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkMultiBlockPLOT3DReaderWrap(vtkSmartPointer<vtkMultiBlockPLOT3DReader>);
 		VtkMultiBlockPLOT3DReaderWrap();
 		~VtkMultiBlockPLOT3DReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

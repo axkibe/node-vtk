@@ -24,7 +24,6 @@ class VtkEdgeLayoutWrap : public VtkGraphAlgorithmWrap
 		VtkEdgeLayoutWrap(vtkSmartPointer<vtkEdgeLayout>);
 		VtkEdgeLayoutWrap();
 		~VtkEdgeLayoutWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

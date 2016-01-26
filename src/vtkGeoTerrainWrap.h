@@ -24,7 +24,6 @@ class VtkGeoTerrainWrap : public VtkObjectWrap
 		VtkGeoTerrainWrap(vtkSmartPointer<vtkGeoTerrain>);
 		VtkGeoTerrainWrap();
 		~VtkGeoTerrainWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

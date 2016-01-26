@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkWindowToImageFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkWindowToImageFilterWrap::ptpl;
 
 VtkWindowToImageFilterWrap::VtkWindowToImageFilterWrap()
@@ -131,7 +130,6 @@ void VtkWindowToImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShouldRerenderOn", ShouldRerenderOn);
 	Nan::SetPrototypeMethod(tpl, "shouldRerenderOn", ShouldRerenderOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -211,7 +209,7 @@ void VtkWindowToImageFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowWrap *w = new VtkWindowWrap();
 	w->native.TakeReference(r);
@@ -290,7 +288,7 @@ void VtkWindowToImageFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -363,7 +361,7 @@ void VtkWindowToImageFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkWindowToImageFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkWindowToImageFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowToImageFilterWrap *w = new VtkWindowToImageFilterWrap();
 	w->native.TakeReference(r);
@@ -415,7 +413,7 @@ void VtkWindowToImageFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkWindowToImageFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkWindowToImageFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWindowToImageFilterWrap *w = new VtkWindowToImageFilterWrap();
 		w->native.TakeReference(r);

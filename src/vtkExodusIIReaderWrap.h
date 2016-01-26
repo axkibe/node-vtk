@@ -24,7 +24,6 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkExodusIIReaderWrap(vtkSmartPointer<vtkExodusIIReader>);
 		VtkExodusIIReaderWrap();
 		~VtkExodusIIReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

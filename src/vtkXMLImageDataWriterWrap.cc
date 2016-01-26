@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLImageDataWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLImageDataWriterWrap::ptpl;
 
 VtkXMLImageDataWriterWrap::VtkXMLImageDataWriterWrap()
@@ -67,7 +66,6 @@ void VtkXMLImageDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -137,7 +135,7 @@ void VtkXMLImageDataWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -182,7 +180,7 @@ void VtkXMLImageDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLImageDataWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLImageDataWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLImageDataWriterWrap *w = new VtkXMLImageDataWriterWrap();
 	w->native.TakeReference(r);
@@ -210,7 +208,7 @@ void VtkXMLImageDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLImageDataWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLImageDataWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLImageDataWriterWrap *w = new VtkXMLImageDataWriterWrap();
 		w->native.TakeReference(r);

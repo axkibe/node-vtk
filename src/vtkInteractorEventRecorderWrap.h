@@ -24,7 +24,6 @@ class VtkInteractorEventRecorderWrap : public VtkInteractorObserverWrap
 		VtkInteractorEventRecorderWrap(vtkSmartPointer<vtkInteractorEventRecorder>);
 		VtkInteractorEventRecorderWrap();
 		~VtkInteractorEventRecorderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

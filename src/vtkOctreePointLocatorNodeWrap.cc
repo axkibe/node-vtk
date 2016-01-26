@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOctreePointLocatorNodeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOctreePointLocatorNodeWrap::ptpl;
 
 VtkOctreePointLocatorNodeWrap::VtkOctreePointLocatorNodeWrap()
@@ -99,7 +98,6 @@ void VtkOctreePointLocatorNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPoints", SetNumberOfPoints);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPoints", SetNumberOfPoints);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -202,7 +200,7 @@ void VtkOctreePointLocatorNodeWrap::GetChild(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOctreePointLocatorNodeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOctreePointLocatorNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOctreePointLocatorNodeWrap *w = new VtkOctreePointLocatorNodeWrap();
 		w->native.TakeReference(r);
@@ -404,7 +402,7 @@ void VtkOctreePointLocatorNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOctreePointLocatorNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOctreePointLocatorNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOctreePointLocatorNodeWrap *w = new VtkOctreePointLocatorNodeWrap();
 	w->native.TakeReference(r);
@@ -432,7 +430,7 @@ void VtkOctreePointLocatorNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOctreePointLocatorNodeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOctreePointLocatorNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOctreePointLocatorNodeWrap *w = new VtkOctreePointLocatorNodeWrap();
 		w->native.TakeReference(r);

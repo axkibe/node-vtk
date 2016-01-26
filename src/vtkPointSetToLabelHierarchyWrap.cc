@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPointSetToLabelHierarchyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPointSetToLabelHierarchyWrap::ptpl;
 
 VtkPointSetToLabelHierarchyWrap::VtkPointSetToLabelHierarchyWrap()
@@ -121,7 +120,6 @@ void VtkPointSetToLabelHierarchyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseUnicodeStringsOn", UseUnicodeStringsOn);
 	Nan::SetPrototypeMethod(tpl, "useUnicodeStringsOn", UseUnicodeStringsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -289,7 +287,7 @@ void VtkPointSetToLabelHierarchyWrap::GetTextProperty(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -334,7 +332,7 @@ void VtkPointSetToLabelHierarchyWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointSetToLabelHierarchyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointSetToLabelHierarchyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointSetToLabelHierarchyWrap *w = new VtkPointSetToLabelHierarchyWrap();
 	w->native.TakeReference(r);
@@ -362,7 +360,7 @@ void VtkPointSetToLabelHierarchyWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPointSetToLabelHierarchyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPointSetToLabelHierarchyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointSetToLabelHierarchyWrap *w = new VtkPointSetToLabelHierarchyWrap();
 		w->native.TakeReference(r);

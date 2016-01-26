@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBSPCutsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBSPCutsWrap::ptpl;
 
 VtkBSPCutsWrap::VtkBSPCutsWrap()
@@ -93,7 +92,6 @@ void VtkBSPCutsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -223,7 +221,7 @@ void VtkBSPCutsWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkBSPCutsWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkBSPCutsWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkBSPCutsWrap *w = new VtkBSPCutsWrap();
 			w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkBSPCutsWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBSPCutsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBSPCutsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBSPCutsWrap *w = new VtkBSPCutsWrap();
 		w->native.TakeReference(r);
@@ -270,7 +268,7 @@ void VtkBSPCutsWrap::GetKdNodeTree(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKdNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKdNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKdNodeWrap *w = new VtkKdNodeWrap();
 	w->native.TakeReference(r);
@@ -341,7 +339,7 @@ void VtkBSPCutsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBSPCutsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBSPCutsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBSPCutsWrap *w = new VtkBSPCutsWrap();
 	w->native.TakeReference(r);
@@ -393,7 +391,7 @@ void VtkBSPCutsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBSPCutsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBSPCutsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBSPCutsWrap *w = new VtkBSPCutsWrap();
 		w->native.TakeReference(r);

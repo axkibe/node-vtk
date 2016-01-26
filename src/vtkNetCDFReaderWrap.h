@@ -24,7 +24,6 @@ class VtkNetCDFReaderWrap : public VtkDataObjectAlgorithmWrap
 		VtkNetCDFReaderWrap(vtkSmartPointer<vtkNetCDFReader>);
 		VtkNetCDFReaderWrap();
 		~VtkNetCDFReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

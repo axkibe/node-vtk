@@ -24,7 +24,6 @@ class VtkUnstructuredGridVolumeMapperWrap : public VtkAbstractVolumeMapperWrap
 		VtkUnstructuredGridVolumeMapperWrap(vtkSmartPointer<vtkUnstructuredGridVolumeMapper>);
 		VtkUnstructuredGridVolumeMapperWrap();
 		~VtkUnstructuredGridVolumeMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

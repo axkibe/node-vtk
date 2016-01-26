@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRayCastImageDisplayHelperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRayCastImageDisplayHelperWrap::ptpl;
 
 VtkRayCastImageDisplayHelperWrap::VtkRayCastImageDisplayHelperWrap()
@@ -77,7 +76,6 @@ void VtkRayCastImageDisplayHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreMultipliedColors", SetPreMultipliedColors);
 	Nan::SetPrototypeMethod(tpl, "setPreMultipliedColors", SetPreMultipliedColors);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -197,7 +195,7 @@ void VtkRayCastImageDisplayHelperWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRayCastImageDisplayHelperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRayCastImageDisplayHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRayCastImageDisplayHelperWrap *w = new VtkRayCastImageDisplayHelperWrap();
 	w->native.TakeReference(r);
@@ -249,7 +247,7 @@ void VtkRayCastImageDisplayHelperWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRayCastImageDisplayHelperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRayCastImageDisplayHelperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRayCastImageDisplayHelperWrap *w = new VtkRayCastImageDisplayHelperWrap();
 		w->native.TakeReference(r);

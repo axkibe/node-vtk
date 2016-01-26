@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridHomogeneousRayIntegratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridHomogeneousRayIntegratorWrap::ptpl;
 
 VtkUnstructuredGridHomogeneousRayIntegratorWrap::VtkUnstructuredGridHomogeneousRayIntegratorWrap()
@@ -71,7 +70,6 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransferFunctionTableSize", SetTransferFunctionTableSize);
 	Nan::SetPrototypeMethod(tpl, "setTransferFunctionTableSize", SetTransferFunctionTableSize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -188,7 +186,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::NewInstance(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridHomogeneousRayIntegratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridHomogeneousRayIntegratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridHomogeneousRayIntegratorWrap *w = new VtkUnstructuredGridHomogeneousRayIntegratorWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::SafeDownCast(const Nan::Fu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridHomogeneousRayIntegratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridHomogeneousRayIntegratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridHomogeneousRayIntegratorWrap *w = new VtkUnstructuredGridHomogeneousRayIntegratorWrap();
 		w->native.TakeReference(r);

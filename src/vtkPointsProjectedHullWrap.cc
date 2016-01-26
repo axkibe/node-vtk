@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPointsProjectedHullWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPointsProjectedHullWrap::ptpl;
 
 VtkPointsProjectedHullWrap::VtkPointsProjectedHullWrap()
@@ -74,7 +73,6 @@ void VtkPointsProjectedHullWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 

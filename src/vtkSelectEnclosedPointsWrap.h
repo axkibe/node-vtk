@@ -24,7 +24,6 @@ class VtkSelectEnclosedPointsWrap : public VtkDataSetAlgorithmWrap
 		VtkSelectEnclosedPointsWrap(vtkSmartPointer<vtkSelectEnclosedPoints>);
 		VtkSelectEnclosedPointsWrap();
 		~VtkSelectEnclosedPointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

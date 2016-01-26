@@ -24,7 +24,6 @@ class VtkLabelRenderStrategyWrap : public VtkObjectWrap
 		VtkLabelRenderStrategyWrap(vtkSmartPointer<vtkLabelRenderStrategy>);
 		VtkLabelRenderStrategyWrap();
 		~VtkLabelRenderStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

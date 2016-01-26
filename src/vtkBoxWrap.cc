@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBoxWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBoxWrap::ptpl;
 
 VtkBoxWrap::VtkBoxWrap()
@@ -72,7 +71,6 @@ void VtkBoxWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXMin", SetXMin);
 	Nan::SetPrototypeMethod(tpl, "setXMin", SetXMin);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkBoxWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBoxWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBoxWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBoxWrap *w = new VtkBoxWrap();
 	w->native.TakeReference(r);
@@ -207,7 +205,7 @@ void VtkBoxWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBoxWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBoxWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBoxWrap *w = new VtkBoxWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkOpenGLExtensionManagerWrap : public VtkObjectWrap
 		VtkOpenGLExtensionManagerWrap(vtkSmartPointer<vtkOpenGLExtensionManager>);
 		VtkOpenGLExtensionManagerWrap();
 		~VtkOpenGLExtensionManagerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

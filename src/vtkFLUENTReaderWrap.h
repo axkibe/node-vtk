@@ -24,7 +24,6 @@ class VtkFLUENTReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkFLUENTReaderWrap(vtkSmartPointer<vtkFLUENTReader>);
 		VtkFLUENTReaderWrap();
 		~VtkFLUENTReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

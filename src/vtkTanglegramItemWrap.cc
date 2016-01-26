@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTanglegramItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTanglegramItemWrap::ptpl;
 
 VtkTanglegramItemWrap::VtkTanglegramItemWrap()
@@ -104,7 +103,6 @@ void VtkTanglegramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTree2Label", SetTree2Label);
 	Nan::SetPrototypeMethod(tpl, "setTree2Label", SetTree2Label);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -202,7 +200,7 @@ void VtkTanglegramItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
 	w->native.TakeReference(r);
@@ -275,7 +273,7 @@ void VtkTanglegramItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTanglegramItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTanglegramItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTanglegramItemWrap *w = new VtkTanglegramItemWrap();
 	w->native.TakeReference(r);
@@ -303,7 +301,7 @@ void VtkTanglegramItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTanglegramItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTanglegramItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTanglegramItemWrap *w = new VtkTanglegramItemWrap();
 		w->native.TakeReference(r);

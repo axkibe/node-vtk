@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLScalarsToColorsPainterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLScalarsToColorsPainterWrap::ptpl;
 
 VtkOpenGLScalarsToColorsPainterWrap::VtkOpenGLScalarsToColorsPainterWrap()
@@ -68,7 +67,6 @@ void VtkOpenGLScalarsToColorsPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -168,7 +166,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLScalarsToColorsPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLScalarsToColorsPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLScalarsToColorsPainterWrap *w = new VtkOpenGLScalarsToColorsPainterWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLScalarsToColorsPainterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLScalarsToColorsPainterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLScalarsToColorsPainterWrap *w = new VtkOpenGLScalarsToColorsPainterWrap();
 		w->native.TakeReference(r);

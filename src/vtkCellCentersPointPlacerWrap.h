@@ -24,7 +24,6 @@ class VtkCellCentersPointPlacerWrap : public VtkPointPlacerWrap
 		VtkCellCentersPointPlacerWrap(vtkSmartPointer<vtkCellCentersPointPlacer>);
 		VtkCellCentersPointPlacerWrap();
 		~VtkCellCentersPointPlacerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkTDxInteractorStyleSettingsWrap : public VtkObjectWrap
 		VtkTDxInteractorStyleSettingsWrap(vtkSmartPointer<vtkTDxInteractorStyleSettings>);
 		VtkTDxInteractorStyleSettingsWrap();
 		~VtkTDxInteractorStyleSettingsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDelaunay3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDelaunay3DWrap::ptpl;
 
 VtkDelaunay3DWrap::VtkDelaunay3DWrap()
@@ -127,7 +126,6 @@ void VtkDelaunay3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -287,7 +285,7 @@ void VtkDelaunay3DWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -430,7 +428,7 @@ void VtkDelaunay3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDelaunay3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDelaunay3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDelaunay3DWrap *w = new VtkDelaunay3DWrap();
 	w->native.TakeReference(r);
@@ -458,7 +456,7 @@ void VtkDelaunay3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDelaunay3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDelaunay3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDelaunay3DWrap *w = new VtkDelaunay3DWrap();
 		w->native.TakeReference(r);

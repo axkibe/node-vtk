@@ -24,7 +24,6 @@ class VtkTriangularTextureWrap : public VtkImageAlgorithmWrap
 		VtkTriangularTextureWrap(vtkSmartPointer<vtkTriangularTexture>);
 		VtkTriangularTextureWrap();
 		~VtkTriangularTextureWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

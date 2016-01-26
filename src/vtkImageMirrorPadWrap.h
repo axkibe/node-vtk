@@ -24,7 +24,6 @@ class VtkImageMirrorPadWrap : public VtkImagePadFilterWrap
 		VtkImageMirrorPadWrap(vtkSmartPointer<vtkImageMirrorPad>);
 		VtkImageMirrorPadWrap();
 		~VtkImageMirrorPadWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

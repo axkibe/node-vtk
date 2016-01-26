@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMergeTablesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMergeTablesWrap::ptpl;
 
 VtkMergeTablesWrap::VtkMergeTablesWrap()
@@ -84,7 +83,6 @@ void VtkMergeTablesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSecondTablePrefix", SetSecondTablePrefix);
 	Nan::SetPrototypeMethod(tpl, "setSecondTablePrefix", SetSecondTablePrefix);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -214,7 +212,7 @@ void VtkMergeTablesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMergeTablesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMergeTablesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMergeTablesWrap *w = new VtkMergeTablesWrap();
 	w->native.TakeReference(r);
@@ -266,7 +264,7 @@ void VtkMergeTablesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMergeTablesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMergeTablesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMergeTablesWrap *w = new VtkMergeTablesWrap();
 		w->native.TakeReference(r);

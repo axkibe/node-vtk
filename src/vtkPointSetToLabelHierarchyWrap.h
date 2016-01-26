@@ -24,7 +24,6 @@ class VtkPointSetToLabelHierarchyWrap : public VtkLabelHierarchyAlgorithmWrap
 		VtkPointSetToLabelHierarchyWrap(vtkSmartPointer<vtkPointSetToLabelHierarchy>);
 		VtkPointSetToLabelHierarchyWrap();
 		~VtkPointSetToLabelHierarchyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

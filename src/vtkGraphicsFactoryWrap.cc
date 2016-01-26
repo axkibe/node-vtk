@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGraphicsFactoryWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGraphicsFactoryWrap::ptpl;
 
 VtkGraphicsFactoryWrap::VtkGraphicsFactoryWrap()
@@ -77,7 +76,6 @@ void VtkGraphicsFactoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseMesaClasses", SetUseMesaClasses);
 	Nan::SetPrototypeMethod(tpl, "setUseMesaClasses", SetUseMesaClasses);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -124,7 +122,7 @@ void VtkGraphicsFactoryWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkObjectWrap *w = new VtkObjectWrap();
 		w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkGraphicsFactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGraphicsFactoryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGraphicsFactoryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphicsFactoryWrap *w = new VtkGraphicsFactoryWrap();
 	w->native.TakeReference(r);
@@ -256,7 +254,7 @@ void VtkGraphicsFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGraphicsFactoryWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGraphicsFactoryWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphicsFactoryWrap *w = new VtkGraphicsFactoryWrap();
 		w->native.TakeReference(r);

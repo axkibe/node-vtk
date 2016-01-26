@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContextItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContextItemWrap::ptpl;
 
 VtkContextItemWrap::VtkContextItemWrap()
@@ -66,7 +65,6 @@ void VtkContextItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOpacity", SetOpacity);
 	Nan::SetPrototypeMethod(tpl, "setOpacity", SetOpacity);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkContextItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContextItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContextItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContextItemWrap *w = new VtkContextItemWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkContextItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContextItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContextItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContextItemWrap *w = new VtkContextItemWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGLSLShaderDeviceAdapter2Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGLSLShaderDeviceAdapter2Wrap::ptpl;
 
 VtkGLSLShaderDeviceAdapter2Wrap::VtkGLSLShaderDeviceAdapter2Wrap()
@@ -63,7 +62,6 @@ void VtkGLSLShaderDeviceAdapter2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkGLSLShaderDeviceAdapter2Wrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGLSLShaderDeviceAdapter2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGLSLShaderDeviceAdapter2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGLSLShaderDeviceAdapter2Wrap *w = new VtkGLSLShaderDeviceAdapter2Wrap();
 	w->native.TakeReference(r);
@@ -181,7 +179,7 @@ void VtkGLSLShaderDeviceAdapter2Wrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGLSLShaderDeviceAdapter2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGLSLShaderDeviceAdapter2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGLSLShaderDeviceAdapter2Wrap *w = new VtkGLSLShaderDeviceAdapter2Wrap();
 		w->native.TakeReference(r);

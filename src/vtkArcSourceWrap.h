@@ -24,7 +24,6 @@ class VtkArcSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkArcSourceWrap(vtkSmartPointer<vtkArcSource>);
 		VtkArcSourceWrap();
 		~VtkArcSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

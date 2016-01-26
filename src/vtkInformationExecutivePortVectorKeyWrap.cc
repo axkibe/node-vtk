@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInformationExecutivePortVectorKeyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInformationExecutivePortVectorKeyWrap::ptpl;
 
 VtkInformationExecutivePortVectorKeyWrap::VtkInformationExecutivePortVectorKeyWrap()
@@ -78,7 +77,6 @@ void VtkInformationExecutivePortVectorKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -207,7 +205,7 @@ void VtkInformationExecutivePortVectorKeyWrap::NewInstance(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationExecutivePortVectorKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationExecutivePortVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationExecutivePortVectorKeyWrap *w = new VtkInformationExecutivePortVectorKeyWrap();
 	w->native.TakeReference(r);
@@ -298,7 +296,7 @@ void VtkInformationExecutivePortVectorKeyWrap::SafeDownCast(const Nan::FunctionC
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationExecutivePortVectorKeyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationExecutivePortVectorKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationExecutivePortVectorKeyWrap *w = new VtkInformationExecutivePortVectorKeyWrap();
 		w->native.TakeReference(r);

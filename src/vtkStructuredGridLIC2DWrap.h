@@ -24,7 +24,6 @@ class VtkStructuredGridLIC2DWrap : public VtkStructuredGridAlgorithmWrap
 		VtkStructuredGridLIC2DWrap(vtkSmartPointer<vtkStructuredGridLIC2D>);
 		VtkStructuredGridLIC2DWrap();
 		~VtkStructuredGridLIC2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

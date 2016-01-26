@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDSPFilterDefinitionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDSPFilterDefinitionWrap::ptpl;
 
 VtkDSPFilterDefinitionWrap::VtkDSPFilterDefinitionWrap()
@@ -104,7 +103,6 @@ void VtkDSPFilterDefinitionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputVariableName", SetOutputVariableName);
 	Nan::SetPrototypeMethod(tpl, "setOutputVariableName", SetOutputVariableName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -347,7 +345,7 @@ void VtkDSPFilterDefinitionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDSPFilterDefinitionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDSPFilterDefinitionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDSPFilterDefinitionWrap *w = new VtkDSPFilterDefinitionWrap();
 	w->native.TakeReference(r);
@@ -432,7 +430,7 @@ void VtkDSPFilterDefinitionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDSPFilterDefinitionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDSPFilterDefinitionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDSPFilterDefinitionWrap *w = new VtkDSPFilterDefinitionWrap();
 		w->native.TakeReference(r);

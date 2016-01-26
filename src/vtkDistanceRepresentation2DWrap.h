@@ -24,7 +24,6 @@ class VtkDistanceRepresentation2DWrap : public VtkDistanceRepresentationWrap
 		VtkDistanceRepresentation2DWrap(vtkSmartPointer<vtkDistanceRepresentation2D>);
 		VtkDistanceRepresentation2DWrap();
 		~VtkDistanceRepresentation2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

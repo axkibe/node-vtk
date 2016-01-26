@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRSliceFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRSliceFilterWrap::ptpl;
 
 VtkAMRSliceFilterWrap::VtkAMRSliceFilterWrap()
@@ -116,7 +115,6 @@ void VtkAMRSliceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOffSetFromOrigin", SetOffSetFromOrigin);
 	Nan::SetPrototypeMethod(tpl, "setOffSetFromOrigin", SetOffSetFromOrigin);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -272,7 +270,7 @@ void VtkAMRSliceFilterWrap::GetController(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -387,7 +385,7 @@ void VtkAMRSliceFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRSliceFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRSliceFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRSliceFilterWrap *w = new VtkAMRSliceFilterWrap();
 	w->native.TakeReference(r);
@@ -415,7 +413,7 @@ void VtkAMRSliceFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRSliceFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRSliceFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRSliceFilterWrap *w = new VtkAMRSliceFilterWrap();
 		w->native.TakeReference(r);

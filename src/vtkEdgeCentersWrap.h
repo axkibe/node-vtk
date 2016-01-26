@@ -24,7 +24,6 @@ class VtkEdgeCentersWrap : public VtkPolyDataAlgorithmWrap
 		VtkEdgeCentersWrap(vtkSmartPointer<vtkEdgeCenters>);
 		VtkEdgeCentersWrap();
 		~VtkEdgeCentersWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

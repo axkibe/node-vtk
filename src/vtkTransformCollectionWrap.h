@@ -24,7 +24,6 @@ class VtkTransformCollectionWrap : public VtkCollectionWrap
 		VtkTransformCollectionWrap(vtkSmartPointer<vtkTransformCollection>);
 		VtkTransformCollectionWrap();
 		~VtkTransformCollectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

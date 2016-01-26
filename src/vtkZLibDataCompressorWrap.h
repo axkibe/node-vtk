@@ -24,7 +24,6 @@ class VtkZLibDataCompressorWrap : public VtkDataCompressorWrap
 		VtkZLibDataCompressorWrap(vtkSmartPointer<vtkZLibDataCompressor>);
 		VtkZLibDataCompressorWrap();
 		~VtkZLibDataCompressorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

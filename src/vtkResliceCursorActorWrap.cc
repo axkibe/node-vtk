@@ -19,7 +19,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkResliceCursorActorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkResliceCursorActorWrap::ptpl;
 
 VtkResliceCursorActorWrap::VtkResliceCursorActorWrap()
@@ -90,7 +89,6 @@ void VtkResliceCursorActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUserMatrix", SetUserMatrix);
 	Nan::SetPrototypeMethod(tpl, "setUserMatrix", SetUserMatrix);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -136,7 +134,7 @@ void VtkResliceCursorActorWrap::GetCenterlineActor(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkActorWrap *w = new VtkActorWrap();
 		w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkResliceCursorActorWrap::GetCenterlineProperty(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPropertyWrap *w = new VtkPropertyWrap();
 		w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkResliceCursorActorWrap::GetCursorAlgorithm(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorPolyDataAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorPolyDataAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorPolyDataAlgorithmWrap *w = new VtkResliceCursorPolyDataAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -233,7 +231,7 @@ void VtkResliceCursorActorWrap::GetThickSlabProperty(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPropertyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPropertyWrap *w = new VtkPropertyWrap();
 		w->native.TakeReference(r);
@@ -295,7 +293,7 @@ void VtkResliceCursorActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceCursorActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceCursorActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorActorWrap *w = new VtkResliceCursorActorWrap();
 	w->native.TakeReference(r);
@@ -365,7 +363,7 @@ void VtkResliceCursorActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkResliceCursorActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkResliceCursorActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkResliceCursorActorWrap *w = new VtkResliceCursorActorWrap();
 		w->native.TakeReference(r);

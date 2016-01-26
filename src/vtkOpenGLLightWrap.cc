@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLLightWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLLightWrap::ptpl;
 
 VtkOpenGLLightWrap::VtkOpenGLLightWrap()
@@ -64,7 +63,6 @@ void VtkOpenGLLightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkOpenGLLightWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLLightWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLLightWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLLightWrap *w = new VtkOpenGLLightWrap();
 	w->native.TakeReference(r);
@@ -194,7 +192,7 @@ void VtkOpenGLLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLLightWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLLightWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLLightWrap *w = new VtkOpenGLLightWrap();
 		w->native.TakeReference(r);

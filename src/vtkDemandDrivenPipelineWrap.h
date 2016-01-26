@@ -24,7 +24,6 @@ class VtkDemandDrivenPipelineWrap : public VtkExecutiveWrap
 		VtkDemandDrivenPipelineWrap(vtkSmartPointer<vtkDemandDrivenPipeline>);
 		VtkDemandDrivenPipelineWrap();
 		~VtkDemandDrivenPipelineWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

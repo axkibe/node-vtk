@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCameraInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCameraInterpolatorWrap::ptpl;
 
 VtkCameraInterpolatorWrap::VtkCameraInterpolatorWrap()
@@ -139,7 +138,6 @@ void VtkCameraInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewUpInterpolator", SetViewUpInterpolator);
 	Nan::SetPrototypeMethod(tpl, "setViewUpInterpolator", SetViewUpInterpolator);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -219,7 +217,7 @@ void VtkCameraInterpolatorWrap::GetClippingRangeInterpolator(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTupleInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkCameraInterpolatorWrap::GetFocalPointInterpolator(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTupleInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -349,7 +347,7 @@ void VtkCameraInterpolatorWrap::GetParallelScaleInterpolator(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTupleInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -372,7 +370,7 @@ void VtkCameraInterpolatorWrap::GetPositionInterpolator(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTupleInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -395,7 +393,7 @@ void VtkCameraInterpolatorWrap::GetViewAngleInterpolator(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTupleInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -418,7 +416,7 @@ void VtkCameraInterpolatorWrap::GetViewUpInterpolator(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTupleInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -499,7 +497,7 @@ void VtkCameraInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraInterpolatorWrap *w = new VtkCameraInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -546,7 +544,7 @@ void VtkCameraInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCameraInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCameraInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCameraInterpolatorWrap *w = new VtkCameraInterpolatorWrap();
 		w->native.TakeReference(r);

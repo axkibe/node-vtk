@@ -24,7 +24,6 @@ class VtkProjectedAAHexahedraMapperWrap : public VtkUnstructuredGridVolumeMapper
 		VtkProjectedAAHexahedraMapperWrap(vtkSmartPointer<vtkProjectedAAHexahedraMapper>);
 		VtkProjectedAAHexahedraMapperWrap();
 		~VtkProjectedAAHexahedraMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

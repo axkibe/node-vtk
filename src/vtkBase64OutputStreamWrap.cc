@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBase64OutputStreamWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBase64OutputStreamWrap::ptpl;
 
 VtkBase64OutputStreamWrap::VtkBase64OutputStreamWrap()
@@ -66,7 +65,6 @@ void VtkBase64OutputStreamWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartWriting", StartWriting);
 	Nan::SetPrototypeMethod(tpl, "startWriting", StartWriting);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkBase64OutputStreamWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBase64OutputStreamWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBase64OutputStreamWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBase64OutputStreamWrap *w = new VtkBase64OutputStreamWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkBase64OutputStreamWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBase64OutputStreamWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBase64OutputStreamWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBase64OutputStreamWrap *w = new VtkBase64OutputStreamWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkParametricEllipsoidWrap : public VtkParametricFunctionWrap
 		VtkParametricEllipsoidWrap(vtkSmartPointer<vtkParametricEllipsoid>);
 		VtkParametricEllipsoidWrap();
 		~VtkParametricEllipsoidWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

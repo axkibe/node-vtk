@@ -24,7 +24,6 @@ class VtkStructuredDataWrap : public VtkObjectWrap
 		VtkStructuredDataWrap(vtkSmartPointer<vtkStructuredData>);
 		VtkStructuredDataWrap();
 		~VtkStructuredDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

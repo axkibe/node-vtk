@@ -24,7 +24,6 @@ class VtkDataSetGradientPrecomputeWrap : public VtkDataSetAlgorithmWrap
 		VtkDataSetGradientPrecomputeWrap(vtkSmartPointer<vtkDataSetGradientPrecompute>);
 		VtkDataSetGradientPrecomputeWrap();
 		~VtkDataSetGradientPrecomputeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

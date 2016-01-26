@@ -24,7 +24,6 @@ class VtkCompositePolyDataMapper2Wrap : public VtkPainterPolyDataMapperWrap
 		VtkCompositePolyDataMapper2Wrap(vtkSmartPointer<vtkCompositePolyDataMapper2>);
 		VtkCompositePolyDataMapper2Wrap();
 		~VtkCompositePolyDataMapper2Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

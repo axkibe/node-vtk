@@ -20,7 +20,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageViewer2Wrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageViewer2Wrap::ptpl;
 
 VtkImageViewer2Wrap::VtkImageViewer2Wrap()
@@ -166,7 +165,6 @@ void VtkImageViewer2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateDisplayExtent", UpdateDisplayExtent);
 	Nan::SetPrototypeMethod(tpl, "updateDisplayExtent", UpdateDisplayExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -250,7 +248,7 @@ void VtkImageViewer2Wrap::GetImageActor(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageActorWrap *w = new VtkImageActorWrap();
 	w->native.TakeReference(r);
@@ -273,7 +271,7 @@ void VtkImageViewer2Wrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -296,7 +294,7 @@ void VtkImageViewer2Wrap::GetInteractorStyle(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleImageWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleImageWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleImageWrap *w = new VtkInteractorStyleImageWrap();
 	w->native.TakeReference(r);
@@ -333,7 +331,7 @@ void VtkImageViewer2Wrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -356,7 +354,7 @@ void VtkImageViewer2Wrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
@@ -435,7 +433,7 @@ void VtkImageViewer2Wrap::GetWindowLevel(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageMapToWindowLevelColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageMapToWindowLevelColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMapToWindowLevelColorsWrap *w = new VtkImageMapToWindowLevelColorsWrap();
 	w->native.TakeReference(r);
@@ -494,7 +492,7 @@ void VtkImageViewer2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageViewer2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageViewer2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageViewer2Wrap *w = new VtkImageViewer2Wrap();
 	w->native.TakeReference(r);
@@ -558,7 +556,7 @@ void VtkImageViewer2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageViewer2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageViewer2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageViewer2Wrap *w = new VtkImageViewer2Wrap();
 		w->native.TakeReference(r);

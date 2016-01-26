@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCameraWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCameraWidgetWrap::ptpl;
 
 VtkCameraWidgetWrap::VtkCameraWidgetWrap()
@@ -67,7 +66,6 @@ void VtkCameraWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -157,7 +155,7 @@ void VtkCameraWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWidgetWrap *w = new VtkCameraWidgetWrap();
 	w->native.TakeReference(r);
@@ -185,7 +183,7 @@ void VtkCameraWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCameraWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCameraWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCameraWidgetWrap *w = new VtkCameraWidgetWrap();
 		w->native.TakeReference(r);

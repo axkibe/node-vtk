@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMultiBlockMergeFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMultiBlockMergeFilterWrap::ptpl;
 
 VtkMultiBlockMergeFilterWrap::VtkMultiBlockMergeFilterWrap()
@@ -64,7 +63,6 @@ void VtkMultiBlockMergeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkMultiBlockMergeFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiBlockMergeFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiBlockMergeFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiBlockMergeFilterWrap *w = new VtkMultiBlockMergeFilterWrap();
 	w->native.TakeReference(r);
@@ -207,7 +205,7 @@ void VtkMultiBlockMergeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMultiBlockMergeFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMultiBlockMergeFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMultiBlockMergeFilterWrap *w = new VtkMultiBlockMergeFilterWrap();
 		w->native.TakeReference(r);

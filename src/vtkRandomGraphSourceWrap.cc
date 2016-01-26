@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRandomGraphSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRandomGraphSourceWrap::ptpl;
 
 VtkRandomGraphSourceWrap::VtkRandomGraphSourceWrap()
@@ -162,7 +161,6 @@ void VtkRandomGraphSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseEdgeProbabilityOn", UseEdgeProbabilityOn);
 	Nan::SetPrototypeMethod(tpl, "useEdgeProbabilityOn", UseEdgeProbabilityOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -542,7 +540,7 @@ void VtkRandomGraphSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRandomGraphSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRandomGraphSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRandomGraphSourceWrap *w = new VtkRandomGraphSourceWrap();
 	w->native.TakeReference(r);
@@ -570,7 +568,7 @@ void VtkRandomGraphSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRandomGraphSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRandomGraphSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRandomGraphSourceWrap *w = new VtkRandomGraphSourceWrap();
 		w->native.TakeReference(r);

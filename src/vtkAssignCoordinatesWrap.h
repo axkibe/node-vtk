@@ -24,7 +24,6 @@ class VtkAssignCoordinatesWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkAssignCoordinatesWrap(vtkSmartPointer<vtkAssignCoordinates>);
 		VtkAssignCoordinatesWrap();
 		~VtkAssignCoordinatesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

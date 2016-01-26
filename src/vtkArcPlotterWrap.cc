@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkArcPlotterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkArcPlotterWrap::ptpl;
 
 VtkArcPlotterWrap::VtkArcPlotterWrap()
@@ -157,7 +156,6 @@ void VtkArcPlotterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseDefaultNormalOn", UseDefaultNormalOn);
 	Nan::SetPrototypeMethod(tpl, "useDefaultNormalOn", UseDefaultNormalOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -199,7 +197,7 @@ void VtkArcPlotterWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
 	w->native.TakeReference(r);
@@ -468,7 +466,7 @@ void VtkArcPlotterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkArcPlotterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkArcPlotterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkArcPlotterWrap *w = new VtkArcPlotterWrap();
 	w->native.TakeReference(r);
@@ -496,7 +494,7 @@ void VtkArcPlotterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkArcPlotterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkArcPlotterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkArcPlotterWrap *w = new VtkArcPlotterWrap();
 		w->native.TakeReference(r);

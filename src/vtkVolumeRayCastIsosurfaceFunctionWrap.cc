@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVolumeRayCastIsosurfaceFunctionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVolumeRayCastIsosurfaceFunctionWrap::ptpl;
 
 VtkVolumeRayCastIsosurfaceFunctionWrap::VtkVolumeRayCastIsosurfaceFunctionWrap()
@@ -66,7 +65,6 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetIsoValue", SetIsoValue);
 	Nan::SetPrototypeMethod(tpl, "setIsoValue", SetIsoValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVolumeRayCastIsosurfaceFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastIsosurfaceFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeRayCastIsosurfaceFunctionWrap *w = new VtkVolumeRayCastIsosurfaceFunctionWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVolumeRayCastIsosurfaceFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastIsosurfaceFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeRayCastIsosurfaceFunctionWrap *w = new VtkVolumeRayCastIsosurfaceFunctionWrap();
 		w->native.TakeReference(r);

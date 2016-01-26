@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUndirectedGraphAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUndirectedGraphAlgorithmWrap::ptpl;
 
 VtkUndirectedGraphAlgorithmWrap::VtkUndirectedGraphAlgorithmWrap()
@@ -68,7 +67,6 @@ void VtkUndirectedGraphAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -128,7 +126,7 @@ void VtkUndirectedGraphAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUndirectedGraphWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUndirectedGraphWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUndirectedGraphWrap *w = new VtkUndirectedGraphWrap();
 		w->native.TakeReference(r);
@@ -147,7 +145,7 @@ void VtkUndirectedGraphAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUndirectedGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUndirectedGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUndirectedGraphWrap *w = new VtkUndirectedGraphWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkUndirectedGraphAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUndirectedGraphAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUndirectedGraphAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUndirectedGraphAlgorithmWrap *w = new VtkUndirectedGraphAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkUndirectedGraphAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUndirectedGraphAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUndirectedGraphAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUndirectedGraphAlgorithmWrap *w = new VtkUndirectedGraphAlgorithmWrap();
 		w->native.TakeReference(r);

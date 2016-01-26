@@ -24,7 +24,6 @@ class VtkOpenGLActorWrap : public VtkActorWrap
 		VtkOpenGLActorWrap(vtkSmartPointer<vtkOpenGLActor>);
 		VtkOpenGLActorWrap();
 		~VtkOpenGLActorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

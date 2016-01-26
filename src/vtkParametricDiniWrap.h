@@ -24,7 +24,6 @@ class VtkParametricDiniWrap : public VtkParametricFunctionWrap
 		VtkParametricDiniWrap(vtkSmartPointer<vtkParametricDini>);
 		VtkParametricDiniWrap();
 		~VtkParametricDiniWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

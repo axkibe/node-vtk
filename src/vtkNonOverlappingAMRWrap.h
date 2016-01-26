@@ -24,7 +24,6 @@ class VtkNonOverlappingAMRWrap : public VtkUniformGridAMRWrap
 		VtkNonOverlappingAMRWrap(vtkSmartPointer<vtkNonOverlappingAMR>);
 		VtkNonOverlappingAMRWrap();
 		~VtkNonOverlappingAMRWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

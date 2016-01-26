@@ -24,7 +24,6 @@ class VtkDiagonalMatrixSourceWrap : public VtkArrayDataAlgorithmWrap
 		VtkDiagonalMatrixSourceWrap(vtkSmartPointer<vtkDiagonalMatrixSource>);
 		VtkDiagonalMatrixSourceWrap();
 		~VtkDiagonalMatrixSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

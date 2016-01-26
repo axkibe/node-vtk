@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRenderPassCollectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRenderPassCollectionWrap::ptpl;
 
 VtkRenderPassCollectionWrap::VtkRenderPassCollectionWrap()
@@ -70,7 +69,6 @@ void VtkRenderPassCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -146,7 +144,7 @@ void VtkRenderPassCollectionWrap::GetLastRenderPass(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderPassWrap *w = new VtkRenderPassWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkRenderPassCollectionWrap::GetNextRenderPass(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderPassWrap *w = new VtkRenderPassWrap();
 	w->native.TakeReference(r);
@@ -214,7 +212,7 @@ void VtkRenderPassCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderPassCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderPassCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderPassCollectionWrap *w = new VtkRenderPassCollectionWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkRenderPassCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRenderPassCollectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRenderPassCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderPassCollectionWrap *w = new VtkRenderPassCollectionWrap();
 		w->native.TakeReference(r);

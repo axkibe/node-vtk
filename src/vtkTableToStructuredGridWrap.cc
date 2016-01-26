@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTableToStructuredGridWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTableToStructuredGridWrap::ptpl;
 
 VtkTableToStructuredGridWrap::VtkTableToStructuredGridWrap()
@@ -117,7 +116,6 @@ void VtkTableToStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZComponent", SetZComponent);
 	Nan::SetPrototypeMethod(tpl, "setZComponent", SetZComponent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -363,7 +361,7 @@ void VtkTableToStructuredGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableToStructuredGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableToStructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableToStructuredGridWrap *w = new VtkTableToStructuredGridWrap();
 	w->native.TakeReference(r);
@@ -391,7 +389,7 @@ void VtkTableToStructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTableToStructuredGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTableToStructuredGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTableToStructuredGridWrap *w = new VtkTableToStructuredGridWrap();
 		w->native.TakeReference(r);

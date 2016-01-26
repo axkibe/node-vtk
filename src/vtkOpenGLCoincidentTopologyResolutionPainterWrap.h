@@ -24,7 +24,6 @@ class VtkOpenGLCoincidentTopologyResolutionPainterWrap : public VtkCoincidentTop
 		VtkOpenGLCoincidentTopologyResolutionPainterWrap(vtkSmartPointer<vtkOpenGLCoincidentTopologyResolutionPainter>);
 		VtkOpenGLCoincidentTopologyResolutionPainterWrap();
 		~VtkOpenGLCoincidentTopologyResolutionPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

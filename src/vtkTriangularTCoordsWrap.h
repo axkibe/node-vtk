@@ -24,7 +24,6 @@ class VtkTriangularTCoordsWrap : public VtkPolyDataAlgorithmWrap
 		VtkTriangularTCoordsWrap(vtkSmartPointer<vtkTriangularTCoords>);
 		VtkTriangularTCoordsWrap();
 		~VtkTriangularTCoordsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

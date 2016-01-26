@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStructuredPointsReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStructuredPointsReaderWrap::ptpl;
 
 VtkStructuredPointsReaderWrap::VtkStructuredPointsReaderWrap()
@@ -71,7 +70,6 @@ void VtkStructuredPointsReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -131,7 +129,7 @@ void VtkStructuredPointsReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStructuredPointsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStructuredPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStructuredPointsWrap *w = new VtkStructuredPointsWrap();
 		w->native.TakeReference(r);
@@ -150,7 +148,7 @@ void VtkStructuredPointsReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredPointsWrap *w = new VtkStructuredPointsWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkStructuredPointsReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredPointsReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredPointsReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredPointsReaderWrap *w = new VtkStructuredPointsReaderWrap();
 	w->native.TakeReference(r);
@@ -245,7 +243,7 @@ void VtkStructuredPointsReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStructuredPointsReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStructuredPointsReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStructuredPointsReaderWrap *w = new VtkStructuredPointsReaderWrap();
 		w->native.TakeReference(r);

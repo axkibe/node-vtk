@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCleanPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCleanPolyDataWrap::ptpl;
 
 VtkCleanPolyDataWrap::VtkCleanPolyDataWrap()
@@ -176,7 +175,6 @@ void VtkCleanPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToleranceIsAbsoluteOn", ToleranceIsAbsoluteOn);
 	Nan::SetPrototypeMethod(tpl, "toleranceIsAbsoluteOn", ToleranceIsAbsoluteOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -408,7 +406,7 @@ void VtkCleanPolyDataWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -551,7 +549,7 @@ void VtkCleanPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCleanPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCleanPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCleanPolyDataWrap *w = new VtkCleanPolyDataWrap();
 	w->native.TakeReference(r);
@@ -639,7 +637,7 @@ void VtkCleanPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCleanPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCleanPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCleanPolyDataWrap *w = new VtkCleanPolyDataWrap();
 		w->native.TakeReference(r);

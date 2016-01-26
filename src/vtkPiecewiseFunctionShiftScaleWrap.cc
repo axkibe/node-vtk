@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPiecewiseFunctionShiftScaleWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPiecewiseFunctionShiftScaleWrap::ptpl;
 
 VtkPiecewiseFunctionShiftScaleWrap::VtkPiecewiseFunctionShiftScaleWrap()
@@ -84,7 +83,6 @@ void VtkPiecewiseFunctionShiftScaleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValueShift", SetValueShift);
 	Nan::SetPrototypeMethod(tpl, "setValueShift", SetValueShift);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -218,7 +216,7 @@ void VtkPiecewiseFunctionShiftScaleWrap::NewInstance(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionShiftScaleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionShiftScaleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionShiftScaleWrap *w = new VtkPiecewiseFunctionShiftScaleWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkPiecewiseFunctionShiftScaleWrap::SafeDownCast(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPiecewiseFunctionShiftScaleWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionShiftScaleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionShiftScaleWrap *w = new VtkPiecewiseFunctionShiftScaleWrap();
 		w->native.TakeReference(r);

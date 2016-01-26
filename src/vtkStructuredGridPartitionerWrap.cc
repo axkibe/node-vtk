@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStructuredGridPartitionerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStructuredGridPartitionerWrap::ptpl;
 
 VtkStructuredGridPartitionerWrap::VtkStructuredGridPartitionerWrap()
@@ -72,7 +71,6 @@ void VtkStructuredGridPartitionerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPartitions", SetNumberOfPartitions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPartitions", SetNumberOfPartitions);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -178,7 +176,7 @@ void VtkStructuredGridPartitionerWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredGridPartitionerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredGridPartitionerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridPartitionerWrap *w = new VtkStructuredGridPartitionerWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkStructuredGridPartitionerWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStructuredGridPartitionerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStructuredGridPartitionerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStructuredGridPartitionerWrap *w = new VtkStructuredGridPartitionerWrap();
 		w->native.TakeReference(r);

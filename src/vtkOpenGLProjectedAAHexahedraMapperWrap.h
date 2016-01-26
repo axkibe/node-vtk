@@ -24,7 +24,6 @@ class VtkOpenGLProjectedAAHexahedraMapperWrap : public VtkProjectedAAHexahedraMa
 		VtkOpenGLProjectedAAHexahedraMapperWrap(vtkSmartPointer<vtkOpenGLProjectedAAHexahedraMapper>);
 		VtkOpenGLProjectedAAHexahedraMapperWrap();
 		~VtkOpenGLProjectedAAHexahedraMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

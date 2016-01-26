@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStreamingTessellatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStreamingTessellatorWrap::ptpl;
 
 VtkStreamingTessellatorWrap::VtkStreamingTessellatorWrap()
@@ -87,7 +86,6 @@ void VtkStreamingTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSubdivisionAlgorithm", SetSubdivisionAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "setSubdivisionAlgorithm", SetSubdivisionAlgorithm);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -199,7 +197,7 @@ void VtkStreamingTessellatorWrap::GetSubdivisionAlgorithm(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEdgeSubdivisionCriterionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEdgeSubdivisionCriterionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEdgeSubdivisionCriterionWrap *w = new VtkEdgeSubdivisionCriterionWrap();
 	w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkStreamingTessellatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStreamingTessellatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStreamingTessellatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStreamingTessellatorWrap *w = new VtkStreamingTessellatorWrap();
 	w->native.TakeReference(r);
@@ -284,7 +282,7 @@ void VtkStreamingTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStreamingTessellatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStreamingTessellatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStreamingTessellatorWrap *w = new VtkStreamingTessellatorWrap();
 		w->native.TakeReference(r);

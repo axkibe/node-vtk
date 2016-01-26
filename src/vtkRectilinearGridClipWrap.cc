@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRectilinearGridClipWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRectilinearGridClipWrap::ptpl;
 
 VtkRectilinearGridClipWrap::VtkRectilinearGridClipWrap()
@@ -78,7 +77,6 @@ void VtkRectilinearGridClipWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputWholeExtent", SetOutputWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setOutputWholeExtent", SetOutputWholeExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkRectilinearGridClipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearGridClipWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearGridClipWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearGridClipWrap *w = new VtkRectilinearGridClipWrap();
 	w->native.TakeReference(r);
@@ -234,7 +232,7 @@ void VtkRectilinearGridClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRectilinearGridClipWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRectilinearGridClipWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectilinearGridClipWrap *w = new VtkRectilinearGridClipWrap();
 		w->native.TakeReference(r);

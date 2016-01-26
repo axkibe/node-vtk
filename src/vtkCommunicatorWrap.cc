@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCommunicatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCommunicatorWrap::ptpl;
 
 VtkCommunicatorWrap::VtkCommunicatorWrap()
@@ -122,7 +121,6 @@ void VtkCommunicatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnMarshalDataObject", UnMarshalDataObject);
 	Nan::SetPrototypeMethod(tpl, "unMarshalDataObject", UnMarshalDataObject);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -482,7 +480,7 @@ void VtkCommunicatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCommunicatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCommunicatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCommunicatorWrap *w = new VtkCommunicatorWrap();
 	w->native.TakeReference(r);
@@ -542,7 +540,7 @@ void VtkCommunicatorWrap::ReceiveDataObject(const Nan::FunctionCallbackInfo<v8::
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkDataObjectWrap *w = new VtkDataObjectWrap();
 			w->native.TakeReference(r);
@@ -609,7 +607,7 @@ void VtkCommunicatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCommunicatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCommunicatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCommunicatorWrap *w = new VtkCommunicatorWrap();
 		w->native.TakeReference(r);

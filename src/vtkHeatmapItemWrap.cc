@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHeatmapItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHeatmapItemWrap::ptpl;
 
 VtkHeatmapItemWrap::VtkHeatmapItemWrap()
@@ -88,7 +87,6 @@ void VtkHeatmapItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTable", SetTable);
 	Nan::SetPrototypeMethod(tpl, "setTable", SetTable);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -186,7 +184,7 @@ void VtkHeatmapItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkHeatmapItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHeatmapItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHeatmapItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHeatmapItemWrap *w = new VtkHeatmapItemWrap();
 	w->native.TakeReference(r);
@@ -280,7 +278,7 @@ void VtkHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHeatmapItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHeatmapItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHeatmapItemWrap *w = new VtkHeatmapItemWrap();
 		w->native.TakeReference(r);

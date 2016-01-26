@@ -24,7 +24,6 @@ class VtkTableToDatabaseWriterWrap : public VtkWriterWrap
 		VtkTableToDatabaseWriterWrap(vtkSmartPointer<vtkTableToDatabaseWriter>);
 		VtkTableToDatabaseWriterWrap();
 		~VtkTableToDatabaseWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

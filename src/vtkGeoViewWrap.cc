@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoViewWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoViewWrap::ptpl;
 
 VtkGeoViewWrap::VtkGeoViewWrap()
@@ -91,7 +90,6 @@ void VtkGeoViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerrain", SetTerrain);
 	Nan::SetPrototypeMethod(tpl, "setTerrain", SetTerrain);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkGeoViewWrap::AddDefaultImageRepresentation(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoAlignedImageRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoAlignedImageRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoAlignedImageRepresentationWrap *w = new VtkGeoAlignedImageRepresentationWrap();
 		w->native.TakeReference(r);
@@ -178,7 +176,7 @@ void VtkGeoViewWrap::GetGeoInteractorStyle(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoInteractorStyleWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoInteractorStyleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoInteractorStyleWrap *w = new VtkGeoInteractorStyleWrap();
 	w->native.TakeReference(r);
@@ -201,7 +199,7 @@ void VtkGeoViewWrap::GetTerrain(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoTerrainWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoTerrainWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoTerrainWrap *w = new VtkGeoTerrainWrap();
 	w->native.TakeReference(r);
@@ -270,7 +268,7 @@ void VtkGeoViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoViewWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoViewWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoViewWrap *w = new VtkGeoViewWrap();
 	w->native.TakeReference(r);
@@ -322,7 +320,7 @@ void VtkGeoViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoViewWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoViewWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoViewWrap *w = new VtkGeoViewWrap();
 		w->native.TakeReference(r);

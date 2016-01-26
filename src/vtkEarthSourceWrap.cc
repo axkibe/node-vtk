@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkEarthSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkEarthSourceWrap::ptpl;
 
 VtkEarthSourceWrap::VtkEarthSourceWrap()
@@ -96,7 +95,6 @@ void VtkEarthSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -272,7 +270,7 @@ void VtkEarthSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkEarthSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkEarthSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEarthSourceWrap *w = new VtkEarthSourceWrap();
 	w->native.TakeReference(r);
@@ -324,7 +322,7 @@ void VtkEarthSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkEarthSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkEarthSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkEarthSourceWrap *w = new VtkEarthSourceWrap();
 		w->native.TakeReference(r);

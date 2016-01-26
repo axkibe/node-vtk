@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageReader2CollectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageReader2CollectionWrap::ptpl;
 
 VtkImageReader2CollectionWrap::VtkImageReader2CollectionWrap()
@@ -67,7 +66,6 @@ void VtkImageReader2CollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkImageReader2CollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageReader2Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageReader2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageReader2Wrap *w = new VtkImageReader2Wrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkImageReader2CollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageReader2CollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageReader2CollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageReader2CollectionWrap *w = new VtkImageReader2CollectionWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkImageReader2CollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageReader2CollectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageReader2CollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageReader2CollectionWrap *w = new VtkImageReader2CollectionWrap();
 		w->native.TakeReference(r);

@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDijkstraImageGeodesicPathWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDijkstraImageGeodesicPathWrap::ptpl;
 
 VtkDijkstraImageGeodesicPathWrap::VtkDijkstraImageGeodesicPathWrap()
@@ -92,7 +91,6 @@ void VtkDijkstraImageGeodesicPathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -218,7 +216,7 @@ void VtkDijkstraImageGeodesicPathWrap::GetInputAsImageData(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -263,7 +261,7 @@ void VtkDijkstraImageGeodesicPathWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDijkstraImageGeodesicPathWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDijkstraImageGeodesicPathWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDijkstraImageGeodesicPathWrap *w = new VtkDijkstraImageGeodesicPathWrap();
 	w->native.TakeReference(r);
@@ -291,7 +289,7 @@ void VtkDijkstraImageGeodesicPathWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDijkstraImageGeodesicPathWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDijkstraImageGeodesicPathWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDijkstraImageGeodesicPathWrap *w = new VtkDijkstraImageGeodesicPathWrap();
 		w->native.TakeReference(r);

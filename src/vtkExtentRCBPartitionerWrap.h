@@ -24,7 +24,6 @@ class VtkExtentRCBPartitionerWrap : public VtkObjectWrap
 		VtkExtentRCBPartitionerWrap(vtkSmartPointer<vtkExtentRCBPartitioner>);
 		VtkExtentRCBPartitionerWrap();
 		~VtkExtentRCBPartitionerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		VtkMoleculeMapperWrap(vtkSmartPointer<vtkMoleculeMapper>);
 		VtkMoleculeMapperWrap();
 		~VtkMoleculeMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

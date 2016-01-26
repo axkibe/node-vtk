@@ -24,7 +24,6 @@ class VtkImageCacheFilterWrap : public VtkImageAlgorithmWrap
 		VtkImageCacheFilterWrap(vtkSmartPointer<vtkImageCacheFilter>);
 		VtkImageCacheFilterWrap();
 		~VtkImageCacheFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

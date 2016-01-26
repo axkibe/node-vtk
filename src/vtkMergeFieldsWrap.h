@@ -24,7 +24,6 @@ class VtkMergeFieldsWrap : public VtkDataSetAlgorithmWrap
 		VtkMergeFieldsWrap(vtkSmartPointer<vtkMergeFields>);
 		VtkMergeFieldsWrap();
 		~VtkMergeFieldsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkScalarBarWidgetWrap : public VtkBorderWidgetWrap
 		VtkScalarBarWidgetWrap(vtkSmartPointer<vtkScalarBarWidget>);
 		VtkScalarBarWidgetWrap();
 		~VtkScalarBarWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkParametricFigure8KleinWrap : public VtkParametricFunctionWrap
 		VtkParametricFigure8KleinWrap(vtkSmartPointer<vtkParametricFigure8Klein>);
 		VtkParametricFigure8KleinWrap();
 		~VtkParametricFigure8KleinWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

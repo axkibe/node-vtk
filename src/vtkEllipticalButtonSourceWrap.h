@@ -24,7 +24,6 @@ class VtkEllipticalButtonSourceWrap : public VtkButtonSourceWrap
 		VtkEllipticalButtonSourceWrap(vtkSmartPointer<vtkEllipticalButtonSource>);
 		VtkEllipticalButtonSourceWrap();
 		~VtkEllipticalButtonSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

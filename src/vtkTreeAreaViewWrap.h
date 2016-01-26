@@ -24,7 +24,6 @@ class VtkTreeAreaViewWrap : public VtkRenderViewWrap
 		VtkTreeAreaViewWrap(vtkSmartPointer<vtkTreeAreaView>);
 		VtkTreeAreaViewWrap();
 		~VtkTreeAreaViewWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

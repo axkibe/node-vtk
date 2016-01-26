@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBalloonWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBalloonWidgetWrap::ptpl;
 
 VtkBalloonWidgetWrap::VtkBalloonWidgetWrap()
@@ -103,7 +102,6 @@ void VtkBalloonWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateBalloonString", UpdateBalloonString);
 	Nan::SetPrototypeMethod(tpl, "updateBalloonString", UpdateBalloonString);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -202,7 +200,7 @@ void VtkBalloonWidgetWrap::GetBalloonImage(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataWrap *w = new VtkImageDataWrap();
 		w->native.TakeReference(r);
@@ -228,7 +226,7 @@ void VtkBalloonWidgetWrap::GetBalloonRepresentation(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBalloonRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBalloonRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBalloonRepresentationWrap *w = new VtkBalloonRepresentationWrap();
 	w->native.TakeReference(r);
@@ -287,7 +285,7 @@ void VtkBalloonWidgetWrap::GetCurrentProp(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropWrap *w = new VtkPropWrap();
 	w->native.TakeReference(r);
@@ -310,7 +308,7 @@ void VtkBalloonWidgetWrap::GetPicker(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractPropPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractPropPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractPropPickerWrap *w = new VtkAbstractPropPickerWrap();
 	w->native.TakeReference(r);
@@ -355,7 +353,7 @@ void VtkBalloonWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBalloonWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBalloonWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBalloonWidgetWrap *w = new VtkBalloonWidgetWrap();
 	w->native.TakeReference(r);
@@ -403,7 +401,7 @@ void VtkBalloonWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBalloonWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBalloonWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBalloonWidgetWrap *w = new VtkBalloonWidgetWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkFixedWidthTextReaderWrap : public VtkTableAlgorithmWrap
 		VtkFixedWidthTextReaderWrap(vtkSmartPointer<vtkFixedWidthTextReader>);
 		VtkFixedWidthTextReaderWrap();
 		~VtkFixedWidthTextReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

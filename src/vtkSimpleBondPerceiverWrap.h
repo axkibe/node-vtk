@@ -24,7 +24,6 @@ class VtkSimpleBondPerceiverWrap : public VtkMoleculeAlgorithmWrap
 		VtkSimpleBondPerceiverWrap(vtkSmartPointer<vtkSimpleBondPerceiver>);
 		VtkSimpleBondPerceiverWrap();
 		~VtkSimpleBondPerceiverWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

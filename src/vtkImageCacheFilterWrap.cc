@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageCacheFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageCacheFilterWrap::ptpl;
 
 VtkImageCacheFilterWrap::VtkImageCacheFilterWrap()
@@ -66,7 +65,6 @@ void VtkImageCacheFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCacheSize", SetCacheSize);
 	Nan::SetPrototypeMethod(tpl, "setCacheSize", SetCacheSize);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkImageCacheFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageCacheFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageCacheFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageCacheFilterWrap *w = new VtkImageCacheFilterWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkImageCacheFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageCacheFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageCacheFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageCacheFilterWrap *w = new VtkImageCacheFilterWrap();
 		w->native.TakeReference(r);

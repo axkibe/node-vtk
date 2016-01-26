@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoTreeNodeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoTreeNodeWrap::ptpl;
 
 VtkGeoTreeNodeWrap::VtkGeoTreeNodeWrap()
@@ -110,7 +109,6 @@ void VtkGeoTreeNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -202,7 +200,7 @@ void VtkGeoTreeNodeWrap::GetChildTreeNode(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoTreeNodeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoTreeNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoTreeNodeWrap *w = new VtkGeoTreeNodeWrap();
 		w->native.TakeReference(r);
@@ -256,7 +254,7 @@ void VtkGeoTreeNodeWrap::GetNewer(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoTreeNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoTreeNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoTreeNodeWrap *w = new VtkGeoTreeNodeWrap();
 	w->native.TakeReference(r);
@@ -279,7 +277,7 @@ void VtkGeoTreeNodeWrap::GetOlder(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoTreeNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoTreeNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoTreeNodeWrap *w = new VtkGeoTreeNodeWrap();
 	w->native.TakeReference(r);
@@ -302,7 +300,7 @@ void VtkGeoTreeNodeWrap::GetParentTreeNode(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoTreeNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoTreeNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoTreeNodeWrap *w = new VtkGeoTreeNodeWrap();
 	w->native.TakeReference(r);
@@ -361,7 +359,7 @@ void VtkGeoTreeNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoTreeNodeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoTreeNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoTreeNodeWrap *w = new VtkGeoTreeNodeWrap();
 	w->native.TakeReference(r);
@@ -389,7 +387,7 @@ void VtkGeoTreeNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoTreeNodeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoTreeNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoTreeNodeWrap *w = new VtkGeoTreeNodeWrap();
 		w->native.TakeReference(r);

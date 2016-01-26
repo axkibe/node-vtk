@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkResliceImageViewerMeasurementsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkResliceImageViewerMeasurementsWrap::ptpl;
 
 VtkResliceImageViewerMeasurementsWrap::VtkResliceImageViewerMeasurementsWrap()
@@ -106,7 +105,6 @@ void VtkResliceImageViewerMeasurementsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -224,7 +222,7 @@ void VtkResliceImageViewerMeasurementsWrap::GetResliceImageViewer(const Nan::Fun
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceImageViewerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceImageViewerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceImageViewerWrap *w = new VtkResliceImageViewerWrap();
 	w->native.TakeReference(r);
@@ -283,7 +281,7 @@ void VtkResliceImageViewerMeasurementsWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkResliceImageViewerMeasurementsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkResliceImageViewerMeasurementsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceImageViewerMeasurementsWrap *w = new VtkResliceImageViewerMeasurementsWrap();
 	w->native.TakeReference(r);
@@ -379,7 +377,7 @@ void VtkResliceImageViewerMeasurementsWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkResliceImageViewerMeasurementsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkResliceImageViewerMeasurementsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkResliceImageViewerMeasurementsWrap *w = new VtkResliceImageViewerMeasurementsWrap();
 		w->native.TakeReference(r);

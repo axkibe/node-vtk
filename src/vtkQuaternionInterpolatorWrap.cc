@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkQuaternionInterpolatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkQuaternionInterpolatorWrap::ptpl;
 
 VtkQuaternionInterpolatorWrap::VtkQuaternionInterpolatorWrap()
@@ -92,7 +91,6 @@ void VtkQuaternionInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInterpolationTypeToSpline", SetInterpolationTypeToSpline);
 	Nan::SetPrototypeMethod(tpl, "setInterpolationTypeToSpline", SetInterpolationTypeToSpline);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -266,7 +264,7 @@ void VtkQuaternionInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkQuaternionInterpolatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkQuaternionInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuaternionInterpolatorWrap *w = new VtkQuaternionInterpolatorWrap();
 	w->native.TakeReference(r);
@@ -313,7 +311,7 @@ void VtkQuaternionInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkQuaternionInterpolatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkQuaternionInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkQuaternionInterpolatorWrap *w = new VtkQuaternionInterpolatorWrap();
 		w->native.TakeReference(r);

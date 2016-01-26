@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageMagnifyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageMagnifyWrap::ptpl;
 
 VtkImageMagnifyWrap::VtkImageMagnifyWrap()
@@ -75,7 +74,6 @@ void VtkImageMagnifyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMagnificationFactors", SetMagnificationFactors);
 	Nan::SetPrototypeMethod(tpl, "setMagnificationFactors", SetMagnificationFactors);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -191,7 +189,7 @@ void VtkImageMagnifyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageMagnifyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageMagnifyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMagnifyWrap *w = new VtkImageMagnifyWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkImageMagnifyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageMagnifyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageMagnifyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageMagnifyWrap *w = new VtkImageMagnifyWrap();
 		w->native.TakeReference(r);

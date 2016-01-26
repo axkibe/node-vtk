@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSplineGraphEdgesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSplineGraphEdgesWrap::ptpl;
 
 VtkSplineGraphEdgesWrap::VtkSplineGraphEdgesWrap()
@@ -73,7 +72,6 @@ void VtkSplineGraphEdgesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplineType", SetSplineType);
 	Nan::SetPrototypeMethod(tpl, "setSplineType", SetSplineType);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -129,7 +127,7 @@ void VtkSplineGraphEdgesWrap::GetSpline(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplineWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplineWrap *w = new VtkSplineWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkSplineGraphEdgesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplineGraphEdgesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplineGraphEdgesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplineGraphEdgesWrap *w = new VtkSplineGraphEdgesWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkSplineGraphEdgesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSplineGraphEdgesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSplineGraphEdgesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSplineGraphEdgesWrap *w = new VtkSplineGraphEdgesWrap();
 		w->native.TakeReference(r);

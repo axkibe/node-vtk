@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDataObjectToTableWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDataObjectToTableWrap::ptpl;
 
 VtkDataObjectToTableWrap::VtkDataObjectToTableWrap()
@@ -72,7 +71,6 @@ void VtkDataObjectToTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFieldType", SetFieldType);
 	Nan::SetPrototypeMethod(tpl, "setFieldType", SetFieldType);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkDataObjectToTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectToTableWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectToTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectToTableWrap *w = new VtkDataObjectToTableWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkDataObjectToTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectToTableWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectToTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectToTableWrap *w = new VtkDataObjectToTableWrap();
 		w->native.TakeReference(r);

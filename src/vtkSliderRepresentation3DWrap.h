@@ -24,7 +24,6 @@ class VtkSliderRepresentation3DWrap : public VtkSliderRepresentationWrap
 		VtkSliderRepresentation3DWrap(vtkSmartPointer<vtkSliderRepresentation3D>);
 		VtkSliderRepresentation3DWrap();
 		~VtkSliderRepresentation3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

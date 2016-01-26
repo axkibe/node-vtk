@@ -24,7 +24,6 @@ class VtkSphericalTransformWrap : public VtkWarpTransformWrap
 		VtkSphericalTransformWrap(vtkSmartPointer<vtkSphericalTransform>);
 		VtkSphericalTransformWrap();
 		~VtkSphericalTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

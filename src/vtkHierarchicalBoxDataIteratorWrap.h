@@ -24,7 +24,6 @@ class VtkHierarchicalBoxDataIteratorWrap : public VtkUniformGridAMRDataIteratorW
 		VtkHierarchicalBoxDataIteratorWrap(vtkSmartPointer<vtkHierarchicalBoxDataIterator>);
 		VtkHierarchicalBoxDataIteratorWrap();
 		~VtkHierarchicalBoxDataIteratorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

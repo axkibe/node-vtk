@@ -24,7 +24,6 @@ class VtkRectilinearGridReaderWrap : public VtkDataReaderWrap
 		VtkRectilinearGridReaderWrap(vtkSmartPointer<vtkRectilinearGridReader>);
 		VtkRectilinearGridReaderWrap();
 		~VtkRectilinearGridReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

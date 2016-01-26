@@ -24,7 +24,6 @@ class VtkInformationDoubleKeyWrap : public VtkInformationKeyWrap
 		VtkInformationDoubleKeyWrap(vtkSmartPointer<vtkInformationDoubleKey>);
 		VtkInformationDoubleKeyWrap();
 		~VtkInformationDoubleKeyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

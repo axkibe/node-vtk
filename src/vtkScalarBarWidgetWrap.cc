@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkScalarBarWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkScalarBarWidgetWrap::ptpl;
 
 VtkScalarBarWidgetWrap::VtkScalarBarWidgetWrap()
@@ -89,7 +88,6 @@ void VtkScalarBarWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarBarActor", SetScalarBarActor);
 	Nan::SetPrototypeMethod(tpl, "setScalarBarActor", SetScalarBarActor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -171,7 +169,7 @@ void VtkScalarBarWidgetWrap::GetScalarBarActor(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarBarActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarBarActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarActorWrap *w = new VtkScalarBarActorWrap();
 	w->native.TakeReference(r);
@@ -194,7 +192,7 @@ void VtkScalarBarWidgetWrap::GetScalarBarRepresentation(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarBarRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarBarRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarRepresentationWrap *w = new VtkScalarBarRepresentationWrap();
 	w->native.TakeReference(r);
@@ -239,7 +237,7 @@ void VtkScalarBarWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarBarWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarBarWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarWidgetWrap *w = new VtkScalarBarWidgetWrap();
 	w->native.TakeReference(r);
@@ -291,7 +289,7 @@ void VtkScalarBarWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkScalarBarWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkScalarBarWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkScalarBarWidgetWrap *w = new VtkScalarBarWidgetWrap();
 		w->native.TakeReference(r);

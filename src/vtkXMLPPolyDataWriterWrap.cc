@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLPPolyDataWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLPPolyDataWriterWrap::ptpl;
 
 VtkXMLPPolyDataWriterWrap::VtkXMLPPolyDataWriterWrap()
@@ -67,7 +66,6 @@ void VtkXMLPPolyDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -137,7 +135,7 @@ void VtkXMLPPolyDataWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -182,7 +180,7 @@ void VtkXMLPPolyDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLPPolyDataWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLPPolyDataWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLPPolyDataWriterWrap *w = new VtkXMLPPolyDataWriterWrap();
 	w->native.TakeReference(r);
@@ -210,7 +208,7 @@ void VtkXMLPPolyDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLPPolyDataWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLPPolyDataWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLPPolyDataWriterWrap *w = new VtkXMLPPolyDataWriterWrap();
 		w->native.TakeReference(r);

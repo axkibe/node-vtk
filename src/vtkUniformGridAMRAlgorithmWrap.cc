@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUniformGridAMRAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUniformGridAMRAlgorithmWrap::ptpl;
 
 VtkUniformGridAMRAlgorithmWrap::VtkUniformGridAMRAlgorithmWrap()
@@ -68,7 +67,6 @@ void VtkUniformGridAMRAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -128,7 +126,7 @@ void VtkUniformGridAMRAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUniformGridAMRWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUniformGridAMRWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUniformGridAMRWrap *w = new VtkUniformGridAMRWrap();
 		w->native.TakeReference(r);
@@ -147,7 +145,7 @@ void VtkUniformGridAMRAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUniformGridAMRWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUniformGridAMRWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUniformGridAMRWrap *w = new VtkUniformGridAMRWrap();
 	w->native.TakeReference(r);
@@ -192,7 +190,7 @@ void VtkUniformGridAMRAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUniformGridAMRAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUniformGridAMRAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUniformGridAMRAlgorithmWrap *w = new VtkUniformGridAMRAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkUniformGridAMRAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUniformGridAMRAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUniformGridAMRAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUniformGridAMRAlgorithmWrap *w = new VtkUniformGridAMRAlgorithmWrap();
 		w->native.TakeReference(r);

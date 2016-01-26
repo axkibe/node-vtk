@@ -24,7 +24,6 @@ class VtkSuperquadricSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkSuperquadricSourceWrap(vtkSmartPointer<vtkSuperquadricSource>);
 		VtkSuperquadricSourceWrap();
 		~VtkSuperquadricSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

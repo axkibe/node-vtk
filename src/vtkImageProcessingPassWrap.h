@@ -24,7 +24,6 @@ class VtkImageProcessingPassWrap : public VtkRenderPassWrap
 		VtkImageProcessingPassWrap(vtkSmartPointer<vtkImageProcessingPass>);
 		VtkImageProcessingPassWrap();
 		~VtkImageProcessingPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

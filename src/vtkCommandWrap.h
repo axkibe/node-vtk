@@ -24,7 +24,6 @@ class VtkCommandWrap : public VtkObjectBaseWrap
 		VtkCommandWrap(vtkSmartPointer<vtkCommand>);
 		VtkCommandWrap();
 		~VtkCommandWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

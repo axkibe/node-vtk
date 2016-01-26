@@ -24,7 +24,6 @@ class VtkLookupTableItemWrap : public VtkScalarsToColorsItemWrap
 		VtkLookupTableItemWrap(vtkSmartPointer<vtkLookupTableItem>);
 		VtkLookupTableItemWrap();
 		~VtkLookupTableItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

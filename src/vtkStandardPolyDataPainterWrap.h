@@ -24,7 +24,6 @@ class VtkStandardPolyDataPainterWrap : public VtkPolyDataPainterWrap
 		VtkStandardPolyDataPainterWrap(vtkSmartPointer<vtkStandardPolyDataPainter>);
 		VtkStandardPolyDataPainterWrap();
 		~VtkStandardPolyDataPainterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkSliceAndDiceLayoutStrategyWrap : public VtkTreeMapLayoutStrategyWrap
 		VtkSliceAndDiceLayoutStrategyWrap(vtkSmartPointer<vtkSliceAndDiceLayoutStrategy>);
 		VtkSliceAndDiceLayoutStrategyWrap();
 		~VtkSliceAndDiceLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

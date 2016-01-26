@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCellLocatorInterpolatedVelocityFieldWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCellLocatorInterpolatedVelocityFieldWrap::ptpl;
 
 VtkCellLocatorInterpolatedVelocityFieldWrap::VtkCellLocatorInterpolatedVelocityFieldWrap()
@@ -78,7 +77,6 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCellLocatorPrototype", SetCellLocatorPrototype);
 	Nan::SetPrototypeMethod(tpl, "setCellLocatorPrototype", SetCellLocatorPrototype);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -160,7 +158,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::GetCellLocatorPrototype(const 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractCellLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractCellLocatorWrap *w = new VtkAbstractCellLocatorWrap();
 	w->native.TakeReference(r);
@@ -197,7 +195,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::GetLastCellLocator(const Nan::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractCellLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractCellLocatorWrap *w = new VtkAbstractCellLocatorWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::NewInstance(const Nan::Functio
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellLocatorInterpolatedVelocityFieldWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellLocatorInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellLocatorInterpolatedVelocityFieldWrap *w = new VtkCellLocatorInterpolatedVelocityFieldWrap();
 	w->native.TakeReference(r);
@@ -270,7 +268,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::Functi
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellLocatorInterpolatedVelocityFieldWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellLocatorInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellLocatorInterpolatedVelocityFieldWrap *w = new VtkCellLocatorInterpolatedVelocityFieldWrap();
 		w->native.TakeReference(r);

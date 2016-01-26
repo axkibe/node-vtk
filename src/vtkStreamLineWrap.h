@@ -24,7 +24,6 @@ class VtkStreamLineWrap : public VtkStreamerWrap
 		VtkStreamLineWrap(vtkSmartPointer<vtkStreamLine>);
 		VtkStreamLineWrap();
 		~VtkStreamLineWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

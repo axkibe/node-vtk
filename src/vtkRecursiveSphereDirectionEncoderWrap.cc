@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRecursiveSphereDirectionEncoderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRecursiveSphereDirectionEncoderWrap::ptpl;
 
 VtkRecursiveSphereDirectionEncoderWrap::VtkRecursiveSphereDirectionEncoderWrap()
@@ -75,7 +74,6 @@ void VtkRecursiveSphereDirectionEncoderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRecursionDepth", SetRecursionDepth);
 	Nan::SetPrototypeMethod(tpl, "setRecursionDepth", SetRecursionDepth);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -209,7 +207,7 @@ void VtkRecursiveSphereDirectionEncoderWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRecursiveSphereDirectionEncoderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRecursiveSphereDirectionEncoderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRecursiveSphereDirectionEncoderWrap *w = new VtkRecursiveSphereDirectionEncoderWrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkRecursiveSphereDirectionEncoderWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRecursiveSphereDirectionEncoderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRecursiveSphereDirectionEncoderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRecursiveSphereDirectionEncoderWrap *w = new VtkRecursiveSphereDirectionEncoderWrap();
 		w->native.TakeReference(r);

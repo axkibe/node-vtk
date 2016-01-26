@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTIFFWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTIFFWriterWrap::ptpl;
 
 VtkTIFFWriterWrap::VtkTIFFWriterWrap()
@@ -87,7 +86,6 @@ void VtkTIFFWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompressionToPackBits", SetCompressionToPackBits);
 	Nan::SetPrototypeMethod(tpl, "setCompressionToPackBits", SetCompressionToPackBits);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -207,7 +205,7 @@ void VtkTIFFWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTIFFWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTIFFWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTIFFWriterWrap *w = new VtkTIFFWriterWrap();
 	w->native.TakeReference(r);
@@ -235,7 +233,7 @@ void VtkTIFFWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTIFFWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTIFFWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTIFFWriterWrap *w = new VtkTIFFWriterWrap();
 		w->native.TakeReference(r);

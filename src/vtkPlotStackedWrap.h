@@ -24,7 +24,6 @@ class VtkPlotStackedWrap : public VtkPlotWrap
 		VtkPlotStackedWrap(vtkSmartPointer<vtkPlotStacked>);
 		VtkPlotStackedWrap();
 		~VtkPlotStackedWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

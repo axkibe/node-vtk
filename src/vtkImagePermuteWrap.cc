@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImagePermuteWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImagePermuteWrap::ptpl;
 
 VtkImagePermuteWrap::VtkImagePermuteWrap()
@@ -63,7 +62,6 @@ void VtkImagePermuteWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFilteredAxes", SetFilteredAxes);
 	Nan::SetPrototypeMethod(tpl, "setFilteredAxes", SetFilteredAxes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkImagePermuteWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImagePermuteWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImagePermuteWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImagePermuteWrap *w = new VtkImagePermuteWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkImagePermuteWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImagePermuteWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImagePermuteWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImagePermuteWrap *w = new VtkImagePermuteWrap();
 		w->native.TakeReference(r);

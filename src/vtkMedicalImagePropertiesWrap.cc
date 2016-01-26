@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMedicalImagePropertiesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMedicalImagePropertiesWrap::ptpl;
 
 VtkMedicalImagePropertiesWrap::VtkMedicalImagePropertiesWrap()
@@ -347,7 +346,6 @@ void VtkMedicalImagePropertiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXRayTubeCurrent", SetXRayTubeCurrent);
 	Nan::SetPrototypeMethod(tpl, "setXRayTubeCurrent", SetXRayTubeCurrent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -1331,7 +1329,7 @@ void VtkMedicalImagePropertiesWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMedicalImagePropertiesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMedicalImagePropertiesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMedicalImagePropertiesWrap *w = new VtkMedicalImagePropertiesWrap();
 	w->native.TakeReference(r);
@@ -1406,7 +1404,7 @@ void VtkMedicalImagePropertiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMedicalImagePropertiesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMedicalImagePropertiesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMedicalImagePropertiesWrap *w = new VtkMedicalImagePropertiesWrap();
 		w->native.TakeReference(r);

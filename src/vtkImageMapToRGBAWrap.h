@@ -24,7 +24,6 @@ class VtkImageMapToRGBAWrap : public VtkImageMapToColorsWrap
 		VtkImageMapToRGBAWrap(vtkSmartPointer<vtkImageMapToRGBA>);
 		VtkImageMapToRGBAWrap();
 		~VtkImageMapToRGBAWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

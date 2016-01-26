@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFreeTypeStringToImageWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFreeTypeStringToImageWrap::ptpl;
 
 VtkFreeTypeStringToImageWrap::VtkFreeTypeStringToImageWrap()
@@ -63,7 +62,6 @@ void VtkFreeTypeStringToImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -161,7 +159,7 @@ void VtkFreeTypeStringToImageWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFreeTypeStringToImageWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFreeTypeStringToImageWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFreeTypeStringToImageWrap *w = new VtkFreeTypeStringToImageWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkFreeTypeStringToImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFreeTypeStringToImageWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFreeTypeStringToImageWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFreeTypeStringToImageWrap *w = new VtkFreeTypeStringToImageWrap();
 		w->native.TakeReference(r);

@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkExtractSelectedTreeWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkExtractSelectedTreeWrap::ptpl;
 
 VtkExtractSelectedTreeWrap::VtkExtractSelectedTreeWrap()
@@ -68,7 +67,6 @@ void VtkExtractSelectedTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -172,7 +170,7 @@ void VtkExtractSelectedTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkExtractSelectedTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkExtractSelectedTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractSelectedTreeWrap *w = new VtkExtractSelectedTreeWrap();
 	w->native.TakeReference(r);
@@ -200,7 +198,7 @@ void VtkExtractSelectedTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkExtractSelectedTreeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkExtractSelectedTreeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractSelectedTreeWrap *w = new VtkExtractSelectedTreeWrap();
 		w->native.TakeReference(r);

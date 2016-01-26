@@ -24,7 +24,6 @@ class VtkMPASReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkMPASReaderWrap(vtkSmartPointer<vtkMPASReader>);
 		VtkMPASReaderWrap();
 		~VtkMPASReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

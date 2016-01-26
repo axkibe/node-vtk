@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGarbageCollectorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGarbageCollectorWrap::ptpl;
 
 VtkGarbageCollectorWrap::VtkGarbageCollectorWrap()
@@ -75,7 +74,6 @@ void VtkGarbageCollectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGlobalDebugFlag", SetGlobalDebugFlag);
 	Nan::SetPrototypeMethod(tpl, "setGlobalDebugFlag", SetGlobalDebugFlag);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -216,7 +214,7 @@ void VtkGarbageCollectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGarbageCollectorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGarbageCollectorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGarbageCollectorWrap *w = new VtkGarbageCollectorWrap();
 	w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkGarbageCollectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGarbageCollectorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGarbageCollectorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGarbageCollectorWrap *w = new VtkGarbageCollectorWrap();
 		w->native.TakeReference(r);

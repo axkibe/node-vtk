@@ -24,7 +24,6 @@ class VtkImageRectilinearWipeWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageRectilinearWipeWrap(vtkSmartPointer<vtkImageRectilinearWipe>);
 		VtkImageRectilinearWipeWrap();
 		~VtkImageRectilinearWipeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

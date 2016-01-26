@@ -24,7 +24,6 @@ class VtkImageDataGeometryFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkImageDataGeometryFilterWrap(vtkSmartPointer<vtkImageDataGeometryFilter>);
 		VtkImageDataGeometryFilterWrap();
 		~VtkImageDataGeometryFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

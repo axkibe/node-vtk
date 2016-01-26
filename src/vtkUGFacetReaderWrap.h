@@ -24,7 +24,6 @@ class VtkUGFacetReaderWrap : public VtkPolyDataAlgorithmWrap
 		VtkUGFacetReaderWrap(vtkSmartPointer<vtkUGFacetReader>);
 		VtkUGFacetReaderWrap();
 		~VtkUGFacetReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

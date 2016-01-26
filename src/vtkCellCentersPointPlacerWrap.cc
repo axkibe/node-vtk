@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCellCentersPointPlacerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCellCentersPointPlacerWrap::ptpl;
 
 VtkCellCentersPointPlacerWrap::VtkCellCentersPointPlacerWrap()
@@ -86,7 +85,6 @@ void VtkCellCentersPointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMode", SetMode);
 	Nan::SetPrototypeMethod(tpl, "setMode", SetMode);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -148,7 +146,7 @@ void VtkCellCentersPointPlacerWrap::GetCellPicker(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellPickerWrap *w = new VtkCellPickerWrap();
 	w->native.TakeReference(r);
@@ -257,7 +255,7 @@ void VtkCellCentersPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellCentersPointPlacerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellCentersPointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellCentersPointPlacerWrap *w = new VtkCellCentersPointPlacerWrap();
 	w->native.TakeReference(r);
@@ -317,7 +315,7 @@ void VtkCellCentersPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellCentersPointPlacerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellCentersPointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellCentersPointPlacerWrap *w = new VtkCellCentersPointPlacerWrap();
 		w->native.TakeReference(r);

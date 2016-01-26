@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperOctreeCursorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeCursorWrap::ptpl;
 
 VtkHyperOctreeCursorWrap::VtkHyperOctreeCursorWrap()
@@ -110,7 +109,6 @@ void VtkHyperOctreeCursorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToSameNode", ToSameNode);
 	Nan::SetPrototypeMethod(tpl, "toSameNode", ToSameNode);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -152,7 +150,7 @@ void VtkHyperOctreeCursorWrap::Clone(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeCursorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeCursorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeCursorWrap *w = new VtkHyperOctreeCursorWrap();
 	w->native.TakeReference(r);
@@ -380,7 +378,7 @@ void VtkHyperOctreeCursorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeCursorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeCursorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeCursorWrap *w = new VtkHyperOctreeCursorWrap();
 	w->native.TakeReference(r);
@@ -408,7 +406,7 @@ void VtkHyperOctreeCursorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeCursorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeCursorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeCursorWrap *w = new VtkHyperOctreeCursorWrap();
 		w->native.TakeReference(r);

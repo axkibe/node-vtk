@@ -24,7 +24,6 @@ class VtkLongLongArrayWrap : public VtkDataArrayWrap
 		VtkLongLongArrayWrap(vtkSmartPointer<vtkLongLongArray>);
 		VtkLongLongArrayWrap();
 		~VtkLongLongArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

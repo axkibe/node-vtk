@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkClearZPassWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkClearZPassWrap::ptpl;
 
 VtkClearZPassWrap::VtkClearZPassWrap()
@@ -72,7 +71,6 @@ void VtkClearZPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDepth", SetDepth);
 	Nan::SetPrototypeMethod(tpl, "setDepth", SetDepth);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -192,7 +190,7 @@ void VtkClearZPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkClearZPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkClearZPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClearZPassWrap *w = new VtkClearZPassWrap();
 	w->native.TakeReference(r);
@@ -220,7 +218,7 @@ void VtkClearZPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkClearZPassWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkClearZPassWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkClearZPassWrap *w = new VtkClearZPassWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkXYPlotWidgetWrap : public VtkInteractorObserverWrap
 		VtkXYPlotWidgetWrap(vtkSmartPointer<vtkXYPlotWidget>);
 		VtkXYPlotWidgetWrap();
 		~VtkXYPlotWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkRenderViewBaseWrap : public VtkViewWrap
 		VtkRenderViewBaseWrap(vtkSmartPointer<vtkRenderViewBase>);
 		VtkRenderViewBaseWrap();
 		~VtkRenderViewBaseWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

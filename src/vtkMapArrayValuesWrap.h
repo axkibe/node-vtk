@@ -24,7 +24,6 @@ class VtkMapArrayValuesWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkMapArrayValuesWrap(vtkSmartPointer<vtkMapArrayValues>);
 		VtkMapArrayValuesWrap();
 		~VtkMapArrayValuesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

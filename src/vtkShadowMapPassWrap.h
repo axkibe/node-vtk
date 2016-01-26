@@ -24,7 +24,6 @@ class VtkShadowMapPassWrap : public VtkRenderPassWrap
 		VtkShadowMapPassWrap(vtkSmartPointer<vtkShadowMapPass>);
 		VtkShadowMapPassWrap();
 		~VtkShadowMapPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

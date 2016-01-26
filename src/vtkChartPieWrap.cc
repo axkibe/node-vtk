@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkChartPieWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkChartPieWrap::ptpl;
 
 VtkChartPieWrap::VtkChartPieWrap()
@@ -75,7 +74,6 @@ void VtkChartPieWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -121,7 +119,7 @@ void VtkChartPieWrap::AddPlot(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlotWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlotWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotWrap *w = new VtkPlotWrap();
 		w->native.TakeReference(r);
@@ -161,7 +159,7 @@ void VtkChartPieWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChartLegendWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChartLegendWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartLegendWrap *w = new VtkChartLegendWrap();
 	w->native.TakeReference(r);
@@ -206,7 +204,7 @@ void VtkChartPieWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkChartPieWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkChartPieWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartPieWrap *w = new VtkChartPieWrap();
 	w->native.TakeReference(r);
@@ -234,7 +232,7 @@ void VtkChartPieWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkChartPieWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkChartPieWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkChartPieWrap *w = new VtkChartPieWrap();
 		w->native.TakeReference(r);

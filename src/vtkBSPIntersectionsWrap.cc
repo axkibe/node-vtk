@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBSPIntersectionsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBSPIntersectionsWrap::ptpl;
 
 VtkBSPIntersectionsWrap::VtkBSPIntersectionsWrap()
@@ -91,7 +90,6 @@ void VtkBSPIntersectionsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCuts", SetCuts);
 	Nan::SetPrototypeMethod(tpl, "setCuts", SetCuts);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -185,7 +183,7 @@ void VtkBSPIntersectionsWrap::GetCuts(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBSPCutsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBSPCutsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBSPCutsWrap *w = new VtkBSPCutsWrap();
 	w->native.TakeReference(r);
@@ -356,7 +354,7 @@ void VtkBSPIntersectionsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBSPIntersectionsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBSPIntersectionsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBSPIntersectionsWrap *w = new VtkBSPIntersectionsWrap();
 	w->native.TakeReference(r);
@@ -384,7 +382,7 @@ void VtkBSPIntersectionsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBSPIntersectionsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBSPIntersectionsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBSPIntersectionsWrap *w = new VtkBSPIntersectionsWrap();
 		w->native.TakeReference(r);

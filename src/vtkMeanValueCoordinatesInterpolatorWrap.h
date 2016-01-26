@@ -24,7 +24,6 @@ class VtkMeanValueCoordinatesInterpolatorWrap : public VtkObjectWrap
 		VtkMeanValueCoordinatesInterpolatorWrap(vtkSmartPointer<vtkMeanValueCoordinatesInterpolator>);
 		VtkMeanValueCoordinatesInterpolatorWrap();
 		~VtkMeanValueCoordinatesInterpolatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

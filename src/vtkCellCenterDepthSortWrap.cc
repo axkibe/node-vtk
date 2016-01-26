@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCellCenterDepthSortWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCellCenterDepthSortWrap::ptpl;
 
 VtkCellCenterDepthSortWrap::VtkCellCenterDepthSortWrap()
@@ -67,7 +66,6 @@ void VtkCellCenterDepthSortWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkCellCenterDepthSortWrap::GetNextCells(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIdTypeArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
 	w->native.TakeReference(r);
@@ -180,7 +178,7 @@ void VtkCellCenterDepthSortWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCellCenterDepthSortWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCellCenterDepthSortWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellCenterDepthSortWrap *w = new VtkCellCenterDepthSortWrap();
 	w->native.TakeReference(r);
@@ -208,7 +206,7 @@ void VtkCellCenterDepthSortWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCellCenterDepthSortWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCellCenterDepthSortWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellCenterDepthSortWrap *w = new VtkCellCenterDepthSortWrap();
 		w->native.TakeReference(r);

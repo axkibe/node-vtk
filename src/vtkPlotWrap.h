@@ -24,7 +24,6 @@ class VtkPlotWrap : public VtkContextItemWrap
 		VtkPlotWrap(vtkSmartPointer<vtkPlot>);
 		VtkPlotWrap();
 		~VtkPlotWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

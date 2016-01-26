@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImagePadFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImagePadFilterWrap::ptpl;
 
 VtkImagePadFilterWrap::VtkImagePadFilterWrap()
@@ -69,7 +68,6 @@ void VtkImagePadFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputWholeExtent", SetOutputWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setOutputWholeExtent", SetOutputWholeExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -161,7 +159,7 @@ void VtkImagePadFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImagePadFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImagePadFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImagePadFilterWrap *w = new VtkImagePadFilterWrap();
 	w->native.TakeReference(r);
@@ -189,7 +187,7 @@ void VtkImagePadFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImagePadFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImagePadFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImagePadFilterWrap *w = new VtkImagePadFilterWrap();
 		w->native.TakeReference(r);

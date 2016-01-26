@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLookupTableWithEnablingWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLookupTableWithEnablingWrap::ptpl;
 
 VtkLookupTableWithEnablingWrap::VtkLookupTableWithEnablingWrap()
@@ -67,7 +66,6 @@ void VtkLookupTableWithEnablingWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEnabledArray", SetEnabledArray);
 	Nan::SetPrototypeMethod(tpl, "setEnabledArray", SetEnabledArray);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkLookupTableWithEnablingWrap::GetEnabledArray(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArrayWrap *w = new VtkDataArrayWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkLookupTableWithEnablingWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLookupTableWithEnablingWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLookupTableWithEnablingWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLookupTableWithEnablingWrap *w = new VtkLookupTableWithEnablingWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkLookupTableWithEnablingWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLookupTableWithEnablingWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLookupTableWithEnablingWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLookupTableWithEnablingWrap *w = new VtkLookupTableWithEnablingWrap();
 		w->native.TakeReference(r);

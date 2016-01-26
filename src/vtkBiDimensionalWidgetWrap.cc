@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkBiDimensionalWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkBiDimensionalWidgetWrap::ptpl;
 
 VtkBiDimensionalWidgetWrap::VtkBiDimensionalWidgetWrap()
@@ -88,7 +87,6 @@ void VtkBiDimensionalWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidgetStateToStart", SetWidgetStateToStart);
 	Nan::SetPrototypeMethod(tpl, "setWidgetStateToStart", SetWidgetStateToStart);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkBiDimensionalWidgetWrap::GetBiDimensionalRepresentation(const Nan::Funct
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBiDimensionalRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBiDimensionalRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBiDimensionalRepresentationWrap *w = new VtkBiDimensionalRepresentationWrap();
 	w->native.TakeReference(r);
@@ -229,7 +227,7 @@ void VtkBiDimensionalWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkBiDimensionalWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkBiDimensionalWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBiDimensionalWidgetWrap *w = new VtkBiDimensionalWidgetWrap();
 	w->native.TakeReference(r);
@@ -257,7 +255,7 @@ void VtkBiDimensionalWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkBiDimensionalWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkBiDimensionalWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBiDimensionalWidgetWrap *w = new VtkBiDimensionalWidgetWrap();
 		w->native.TakeReference(r);

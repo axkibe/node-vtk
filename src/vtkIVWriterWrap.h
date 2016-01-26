@@ -24,7 +24,6 @@ class VtkIVWriterWrap : public VtkWriterWrap
 		VtkIVWriterWrap(vtkSmartPointer<vtkIVWriter>);
 		VtkIVWriterWrap();
 		~VtkIVWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

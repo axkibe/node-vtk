@@ -24,7 +24,6 @@ class VtkIdFilterWrap : public VtkDataSetAlgorithmWrap
 		VtkIdFilterWrap(vtkSmartPointer<vtkIdFilter>);
 		VtkIdFilterWrap();
 		~VtkIdFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

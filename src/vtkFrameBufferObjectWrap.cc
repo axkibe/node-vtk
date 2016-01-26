@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFrameBufferObjectWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFrameBufferObjectWrap::ptpl;
 
 VtkFrameBufferObjectWrap::VtkFrameBufferObjectWrap()
@@ -85,7 +84,6 @@ void VtkFrameBufferObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnBind", UnBind);
 	Nan::SetPrototypeMethod(tpl, "unBind", UnBind);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -153,7 +151,7 @@ void VtkFrameBufferObjectWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -198,7 +196,7 @@ void VtkFrameBufferObjectWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFrameBufferObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFrameBufferObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFrameBufferObjectWrap *w = new VtkFrameBufferObjectWrap();
 	w->native.TakeReference(r);
@@ -281,7 +279,7 @@ void VtkFrameBufferObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFrameBufferObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFrameBufferObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFrameBufferObjectWrap *w = new VtkFrameBufferObjectWrap();
 		w->native.TakeReference(r);

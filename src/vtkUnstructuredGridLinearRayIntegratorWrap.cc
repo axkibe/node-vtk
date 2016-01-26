@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkUnstructuredGridLinearRayIntegratorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkUnstructuredGridLinearRayIntegratorWrap::ptpl;
 
 VtkUnstructuredGridLinearRayIntegratorWrap::VtkUnstructuredGridLinearRayIntegratorWrap()
@@ -65,7 +64,6 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -168,7 +166,7 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::NewInstance(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkUnstructuredGridLinearRayIntegratorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridLinearRayIntegratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridLinearRayIntegratorWrap *w = new VtkUnstructuredGridLinearRayIntegratorWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::SafeDownCast(const Nan::Functio
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkUnstructuredGridLinearRayIntegratorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridLinearRayIntegratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridLinearRayIntegratorWrap *w = new VtkUnstructuredGridLinearRayIntegratorWrap();
 		w->native.TakeReference(r);

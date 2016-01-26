@@ -24,7 +24,6 @@ class VtkHierarchicalPolyDataMapperWrap : public VtkCompositePolyDataMapperWrap
 		VtkHierarchicalPolyDataMapperWrap(vtkSmartPointer<vtkHierarchicalPolyDataMapper>);
 		VtkHierarchicalPolyDataMapperWrap();
 		~VtkHierarchicalPolyDataMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

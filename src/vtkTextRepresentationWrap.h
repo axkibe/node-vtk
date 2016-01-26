@@ -24,7 +24,6 @@ class VtkTextRepresentationWrap : public VtkBorderRepresentationWrap
 		VtkTextRepresentationWrap(vtkSmartPointer<vtkTextRepresentation>);
 		VtkTextRepresentationWrap();
 		~VtkTextRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

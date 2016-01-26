@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStripperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStripperWrap::ptpl;
 
 VtkStripperWrap::VtkStripperWrap()
@@ -108,7 +107,6 @@ void VtkStripperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassThroughPointIds", SetPassThroughPointIds);
 	Nan::SetPrototypeMethod(tpl, "setPassThroughPointIds", SetPassThroughPointIds);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -270,7 +268,7 @@ void VtkStripperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStripperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStripperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStripperWrap *w = new VtkStripperWrap();
 	w->native.TakeReference(r);
@@ -370,7 +368,7 @@ void VtkStripperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStripperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStripperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStripperWrap *w = new VtkStripperWrap();
 		w->native.TakeReference(r);

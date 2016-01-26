@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMutexLockWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMutexLockWrap::ptpl;
 
 VtkMutexLockWrap::VtkMutexLockWrap()
@@ -65,7 +64,6 @@ void VtkMutexLockWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Unlock", Unlock);
 	Nan::SetPrototypeMethod(tpl, "unlock", Unlock);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkMutexLockWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMutexLockWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMutexLockWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMutexLockWrap *w = new VtkMutexLockWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkMutexLockWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMutexLockWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMutexLockWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMutexLockWrap *w = new VtkMutexLockWrap();
 		w->native.TakeReference(r);

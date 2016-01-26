@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkIntersectionPolyDataFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkIntersectionPolyDataFilterWrap::ptpl;
 
 VtkIntersectionPolyDataFilterWrap::VtkIntersectionPolyDataFilterWrap()
@@ -84,7 +83,6 @@ void VtkIntersectionPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SplitSecondOutputOn", SplitSecondOutputOn);
 	Nan::SetPrototypeMethod(tpl, "splitSecondOutputOn", SplitSecondOutputOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -190,7 +188,7 @@ void VtkIntersectionPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIntersectionPolyDataFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIntersectionPolyDataFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIntersectionPolyDataFilterWrap *w = new VtkIntersectionPolyDataFilterWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkIntersectionPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkIntersectionPolyDataFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkIntersectionPolyDataFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkIntersectionPolyDataFilterWrap *w = new VtkIntersectionPolyDataFilterWrap();
 		w->native.TakeReference(r);

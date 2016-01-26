@@ -24,7 +24,6 @@ class VtkGeoImageNodeWrap : public VtkGeoTreeNodeWrap
 		VtkGeoImageNodeWrap(vtkSmartPointer<vtkGeoImageNode>);
 		VtkGeoImageNodeWrap();
 		~VtkGeoImageNodeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

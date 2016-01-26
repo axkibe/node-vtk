@@ -24,7 +24,6 @@ class VtkRectilinearGridOutlineFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkRectilinearGridOutlineFilterWrap(vtkSmartPointer<vtkRectilinearGridOutlineFilter>);
 		VtkRectilinearGridOutlineFilterWrap();
 		~VtkRectilinearGridOutlineFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

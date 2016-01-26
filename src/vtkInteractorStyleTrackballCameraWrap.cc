@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleTrackballCameraWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleTrackballCameraWrap::ptpl;
 
 VtkInteractorStyleTrackballCameraWrap::VtkInteractorStyleTrackballCameraWrap()
@@ -105,7 +104,6 @@ void VtkInteractorStyleTrackballCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Spin", Spin);
 	Nan::SetPrototypeMethod(tpl, "spin", Spin);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -209,7 +207,7 @@ void VtkInteractorStyleTrackballCameraWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleTrackballCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleTrackballCameraWrap *w = new VtkInteractorStyleTrackballCameraWrap();
 	w->native.TakeReference(r);
@@ -369,7 +367,7 @@ void VtkInteractorStyleTrackballCameraWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleTrackballCameraWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleTrackballCameraWrap *w = new VtkInteractorStyleTrackballCameraWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFrustumCoverageCullerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFrustumCoverageCullerWrap::ptpl;
 
 VtkFrustumCoverageCullerWrap::VtkFrustumCoverageCullerWrap()
@@ -96,7 +95,6 @@ void VtkFrustumCoverageCullerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSortingStyleToNone", SetSortingStyleToNone);
 	Nan::SetPrototypeMethod(tpl, "setSortingStyleToNone", SetSortingStyleToNone);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -258,7 +256,7 @@ void VtkFrustumCoverageCullerWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFrustumCoverageCullerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFrustumCoverageCullerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFrustumCoverageCullerWrap *w = new VtkFrustumCoverageCullerWrap();
 	w->native.TakeReference(r);
@@ -286,7 +284,7 @@ void VtkFrustumCoverageCullerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFrustumCoverageCullerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFrustumCoverageCullerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFrustumCoverageCullerWrap *w = new VtkFrustumCoverageCullerWrap();
 		w->native.TakeReference(r);

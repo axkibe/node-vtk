@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkKMeansStatisticsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkKMeansStatisticsWrap::ptpl;
 
 VtkKMeansStatisticsWrap::VtkKMeansStatisticsWrap()
@@ -96,7 +95,6 @@ void VtkKMeansStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -191,7 +189,7 @@ void VtkKMeansStatisticsWrap::GetDistanceFunctor(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKMeansDistanceFunctorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKMeansDistanceFunctorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKMeansDistanceFunctorWrap *w = new VtkKMeansDistanceFunctorWrap();
 	w->native.TakeReference(r);
@@ -278,7 +276,7 @@ void VtkKMeansStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkKMeansStatisticsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkKMeansStatisticsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKMeansStatisticsWrap *w = new VtkKMeansStatisticsWrap();
 	w->native.TakeReference(r);
@@ -306,7 +304,7 @@ void VtkKMeansStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkKMeansStatisticsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkKMeansStatisticsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKMeansStatisticsWrap *w = new VtkKMeansStatisticsWrap();
 		w->native.TakeReference(r);

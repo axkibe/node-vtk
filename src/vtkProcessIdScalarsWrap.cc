@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProcessIdScalarsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProcessIdScalarsWrap::ptpl;
 
 VtkProcessIdScalarsWrap::VtkProcessIdScalarsWrap()
@@ -88,7 +87,6 @@ void VtkProcessIdScalarsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarModeToPointData", SetScalarModeToPointData);
 	Nan::SetPrototypeMethod(tpl, "setScalarModeToPointData", SetScalarModeToPointData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -144,7 +142,7 @@ void VtkProcessIdScalarsWrap::GetController(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -217,7 +215,7 @@ void VtkProcessIdScalarsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProcessIdScalarsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProcessIdScalarsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProcessIdScalarsWrap *w = new VtkProcessIdScalarsWrap();
 	w->native.TakeReference(r);
@@ -269,7 +267,7 @@ void VtkProcessIdScalarsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProcessIdScalarsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProcessIdScalarsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProcessIdScalarsWrap *w = new VtkProcessIdScalarsWrap();
 		w->native.TakeReference(r);

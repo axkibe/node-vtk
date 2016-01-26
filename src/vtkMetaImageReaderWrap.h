@@ -24,7 +24,6 @@ class VtkMetaImageReaderWrap : public VtkImageReader2Wrap
 		VtkMetaImageReaderWrap(vtkSmartPointer<vtkMetaImageReader>);
 		VtkMetaImageReaderWrap();
 		~VtkMetaImageReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

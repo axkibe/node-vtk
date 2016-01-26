@@ -24,7 +24,6 @@ class VtkEnSightGoldReaderWrap : public VtkEnSightReaderWrap
 		VtkEnSightGoldReaderWrap(vtkSmartPointer<vtkEnSightGoldReader>);
 		VtkEnSightGoldReaderWrap();
 		~VtkEnSightGoldReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

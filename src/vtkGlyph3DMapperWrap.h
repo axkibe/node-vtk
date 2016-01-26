@@ -24,7 +24,6 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 		VtkGlyph3DMapperWrap(vtkSmartPointer<vtkGlyph3DMapper>);
 		VtkGlyph3DMapperWrap();
 		~VtkGlyph3DMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

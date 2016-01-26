@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkX3DExporterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkX3DExporterWrap::ptpl;
 
 VtkX3DExporterWrap::VtkX3DExporterWrap()
@@ -129,7 +128,6 @@ void VtkX3DExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteToOutputStringOn", WriteToOutputStringOn);
 	Nan::SetPrototypeMethod(tpl, "writeToOutputStringOn", WriteToOutputStringOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -409,7 +407,7 @@ void VtkX3DExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkX3DExporterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkX3DExporterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkX3DExporterWrap *w = new VtkX3DExporterWrap();
 	w->native.TakeReference(r);
@@ -451,7 +449,7 @@ void VtkX3DExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkX3DExporterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkX3DExporterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkX3DExporterWrap *w = new VtkX3DExporterWrap();
 		w->native.TakeReference(r);

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkNetCDFReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkNetCDFReaderWrap::ptpl;
 
 VtkNetCDFReaderWrap::VtkNetCDFReaderWrap()
@@ -112,7 +111,6 @@ void VtkNetCDFReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateMetaData", UpdateMetaData);
 	Nan::SetPrototypeMethod(tpl, "updateMetaData", UpdateMetaData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -154,7 +152,7 @@ void VtkNetCDFReaderWrap::GetAllDimensions(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -177,7 +175,7 @@ void VtkNetCDFReaderWrap::GetAllVariableArrayNames(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -327,7 +325,7 @@ void VtkNetCDFReaderWrap::GetVariableDimensions(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStringArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
 	w->native.TakeReference(r);
@@ -372,7 +370,7 @@ void VtkNetCDFReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkNetCDFReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkNetCDFReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkNetCDFReaderWrap *w = new VtkNetCDFReaderWrap();
 	w->native.TakeReference(r);
@@ -424,7 +422,7 @@ void VtkNetCDFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkNetCDFReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkNetCDFReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkNetCDFReaderWrap *w = new VtkNetCDFReaderWrap();
 		w->native.TakeReference(r);

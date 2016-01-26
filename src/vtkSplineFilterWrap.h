@@ -24,7 +24,6 @@ class VtkSplineFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkSplineFilterWrap(vtkSmartPointer<vtkSplineFilter>);
 		VtkSplineFilterWrap();
 		~VtkSplineFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

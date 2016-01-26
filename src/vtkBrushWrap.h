@@ -24,7 +24,6 @@ class VtkBrushWrap : public VtkObjectWrap
 		VtkBrushWrap(vtkSmartPointer<vtkBrush>);
 		VtkBrushWrap();
 		~VtkBrushWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

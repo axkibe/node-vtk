@@ -24,7 +24,6 @@ class VtkImageVariance3DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageVariance3DWrap(vtkSmartPointer<vtkImageVariance3D>);
 		VtkImageVariance3DWrap();
 		~VtkImageVariance3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

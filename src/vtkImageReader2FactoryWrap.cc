@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageReader2FactoryWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageReader2FactoryWrap::ptpl;
 
 VtkImageReader2FactoryWrap::VtkImageReader2FactoryWrap()
@@ -70,7 +69,6 @@ void VtkImageReader2FactoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -117,7 +115,7 @@ void VtkImageReader2FactoryWrap::CreateImageReader2(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageReader2Wrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageReader2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageReader2Wrap *w = new VtkImageReader2Wrap();
 		w->native.TakeReference(r);
@@ -199,7 +197,7 @@ void VtkImageReader2FactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageReader2FactoryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageReader2FactoryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageReader2FactoryWrap *w = new VtkImageReader2FactoryWrap();
 	w->native.TakeReference(r);
@@ -247,7 +245,7 @@ void VtkImageReader2FactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageReader2FactoryWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageReader2FactoryWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageReader2FactoryWrap *w = new VtkImageReader2FactoryWrap();
 		w->native.TakeReference(r);

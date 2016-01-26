@@ -24,7 +24,6 @@ class VtkPieceRequestFilterWrap : public VtkAlgorithmWrap
 		VtkPieceRequestFilterWrap(vtkSmartPointer<vtkPieceRequestFilter>);
 		VtkPieceRequestFilterWrap();
 		~VtkPieceRequestFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

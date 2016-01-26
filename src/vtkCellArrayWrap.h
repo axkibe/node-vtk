@@ -24,7 +24,6 @@ class VtkCellArrayWrap : public VtkObjectWrap
 		VtkCellArrayWrap(vtkSmartPointer<vtkCellArray>);
 		VtkCellArrayWrap();
 		~VtkCellArrayWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolygonalHandleRepresentation3DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolygonalHandleRepresentation3DWrap::ptpl;
 
 VtkPolygonalHandleRepresentation3DWrap::VtkPolygonalHandleRepresentation3DWrap()
@@ -63,7 +62,6 @@ void VtkPolygonalHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOffset", SetOffset);
 	Nan::SetPrototypeMethod(tpl, "setOffset", SetOffset);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -141,7 +139,7 @@ void VtkPolygonalHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolygonalHandleRepresentation3DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolygonalHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolygonalHandleRepresentation3DWrap *w = new VtkPolygonalHandleRepresentation3DWrap();
 	w->native.TakeReference(r);
@@ -169,7 +167,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolygonalHandleRepresentation3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolygonalHandleRepresentation3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolygonalHandleRepresentation3DWrap *w = new VtkPolygonalHandleRepresentation3DWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkLinearExtrusionFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkLinearExtrusionFilterWrap(vtkSmartPointer<vtkLinearExtrusionFilter>);
 		VtkLinearExtrusionFilterWrap();
 		~VtkLinearExtrusionFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

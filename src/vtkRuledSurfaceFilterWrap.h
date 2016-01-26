@@ -24,7 +24,6 @@ class VtkRuledSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkRuledSurfaceFilterWrap(vtkSmartPointer<vtkRuledSurfaceFilter>);
 		VtkRuledSurfaceFilterWrap();
 		~VtkRuledSurfaceFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

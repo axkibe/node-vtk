@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperTreeGridAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperTreeGridAlgorithmWrap::ptpl;
 
 VtkHyperTreeGridAlgorithmWrap::VtkHyperTreeGridAlgorithmWrap()
@@ -80,7 +79,6 @@ void VtkHyperTreeGridAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -177,7 +175,7 @@ void VtkHyperTreeGridAlgorithmWrap::GetHyperTreeGridInput(const Nan::FunctionCal
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperTreeGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperTreeGridWrap *w = new VtkHyperTreeGridWrap();
 		w->native.TakeReference(r);
@@ -207,7 +205,7 @@ void VtkHyperTreeGridAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
 		w->native.TakeReference(r);
@@ -226,7 +224,7 @@ void VtkHyperTreeGridAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -253,7 +251,7 @@ void VtkHyperTreeGridAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperTreeGridWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperTreeGridWrap *w = new VtkHyperTreeGridWrap();
 		w->native.TakeReference(r);
@@ -272,7 +270,7 @@ void VtkHyperTreeGridAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeGridWrap *w = new VtkHyperTreeGridWrap();
 	w->native.TakeReference(r);
@@ -317,7 +315,7 @@ void VtkHyperTreeGridAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperTreeGridAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperTreeGridAlgorithmWrap *w = new VtkHyperTreeGridAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -345,7 +343,7 @@ void VtkHyperTreeGridAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperTreeGridAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperTreeGridAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperTreeGridAlgorithmWrap *w = new VtkHyperTreeGridAlgorithmWrap();
 		w->native.TakeReference(r);

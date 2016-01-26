@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageChangeInformationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageChangeInformationWrap::ptpl;
 
 VtkImageChangeInformationWrap::VtkImageChangeInformationWrap()
@@ -100,7 +99,6 @@ void VtkImageChangeInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpacingScale", SetSpacingScale);
 	Nan::SetPrototypeMethod(tpl, "setSpacingScale", SetSpacingScale);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkImageChangeInformationWrap::GetInformationInput(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -239,7 +237,7 @@ void VtkImageChangeInformationWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageChangeInformationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageChangeInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageChangeInformationWrap *w = new VtkImageChangeInformationWrap();
 	w->native.TakeReference(r);
@@ -267,7 +265,7 @@ void VtkImageChangeInformationWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageChangeInformationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageChangeInformationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageChangeInformationWrap *w = new VtkImageChangeInformationWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkDelaunay2DWrap : public VtkPolyDataAlgorithmWrap
 		VtkDelaunay2DWrap(vtkSmartPointer<vtkDelaunay2D>);
 		VtkDelaunay2DWrap();
 		~VtkDelaunay2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

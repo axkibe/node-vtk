@@ -24,7 +24,6 @@ class VtkGraphItemWrap : public VtkContextItemWrap
 		VtkGraphItemWrap(vtkSmartPointer<vtkGraphItem>);
 		VtkGraphItemWrap();
 		~VtkGraphItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

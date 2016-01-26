@@ -24,7 +24,6 @@ class VtkPointsProjectedHullWrap : public VtkPointsWrap
 		VtkPointsProjectedHullWrap(vtkSmartPointer<vtkPointsProjectedHull>);
 		VtkPointsProjectedHullWrap();
 		~VtkPointsProjectedHullWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkChartXYZWrap : public VtkContextItemWrap
 		VtkChartXYZWrap(vtkSmartPointer<vtkChartXYZ>);
 		VtkChartXYZWrap();
 		~VtkChartXYZWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

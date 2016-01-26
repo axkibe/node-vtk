@@ -24,7 +24,6 @@ class VtkAMRResampleFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		VtkAMRResampleFilterWrap(vtkSmartPointer<vtkAMRResampleFilter>);
 		VtkAMRResampleFilterWrap();
 		~VtkAMRResampleFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkVectorDotWrap : public VtkDataSetAlgorithmWrap
 		VtkVectorDotWrap(vtkSmartPointer<vtkVectorDot>);
 		VtkVectorDotWrap();
 		~VtkVectorDotWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

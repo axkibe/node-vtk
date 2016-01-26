@@ -24,7 +24,6 @@ class VtkDeformPointSetWrap : public VtkPointSetAlgorithmWrap
 		VtkDeformPointSetWrap(vtkSmartPointer<vtkDeformPointSet>);
 		VtkDeformPointSetWrap();
 		~VtkDeformPointSetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

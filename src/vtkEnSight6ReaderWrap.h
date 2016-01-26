@@ -24,7 +24,6 @@ class VtkEnSight6ReaderWrap : public VtkEnSightReaderWrap
 		VtkEnSight6ReaderWrap(vtkSmartPointer<vtkEnSight6Reader>);
 		VtkEnSight6ReaderWrap();
 		~VtkEnSight6ReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

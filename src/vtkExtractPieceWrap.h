@@ -24,7 +24,6 @@ class VtkExtractPieceWrap : public VtkCompositeDataSetAlgorithmWrap
 		VtkExtractPieceWrap(vtkSmartPointer<vtkExtractPiece>);
 		VtkExtractPieceWrap();
 		~VtkExtractPieceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

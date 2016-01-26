@@ -24,7 +24,6 @@ class VtkIdListWrap : public VtkObjectWrap
 		VtkIdListWrap(vtkSmartPointer<vtkIdList>);
 		VtkIdListWrap();
 		~VtkIdListWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

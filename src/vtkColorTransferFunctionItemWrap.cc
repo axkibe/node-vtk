@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkColorTransferFunctionItemWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkColorTransferFunctionItemWrap::ptpl;
 
 VtkColorTransferFunctionItemWrap::VtkColorTransferFunctionItemWrap()
@@ -67,7 +66,6 @@ void VtkColorTransferFunctionItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetColorTransferFunction", SetColorTransferFunction);
 	Nan::SetPrototypeMethod(tpl, "setColorTransferFunction", SetColorTransferFunction);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkColorTransferFunctionItemWrap::GetColorTransferFunction(const Nan::Funct
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkColorTransferFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkColorTransferFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorTransferFunctionWrap *w = new VtkColorTransferFunctionWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkColorTransferFunctionItemWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkColorTransferFunctionItemWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkColorTransferFunctionItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorTransferFunctionItemWrap *w = new VtkColorTransferFunctionItemWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkColorTransferFunctionItemWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkColorTransferFunctionItemWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkColorTransferFunctionItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkColorTransferFunctionItemWrap *w = new VtkColorTransferFunctionItemWrap();
 		w->native.TakeReference(r);

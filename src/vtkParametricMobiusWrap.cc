@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParametricMobiusWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParametricMobiusWrap::ptpl;
 
 VtkParametricMobiusWrap::VtkParametricMobiusWrap()
@@ -69,7 +68,6 @@ void VtkParametricMobiusWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -175,7 +173,7 @@ void VtkParametricMobiusWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParametricMobiusWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParametricMobiusWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParametricMobiusWrap *w = new VtkParametricMobiusWrap();
 	w->native.TakeReference(r);
@@ -203,7 +201,7 @@ void VtkParametricMobiusWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParametricMobiusWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParametricMobiusWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParametricMobiusWrap *w = new VtkParametricMobiusWrap();
 		w->native.TakeReference(r);

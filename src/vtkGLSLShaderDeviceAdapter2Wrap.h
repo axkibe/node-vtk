@@ -24,7 +24,6 @@ class VtkGLSLShaderDeviceAdapter2Wrap : public VtkShaderDeviceAdapter2Wrap
 		VtkGLSLShaderDeviceAdapter2Wrap(vtkSmartPointer<vtkGLSLShaderDeviceAdapter2>);
 		VtkGLSLShaderDeviceAdapter2Wrap();
 		~VtkGLSLShaderDeviceAdapter2Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

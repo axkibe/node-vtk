@@ -24,7 +24,6 @@ class VtkPSLACReaderWrap : public VtkSLACReaderWrap
 		VtkPSLACReaderWrap(vtkSmartPointer<vtkPSLACReader>);
 		VtkPSLACReaderWrap();
 		~VtkPSLACReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

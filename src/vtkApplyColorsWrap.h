@@ -24,7 +24,6 @@ class VtkApplyColorsWrap : public VtkPassInputTypeAlgorithmWrap
 		VtkApplyColorsWrap(vtkSmartPointer<vtkApplyColors>);
 		VtkApplyColorsWrap();
 		~VtkApplyColorsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

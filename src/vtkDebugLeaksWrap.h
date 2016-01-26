@@ -24,7 +24,6 @@ class VtkDebugLeaksWrap : public VtkObjectWrap
 		VtkDebugLeaksWrap(vtkSmartPointer<vtkDebugLeaks>);
 		VtkDebugLeaksWrap();
 		~VtkDebugLeaksWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

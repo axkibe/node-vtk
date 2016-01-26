@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRenderedRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRenderedRepresentationWrap::ptpl;
 
 VtkRenderedRepresentationWrap::VtkRenderedRepresentationWrap()
@@ -66,7 +65,6 @@ void VtkRenderedRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLabelRenderMode", SetLabelRenderMode);
 	Nan::SetPrototypeMethod(tpl, "setLabelRenderMode", SetLabelRenderMode);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkRenderedRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderedRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderedRepresentationWrap *w = new VtkRenderedRepresentationWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkRenderedRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRenderedRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderedRepresentationWrap *w = new VtkRenderedRepresentationWrap();
 		w->native.TakeReference(r);

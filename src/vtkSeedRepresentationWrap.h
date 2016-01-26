@@ -24,7 +24,6 @@ class VtkSeedRepresentationWrap : public VtkWidgetRepresentationWrap
 		VtkSeedRepresentationWrap(vtkSmartPointer<vtkSeedRepresentation>);
 		VtkSeedRepresentationWrap();
 		~VtkSeedRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

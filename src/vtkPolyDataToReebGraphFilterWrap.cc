@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPolyDataToReebGraphFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPolyDataToReebGraphFilterWrap::ptpl;
 
 VtkPolyDataToReebGraphFilterWrap::VtkPolyDataToReebGraphFilterWrap()
@@ -70,7 +69,6 @@ void VtkPolyDataToReebGraphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFieldId", SetFieldId);
 	Nan::SetPrototypeMethod(tpl, "setFieldId", SetFieldId);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -140,7 +138,7 @@ void VtkPolyDataToReebGraphFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkReebGraphWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkReebGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkReebGraphWrap *w = new VtkReebGraphWrap();
 	w->native.TakeReference(r);
@@ -185,7 +183,7 @@ void VtkPolyDataToReebGraphFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataToReebGraphFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataToReebGraphFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataToReebGraphFilterWrap *w = new VtkPolyDataToReebGraphFilterWrap();
 	w->native.TakeReference(r);
@@ -213,7 +211,7 @@ void VtkPolyDataToReebGraphFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPolyDataToReebGraphFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPolyDataToReebGraphFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataToReebGraphFilterWrap *w = new VtkPolyDataToReebGraphFilterWrap();
 		w->native.TakeReference(r);

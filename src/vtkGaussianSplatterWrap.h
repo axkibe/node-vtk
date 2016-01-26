@@ -24,7 +24,6 @@ class VtkGaussianSplatterWrap : public VtkImageAlgorithmWrap
 		VtkGaussianSplatterWrap(vtkSmartPointer<vtkGaussianSplatter>);
 		VtkGaussianSplatterWrap();
 		~VtkGaussianSplatterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

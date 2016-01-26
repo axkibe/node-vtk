@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLegendScaleActorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLegendScaleActorWrap::ptpl;
 
 VtkLegendScaleActorWrap::VtkLegendScaleActorWrap()
@@ -248,7 +247,6 @@ void VtkLegendScaleActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TopAxisVisibilityOn", TopAxisVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "topAxisVisibilityOn", TopAxisVisibilityOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -402,7 +400,7 @@ void VtkLegendScaleActorWrap::GetBottomAxis(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
 	w->native.TakeReference(r);
@@ -579,7 +577,7 @@ void VtkLegendScaleActorWrap::GetLeftAxis(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
 	w->native.TakeReference(r);
@@ -658,7 +656,7 @@ void VtkLegendScaleActorWrap::GetLegendLabelProperty(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -681,7 +679,7 @@ void VtkLegendScaleActorWrap::GetLegendTitleProperty(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -718,7 +716,7 @@ void VtkLegendScaleActorWrap::GetRightAxis(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
 	w->native.TakeReference(r);
@@ -797,7 +795,7 @@ void VtkLegendScaleActorWrap::GetTopAxis(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
 	w->native.TakeReference(r);
@@ -946,7 +944,7 @@ void VtkLegendScaleActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLegendScaleActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLegendScaleActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLegendScaleActorWrap *w = new VtkLegendScaleActorWrap();
 	w->native.TakeReference(r);
@@ -1062,7 +1060,7 @@ void VtkLegendScaleActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLegendScaleActorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLegendScaleActorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLegendScaleActorWrap *w = new VtkLegendScaleActorWrap();
 		w->native.TakeReference(r);

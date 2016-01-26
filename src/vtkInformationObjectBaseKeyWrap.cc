@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInformationObjectBaseKeyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInformationObjectBaseKeyWrap::ptpl;
 
 VtkInformationObjectBaseKeyWrap::VtkInformationObjectBaseKeyWrap()
@@ -75,7 +74,6 @@ void VtkInformationObjectBaseKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -122,7 +120,7 @@ void VtkInformationObjectBaseKeyWrap::Get(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkObjectBaseWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkObjectBaseWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkObjectBaseWrap *w = new VtkObjectBaseWrap();
 		w->native.TakeReference(r);
@@ -184,7 +182,7 @@ void VtkInformationObjectBaseKeyWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationObjectBaseKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationObjectBaseKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationObjectBaseKeyWrap *w = new VtkInformationObjectBaseKeyWrap();
 	w->native.TakeReference(r);
@@ -237,7 +235,7 @@ void VtkInformationObjectBaseKeyWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationObjectBaseKeyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationObjectBaseKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationObjectBaseKeyWrap *w = new VtkInformationObjectBaseKeyWrap();
 		w->native.TakeReference(r);

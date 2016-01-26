@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkObjectFactoryCollectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkObjectFactoryCollectionWrap::ptpl;
 
 VtkObjectFactoryCollectionWrap::VtkObjectFactoryCollectionWrap()
@@ -67,7 +66,6 @@ void VtkObjectFactoryCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -143,7 +141,7 @@ void VtkObjectFactoryCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkObjectFactoryWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkObjectFactoryWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkObjectFactoryWrap *w = new VtkObjectFactoryWrap();
 	w->native.TakeReference(r);
@@ -188,7 +186,7 @@ void VtkObjectFactoryCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkObjectFactoryCollectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkObjectFactoryCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkObjectFactoryCollectionWrap *w = new VtkObjectFactoryCollectionWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkObjectFactoryCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkObjectFactoryCollectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkObjectFactoryCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkObjectFactoryCollectionWrap *w = new VtkObjectFactoryCollectionWrap();
 		w->native.TakeReference(r);

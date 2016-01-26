@@ -24,7 +24,6 @@ class VtkSimplePointsReaderWrap : public VtkPolyDataAlgorithmWrap
 		VtkSimplePointsReaderWrap(vtkSmartPointer<vtkSimplePointsReader>);
 		VtkSimplePointsReaderWrap();
 		~VtkSimplePointsReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

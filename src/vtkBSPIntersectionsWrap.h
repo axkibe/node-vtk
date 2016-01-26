@@ -24,7 +24,6 @@ class VtkBSPIntersectionsWrap : public VtkObjectWrap
 		VtkBSPIntersectionsWrap(vtkSmartPointer<vtkBSPIntersections>);
 		VtkBSPIntersectionsWrap();
 		~VtkBSPIntersectionsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

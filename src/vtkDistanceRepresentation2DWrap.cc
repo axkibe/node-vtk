@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDistanceRepresentation2DWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDistanceRepresentation2DWrap::ptpl;
 
 VtkDistanceRepresentation2DWrap::VtkDistanceRepresentation2DWrap()
@@ -85,7 +84,6 @@ void VtkDistanceRepresentation2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -139,7 +137,7 @@ void VtkDistanceRepresentation2DWrap::GetAxis(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAxisActor2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
 	w->native.TakeReference(r);
@@ -162,7 +160,7 @@ void VtkDistanceRepresentation2DWrap::GetAxisProperty(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProperty2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
 	w->native.TakeReference(r);
@@ -235,7 +233,7 @@ void VtkDistanceRepresentation2DWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDistanceRepresentation2DWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDistanceRepresentation2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistanceRepresentation2DWrap *w = new VtkDistanceRepresentation2DWrap();
 	w->native.TakeReference(r);
@@ -327,7 +325,7 @@ void VtkDistanceRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDistanceRepresentation2DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDistanceRepresentation2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDistanceRepresentation2DWrap *w = new VtkDistanceRepresentation2DWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkMultiThreaderWrap : public VtkObjectWrap
 		VtkMultiThreaderWrap(vtkSmartPointer<vtkMultiThreader>);
 		VtkMultiThreaderWrap();
 		~VtkMultiThreaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

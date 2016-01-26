@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGaussianBlurPassWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGaussianBlurPassWrap::ptpl;
 
 VtkGaussianBlurPassWrap::VtkGaussianBlurPassWrap()
@@ -64,7 +63,6 @@ void VtkGaussianBlurPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkGaussianBlurPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGaussianBlurPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGaussianBlurPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGaussianBlurPassWrap *w = new VtkGaussianBlurPassWrap();
 	w->native.TakeReference(r);
@@ -190,7 +188,7 @@ void VtkGaussianBlurPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGaussianBlurPassWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGaussianBlurPassWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGaussianBlurPassWrap *w = new VtkGaussianBlurPassWrap();
 		w->native.TakeReference(r);

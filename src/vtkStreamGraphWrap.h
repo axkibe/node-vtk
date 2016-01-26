@@ -24,7 +24,6 @@ class VtkStreamGraphWrap : public VtkGraphAlgorithmWrap
 		VtkStreamGraphWrap(vtkSmartPointer<vtkStreamGraph>);
 		VtkStreamGraphWrap();
 		~VtkStreamGraphWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

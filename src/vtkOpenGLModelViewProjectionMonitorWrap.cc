@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkOpenGLModelViewProjectionMonitorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkOpenGLModelViewProjectionMonitorWrap::ptpl;
 
 VtkOpenGLModelViewProjectionMonitorWrap::VtkOpenGLModelViewProjectionMonitorWrap()
@@ -62,7 +61,6 @@ void VtkOpenGLModelViewProjectionMonitorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -140,7 +138,7 @@ void VtkOpenGLModelViewProjectionMonitorWrap::NewInstance(const Nan::FunctionCal
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkOpenGLModelViewProjectionMonitorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkOpenGLModelViewProjectionMonitorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLModelViewProjectionMonitorWrap *w = new VtkOpenGLModelViewProjectionMonitorWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkOpenGLModelViewProjectionMonitorWrap::SafeDownCast(const Nan::FunctionCa
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkOpenGLModelViewProjectionMonitorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkOpenGLModelViewProjectionMonitorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLModelViewProjectionMonitorWrap *w = new VtkOpenGLModelViewProjectionMonitorWrap();
 		w->native.TakeReference(r);

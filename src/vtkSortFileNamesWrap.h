@@ -24,7 +24,6 @@ class VtkSortFileNamesWrap : public VtkObjectWrap
 		VtkSortFileNamesWrap(vtkSmartPointer<vtkSortFileNames>);
 		VtkSortFileNamesWrap();
 		~VtkSortFileNamesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkCylinderWrap : public VtkImplicitFunctionWrap
 		VtkCylinderWrap(vtkSmartPointer<vtkCylinder>);
 		VtkCylinderWrap();
 		~VtkCylinderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

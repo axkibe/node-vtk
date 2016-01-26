@@ -24,7 +24,6 @@ class VtkPolyDataPointSamplerWrap : public VtkPolyDataAlgorithmWrap
 		VtkPolyDataPointSamplerWrap(vtkSmartPointer<vtkPolyDataPointSampler>);
 		VtkPolyDataPointSamplerWrap();
 		~VtkPolyDataPointSamplerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

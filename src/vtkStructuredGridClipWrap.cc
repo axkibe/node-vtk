@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStructuredGridClipWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStructuredGridClipWrap::ptpl;
 
 VtkStructuredGridClipWrap::VtkStructuredGridClipWrap()
@@ -78,7 +77,6 @@ void VtkStructuredGridClipWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputWholeExtent", SetOutputWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setOutputWholeExtent", SetOutputWholeExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkStructuredGridClipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStructuredGridClipWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStructuredGridClipWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridClipWrap *w = new VtkStructuredGridClipWrap();
 	w->native.TakeReference(r);
@@ -234,7 +232,7 @@ void VtkStructuredGridClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStructuredGridClipWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStructuredGridClipWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStructuredGridClipWrap *w = new VtkStructuredGridClipWrap();
 		w->native.TakeReference(r);

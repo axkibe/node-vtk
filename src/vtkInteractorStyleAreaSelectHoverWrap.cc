@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleAreaSelectHoverWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleAreaSelectHoverWrap::ptpl;
 
 VtkInteractorStyleAreaSelectHoverWrap::VtkInteractorStyleAreaSelectHoverWrap()
@@ -95,7 +94,6 @@ void VtkInteractorStyleAreaSelectHoverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -179,7 +177,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::GetLayout(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAreaLayoutWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAreaLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAreaLayoutWrap *w = new VtkAreaLayoutWrap();
 	w->native.TakeReference(r);
@@ -224,7 +222,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::NewInstance(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleAreaSelectHoverWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleAreaSelectHoverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleAreaSelectHoverWrap *w = new VtkInteractorStyleAreaSelectHoverWrap();
 	w->native.TakeReference(r);
@@ -264,7 +262,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SafeDownCast(const Nan::FunctionCall
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleAreaSelectHoverWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleAreaSelectHoverWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleAreaSelectHoverWrap *w = new VtkInteractorStyleAreaSelectHoverWrap();
 		w->native.TakeReference(r);

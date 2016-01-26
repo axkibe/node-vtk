@@ -24,7 +24,6 @@ class VtkInteractorStyleRubberBandZoomWrap : public VtkInteractorStyleWrap
 		VtkInteractorStyleRubberBandZoomWrap(vtkSmartPointer<vtkInteractorStyleRubberBandZoom>);
 		VtkInteractorStyleRubberBandZoomWrap();
 		~VtkInteractorStyleRubberBandZoomWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

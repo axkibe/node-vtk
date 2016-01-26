@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGL2PSUtilitiesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGL2PSUtilitiesWrap::ptpl;
 
 VtkGL2PSUtilitiesWrap::VtkGL2PSUtilitiesWrap()
@@ -70,7 +69,6 @@ void VtkGL2PSUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TextPropertyToPSFontName", TextPropertyToPSFontName);
 	Nan::SetPrototypeMethod(tpl, "textPropertyToPSFontName", TextPropertyToPSFontName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -126,7 +124,7 @@ void VtkGL2PSUtilitiesWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
 	w->native.TakeReference(r);
@@ -171,7 +169,7 @@ void VtkGL2PSUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGL2PSUtilitiesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGL2PSUtilitiesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGL2PSUtilitiesWrap *w = new VtkGL2PSUtilitiesWrap();
 	w->native.TakeReference(r);
@@ -199,7 +197,7 @@ void VtkGL2PSUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGL2PSUtilitiesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGL2PSUtilitiesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGL2PSUtilitiesWrap *w = new VtkGL2PSUtilitiesWrap();
 		w->native.TakeReference(r);

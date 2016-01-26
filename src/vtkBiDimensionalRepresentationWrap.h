@@ -24,7 +24,6 @@ class VtkBiDimensionalRepresentationWrap : public VtkWidgetRepresentationWrap
 		VtkBiDimensionalRepresentationWrap(vtkSmartPointer<vtkBiDimensionalRepresentation>);
 		VtkBiDimensionalRepresentationWrap();
 		~VtkBiDimensionalRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

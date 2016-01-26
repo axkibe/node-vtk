@@ -24,7 +24,6 @@ class VtkGraphMapperWrap : public VtkMapperWrap
 		VtkGraphMapperWrap(vtkSmartPointer<vtkGraphMapper>);
 		VtkGraphMapperWrap();
 		~VtkGraphMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

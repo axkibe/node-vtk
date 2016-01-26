@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMatrixToHomogeneousTransformWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMatrixToHomogeneousTransformWrap::ptpl;
 
 VtkMatrixToHomogeneousTransformWrap::VtkMatrixToHomogeneousTransformWrap()
@@ -74,7 +73,6 @@ void VtkMatrixToHomogeneousTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -130,7 +128,7 @@ void VtkMatrixToHomogeneousTransformWrap::GetInput(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrix4x4Wrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrix4x4Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
 	w->native.TakeReference(r);
@@ -187,7 +185,7 @@ void VtkMatrixToHomogeneousTransformWrap::MakeTransform(const Nan::FunctionCallb
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -210,7 +208,7 @@ void VtkMatrixToHomogeneousTransformWrap::NewInstance(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMatrixToHomogeneousTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMatrixToHomogeneousTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrixToHomogeneousTransformWrap *w = new VtkMatrixToHomogeneousTransformWrap();
 	w->native.TakeReference(r);
@@ -238,7 +236,7 @@ void VtkMatrixToHomogeneousTransformWrap::SafeDownCast(const Nan::FunctionCallba
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMatrixToHomogeneousTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMatrixToHomogeneousTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMatrixToHomogeneousTransformWrap *w = new VtkMatrixToHomogeneousTransformWrap();
 		w->native.TakeReference(r);

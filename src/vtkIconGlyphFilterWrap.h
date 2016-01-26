@@ -24,7 +24,6 @@ class VtkIconGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkIconGlyphFilterWrap(vtkSmartPointer<vtkIconGlyphFilter>);
 		VtkIconGlyphFilterWrap();
 		~VtkIconGlyphFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkAffineRepresentation2DWrap : public VtkAffineRepresentationWrap
 		VtkAffineRepresentation2DWrap(vtkSmartPointer<vtkAffineRepresentation2D>);
 		VtkAffineRepresentation2DWrap();
 		~VtkAffineRepresentation2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

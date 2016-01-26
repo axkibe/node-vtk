@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeReaderWrap::ptpl;
 
 VtkTreeReaderWrap::VtkTreeReaderWrap()
@@ -67,7 +66,6 @@ void VtkTreeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -127,7 +125,7 @@ void VtkTreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeWrap *w = new VtkTreeWrap();
 		w->native.TakeReference(r);
@@ -146,7 +144,7 @@ void VtkTreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& in
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeWrap *w = new VtkTreeWrap();
 	w->native.TakeReference(r);
@@ -191,7 +189,7 @@ void VtkTreeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeReaderWrap *w = new VtkTreeReaderWrap();
 	w->native.TakeReference(r);
@@ -219,7 +217,7 @@ void VtkTreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeReaderWrap *w = new VtkTreeReaderWrap();
 		w->native.TakeReference(r);

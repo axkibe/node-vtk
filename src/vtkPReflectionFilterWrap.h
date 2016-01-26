@@ -24,7 +24,6 @@ class VtkPReflectionFilterWrap : public VtkReflectionFilterWrap
 		VtkPReflectionFilterWrap(vtkSmartPointer<vtkPReflectionFilter>);
 		VtkPReflectionFilterWrap();
 		~VtkPReflectionFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

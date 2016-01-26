@@ -24,7 +24,6 @@ class VtkDistanceToCameraWrap : public VtkPolyDataAlgorithmWrap
 		VtkDistanceToCameraWrap(vtkSmartPointer<vtkDistanceToCamera>);
 		VtkDistanceToCameraWrap();
 		~VtkDistanceToCameraWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkProgrammableSourceWrap : public VtkDataSetAlgorithmWrap
 		VtkProgrammableSourceWrap(vtkSmartPointer<vtkProgrammableSource>);
 		VtkProgrammableSourceWrap();
 		~VtkProgrammableSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

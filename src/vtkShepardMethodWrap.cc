@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkShepardMethodWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkShepardMethodWrap::ptpl;
 
 VtkShepardMethodWrap::VtkShepardMethodWrap()
@@ -84,7 +83,6 @@ void VtkShepardMethodWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSampleDimensions", SetSampleDimensions);
 	Nan::SetPrototypeMethod(tpl, "setSampleDimensions", SetSampleDimensions);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -218,7 +216,7 @@ void VtkShepardMethodWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkShepardMethodWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkShepardMethodWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkShepardMethodWrap *w = new VtkShepardMethodWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkShepardMethodWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkShepardMethodWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkShepardMethodWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkShepardMethodWrap *w = new VtkShepardMethodWrap();
 		w->native.TakeReference(r);

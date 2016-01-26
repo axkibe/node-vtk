@@ -24,7 +24,6 @@ class VtkCriticalSectionWrap : public VtkObjectWrap
 		VtkCriticalSectionWrap(vtkSmartPointer<vtkCriticalSection>);
 		VtkCriticalSectionWrap();
 		~VtkCriticalSectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

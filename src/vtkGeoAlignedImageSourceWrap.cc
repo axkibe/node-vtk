@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkGeoAlignedImageSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkGeoAlignedImageSourceWrap::ptpl;
 
 VtkGeoAlignedImageSourceWrap::VtkGeoAlignedImageSourceWrap()
@@ -91,7 +90,6 @@ void VtkGeoAlignedImageSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOverlap", SetOverlap);
 	Nan::SetPrototypeMethod(tpl, "setOverlap", SetOverlap);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -147,7 +145,7 @@ void VtkGeoAlignedImageSourceWrap::GetImage(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -234,7 +232,7 @@ void VtkGeoAlignedImageSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkGeoAlignedImageSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkGeoAlignedImageSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoAlignedImageSourceWrap *w = new VtkGeoAlignedImageSourceWrap();
 	w->native.TakeReference(r);
@@ -286,7 +284,7 @@ void VtkGeoAlignedImageSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkGeoAlignedImageSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkGeoAlignedImageSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoAlignedImageSourceWrap *w = new VtkGeoAlignedImageSourceWrap();
 		w->native.TakeReference(r);

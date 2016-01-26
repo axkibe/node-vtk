@@ -24,7 +24,6 @@ class VtkBMPWriterWrap : public VtkImageWriterWrap
 		VtkBMPWriterWrap(vtkSmartPointer<vtkBMPWriter>);
 		VtkBMPWriterWrap();
 		~VtkBMPWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

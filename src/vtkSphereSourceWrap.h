@@ -24,7 +24,6 @@ class VtkSphereSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkSphereSourceWrap(vtkSmartPointer<vtkSphereSource>);
 		VtkSphereSourceWrap();
 		~VtkSphereSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

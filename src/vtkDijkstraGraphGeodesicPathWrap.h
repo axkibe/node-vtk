@@ -24,7 +24,6 @@ class VtkDijkstraGraphGeodesicPathWrap : public VtkGraphGeodesicPathWrap
 		VtkDijkstraGraphGeodesicPathWrap(vtkSmartPointer<vtkDijkstraGraphGeodesicPath>);
 		VtkDijkstraGraphGeodesicPathWrap();
 		~VtkDijkstraGraphGeodesicPathWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

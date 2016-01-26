@@ -24,7 +24,6 @@ class VtkDepthPeelingPassWrap : public VtkRenderPassWrap
 		VtkDepthPeelingPassWrap(vtkSmartPointer<vtkDepthPeelingPass>);
 		VtkDepthPeelingPassWrap();
 		~VtkDepthPeelingPassWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

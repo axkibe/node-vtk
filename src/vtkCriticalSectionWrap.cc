@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCriticalSectionWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCriticalSectionWrap::ptpl;
 
 VtkCriticalSectionWrap::VtkCriticalSectionWrap()
@@ -65,7 +64,6 @@ void VtkCriticalSectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Unlock", Unlock);
 	Nan::SetPrototypeMethod(tpl, "unlock", Unlock);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkCriticalSectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCriticalSectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCriticalSectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCriticalSectionWrap *w = new VtkCriticalSectionWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkCriticalSectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCriticalSectionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCriticalSectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCriticalSectionWrap *w = new VtkCriticalSectionWrap();
 		w->native.TakeReference(r);

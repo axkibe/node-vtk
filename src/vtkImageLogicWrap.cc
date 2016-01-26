@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageLogicWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageLogicWrap::ptpl;
 
 VtkImageLogicWrap::VtkImageLogicWrap()
@@ -97,7 +96,6 @@ void VtkImageLogicWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputTrueValue", SetOutputTrueValue);
 	Nan::SetPrototypeMethod(tpl, "setOutputTrueValue", SetOutputTrueValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -203,7 +201,7 @@ void VtkImageLogicWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageLogicWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageLogicWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageLogicWrap *w = new VtkImageLogicWrap();
 	w->native.TakeReference(r);
@@ -231,7 +229,7 @@ void VtkImageLogicWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageLogicWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageLogicWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageLogicWrap *w = new VtkImageLogicWrap();
 		w->native.TakeReference(r);

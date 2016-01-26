@@ -24,7 +24,6 @@ class VtkThresholdWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkThresholdWrap(vtkSmartPointer<vtkThreshold>);
 		VtkThresholdWrap();
 		~VtkThresholdWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

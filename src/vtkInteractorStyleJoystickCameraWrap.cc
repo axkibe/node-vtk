@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInteractorStyleJoystickCameraWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInteractorStyleJoystickCameraWrap::ptpl;
 
 VtkInteractorStyleJoystickCameraWrap::VtkInteractorStyleJoystickCameraWrap()
@@ -99,7 +98,6 @@ void VtkInteractorStyleJoystickCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Spin", Spin);
 	Nan::SetPrototypeMethod(tpl, "spin", Spin);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -189,7 +187,7 @@ void VtkInteractorStyleJoystickCameraWrap::NewInstance(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInteractorStyleJoystickCameraWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleJoystickCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleJoystickCameraWrap *w = new VtkInteractorStyleJoystickCameraWrap();
 	w->native.TakeReference(r);
@@ -349,7 +347,7 @@ void VtkInteractorStyleJoystickCameraWrap::SafeDownCast(const Nan::FunctionCallb
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInteractorStyleJoystickCameraWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleJoystickCameraWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleJoystickCameraWrap *w = new VtkInteractorStyleJoystickCameraWrap();
 		w->native.TakeReference(r);

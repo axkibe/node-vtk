@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTerrainDataPointPlacerWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTerrainDataPointPlacerWrap::ptpl;
 
 VtkTerrainDataPointPlacerWrap::VtkTerrainDataPointPlacerWrap()
@@ -77,7 +76,6 @@ void VtkTerrainDataPointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHeightOffset", SetHeightOffset);
 	Nan::SetPrototypeMethod(tpl, "setHeightOffset", SetHeightOffset);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -167,7 +165,7 @@ void VtkTerrainDataPointPlacerWrap::GetPropPicker(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPropPickerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPropPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropPickerWrap *w = new VtkPropPickerWrap();
 	w->native.TakeReference(r);
@@ -212,7 +210,7 @@ void VtkTerrainDataPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTerrainDataPointPlacerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTerrainDataPointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTerrainDataPointPlacerWrap *w = new VtkTerrainDataPointPlacerWrap();
 	w->native.TakeReference(r);
@@ -252,7 +250,7 @@ void VtkTerrainDataPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTerrainDataPointPlacerWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTerrainDataPointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTerrainDataPointPlacerWrap *w = new VtkTerrainDataPointPlacerWrap();
 		w->native.TakeReference(r);

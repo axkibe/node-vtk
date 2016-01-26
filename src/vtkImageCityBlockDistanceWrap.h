@@ -24,7 +24,6 @@ class VtkImageCityBlockDistanceWrap : public VtkImageDecomposeFilterWrap
 		VtkImageCityBlockDistanceWrap(vtkSmartPointer<vtkImageCityBlockDistance>);
 		VtkImageCityBlockDistanceWrap();
 		~VtkImageCityBlockDistanceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

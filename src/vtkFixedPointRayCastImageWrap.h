@@ -24,7 +24,6 @@ class VtkFixedPointRayCastImageWrap : public VtkObjectWrap
 		VtkFixedPointRayCastImageWrap(vtkSmartPointer<vtkFixedPointRayCastImage>);
 		VtkFixedPointRayCastImageWrap();
 		~VtkFixedPointRayCastImageWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkGeoProjectionWrap : public VtkObjectWrap
 		VtkGeoProjectionWrap(vtkSmartPointer<vtkGeoProjection>);
 		VtkGeoProjectionWrap();
 		~VtkGeoProjectionWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

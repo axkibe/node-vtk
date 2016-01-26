@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkScalarBarRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkScalarBarRepresentationWrap::ptpl;
 
 VtkScalarBarRepresentationWrap::VtkScalarBarRepresentationWrap()
@@ -103,7 +102,6 @@ void VtkScalarBarRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVisibility", SetVisibility);
 	Nan::SetPrototypeMethod(tpl, "setVisibility", SetVisibility);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -205,7 +203,7 @@ void VtkScalarBarRepresentationWrap::GetScalarBarActor(const Nan::FunctionCallba
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarBarActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarBarActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarActorWrap *w = new VtkScalarBarActorWrap();
 	w->native.TakeReference(r);
@@ -278,7 +276,7 @@ void VtkScalarBarRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarBarRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarBarRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarRepresentationWrap *w = new VtkScalarBarRepresentationWrap();
 	w->native.TakeReference(r);
@@ -392,7 +390,7 @@ void VtkScalarBarRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkScalarBarRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkScalarBarRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkScalarBarRepresentationWrap *w = new VtkScalarBarRepresentationWrap();
 		w->native.TakeReference(r);

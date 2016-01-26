@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSmartVolumeMapperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSmartVolumeMapperWrap::ptpl;
 
 VtkSmartVolumeMapperWrap::VtkSmartVolumeMapperWrap()
@@ -120,7 +119,6 @@ void VtkSmartVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRequestedRenderModeToRayCastAndTexture", SetRequestedRenderModeToRayCastAndTexture);
 	Nan::SetPrototypeMethod(tpl, "setRequestedRenderModeToRayCastAndTexture", SetRequestedRenderModeToRayCastAndTexture);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -310,7 +308,7 @@ void VtkSmartVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSmartVolumeMapperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSmartVolumeMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSmartVolumeMapperWrap *w = new VtkSmartVolumeMapperWrap();
 	w->native.TakeReference(r);
@@ -383,7 +381,7 @@ void VtkSmartVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSmartVolumeMapperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSmartVolumeMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSmartVolumeMapperWrap *w = new VtkSmartVolumeMapperWrap();
 		w->native.TakeReference(r);

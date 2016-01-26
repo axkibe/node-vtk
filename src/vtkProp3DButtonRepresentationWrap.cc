@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProp3DButtonRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProp3DButtonRepresentationWrap::ptpl;
 
 VtkProp3DButtonRepresentationWrap::VtkProp3DButtonRepresentationWrap()
@@ -113,7 +112,6 @@ void VtkProp3DButtonRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -244,7 +242,7 @@ void VtkProp3DButtonRepresentationWrap::GetButtonProp(const Nan::FunctionCallbac
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProp3DWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProp3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProp3DWrap *w = new VtkProp3DWrap();
 		w->native.TakeReference(r);
@@ -334,7 +332,7 @@ void VtkProp3DButtonRepresentationWrap::NewInstance(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProp3DButtonRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProp3DButtonRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProp3DButtonRepresentationWrap *w = new VtkProp3DButtonRepresentationWrap();
 	w->native.TakeReference(r);
@@ -448,7 +446,7 @@ void VtkProp3DButtonRepresentationWrap::SafeDownCast(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProp3DButtonRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProp3DButtonRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProp3DButtonRepresentationWrap *w = new VtkProp3DButtonRepresentationWrap();
 		w->native.TakeReference(r);

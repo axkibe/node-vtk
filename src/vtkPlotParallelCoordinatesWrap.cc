@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPlotParallelCoordinatesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPlotParallelCoordinatesWrap::ptpl;
 
 VtkPlotParallelCoordinatesWrap::VtkPlotParallelCoordinatesWrap()
@@ -89,7 +88,6 @@ void VtkPlotParallelCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -157,7 +155,7 @@ void VtkPlotParallelCoordinatesWrap::GetLookupTable(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkScalarsToColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
 	w->native.TakeReference(r);
@@ -216,7 +214,7 @@ void VtkPlotParallelCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPlotParallelCoordinatesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPlotParallelCoordinatesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlotParallelCoordinatesWrap *w = new VtkPlotParallelCoordinatesWrap();
 	w->native.TakeReference(r);
@@ -244,7 +242,7 @@ void VtkPlotParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPlotParallelCoordinatesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPlotParallelCoordinatesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotParallelCoordinatesWrap *w = new VtkPlotParallelCoordinatesWrap();
 		w->native.TakeReference(r);

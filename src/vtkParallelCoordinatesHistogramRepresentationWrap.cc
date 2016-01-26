@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkParallelCoordinatesHistogramRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkParallelCoordinatesHistogramRepresentationWrap::ptpl;
 
 VtkParallelCoordinatesHistogramRepresentationWrap::VtkParallelCoordinatesHistogramRepresentationWrap()
@@ -103,7 +102,6 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseHistogramsOn", UseHistogramsOn);
 	Nan::SetPrototypeMethod(tpl, "useHistogramsOn", UseHistogramsOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -243,7 +241,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::NewInstance(const Nan::F
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkParallelCoordinatesHistogramRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkParallelCoordinatesHistogramRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParallelCoordinatesHistogramRepresentationWrap *w = new VtkParallelCoordinatesHistogramRepresentationWrap();
 	w->native.TakeReference(r);
@@ -271,7 +269,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SafeDownCast(const Nan::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkParallelCoordinatesHistogramRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkParallelCoordinatesHistogramRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParallelCoordinatesHistogramRepresentationWrap *w = new VtkParallelCoordinatesHistogramRepresentationWrap();
 		w->native.TakeReference(r);

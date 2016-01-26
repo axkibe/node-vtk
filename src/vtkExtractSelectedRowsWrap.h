@@ -24,7 +24,6 @@ class VtkExtractSelectedRowsWrap : public VtkTableAlgorithmWrap
 		VtkExtractSelectedRowsWrap(vtkSmartPointer<vtkExtractSelectedRows>);
 		VtkExtractSelectedRowsWrap();
 		~VtkExtractSelectedRowsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

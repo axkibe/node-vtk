@@ -24,7 +24,6 @@ class VtkSplineWidget2Wrap : public VtkAbstractWidgetWrap
 		VtkSplineWidget2Wrap(vtkSmartPointer<vtkSplineWidget2>);
 		VtkSplineWidget2Wrap();
 		~VtkSplineWidget2Wrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

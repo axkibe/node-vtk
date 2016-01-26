@@ -24,7 +24,6 @@ class VtkImageOpenClose3DWrap : public VtkImageAlgorithmWrap
 		VtkImageOpenClose3DWrap(vtkSmartPointer<vtkImageOpenClose3D>);
 		VtkImageOpenClose3DWrap();
 		~VtkImageOpenClose3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

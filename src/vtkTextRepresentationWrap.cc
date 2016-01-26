@@ -17,7 +17,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTextRepresentationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTextRepresentationWrap::ptpl;
 
 VtkTextRepresentationWrap::VtkTextRepresentationWrap()
@@ -106,7 +105,6 @@ void VtkTextRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWindowLocation", SetWindowLocation);
 	Nan::SetPrototypeMethod(tpl, "setWindowLocation", SetWindowLocation);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -208,7 +206,7 @@ void VtkTextRepresentationWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextActorWrap *w = new VtkTextActorWrap();
 	w->native.TakeReference(r);
@@ -281,7 +279,7 @@ void VtkTextRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextRepresentationWrap *w = new VtkTextRepresentationWrap();
 	w->native.TakeReference(r);
@@ -395,7 +393,7 @@ void VtkTextRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTextRepresentationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTextRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextRepresentationWrap *w = new VtkTextRepresentationWrap();
 		w->native.TakeReference(r);

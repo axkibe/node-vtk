@@ -24,7 +24,6 @@ class VtkGeoGraticuleWrap : public VtkPolyDataAlgorithmWrap
 		VtkGeoGraticuleWrap(vtkSmartPointer<vtkGeoGraticule>);
 		VtkGeoGraticuleWrap();
 		~VtkGeoGraticuleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

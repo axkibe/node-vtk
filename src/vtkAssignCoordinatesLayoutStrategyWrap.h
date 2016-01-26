@@ -24,7 +24,6 @@ class VtkAssignCoordinatesLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		VtkAssignCoordinatesLayoutStrategyWrap(vtkSmartPointer<vtkAssignCoordinatesLayoutStrategy>);
 		VtkAssignCoordinatesLayoutStrategyWrap();
 		~VtkAssignCoordinatesLayoutStrategyWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

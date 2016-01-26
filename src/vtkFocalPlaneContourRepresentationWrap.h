@@ -24,7 +24,6 @@ class VtkFocalPlaneContourRepresentationWrap : public VtkContourRepresentationWr
 		VtkFocalPlaneContourRepresentationWrap(vtkSmartPointer<vtkFocalPlaneContourRepresentation>);
 		VtkFocalPlaneContourRepresentationWrap();
 		~VtkFocalPlaneContourRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

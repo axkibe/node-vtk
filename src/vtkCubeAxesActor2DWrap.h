@@ -24,7 +24,6 @@ class VtkCubeAxesActor2DWrap : public VtkActor2DWrap
 		VtkCubeAxesActor2DWrap(vtkSmartPointer<vtkCubeAxesActor2D>);
 		VtkCubeAxesActor2DWrap();
 		~VtkCubeAxesActor2DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

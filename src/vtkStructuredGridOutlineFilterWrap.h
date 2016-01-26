@@ -24,7 +24,6 @@ class VtkStructuredGridOutlineFilterWrap : public VtkPolyDataAlgorithmWrap
 		VtkStructuredGridOutlineFilterWrap(vtkSmartPointer<vtkStructuredGridOutlineFilter>);
 		VtkStructuredGridOutlineFilterWrap();
 		~VtkStructuredGridOutlineFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

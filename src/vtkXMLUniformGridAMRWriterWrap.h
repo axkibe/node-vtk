@@ -24,7 +24,6 @@ class VtkXMLUniformGridAMRWriterWrap : public VtkXMLCompositeDataWriterWrap
 		VtkXMLUniformGridAMRWriterWrap(vtkSmartPointer<vtkXMLUniformGridAMRWriter>);
 		VtkXMLUniformGridAMRWriterWrap();
 		~VtkXMLUniformGridAMRWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

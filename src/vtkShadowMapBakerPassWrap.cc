@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkShadowMapBakerPassWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkShadowMapBakerPassWrap::ptpl;
 
 VtkShadowMapBakerPassWrap::VtkShadowMapBakerPassWrap()
@@ -84,7 +83,6 @@ void VtkShadowMapBakerPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUpToDate", SetUpToDate);
 	Nan::SetPrototypeMethod(tpl, "setUpToDate", SetUpToDate);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -140,7 +138,7 @@ void VtkShadowMapBakerPassWrap::GetCompositeZPass(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderPassWrap *w = new VtkRenderPassWrap();
 	w->native.TakeReference(r);
@@ -163,7 +161,7 @@ void VtkShadowMapBakerPassWrap::GetOpaquePass(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderPassWrap *w = new VtkRenderPassWrap();
 	w->native.TakeReference(r);
@@ -208,7 +206,7 @@ void VtkShadowMapBakerPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkShadowMapBakerPassWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkShadowMapBakerPassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkShadowMapBakerPassWrap *w = new VtkShadowMapBakerPassWrap();
 	w->native.TakeReference(r);
@@ -231,7 +229,7 @@ void VtkShadowMapBakerPassWrap::OCCLUDER(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -254,7 +252,7 @@ void VtkShadowMapBakerPassWrap::RECEIVER(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -302,7 +300,7 @@ void VtkShadowMapBakerPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkShadowMapBakerPassWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkShadowMapBakerPassWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkShadowMapBakerPassWrap *w = new VtkShadowMapBakerPassWrap();
 		w->native.TakeReference(r);

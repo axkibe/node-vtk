@@ -24,7 +24,6 @@ class VtkLevelIdScalarsWrap : public VtkOverlappingAMRLevelIdScalarsWrap
 		VtkLevelIdScalarsWrap(vtkSmartPointer<vtkLevelIdScalars>);
 		VtkLevelIdScalarsWrap();
 		~VtkLevelIdScalarsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

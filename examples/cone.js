@@ -4,28 +4,32 @@ var vtk, source, mapper, actor, renderer, renderWindow, renderWindowInteractor;
 
 vtk = require('./vtk');
 
-source = new vtk.ConeSource( );
+source = new vtk.ConeSource();
 source.setResolution( 10 );
 
-mapper = new vtk.PolyDataMapper( );
+console.log( 'source instanceof vtk.ConeSource: ', source instanceof vtk.ConeSource );
+console.log( 'source instanceof vtk.Object: ', source instanceof vtk.Object );
+console.log( 'source instanceof vtk.CubeSource: ', source instanceof vtk.CubeSource );
 
-mapper.setInputConnection( 0, source.getOutputPort( ) );
+mapper = new vtk.PolyDataMapper();
 
-actor = new vtk.Actor( );
+mapper.setInputConnection( source.getOutputPort() );
+
+actor = new vtk.Actor();
 actor.setMapper( mapper );
 
-renderer = new vtk.Renderer( );
+renderer = new vtk.Renderer();
 renderer.addActor( actor );
 renderer.setBackground( 0.3, 0.2, 0.1 );
-renderer.resetCamera( );
+renderer.resetCamera();
 
-renderWindow = new vtk.RenderWindow( );
+renderWindow = new vtk.RenderWindow();
 renderWindow.addRenderer( renderer );
 
-renderWindowInteractor = new vtk.RenderWindowInteractor( );
+renderWindowInteractor = new vtk.RenderWindowInteractor();
 renderWindowInteractor.setRenderWindow( renderWindow );
-renderWindowInteractor.setInteractorStyle( new vtk.InteractorStyleTrackballCamera( ) );
+renderWindowInteractor.setInteractorStyle( new vtk.InteractorStyleTrackballCamera() );
 
 renderWindow.render();
 
-renderWindowInteractor.start( );
+renderWindowInteractor.start();

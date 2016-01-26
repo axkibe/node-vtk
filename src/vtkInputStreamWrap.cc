@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInputStreamWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInputStreamWrap::ptpl;
 
 VtkInputStreamWrap::VtkInputStreamWrap()
@@ -65,7 +64,6 @@ void VtkInputStreamWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartReading", StartReading);
 	Nan::SetPrototypeMethod(tpl, "startReading", StartReading);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkInputStreamWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInputStreamWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInputStreamWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInputStreamWrap *w = new VtkInputStreamWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkInputStreamWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInputStreamWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInputStreamWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInputStreamWrap *w = new VtkInputStreamWrap();
 		w->native.TakeReference(r);

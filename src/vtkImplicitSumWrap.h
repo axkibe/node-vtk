@@ -24,7 +24,6 @@ class VtkImplicitSumWrap : public VtkImplicitFunctionWrap
 		VtkImplicitSumWrap(vtkSmartPointer<vtkImplicitSum>);
 		VtkImplicitSumWrap();
 		~VtkImplicitSumWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

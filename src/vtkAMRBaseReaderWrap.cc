@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAMRBaseReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAMRBaseReaderWrap::ptpl;
 
 VtkAMRBaseReaderWrap::VtkAMRBaseReaderWrap()
@@ -128,7 +127,6 @@ void VtkAMRBaseReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointArrayStatus", SetPointArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setPointArrayStatus", SetPointArrayStatus);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -237,7 +235,7 @@ void VtkAMRBaseReaderWrap::GetCellDataArraySelection(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArraySelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArraySelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArraySelectionWrap *w = new VtkDataArraySelectionWrap();
 	w->native.TakeReference(r);
@@ -274,7 +272,7 @@ void VtkAMRBaseReaderWrap::GetController(const Nan::FunctionCallbackInfo<v8::Val
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMultiProcessControllerWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
 	w->native.TakeReference(r);
@@ -424,7 +422,7 @@ void VtkAMRBaseReaderWrap::GetPointDataArraySelection(const Nan::FunctionCallbac
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataArraySelectionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataArraySelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArraySelectionWrap *w = new VtkDataArraySelectionWrap();
 	w->native.TakeReference(r);
@@ -481,7 +479,7 @@ void VtkAMRBaseReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAMRBaseReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAMRBaseReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRBaseReaderWrap *w = new VtkAMRBaseReaderWrap();
 	w->native.TakeReference(r);
@@ -509,7 +507,7 @@ void VtkAMRBaseReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAMRBaseReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAMRBaseReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRBaseReaderWrap *w = new VtkAMRBaseReaderWrap();
 		w->native.TakeReference(r);

@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageRGBToHSVWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageRGBToHSVWrap::ptpl;
 
 VtkImageRGBToHSVWrap::VtkImageRGBToHSVWrap()
@@ -66,7 +65,6 @@ void VtkImageRGBToHSVWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximum", SetMaximum);
 	Nan::SetPrototypeMethod(tpl, "setMaximum", SetMaximum);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -158,7 +156,7 @@ void VtkImageRGBToHSVWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageRGBToHSVWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageRGBToHSVWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageRGBToHSVWrap *w = new VtkImageRGBToHSVWrap();
 	w->native.TakeReference(r);
@@ -186,7 +184,7 @@ void VtkImageRGBToHSVWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageRGBToHSVWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageRGBToHSVWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageRGBToHSVWrap *w = new VtkImageRGBToHSVWrap();
 		w->native.TakeReference(r);

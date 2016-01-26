@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkContourWidgetWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkContourWidgetWrap::ptpl;
 
 VtkContourWidgetWrap::VtkContourWidgetWrap()
@@ -123,7 +122,6 @@ void VtkContourWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidgetState", SetWidgetState);
 	Nan::SetPrototypeMethod(tpl, "setWidgetState", SetWidgetState);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -303,7 +301,7 @@ void VtkContourWidgetWrap::GetContourRepresentation(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContourRepresentationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContourRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContourRepresentationWrap *w = new VtkContourRepresentationWrap();
 	w->native.TakeReference(r);
@@ -410,7 +408,7 @@ void VtkContourWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkContourWidgetWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkContourWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkContourWidgetWrap *w = new VtkContourWidgetWrap();
 	w->native.TakeReference(r);
@@ -438,7 +436,7 @@ void VtkContourWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkContourWidgetWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkContourWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkContourWidgetWrap *w = new VtkContourWidgetWrap();
 		w->native.TakeReference(r);

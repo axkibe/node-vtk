@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImplicitSelectionLoopWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImplicitSelectionLoopWrap::ptpl;
 
 VtkImplicitSelectionLoopWrap::VtkImplicitSelectionLoopWrap()
@@ -85,7 +84,6 @@ void VtkImplicitSelectionLoopWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNormal", SetNormal);
 	Nan::SetPrototypeMethod(tpl, "setNormal", SetNormal);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -208,7 +206,7 @@ void VtkImplicitSelectionLoopWrap::GetLoop(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
 	w->native.TakeReference(r);
@@ -253,7 +251,7 @@ void VtkImplicitSelectionLoopWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImplicitSelectionLoopWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImplicitSelectionLoopWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitSelectionLoopWrap *w = new VtkImplicitSelectionLoopWrap();
 	w->native.TakeReference(r);
@@ -281,7 +279,7 @@ void VtkImplicitSelectionLoopWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImplicitSelectionLoopWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImplicitSelectionLoopWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitSelectionLoopWrap *w = new VtkImplicitSelectionLoopWrap();
 		w->native.TakeReference(r);

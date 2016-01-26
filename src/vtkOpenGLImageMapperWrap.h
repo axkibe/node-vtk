@@ -24,7 +24,6 @@ class VtkOpenGLImageMapperWrap : public VtkImageMapperWrap
 		VtkOpenGLImageMapperWrap(vtkSmartPointer<vtkOpenGLImageMapper>);
 		VtkOpenGLImageMapperWrap();
 		~VtkOpenGLImageMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

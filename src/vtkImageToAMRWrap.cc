@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageToAMRWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageToAMRWrap::ptpl;
 
 VtkImageToAMRWrap::VtkImageToAMRWrap()
@@ -96,7 +95,6 @@ void VtkImageToAMRWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRefinementRatio", SetRefinementRatio);
 	Nan::SetPrototypeMethod(tpl, "setRefinementRatio", SetRefinementRatio);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -300,7 +298,7 @@ void VtkImageToAMRWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageToAMRWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageToAMRWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageToAMRWrap *w = new VtkImageToAMRWrap();
 	w->native.TakeReference(r);
@@ -328,7 +326,7 @@ void VtkImageToAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageToAMRWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageToAMRWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageToAMRWrap *w = new VtkImageToAMRWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkStreamerWrap : public VtkPolyDataAlgorithmWrap
 		VtkStreamerWrap(vtkSmartPointer<vtkStreamer>);
 		VtkStreamerWrap();
 		~VtkStreamerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

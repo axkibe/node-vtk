@@ -24,7 +24,6 @@ class VtkMetaImageWriterWrap : public VtkImageWriterWrap
 		VtkMetaImageWriterWrap(vtkSmartPointer<vtkMetaImageWriter>);
 		VtkMetaImageWriterWrap();
 		~VtkMetaImageWriterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

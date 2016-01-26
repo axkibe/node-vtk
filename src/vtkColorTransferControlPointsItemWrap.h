@@ -24,7 +24,6 @@ class VtkColorTransferControlPointsItemWrap : public VtkControlPointsItemWrap
 		VtkColorTransferControlPointsItemWrap(vtkSmartPointer<vtkColorTransferControlPointsItem>);
 		VtkColorTransferControlPointsItemWrap();
 		~VtkColorTransferControlPointsItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

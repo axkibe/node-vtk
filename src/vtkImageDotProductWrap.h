@@ -24,7 +24,6 @@ class VtkImageDotProductWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageDotProductWrap(vtkSmartPointer<vtkImageDotProduct>);
 		VtkImageDotProductWrap();
 		~VtkImageDotProductWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

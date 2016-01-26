@@ -24,7 +24,6 @@ class VtkSQLDatabaseSchemaWrap : public VtkObjectWrap
 		VtkSQLDatabaseSchemaWrap(vtkSmartPointer<vtkSQLDatabaseSchema>);
 		VtkSQLDatabaseSchemaWrap();
 		~VtkSQLDatabaseSchemaWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

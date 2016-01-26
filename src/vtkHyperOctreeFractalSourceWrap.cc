@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkHyperOctreeFractalSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkHyperOctreeFractalSourceWrap::ptpl;
 
 VtkHyperOctreeFractalSourceWrap::VtkHyperOctreeFractalSourceWrap()
@@ -99,7 +98,6 @@ void VtkHyperOctreeFractalSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpanThreshold", SetSpanThreshold);
 	Nan::SetPrototypeMethod(tpl, "setSpanThreshold", SetSpanThreshold);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -261,7 +259,7 @@ void VtkHyperOctreeFractalSourceWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHyperOctreeFractalSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeFractalSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeFractalSourceWrap *w = new VtkHyperOctreeFractalSourceWrap();
 	w->native.TakeReference(r);
@@ -289,7 +287,7 @@ void VtkHyperOctreeFractalSourceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHyperOctreeFractalSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeFractalSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeFractalSourceWrap *w = new VtkHyperOctreeFractalSourceWrap();
 		w->native.TakeReference(r);

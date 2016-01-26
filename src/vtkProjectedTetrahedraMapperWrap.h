@@ -24,7 +24,6 @@ class VtkProjectedTetrahedraMapperWrap : public VtkUnstructuredGridVolumeMapperW
 		VtkProjectedTetrahedraMapperWrap(vtkSmartPointer<vtkProjectedTetrahedraMapper>);
 		VtkProjectedTetrahedraMapperWrap();
 		~VtkProjectedTetrahedraMapperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

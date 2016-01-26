@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSplitFieldWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSplitFieldWrap::ptpl;
 
 VtkSplitFieldWrap::VtkSplitFieldWrap()
@@ -66,7 +65,6 @@ void VtkSplitFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Split", Split);
 	Nan::SetPrototypeMethod(tpl, "split", Split);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -144,7 +142,7 @@ void VtkSplitFieldWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSplitFieldWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSplitFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSplitFieldWrap *w = new VtkSplitFieldWrap();
 	w->native.TakeReference(r);
@@ -172,7 +170,7 @@ void VtkSplitFieldWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSplitFieldWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSplitFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSplitFieldWrap *w = new VtkSplitFieldWrap();
 		w->native.TakeReference(r);

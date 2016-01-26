@@ -24,7 +24,6 @@ class VtkImageMaskBitsWrap : public VtkThreadedImageAlgorithmWrap
 		VtkImageMaskBitsWrap(vtkSmartPointer<vtkImageMaskBits>);
 		VtkImageMaskBitsWrap();
 		~VtkImageMaskBitsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

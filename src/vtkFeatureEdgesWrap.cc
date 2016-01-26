@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkFeatureEdgesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkFeatureEdgesWrap::ptpl;
 
 VtkFeatureEdgesWrap::VtkFeatureEdgesWrap()
@@ -148,7 +147,6 @@ void VtkFeatureEdgesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -372,7 +370,7 @@ void VtkFeatureEdgesWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -483,7 +481,7 @@ void VtkFeatureEdgesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkFeatureEdgesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkFeatureEdgesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFeatureEdgesWrap *w = new VtkFeatureEdgesWrap();
 	w->native.TakeReference(r);
@@ -535,7 +533,7 @@ void VtkFeatureEdgesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkFeatureEdgesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkFeatureEdgesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFeatureEdgesWrap *w = new VtkFeatureEdgesWrap();
 		w->native.TakeReference(r);

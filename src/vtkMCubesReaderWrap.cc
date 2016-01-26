@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMCubesReaderWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMCubesReaderWrap::ptpl;
 
 VtkMCubesReaderWrap::VtkMCubesReaderWrap()
@@ -145,7 +144,6 @@ void VtkMCubesReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwapBytesOn", SwapBytesOn);
 	Nan::SetPrototypeMethod(tpl, "swapBytesOn", SwapBytesOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -349,7 +347,7 @@ void VtkMCubesReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -422,7 +420,7 @@ void VtkMCubesReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMCubesReaderWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMCubesReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMCubesReaderWrap *w = new VtkMCubesReaderWrap();
 	w->native.TakeReference(r);
@@ -474,7 +472,7 @@ void VtkMCubesReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMCubesReaderWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMCubesReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMCubesReaderWrap *w = new VtkMCubesReaderWrap();
 		w->native.TakeReference(r);

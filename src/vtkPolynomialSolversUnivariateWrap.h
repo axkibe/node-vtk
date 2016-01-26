@@ -24,7 +24,6 @@ class VtkPolynomialSolversUnivariateWrap : public VtkObjectWrap
 		VtkPolynomialSolversUnivariateWrap(vtkSmartPointer<vtkPolynomialSolversUnivariate>);
 		VtkPolynomialSolversUnivariateWrap();
 		~VtkPolynomialSolversUnivariateWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

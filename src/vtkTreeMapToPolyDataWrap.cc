@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkTreeMapToPolyDataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkTreeMapToPolyDataWrap::ptpl;
 
 VtkTreeMapToPolyDataWrap::VtkTreeMapToPolyDataWrap()
@@ -76,7 +75,6 @@ void VtkTreeMapToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRectanglesArrayName", SetRectanglesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setRectanglesArrayName", SetRectanglesArrayName);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -194,7 +192,7 @@ void VtkTreeMapToPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTreeMapToPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTreeMapToPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeMapToPolyDataWrap *w = new VtkTreeMapToPolyDataWrap();
 	w->native.TakeReference(r);
@@ -222,7 +220,7 @@ void VtkTreeMapToPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkTreeMapToPolyDataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkTreeMapToPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeMapToPolyDataWrap *w = new VtkTreeMapToPolyDataWrap();
 		w->native.TakeReference(r);

@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkColorMaterialHelperWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkColorMaterialHelperWrap::ptpl;
 
 VtkColorMaterialHelperWrap::VtkColorMaterialHelperWrap()
@@ -68,7 +67,6 @@ void VtkColorMaterialHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUniformVariables", SetUniformVariables);
 	Nan::SetPrototypeMethod(tpl, "setUniformVariables", SetUniformVariables);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -146,7 +144,7 @@ void VtkColorMaterialHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkColorMaterialHelperWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkColorMaterialHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorMaterialHelperWrap *w = new VtkColorMaterialHelperWrap();
 	w->native.TakeReference(r);
@@ -198,7 +196,7 @@ void VtkColorMaterialHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkColorMaterialHelperWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkColorMaterialHelperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkColorMaterialHelperWrap *w = new VtkColorMaterialHelperWrap();
 		w->native.TakeReference(r);

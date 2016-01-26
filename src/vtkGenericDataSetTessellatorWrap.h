@@ -24,7 +24,6 @@ class VtkGenericDataSetTessellatorWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkGenericDataSetTessellatorWrap(vtkSmartPointer<vtkGenericDataSetTessellator>);
 		VtkGenericDataSetTessellatorWrap();
 		~VtkGenericDataSetTessellatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

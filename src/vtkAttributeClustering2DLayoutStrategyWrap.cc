@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkAttributeClustering2DLayoutStrategyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkAttributeClustering2DLayoutStrategyWrap::ptpl;
 
 VtkAttributeClustering2DLayoutStrategyWrap::VtkAttributeClustering2DLayoutStrategyWrap()
@@ -123,7 +122,6 @@ void VtkAttributeClustering2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexAttribute", SetVertexAttribute);
 	Nan::SetPrototypeMethod(tpl, "setVertexAttribute", SetVertexAttribute);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -421,7 +419,7 @@ void VtkAttributeClustering2DLayoutStrategyWrap::NewInstance(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAttributeClustering2DLayoutStrategyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAttributeClustering2DLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAttributeClustering2DLayoutStrategyWrap *w = new VtkAttributeClustering2DLayoutStrategyWrap();
 	w->native.TakeReference(r);
@@ -449,7 +447,7 @@ void VtkAttributeClustering2DLayoutStrategyWrap::SafeDownCast(const Nan::Functio
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkAttributeClustering2DLayoutStrategyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkAttributeClustering2DLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAttributeClustering2DLayoutStrategyWrap *w = new VtkAttributeClustering2DLayoutStrategyWrap();
 		w->native.TakeReference(r);

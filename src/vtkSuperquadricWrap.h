@@ -24,7 +24,6 @@ class VtkSuperquadricWrap : public VtkImplicitFunctionWrap
 		VtkSuperquadricWrap(vtkSmartPointer<vtkSuperquadric>);
 		VtkSuperquadricWrap();
 		~VtkSuperquadricWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkContourTriangulatorWrap : public VtkPolyDataAlgorithmWrap
 		VtkContourTriangulatorWrap(vtkSmartPointer<vtkContourTriangulator>);
 		VtkContourTriangulatorWrap();
 		~VtkContourTriangulatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

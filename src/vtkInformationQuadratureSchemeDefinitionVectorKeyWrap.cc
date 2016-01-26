@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::ptpl;
 
 VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::VtkInformationQuadratureSchemeDefinitionVectorKeyWrap()
@@ -96,7 +95,6 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Size", Size);
 	Nan::SetPrototypeMethod(tpl, "size", Size);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -216,7 +214,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::Get(const Nan::Funct
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkQuadratureSchemeDefinitionWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkQuadratureSchemeDefinitionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkQuadratureSchemeDefinitionWrap *w = new VtkQuadratureSchemeDefinitionWrap();
 			w->native.TakeReference(r);
@@ -301,7 +299,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::NewInstance(const Na
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationQuadratureSchemeDefinitionVectorKeyWrap *w = new VtkInformationQuadratureSchemeDefinitionVectorKeyWrap();
 	w->native.TakeReference(r);
@@ -380,7 +378,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::SafeDownCast(const N
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationQuadratureSchemeDefinitionVectorKeyWrap *w = new VtkInformationQuadratureSchemeDefinitionVectorKeyWrap();
 		w->native.TakeReference(r);

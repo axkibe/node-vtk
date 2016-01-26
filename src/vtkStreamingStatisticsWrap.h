@@ -24,7 +24,6 @@ class VtkStreamingStatisticsWrap : public VtkTableAlgorithmWrap
 		VtkStreamingStatisticsWrap(vtkSmartPointer<vtkStreamingStatistics>);
 		VtkStreamingStatisticsWrap();
 		~VtkStreamingStatisticsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

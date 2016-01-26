@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkProgrammableGlyphFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkProgrammableGlyphFilterWrap::ptpl;
 
 VtkProgrammableGlyphFilterWrap::VtkProgrammableGlyphFilterWrap()
@@ -90,7 +89,6 @@ void VtkProgrammableGlyphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -174,7 +172,7 @@ void VtkProgrammableGlyphFilterWrap::GetPointData(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPointDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPointDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointDataWrap *w = new VtkPointDataWrap();
 	w->native.TakeReference(r);
@@ -197,7 +195,7 @@ void VtkProgrammableGlyphFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPolyDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
 	w->native.TakeReference(r);
@@ -242,7 +240,7 @@ void VtkProgrammableGlyphFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkProgrammableGlyphFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkProgrammableGlyphFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProgrammableGlyphFilterWrap *w = new VtkProgrammableGlyphFilterWrap();
 	w->native.TakeReference(r);
@@ -270,7 +268,7 @@ void VtkProgrammableGlyphFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkProgrammableGlyphFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkProgrammableGlyphFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProgrammableGlyphFilterWrap *w = new VtkProgrammableGlyphFilterWrap();
 		w->native.TakeReference(r);

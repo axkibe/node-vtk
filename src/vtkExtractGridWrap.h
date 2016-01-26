@@ -24,7 +24,6 @@ class VtkExtractGridWrap : public VtkStructuredGridAlgorithmWrap
 		VtkExtractGridWrap(vtkSmartPointer<vtkExtractGrid>);
 		VtkExtractGridWrap();
 		~VtkExtractGridWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

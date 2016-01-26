@@ -24,7 +24,6 @@ class VtkContourWidgetWrap : public VtkAbstractWidgetWrap
 		VtkContourWidgetWrap(vtkSmartPointer<vtkContourWidget>);
 		VtkContourWidgetWrap();
 		~VtkContourWidgetWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

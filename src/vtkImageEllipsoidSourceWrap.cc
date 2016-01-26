@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageEllipsoidSourceWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageEllipsoidSourceWrap::ptpl;
 
 VtkImageEllipsoidSourceWrap::VtkImageEllipsoidSourceWrap()
@@ -117,7 +116,6 @@ void VtkImageEllipsoidSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -237,7 +235,7 @@ void VtkImageEllipsoidSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageEllipsoidSourceWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageEllipsoidSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageEllipsoidSourceWrap *w = new VtkImageEllipsoidSourceWrap();
 	w->native.TakeReference(r);
@@ -265,7 +263,7 @@ void VtkImageEllipsoidSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageEllipsoidSourceWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageEllipsoidSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageEllipsoidSourceWrap *w = new VtkImageEllipsoidSourceWrap();
 		w->native.TakeReference(r);

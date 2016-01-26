@@ -24,7 +24,6 @@ class VtkColorTransferFunctionItemWrap : public VtkScalarsToColorsItemWrap
 		VtkColorTransferFunctionItemWrap(vtkSmartPointer<vtkColorTransferFunctionItem>);
 		VtkColorTransferFunctionItemWrap();
 		~VtkColorTransferFunctionItemWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkMCubesReaderWrap : public VtkPolyDataAlgorithmWrap
 		VtkMCubesReaderWrap(vtkSmartPointer<vtkMCubesReader>);
 		VtkMCubesReaderWrap();
 		~VtkMCubesReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

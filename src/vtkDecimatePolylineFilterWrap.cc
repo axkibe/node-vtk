@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkDecimatePolylineFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkDecimatePolylineFilterWrap::ptpl;
 
 VtkDecimatePolylineFilterWrap::VtkDecimatePolylineFilterWrap()
@@ -78,7 +77,6 @@ void VtkDecimatePolylineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTargetReduction", SetTargetReduction);
 	Nan::SetPrototypeMethod(tpl, "setTargetReduction", SetTargetReduction);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -212,7 +210,7 @@ void VtkDecimatePolylineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDecimatePolylineFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDecimatePolylineFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDecimatePolylineFilterWrap *w = new VtkDecimatePolylineFilterWrap();
 	w->native.TakeReference(r);
@@ -240,7 +238,7 @@ void VtkDecimatePolylineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkDecimatePolylineFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkDecimatePolylineFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDecimatePolylineFilterWrap *w = new VtkDecimatePolylineFilterWrap();
 		w->native.TakeReference(r);

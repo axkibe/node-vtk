@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkSurfaceLICDefaultPainterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkSurfaceLICDefaultPainterWrap::ptpl;
 
 VtkSurfaceLICDefaultPainterWrap::VtkSurfaceLICDefaultPainterWrap()
@@ -67,7 +66,6 @@ void VtkSurfaceLICDefaultPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSurfaceLICPainter", SetSurfaceLICPainter);
 	Nan::SetPrototypeMethod(tpl, "setSurfaceLICPainter", SetSurfaceLICPainter);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkSurfaceLICDefaultPainterWrap::GetSurfaceLICPainter(const Nan::FunctionCa
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSurfaceLICPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSurfaceLICPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSurfaceLICPainterWrap *w = new VtkSurfaceLICPainterWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkSurfaceLICDefaultPainterWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkSurfaceLICDefaultPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkSurfaceLICDefaultPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSurfaceLICDefaultPainterWrap *w = new VtkSurfaceLICDefaultPainterWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkSurfaceLICDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkSurfaceLICDefaultPainterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkSurfaceLICDefaultPainterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSurfaceLICDefaultPainterWrap *w = new VtkSurfaceLICDefaultPainterWrap();
 		w->native.TakeReference(r);

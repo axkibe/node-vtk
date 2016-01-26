@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkPerspectiveTransformWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkPerspectiveTransformWrap::ptpl;
 
 VtkPerspectiveTransformWrap::VtkPerspectiveTransformWrap()
@@ -149,7 +148,6 @@ void VtkPerspectiveTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -368,7 +366,7 @@ void VtkPerspectiveTransformWrap::GetConcatenatedTransform(const Nan::FunctionCa
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkHomogeneousTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkHomogeneousTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHomogeneousTransformWrap *w = new VtkHomogeneousTransformWrap();
 		w->native.TakeReference(r);
@@ -394,7 +392,7 @@ void VtkPerspectiveTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkHomogeneousTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkHomogeneousTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHomogeneousTransformWrap *w = new VtkHomogeneousTransformWrap();
 	w->native.TakeReference(r);
@@ -491,7 +489,7 @@ void VtkPerspectiveTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkAbstractTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
 	w->native.TakeReference(r);
@@ -514,7 +512,7 @@ void VtkPerspectiveTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPerspectiveTransformWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPerspectiveTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPerspectiveTransformWrap *w = new VtkPerspectiveTransformWrap();
 	w->native.TakeReference(r);
@@ -748,7 +746,7 @@ void VtkPerspectiveTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPerspectiveTransformWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPerspectiveTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPerspectiveTransformWrap *w = new VtkPerspectiveTransformWrap();
 		w->native.TakeReference(r);

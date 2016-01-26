@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkLongLongArrayWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkLongLongArrayWrap::ptpl;
 
 VtkLongLongArrayWrap::VtkLongLongArrayWrap()
@@ -63,7 +62,6 @@ void VtkLongLongArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -155,7 +153,7 @@ void VtkLongLongArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkLongLongArrayWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkLongLongArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLongLongArrayWrap *w = new VtkLongLongArrayWrap();
 	w->native.TakeReference(r);
@@ -183,7 +181,7 @@ void VtkLongLongArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkLongLongArrayWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkLongLongArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLongLongArrayWrap *w = new VtkLongLongArrayWrap();
 		w->native.TakeReference(r);

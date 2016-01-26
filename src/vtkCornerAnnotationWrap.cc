@@ -18,7 +18,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCornerAnnotationWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCornerAnnotationWrap::ptpl;
 
 VtkCornerAnnotationWrap::VtkCornerAnnotationWrap()
@@ -164,7 +163,6 @@ void VtkCornerAnnotationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowSliceAndImageOn", ShowSliceAndImageOn);
 	Nan::SetPrototypeMethod(tpl, "showSliceAndImageOn", ShowSliceAndImageOn);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -252,7 +250,7 @@ void VtkCornerAnnotationWrap::GetImageActor(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageActorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageActorWrap *w = new VtkImageActorWrap();
 	w->native.TakeReference(r);
@@ -408,7 +406,7 @@ void VtkCornerAnnotationWrap::GetTextProperty(const Nan::FunctionCallbackInfo<v8
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkTextPropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
 	w->native.TakeReference(r);
@@ -431,7 +429,7 @@ void VtkCornerAnnotationWrap::GetWindowLevel(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageMapToWindowLevelColorsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageMapToWindowLevelColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMapToWindowLevelColorsWrap *w = new VtkImageMapToWindowLevelColorsWrap();
 	w->native.TakeReference(r);
@@ -490,7 +488,7 @@ void VtkCornerAnnotationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCornerAnnotationWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCornerAnnotationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCornerAnnotationWrap *w = new VtkCornerAnnotationWrap();
 	w->native.TakeReference(r);
@@ -604,7 +602,7 @@ void VtkCornerAnnotationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCornerAnnotationWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCornerAnnotationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCornerAnnotationWrap *w = new VtkCornerAnnotationWrap();
 		w->native.TakeReference(r);

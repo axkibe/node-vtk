@@ -24,7 +24,6 @@ class VtkGlobFileNamesWrap : public VtkObjectWrap
 		VtkGlobFileNamesWrap(vtkSmartPointer<vtkGlobFileNames>);
 		VtkGlobFileNamesWrap();
 		~VtkGlobFileNamesWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

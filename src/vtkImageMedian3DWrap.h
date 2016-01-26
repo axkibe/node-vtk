@@ -24,7 +24,6 @@ class VtkImageMedian3DWrap : public VtkImageSpatialAlgorithmWrap
 		VtkImageMedian3DWrap(vtkSmartPointer<vtkImageMedian3D>);
 		VtkImageMedian3DWrap();
 		~VtkImageMedian3DWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

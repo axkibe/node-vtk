@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkXMLRectilinearGridWriterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkXMLRectilinearGridWriterWrap::ptpl;
 
 VtkXMLRectilinearGridWriterWrap::VtkXMLRectilinearGridWriterWrap()
@@ -67,7 +66,6 @@ void VtkXMLRectilinearGridWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -137,7 +135,7 @@ void VtkXMLRectilinearGridWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRectilinearGridWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRectilinearGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearGridWrap *w = new VtkRectilinearGridWrap();
 	w->native.TakeReference(r);
@@ -182,7 +180,7 @@ void VtkXMLRectilinearGridWriterWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkXMLRectilinearGridWriterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkXMLRectilinearGridWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLRectilinearGridWriterWrap *w = new VtkXMLRectilinearGridWriterWrap();
 	w->native.TakeReference(r);
@@ -210,7 +208,7 @@ void VtkXMLRectilinearGridWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkXMLRectilinearGridWriterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkXMLRectilinearGridWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLRectilinearGridWriterWrap *w = new VtkXMLRectilinearGridWriterWrap();
 		w->native.TakeReference(r);

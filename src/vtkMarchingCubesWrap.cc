@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMarchingCubesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMarchingCubesWrap::ptpl;
 
 VtkMarchingCubesWrap::VtkMarchingCubesWrap()
@@ -121,7 +120,6 @@ void VtkMarchingCubesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -330,7 +328,7 @@ void VtkMarchingCubesWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkIncrementalPointLocatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
 	w->native.TakeReference(r);
@@ -410,7 +408,7 @@ void VtkMarchingCubesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMarchingCubesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMarchingCubesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMarchingCubesWrap *w = new VtkMarchingCubesWrap();
 	w->native.TakeReference(r);
@@ -438,7 +436,7 @@ void VtkMarchingCubesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMarchingCubesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMarchingCubesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMarchingCubesWrap *w = new VtkMarchingCubesWrap();
 		w->native.TakeReference(r);

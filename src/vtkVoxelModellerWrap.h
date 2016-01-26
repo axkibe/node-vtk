@@ -24,7 +24,6 @@ class VtkVoxelModellerWrap : public VtkImageAlgorithmWrap
 		VtkVoxelModellerWrap(vtkSmartPointer<vtkVoxelModeller>);
 		VtkVoxelModellerWrap();
 		~VtkVoxelModellerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

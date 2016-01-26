@@ -24,7 +24,6 @@ class VtkRectilinearWipeRepresentationWrap : public VtkWidgetRepresentationWrap
 		VtkRectilinearWipeRepresentationWrap(vtkSmartPointer<vtkRectilinearWipeRepresentation>);
 		VtkRectilinearWipeRepresentationWrap();
 		~VtkRectilinearWipeRepresentationWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

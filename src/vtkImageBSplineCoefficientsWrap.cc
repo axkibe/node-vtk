@@ -13,7 +13,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageBSplineCoefficientsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageBSplineCoefficientsWrap::ptpl;
 
 VtkImageBSplineCoefficientsWrap::VtkImageBSplineCoefficientsWrap()
@@ -132,7 +131,6 @@ void VtkImageBSplineCoefficientsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplineDegree", SetSplineDegree);
 	Nan::SetPrototypeMethod(tpl, "setSplineDegree", SetSplineDegree);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -431,7 +429,7 @@ void VtkImageBSplineCoefficientsWrap::NewInstance(const Nan::FunctionCallbackInf
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageBSplineCoefficientsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageBSplineCoefficientsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageBSplineCoefficientsWrap *w = new VtkImageBSplineCoefficientsWrap();
 	w->native.TakeReference(r);
@@ -459,7 +457,7 @@ void VtkImageBSplineCoefficientsWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageBSplineCoefficientsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageBSplineCoefficientsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageBSplineCoefficientsWrap *w = new VtkImageBSplineCoefficientsWrap();
 		w->native.TakeReference(r);

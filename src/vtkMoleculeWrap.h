@@ -24,7 +24,6 @@ class VtkMoleculeWrap : public VtkUndirectedGraphWrap
 		VtkMoleculeWrap(vtkSmartPointer<vtkMolecule>);
 		VtkMoleculeWrap();
 		~VtkMoleculeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

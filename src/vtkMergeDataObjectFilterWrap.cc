@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMergeDataObjectFilterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMergeDataObjectFilterWrap::ptpl;
 
 VtkMergeDataObjectFilterWrap::VtkMergeDataObjectFilterWrap()
@@ -82,7 +81,6 @@ void VtkMergeDataObjectFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputFieldToPointDataField", SetOutputFieldToPointDataField);
 	Nan::SetPrototypeMethod(tpl, "setOutputFieldToPointDataField", SetOutputFieldToPointDataField);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -138,7 +136,7 @@ void VtkMergeDataObjectFilterWrap::GetDataObject(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkDataObjectWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
 	w->native.TakeReference(r);
@@ -197,7 +195,7 @@ void VtkMergeDataObjectFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMergeDataObjectFilterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMergeDataObjectFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMergeDataObjectFilterWrap *w = new VtkMergeDataObjectFilterWrap();
 	w->native.TakeReference(r);
@@ -225,7 +223,7 @@ void VtkMergeDataObjectFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMergeDataObjectFilterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMergeDataObjectFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMergeDataObjectFilterWrap *w = new VtkMergeDataObjectFilterWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkNetCDFCAMReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		VtkNetCDFCAMReaderWrap(vtkSmartPointer<vtkNetCDFCAMReader>);
 		VtkNetCDFCAMReaderWrap();
 		~VtkNetCDFCAMReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

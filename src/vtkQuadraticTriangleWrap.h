@@ -24,7 +24,6 @@ class VtkQuadraticTriangleWrap : public VtkNonLinearCellWrap
 		VtkQuadraticTriangleWrap(vtkSmartPointer<vtkQuadraticTriangle>);
 		VtkQuadraticTriangleWrap();
 		~VtkQuadraticTriangleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

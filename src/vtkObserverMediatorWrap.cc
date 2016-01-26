@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkObserverMediatorWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkObserverMediatorWrap::ptpl;
 
 VtkObserverMediatorWrap::VtkObserverMediatorWrap()
@@ -73,7 +72,6 @@ void VtkObserverMediatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
 	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -129,7 +127,7 @@ void VtkObserverMediatorWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderWindowInteractorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderWindowInteractorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
 	w->native.TakeReference(r);
@@ -174,7 +172,7 @@ void VtkObserverMediatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkObserverMediatorWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkObserverMediatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkObserverMediatorWrap *w = new VtkObserverMediatorWrap();
 	w->native.TakeReference(r);
@@ -248,7 +246,7 @@ void VtkObserverMediatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkObserverMediatorWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkObserverMediatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkObserverMediatorWrap *w = new VtkObserverMediatorWrap();
 		w->native.TakeReference(r);

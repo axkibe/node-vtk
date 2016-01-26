@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkModelMetadataWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkModelMetadataWrap::ptpl;
 
 VtkModelMetadataWrap::VtkModelMetadataWrap()
@@ -247,7 +246,6 @@ void VtkModelMetadataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Unpack", Unpack);
 	Nan::SetPrototypeMethod(tpl, "unpack", Unpack);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -456,7 +454,7 @@ void VtkModelMetadataWrap::ExtractGlobalMetadata(const Nan::FunctionCallbackInfo
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkModelMetadataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkModelMetadataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkModelMetadataWrap *w = new VtkModelMetadataWrap();
 	w->native.TakeReference(r);
@@ -488,7 +486,7 @@ void VtkModelMetadataWrap::ExtractModelMetadata(const Nan::FunctionCallbackInfo<
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
-				Nan::New<v8::Function>(VtkModelMetadataWrap::constructor);
+				Nan::New<v8::FunctionTemplate>(VtkModelMetadataWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkModelMetadataWrap *w = new VtkModelMetadataWrap();
 			w->native.TakeReference(r);
@@ -1134,7 +1132,7 @@ void VtkModelMetadataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkModelMetadataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkModelMetadataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkModelMetadataWrap *w = new VtkModelMetadataWrap();
 	w->native.TakeReference(r);
@@ -1282,7 +1280,7 @@ void VtkModelMetadataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkModelMetadataWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkModelMetadataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkModelMetadataWrap *w = new VtkModelMetadataWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkCullerWrap : public VtkObjectWrap
 		VtkCullerWrap(vtkSmartPointer<vtkCuller>);
 		VtkCullerWrap();
 		~VtkCullerWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

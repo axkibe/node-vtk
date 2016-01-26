@@ -24,7 +24,6 @@ class VtkAMRSliceFilterWrap : public VtkOverlappingAMRAlgorithmWrap
 		VtkAMRSliceFilterWrap(vtkSmartPointer<vtkAMRSliceFilter>);
 		VtkAMRSliceFilterWrap();
 		~VtkAMRSliceFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkVolumePropertyWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkVolumePropertyWrap::ptpl;
 
 VtkVolumePropertyWrap::VtkVolumePropertyWrap()
@@ -193,7 +192,6 @@ void VtkVolumePropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateMTimes", UpdateMTimes);
 	Nan::SetPrototypeMethod(tpl, "updateMTimes", UpdateMTimes);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -454,7 +452,7 @@ void VtkVolumePropertyWrap::GetGradientOpacity(const Nan::FunctionCallbackInfo<v
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 		w->native.TakeReference(r);
@@ -473,7 +471,7 @@ void VtkVolumePropertyWrap::GetGradientOpacity(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 	w->native.TakeReference(r);
@@ -500,7 +498,7 @@ void VtkVolumePropertyWrap::GetGrayTransferFunction(const Nan::FunctionCallbackI
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 		w->native.TakeReference(r);
@@ -519,7 +517,7 @@ void VtkVolumePropertyWrap::GetGrayTransferFunction(const Nan::FunctionCallbackI
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 	w->native.TakeReference(r);
@@ -644,7 +642,7 @@ void VtkVolumePropertyWrap::GetRGBTransferFunction(const Nan::FunctionCallbackIn
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkColorTransferFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkColorTransferFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkColorTransferFunctionWrap *w = new VtkColorTransferFunctionWrap();
 		w->native.TakeReference(r);
@@ -663,7 +661,7 @@ void VtkVolumePropertyWrap::GetRGBTransferFunction(const Nan::FunctionCallbackIn
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkColorTransferFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkColorTransferFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorTransferFunctionWrap *w = new VtkColorTransferFunctionWrap();
 	w->native.TakeReference(r);
@@ -690,7 +688,7 @@ void VtkVolumePropertyWrap::GetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 		w->native.TakeReference(r);
@@ -709,7 +707,7 @@ void VtkVolumePropertyWrap::GetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 	w->native.TakeReference(r);
@@ -848,7 +846,7 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 		w->native.TakeReference(r);
@@ -867,7 +865,7 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkPiecewiseFunctionWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
 	w->native.TakeReference(r);
@@ -936,7 +934,7 @@ void VtkVolumePropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkVolumePropertyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkVolumePropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumePropertyWrap *w = new VtkVolumePropertyWrap();
 	w->native.TakeReference(r);
@@ -964,7 +962,7 @@ void VtkVolumePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkVolumePropertyWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkVolumePropertyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumePropertyWrap *w = new VtkVolumePropertyWrap();
 		w->native.TakeReference(r);

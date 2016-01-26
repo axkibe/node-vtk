@@ -24,7 +24,6 @@ class VtkHyperOctreeToUniformGridFilterWrap : public VtkImageAlgorithmWrap
 		VtkHyperOctreeToUniformGridFilterWrap(vtkSmartPointer<vtkHyperOctreeToUniformGridFilter>);
 		VtkHyperOctreeToUniformGridFilterWrap();
 		~VtkHyperOctreeToUniformGridFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -12,7 +12,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkMathTextUtilitiesWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkMathTextUtilitiesWrap::ptpl;
 
 VtkMathTextUtilitiesWrap::VtkMathTextUtilitiesWrap()
@@ -65,7 +64,6 @@ void VtkMathTextUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInstance", SetInstance);
 	Nan::SetPrototypeMethod(tpl, "setInstance", SetInstance);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -121,7 +119,7 @@ void VtkMathTextUtilitiesWrap::GetInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMathTextUtilitiesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMathTextUtilitiesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMathTextUtilitiesWrap *w = new VtkMathTextUtilitiesWrap();
 	w->native.TakeReference(r);
@@ -166,7 +164,7 @@ void VtkMathTextUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkMathTextUtilitiesWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkMathTextUtilitiesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMathTextUtilitiesWrap *w = new VtkMathTextUtilitiesWrap();
 	w->native.TakeReference(r);
@@ -194,7 +192,7 @@ void VtkMathTextUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkMathTextUtilitiesWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkMathTextUtilitiesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMathTextUtilitiesWrap *w = new VtkMathTextUtilitiesWrap();
 		w->native.TakeReference(r);

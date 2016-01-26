@@ -24,7 +24,6 @@ class VtkHyperOctreeCutterWrap : public VtkPolyDataAlgorithmWrap
 		VtkHyperOctreeCutterWrap(vtkSmartPointer<vtkHyperOctreeCutter>);
 		VtkHyperOctreeCutterWrap();
 		~VtkHyperOctreeCutterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

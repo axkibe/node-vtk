@@ -16,7 +16,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkCoincidentTopologyResolutionPainterWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkCoincidentTopologyResolutionPainterWrap::ptpl;
 
 VtkCoincidentTopologyResolutionPainterWrap::VtkCoincidentTopologyResolutionPainterWrap()
@@ -71,7 +70,6 @@ void VtkCoincidentTopologyResolutionPainterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "Z_SHIFT", Z_SHIFT);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -149,7 +147,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::NewInstance(const Nan::Function
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkCoincidentTopologyResolutionPainterWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkCoincidentTopologyResolutionPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoincidentTopologyResolutionPainterWrap *w = new VtkCoincidentTopologyResolutionPainterWrap();
 	w->native.TakeReference(r);
@@ -172,7 +170,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::POLYGON_OFFSET_FACES(const Nan:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -195,7 +193,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::POLYGON_OFFSET_PARAMETERS(const
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationDoubleVectorKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleVectorKeyWrap *w = new VtkInformationDoubleVectorKeyWrap();
 	w->native.TakeReference(r);
@@ -218,7 +216,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::RESOLVE_COINCIDENT_TOPOLOGY(con
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationIntegerKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
 	w->native.TakeReference(r);
@@ -246,7 +244,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::SafeDownCast(const Nan::Functio
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkCoincidentTopologyResolutionPainterWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkCoincidentTopologyResolutionPainterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCoincidentTopologyResolutionPainterWrap *w = new VtkCoincidentTopologyResolutionPainterWrap();
 		w->native.TakeReference(r);
@@ -272,7 +270,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::Z_SHIFT(const Nan::FunctionCall
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkInformationDoubleKeyWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleKeyWrap *w = new VtkInformationDoubleKeyWrap();
 	w->native.TakeReference(r);

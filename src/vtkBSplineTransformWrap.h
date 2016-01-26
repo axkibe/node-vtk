@@ -24,7 +24,6 @@ class VtkBSplineTransformWrap : public VtkWarpTransformWrap
 		VtkBSplineTransformWrap(vtkSmartPointer<vtkBSplineTransform>);
 		VtkBSplineTransformWrap();
 		~VtkBSplineTransformWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

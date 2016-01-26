@@ -24,7 +24,6 @@ class VtkThresholdPointsWrap : public VtkPolyDataAlgorithmWrap
 		VtkThresholdPointsWrap(vtkSmartPointer<vtkThresholdPoints>);
 		VtkThresholdPointsWrap();
 		~VtkThresholdPointsWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

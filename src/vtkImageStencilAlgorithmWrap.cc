@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkImageStencilAlgorithmWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkImageStencilAlgorithmWrap::ptpl;
 
 VtkImageStencilAlgorithmWrap::VtkImageStencilAlgorithmWrap()
@@ -67,7 +66,6 @@ void VtkImageStencilAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -123,7 +121,7 @@ void VtkImageStencilAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageStencilDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageStencilDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageStencilDataWrap *w = new VtkImageStencilDataWrap();
 	w->native.TakeReference(r);
@@ -168,7 +166,7 @@ void VtkImageStencilAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageStencilAlgorithmWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageStencilAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageStencilAlgorithmWrap *w = new VtkImageStencilAlgorithmWrap();
 	w->native.TakeReference(r);
@@ -196,7 +194,7 @@ void VtkImageStencilAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkImageStencilAlgorithmWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkImageStencilAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageStencilAlgorithmWrap *w = new VtkImageStencilAlgorithmWrap();
 		w->native.TakeReference(r);

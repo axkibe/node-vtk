@@ -24,7 +24,6 @@ class VtkGlobeSourceWrap : public VtkPolyDataAlgorithmWrap
 		VtkGlobeSourceWrap(vtkSmartPointer<vtkGlobeSource>);
 		VtkGlobeSourceWrap();
 		~VtkGlobeSourceWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

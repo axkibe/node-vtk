@@ -14,7 +14,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkStreamingStatisticsWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkStreamingStatisticsWrap::ptpl;
 
 VtkStreamingStatisticsWrap::VtkStreamingStatisticsWrap()
@@ -64,7 +63,6 @@ void VtkStreamingStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStatisticsAlgorithm", SetStatisticsAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "setStatisticsAlgorithm", SetStatisticsAlgorithm);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -142,7 +140,7 @@ void VtkStreamingStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkStreamingStatisticsWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkStreamingStatisticsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStreamingStatisticsWrap *w = new VtkStreamingStatisticsWrap();
 	w->native.TakeReference(r);
@@ -170,7 +168,7 @@ void VtkStreamingStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkStreamingStatisticsWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkStreamingStatisticsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStreamingStatisticsWrap *w = new VtkStreamingStatisticsWrap();
 		w->native.TakeReference(r);

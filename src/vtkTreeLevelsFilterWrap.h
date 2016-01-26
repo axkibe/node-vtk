@@ -24,7 +24,6 @@ class VtkTreeLevelsFilterWrap : public VtkTreeAlgorithmWrap
 		VtkTreeLevelsFilterWrap(vtkSmartPointer<vtkTreeLevelsFilter>);
 		VtkTreeLevelsFilterWrap();
 		~VtkTreeLevelsFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

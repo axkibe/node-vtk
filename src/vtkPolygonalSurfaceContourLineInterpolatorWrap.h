@@ -24,7 +24,6 @@ class VtkPolygonalSurfaceContourLineInterpolatorWrap : public VtkPolyDataContour
 		VtkPolygonalSurfaceContourLineInterpolatorWrap(vtkSmartPointer<vtkPolygonalSurfaceContourLineInterpolator>);
 		VtkPolygonalSurfaceContourLineInterpolatorWrap();
 		~VtkPolygonalSurfaceContourLineInterpolatorWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkSLCReaderWrap : public VtkImageReader2Wrap
 		VtkSLCReaderWrap(vtkSmartPointer<vtkSLCReader>);
 		VtkSLCReaderWrap();
 		~VtkSLCReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkCollectPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		VtkCollectPolyDataWrap(vtkSmartPointer<vtkCollectPolyData>);
 		VtkCollectPolyDataWrap();
 		~VtkCollectPolyDataWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

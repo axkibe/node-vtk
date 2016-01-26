@@ -15,7 +15,6 @@
 using namespace v8;
 
 extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;
-Nan::Persistent<v8::Function> VtkRenderLargeImageWrap::constructor;
 Nan::Persistent<v8::FunctionTemplate> VtkRenderLargeImageWrap::ptpl;
 
 VtkRenderLargeImageWrap::VtkRenderLargeImageWrap()
@@ -77,7 +76,6 @@ void VtkRenderLargeImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMagnification", SetMagnification);
 	Nan::SetPrototypeMethod(tpl, "setMagnification", SetMagnification);
 
-	constructor.Reset( tpl->GetFunction() );
 	ptpl.Reset( tpl );
 }
 
@@ -133,7 +131,7 @@ void VtkRenderLargeImageWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRendererWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
 	w->native.TakeReference(r);
@@ -170,7 +168,7 @@ void VtkRenderLargeImageWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Valu
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkImageDataWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
 	w->native.TakeReference(r);
@@ -215,7 +213,7 @@ void VtkRenderLargeImageWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
-		Nan::New<v8::Function>(VtkRenderLargeImageWrap::constructor);
+		Nan::New<v8::FunctionTemplate>(VtkRenderLargeImageWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderLargeImageWrap *w = new VtkRenderLargeImageWrap();
 	w->native.TakeReference(r);
@@ -243,7 +241,7 @@ void VtkRenderLargeImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
-			Nan::New<v8::Function>(VtkRenderLargeImageWrap::constructor);
+			Nan::New<v8::FunctionTemplate>(VtkRenderLargeImageWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRenderLargeImageWrap *w = new VtkRenderLargeImageWrap();
 		w->native.TakeReference(r);

@@ -24,7 +24,6 @@ class VtkVolumeRayCastSpaceLeapingImageFilterWrap : public VtkThreadedImageAlgor
 		VtkVolumeRayCastSpaceLeapingImageFilterWrap(vtkSmartPointer<vtkVolumeRayCastSpaceLeapingImageFilter>);
 		VtkVolumeRayCastSpaceLeapingImageFilterWrap();
 		~VtkVolumeRayCastSpaceLeapingImageFilterWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

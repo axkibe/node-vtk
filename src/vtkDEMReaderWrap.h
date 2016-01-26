@@ -24,7 +24,6 @@ class VtkDEMReaderWrap : public VtkImageAlgorithmWrap
 		VtkDEMReaderWrap(vtkSmartPointer<vtkDEMReader>);
 		VtkDEMReaderWrap();
 		~VtkDEMReaderWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

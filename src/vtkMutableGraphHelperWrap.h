@@ -24,7 +24,6 @@ class VtkMutableGraphHelperWrap : public VtkObjectWrap
 		VtkMutableGraphHelperWrap(vtkSmartPointer<vtkMutableGraphHelper>);
 		VtkMutableGraphHelperWrap();
 		~VtkMutableGraphHelperWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

@@ -24,7 +24,6 @@ class VtkTemporalShiftScaleWrap : public VtkAlgorithmWrap
 		VtkTemporalShiftScaleWrap(vtkSmartPointer<vtkTemporalShiftScale>);
 		VtkTemporalShiftScaleWrap();
 		~VtkTemporalShiftScaleWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:

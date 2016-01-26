@@ -24,7 +24,6 @@ class VtkExtractSelectedTreeWrap : public VtkTreeAlgorithmWrap
 		VtkExtractSelectedTreeWrap(vtkSmartPointer<vtkExtractSelectedTree>);
 		VtkExtractSelectedTreeWrap();
 		~VtkExtractSelectedTreeWrap( );
-		static Nan::Persistent<v8::Function> constructor;
 		static Nan::Persistent<v8::FunctionTemplate> ptpl;
 
 	private:
