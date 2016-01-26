@@ -9,11 +9,19 @@ on your system.
 Installation:
 =============
 
-If all goes well this should do it:
-  npm install vtk
+If all goes well simply this should do it:
+```
+npm install vtk
+```
+
+It will build the wrapper classes matching the VTK installed on your system.
+This might take a little while.
+
 
 You might need to install following packages for example on Debian:
-  sudo apt-get install vtk6-dev qtbase5-dev
+```
+sudo apt-get install vtk6-dev qtbase5-dev
+```
 
 Usage:
 ======
@@ -46,6 +54,6 @@ renderWindow.render();
 renderWindowInteractor.start();
 ```
 
-Note that the renderWinowInteractor.start() call does not return, until the render window is closed.
+Note that the renderWinowInteractor.start() call does not return until the render window is closed.
 This means the Node.js event loop is halted during this.
 
