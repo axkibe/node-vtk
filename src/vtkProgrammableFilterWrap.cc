@@ -34,26 +34,27 @@ VtkProgrammableFilterWrap::~VtkProgrammableFilterWrap()
 
 void VtkProgrammableFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProgrammableFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProgrammableFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ProgrammableFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProgrammableFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ProgrammableFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProgrammableFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProgrammableFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProgrammableFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProgrammableFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CopyArraysOff", CopyArraysOff);
 	Nan::SetPrototypeMethod(tpl, "copyArraysOff", CopyArraysOff);
 
@@ -93,6 +94,8 @@ void VtkProgrammableFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProgrammableFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -167,6 +170,7 @@ void VtkProgrammableFilterWrap::GetGraphInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetGraphInput();
+		VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,6 +193,7 @@ void VtkProgrammableFilterWrap::GetPolyDataInput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPolyDataInput();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,6 +216,7 @@ void VtkProgrammableFilterWrap::GetRectilinearGridInput(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetRectilinearGridInput();
+		VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,6 +239,7 @@ void VtkProgrammableFilterWrap::GetStructuredGridInput(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetStructuredGridInput();
+		VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,6 +262,7 @@ void VtkProgrammableFilterWrap::GetStructuredPointsInput(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetStructuredPointsInput();
+		VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -277,6 +285,7 @@ void VtkProgrammableFilterWrap::GetTableInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTableInput();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,6 +308,7 @@ void VtkProgrammableFilterWrap::GetUnstructuredGridInput(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetUnstructuredGridInput();
+		VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,6 +353,7 @@ void VtkProgrammableFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkProgrammableFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -358,7 +369,7 @@ void VtkProgrammableFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkProgrammableFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableFilterWrap>(info.Holder());
 	vtkProgrammableFilter *native = (vtkProgrammableFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProgrammableFilter * r;
@@ -370,6 +381,7 @@ void VtkProgrammableFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProgrammableFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -30,26 +30,27 @@ VtkMultiPieceDataSetWrap::~VtkMultiPieceDataSetWrap()
 
 void VtkMultiPieceDataSetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectTreeWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectTreeWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMultiPieceDataSetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMultiPieceDataSet").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MultiPieceDataSet").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMultiPieceDataSet").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MultiPieceDataSet").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMultiPieceDataSetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMultiPieceDataSetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMultiPieceDataSetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectTreeWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectTreeWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMultiPieceDataSetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -74,6 +75,8 @@ void VtkMultiPieceDataSetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMultiPieceDataSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -117,7 +120,7 @@ void VtkMultiPieceDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
 	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -132,6 +135,7 @@ void VtkMultiPieceDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkMultiPieceDataSetWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -152,6 +156,7 @@ void VtkMultiPieceDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkMultiPieceDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -184,7 +189,7 @@ void VtkMultiPieceDataSetWrap::GetMetaData(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
 	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataIteratorWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info[0]->ToObject());
 		vtkInformation * r;
@@ -196,6 +201,7 @@ void VtkMultiPieceDataSetWrap::GetMetaData(const Nan::FunctionCallbackInfo<v8::V
 		r = native->GetMetaData(
 			(vtkCompositeDataIterator *) a0->native.GetPointer()
 		);
+			VtkInformationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -214,7 +220,7 @@ void VtkMultiPieceDataSetWrap::HasMetaData(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
 	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataIteratorWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info[0]->ToObject());
 		int r;
@@ -265,6 +271,7 @@ void VtkMultiPieceDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkMultiPieceDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +287,7 @@ void VtkMultiPieceDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
 	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMultiPieceDataSet * r;
@@ -292,6 +299,7 @@ void VtkMultiPieceDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMultiPieceDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

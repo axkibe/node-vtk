@@ -29,26 +29,27 @@ VtkDataTransferHelperWrap::~VtkDataTransferHelperWrap()
 
 void VtkDataTransferHelperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataTransferHelperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataTransferHelper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataTransferHelper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataTransferHelper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataTransferHelper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataTransferHelperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataTransferHelperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataTransferHelperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataTransferHelperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetArray", GetArray);
 	Nan::SetPrototypeMethod(tpl, "getArray", GetArray);
 
@@ -94,6 +95,8 @@ void VtkDataTransferHelperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTextureExtent", SetTextureExtent);
 	Nan::SetPrototypeMethod(tpl, "setTextureExtent", SetTextureExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataTransferHelperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -130,6 +133,7 @@ void VtkDataTransferHelperWrap::GetArray(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetArray();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,6 +170,7 @@ void VtkDataTransferHelperWrap::GetContext(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetContext();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,6 +207,7 @@ void VtkDataTransferHelperWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetTexture();
+		VtkTextureObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,6 +252,7 @@ void VtkDataTransferHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataTransferHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -261,7 +268,7 @@ void VtkDataTransferHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDataTransferHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDataTransferHelperWrap>(info.Holder());
 	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataTransferHelper * r;
@@ -273,6 +280,7 @@ void VtkDataTransferHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataTransferHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -291,7 +299,7 @@ void VtkDataTransferHelperWrap::SetArray(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataTransferHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDataTransferHelperWrap>(info.Holder());
 	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -350,7 +358,7 @@ void VtkDataTransferHelperWrap::SetContext(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataTransferHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDataTransferHelperWrap>(info.Holder());
 	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -428,7 +436,7 @@ void VtkDataTransferHelperWrap::SetTexture(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataTransferHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDataTransferHelperWrap>(info.Holder());
 	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextureObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextureObjectWrap *a0 = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

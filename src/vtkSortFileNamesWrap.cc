@@ -27,26 +27,27 @@ VtkSortFileNamesWrap::~VtkSortFileNamesWrap()
 
 void VtkSortFileNamesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSortFileNamesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSortFileNames").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SortFileNames").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSortFileNames").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SortFileNames").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSortFileNamesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSortFileNamesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSortFileNamesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSortFileNamesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -125,6 +126,8 @@ void VtkSortFileNamesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSortFileNamesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -175,6 +178,7 @@ void VtkSortFileNamesWrap::GetFileNames(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetFileNames();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,6 +229,7 @@ void VtkSortFileNamesWrap::GetInputFileNames(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetInputFileNames();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,6 +256,7 @@ void VtkSortFileNamesWrap::GetNthGroup(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetNthGroup(
 			info[0]->Int32Value()
 		);
+			VtkStringArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -388,6 +394,7 @@ void VtkSortFileNamesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkSortFileNamesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -427,7 +434,7 @@ void VtkSortFileNamesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSortFileNamesWrap *wrapper = ObjectWrap::Unwrap<VtkSortFileNamesWrap>(info.Holder());
 	vtkSortFileNames *native = (vtkSortFileNames *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSortFileNames * r;
@@ -439,6 +446,7 @@ void VtkSortFileNamesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSortFileNamesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -495,7 +503,7 @@ void VtkSortFileNamesWrap::SetInputFileNames(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSortFileNamesWrap *wrapper = ObjectWrap::Unwrap<VtkSortFileNamesWrap>(info.Holder());
 	vtkSortFileNames *native = (vtkSortFileNames *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkSpanTreeLayoutStrategyWrap::~VtkSpanTreeLayoutStrategyWrap()
 
 void VtkSpanTreeLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSpanTreeLayoutStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSpanTreeLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SpanTreeLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSpanTreeLayoutStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SpanTreeLayoutStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSpanTreeLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSpanTreeLayoutStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSpanTreeLayoutStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSpanTreeLayoutStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DepthFirstSpanningTreeOff", DepthFirstSpanningTreeOff);
 	Nan::SetPrototypeMethod(tpl, "depthFirstSpanningTreeOff", DepthFirstSpanningTreeOff);
 
@@ -68,6 +69,8 @@ void VtkSpanTreeLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSpanTreeLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -176,6 +179,7 @@ void VtkSpanTreeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkSpanTreeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +195,7 @@ void VtkSpanTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkSpanTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSpanTreeLayoutStrategyWrap>(info.Holder());
 	vtkSpanTreeLayoutStrategy *native = (vtkSpanTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSpanTreeLayoutStrategy * r;
@@ -203,6 +207,7 @@ void VtkSpanTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSpanTreeLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkInteractorStyleRubberBand3DWrap::~VtkInteractorStyleRubberBand3DWrap()
 
 void VtkInteractorStyleRubberBand3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleTrackballCameraWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleRubberBand3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyleRubberBand3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyleRubberBand3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyleRubberBand3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyleRubberBand3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleRubberBand3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleRubberBand3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleRubberBand3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleTrackballCameraWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleRubberBand3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -95,6 +96,8 @@ void VtkInteractorStyleRubberBand3DWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleRubberBand3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -181,6 +184,7 @@ void VtkInteractorStyleRubberBand3DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleRubberBand3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -328,7 +332,7 @@ void VtkInteractorStyleRubberBand3DWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkInteractorStyleRubberBand3DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand3DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand3D *native = (vtkInteractorStyleRubberBand3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyleRubberBand3D * r;
@@ -340,6 +344,7 @@ void VtkInteractorStyleRubberBand3DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleRubberBand3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

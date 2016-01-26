@@ -30,26 +30,27 @@ VtkDelaunay2DWrap::~VtkDelaunay2DWrap()
 
 void VtkDelaunay2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDelaunay2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDelaunay2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Delaunay2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDelaunay2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Delaunay2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDelaunay2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDelaunay2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDelaunay2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDelaunay2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BoundingTriangulationOff", BoundingTriangulationOff);
 	Nan::SetPrototypeMethod(tpl, "boundingTriangulationOff", BoundingTriangulationOff);
 
@@ -137,6 +138,8 @@ void VtkDelaunay2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDelaunay2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -351,6 +354,7 @@ void VtkDelaunay2DWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetSource();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -415,6 +419,7 @@ void VtkDelaunay2DWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -459,6 +464,7 @@ void VtkDelaunay2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkDelaunay2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -474,7 +480,7 @@ void VtkDelaunay2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDelaunay2DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay2DWrap>(info.Holder());
 	vtkDelaunay2D *native = (vtkDelaunay2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDelaunay2D * r;
@@ -486,6 +492,7 @@ void VtkDelaunay2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDelaunay2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -580,7 +587,7 @@ void VtkDelaunay2DWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDelaunay2DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay2DWrap>(info.Holder());
 	vtkDelaunay2D *native = (vtkDelaunay2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -600,7 +607,7 @@ void VtkDelaunay2DWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDelaunay2DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay2DWrap>(info.Holder());
 	vtkDelaunay2D *native = (vtkDelaunay2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -639,7 +646,7 @@ void VtkDelaunay2DWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDelaunay2DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay2DWrap>(info.Holder());
 	vtkDelaunay2D *native = (vtkDelaunay2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

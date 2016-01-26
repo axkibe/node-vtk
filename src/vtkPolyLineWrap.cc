@@ -31,26 +31,27 @@ VtkPolyLineWrap::~VtkPolyLineWrap()
 
 void VtkPolyLineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCellWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyLineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyLine").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyLine").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyLine").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyLine").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyLineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyLineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyLineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCellWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyLineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateSlidingNormals", GenerateSlidingNormals);
 	Nan::SetPrototypeMethod(tpl, "generateSlidingNormals", GenerateSlidingNormals);
 
@@ -90,6 +91,8 @@ void VtkPolyLineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyLineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -119,13 +122,13 @@ void VtkPolyLineWrap::GenerateSlidingNormals(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPolyLineWrap *wrapper = ObjectWrap::Unwrap<VtkPolyLineWrap>(info.Holder());
 	vtkPolyLine *native = (vtkPolyLine *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCellArrayWrap *a1 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
 				int r;
@@ -204,6 +207,7 @@ void VtkPolyLineWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
+			VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -233,6 +237,7 @@ void VtkPolyLineWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
+			VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -322,6 +327,7 @@ void VtkPolyLineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyLineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -337,7 +343,7 @@ void VtkPolyLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPolyLineWrap *wrapper = ObjectWrap::Unwrap<VtkPolyLineWrap>(info.Holder());
 	vtkPolyLine *native = (vtkPolyLine *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyLine * r;
@@ -349,6 +355,7 @@ void VtkPolyLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyLineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -369,10 +376,10 @@ void VtkPolyLineWrap::Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkPolyLine *native = (vtkPolyLine *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
 				int r;

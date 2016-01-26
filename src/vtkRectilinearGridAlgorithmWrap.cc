@@ -29,26 +29,27 @@ VtkRectilinearGridAlgorithmWrap::~VtkRectilinearGridAlgorithmWrap()
 
 void VtkRectilinearGridAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRectilinearGridAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRectilinearGridAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RectilinearGridAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRectilinearGridAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RectilinearGridAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRectilinearGridAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRectilinearGridAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRectilinearGridAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRectilinearGridAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInputData", AddInputData);
 	Nan::SetPrototypeMethod(tpl, "addInputData", AddInputData);
 
@@ -79,6 +80,8 @@ void VtkRectilinearGridAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRectilinearGridAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -108,7 +111,7 @@ void VtkRectilinearGridAlgorithmWrap::AddInputData(const Nan::FunctionCallbackIn
 {
 	VtkRectilinearGridAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridAlgorithmWrap>(info.Holder());
 	vtkRectilinearGridAlgorithm *native = (vtkRectilinearGridAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -123,7 +126,7 @@ void VtkRectilinearGridAlgorithmWrap::AddInputData(const Nan::FunctionCallbackIn
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -170,6 +173,7 @@ void VtkRectilinearGridAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -188,6 +192,7 @@ void VtkRectilinearGridAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,6 +219,7 @@ void VtkRectilinearGridAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkRectilinearGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,6 +238,7 @@ void VtkRectilinearGridAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetOutput();
+		VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,6 +265,7 @@ void VtkRectilinearGridAlgorithmWrap::GetRectilinearGridInput(const Nan::Functio
 		r = native->GetRectilinearGridInput(
 			info[0]->Int32Value()
 		);
+			VtkRectilinearGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -305,6 +313,7 @@ void VtkRectilinearGridAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkRectilinearGridAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -320,7 +329,7 @@ void VtkRectilinearGridAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkRectilinearGridAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridAlgorithmWrap>(info.Holder());
 	vtkRectilinearGridAlgorithm *native = (vtkRectilinearGridAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRectilinearGridAlgorithm * r;
@@ -332,6 +341,7 @@ void VtkRectilinearGridAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRectilinearGridAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -350,7 +360,7 @@ void VtkRectilinearGridAlgorithmWrap::SetInputData(const Nan::FunctionCallbackIn
 {
 	VtkRectilinearGridAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridAlgorithmWrap>(info.Holder());
 	vtkRectilinearGridAlgorithm *native = (vtkRectilinearGridAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -365,7 +375,7 @@ void VtkRectilinearGridAlgorithmWrap::SetInputData(const Nan::FunctionCallbackIn
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -387,7 +397,7 @@ void VtkRectilinearGridAlgorithmWrap::SetOutput(const Nan::FunctionCallbackInfo<
 {
 	VtkRectilinearGridAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridAlgorithmWrap>(info.Holder());
 	vtkRectilinearGridAlgorithm *native = (vtkRectilinearGridAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

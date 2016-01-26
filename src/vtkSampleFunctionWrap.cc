@@ -29,26 +29,27 @@ VtkSampleFunctionWrap::~VtkSampleFunctionWrap()
 
 void VtkSampleFunctionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSampleFunctionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSampleFunction").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SampleFunction").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSampleFunction").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SampleFunction").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSampleFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSampleFunctionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSampleFunctionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSampleFunctionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CappingOff", CappingOff);
 	Nan::SetPrototypeMethod(tpl, "cappingOff", CappingOff);
 
@@ -154,6 +155,8 @@ void VtkSampleFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScalars", SetScalars);
 	Nan::SetPrototypeMethod(tpl, "setScalars", SetScalars);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSampleFunctionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -294,6 +297,7 @@ void VtkSampleFunctionWrap::GetImplicitFunction(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetImplicitFunction();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,6 +384,7 @@ void VtkSampleFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkSampleFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,7 +400,7 @@ void VtkSampleFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSampleFunction * r;
@@ -407,6 +412,7 @@ void VtkSampleFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSampleFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -482,7 +488,7 @@ void VtkSampleFunctionWrap::SetImplicitFunction(const Nan::FunctionCallbackInfo<
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -747,7 +753,7 @@ void VtkSampleFunctionWrap::SetScalars(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

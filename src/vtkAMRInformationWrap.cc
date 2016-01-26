@@ -26,26 +26,27 @@ VtkAMRInformationWrap::~VtkAMRInformationWrap()
 
 void VtkAMRInformationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMRInformationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMRInformation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMRInformation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMRInformation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMRInformation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMRInformationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMRInformationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMRInformationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMRInformationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -79,6 +80,8 @@ void VtkAMRInformationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetGridDescription", SetGridDescription);
 	Nan::SetPrototypeMethod(tpl, "setGridDescription", SetGridDescription);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMRInformationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -108,7 +111,7 @@ void VtkAMRInformationWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
 	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAMRInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAMRInformationWrap *a0 = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -230,6 +233,7 @@ void VtkAMRInformationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMRInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,7 +249,7 @@ void VtkAMRInformationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
 	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMRInformation * r;
@@ -257,6 +261,7 @@ void VtkAMRInformationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMRInformationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

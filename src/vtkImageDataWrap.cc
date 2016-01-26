@@ -31,26 +31,27 @@ VtkImageDataWrap::~VtkImageDataWrap()
 
 void VtkImageDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AllocateScalars", AllocateScalars);
 	Nan::SetPrototypeMethod(tpl, "allocateScalars", AllocateScalars);
 
@@ -150,6 +151,8 @@ void VtkImageDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -179,7 +182,7 @@ void VtkImageDataWrap::AllocateScalars(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -227,7 +230,7 @@ void VtkImageDataWrap::CopyAndCastFrom(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -271,7 +274,7 @@ void VtkImageDataWrap::CopyInformationFromPipeline(const Nan::FunctionCallbackIn
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -291,7 +294,7 @@ void VtkImageDataWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -311,7 +314,7 @@ void VtkImageDataWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -345,7 +348,7 @@ void VtkImageDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -360,6 +363,7 @@ void VtkImageDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkImageDataWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -380,6 +384,7 @@ void VtkImageDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -454,7 +459,7 @@ void VtkImageDataWrap::GetNumberOfScalarComponents(const Nan::FunctionCallbackIn
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -516,7 +521,7 @@ void VtkImageDataWrap::GetScalarSize(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -545,7 +550,7 @@ void VtkImageDataWrap::GetScalarType(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -588,7 +593,7 @@ void VtkImageDataWrap::GetScalarTypeMax(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		double r;
@@ -617,7 +622,7 @@ void VtkImageDataWrap::GetScalarTypeMin(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		double r;
@@ -652,10 +657,10 @@ void VtkImageDataWrap::GetVoxelGradient(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkDataArrayWrap *a3 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkDataArrayWrap *a4 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[4]->ToObject());
 						if(info.Length() != 5)
@@ -724,6 +729,7 @@ void VtkImageDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -751,7 +757,7 @@ void VtkImageDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageData * r;
@@ -763,6 +769,7 @@ void VtkImageDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -849,7 +856,7 @@ void VtkImageDataWrap::SetNumberOfScalarComponents(const Nan::FunctionCallbackIn
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -935,7 +942,7 @@ void VtkImageDataWrap::SetScalarType(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -984,7 +991,7 @@ void VtkImageDataWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

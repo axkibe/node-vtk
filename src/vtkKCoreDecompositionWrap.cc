@@ -27,26 +27,27 @@ VtkKCoreDecompositionWrap::~VtkKCoreDecompositionWrap()
 
 void VtkKCoreDecompositionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkKCoreDecompositionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkKCoreDecomposition").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("KCoreDecomposition").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkKCoreDecomposition").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("KCoreDecomposition").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkKCoreDecompositionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkKCoreDecompositionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkKCoreDecompositionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkKCoreDecompositionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CheckInputGraphOff", CheckInputGraphOff);
 	Nan::SetPrototypeMethod(tpl, "checkInputGraphOff", CheckInputGraphOff);
 
@@ -80,6 +81,8 @@ void VtkKCoreDecompositionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseOutDegreeNeighborsOn", UseOutDegreeNeighborsOn);
 	Nan::SetPrototypeMethod(tpl, "useOutDegreeNeighborsOn", UseOutDegreeNeighborsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkKCoreDecompositionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -176,6 +179,7 @@ void VtkKCoreDecompositionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkKCoreDecompositionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +195,7 @@ void VtkKCoreDecompositionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkKCoreDecomposition * r;
@@ -203,6 +207,7 @@ void VtkKCoreDecompositionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkKCoreDecompositionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

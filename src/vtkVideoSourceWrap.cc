@@ -27,26 +27,27 @@ VtkVideoSourceWrap::~VtkVideoSourceWrap()
 
 void VtkVideoSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVideoSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVideoSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VideoSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVideoSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VideoSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVideoSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVideoSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVideoSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVideoSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoAdvanceOff", AutoAdvanceOff);
 	Nan::SetPrototypeMethod(tpl, "autoAdvanceOff", AutoAdvanceOff);
 
@@ -170,6 +171,8 @@ void VtkVideoSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVideoSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -482,6 +485,7 @@ void VtkVideoSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkVideoSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -545,7 +549,7 @@ void VtkVideoSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVideoSource * r;
@@ -557,6 +561,7 @@ void VtkVideoSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVideoSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkImageCacheFilterWrap::~VtkImageCacheFilterWrap()
 
 void VtkImageCacheFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageCacheFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageCacheFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageCacheFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageCacheFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageCacheFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageCacheFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageCacheFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageCacheFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageCacheFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCacheSize", GetCacheSize);
 	Nan::SetPrototypeMethod(tpl, "getCacheSize", GetCacheSize);
 
@@ -65,6 +66,8 @@ void VtkImageCacheFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCacheSize", SetCacheSize);
 	Nan::SetPrototypeMethod(tpl, "setCacheSize", SetCacheSize);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageCacheFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkImageCacheFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageCacheFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +170,7 @@ void VtkImageCacheFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageCacheFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageCacheFilterWrap>(info.Holder());
 	vtkImageCacheFilter *native = (vtkImageCacheFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageCacheFilter * r;
@@ -178,6 +182,7 @@ void VtkImageCacheFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageCacheFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

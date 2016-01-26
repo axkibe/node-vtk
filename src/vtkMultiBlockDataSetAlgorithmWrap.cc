@@ -29,26 +29,27 @@ VtkMultiBlockDataSetAlgorithmWrap::~VtkMultiBlockDataSetAlgorithmWrap()
 
 void VtkMultiBlockDataSetAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMultiBlockDataSetAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMultiBlockDataSetAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MultiBlockDataSetAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMultiBlockDataSetAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MultiBlockDataSetAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMultiBlockDataSetAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMultiBlockDataSetAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMultiBlockDataSetAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMultiBlockDataSetAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -67,6 +68,8 @@ void VtkMultiBlockDataSetAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMultiBlockDataSetAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -121,6 +124,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkMultiBlockDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -139,6 +143,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetOutput();
+		VtkMultiBlockDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,6 +188,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkMultiBlockDataSetAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +204,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkMultiBlockDataSetAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataSetAlgorithmWrap>(info.Holder());
 	vtkMultiBlockDataSetAlgorithm *native = (vtkMultiBlockDataSetAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMultiBlockDataSetAlgorithm * r;
@@ -210,6 +216,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMultiBlockDataSetAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -228,7 +235,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::SetInputData(const Nan::FunctionCallback
 {
 	VtkMultiBlockDataSetAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataSetAlgorithmWrap>(info.Holder());
 	vtkMultiBlockDataSetAlgorithm *native = (vtkMultiBlockDataSetAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -243,7 +250,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::SetInputData(const Nan::FunctionCallback
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

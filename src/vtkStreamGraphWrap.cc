@@ -27,26 +27,27 @@ VtkStreamGraphWrap::~VtkStreamGraphWrap()
 
 void VtkStreamGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStreamGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStreamGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StreamGraph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStreamGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StreamGraph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStreamGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStreamGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStreamGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStreamGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkStreamGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseEdgeWindowOn", UseEdgeWindowOn);
 	Nan::SetPrototypeMethod(tpl, "useEdgeWindowOn", UseEdgeWindowOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStreamGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -177,6 +180,7 @@ void VtkStreamGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkStreamGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +196,7 @@ void VtkStreamGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkStreamGraphWrap *wrapper = ObjectWrap::Unwrap<VtkStreamGraphWrap>(info.Holder());
 	vtkStreamGraph *native = (vtkStreamGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStreamGraph * r;
@@ -204,6 +208,7 @@ void VtkStreamGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStreamGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

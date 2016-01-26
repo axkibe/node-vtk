@@ -28,26 +28,27 @@ VtkRowQueryToTableWrap::~VtkRowQueryToTableWrap()
 
 void VtkRowQueryToTableWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTableAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRowQueryToTableWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRowQueryToTable").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RowQueryToTable").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRowQueryToTable").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RowQueryToTable").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRowQueryToTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRowQueryToTableWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRowQueryToTableWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRowQueryToTableWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkRowQueryToTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetQuery", SetQuery);
 	Nan::SetPrototypeMethod(tpl, "setQuery", SetQuery);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRowQueryToTableWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkRowQueryToTableWrap::GetQuery(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetQuery();
+		VtkRowQueryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkRowQueryToTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkRowQueryToTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkRowQueryToTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRowQueryToTableWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryToTableWrap>(info.Holder());
 	vtkRowQueryToTable *native = (vtkRowQueryToTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRowQueryToTable * r;
@@ -187,6 +192,7 @@ void VtkRowQueryToTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRowQueryToTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkRowQueryToTableWrap::SetQuery(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRowQueryToTableWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryToTableWrap>(info.Holder());
 	vtkRowQueryToTable *native = (vtkRowQueryToTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRowQueryWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRowQueryWrap *a0 = ObjectWrap::Unwrap<VtkRowQueryWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

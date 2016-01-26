@@ -28,26 +28,27 @@ VtkWarpLensWrap::~VtkWarpLensWrap()
 
 void VtkWarpLensWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWarpLensWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWarpLens").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WarpLens").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWarpLens").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WarpLens").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWarpLensWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWarpLensWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWarpLensWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWarpLensWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -123,6 +124,8 @@ void VtkWarpLensWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPrincipalPoint", SetPrincipalPoint);
 	Nan::SetPrototypeMethod(tpl, "setPrincipalPoint", SetPrincipalPoint);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWarpLensWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -154,7 +157,7 @@ void VtkWarpLensWrap::FillInputPortInformation(const Nan::FunctionCallbackInfo<v
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -347,6 +350,7 @@ void VtkWarpLensWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkWarpLensWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -362,7 +366,7 @@ void VtkWarpLensWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkWarpLensWrap *wrapper = ObjectWrap::Unwrap<VtkWarpLensWrap>(info.Holder());
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWarpLens * r;
@@ -374,6 +378,7 @@ void VtkWarpLensWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWarpLensWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

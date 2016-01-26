@@ -27,26 +27,27 @@ VtkStructuredPointsGeometryFilterWrap::~VtkStructuredPointsGeometryFilterWrap()
 
 void VtkStructuredPointsGeometryFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageDataGeometryFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageDataGeometryFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStructuredPointsGeometryFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStructuredPointsGeometryFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StructuredPointsGeometryFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStructuredPointsGeometryFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StructuredPointsGeometryFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStructuredPointsGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStructuredPointsGeometryFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStructuredPointsGeometryFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageDataGeometryFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageDataGeometryFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStructuredPointsGeometryFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkStructuredPointsGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStructuredPointsGeometryFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkStructuredPointsGeometryFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkStructuredPointsGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkStructuredPointsGeometryFilterWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkStructuredPointsGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredPointsGeometryFilterWrap>(info.Holder());
 	vtkStructuredPointsGeometryFilter *native = (vtkStructuredPointsGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStructuredPointsGeometryFilter * r;
@@ -158,6 +162,7 @@ void VtkStructuredPointsGeometryFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStructuredPointsGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

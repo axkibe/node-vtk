@@ -27,26 +27,27 @@ VtkOpenGLHardwareSupportWrap::~VtkOpenGLHardwareSupportWrap()
 
 void VtkOpenGLHardwareSupportWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLHardwareSupportWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLHardwareSupport").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLHardwareSupport").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLHardwareSupport").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLHardwareSupport").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLHardwareSupportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLHardwareSupportWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLHardwareSupportWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLHardwareSupportWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkOpenGLHardwareSupportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetExtensionManager", SetExtensionManager);
 	Nan::SetPrototypeMethod(tpl, "setExtensionManager", SetExtensionManager);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLHardwareSupportWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -121,6 +124,7 @@ void VtkOpenGLHardwareSupportWrap::GetExtensionManager(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetExtensionManager();
+		VtkOpenGLExtensionManagerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,6 +197,7 @@ void VtkOpenGLHardwareSupportWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLHardwareSupportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +213,7 @@ void VtkOpenGLHardwareSupportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkOpenGLHardwareSupportWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHardwareSupportWrap>(info.Holder());
 	vtkOpenGLHardwareSupport *native = (vtkOpenGLHardwareSupport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLHardwareSupport * r;
@@ -220,6 +225,7 @@ void VtkOpenGLHardwareSupportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLHardwareSupportWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +244,7 @@ void VtkOpenGLHardwareSupportWrap::SetExtensionManager(const Nan::FunctionCallba
 {
 	VtkOpenGLHardwareSupportWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHardwareSupportWrap>(info.Holder());
 	vtkOpenGLHardwareSupport *native = (vtkOpenGLHardwareSupport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOpenGLExtensionManagerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkOpenGLExtensionManagerWrap *a0 = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

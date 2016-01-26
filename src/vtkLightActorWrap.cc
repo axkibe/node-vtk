@@ -30,26 +30,27 @@ VtkLightActorWrap::~VtkLightActorWrap()
 
 void VtkLightActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProp3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLightActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLightActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LightActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLightActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LightActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLightActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLightActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLightActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProp3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLightActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -80,6 +81,8 @@ void VtkLightActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetLight", SetLight);
 	Nan::SetPrototypeMethod(tpl, "setLight", SetLight);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLightActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -130,6 +133,7 @@ void VtkLightActorWrap::GetLight(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetLight();
+		VtkLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -188,6 +192,7 @@ void VtkLightActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkLightActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +208,7 @@ void VtkLightActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo
 {
 	VtkLightActorWrap *wrapper = ObjectWrap::Unwrap<VtkLightActorWrap>(info.Holder());
 	vtkLightActor *native = (vtkLightActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -223,7 +228,7 @@ void VtkLightActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLightActorWrap *wrapper = ObjectWrap::Unwrap<VtkLightActorWrap>(info.Holder());
 	vtkLightActor *native = (vtkLightActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -245,7 +250,7 @@ void VtkLightActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkLightActorWrap *wrapper = ObjectWrap::Unwrap<VtkLightActorWrap>(info.Holder());
 	vtkLightActor *native = (vtkLightActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLightActor * r;
@@ -257,6 +262,7 @@ void VtkLightActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLightActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -298,7 +304,7 @@ void VtkLightActorWrap::SetLight(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkLightActorWrap *wrapper = ObjectWrap::Unwrap<VtkLightActorWrap>(info.Holder());
 	vtkLightActor *native = (vtkLightActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightWrap *a0 = ObjectWrap::Unwrap<VtkLightWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

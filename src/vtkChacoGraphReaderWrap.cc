@@ -27,26 +27,27 @@ VtkChacoGraphReaderWrap::~VtkChacoGraphReaderWrap()
 
 void VtkChacoGraphReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUndirectedGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUndirectedGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkChacoGraphReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkChacoGraphReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ChacoGraphReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkChacoGraphReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ChacoGraphReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkChacoGraphReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkChacoGraphReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkChacoGraphReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUndirectedGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUndirectedGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkChacoGraphReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkChacoGraphReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkChacoGraphReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkChacoGraphReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkChacoGraphReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +170,7 @@ void VtkChacoGraphReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkChacoGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoGraphReaderWrap>(info.Holder());
 	vtkChacoGraphReader *native = (vtkChacoGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkChacoGraphReader * r;
@@ -178,6 +182,7 @@ void VtkChacoGraphReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkChacoGraphReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

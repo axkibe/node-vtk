@@ -26,26 +26,27 @@ VtkVoidArrayWrap::~VtkVoidArrayWrap()
 
 void VtkVoidArrayWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVoidArrayWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVoidArray").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VoidArray").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVoidArray").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VoidArray").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVoidArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVoidArrayWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVoidArrayWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVoidArrayWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -76,6 +77,8 @@ void VtkVoidArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVoidArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -105,7 +108,7 @@ void VtkVoidArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkVoidArrayWrap *wrapper = ObjectWrap::Unwrap<VtkVoidArrayWrap>(info.Holder());
 	vtkVoidArray *native = (vtkVoidArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVoidArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVoidArrayWrap *a0 = ObjectWrap::Unwrap<VtkVoidArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -208,6 +211,7 @@ void VtkVoidArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkVoidArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +239,7 @@ void VtkVoidArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkVoidArrayWrap *wrapper = ObjectWrap::Unwrap<VtkVoidArrayWrap>(info.Holder());
 	vtkVoidArray *native = (vtkVoidArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVoidArray * r;
@@ -247,6 +251,7 @@ void VtkVoidArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVoidArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

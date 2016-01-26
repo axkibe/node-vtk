@@ -30,26 +30,27 @@ VtkHierarchicalGraphViewWrap::~VtkHierarchicalGraphViewWrap()
 
 void VtkHierarchicalGraphViewWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphLayoutViewWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutViewWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHierarchicalGraphViewWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHierarchicalGraphView").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HierarchicalGraphView").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHierarchicalGraphView").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HierarchicalGraphView").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHierarchicalGraphViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHierarchicalGraphViewWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHierarchicalGraphViewWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutViewWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutViewWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHierarchicalGraphViewWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ColorGraphEdgesByArrayOff", ColorGraphEdgesByArrayOff);
 	Nan::SetPrototypeMethod(tpl, "colorGraphEdgesByArrayOff", ColorGraphEdgesByArrayOff);
 
@@ -119,6 +120,8 @@ void VtkHierarchicalGraphViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetHierarchyFromInputConnection", SetHierarchyFromInputConnection);
 	Nan::SetPrototypeMethod(tpl, "setHierarchyFromInputConnection", SetHierarchyFromInputConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHierarchicalGraphViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -319,6 +322,7 @@ void VtkHierarchicalGraphViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkHierarchicalGraphViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -334,7 +338,7 @@ void VtkHierarchicalGraphViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHierarchicalGraphView * r;
@@ -346,6 +350,7 @@ void VtkHierarchicalGraphViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHierarchicalGraphViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -454,7 +459,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphFromInput(const Nan::FunctionCallback
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -466,6 +471,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphFromInput(const Nan::FunctionCallback
 		r = native->SetGraphFromInput(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -484,7 +490,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphFromInputConnection(const Nan::Functi
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -496,6 +502,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphFromInputConnection(const Nan::Functi
 		r = native->SetGraphFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -514,7 +521,7 @@ void VtkHierarchicalGraphViewWrap::SetHierarchyFromInput(const Nan::FunctionCall
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -526,6 +533,7 @@ void VtkHierarchicalGraphViewWrap::SetHierarchyFromInput(const Nan::FunctionCall
 		r = native->SetHierarchyFromInput(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -544,7 +552,7 @@ void VtkHierarchicalGraphViewWrap::SetHierarchyFromInputConnection(const Nan::Fu
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -556,6 +564,7 @@ void VtkHierarchicalGraphViewWrap::SetHierarchyFromInputConnection(const Nan::Fu
 		r = native->SetHierarchyFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

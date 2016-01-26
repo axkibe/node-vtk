@@ -28,26 +28,27 @@ VtkBSPIntersectionsWrap::~VtkBSPIntersectionsWrap()
 
 void VtkBSPIntersectionsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBSPIntersectionsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBSPIntersections").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BSPIntersections").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBSPIntersections").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BSPIntersections").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBSPIntersectionsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBSPIntersectionsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBSPIntersectionsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBSPIntersectionsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeIntersectionsUsingDataBoundsOff", ComputeIntersectionsUsingDataBoundsOff);
 	Nan::SetPrototypeMethod(tpl, "computeIntersectionsUsingDataBoundsOff", ComputeIntersectionsUsingDataBoundsOff);
 
@@ -90,6 +91,8 @@ void VtkBSPIntersectionsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCuts", SetCuts);
 	Nan::SetPrototypeMethod(tpl, "setCuts", SetCuts);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBSPIntersectionsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -178,6 +181,7 @@ void VtkBSPIntersectionsWrap::GetCuts(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetCuts();
+		VtkBSPCutsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -254,7 +258,7 @@ void VtkBSPIntersectionsWrap::IntersectsCell(const Nan::FunctionCallbackInfo<v8:
 	vtkBSPIntersections *native = (vtkBSPIntersections *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCellWrap *a1 = ObjectWrap::Unwrap<VtkCellWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -348,6 +352,7 @@ void VtkBSPIntersectionsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkBSPIntersectionsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -363,7 +368,7 @@ void VtkBSPIntersectionsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBSPIntersectionsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPIntersectionsWrap>(info.Holder());
 	vtkBSPIntersections *native = (vtkBSPIntersections *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBSPIntersections * r;
@@ -375,6 +380,7 @@ void VtkBSPIntersectionsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBSPIntersectionsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -412,7 +418,7 @@ void VtkBSPIntersectionsWrap::SetCuts(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkBSPIntersectionsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPIntersectionsWrap>(info.Holder());
 	vtkBSPIntersections *native = (vtkBSPIntersections *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBSPCutsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBSPCutsWrap *a0 = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

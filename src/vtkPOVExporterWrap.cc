@@ -27,26 +27,27 @@ VtkPOVExporterWrap::~VtkPOVExporterWrap()
 
 void VtkPOVExporterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExporterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExporterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPOVExporterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPOVExporter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("POVExporter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPOVExporter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("POVExporter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPOVExporterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPOVExporterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPOVExporterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExporterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExporterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPOVExporterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkPOVExporterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPOVExporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkPOVExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkPOVExporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +170,7 @@ void VtkPOVExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPOVExporterWrap *wrapper = ObjectWrap::Unwrap<VtkPOVExporterWrap>(info.Holder());
 	vtkPOVExporter *native = (vtkPOVExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPOVExporter * r;
@@ -178,6 +182,7 @@ void VtkPOVExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPOVExporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

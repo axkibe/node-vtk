@@ -27,26 +27,27 @@ VtkImageMapToWindowLevelColorsWrap::~VtkImageMapToWindowLevelColorsWrap()
 
 void VtkImageMapToWindowLevelColorsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageMapToColorsWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageMapToColorsWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageMapToWindowLevelColorsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageMapToWindowLevelColors").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageMapToWindowLevelColors").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageMapToWindowLevelColors").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageMapToWindowLevelColors").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageMapToWindowLevelColorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageMapToWindowLevelColorsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageMapToWindowLevelColorsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageMapToColorsWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageMapToColorsWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageMapToWindowLevelColorsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkImageMapToWindowLevelColorsWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetWindow", SetWindow);
 	Nan::SetPrototypeMethod(tpl, "setWindow", SetWindow);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageMapToWindowLevelColorsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -171,6 +174,7 @@ void VtkImageMapToWindowLevelColorsWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageMapToWindowLevelColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +190,7 @@ void VtkImageMapToWindowLevelColorsWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkImageMapToWindowLevelColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToWindowLevelColorsWrap>(info.Holder());
 	vtkImageMapToWindowLevelColors *native = (vtkImageMapToWindowLevelColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageMapToWindowLevelColors * r;
@@ -198,6 +202,7 @@ void VtkImageMapToWindowLevelColorsWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageMapToWindowLevelColorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

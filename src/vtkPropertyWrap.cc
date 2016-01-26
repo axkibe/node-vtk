@@ -31,26 +31,27 @@ VtkPropertyWrap::~VtkPropertyWrap()
 
 void VtkPropertyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPropertyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProperty").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Property").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProperty").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Property").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPropertyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPropertyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPropertyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPropertyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddShaderVariable", AddShaderVariable);
 	Nan::SetPrototypeMethod(tpl, "addShaderVariable", AddShaderVariable);
 
@@ -297,6 +298,8 @@ void VtkPropertyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShadingOn", ShadingOn);
 	Nan::SetPrototypeMethod(tpl, "shadingOn", ShadingOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -445,10 +448,10 @@ void VtkPropertyWrap::BackfaceRender(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkActorWrap *a0 = ObjectWrap::Unwrap<VtkActorWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkRendererWrap *a1 = ObjectWrap::Unwrap<VtkRendererWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -470,7 +473,7 @@ void VtkPropertyWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -923,6 +926,7 @@ void VtkPropertyWrap::GetShaderDeviceAdapter2(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetShaderDeviceAdapter2();
+		VtkShaderDeviceAdapter2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1048,6 +1052,7 @@ void VtkPropertyWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetTexture(
 			*a0
 		);
+			VtkTextureWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1070,6 +1075,7 @@ void VtkPropertyWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetTexture(
 			info[0]->Int32Value()
 		);
+			VtkTextureWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1141,6 +1147,7 @@ void VtkPropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1156,10 +1163,10 @@ void VtkPropertyWrap::PostRender(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkActorWrap *a0 = ObjectWrap::Unwrap<VtkActorWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkRendererWrap *a1 = ObjectWrap::Unwrap<VtkRendererWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1181,7 +1188,7 @@ void VtkPropertyWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1245,10 +1252,10 @@ void VtkPropertyWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkActorWrap *a0 = ObjectWrap::Unwrap<VtkActorWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkRendererWrap *a1 = ObjectWrap::Unwrap<VtkRendererWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1270,7 +1277,7 @@ void VtkPropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProperty * r;
@@ -1282,6 +1289,7 @@ void VtkPropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1757,7 +1765,7 @@ void VtkPropertyWrap::SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTextureWrap *a1 = ObjectWrap::Unwrap<VtkTextureWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1774,7 +1782,7 @@ void VtkPropertyWrap::SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTextureWrap *a1 = ObjectWrap::Unwrap<VtkTextureWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

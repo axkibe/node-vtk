@@ -28,26 +28,27 @@ VtkImageSeparableConvolutionWrap::~VtkImageSeparableConvolutionWrap()
 
 void VtkImageSeparableConvolutionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageDecomposeFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageDecomposeFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageSeparableConvolutionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageSeparableConvolution").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageSeparableConvolution").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageSeparableConvolution").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageSeparableConvolution").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageSeparableConvolutionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageSeparableConvolutionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageSeparableConvolutionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageDecomposeFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageDecomposeFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageSeparableConvolutionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -78,6 +79,8 @@ void VtkImageSeparableConvolutionWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetZKernel", SetZKernel);
 	Nan::SetPrototypeMethod(tpl, "setZKernel", SetZKernel);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageSeparableConvolutionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -128,6 +131,7 @@ void VtkImageSeparableConvolutionWrap::GetXKernel(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetXKernel();
+		VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -150,6 +154,7 @@ void VtkImageSeparableConvolutionWrap::GetYKernel(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetYKernel();
+		VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,6 +177,7 @@ void VtkImageSeparableConvolutionWrap::GetZKernel(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetZKernel();
+		VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,6 +222,7 @@ void VtkImageSeparableConvolutionWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageSeparableConvolutionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -231,7 +238,7 @@ void VtkImageSeparableConvolutionWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkImageSeparableConvolutionWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeparableConvolutionWrap>(info.Holder());
 	vtkImageSeparableConvolution *native = (vtkImageSeparableConvolution *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageSeparableConvolution * r;
@@ -243,6 +250,7 @@ void VtkImageSeparableConvolutionWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageSeparableConvolutionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,7 +269,7 @@ void VtkImageSeparableConvolutionWrap::SetXKernel(const Nan::FunctionCallbackInf
 {
 	VtkImageSeparableConvolutionWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeparableConvolutionWrap>(info.Holder());
 	vtkImageSeparableConvolution *native = (vtkImageSeparableConvolution *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFloatArrayWrap *a0 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -281,7 +289,7 @@ void VtkImageSeparableConvolutionWrap::SetYKernel(const Nan::FunctionCallbackInf
 {
 	VtkImageSeparableConvolutionWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeparableConvolutionWrap>(info.Holder());
 	vtkImageSeparableConvolution *native = (vtkImageSeparableConvolution *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFloatArrayWrap *a0 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -301,7 +309,7 @@ void VtkImageSeparableConvolutionWrap::SetZKernel(const Nan::FunctionCallbackInf
 {
 	VtkImageSeparableConvolutionWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeparableConvolutionWrap>(info.Holder());
 	vtkImageSeparableConvolution *native = (vtkImageSeparableConvolution *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFloatArrayWrap *a0 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

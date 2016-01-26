@@ -29,26 +29,27 @@ VtkHyperOctreeClipCutPointsGrabberWrap::~VtkHyperOctreeClipCutPointsGrabberWrap(
 
 void VtkHyperOctreeClipCutPointsGrabberWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHyperOctreePointsGrabberWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperOctreePointsGrabberWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperOctreeClipCutPointsGrabberWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperOctreeClipCutPointsGrabber").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperOctreeClipCutPointsGrabber").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperOctreeClipCutPointsGrabber").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperOctreeClipCutPointsGrabber").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperOctreeClipCutPointsGrabberWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperOctreeClipCutPointsGrabberWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperOctreeClipCutPointsGrabberWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHyperOctreePointsGrabberWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperOctreePointsGrabberWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperOctreeClipCutPointsGrabberWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,6 +74,8 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SetDimension", SetDimension);
 	Nan::SetPrototypeMethod(tpl, "setDimension", SetDimension);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperOctreeClipCutPointsGrabberWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -123,6 +126,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::GetPolygon(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPolygon();
+		VtkPolygonWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -145,6 +149,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::GetTriangulator(const Nan::Function
 		return;
 	}
 	r = native->GetTriangulator();
+		VtkOrderedTriangulatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,6 +206,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperOctreeClipCutPointsGrabberWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +222,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkHyperOctreeClipCutPointsGrabberWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeClipCutPointsGrabberWrap>(info.Holder());
 	vtkHyperOctreeClipCutPointsGrabber *native = (vtkHyperOctreeClipCutPointsGrabber *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperOctreeClipCutPointsGrabber * r;
@@ -228,6 +234,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperOctreeClipCutPointsGrabberWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

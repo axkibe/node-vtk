@@ -28,26 +28,27 @@ VtkExplicitCellWrap::~VtkExplicitCellWrap()
 
 void VtkExplicitCellWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkNonLinearCellWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkNonLinearCellWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExplicitCellWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExplicitCell").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExplicitCell").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExplicitCell").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExplicitCell").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExplicitCellWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExplicitCellWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExplicitCellWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkNonLinearCellWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkNonLinearCellWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExplicitCellWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkExplicitCellWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDataSet", SetDataSet);
 	Nan::SetPrototypeMethod(tpl, "setDataSet", SetDataSet);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExplicitCellWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -119,6 +122,7 @@ void VtkExplicitCellWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetDataSet();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,6 +181,7 @@ void VtkExplicitCellWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkExplicitCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +197,7 @@ void VtkExplicitCellWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkExplicitCellWrap *wrapper = ObjectWrap::Unwrap<VtkExplicitCellWrap>(info.Holder());
 	vtkExplicitCell *native = (vtkExplicitCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExplicitCell * r;
@@ -204,6 +209,7 @@ void VtkExplicitCellWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExplicitCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -222,7 +228,7 @@ void VtkExplicitCellWrap::SetDataSet(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkExplicitCellWrap *wrapper = ObjectWrap::Unwrap<VtkExplicitCellWrap>(info.Holder());
 	vtkExplicitCell *native = (vtkExplicitCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

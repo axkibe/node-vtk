@@ -27,26 +27,27 @@ VtkEnSightReaderWrap::~VtkEnSightReaderWrap()
 
 void VtkEnSightReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGenericEnSightReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericEnSightReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEnSightReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEnSightReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EnSightReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEnSightReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EnSightReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEnSightReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEnSightReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEnSightReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGenericEnSightReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericEnSightReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEnSightReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkEnSightReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetParticleCoordinatesByIndex", SetParticleCoordinatesByIndex);
 	Nan::SetPrototypeMethod(tpl, "setParticleCoordinatesByIndex", SetParticleCoordinatesByIndex);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEnSightReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -191,6 +194,7 @@ void VtkEnSightReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkEnSightReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +234,7 @@ void VtkEnSightReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkEnSightReaderWrap>(info.Holder());
 	vtkEnSightReader *native = (vtkEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEnSightReader * r;
@@ -242,6 +246,7 @@ void VtkEnSightReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEnSightReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -31,26 +31,27 @@ VtkWidgetRepresentationWrap::~VtkWidgetRepresentationWrap()
 
 void VtkWidgetRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPropWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWidgetRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWidgetRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WidgetRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWidgetRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WidgetRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWidgetRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWidgetRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWidgetRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPropWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWidgetRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -159,6 +160,8 @@ void VtkWidgetRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWidgetRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -229,7 +232,7 @@ void VtkWidgetRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -249,7 +252,7 @@ void VtkWidgetRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -430,6 +433,7 @@ void VtkWidgetRepresentationWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -445,7 +449,7 @@ void VtkWidgetRepresentationWrap::GetVolumes(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -551,6 +555,7 @@ void VtkWidgetRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkWidgetRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -590,7 +595,7 @@ void VtkWidgetRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -610,7 +615,7 @@ void VtkWidgetRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCallba
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -632,7 +637,7 @@ void VtkWidgetRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo<
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -654,7 +659,7 @@ void VtkWidgetRepresentationWrap::RenderTranslucentPolygonalGeometry(const Nan::
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -676,7 +681,7 @@ void VtkWidgetRepresentationWrap::RenderVolumetricGeometry(const Nan::FunctionCa
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -698,7 +703,7 @@ void VtkWidgetRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWidgetRepresentation * r;
@@ -710,6 +715,7 @@ void VtkWidgetRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWidgetRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -785,7 +791,7 @@ void VtkWidgetRepresentationWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -805,7 +811,7 @@ void VtkWidgetRepresentationWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
 	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

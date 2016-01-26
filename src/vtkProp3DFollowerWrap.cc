@@ -32,26 +32,27 @@ VtkProp3DFollowerWrap::~VtkProp3DFollowerWrap()
 
 void VtkProp3DFollowerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProp3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProp3DFollowerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProp3DFollower").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Prop3DFollower").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProp3DFollower").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Prop3DFollower").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProp3DFollowerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProp3DFollowerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProp3DFollowerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProp3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProp3DFollowerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeMatrix", ComputeMatrix);
 	Nan::SetPrototypeMethod(tpl, "computeMatrix", ComputeMatrix);
 
@@ -103,6 +104,8 @@ void VtkProp3DFollowerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProp3DFollowerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkProp3DFollowerWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,6 +191,7 @@ void VtkProp3DFollowerWrap::GetNextPath(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetNextPath();
+		VtkAssemblyPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -209,6 +214,7 @@ void VtkProp3DFollowerWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetProp3D();
+		VtkProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,6 +285,7 @@ void VtkProp3DFollowerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkProp3DFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +301,7 @@ void VtkProp3DFollowerWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -314,7 +321,7 @@ void VtkProp3DFollowerWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -336,7 +343,7 @@ void VtkProp3DFollowerWrap::RenderTranslucentPolygonalGeometry(const Nan::Functi
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -358,7 +365,7 @@ void VtkProp3DFollowerWrap::RenderVolumetricGeometry(const Nan::FunctionCallback
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -380,7 +387,7 @@ void VtkProp3DFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProp3DFollower * r;
@@ -392,6 +399,7 @@ void VtkProp3DFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProp3DFollowerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -410,7 +418,7 @@ void VtkProp3DFollowerWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -430,7 +438,7 @@ void VtkProp3DFollowerWrap::SetProp3D(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -450,7 +458,7 @@ void VtkProp3DFollowerWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

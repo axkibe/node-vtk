@@ -28,26 +28,27 @@ VtkContextInteractorStyleWrap::~VtkContextInteractorStyleWrap()
 
 void VtkContextInteractorStyleWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkContextInteractorStyleWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkContextInteractorStyle").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ContextInteractorStyle").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkContextInteractorStyle").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ContextInteractorStyle").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkContextInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkContextInteractorStyleWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkContextInteractorStyleWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkContextInteractorStyleWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -105,6 +106,8 @@ void VtkContextInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScene", SetScene);
 	Nan::SetPrototypeMethod(tpl, "setScene", SetScene);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkContextInteractorStyleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -155,6 +158,7 @@ void VtkContextInteractorStyleWrap::GetScene(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetScene();
+		VtkContextSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,6 +203,7 @@ void VtkContextInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkContextInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -370,7 +375,7 @@ void VtkContextInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkContextInteractorStyle * r;
@@ -382,6 +387,7 @@ void VtkContextInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkContextInteractorStyleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -400,7 +406,7 @@ void VtkContextInteractorStyleWrap::SetScene(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContextSceneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContextSceneWrap *a0 = ObjectWrap::Unwrap<VtkContextSceneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

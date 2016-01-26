@@ -27,26 +27,27 @@ VtkDIMACSGraphReaderWrap::~VtkDIMACSGraphReaderWrap()
 
 void VtkDIMACSGraphReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDIMACSGraphReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDIMACSGraphReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DIMACSGraphReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDIMACSGraphReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DIMACSGraphReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDIMACSGraphReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDIMACSGraphReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDIMACSGraphReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDIMACSGraphReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkDIMACSGraphReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVertexAttributeArrayName", SetVertexAttributeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVertexAttributeArrayName", SetVertexAttributeArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDIMACSGraphReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -191,6 +194,7 @@ void VtkDIMACSGraphReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkDIMACSGraphReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +210,7 @@ void VtkDIMACSGraphReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDIMACSGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDIMACSGraphReaderWrap>(info.Holder());
 	vtkDIMACSGraphReader *native = (vtkDIMACSGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDIMACSGraphReader * r;
@@ -218,6 +222,7 @@ void VtkDIMACSGraphReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDIMACSGraphReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

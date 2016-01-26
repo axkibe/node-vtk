@@ -27,26 +27,27 @@ VtkPolyDataNormalsWrap::~VtkPolyDataNormalsWrap()
 
 void VtkPolyDataNormalsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataNormalsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataNormals").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataNormals").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataNormals").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataNormals").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataNormalsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataNormalsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataNormalsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataNormalsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoOrientNormalsOff", AutoOrientNormalsOff);
 	Nan::SetPrototypeMethod(tpl, "autoOrientNormalsOff", AutoOrientNormalsOff);
 
@@ -167,6 +168,8 @@ void VtkPolyDataNormalsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SplittingOn", SplittingOn);
 	Nan::SetPrototypeMethod(tpl, "splittingOn", SplittingOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataNormalsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -541,6 +544,7 @@ void VtkPolyDataNormalsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataNormalsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -580,7 +584,7 @@ void VtkPolyDataNormalsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataNormals * r;
@@ -592,6 +596,7 @@ void VtkPolyDataNormalsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataNormalsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

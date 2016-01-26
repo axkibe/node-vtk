@@ -33,26 +33,27 @@ VtkActor2DWrap::~VtkActor2DWrap()
 
 void VtkActor2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPropWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkActor2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkActor2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Actor2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkActor2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Actor2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkActor2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkActor2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkActor2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPropWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkActor2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetActors2D", GetActors2D);
 	Nan::SetPrototypeMethod(tpl, "getActors2D", GetActors2D);
 
@@ -137,6 +138,8 @@ void VtkActor2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkActor2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -166,7 +169,7 @@ void VtkActor2DWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -193,6 +196,7 @@ void VtkActor2DWrap::GetActualPosition2Coordinate(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetActualPosition2Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,6 +219,7 @@ void VtkActor2DWrap::GetActualPositionCoordinate(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetActualPositionCoordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,6 +284,7 @@ void VtkActor2DWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetMapper();
+		VtkMapper2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,6 +307,7 @@ void VtkActor2DWrap::GetPosition2Coordinate(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetPosition2Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +330,7 @@ void VtkActor2DWrap::GetPositionCoordinate(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetPositionCoordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -345,6 +353,7 @@ void VtkActor2DWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -417,6 +426,7 @@ void VtkActor2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
+		VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,7 +442,7 @@ void VtkActor2DWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -452,7 +462,7 @@ void VtkActor2DWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -474,7 +484,7 @@ void VtkActor2DWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -496,7 +506,7 @@ void VtkActor2DWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCallb
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -518,7 +528,7 @@ void VtkActor2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkActor2D * r;
@@ -530,6 +540,7 @@ void VtkActor2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkActor2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -609,7 +620,7 @@ void VtkActor2DWrap::SetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMapper2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMapper2DWrap *a0 = ObjectWrap::Unwrap<VtkMapper2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -675,7 +686,7 @@ void VtkActor2DWrap::SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -714,7 +725,7 @@ void VtkActor2DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DWrap>(info.Holder());
 	vtkActor2D *native = (vtkActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -33,26 +33,27 @@ VtkTextureWrap::~VtkTextureWrap()
 
 void VtkTextureWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextureWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTexture").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Texture").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTexture").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Texture").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextureWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextureWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextureWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextureWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EdgeClampOff", EdgeClampOff);
 	Nan::SetPrototypeMethod(tpl, "edgeClampOff", EdgeClampOff);
 
@@ -185,6 +186,8 @@ void VtkTextureWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextureWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -287,6 +290,7 @@ void VtkTextureWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetInput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +327,7 @@ void VtkTextureWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,6 +364,7 @@ void VtkTextureWrap::GetMappedScalars(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetMappedScalars();
+		VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -423,6 +429,7 @@ void VtkTextureWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetTransform();
+		VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -498,7 +505,7 @@ void VtkTextureWrap::Load(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -549,6 +556,7 @@ void VtkTextureWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -564,7 +572,7 @@ void VtkTextureWrap::PostRender(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -608,7 +616,7 @@ void VtkTextureWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -628,7 +636,7 @@ void VtkTextureWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -696,7 +704,7 @@ void VtkTextureWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTexture * r;
@@ -708,6 +716,7 @@ void VtkTextureWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextureWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -783,7 +792,7 @@ void VtkTextureWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -915,7 +924,7 @@ void VtkTextureWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkImageShrink3DWrap::~VtkImageShrink3DWrap()
 
 void VtkImageShrink3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageShrink3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageShrink3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageShrink3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageShrink3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageShrink3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageShrink3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageShrink3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageShrink3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageShrink3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AveragingOff", AveragingOff);
 	Nan::SetPrototypeMethod(tpl, "averagingOff", AveragingOff);
 
@@ -125,6 +126,8 @@ void VtkImageShrink3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetShrinkFactors", SetShrinkFactors);
 	Nan::SetPrototypeMethod(tpl, "setShrinkFactors", SetShrinkFactors);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageShrink3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -387,6 +390,7 @@ void VtkImageShrink3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageShrink3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -402,7 +406,7 @@ void VtkImageShrink3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageShrink3D * r;
@@ -414,6 +418,7 @@ void VtkImageShrink3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageShrink3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

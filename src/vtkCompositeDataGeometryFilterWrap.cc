@@ -27,26 +27,27 @@ VtkCompositeDataGeometryFilterWrap::~VtkCompositeDataGeometryFilterWrap()
 
 void VtkCompositeDataGeometryFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompositeDataGeometryFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompositeDataGeometryFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompositeDataGeometryFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompositeDataGeometryFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompositeDataGeometryFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompositeDataGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompositeDataGeometryFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompositeDataGeometryFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompositeDataGeometryFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkCompositeDataGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompositeDataGeometryFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkCompositeDataGeometryFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompositeDataGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkCompositeDataGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkCompositeDataGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataGeometryFilterWrap>(info.Holder());
 	vtkCompositeDataGeometryFilter *native = (vtkCompositeDataGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompositeDataGeometryFilter * r;
@@ -158,6 +162,7 @@ void VtkCompositeDataGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompositeDataGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

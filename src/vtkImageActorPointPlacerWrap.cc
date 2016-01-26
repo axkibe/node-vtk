@@ -28,26 +28,27 @@ VtkImageActorPointPlacerWrap::~VtkImageActorPointPlacerWrap()
 
 void VtkImageActorPointPlacerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointPlacerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageActorPointPlacerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageActorPointPlacer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageActorPointPlacer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageActorPointPlacer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageActorPointPlacer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageActorPointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageActorPointPlacerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageActorPointPlacerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointPlacerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageActorPointPlacerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkImageActorPointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateInternalState", UpdateInternalState);
 	Nan::SetPrototypeMethod(tpl, "updateInternalState", UpdateInternalState);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageActorPointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -125,6 +128,7 @@ void VtkImageActorPointPlacerWrap::GetImageActor(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetImageActor();
+		VtkImageActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,6 +173,7 @@ void VtkImageActorPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageActorPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +189,7 @@ void VtkImageActorPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkImageActorPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkImageActorPointPlacerWrap>(info.Holder());
 	vtkImageActorPointPlacer *native = (vtkImageActorPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageActorPointPlacer * r;
@@ -196,6 +201,7 @@ void VtkImageActorPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageActorPointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -253,7 +259,7 @@ void VtkImageActorPointPlacerWrap::SetImageActor(const Nan::FunctionCallbackInfo
 {
 	VtkImageActorPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkImageActorPointPlacerWrap>(info.Holder());
 	vtkImageActorPointPlacer *native = (vtkImageActorPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageActorWrap *a0 = ObjectWrap::Unwrap<VtkImageActorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

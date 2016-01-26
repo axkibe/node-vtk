@@ -27,26 +27,27 @@ VtkCutMaterialWrap::~VtkCutMaterialWrap()
 
 void VtkCutMaterialWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCutMaterialWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCutMaterial").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CutMaterial").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCutMaterial").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CutMaterial").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCutMaterialWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCutMaterialWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCutMaterialWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCutMaterialWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetArrayName", GetArrayName);
 	Nan::SetPrototypeMethod(tpl, "getArrayName", GetArrayName);
 
@@ -80,6 +81,8 @@ void VtkCutMaterialWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetUpVector", SetUpVector);
 	Nan::SetPrototypeMethod(tpl, "setUpVector", SetUpVector);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCutMaterialWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -194,6 +197,7 @@ void VtkCutMaterialWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkCutMaterialWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -209,7 +213,7 @@ void VtkCutMaterialWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
 	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCutMaterial * r;
@@ -221,6 +225,7 @@ void VtkCutMaterialWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCutMaterialWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -28,26 +28,27 @@ VtkMNITransformReaderWrap::~VtkMNITransformReaderWrap()
 
 void VtkMNITransformReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMNITransformReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMNITransformReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MNITransformReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMNITransformReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MNITransformReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMNITransformReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMNITransformReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMNITransformReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMNITransformReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CanReadFile", CanReadFile);
 	Nan::SetPrototypeMethod(tpl, "canReadFile", CanReadFile);
 
@@ -87,6 +88,8 @@ void VtkMNITransformReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMNITransformReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -219,6 +222,7 @@ void VtkMNITransformReaderWrap::GetNthTransform(const Nan::FunctionCallbackInfo<
 		r = native->GetNthTransform(
 			info[0]->Int32Value()
 		);
+			VtkAbstractTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -258,6 +262,7 @@ void VtkMNITransformReaderWrap::GetTransform(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,6 +307,7 @@ void VtkMNITransformReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkMNITransformReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,7 +323,7 @@ void VtkMNITransformReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMNITransformReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformReaderWrap>(info.Holder());
 	vtkMNITransformReader *native = (vtkMNITransformReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMNITransformReader * r;
@@ -329,6 +335,7 @@ void VtkMNITransformReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMNITransformReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

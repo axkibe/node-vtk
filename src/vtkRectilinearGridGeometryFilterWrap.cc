@@ -27,26 +27,27 @@ VtkRectilinearGridGeometryFilterWrap::~VtkRectilinearGridGeometryFilterWrap()
 
 void VtkRectilinearGridGeometryFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRectilinearGridGeometryFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRectilinearGridGeometryFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RectilinearGridGeometryFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRectilinearGridGeometryFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RectilinearGridGeometryFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRectilinearGridGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRectilinearGridGeometryFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRectilinearGridGeometryFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRectilinearGridGeometryFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkRectilinearGridGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetExtent", SetExtent);
 	Nan::SetPrototypeMethod(tpl, "setExtent", SetExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRectilinearGridGeometryFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkRectilinearGridGeometryFilterWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkRectilinearGridGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -149,7 +153,7 @@ void VtkRectilinearGridGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkRectilinearGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridGeometryFilterWrap>(info.Holder());
 	vtkRectilinearGridGeometryFilter *native = (vtkRectilinearGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRectilinearGridGeometryFilter * r;
@@ -161,6 +165,7 @@ void VtkRectilinearGridGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRectilinearGridGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

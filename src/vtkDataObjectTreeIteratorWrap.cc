@@ -29,26 +29,27 @@ VtkDataObjectTreeIteratorWrap::~VtkDataObjectTreeIteratorWrap()
 
 void VtkDataObjectTreeIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCompositeDataIteratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataObjectTreeIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataObjectTreeIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataObjectTreeIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataObjectTreeIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataObjectTreeIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataObjectTreeIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataObjectTreeIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataObjectTreeIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeDataIteratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataObjectTreeIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -103,6 +104,8 @@ void VtkDataObjectTreeIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "VisitOnlyLeavesOn", VisitOnlyLeavesOn);
 	Nan::SetPrototypeMethod(tpl, "visitOnlyLeavesOn", VisitOnlyLeavesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataObjectTreeIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -153,6 +156,7 @@ void VtkDataObjectTreeIteratorWrap::GetCurrentDataObject(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetCurrentDataObject();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,6 +179,7 @@ void VtkDataObjectTreeIteratorWrap::GetCurrentMetaData(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetCurrentMetaData();
+		VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,6 +304,7 @@ void VtkDataObjectTreeIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataObjectTreeIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,7 +320,7 @@ void VtkDataObjectTreeIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkDataObjectTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeIteratorWrap>(info.Holder());
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataObjectTreeIterator * r;
@@ -326,6 +332,7 @@ void VtkDataObjectTreeIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataObjectTreeIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -28,26 +28,27 @@ VtkImageSeedConnectivityWrap::~VtkImageSeedConnectivityWrap()
 
 void VtkImageSeedConnectivityWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageSeedConnectivityWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageSeedConnectivity").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageSeedConnectivity").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageSeedConnectivity").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageSeedConnectivity").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageSeedConnectivityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageSeedConnectivityWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageSeedConnectivityWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageSeedConnectivityWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddSeed", AddSeed);
 	Nan::SetPrototypeMethod(tpl, "addSeed", AddSeed);
 
@@ -93,6 +94,8 @@ void VtkImageSeedConnectivityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutputUnconnectedValue", SetOutputUnconnectedValue);
 	Nan::SetPrototypeMethod(tpl, "setOutputUnconnectedValue", SetOutputUnconnectedValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageSeedConnectivityWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -180,6 +183,7 @@ void VtkImageSeedConnectivityWrap::GetConnector(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetConnector();
+		VtkImageConnectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,6 +284,7 @@ void VtkImageSeedConnectivityWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageSeedConnectivityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -307,7 +312,7 @@ void VtkImageSeedConnectivityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
 	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageSeedConnectivity * r;
@@ -319,6 +324,7 @@ void VtkImageSeedConnectivityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageSeedConnectivityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

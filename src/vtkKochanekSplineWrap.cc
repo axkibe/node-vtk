@@ -27,26 +27,27 @@ VtkKochanekSplineWrap::~VtkKochanekSplineWrap()
 
 void VtkKochanekSplineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSplineWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSplineWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkKochanekSplineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkKochanekSpline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("KochanekSpline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkKochanekSpline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("KochanekSpline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkKochanekSplineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkKochanekSplineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkKochanekSplineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSplineWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSplineWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkKochanekSplineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Compute", Compute);
 	Nan::SetPrototypeMethod(tpl, "compute", Compute);
 
@@ -86,6 +87,8 @@ void VtkKochanekSplineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDefaultTension", SetDefaultTension);
 	Nan::SetPrototypeMethod(tpl, "setDefaultTension", SetDefaultTension);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkKochanekSplineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -127,7 +130,7 @@ void VtkKochanekSplineWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkKochanekSplineWrap *wrapper = ObjectWrap::Unwrap<VtkKochanekSplineWrap>(info.Holder());
 	vtkKochanekSpline *native = (vtkKochanekSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -253,6 +256,7 @@ void VtkKochanekSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkKochanekSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -268,7 +272,7 @@ void VtkKochanekSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkKochanekSplineWrap *wrapper = ObjectWrap::Unwrap<VtkKochanekSplineWrap>(info.Holder());
 	vtkKochanekSpline *native = (vtkKochanekSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkKochanekSpline * r;
@@ -280,6 +284,7 @@ void VtkKochanekSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkKochanekSplineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

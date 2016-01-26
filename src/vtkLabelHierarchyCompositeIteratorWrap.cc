@@ -30,26 +30,27 @@ VtkLabelHierarchyCompositeIteratorWrap::~VtkLabelHierarchyCompositeIteratorWrap(
 
 void VtkLabelHierarchyCompositeIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLabelHierarchyIteratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabelHierarchyIteratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLabelHierarchyCompositeIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLabelHierarchyCompositeIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LabelHierarchyCompositeIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLabelHierarchyCompositeIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LabelHierarchyCompositeIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLabelHierarchyCompositeIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLabelHierarchyCompositeIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLabelHierarchyCompositeIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLabelHierarchyIteratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabelHierarchyIteratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLabelHierarchyCompositeIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddIterator", AddIterator);
 	Nan::SetPrototypeMethod(tpl, "addIterator", AddIterator);
 
@@ -83,6 +84,8 @@ void VtkLabelHierarchyCompositeIteratorWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLabelHierarchyCompositeIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -112,7 +115,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::AddIterator(const Nan::FunctionCall
 {
 	VtkLabelHierarchyCompositeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyCompositeIteratorWrap>(info.Holder());
 	vtkLabelHierarchyCompositeIterator *native = (vtkLabelHierarchyCompositeIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLabelHierarchyIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLabelHierarchyIteratorWrap *a0 = ObjectWrap::Unwrap<VtkLabelHierarchyIteratorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -145,7 +148,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::Begin(const Nan::FunctionCallbackIn
 {
 	VtkLabelHierarchyCompositeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyCompositeIteratorWrap>(info.Holder());
 	vtkLabelHierarchyCompositeIterator *native = (vtkLabelHierarchyCompositeIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -165,7 +168,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::BoxAllNodes(const Nan::FunctionCall
 {
 	VtkLabelHierarchyCompositeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyCompositeIteratorWrap>(info.Holder());
 	vtkLabelHierarchyCompositeIterator *native = (vtkLabelHierarchyCompositeIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -230,6 +233,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::GetHierarchy(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetHierarchy();
+		VtkLabelHierarchyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,6 +278,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkLabelHierarchyCompositeIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +306,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkLabelHierarchyCompositeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyCompositeIteratorWrap>(info.Holder());
 	vtkLabelHierarchyCompositeIterator *native = (vtkLabelHierarchyCompositeIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLabelHierarchyCompositeIterator * r;
@@ -313,6 +318,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLabelHierarchyCompositeIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -30,26 +30,27 @@ VtkHandleRepresentationWrap::~VtkHandleRepresentationWrap()
 
 void VtkHandleRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHandleRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHandleRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HandleRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHandleRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HandleRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHandleRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHandleRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHandleRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHandleRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ActiveRepresentationOff", ActiveRepresentationOff);
 	Nan::SetPrototypeMethod(tpl, "activeRepresentationOff", ActiveRepresentationOff);
 
@@ -122,6 +123,8 @@ void VtkHandleRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHandleRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -199,7 +202,7 @@ void VtkHandleRepresentationWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
 	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -296,6 +299,7 @@ void VtkHandleRepresentationWrap::GetPointPlacer(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPointPlacer();
+		VtkPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -382,6 +386,7 @@ void VtkHandleRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -397,7 +402,7 @@ void VtkHandleRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
 	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHandleRepresentation * r;
@@ -409,6 +414,7 @@ void VtkHandleRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHandleRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -484,7 +490,7 @@ void VtkHandleRepresentationWrap::SetPointPlacer(const Nan::FunctionCallbackInfo
 {
 	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
 	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointPlacerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointPlacerWrap *a0 = ObjectWrap::Unwrap<VtkPointPlacerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -504,7 +510,7 @@ void VtkHandleRepresentationWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8
 {
 	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
 	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -543,7 +549,7 @@ void VtkHandleRepresentationWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8
 {
 	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
 	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkTransform2DWrap::~VtkTransform2DWrap()
 
 void VtkTransform2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransform2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransform2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Transform2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransform2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Transform2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransform2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransform2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransform2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransform2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -93,6 +94,8 @@ void VtkTransform2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransform2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,7 +139,7 @@ void VtkTransform2DWrap::GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTransform2DWrap *wrapper = ObjectWrap::Unwrap<VtkTransform2DWrap>(info.Holder());
 	vtkTransform2D *native = (vtkTransform2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -156,7 +159,7 @@ void VtkTransform2DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTransform2DWrap *wrapper = ObjectWrap::Unwrap<VtkTransform2DWrap>(info.Holder());
 	vtkTransform2D *native = (vtkTransform2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -176,6 +179,7 @@ void VtkTransform2DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetMatrix();
+		VtkMatrix3x3Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +195,7 @@ void VtkTransform2DWrap::GetTranspose(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTransform2DWrap *wrapper = ObjectWrap::Unwrap<VtkTransform2DWrap>(info.Holder());
 	vtkTransform2D *native = (vtkTransform2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -235,10 +239,10 @@ void VtkTransform2DWrap::InverseTransformPoints(const Nan::FunctionCallbackInfo<
 {
 	VtkTransform2DWrap *wrapper = ObjectWrap::Unwrap<VtkTransform2DWrap>(info.Holder());
 	vtkTransform2D *native = (vtkTransform2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPoints2DWrap *a0 = ObjectWrap::Unwrap<VtkPoints2DWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPoints2DWrap *a1 = ObjectWrap::Unwrap<VtkPoints2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -289,6 +293,7 @@ void VtkTransform2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransform2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,7 +328,7 @@ void VtkTransform2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTransform2DWrap *wrapper = ObjectWrap::Unwrap<VtkTransform2DWrap>(info.Holder());
 	vtkTransform2D *native = (vtkTransform2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransform2D * r;
@@ -335,6 +340,7 @@ void VtkTransform2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransform2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -376,7 +382,7 @@ void VtkTransform2DWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTransform2DWrap *wrapper = ObjectWrap::Unwrap<VtkTransform2DWrap>(info.Holder());
 	vtkTransform2D *native = (vtkTransform2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -396,10 +402,10 @@ void VtkTransform2DWrap::TransformPoints(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTransform2DWrap *wrapper = ObjectWrap::Unwrap<VtkTransform2DWrap>(info.Holder());
 	vtkTransform2D *native = (vtkTransform2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPoints2DWrap *a0 = ObjectWrap::Unwrap<VtkPoints2DWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPoints2DWrap *a1 = ObjectWrap::Unwrap<VtkPoints2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

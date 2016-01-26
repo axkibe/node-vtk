@@ -30,26 +30,27 @@ VtkDataArrayCollectionIteratorWrap::~VtkDataArrayCollectionIteratorWrap()
 
 void VtkDataArrayCollectionIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCollectionIteratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionIteratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataArrayCollectionIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataArrayCollectionIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataArrayCollectionIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataArrayCollectionIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataArrayCollectionIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataArrayCollectionIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataArrayCollectionIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataArrayCollectionIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCollectionIteratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionIteratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataArrayCollectionIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkDataArrayCollectionIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetCollection", SetCollection);
 	Nan::SetPrototypeMethod(tpl, "setCollection", SetCollection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataArrayCollectionIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -118,6 +121,7 @@ void VtkDataArrayCollectionIteratorWrap::GetDataArray(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetDataArray();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,6 +166,7 @@ void VtkDataArrayCollectionIteratorWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataArrayCollectionIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +182,7 @@ void VtkDataArrayCollectionIteratorWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkDataArrayCollectionIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayCollectionIteratorWrap>(info.Holder());
 	vtkDataArrayCollectionIterator *native = (vtkDataArrayCollectionIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataArrayCollectionIterator * r;
@@ -189,6 +194,7 @@ void VtkDataArrayCollectionIteratorWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataArrayCollectionIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -207,7 +213,7 @@ void VtkDataArrayCollectionIteratorWrap::SetCollection(const Nan::FunctionCallba
 {
 	VtkDataArrayCollectionIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayCollectionIteratorWrap>(info.Holder());
 	vtkDataArrayCollectionIterator *native = (vtkDataArrayCollectionIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCollectionWrap *a0 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

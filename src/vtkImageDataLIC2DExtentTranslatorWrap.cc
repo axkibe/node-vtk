@@ -28,26 +28,27 @@ VtkImageDataLIC2DExtentTranslatorWrap::~VtkImageDataLIC2DExtentTranslatorWrap()
 
 void VtkImageDataLIC2DExtentTranslatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExtentTranslatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtentTranslatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageDataLIC2DExtentTranslatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageDataLIC2DExtentTranslator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageDataLIC2DExtentTranslator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageDataLIC2DExtentTranslator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageDataLIC2DExtentTranslator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageDataLIC2DExtentTranslatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageDataLIC2DExtentTranslatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtentTranslatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtentTranslatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageDataLIC2DExtentTranslatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAlgorithm", GetAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "getAlgorithm", GetAlgorithm);
 
@@ -75,6 +76,8 @@ void VtkImageDataLIC2DExtentTranslatorWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetInputWholeExtent", SetInputWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setInputWholeExtent", SetInputWholeExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageDataLIC2DExtentTranslatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -111,6 +114,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::GetAlgorithm(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetAlgorithm();
+		VtkImageDataLIC2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -147,6 +151,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::GetInputExtentTranslator(const Nan::
 		return;
 	}
 	r = native->GetInputExtentTranslator();
+		VtkExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,6 +196,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +212,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkImageDataLIC2DExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataLIC2DExtentTranslatorWrap>(info.Holder());
 	vtkImageDataLIC2DExtentTranslator *native = (vtkImageDataLIC2DExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageDataLIC2DExtentTranslator * r;
@@ -218,6 +224,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -236,7 +243,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SetAlgorithm(const Nan::FunctionCall
 {
 	VtkImageDataLIC2DExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataLIC2DExtentTranslatorWrap>(info.Holder());
 	vtkImageDataLIC2DExtentTranslator *native = (vtkImageDataLIC2DExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataLIC2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataLIC2DWrap *a0 = ObjectWrap::Unwrap<VtkImageDataLIC2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -256,7 +263,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SetInputExtentTranslator(const Nan::
 {
 	VtkImageDataLIC2DExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataLIC2DExtentTranslatorWrap>(info.Holder());
 	vtkImageDataLIC2DExtentTranslator *native = (vtkImageDataLIC2DExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkExtentTranslatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkExtentTranslatorWrap *a0 = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

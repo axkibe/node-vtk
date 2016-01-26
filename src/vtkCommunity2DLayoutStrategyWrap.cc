@@ -27,26 +27,27 @@ VtkCommunity2DLayoutStrategyWrap::~VtkCommunity2DLayoutStrategyWrap()
 
 void VtkCommunity2DLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCommunity2DLayoutStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCommunity2DLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Community2DLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCommunity2DLayoutStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Community2DLayoutStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCommunity2DLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCommunity2DLayoutStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCommunity2DLayoutStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCommunity2DLayoutStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -122,6 +123,8 @@ void VtkCommunity2DLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetRandomSeed", SetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "setRandomSeed", SetRandomSeed);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCommunity2DLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -414,6 +417,7 @@ void VtkCommunity2DLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkCommunity2DLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -429,7 +433,7 @@ void VtkCommunity2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
 	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCommunity2DLayoutStrategy * r;
@@ -441,6 +445,7 @@ void VtkCommunity2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCommunity2DLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

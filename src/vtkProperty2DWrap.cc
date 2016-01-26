@@ -27,26 +27,27 @@ VtkProperty2DWrap::~VtkProperty2DWrap()
 
 void VtkProperty2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProperty2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProperty2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Property2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProperty2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Property2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProperty2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProperty2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProperty2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProperty2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -110,6 +111,8 @@ void VtkProperty2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOpacity", SetOpacity);
 	Nan::SetPrototypeMethod(tpl, "setOpacity", SetOpacity);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProperty2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -139,7 +142,7 @@ void VtkProperty2DWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkProperty2DWrap *wrapper = ObjectWrap::Unwrap<VtkProperty2DWrap>(info.Holder());
 	vtkProperty2D *native = (vtkProperty2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -314,6 +317,7 @@ void VtkProperty2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +333,7 @@ void VtkProperty2DWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProperty2DWrap *wrapper = ObjectWrap::Unwrap<VtkProperty2DWrap>(info.Holder());
 	vtkProperty2D *native = (vtkProperty2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -349,7 +353,7 @@ void VtkProperty2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkProperty2DWrap *wrapper = ObjectWrap::Unwrap<VtkProperty2DWrap>(info.Holder());
 	vtkProperty2D *native = (vtkProperty2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProperty2D * r;
@@ -361,6 +365,7 @@ void VtkProperty2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProperty2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

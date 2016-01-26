@@ -28,26 +28,27 @@ VtkButtonRepresentationWrap::~VtkButtonRepresentationWrap()
 
 void VtkButtonRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkButtonRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkButtonRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ButtonRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkButtonRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ButtonRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkButtonRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkButtonRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkButtonRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkButtonRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -90,6 +91,8 @@ void VtkButtonRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkButtonRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -237,6 +240,7 @@ void VtkButtonRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkButtonRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +280,7 @@ void VtkButtonRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkButtonRepresentationWrap>(info.Holder());
 	vtkButtonRepresentation *native = (vtkButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkButtonRepresentation * r;
@@ -288,6 +292,7 @@ void VtkButtonRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkButtonRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -344,7 +349,7 @@ void VtkButtonRepresentationWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8
 {
 	VtkButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkButtonRepresentationWrap>(info.Holder());
 	vtkButtonRepresentation *native = (vtkButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

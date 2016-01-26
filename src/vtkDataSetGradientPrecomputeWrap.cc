@@ -28,26 +28,27 @@ VtkDataSetGradientPrecomputeWrap::~VtkDataSetGradientPrecomputeWrap()
 
 void VtkDataSetGradientPrecomputeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataSetGradientPrecomputeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataSetGradientPrecompute").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataSetGradientPrecompute").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataSetGradientPrecompute").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataSetGradientPrecompute").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataSetGradientPrecomputeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataSetGradientPrecomputeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataSetGradientPrecomputeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataSetGradientPrecomputeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkDataSetGradientPrecomputeWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataSetGradientPrecomputeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -106,7 +109,7 @@ void VtkDataSetGradientPrecomputeWrap::GradientPrecompute(const Nan::FunctionCal
 {
 	VtkDataSetGradientPrecomputeWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetGradientPrecomputeWrap>(info.Holder());
 	vtkDataSetGradientPrecompute *native = (vtkDataSetGradientPrecompute *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		int r;
@@ -157,6 +160,7 @@ void VtkDataSetGradientPrecomputeWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataSetGradientPrecomputeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +176,7 @@ void VtkDataSetGradientPrecomputeWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkDataSetGradientPrecomputeWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetGradientPrecomputeWrap>(info.Holder());
 	vtkDataSetGradientPrecompute *native = (vtkDataSetGradientPrecompute *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataSetGradientPrecompute * r;
@@ -184,6 +188,7 @@ void VtkDataSetGradientPrecomputeWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataSetGradientPrecomputeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

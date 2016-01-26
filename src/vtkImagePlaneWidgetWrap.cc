@@ -39,26 +39,27 @@ VtkImagePlaneWidgetWrap::~VtkImagePlaneWidgetWrap()
 
 void VtkImagePlaneWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataSourceWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataSourceWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImagePlaneWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImagePlaneWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImagePlaneWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImagePlaneWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImagePlaneWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImagePlaneWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImagePlaneWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImagePlaneWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataSourceWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataSourceWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImagePlaneWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DisplayTextOff", DisplayTextOff);
 	Nan::SetPrototypeMethod(tpl, "displayTextOff", DisplayTextOff);
 
@@ -398,6 +399,8 @@ void VtkImagePlaneWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UserControlledLookupTableOn", UserControlledLookupTableOn);
 	Nan::SetPrototypeMethod(tpl, "userControlledLookupTableOn", UserControlledLookupTableOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImagePlaneWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -472,6 +475,7 @@ void VtkImagePlaneWidgetWrap::GetColorMap(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetColorMap();
+		VtkImageMapToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -522,6 +526,7 @@ void VtkImagePlaneWidgetWrap::GetCursorProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetCursorProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -670,6 +675,7 @@ void VtkImagePlaneWidgetWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -692,6 +698,7 @@ void VtkImagePlaneWidgetWrap::GetMarginProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetMarginProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -896,6 +903,7 @@ void VtkImagePlaneWidgetWrap::GetPlaneProperty(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetPlaneProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -911,7 +919,7 @@ void VtkImagePlaneWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -938,6 +946,7 @@ void VtkImagePlaneWidgetWrap::GetPolyDataAlgorithm(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetPolyDataAlgorithm();
+		VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -960,6 +969,7 @@ void VtkImagePlaneWidgetWrap::GetReslice(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetReslice();
+		VtkImageResliceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -982,6 +992,7 @@ void VtkImagePlaneWidgetWrap::GetResliceAxes(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetResliceAxes();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1018,6 +1029,7 @@ void VtkImagePlaneWidgetWrap::GetResliceOutput(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetResliceOutput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1138,6 +1150,7 @@ void VtkImagePlaneWidgetWrap::GetSelectedPlaneProperty(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetSelectedPlaneProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1188,6 +1201,7 @@ void VtkImagePlaneWidgetWrap::GetTextProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1210,6 +1224,7 @@ void VtkImagePlaneWidgetWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetTexture();
+		VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1246,6 +1261,7 @@ void VtkImagePlaneWidgetWrap::GetTexturePlaneProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetTexturePlaneProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1370,6 +1386,7 @@ void VtkImagePlaneWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkImagePlaneWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1453,7 +1470,7 @@ void VtkImagePlaneWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImagePlaneWidget * r;
@@ -1465,6 +1482,7 @@ void VtkImagePlaneWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImagePlaneWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1483,7 +1501,7 @@ void VtkImagePlaneWidgetWrap::SetColorMap(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMapToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageMapToColorsWrap *a0 = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1503,7 +1521,7 @@ void VtkImagePlaneWidgetWrap::SetCursorProperty(const Nan::FunctionCallbackInfo<
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1561,7 +1579,7 @@ void VtkImagePlaneWidgetWrap::SetInputConnection(const Nan::FunctionCallbackInfo
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1638,7 +1656,7 @@ void VtkImagePlaneWidgetWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLookupTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLookupTableWrap *a0 = ObjectWrap::Unwrap<VtkLookupTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1658,7 +1676,7 @@ void VtkImagePlaneWidgetWrap::SetMarginProperty(const Nan::FunctionCallbackInfo<
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1781,7 +1799,7 @@ void VtkImagePlaneWidgetWrap::SetPicker(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractPropPickerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractPropPickerWrap *a0 = ObjectWrap::Unwrap<VtkAbstractPropPickerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1856,7 +1874,7 @@ void VtkImagePlaneWidgetWrap::SetPlaneProperty(const Nan::FunctionCallbackInfo<v
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2042,7 +2060,7 @@ void VtkImagePlaneWidgetWrap::SetSelectedPlaneProperty(const Nan::FunctionCallba
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2100,7 +2118,7 @@ void VtkImagePlaneWidgetWrap::SetTextProperty(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2139,7 +2157,7 @@ void VtkImagePlaneWidgetWrap::SetTexturePlaneProperty(const Nan::FunctionCallbac
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

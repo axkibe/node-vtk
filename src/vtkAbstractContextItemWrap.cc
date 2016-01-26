@@ -27,26 +27,27 @@ VtkAbstractContextItemWrap::~VtkAbstractContextItemWrap()
 
 void VtkAbstractContextItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAbstractContextItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAbstractContextItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AbstractContextItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAbstractContextItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AbstractContextItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAbstractContextItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAbstractContextItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAbstractContextItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAbstractContextItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClearItems", ClearItems);
 	Nan::SetPrototypeMethod(tpl, "clearItems", ClearItems);
 
@@ -80,6 +81,8 @@ void VtkAbstractContextItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAbstractContextItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -142,6 +145,7 @@ void VtkAbstractContextItemWrap::GetParent(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetParent();
+		VtkAbstractContextItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,6 +168,7 @@ void VtkAbstractContextItemWrap::GetScene(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetScene();
+		VtkContextSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,6 +213,7 @@ void VtkAbstractContextItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkAbstractContextItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +241,7 @@ void VtkAbstractContextItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAbstractContextItemWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info.Holder());
 	vtkAbstractContextItem *native = (vtkAbstractContextItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAbstractContextItem * r;
@@ -247,6 +253,7 @@ void VtkAbstractContextItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAbstractContextItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -265,7 +272,7 @@ void VtkAbstractContextItemWrap::SetParent(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAbstractContextItemWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info.Holder());
 	vtkAbstractContextItem *native = (vtkAbstractContextItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractContextItemWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractContextItemWrap *a0 = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -285,7 +292,7 @@ void VtkAbstractContextItemWrap::SetScene(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAbstractContextItemWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info.Holder());
 	vtkAbstractContextItem *native = (vtkAbstractContextItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContextSceneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContextSceneWrap *a0 = ObjectWrap::Unwrap<VtkContextSceneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

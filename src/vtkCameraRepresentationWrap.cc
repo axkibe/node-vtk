@@ -34,26 +34,27 @@ VtkCameraRepresentationWrap::~VtkCameraRepresentationWrap()
 
 void VtkCameraRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkBorderRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCameraRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCameraRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CameraRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCameraRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CameraRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCameraRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCameraRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCameraRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkBorderRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCameraRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddCameraToPath", AddCameraToPath);
 	Nan::SetPrototypeMethod(tpl, "addCameraToPath", AddCameraToPath);
 
@@ -123,6 +124,8 @@ void VtkCameraRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfFrames", SetNumberOfFrames);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfFrames", SetNumberOfFrames);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCameraRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -164,7 +167,7 @@ void VtkCameraRepresentationWrap::AnimatePath(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -196,7 +199,7 @@ void VtkCameraRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -223,6 +226,7 @@ void VtkCameraRepresentationWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,6 +263,7 @@ void VtkCameraRepresentationWrap::GetInterpolator(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetInterpolator();
+		VtkCameraInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +328,7 @@ void VtkCameraRepresentationWrap::GetProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -393,6 +399,7 @@ void VtkCameraRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkCameraRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -408,7 +415,7 @@ void VtkCameraRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -428,7 +435,7 @@ void VtkCameraRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCallba
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -450,7 +457,7 @@ void VtkCameraRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo<
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -472,7 +479,7 @@ void VtkCameraRepresentationWrap::RenderTranslucentPolygonalGeometry(const Nan::
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -494,7 +501,7 @@ void VtkCameraRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCameraRepresentation * r;
@@ -506,6 +513,7 @@ void VtkCameraRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCameraRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -524,7 +532,7 @@ void VtkCameraRepresentationWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -544,7 +552,7 @@ void VtkCameraRepresentationWrap::SetInterpolator(const Nan::FunctionCallbackInf
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

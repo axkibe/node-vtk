@@ -29,26 +29,27 @@ VtkExtractCTHPartWrap::~VtkExtractCTHPartWrap()
 
 void VtkExtractCTHPartWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractCTHPartWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractCTHPart").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractCTHPart").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractCTHPart").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractCTHPart").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractCTHPartWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractCTHPartWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractCTHPartWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractCTHPartWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddVolumeArrayName", AddVolumeArrayName);
 	Nan::SetPrototypeMethod(tpl, "addVolumeArrayName", AddVolumeArrayName);
 
@@ -115,6 +116,8 @@ void VtkExtractCTHPartWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVolumeFractionSurfaceValue", SetVolumeFractionSurfaceValue);
 	Nan::SetPrototypeMethod(tpl, "setVolumeFractionSurfaceValue", SetVolumeFractionSurfaceValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractCTHPartWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -233,6 +236,7 @@ void VtkExtractCTHPartWrap::GetClipPlane(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetClipPlane();
+		VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,6 +259,7 @@ void VtkExtractCTHPartWrap::GetController(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -376,6 +381,7 @@ void VtkExtractCTHPartWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractCTHPartWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -427,7 +433,7 @@ void VtkExtractCTHPartWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractCTHPart * r;
@@ -439,6 +445,7 @@ void VtkExtractCTHPartWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractCTHPartWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -457,7 +464,7 @@ void VtkExtractCTHPartWrap::SetClipPlane(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -477,7 +484,7 @@ void VtkExtractCTHPartWrap::SetController(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

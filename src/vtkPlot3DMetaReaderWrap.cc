@@ -27,26 +27,27 @@ VtkPlot3DMetaReaderWrap::~VtkPlot3DMetaReaderWrap()
 
 void VtkPlot3DMetaReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPlot3DMetaReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPlot3DMetaReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Plot3DMetaReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPlot3DMetaReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Plot3DMetaReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPlot3DMetaReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPlot3DMetaReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPlot3DMetaReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPlot3DMetaReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkPlot3DMetaReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPlot3DMetaReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkPlot3DMetaReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkPlot3DMetaReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +170,7 @@ void VtkPlot3DMetaReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPlot3DMetaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DMetaReaderWrap>(info.Holder());
 	vtkPlot3DMetaReader *native = (vtkPlot3DMetaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPlot3DMetaReader * r;
@@ -178,6 +182,7 @@ void VtkPlot3DMetaReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPlot3DMetaReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

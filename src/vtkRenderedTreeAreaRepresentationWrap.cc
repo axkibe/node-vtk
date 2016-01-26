@@ -32,26 +32,27 @@ VtkRenderedTreeAreaRepresentationWrap::~VtkRenderedTreeAreaRepresentationWrap()
 
 void VtkRenderedTreeAreaRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderedRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderedTreeAreaRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderedTreeAreaRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RenderedTreeAreaRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderedTreeAreaRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RenderedTreeAreaRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderedTreeAreaRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderedTreeAreaRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderedTreeAreaRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderedRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderedTreeAreaRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ApplyViewTheme", ApplyViewTheme);
 	Nan::SetPrototypeMethod(tpl, "applyViewTheme", ApplyViewTheme);
 
@@ -199,6 +200,8 @@ void VtkRenderedTreeAreaRepresentationWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderedTreeAreaRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -228,7 +231,7 @@ void VtkRenderedTreeAreaRepresentationWrap::ApplyViewTheme(const Nan::FunctionCa
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -369,6 +372,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetAreaLabelMapper(const Nan::Functi
 		return;
 	}
 	r = native->GetAreaLabelMapper();
+		VtkLabeledDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -405,6 +409,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetAreaLabelTextProperty(const Nan::
 		return;
 	}
 	r = native->GetAreaLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -427,6 +432,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetAreaLayoutStrategy(const Nan::Fun
 		return;
 	}
 	r = native->GetAreaLayoutStrategy();
+		VtkAreaLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -463,6 +469,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetAreaToPolyData(const Nan::Functio
 		return;
 	}
 	r = native->GetAreaToPolyData();
+		VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -587,6 +594,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetGraphEdgeLabelTextProperty(const 
 		r = native->GetGraphEdgeLabelTextProperty(
 			info[0]->Int32Value()
 		);
+			VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -605,6 +613,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetGraphEdgeLabelTextProperty(const 
 		return;
 	}
 	r = native->GetGraphEdgeLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -736,6 +745,7 @@ void VtkRenderedTreeAreaRepresentationWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderedTreeAreaRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -751,7 +761,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderedTreeAreaRepresentation * r;
@@ -763,6 +773,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderedTreeAreaRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -841,7 +852,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelMapper(const Nan::Functi
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLabeledDataMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLabeledDataMapperWrap *a0 = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -881,7 +892,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelTextProperty(const Nan::
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -901,7 +912,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLayoutStrategy(const Nan::Fun
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -941,7 +952,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaToPolyData(const Nan::Functio
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataAlgorithmWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1083,7 +1094,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeLabelTextProperty(const 
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())

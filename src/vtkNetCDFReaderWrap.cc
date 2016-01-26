@@ -28,26 +28,27 @@ VtkNetCDFReaderWrap::~VtkNetCDFReaderWrap()
 
 void VtkNetCDFReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkNetCDFReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkNetCDFReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("NetCDFReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkNetCDFReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("NetCDFReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkNetCDFReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkNetCDFReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkNetCDFReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkNetCDFReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAllDimensions", GetAllDimensions);
 	Nan::SetPrototypeMethod(tpl, "getAllDimensions", GetAllDimensions);
 
@@ -111,6 +112,8 @@ void VtkNetCDFReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateMetaData", UpdateMetaData);
 	Nan::SetPrototypeMethod(tpl, "updateMetaData", UpdateMetaData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkNetCDFReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -147,6 +150,7 @@ void VtkNetCDFReaderWrap::GetAllDimensions(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetAllDimensions();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,6 +173,7 @@ void VtkNetCDFReaderWrap::GetAllVariableArrayNames(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetAllVariableArrayNames();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -318,6 +323,7 @@ void VtkNetCDFReaderWrap::GetVariableDimensions(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetVariableDimensions();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -362,6 +368,7 @@ void VtkNetCDFReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkNetCDFReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +408,7 @@ void VtkNetCDFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkNetCDFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFReaderWrap>(info.Holder());
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkNetCDFReader * r;
@@ -413,6 +420,7 @@ void VtkNetCDFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkNetCDFReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -30,26 +30,27 @@ VtkBiQuadraticQuadraticWedgeWrap::~VtkBiQuadraticQuadraticWedgeWrap()
 
 void VtkBiQuadraticQuadraticWedgeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkNonLinearCellWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkNonLinearCellWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBiQuadraticQuadraticWedgeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBiQuadraticQuadraticWedge").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BiQuadraticQuadraticWedge").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBiQuadraticQuadraticWedge").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BiQuadraticQuadraticWedge").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBiQuadraticQuadraticWedgeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBiQuadraticQuadraticWedgeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBiQuadraticQuadraticWedgeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkNonLinearCellWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkNonLinearCellWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBiQuadraticQuadraticWedgeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellDimension", GetCellDimension);
 	Nan::SetPrototypeMethod(tpl, "getCellDimension", GetCellDimension);
 
@@ -83,6 +84,8 @@ void VtkBiQuadraticQuadraticWedgeWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBiQuadraticQuadraticWedgeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -165,6 +168,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::GetEdge(const Nan::FunctionCallbackInfo<v
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
+			VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -194,6 +198,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::GetFace(const Nan::FunctionCallbackInfo<v
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
+			VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -269,6 +274,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkBiQuadraticQuadraticWedgeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +290,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkBiQuadraticQuadraticWedgeWrap *wrapper = ObjectWrap::Unwrap<VtkBiQuadraticQuadraticWedgeWrap>(info.Holder());
 	vtkBiQuadraticQuadraticWedge *native = (vtkBiQuadraticQuadraticWedge *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBiQuadraticQuadraticWedge * r;
@@ -296,6 +302,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBiQuadraticQuadraticWedgeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -316,10 +323,10 @@ void VtkBiQuadraticQuadraticWedgeWrap::Triangulate(const Nan::FunctionCallbackIn
 	vtkBiQuadraticQuadraticWedge *native = (vtkBiQuadraticQuadraticWedge *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
 				int r;

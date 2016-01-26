@@ -28,26 +28,27 @@ VtkGeoAdaptiveArcsWrap::~VtkGeoAdaptiveArcsWrap()
 
 void VtkGeoAdaptiveArcsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoAdaptiveArcsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoAdaptiveArcs").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoAdaptiveArcs").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoAdaptiveArcs").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoAdaptiveArcs").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoAdaptiveArcsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoAdaptiveArcsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoAdaptiveArcsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoAdaptiveArcsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -84,6 +85,8 @@ void VtkGeoAdaptiveArcsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoAdaptiveArcsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -176,6 +179,7 @@ void VtkGeoAdaptiveArcsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,6 +224,7 @@ void VtkGeoAdaptiveArcsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoAdaptiveArcsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +240,7 @@ void VtkGeoAdaptiveArcsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGeoAdaptiveArcsWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAdaptiveArcsWrap>(info.Holder());
 	vtkGeoAdaptiveArcs *native = (vtkGeoAdaptiveArcs *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoAdaptiveArcs * r;
@@ -247,6 +252,7 @@ void VtkGeoAdaptiveArcsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoAdaptiveArcsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -322,7 +328,7 @@ void VtkGeoAdaptiveArcsWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGeoAdaptiveArcsWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAdaptiveArcsWrap>(info.Holder());
 	vtkGeoAdaptiveArcs *native = (vtkGeoAdaptiveArcs *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

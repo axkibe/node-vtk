@@ -28,26 +28,27 @@ VtkPieceRequestFilterWrap::~VtkPieceRequestFilterWrap()
 
 void VtkPieceRequestFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPieceRequestFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPieceRequestFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PieceRequestFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPieceRequestFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PieceRequestFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPieceRequestFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPieceRequestFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPieceRequestFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPieceRequestFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -90,6 +91,8 @@ void VtkPieceRequestFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPiece", SetPiece);
 	Nan::SetPrototypeMethod(tpl, "setPiece", SetPiece);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPieceRequestFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -186,6 +189,7 @@ void VtkPieceRequestFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,6 +208,7 @@ void VtkPieceRequestFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetOutput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,6 +295,7 @@ void VtkPieceRequestFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkPieceRequestFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -305,7 +311,7 @@ void VtkPieceRequestFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPieceRequestFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPieceRequestFilterWrap>(info.Holder());
 	vtkPieceRequestFilter *native = (vtkPieceRequestFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPieceRequestFilter * r;
@@ -317,6 +323,7 @@ void VtkPieceRequestFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPieceRequestFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -335,7 +342,7 @@ void VtkPieceRequestFilterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPieceRequestFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPieceRequestFilterWrap>(info.Holder());
 	vtkPieceRequestFilter *native = (vtkPieceRequestFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -350,7 +357,7 @@ void VtkPieceRequestFilterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8:
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

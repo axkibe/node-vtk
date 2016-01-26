@@ -29,26 +29,27 @@ VtkDendrogramItemWrap::~VtkDendrogramItemWrap()
 
 void VtkDendrogramItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContextItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDendrogramItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDendrogramItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DendrogramItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDendrogramItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DendrogramItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDendrogramItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDendrogramItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDendrogramItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDendrogramItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeLabelWidth", ComputeLabelWidth);
 	Nan::SetPrototypeMethod(tpl, "computeLabelWidth", ComputeLabelWidth);
 
@@ -115,6 +116,8 @@ void VtkDendrogramItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTree", SetTree);
 	Nan::SetPrototypeMethod(tpl, "setTree", SetTree);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDendrogramItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -144,7 +147,7 @@ void VtkDendrogramItemWrap::ComputeLabelWidth(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -306,6 +309,7 @@ void VtkDendrogramItemWrap::GetPrunedTree(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetPrunedTree();
+		VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,6 +353,7 @@ void VtkDendrogramItemWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetTree();
+		VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -393,6 +398,7 @@ void VtkDendrogramItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkDendrogramItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -408,7 +414,7 @@ void VtkDendrogramItemWrap::PrepareToPaint(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -428,7 +434,7 @@ void VtkDendrogramItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDendrogramItem * r;
@@ -440,6 +446,7 @@ void VtkDendrogramItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDendrogramItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -516,7 +523,7 @@ void VtkDendrogramItemWrap::SetTree(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

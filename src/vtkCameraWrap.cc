@@ -31,26 +31,27 @@ VtkCameraWrap::~VtkCameraWrap()
 
 void VtkCameraWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCameraWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCamera").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Camera").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCamera").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Camera").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCameraWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCameraWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCameraWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ApplyTransform", ApplyTransform);
 	Nan::SetPrototypeMethod(tpl, "applyTransform", ApplyTransform);
 
@@ -276,6 +277,8 @@ void VtkCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCameraWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -305,7 +308,7 @@ void VtkCameraWrap::ApplyTransform(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -356,7 +359,7 @@ void VtkCameraWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -421,6 +424,7 @@ void VtkCameraWrap::GetCameraLightTransformMatrix(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetCameraLightTransformMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -467,6 +471,7 @@ void VtkCameraWrap::GetCompositeProjectionTransformMatrix(const Nan::FunctionCal
 					info[1]->NumberValue(),
 					info[2]->NumberValue()
 				);
+					VtkMatrix4x4Wrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -536,6 +541,7 @@ void VtkCameraWrap::GetEyeTransformMatrix(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetEyeTransformMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -586,6 +592,7 @@ void VtkCameraWrap::GetModelTransformMatrix(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetModelTransformMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -608,6 +615,7 @@ void VtkCameraWrap::GetModelViewTransformMatrix(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetModelViewTransformMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -630,6 +638,7 @@ void VtkCameraWrap::GetModelViewTransformObject(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetModelViewTransformObject();
+		VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -690,6 +699,7 @@ void VtkCameraWrap::GetProjectionTransformMatrix(const Nan::FunctionCallbackInfo
 					info[1]->NumberValue(),
 					info[2]->NumberValue()
 				);
+					VtkMatrix4x4Wrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -727,6 +737,7 @@ void VtkCameraWrap::GetProjectionTransformObject(const Nan::FunctionCallbackInfo
 					info[1]->NumberValue(),
 					info[2]->NumberValue()
 				);
+					VtkPerspectiveTransformWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -810,6 +821,7 @@ void VtkCameraWrap::GetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetUserTransform();
+		VtkHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -832,6 +844,7 @@ void VtkCameraWrap::GetUserViewTransform(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetUserViewTransform();
+		VtkHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -868,6 +881,7 @@ void VtkCameraWrap::GetViewTransformMatrix(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetViewTransformMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -890,6 +904,7 @@ void VtkCameraWrap::GetViewTransformObject(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetViewTransformObject();
+		VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -934,6 +949,7 @@ void VtkCameraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1004,7 +1020,7 @@ void VtkCameraWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1043,7 +1059,7 @@ void VtkCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCamera * r;
@@ -1055,6 +1071,7 @@ void VtkCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1153,7 +1170,7 @@ void VtkCameraWrap::SetEyeTransformMatrix(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1238,7 +1255,7 @@ void VtkCameraWrap::SetModelTransformMatrix(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1503,7 +1520,7 @@ void VtkCameraWrap::SetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHomogeneousTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHomogeneousTransformWrap *a0 = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1523,7 +1540,7 @@ void VtkCameraWrap::SetUserViewTransform(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHomogeneousTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHomogeneousTransformWrap *a0 = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1639,7 +1656,7 @@ void VtkCameraWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1659,7 +1676,7 @@ void VtkCameraWrap::UpdateViewport(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

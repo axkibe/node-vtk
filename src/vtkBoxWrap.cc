@@ -27,26 +27,27 @@ VtkBoxWrap::~VtkBoxWrap()
 
 void VtkBoxWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImplicitFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBoxWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBox").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Box").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBox").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Box").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBoxWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBoxWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBoxWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBoxWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EvaluateFunction", EvaluateFunction);
 	Nan::SetPrototypeMethod(tpl, "evaluateFunction", EvaluateFunction);
 
@@ -71,6 +72,8 @@ void VtkBoxWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetXMin", SetXMin);
 	Nan::SetPrototypeMethod(tpl, "setXMin", SetXMin);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBoxWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -172,6 +175,7 @@ void VtkBoxWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
+		VtkBoxWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,7 +191,7 @@ void VtkBoxWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBoxWrap *wrapper = ObjectWrap::Unwrap<VtkBoxWrap>(info.Holder());
 	vtkBox *native = (vtkBox *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBox * r;
@@ -199,6 +203,7 @@ void VtkBoxWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBoxWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

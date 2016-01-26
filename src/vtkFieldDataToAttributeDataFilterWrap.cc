@@ -29,26 +29,27 @@ VtkFieldDataToAttributeDataFilterWrap::~VtkFieldDataToAttributeDataFilterWrap()
 
 void VtkFieldDataToAttributeDataFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFieldDataToAttributeDataFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFieldDataToAttributeDataFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FieldDataToAttributeDataFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFieldDataToAttributeDataFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FieldDataToAttributeDataFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFieldDataToAttributeDataFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFieldDataToAttributeDataFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFieldDataToAttributeDataFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFieldDataToAttributeDataFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DefaultNormalizeOff", DefaultNormalizeOff);
 	Nan::SetPrototypeMethod(tpl, "defaultNormalizeOff", DefaultNormalizeOff);
 
@@ -193,6 +194,8 @@ void VtkFieldDataToAttributeDataFilterWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetVectorComponent", SetVectorComponent);
 	Nan::SetPrototypeMethod(tpl, "setVectorComponent", SetVectorComponent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFieldDataToAttributeDataFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -274,7 +277,7 @@ void VtkFieldDataToAttributeDataFilterWrap::GetFieldArray(const Nan::FunctionCal
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -293,6 +296,7 @@ void VtkFieldDataToAttributeDataFilterWrap::GetFieldArray(const Nan::FunctionCal
 					*a1,
 					info[2]->Int32Value()
 				);
+					VtkDataArrayWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -895,6 +899,7 @@ void VtkFieldDataToAttributeDataFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkFieldDataToAttributeDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -910,7 +915,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFieldDataToAttributeDataFilter * r;
@@ -922,6 +927,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFieldDataToAttributeDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

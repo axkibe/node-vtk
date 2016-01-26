@@ -28,26 +28,27 @@ VtkMarchingContourFilterWrap::~VtkMarchingContourFilterWrap()
 
 void VtkMarchingContourFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMarchingContourFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMarchingContourFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MarchingContourFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMarchingContourFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MarchingContourFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMarchingContourFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMarchingContourFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMarchingContourFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMarchingContourFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeGradientsOff", ComputeGradientsOff);
 	Nan::SetPrototypeMethod(tpl, "computeGradientsOff", ComputeGradientsOff);
 
@@ -132,6 +133,8 @@ void VtkMarchingContourFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseScalarTreeOn", UseScalarTreeOn);
 	Nan::SetPrototypeMethod(tpl, "useScalarTreeOn", UseScalarTreeOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMarchingContourFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -335,6 +338,7 @@ void VtkMarchingContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -428,6 +432,7 @@ void VtkMarchingContourFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkMarchingContourFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -443,7 +448,7 @@ void VtkMarchingContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMarchingContourFilter * r;
@@ -455,6 +460,7 @@ void VtkMarchingContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMarchingContourFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -530,7 +536,7 @@ void VtkMarchingContourFilterWrap::SetLocator(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

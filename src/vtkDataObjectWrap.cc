@@ -39,26 +39,27 @@ VtkDataObjectWrap::~VtkDataObjectWrap()
 
 void VtkDataObjectWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataObjectWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataObject").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataObject").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataObject").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataObject").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataObjectWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataObjectWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataObjectWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataObjectWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BOUNDING_BOX", BOUNDING_BOX);
 
 	Nan::SetPrototypeMethod(tpl, "CELL_DATA_VECTOR", CELL_DATA_VECTOR);
@@ -221,6 +222,8 @@ void VtkDataObjectWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "VERTEX_DATA_VECTOR", VERTEX_DATA_VECTOR);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataObjectWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -257,6 +260,7 @@ void VtkDataObjectWrap::BOUNDING_BOX(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->BOUNDING_BOX();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,6 +283,7 @@ void VtkDataObjectWrap::CELL_DATA_VECTOR(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->CELL_DATA_VECTOR();
+		VtkInformationInformationVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +299,7 @@ void VtkDataObjectWrap::CopyInformationFromPipeline(const Nan::FunctionCallbackI
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -321,6 +326,7 @@ void VtkDataObjectWrap::DATA_EXTENT(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->DATA_EXTENT();
+		VtkInformationIntegerPointerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,6 +349,7 @@ void VtkDataObjectWrap::DATA_EXTENT_TYPE(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->DATA_EXTENT_TYPE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -365,6 +372,7 @@ void VtkDataObjectWrap::DATA_GEOMETRY_UNMODIFIED(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->DATA_GEOMETRY_UNMODIFIED();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -387,6 +395,7 @@ void VtkDataObjectWrap::DATA_NUMBER_OF_GHOST_LEVELS(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->DATA_NUMBER_OF_GHOST_LEVELS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -409,6 +418,7 @@ void VtkDataObjectWrap::DATA_NUMBER_OF_PIECES(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->DATA_NUMBER_OF_PIECES();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -431,6 +441,7 @@ void VtkDataObjectWrap::DATA_OBJECT(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->DATA_OBJECT();
+		VtkInformationDataObjectKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,6 +464,7 @@ void VtkDataObjectWrap::DATA_PIECE_NUMBER(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->DATA_PIECE_NUMBER();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -475,6 +487,7 @@ void VtkDataObjectWrap::DATA_RESOLUTION(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->DATA_RESOLUTION();
+		VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,6 +510,7 @@ void VtkDataObjectWrap::DATA_TIME_STEP(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->DATA_TIME_STEP();
+		VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -519,6 +533,7 @@ void VtkDataObjectWrap::DATA_TYPE_NAME(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->DATA_TYPE_NAME();
+		VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -546,7 +561,7 @@ void VtkDataObjectWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -573,6 +588,7 @@ void VtkDataObjectWrap::EDGE_DATA_VECTOR(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->EDGE_DATA_VECTOR();
+		VtkInformationInformationVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -595,6 +611,7 @@ void VtkDataObjectWrap::FIELD_ACTIVE_ATTRIBUTE(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->FIELD_ACTIVE_ATTRIBUTE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -617,6 +634,7 @@ void VtkDataObjectWrap::FIELD_ARRAY_NAME(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->FIELD_ARRAY_NAME();
+		VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -639,6 +657,7 @@ void VtkDataObjectWrap::FIELD_ARRAY_TYPE(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->FIELD_ARRAY_TYPE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -661,6 +680,7 @@ void VtkDataObjectWrap::FIELD_ASSOCIATION(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->FIELD_ASSOCIATION();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -683,6 +703,7 @@ void VtkDataObjectWrap::FIELD_ATTRIBUTE_TYPE(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->FIELD_ATTRIBUTE_TYPE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -705,6 +726,7 @@ void VtkDataObjectWrap::FIELD_NAME(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->FIELD_NAME();
+		VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -727,6 +749,7 @@ void VtkDataObjectWrap::FIELD_NUMBER_OF_COMPONENTS(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->FIELD_NUMBER_OF_COMPONENTS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -749,6 +772,7 @@ void VtkDataObjectWrap::FIELD_NUMBER_OF_TUPLES(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->FIELD_NUMBER_OF_TUPLES();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -771,6 +795,7 @@ void VtkDataObjectWrap::FIELD_OPERATION(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->FIELD_OPERATION();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -793,6 +818,7 @@ void VtkDataObjectWrap::FIELD_RANGE(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->FIELD_RANGE();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -808,7 +834,7 @@ void VtkDataObjectWrap::GetActiveFieldInformation(const Nan::FunctionCallbackInf
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -826,6 +852,7 @@ void VtkDataObjectWrap::GetActiveFieldInformation(const Nan::FunctionCallbackInf
 					info[1]->Int32Value(),
 					info[2]->Int32Value()
 				);
+					VtkInformationWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -889,7 +916,7 @@ void VtkDataObjectWrap::GetAttributeTypeForArray(const Nan::FunctionCallbackInfo
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
 		int r;
@@ -922,6 +949,7 @@ void VtkDataObjectWrap::GetAttributes(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetAttributes(
 			info[0]->Int32Value()
 		);
+			VtkDataSetAttributesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -951,6 +979,7 @@ void VtkDataObjectWrap::GetAttributesAsFieldData(const Nan::FunctionCallbackInfo
 		r = native->GetAttributesAsFieldData(
 			info[0]->Int32Value()
 		);
+			VtkFieldDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -983,7 +1012,7 @@ void VtkDataObjectWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -998,6 +1027,7 @@ void VtkDataObjectWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkDataObjectWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -1018,6 +1048,7 @@ void VtkDataObjectWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1085,6 +1116,7 @@ void VtkDataObjectWrap::GetFieldData(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetFieldData();
+		VtkFieldDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1121,6 +1153,7 @@ void VtkDataObjectWrap::GetInformation(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetInformation();
+		VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1136,7 +1169,7 @@ void VtkDataObjectWrap::GetNamedFieldInformation(const Nan::FunctionCallbackInfo
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1155,6 +1188,7 @@ void VtkDataObjectWrap::GetNamedFieldInformation(const Nan::FunctionCallbackInfo
 					info[1]->Int32Value(),
 					*a2
 				);
+					VtkInformationWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -1240,6 +1274,7 @@ void VtkDataObjectWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1262,6 +1297,7 @@ void VtkDataObjectWrap::ORIGIN(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->ORIGIN();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1284,6 +1320,7 @@ void VtkDataObjectWrap::PIECE_EXTENT(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->PIECE_EXTENT();
+		VtkInformationIntegerVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1306,6 +1343,7 @@ void VtkDataObjectWrap::PIECE_FIELD_RANGE(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->PIECE_FIELD_RANGE();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1328,6 +1366,7 @@ void VtkDataObjectWrap::POINT_DATA_VECTOR(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->POINT_DATA_VECTOR();
+		VtkInformationInformationVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1367,7 +1406,7 @@ void VtkDataObjectWrap::RemoveNamedFieldInformation(const Nan::FunctionCallbackI
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1403,6 +1442,7 @@ void VtkDataObjectWrap::SIL(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->SIL();
+		VtkInformationDataObjectKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1425,6 +1465,7 @@ void VtkDataObjectWrap::SPACING(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->SPACING();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1440,7 +1481,7 @@ void VtkDataObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataObject * r;
@@ -1452,6 +1493,7 @@ void VtkDataObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1470,7 +1512,7 @@ void VtkDataObjectWrap::SetActiveAttribute(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1492,6 +1534,7 @@ void VtkDataObjectWrap::SetActiveAttribute(const Nan::FunctionCallbackInfo<v8::V
 						*a2,
 						info[3]->Int32Value()
 					);
+						VtkInformationWrap::InitPtpl();
 					v8::Local<v8::Value> argv[1] =
 						{ Nan::New(vtkNodeJsNoWrap) };
 					v8::Local<v8::Function> cons =
@@ -1513,7 +1556,7 @@ void VtkDataObjectWrap::SetActiveAttributeInfo(const Nan::FunctionCallbackInfo<v
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1558,7 +1601,7 @@ void VtkDataObjectWrap::SetFieldData(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1597,7 +1640,7 @@ void VtkDataObjectWrap::SetInformation(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1617,7 +1660,7 @@ void VtkDataObjectWrap::SetPointDataActiveScalarInfo(const Nan::FunctionCallback
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1645,7 +1688,7 @@ void VtkDataObjectWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1672,6 +1715,7 @@ void VtkDataObjectWrap::VERTEX_DATA_VECTOR(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->VERTEX_DATA_VECTOR();
+		VtkInformationInformationVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

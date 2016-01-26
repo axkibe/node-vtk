@@ -27,26 +27,27 @@ VtkVertexListIteratorWrap::~VtkVertexListIteratorWrap()
 
 void VtkVertexListIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVertexListIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVertexListIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VertexListIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVertexListIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VertexListIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVertexListIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVertexListIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVertexListIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVertexListIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkVertexListIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVertexListIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -115,6 +118,7 @@ void VtkVertexListIteratorWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetGraph();
+		VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -159,6 +163,7 @@ void VtkVertexListIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkVertexListIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -174,7 +179,7 @@ void VtkVertexListIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkVertexListIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkVertexListIteratorWrap>(info.Holder());
 	vtkVertexListIterator *native = (vtkVertexListIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVertexListIterator * r;
@@ -186,6 +191,7 @@ void VtkVertexListIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVertexListIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +210,7 @@ void VtkVertexListIteratorWrap::SetGraph(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkVertexListIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkVertexListIteratorWrap>(info.Holder());
 	vtkVertexListIterator *native = (vtkVertexListIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

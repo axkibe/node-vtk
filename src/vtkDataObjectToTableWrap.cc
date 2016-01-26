@@ -27,26 +27,27 @@ VtkDataObjectToTableWrap::~VtkDataObjectToTableWrap()
 
 void VtkDataObjectToTableWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTableAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataObjectToTableWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataObjectToTable").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataObjectToTable").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataObjectToTable").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataObjectToTable").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataObjectToTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataObjectToTableWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataObjectToTableWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataObjectToTableWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkDataObjectToTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFieldType", SetFieldType);
 	Nan::SetPrototypeMethod(tpl, "setFieldType", SetFieldType);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataObjectToTableWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -185,6 +188,7 @@ void VtkDataObjectToTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataObjectToTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +204,7 @@ void VtkDataObjectToTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDataObjectToTableWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToTableWrap>(info.Holder());
 	vtkDataObjectToTable *native = (vtkDataObjectToTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataObjectToTable * r;
@@ -212,6 +216,7 @@ void VtkDataObjectToTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataObjectToTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

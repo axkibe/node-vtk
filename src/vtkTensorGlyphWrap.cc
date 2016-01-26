@@ -29,26 +29,27 @@ VtkTensorGlyphWrap::~VtkTensorGlyphWrap()
 
 void VtkTensorGlyphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTensorGlyphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTensorGlyph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TensorGlyph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTensorGlyph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TensorGlyph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTensorGlyphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTensorGlyphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTensorGlyphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTensorGlyphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClampScalingOff", ClampScalingOff);
 	Nan::SetPrototypeMethod(tpl, "clampScalingOff", ClampScalingOff);
 
@@ -178,6 +179,8 @@ void VtkTensorGlyphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ThreeGlyphsOn", ThreeGlyphsOn);
 	Nan::SetPrototypeMethod(tpl, "threeGlyphsOn", ThreeGlyphsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTensorGlyphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -440,6 +443,7 @@ void VtkTensorGlyphWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetSource();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -512,6 +516,7 @@ void VtkTensorGlyphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkTensorGlyphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -527,7 +532,7 @@ void VtkTensorGlyphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTensorGlyph * r;
@@ -539,6 +544,7 @@ void VtkTensorGlyphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTensorGlyphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -757,7 +763,7 @@ void VtkTensorGlyphWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -772,7 +778,7 @@ void VtkTensorGlyphWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v8:
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -794,7 +800,7 @@ void VtkTensorGlyphWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

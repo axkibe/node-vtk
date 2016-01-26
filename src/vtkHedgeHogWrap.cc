@@ -27,26 +27,27 @@ VtkHedgeHogWrap::~VtkHedgeHogWrap()
 
 void VtkHedgeHogWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHedgeHogWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHedgeHog").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HedgeHog").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHedgeHog").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HedgeHog").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHedgeHogWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHedgeHogWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHedgeHogWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHedgeHogWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -86,6 +87,8 @@ void VtkHedgeHogWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVectorModeToUseVector", SetVectorModeToUseVector);
 	Nan::SetPrototypeMethod(tpl, "setVectorModeToUseVector", SetVectorModeToUseVector);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHedgeHogWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -214,6 +217,7 @@ void VtkHedgeHogWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkHedgeHogWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,7 +233,7 @@ void VtkHedgeHogWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkHedgeHogWrap *wrapper = ObjectWrap::Unwrap<VtkHedgeHogWrap>(info.Holder());
 	vtkHedgeHog *native = (vtkHedgeHog *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHedgeHog * r;
@@ -241,6 +245,7 @@ void VtkHedgeHogWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHedgeHogWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkSQLDatabaseWrap::~VtkSQLDatabaseWrap()
 
 void VtkSQLDatabaseWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSQLDatabaseWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSQLDatabase").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SQLDatabase").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSQLDatabase").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SQLDatabase").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSQLDatabaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSQLDatabaseWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSQLDatabaseWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSQLDatabaseWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Close", Close);
 	Nan::SetPrototypeMethod(tpl, "close", Close);
 
@@ -87,6 +88,8 @@ void VtkSQLDatabaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UnRegisterAllCreateFromURLCallbacks", UnRegisterAllCreateFromURLCallbacks);
 	Nan::SetPrototypeMethod(tpl, "unRegisterAllCreateFromURLCallbacks", UnRegisterAllCreateFromURLCallbacks);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSQLDatabaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,6 +143,7 @@ void VtkSQLDatabaseWrap::CreateFromURL(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->CreateFromURL(
 			*a0
 		);
+			VtkSQLDatabaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -165,6 +169,7 @@ void VtkSQLDatabaseWrap::DATABASE(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->DATABASE();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,6 +234,7 @@ void VtkSQLDatabaseWrap::GetQueryInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetQueryInstance();
+		VtkSQLQueryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,6 +262,7 @@ void VtkSQLDatabaseWrap::GetRecord(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->GetRecord(
 			*a0
 		);
+			VtkStringArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -281,6 +288,7 @@ void VtkSQLDatabaseWrap::GetTables(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetTables();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,6 +333,7 @@ void VtkSQLDatabaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkSQLDatabaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -340,7 +349,7 @@ void VtkSQLDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
 	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSQLDatabase * r;
@@ -352,6 +361,7 @@ void VtkSQLDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSQLDatabaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -28,26 +28,27 @@ VtkImageNonMaximumSuppressionWrap::~VtkImageNonMaximumSuppressionWrap()
 
 void VtkImageNonMaximumSuppressionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageNonMaximumSuppressionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageNonMaximumSuppression").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageNonMaximumSuppression").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageNonMaximumSuppression").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageNonMaximumSuppression").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageNonMaximumSuppressionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageNonMaximumSuppressionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageNonMaximumSuppressionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageNonMaximumSuppressionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -90,6 +91,8 @@ void VtkImageNonMaximumSuppressionWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetVectorInputData", SetVectorInputData);
 	Nan::SetPrototypeMethod(tpl, "setVectorInputData", SetVectorInputData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageNonMaximumSuppressionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -242,6 +245,7 @@ void VtkImageNonMaximumSuppressionWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageNonMaximumSuppressionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +261,7 @@ void VtkImageNonMaximumSuppressionWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkImageNonMaximumSuppressionWrap *wrapper = ObjectWrap::Unwrap<VtkImageNonMaximumSuppressionWrap>(info.Holder());
 	vtkImageNonMaximumSuppression *native = (vtkImageNonMaximumSuppression *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageNonMaximumSuppression * r;
@@ -269,6 +273,7 @@ void VtkImageNonMaximumSuppressionWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageNonMaximumSuppressionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -325,7 +330,7 @@ void VtkImageNonMaximumSuppressionWrap::SetMagnitudeInputData(const Nan::Functio
 {
 	VtkImageNonMaximumSuppressionWrap *wrapper = ObjectWrap::Unwrap<VtkImageNonMaximumSuppressionWrap>(info.Holder());
 	vtkImageNonMaximumSuppression *native = (vtkImageNonMaximumSuppression *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -345,7 +350,7 @@ void VtkImageNonMaximumSuppressionWrap::SetVectorInputData(const Nan::FunctionCa
 {
 	VtkImageNonMaximumSuppressionWrap *wrapper = ObjectWrap::Unwrap<VtkImageNonMaximumSuppressionWrap>(info.Holder());
 	vtkImageNonMaximumSuppression *native = (vtkImageNonMaximumSuppression *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

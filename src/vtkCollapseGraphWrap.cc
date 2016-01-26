@@ -28,26 +28,27 @@ VtkCollapseGraphWrap::~VtkCollapseGraphWrap()
 
 void VtkCollapseGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCollapseGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCollapseGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CollapseGraph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCollapseGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CollapseGraph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCollapseGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCollapseGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCollapseGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCollapseGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkCollapseGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCollapseGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -138,6 +141,7 @@ void VtkCollapseGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkCollapseGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -153,7 +157,7 @@ void VtkCollapseGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCollapseGraphWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseGraphWrap>(info.Holder());
 	vtkCollapseGraph *native = (vtkCollapseGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCollapseGraph * r;
@@ -165,6 +169,7 @@ void VtkCollapseGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCollapseGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -183,7 +188,7 @@ void VtkCollapseGraphWrap::SetGraphConnection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCollapseGraphWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseGraphWrap>(info.Holder());
 	vtkCollapseGraph *native = (vtkCollapseGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -203,7 +208,7 @@ void VtkCollapseGraphWrap::SetSelectionConnection(const Nan::FunctionCallbackInf
 {
 	VtkCollapseGraphWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseGraphWrap>(info.Holder());
 	vtkCollapseGraph *native = (vtkCollapseGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

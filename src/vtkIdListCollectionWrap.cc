@@ -28,26 +28,27 @@ VtkIdListCollectionWrap::~VtkIdListCollectionWrap()
 
 void VtkIdListCollectionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCollectionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkIdListCollectionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkIdListCollection").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("IdListCollection").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkIdListCollection").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("IdListCollection").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkIdListCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkIdListCollectionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkIdListCollectionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCollectionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkIdListCollectionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddItem", AddItem);
 	Nan::SetPrototypeMethod(tpl, "addItem", AddItem);
 
@@ -69,6 +70,8 @@ void VtkIdListCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkIdListCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -98,7 +101,7 @@ void VtkIdListCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkIdListCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkIdListCollectionWrap>(info.Holder());
 	vtkIdListCollection *native = (vtkIdListCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -143,6 +146,7 @@ void VtkIdListCollectionWrap::GetItem(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetItem(
 			info[0]->Int32Value()
 		);
+			VtkIdListWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -168,6 +172,7 @@ void VtkIdListCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetNextItem();
+		VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,6 +217,7 @@ void VtkIdListCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkIdListCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -227,7 +233,7 @@ void VtkIdListCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkIdListCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkIdListCollectionWrap>(info.Holder());
 	vtkIdListCollection *native = (vtkIdListCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkIdListCollection * r;
@@ -239,6 +245,7 @@ void VtkIdListCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkIdListCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

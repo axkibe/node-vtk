@@ -27,26 +27,27 @@ VtkIncrementalPointLocatorWrap::~VtkIncrementalPointLocatorWrap()
 
 void VtkIncrementalPointLocatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractPointLocatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPointLocatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkIncrementalPointLocatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkIncrementalPointLocator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("IncrementalPointLocator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkIncrementalPointLocator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("IncrementalPointLocator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkIncrementalPointLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkIncrementalPointLocatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkIncrementalPointLocatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractPointLocatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPointLocatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkIncrementalPointLocatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkIncrementalPointLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkIncrementalPointLocatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -146,6 +149,7 @@ void VtkIncrementalPointLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +165,7 @@ void VtkIncrementalPointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkIncrementalPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info.Holder());
 	vtkIncrementalPointLocator *native = (vtkIncrementalPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkIncrementalPointLocator * r;
@@ -173,6 +177,7 @@ void VtkIncrementalPointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkIncrementalPointLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

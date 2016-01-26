@@ -27,26 +27,27 @@ VtkGreedyTerrainDecimationWrap::~VtkGreedyTerrainDecimationWrap()
 
 void VtkGreedyTerrainDecimationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGreedyTerrainDecimationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGreedyTerrainDecimation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GreedyTerrainDecimation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGreedyTerrainDecimation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GreedyTerrainDecimation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGreedyTerrainDecimationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGreedyTerrainDecimationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGreedyTerrainDecimationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGreedyTerrainDecimationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BoundaryVertexDeletionOff", BoundaryVertexDeletionOff);
 	Nan::SetPrototypeMethod(tpl, "boundaryVertexDeletionOff", BoundaryVertexDeletionOff);
 
@@ -143,6 +144,8 @@ void VtkGreedyTerrainDecimationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetRelativeError", SetRelativeError);
 	Nan::SetPrototypeMethod(tpl, "setRelativeError", SetRelativeError);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGreedyTerrainDecimationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -459,6 +462,7 @@ void VtkGreedyTerrainDecimationWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkGreedyTerrainDecimationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -474,7 +478,7 @@ void VtkGreedyTerrainDecimationWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGreedyTerrainDecimation * r;
@@ -486,6 +490,7 @@ void VtkGreedyTerrainDecimationWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGreedyTerrainDecimationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

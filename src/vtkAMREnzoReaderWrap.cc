@@ -27,26 +27,27 @@ VtkAMREnzoReaderWrap::~VtkAMREnzoReaderWrap()
 
 void VtkAMREnzoReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAMRBaseReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAMRBaseReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMREnzoReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMREnzoReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMREnzoReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMREnzoReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMREnzoReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMREnzoReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMREnzoReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMREnzoReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAMRBaseReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAMRBaseReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMREnzoReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ConvertToCGSOff", ConvertToCGSOff);
 	Nan::SetPrototypeMethod(tpl, "convertToCGSOff", ConvertToCGSOff);
 
@@ -80,6 +81,8 @@ void VtkAMREnzoReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMREnzoReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -218,6 +221,7 @@ void VtkAMREnzoReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMREnzoReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +237,7 @@ void VtkAMREnzoReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAMREnzoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMREnzoReaderWrap>(info.Holder());
 	vtkAMREnzoReader *native = (vtkAMREnzoReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMREnzoReader * r;
@@ -245,6 +249,7 @@ void VtkAMREnzoReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMREnzoReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

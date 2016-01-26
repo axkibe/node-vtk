@@ -28,26 +28,27 @@ VtkNewickTreeWriterWrap::~VtkNewickTreeWriterWrap()
 
 void VtkNewickTreeWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkNewickTreeWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkNewickTreeWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("NewickTreeWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkNewickTreeWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("NewickTreeWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkNewickTreeWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkNewickTreeWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkNewickTreeWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkNewickTreeWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkNewickTreeWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkNewickTreeWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -117,6 +120,7 @@ void VtkNewickTreeWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkTreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -135,6 +139,7 @@ void VtkNewickTreeWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetInput();
+		VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,6 +184,7 @@ void VtkNewickTreeWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkNewickTreeWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +200,7 @@ void VtkNewickTreeWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkNewickTreeWriterWrap *wrapper = ObjectWrap::Unwrap<VtkNewickTreeWriterWrap>(info.Holder());
 	vtkNewickTreeWriter *native = (vtkNewickTreeWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkNewickTreeWriter * r;
@@ -206,6 +212,7 @@ void VtkNewickTreeWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkNewickTreeWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

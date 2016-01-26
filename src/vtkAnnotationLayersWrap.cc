@@ -31,26 +31,27 @@ VtkAnnotationLayersWrap::~VtkAnnotationLayersWrap()
 
 void VtkAnnotationLayersWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAnnotationLayersWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAnnotationLayers").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AnnotationLayers").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAnnotationLayers").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AnnotationLayers").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAnnotationLayersWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAnnotationLayersWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAnnotationLayersWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAnnotationLayersWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddAnnotation", AddAnnotation);
 	Nan::SetPrototypeMethod(tpl, "addAnnotation", AddAnnotation);
 
@@ -93,6 +94,8 @@ void VtkAnnotationLayersWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAnnotationLayersWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,7 +125,7 @@ void VtkAnnotationLayersWrap::AddAnnotation(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -142,7 +145,7 @@ void VtkAnnotationLayersWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -183,6 +186,7 @@ void VtkAnnotationLayersWrap::GetCurrentAnnotation(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCurrentAnnotation();
+		VtkAnnotationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,6 +209,7 @@ void VtkAnnotationLayersWrap::GetCurrentSelection(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetCurrentSelection();
+		VtkSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,7 +225,7 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -235,6 +240,7 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkAnnotationLayersWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -255,6 +261,7 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkAnnotationLayersWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -314,6 +321,7 @@ void VtkAnnotationLayersWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkAnnotationLayersWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +337,7 @@ void VtkAnnotationLayersWrap::RemoveAnnotation(const Nan::FunctionCallbackInfo<v
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -349,7 +357,7 @@ void VtkAnnotationLayersWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAnnotationLayers * r;
@@ -361,6 +369,7 @@ void VtkAnnotationLayersWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAnnotationLayersWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -379,7 +388,7 @@ void VtkAnnotationLayersWrap::SetCurrentAnnotation(const Nan::FunctionCallbackIn
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -399,7 +408,7 @@ void VtkAnnotationLayersWrap::SetCurrentSelection(const Nan::FunctionCallbackInf
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -419,7 +428,7 @@ void VtkAnnotationLayersWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

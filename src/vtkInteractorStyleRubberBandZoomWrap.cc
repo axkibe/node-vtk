@@ -27,26 +27,27 @@ VtkInteractorStyleRubberBandZoomWrap::~VtkInteractorStyleRubberBandZoomWrap()
 
 void VtkInteractorStyleRubberBandZoomWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleRubberBandZoomWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyleRubberBandZoom").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyleRubberBandZoom").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyleRubberBandZoom").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyleRubberBandZoom").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleRubberBandZoomWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleRubberBandZoomWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleRubberBandZoomWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleRubberBandZoomWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkInteractorStyleRubberBandZoomWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleRubberBandZoomWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,6 +143,7 @@ void VtkInteractorStyleRubberBandZoomWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleRubberBandZoomWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +195,7 @@ void VtkInteractorStyleRubberBandZoomWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkInteractorStyleRubberBandZoomWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandZoomWrap>(info.Holder());
 	vtkInteractorStyleRubberBandZoom *native = (vtkInteractorStyleRubberBandZoom *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyleRubberBandZoom * r;
@@ -203,6 +207,7 @@ void VtkInteractorStyleRubberBandZoomWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleRubberBandZoomWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

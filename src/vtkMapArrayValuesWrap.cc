@@ -27,26 +27,27 @@ VtkMapArrayValuesWrap::~VtkMapArrayValuesWrap()
 
 void VtkMapArrayValuesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMapArrayValuesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMapArrayValues").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MapArrayValues").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMapArrayValues").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MapArrayValues").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMapArrayValuesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMapArrayValuesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMapArrayValuesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMapArrayValuesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddToMap", AddToMap);
 	Nan::SetPrototypeMethod(tpl, "addToMap", AddToMap);
 
@@ -110,6 +111,8 @@ void VtkMapArrayValuesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPassArray", SetPassArray);
 	Nan::SetPrototypeMethod(tpl, "setPassArray", SetPassArray);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMapArrayValuesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -360,6 +363,7 @@ void VtkMapArrayValuesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkMapArrayValuesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -399,7 +403,7 @@ void VtkMapArrayValuesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMapArrayValuesWrap *wrapper = ObjectWrap::Unwrap<VtkMapArrayValuesWrap>(info.Holder());
 	vtkMapArrayValues *native = (vtkMapArrayValues *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMapArrayValues * r;
@@ -411,6 +415,7 @@ void VtkMapArrayValuesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMapArrayValuesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

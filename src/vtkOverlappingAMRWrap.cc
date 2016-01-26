@@ -32,26 +32,27 @@ VtkOverlappingAMRWrap::~VtkOverlappingAMRWrap()
 
 void VtkOverlappingAMRWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUniformGridAMRWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUniformGridAMRWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOverlappingAMRWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOverlappingAMR").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OverlappingAMR").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOverlappingAMR").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OverlappingAMR").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOverlappingAMRWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOverlappingAMRWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOverlappingAMRWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUniformGridAMRWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUniformGridAMRWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOverlappingAMRWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Audit", Audit);
 	Nan::SetPrototypeMethod(tpl, "audit", Audit);
 
@@ -90,6 +91,8 @@ void VtkOverlappingAMRWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetAMRInfo", SetAMRInfo);
 	Nan::SetPrototypeMethod(tpl, "setAMRInfo", SetAMRInfo);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOverlappingAMRWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -150,6 +153,7 @@ void VtkOverlappingAMRWrap::GetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetAMRInfo();
+		VtkAMRInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +183,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
 	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -194,6 +198,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkOverlappingAMRWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -214,6 +219,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkOverlappingAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -246,7 +252,7 @@ void VtkOverlappingAMRWrap::GetRefinementRatio(const Nan::FunctionCallbackInfo<v
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
 	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataIteratorWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info[0]->ToObject());
 		int r;
@@ -297,6 +303,7 @@ void VtkOverlappingAMRWrap::NUMBER_OF_BLANKED_POINTS(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NUMBER_OF_BLANKED_POINTS();
+		VtkInformationIdTypeKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,6 +326,7 @@ void VtkOverlappingAMRWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkOverlappingAMRWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -341,6 +349,7 @@ void VtkOverlappingAMRWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewIterator();
+		VtkCompositeDataIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -356,7 +365,7 @@ void VtkOverlappingAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
 	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOverlappingAMR * r;
@@ -368,6 +377,7 @@ void VtkOverlappingAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOverlappingAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -386,7 +396,7 @@ void VtkOverlappingAMRWrap::SetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
 	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAMRInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAMRInformationWrap *a0 = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

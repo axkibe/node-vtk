@@ -29,26 +29,27 @@ VtkTemporalStreamTracerWrap::~VtkTemporalStreamTracerWrap()
 
 void VtkTemporalStreamTracerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStreamTracerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamTracerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTemporalStreamTracerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTemporalStreamTracer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TemporalStreamTracer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTemporalStreamTracer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TemporalStreamTracer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTemporalStreamTracerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTemporalStreamTracerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTemporalStreamTracerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStreamTracerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamTracerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTemporalStreamTracerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddSourceConnection", AddSourceConnection);
 	Nan::SetPrototypeMethod(tpl, "addSourceConnection", AddSourceConnection);
 
@@ -157,6 +158,8 @@ void VtkTemporalStreamTracerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "StaticSeedsOn", StaticSeedsOn);
 	Nan::SetPrototypeMethod(tpl, "staticSeedsOn", StaticSeedsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTemporalStreamTracerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -186,7 +189,7 @@ void VtkTemporalStreamTracerWrap::AddSourceConnection(const Nan::FunctionCallbac
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -307,6 +310,7 @@ void VtkTemporalStreamTracerWrap::GetParticleWriter(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetParticleWriter();
+		VtkAbstractParticleWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -445,6 +449,7 @@ void VtkTemporalStreamTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkTemporalStreamTracerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -472,7 +477,7 @@ void VtkTemporalStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTemporalStreamTracer * r;
@@ -484,6 +489,7 @@ void VtkTemporalStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTemporalStreamTracerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -579,7 +585,7 @@ void VtkTemporalStreamTracerWrap::SetParticleWriter(const Nan::FunctionCallbackI
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractParticleWriterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractParticleWriterWrap *a0 = ObjectWrap::Unwrap<VtkAbstractParticleWriterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

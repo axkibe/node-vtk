@@ -29,26 +29,27 @@ VtkLinearContourLineInterpolatorWrap::~VtkLinearContourLineInterpolatorWrap()
 
 void VtkLinearContourLineInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContourLineInterpolatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourLineInterpolatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLinearContourLineInterpolatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLinearContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LinearContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLinearContourLineInterpolator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LinearContourLineInterpolator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLinearContourLineInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLinearContourLineInterpolatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLinearContourLineInterpolatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContourLineInterpolatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourLineInterpolatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLinearContourLineInterpolatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -64,6 +65,8 @@ void VtkLinearContourLineInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLinearContourLineInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -107,10 +110,10 @@ void VtkLinearContourLineInterpolatorWrap::InterpolateLine(const Nan::FunctionCa
 {
 	VtkLinearContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkLinearContourLineInterpolatorWrap>(info.Holder());
 	vtkLinearContourLineInterpolator *native = (vtkLinearContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkContourRepresentationWrap *a1 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -171,6 +174,7 @@ void VtkLinearContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkLinearContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +190,7 @@ void VtkLinearContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkLinearContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkLinearContourLineInterpolatorWrap>(info.Holder());
 	vtkLinearContourLineInterpolator *native = (vtkLinearContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLinearContourLineInterpolator * r;
@@ -198,6 +202,7 @@ void VtkLinearContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLinearContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

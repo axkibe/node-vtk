@@ -28,26 +28,27 @@ VtkProjectedAAHexahedraMapperWrap::~VtkProjectedAAHexahedraMapperWrap()
 
 void VtkProjectedAAHexahedraMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProjectedAAHexahedraMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProjectedAAHexahedraMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ProjectedAAHexahedraMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProjectedAAHexahedraMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ProjectedAAHexahedraMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProjectedAAHexahedraMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProjectedAAHexahedraMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProjectedAAHexahedraMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProjectedAAHexahedraMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkProjectedAAHexahedraMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetVisibilitySort", SetVisibilitySort);
 	Nan::SetPrototypeMethod(tpl, "setVisibilitySort", SetVisibilitySort);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProjectedAAHexahedraMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkProjectedAAHexahedraMapperWrap::GetVisibilitySort(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetVisibilitySort();
+		VtkVisibilitySortWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkProjectedAAHexahedraMapperWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkProjectedAAHexahedraMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkProjectedAAHexahedraMapperWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkProjectedAAHexahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedAAHexahedraMapperWrap>(info.Holder());
 	vtkProjectedAAHexahedraMapper *native = (vtkProjectedAAHexahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProjectedAAHexahedraMapper * r;
@@ -187,6 +192,7 @@ void VtkProjectedAAHexahedraMapperWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProjectedAAHexahedraMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkProjectedAAHexahedraMapperWrap::SetVisibilitySort(const Nan::FunctionCal
 {
 	VtkProjectedAAHexahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedAAHexahedraMapperWrap>(info.Holder());
 	vtkProjectedAAHexahedraMapper *native = (vtkProjectedAAHexahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVisibilitySortWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVisibilitySortWrap *a0 = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

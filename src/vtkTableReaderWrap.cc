@@ -28,26 +28,27 @@ VtkTableReaderWrap::~VtkTableReaderWrap()
 
 void VtkTableReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTableReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTableReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TableReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTableReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TableReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTableReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTableReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTableReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTableReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkTableReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTableReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +123,7 @@ void VtkTableReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -138,6 +142,7 @@ void VtkTableReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetOutput();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,6 +187,7 @@ void VtkTableReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkTableReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +203,7 @@ void VtkTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTableReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTableReaderWrap>(info.Holder());
 	vtkTableReader *native = (vtkTableReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTableReader * r;
@@ -209,6 +215,7 @@ void VtkTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTableReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +234,7 @@ void VtkTableReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTableReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTableReaderWrap>(info.Holder());
 	vtkTableReader *native = (vtkTableReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

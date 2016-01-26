@@ -28,26 +28,27 @@ VtkCMLMoleculeReaderWrap::~VtkCMLMoleculeReaderWrap()
 
 void VtkCMLMoleculeReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMoleculeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCMLMoleculeReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCMLMoleculeReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CMLMoleculeReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCMLMoleculeReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CMLMoleculeReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCMLMoleculeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCMLMoleculeReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCMLMoleculeReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMoleculeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCMLMoleculeReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkCMLMoleculeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCMLMoleculeReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,6 +139,7 @@ void VtkCMLMoleculeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetOutput();
+		VtkMoleculeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,6 +184,7 @@ void VtkCMLMoleculeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkCMLMoleculeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +200,7 @@ void VtkCMLMoleculeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCMLMoleculeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkCMLMoleculeReaderWrap>(info.Holder());
 	vtkCMLMoleculeReader *native = (vtkCMLMoleculeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCMLMoleculeReader * r;
@@ -207,6 +212,7 @@ void VtkCMLMoleculeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCMLMoleculeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -245,7 +251,7 @@ void VtkCMLMoleculeReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCMLMoleculeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkCMLMoleculeReaderWrap>(info.Holder());
 	vtkCMLMoleculeReader *native = (vtkCMLMoleculeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMoleculeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMoleculeWrap *a0 = ObjectWrap::Unwrap<VtkMoleculeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -30,26 +30,27 @@ VtkPlotHistogram2DWrap::~VtkPlotHistogram2DWrap()
 
 void VtkPlotHistogram2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPlotWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPlotHistogram2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPlotHistogram2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PlotHistogram2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPlotHistogram2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PlotHistogram2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPlotHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPlotHistogram2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPlotHistogram2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPlotWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPlotHistogram2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkPlotHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPlotHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -127,6 +130,7 @@ void VtkPlotHistogram2DWrap::GetInputImageData(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetInputImageData();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -149,6 +153,7 @@ void VtkPlotHistogram2DWrap::GetTransferFunction(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetTransferFunction();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,6 +198,7 @@ void VtkPlotHistogram2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkPlotHistogram2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +214,7 @@ void VtkPlotHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPlotHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPlotHistogram2DWrap>(info.Holder());
 	vtkPlotHistogram2D *native = (vtkPlotHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPlotHistogram2D * r;
@@ -220,6 +226,7 @@ void VtkPlotHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPlotHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +245,7 @@ void VtkPlotHistogram2DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPlotHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPlotHistogram2DWrap>(info.Holder());
 	vtkPlotHistogram2D *native = (vtkPlotHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -258,7 +265,7 @@ void VtkPlotHistogram2DWrap::SetTransferFunction(const Nan::FunctionCallbackInfo
 {
 	VtkPlotHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPlotHistogram2DWrap>(info.Holder());
 	vtkPlotHistogram2D *native = (vtkPlotHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -32,26 +32,27 @@ VtkAbstractVolumeMapperWrap::~VtkAbstractVolumeMapperWrap()
 
 void VtkAbstractVolumeMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractMapper3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractMapper3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAbstractVolumeMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAbstractVolumeMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AbstractVolumeMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAbstractVolumeMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AbstractVolumeMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAbstractVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAbstractVolumeMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAbstractVolumeMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractMapper3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractMapper3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAbstractVolumeMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetArrayAccessMode", GetArrayAccessMode);
 	Nan::SetPrototypeMethod(tpl, "getArrayAccessMode", GetArrayAccessMode);
 
@@ -112,6 +113,8 @@ void VtkAbstractVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUsePointFieldData", SetScalarModeToUsePointFieldData);
 	Nan::SetPrototypeMethod(tpl, "setScalarModeToUsePointFieldData", SetScalarModeToUsePointFieldData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAbstractVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -204,6 +207,7 @@ void VtkAbstractVolumeMapperWrap::GetDataObjectInput(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetDataObjectInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,6 +230,7 @@ void VtkAbstractVolumeMapperWrap::GetDataSetInput(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetDataSetInput();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,6 +303,7 @@ void VtkAbstractVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkAbstractVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,7 +319,7 @@ void VtkAbstractVolumeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 {
 	VtkAbstractVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info.Holder());
 	vtkAbstractVolumeMapper *native = (vtkAbstractVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -333,10 +339,10 @@ void VtkAbstractVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAbstractVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info.Holder());
 	vtkAbstractVolumeMapper *native = (vtkAbstractVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -358,7 +364,7 @@ void VtkAbstractVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkAbstractVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info.Holder());
 	vtkAbstractVolumeMapper *native = (vtkAbstractVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAbstractVolumeMapper * r;
@@ -370,6 +376,7 @@ void VtkAbstractVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAbstractVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

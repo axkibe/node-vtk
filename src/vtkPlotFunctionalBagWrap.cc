@@ -28,26 +28,27 @@ VtkPlotFunctionalBagWrap::~VtkPlotFunctionalBagWrap()
 
 void VtkPlotFunctionalBagWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPlotWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPlotFunctionalBagWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPlotFunctionalBag").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PlotFunctionalBag").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPlotFunctionalBag").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PlotFunctionalBag").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPlotFunctionalBagWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPlotFunctionalBagWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPlotFunctionalBagWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPlotWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPlotFunctionalBagWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLookupTable", CreateDefaultLookupTable);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLookupTable", CreateDefaultLookupTable);
 
@@ -72,6 +73,8 @@ void VtkPlotFunctionalBagWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPlotFunctionalBagWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkPlotFunctionalBagWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,6 +182,7 @@ void VtkPlotFunctionalBagWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkPlotFunctionalBagWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +198,7 @@ void VtkPlotFunctionalBagWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
 	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPlotFunctionalBag * r;
@@ -205,6 +210,7 @@ void VtkPlotFunctionalBagWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPlotFunctionalBagWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -223,7 +229,7 @@ void VtkPlotFunctionalBagWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
 	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

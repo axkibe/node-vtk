@@ -27,26 +27,27 @@ VtkUnsignedIntArrayWrap::~VtkUnsignedIntArrayWrap()
 
 void VtkUnsignedIntArrayWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataArrayWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataArrayWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUnsignedIntArrayWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUnsignedIntArray").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UnsignedIntArray").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUnsignedIntArray").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UnsignedIntArray").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUnsignedIntArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUnsignedIntArrayWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUnsignedIntArrayWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataArrayWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataArrayWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUnsignedIntArrayWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkUnsignedIntArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUnsignedIntArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -148,6 +151,7 @@ void VtkUnsignedIntArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkUnsignedIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +167,7 @@ void VtkUnsignedIntArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkUnsignedIntArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnsignedIntArrayWrap>(info.Holder());
 	vtkUnsignedIntArray *native = (vtkUnsignedIntArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUnsignedIntArray * r;
@@ -175,6 +179,7 @@ void VtkUnsignedIntArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUnsignedIntArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

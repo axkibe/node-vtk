@@ -27,26 +27,27 @@ VtkConstrained2DLayoutStrategyWrap::~VtkConstrained2DLayoutStrategyWrap()
 
 void VtkConstrained2DLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkConstrained2DLayoutStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkConstrained2DLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Constrained2DLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkConstrained2DLayoutStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Constrained2DLayoutStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkConstrained2DLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkConstrained2DLayoutStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkConstrained2DLayoutStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkConstrained2DLayoutStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -122,6 +123,8 @@ void VtkConstrained2DLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetRandomSeed", SetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "setRandomSeed", SetRandomSeed);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkConstrained2DLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -414,6 +417,7 @@ void VtkConstrained2DLayoutStrategyWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkConstrained2DLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -429,7 +433,7 @@ void VtkConstrained2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkConstrained2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConstrained2DLayoutStrategyWrap>(info.Holder());
 	vtkConstrained2DLayoutStrategy *native = (vtkConstrained2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkConstrained2DLayoutStrategy * r;
@@ -441,6 +445,7 @@ void VtkConstrained2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkConstrained2DLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

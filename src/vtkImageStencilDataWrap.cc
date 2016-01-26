@@ -29,26 +29,27 @@ VtkImageStencilDataWrap::~VtkImageStencilDataWrap()
 
 void VtkImageStencilDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageStencilDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageStencilData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageStencilData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageStencilData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageStencilData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageStencilDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageStencilDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageStencilDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageStencilDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Add", Add);
 	Nan::SetPrototypeMethod(tpl, "add", Add);
 
@@ -121,6 +122,8 @@ void VtkImageStencilDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Subtract", Subtract);
 	Nan::SetPrototypeMethod(tpl, "subtract", Subtract);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageStencilDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -150,7 +153,7 @@ void VtkImageStencilDataWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -182,7 +185,7 @@ void VtkImageStencilDataWrap::CopyInformationFromPipeline(const Nan::FunctionCal
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -202,7 +205,7 @@ void VtkImageStencilDataWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -248,7 +251,7 @@ void VtkImageStencilDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -263,6 +266,7 @@ void VtkImageStencilDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkImageStencilDataWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -283,6 +287,7 @@ void VtkImageStencilDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkImageStencilDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -403,7 +408,7 @@ void VtkImageStencilDataWrap::InternalImageStencilDataCopy(const Nan::FunctionCa
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -481,6 +486,7 @@ void VtkImageStencilDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -527,7 +533,7 @@ void VtkImageStencilDataWrap::Replace(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -547,7 +553,7 @@ void VtkImageStencilDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageStencilData * r;
@@ -559,6 +565,7 @@ void VtkImageStencilDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageStencilDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -670,7 +677,7 @@ void VtkImageStencilDataWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -690,7 +697,7 @@ void VtkImageStencilDataWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

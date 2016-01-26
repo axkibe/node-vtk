@@ -28,26 +28,27 @@ VtkImageSliceCollectionWrap::~VtkImageSliceCollectionWrap()
 
 void VtkImageSliceCollectionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPropCollectionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropCollectionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageSliceCollectionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageSliceCollection").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageSliceCollection").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageSliceCollection").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageSliceCollection").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageSliceCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageSliceCollectionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageSliceCollectionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPropCollectionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropCollectionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageSliceCollectionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddItem", AddItem);
 	Nan::SetPrototypeMethod(tpl, "addItem", AddItem);
 
@@ -72,6 +73,8 @@ void VtkImageSliceCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Sort", Sort);
 	Nan::SetPrototypeMethod(tpl, "sort", Sort);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageSliceCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -101,7 +104,7 @@ void VtkImageSliceCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageSliceCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceCollectionWrap>(info.Holder());
 	vtkImageSliceCollection *native = (vtkImageSliceCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageSliceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageSliceWrap *a0 = ObjectWrap::Unwrap<VtkImageSliceWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -142,6 +145,7 @@ void VtkImageSliceCollectionWrap::GetNextImage(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetNextImage();
+		VtkImageSliceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,6 +168,7 @@ void VtkImageSliceCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetNextItem();
+		VtkImageSliceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,6 +213,7 @@ void VtkImageSliceCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageSliceCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +229,7 @@ void VtkImageSliceCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageSliceCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceCollectionWrap>(info.Holder());
 	vtkImageSliceCollection *native = (vtkImageSliceCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageSliceCollection * r;
@@ -235,6 +241,7 @@ void VtkImageSliceCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageSliceCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

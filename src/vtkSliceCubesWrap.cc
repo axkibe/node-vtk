@@ -27,26 +27,27 @@ VtkSliceCubesWrap::~VtkSliceCubesWrap()
 
 void VtkSliceCubesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSliceCubesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSliceCubes").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SliceCubes").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSliceCubes").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SliceCubes").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSliceCubesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSliceCubesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSliceCubesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSliceCubesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -89,6 +90,8 @@ void VtkSliceCubesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSliceCubesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -167,6 +170,7 @@ void VtkSliceCubesWrap::GetReader(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetReader();
+		VtkVolumeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,6 +229,7 @@ void VtkSliceCubesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkSliceCubesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +245,7 @@ void VtkSliceCubesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkSliceCubesWrap *wrapper = ObjectWrap::Unwrap<VtkSliceCubesWrap>(info.Holder());
 	vtkSliceCubes *native = (vtkSliceCubes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSliceCubes * r;
@@ -252,6 +257,7 @@ void VtkSliceCubesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSliceCubesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -310,7 +316,7 @@ void VtkSliceCubesWrap::SetReader(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkSliceCubesWrap *wrapper = ObjectWrap::Unwrap<VtkSliceCubesWrap>(info.Holder());
 	vtkSliceCubes *native = (vtkSliceCubes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeReaderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeReaderWrap *a0 = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

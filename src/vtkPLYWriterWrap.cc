@@ -29,26 +29,27 @@ VtkPLYWriterWrap::~VtkPLYWriterWrap()
 
 void VtkPLYWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPLYWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPLYWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PLYWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPLYWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PLYWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPLYWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPLYWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPLYWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPLYWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetArrayName", GetArrayName);
 	Nan::SetPrototypeMethod(tpl, "getArrayName", GetArrayName);
 
@@ -151,6 +152,8 @@ void VtkPLYWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetLookupTable", SetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "setLookupTable", SetLookupTable);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPLYWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -373,6 +376,7 @@ void VtkPLYWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -391,6 +395,7 @@ void VtkPLYWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetInput();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -413,6 +418,7 @@ void VtkPLYWriterWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -457,6 +463,7 @@ void VtkPLYWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkPLYWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -472,7 +479,7 @@ void VtkPLYWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPLYWriter * r;
@@ -484,6 +491,7 @@ void VtkPLYWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPLYWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -726,7 +734,7 @@ void VtkPLYWriterWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

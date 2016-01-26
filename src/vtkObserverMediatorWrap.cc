@@ -28,26 +28,27 @@ VtkObserverMediatorWrap::~VtkObserverMediatorWrap()
 
 void VtkObserverMediatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkObserverMediatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkObserverMediator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ObserverMediator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkObserverMediator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ObserverMediator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkObserverMediatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkObserverMediatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkObserverMediatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkObserverMediatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkObserverMediatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
 	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkObserverMediatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,6 +125,7 @@ void VtkObserverMediatorWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetInteractor();
+		VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,6 +170,7 @@ void VtkObserverMediatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkObserverMediatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,7 +186,7 @@ void VtkObserverMediatorWrap::RemoveAllCursorShapeRequests(const Nan::FunctionCa
 {
 	VtkObserverMediatorWrap *wrapper = ObjectWrap::Unwrap<VtkObserverMediatorWrap>(info.Holder());
 	vtkObserverMediator *native = (vtkObserverMediator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInteractorObserverWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInteractorObserverWrap *a0 = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -201,7 +206,7 @@ void VtkObserverMediatorWrap::RequestCursorShape(const Nan::FunctionCallbackInfo
 {
 	VtkObserverMediatorWrap *wrapper = ObjectWrap::Unwrap<VtkObserverMediatorWrap>(info.Holder());
 	vtkObserverMediator *native = (vtkObserverMediator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInteractorObserverWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInteractorObserverWrap *a0 = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -227,7 +232,7 @@ void VtkObserverMediatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkObserverMediatorWrap *wrapper = ObjectWrap::Unwrap<VtkObserverMediatorWrap>(info.Holder());
 	vtkObserverMediator *native = (vtkObserverMediator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkObserverMediator * r;
@@ -239,6 +244,7 @@ void VtkObserverMediatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkObserverMediatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -257,7 +263,7 @@ void VtkObserverMediatorWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkObserverMediatorWrap *wrapper = ObjectWrap::Unwrap<VtkObserverMediatorWrap>(info.Holder());
 	vtkObserverMediator *native = (vtkObserverMediator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

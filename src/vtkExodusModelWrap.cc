@@ -29,26 +29,27 @@ VtkExodusModelWrap::~VtkExodusModelWrap()
 
 void VtkExodusModelWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExodusModelWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExodusModel").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExodusModel").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExodusModel").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExodusModel").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExodusModelWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExodusModelWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExodusModelWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExodusModelWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddUGridElementVariable", AddUGridElementVariable);
 	Nan::SetPrototypeMethod(tpl, "addUGridElementVariable", AddUGridElementVariable);
 
@@ -103,6 +104,8 @@ void VtkExodusModelWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UnpackExodusModel", UnpackExodusModel);
 	Nan::SetPrototypeMethod(tpl, "unpackExodusModel", UnpackExodusModel);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExodusModelWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -194,10 +197,10 @@ void VtkExodusModelWrap::ExtractExodusModel(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkUnstructuredGridWrap *a1 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[1]->ToObject());
 			vtkExodusModel * r;
@@ -210,6 +213,7 @@ void VtkExodusModelWrap::ExtractExodusModel(const Nan::FunctionCallbackInfo<v8::
 				(vtkIdTypeArray *) a0->native.GetPointer(),
 				(vtkUnstructuredGrid *) a1->native.GetPointer()
 			);
+				VtkExodusModelWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -250,6 +254,7 @@ void VtkExodusModelWrap::GetModelMetadata(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetModelMetadata();
+		VtkModelMetadataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -265,7 +270,7 @@ void VtkExodusModelWrap::HasMetadata(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
 		int r;
@@ -309,7 +314,7 @@ void VtkExodusModelWrap::MergeExodusModel(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkExodusModelWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkExodusModelWrap *a0 = ObjectWrap::Unwrap<VtkExodusModelWrap>(info[0]->ToObject());
 		int r;
@@ -338,6 +343,7 @@ void VtkExodusModelWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkExodusModelWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -353,7 +359,7 @@ void VtkExodusModelWrap::PackExodusModel(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -429,7 +435,7 @@ void VtkExodusModelWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExodusModel * r;
@@ -441,6 +447,7 @@ void VtkExodusModelWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExodusModelWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -484,7 +491,7 @@ void VtkExodusModelWrap::SetLocalInformation(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -522,7 +529,7 @@ void VtkExodusModelWrap::SetModelMetadata(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkModelMetadataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkModelMetadataWrap *a0 = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -542,7 +549,7 @@ void VtkExodusModelWrap::UnpackExodusModel(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())

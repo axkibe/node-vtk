@@ -26,26 +26,27 @@ VtkXMLDataElementWrap::~VtkXMLDataElementWrap()
 
 void VtkXMLDataElementWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLDataElementWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLDataElement").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLDataElement").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLDataElement").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLDataElement").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLDataElementWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLDataElementWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLDataElementWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLDataElementWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddNestedElement", AddNestedElement);
 	Nan::SetPrototypeMethod(tpl, "addNestedElement", AddNestedElement);
 
@@ -172,6 +173,8 @@ void VtkXMLDataElementWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetParent", SetParent);
 	Nan::SetPrototypeMethod(tpl, "setParent", SetParent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLDataElementWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -201,7 +204,7 @@ void VtkXMLDataElementWrap::AddNestedElement(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -221,7 +224,7 @@ void VtkXMLDataElementWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -253,6 +256,7 @@ void VtkXMLDataElementWrap::FindNestedElement(const Nan::FunctionCallbackInfo<v8
 		r = native->FindNestedElement(
 			*a0
 		);
+			VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -283,6 +287,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithName(const Nan::FunctionCallbac
 		r = native->FindNestedElementWithName(
 			*a0
 		);
+			VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -321,6 +326,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithNameAndAttribute(const Nan::Fun
 					*a1,
 					*a2
 				);
+					VtkXMLDataElementWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -357,6 +363,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithNameAndId(const Nan::FunctionCa
 				*a0,
 				*a1
 			);
+				VtkXMLDataElementWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -563,6 +570,7 @@ void VtkXMLDataElementWrap::GetNestedElement(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetNestedElement(
 			info[0]->Int32Value()
 		);
+			VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -616,6 +624,7 @@ void VtkXMLDataElementWrap::GetParent(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetParent();
+		VtkXMLDataElementWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -638,6 +647,7 @@ void VtkXMLDataElementWrap::GetRoot(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetRoot();
+		VtkXMLDataElementWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -675,7 +685,7 @@ void VtkXMLDataElementWrap::IsEqualTo(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		int r;
@@ -709,6 +719,7 @@ void VtkXMLDataElementWrap::LookupElement(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->LookupElement(
 			*a0
 		);
+			VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -739,6 +750,7 @@ void VtkXMLDataElementWrap::LookupElementWithName(const Nan::FunctionCallbackInf
 		r = native->LookupElementWithName(
 			*a0
 		);
+			VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -764,6 +776,7 @@ void VtkXMLDataElementWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLDataElementWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -843,7 +856,7 @@ void VtkXMLDataElementWrap::RemoveNestedElement(const Nan::FunctionCallbackInfo<
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -863,7 +876,7 @@ void VtkXMLDataElementWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLDataElement * r;
@@ -875,6 +888,7 @@ void VtkXMLDataElementWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1068,7 +1082,7 @@ void VtkXMLDataElementWrap::SetParent(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkHierarchicalPolyDataMapperWrap::~VtkHierarchicalPolyDataMapperWrap()
 
 void VtkHierarchicalPolyDataMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCompositePolyDataMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositePolyDataMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHierarchicalPolyDataMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHierarchicalPolyDataMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HierarchicalPolyDataMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHierarchicalPolyDataMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HierarchicalPolyDataMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHierarchicalPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHierarchicalPolyDataMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHierarchicalPolyDataMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositePolyDataMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositePolyDataMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHierarchicalPolyDataMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkHierarchicalPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHierarchicalPolyDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkHierarchicalPolyDataMapperWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkHierarchicalPolyDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkHierarchicalPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkHierarchicalPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalPolyDataMapperWrap>(info.Holder());
 	vtkHierarchicalPolyDataMapper *native = (vtkHierarchicalPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHierarchicalPolyDataMapper * r;
@@ -158,6 +162,7 @@ void VtkHierarchicalPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHierarchicalPolyDataMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

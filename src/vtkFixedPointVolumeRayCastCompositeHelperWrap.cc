@@ -29,26 +29,27 @@ VtkFixedPointVolumeRayCastCompositeHelperWrap::~VtkFixedPointVolumeRayCastCompos
 
 void VtkFixedPointVolumeRayCastCompositeHelperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkFixedPointVolumeRayCastHelperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFixedPointVolumeRayCastHelperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFixedPointVolumeRayCastCompositeHelperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFixedPointVolumeRayCastCompositeHelper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FixedPointVolumeRayCastCompositeHelper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFixedPointVolumeRayCastCompositeHelper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FixedPointVolumeRayCastCompositeHelper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFixedPointVolumeRayCastCompositeHelperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFixedPointVolumeRayCastCompositeHelperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFixedPointVolumeRayCastCompositeHelperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkFixedPointVolumeRayCastHelperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFixedPointVolumeRayCastHelperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFixedPointVolumeRayCastCompositeHelperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateImage", GenerateImage);
 	Nan::SetPrototypeMethod(tpl, "generateImage", GenerateImage);
 
@@ -64,6 +65,8 @@ void VtkFixedPointVolumeRayCastCompositeHelperWrap::InitTpl(v8::Local<v8::Functi
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFixedPointVolumeRayCastCompositeHelperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -97,10 +100,10 @@ void VtkFixedPointVolumeRayCastCompositeHelperWrap::GenerateImage(const Nan::Fun
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkVolumeWrap *a2 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkFixedPointVolumeRayCastMapperWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkFixedPointVolumeRayCastMapperWrap *a3 = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info[3]->ToObject());
 					if(info.Length() != 4)
@@ -169,6 +172,7 @@ void VtkFixedPointVolumeRayCastCompositeHelperWrap::NewInstance(const Nan::Funct
 		return;
 	}
 	r = native->NewInstance();
+		VtkFixedPointVolumeRayCastCompositeHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +188,7 @@ void VtkFixedPointVolumeRayCastCompositeHelperWrap::SafeDownCast(const Nan::Func
 {
 	VtkFixedPointVolumeRayCastCompositeHelperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastCompositeHelperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastCompositeHelper *native = (vtkFixedPointVolumeRayCastCompositeHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFixedPointVolumeRayCastCompositeHelper * r;
@@ -196,6 +200,7 @@ void VtkFixedPointVolumeRayCastCompositeHelperWrap::SafeDownCast(const Nan::Func
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFixedPointVolumeRayCastCompositeHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

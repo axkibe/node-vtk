@@ -27,26 +27,27 @@ VtkTupleInterpolatorWrap::~VtkTupleInterpolatorWrap()
 
 void VtkTupleInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTupleInterpolatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTupleInterpolator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TupleInterpolator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTupleInterpolator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TupleInterpolator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTupleInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTupleInterpolatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTupleInterpolatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTupleInterpolatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -98,6 +99,8 @@ void VtkTupleInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfComponents", SetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfComponents", SetNumberOfComponents);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTupleInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -148,6 +151,7 @@ void VtkTupleInterpolatorWrap::GetInterpolatingSpline(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetInterpolatingSpline();
+		VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,6 +278,7 @@ void VtkTupleInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -308,7 +313,7 @@ void VtkTupleInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTupleInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info.Holder());
 	vtkTupleInterpolator *native = (vtkTupleInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTupleInterpolator * r;
@@ -320,6 +325,7 @@ void VtkTupleInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTupleInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -338,7 +344,7 @@ void VtkTupleInterpolatorWrap::SetInterpolatingSpline(const Nan::FunctionCallbac
 {
 	VtkTupleInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info.Holder());
 	vtkTupleInterpolator *native = (vtkTupleInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

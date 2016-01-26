@@ -29,26 +29,27 @@ VtkUnstructuredGridLinearRayIntegratorWrap::~VtkUnstructuredGridLinearRayIntegra
 
 void VtkUnstructuredGridLinearRayIntegratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridVolumeRayIntegratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUnstructuredGridLinearRayIntegratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUnstructuredGridLinearRayIntegrator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UnstructuredGridLinearRayIntegrator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUnstructuredGridLinearRayIntegrator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UnstructuredGridLinearRayIntegrator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUnstructuredGridLinearRayIntegratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUnstructuredGridLinearRayIntegratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUnstructuredGridLinearRayIntegratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -64,6 +65,8 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::InitTpl(v8::Local<v8::FunctionT
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUnstructuredGridLinearRayIntegratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -107,10 +110,10 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::Initialize(const Nan::FunctionC
 {
 	VtkUnstructuredGridLinearRayIntegratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridLinearRayIntegratorWrap>(info.Holder());
 	vtkUnstructuredGridLinearRayIntegrator *native = (vtkUnstructuredGridLinearRayIntegrator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -161,6 +164,7 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
+		VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +180,7 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::SafeDownCast(const Nan::Functio
 {
 	VtkUnstructuredGridLinearRayIntegratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridLinearRayIntegratorWrap>(info.Holder());
 	vtkUnstructuredGridLinearRayIntegrator *native = (vtkUnstructuredGridLinearRayIntegrator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUnstructuredGridLinearRayIntegrator * r;
@@ -188,6 +192,7 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

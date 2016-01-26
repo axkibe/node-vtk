@@ -32,26 +32,27 @@ VtkParallelCoordinatesRepresentationWrap::~VtkParallelCoordinatesRepresentationW
 
 void VtkParallelCoordinatesRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderedRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParallelCoordinatesRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParallelCoordinatesRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParallelCoordinatesRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParallelCoordinatesRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParallelCoordinatesRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParallelCoordinatesRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParallelCoordinatesRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParallelCoordinatesRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderedRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParallelCoordinatesRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ApplyViewTheme", ApplyViewTheme);
 	Nan::SetPrototypeMethod(tpl, "applyViewTheme", ApplyViewTheme);
 
@@ -157,6 +158,8 @@ void VtkParallelCoordinatesRepresentationWrap::InitTpl(v8::Local<v8::FunctionTem
 	Nan::SetPrototypeMethod(tpl, "UseCurvesOn", UseCurvesOn);
 	Nan::SetPrototypeMethod(tpl, "useCurvesOn", UseCurvesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParallelCoordinatesRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -186,7 +189,7 @@ void VtkParallelCoordinatesRepresentationWrap::ApplyViewTheme(const Nan::Functio
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -276,7 +279,7 @@ void VtkParallelCoordinatesRepresentationWrap::GetHoverText(const Nan::FunctionC
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewWrap *a0 = ObjectWrap::Unwrap<VtkViewWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -444,7 +447,7 @@ void VtkParallelCoordinatesRepresentationWrap::LassoSelect(const Nan::FunctionCa
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -475,6 +478,7 @@ void VtkParallelCoordinatesRepresentationWrap::NewInstance(const Nan::FunctionCa
 		return;
 	}
 	r = native->NewInstance();
+		VtkParallelCoordinatesRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -502,7 +506,7 @@ void VtkParallelCoordinatesRepresentationWrap::SafeDownCast(const Nan::FunctionC
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParallelCoordinatesRepresentation * r;
@@ -514,6 +518,7 @@ void VtkParallelCoordinatesRepresentationWrap::SafeDownCast(const Nan::FunctionC
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParallelCoordinatesRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -605,7 +610,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisTitles(const Nan::Function
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

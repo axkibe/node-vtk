@@ -31,26 +31,27 @@ VtkViewWrap::~VtkViewWrap()
 
 void VtkViewWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkViewWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkView").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("View").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkView").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("View").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkViewWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkViewWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkViewWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddRepresentation", AddRepresentation);
 	Nan::SetPrototypeMethod(tpl, "addRepresentation", AddRepresentation);
 
@@ -108,6 +109,8 @@ void VtkViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -137,7 +140,7 @@ void VtkViewWrap::AddRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -157,7 +160,7 @@ void VtkViewWrap::AddRepresentationFromInput(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -169,6 +172,7 @@ void VtkViewWrap::AddRepresentationFromInput(const Nan::FunctionCallbackInfo<v8:
 		r = native->AddRepresentationFromInput(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -187,7 +191,7 @@ void VtkViewWrap::AddRepresentationFromInputConnection(const Nan::FunctionCallba
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -199,6 +203,7 @@ void VtkViewWrap::AddRepresentationFromInputConnection(const Nan::FunctionCallba
 		r = native->AddRepresentationFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -217,7 +222,7 @@ void VtkViewWrap::ApplyViewTheme(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -272,6 +277,7 @@ void VtkViewWrap::GetObserver(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetObserver();
+		VtkCommandWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,6 +304,7 @@ void VtkViewWrap::GetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetRepresentation(
 			info[0]->Int32Value()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -345,6 +352,7 @@ void VtkViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
+		VtkViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -360,7 +368,7 @@ void VtkViewWrap::RegisterProgress(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -397,7 +405,7 @@ void VtkViewWrap::RemoveRepresentation(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -417,7 +425,7 @@ void VtkViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkView * r;
@@ -429,6 +437,7 @@ void VtkViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -447,7 +456,7 @@ void VtkViewWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -467,7 +476,7 @@ void VtkViewWrap::SetRepresentationFromInput(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -479,6 +488,7 @@ void VtkViewWrap::SetRepresentationFromInput(const Nan::FunctionCallbackInfo<v8:
 		r = native->SetRepresentationFromInput(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -497,7 +507,7 @@ void VtkViewWrap::SetRepresentationFromInputConnection(const Nan::FunctionCallba
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -509,6 +519,7 @@ void VtkViewWrap::SetRepresentationFromInputConnection(const Nan::FunctionCallba
 		r = native->SetRepresentationFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -527,7 +538,7 @@ void VtkViewWrap::UnRegisterProgress(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

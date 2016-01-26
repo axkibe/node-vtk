@@ -28,26 +28,27 @@ VtkRIBLightWrap::~VtkRIBLightWrap()
 
 void VtkRIBLightWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLightWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLightWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRIBLightWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRIBLight").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RIBLight").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRIBLight").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RIBLight").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRIBLightWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRIBLightWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRIBLightWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLightWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLightWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRIBLightWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkRIBLightWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShadowsOn", ShadowsOn);
 	Nan::SetPrototypeMethod(tpl, "shadowsOn", ShadowsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRIBLightWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -161,6 +164,7 @@ void VtkRIBLightWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkRIBLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +180,7 @@ void VtkRIBLightWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRIBLightWrap *wrapper = ObjectWrap::Unwrap<VtkRIBLightWrap>(info.Holder());
 	vtkRIBLight *native = (vtkRIBLight *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -200,7 +204,7 @@ void VtkRIBLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkRIBLightWrap *wrapper = ObjectWrap::Unwrap<VtkRIBLightWrap>(info.Holder());
 	vtkRIBLight *native = (vtkRIBLight *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRIBLight * r;
@@ -212,6 +216,7 @@ void VtkRIBLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRIBLightWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkAutoCorrelativeStatisticsWrap::~VtkAutoCorrelativeStatisticsWrap()
 
 void VtkAutoCorrelativeStatisticsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStatisticsAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAutoCorrelativeStatisticsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAutoCorrelativeStatistics").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AutoCorrelativeStatistics").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAutoCorrelativeStatistics").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AutoCorrelativeStatistics").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAutoCorrelativeStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAutoCorrelativeStatisticsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAutoCorrelativeStatisticsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStatisticsAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAutoCorrelativeStatisticsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Aggregate", Aggregate);
 	Nan::SetPrototypeMethod(tpl, "aggregate", Aggregate);
 
@@ -64,6 +65,8 @@ void VtkAutoCorrelativeStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAutoCorrelativeStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -93,10 +96,10 @@ void VtkAutoCorrelativeStatisticsWrap::Aggregate(const Nan::FunctionCallbackInfo
 {
 	VtkAutoCorrelativeStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkAutoCorrelativeStatisticsWrap>(info.Holder());
 	vtkAutoCorrelativeStatistics *native = (vtkAutoCorrelativeStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectCollectionWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectCollectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -161,6 +164,7 @@ void VtkAutoCorrelativeStatisticsWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkAutoCorrelativeStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +180,7 @@ void VtkAutoCorrelativeStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkAutoCorrelativeStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkAutoCorrelativeStatisticsWrap>(info.Holder());
 	vtkAutoCorrelativeStatistics *native = (vtkAutoCorrelativeStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAutoCorrelativeStatistics * r;
@@ -188,6 +192,7 @@ void VtkAutoCorrelativeStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAutoCorrelativeStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

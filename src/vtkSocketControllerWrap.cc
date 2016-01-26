@@ -28,26 +28,27 @@ VtkSocketControllerWrap::~VtkSocketControllerWrap()
 
 void VtkSocketControllerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiProcessControllerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSocketControllerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSocketController").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SocketController").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSocketController").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SocketController").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSocketControllerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSocketControllerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSocketControllerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiProcessControllerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSocketControllerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CloseConnection", CloseConnection);
 	Nan::SetPrototypeMethod(tpl, "closeConnection", CloseConnection);
 
@@ -93,6 +94,8 @@ void VtkSocketControllerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WaitForConnection", WaitForConnection);
 	Nan::SetPrototypeMethod(tpl, "waitForConnection", WaitForConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSocketControllerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -167,6 +170,7 @@ void VtkSocketControllerWrap::CreateCompliantController(const Nan::FunctionCallb
 		return;
 	}
 	r = native->CreateCompliantController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,6 +303,7 @@ void VtkSocketControllerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkSocketControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,7 +319,7 @@ void VtkSocketControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSocketControllerWrap *wrapper = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info.Holder());
 	vtkSocketController *native = (vtkSocketController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSocketController * r;
@@ -326,6 +331,7 @@ void VtkSocketControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSocketControllerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -344,7 +350,7 @@ void VtkSocketControllerWrap::SetCommunicator(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSocketControllerWrap *wrapper = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info.Holder());
 	vtkSocketController *native = (vtkSocketController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketCommunicatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketCommunicatorWrap *a0 = ObjectWrap::Unwrap<VtkSocketCommunicatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

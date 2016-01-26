@@ -29,26 +29,27 @@ VtkProgrammableElectronicDataWrap::~VtkProgrammableElectronicDataWrap()
 
 void VtkProgrammableElectronicDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractElectronicDataWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractElectronicDataWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProgrammableElectronicDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProgrammableElectronicData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ProgrammableElectronicData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProgrammableElectronicData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ProgrammableElectronicData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProgrammableElectronicDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProgrammableElectronicDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProgrammableElectronicDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractElectronicDataWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractElectronicDataWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProgrammableElectronicDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -76,6 +77,8 @@ void VtkProgrammableElectronicDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetPadding", SetPadding);
 	Nan::SetPrototypeMethod(tpl, "setPadding", SetPadding);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProgrammableElectronicDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -105,7 +108,7 @@ void VtkProgrammableElectronicDataWrap::DeepCopy(const Nan::FunctionCallbackInfo
 {
 	VtkProgrammableElectronicDataWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableElectronicDataWrap>(info.Holder());
 	vtkProgrammableElectronicData *native = (vtkProgrammableElectronicData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -146,6 +149,7 @@ void VtkProgrammableElectronicDataWrap::GetElectronDensity(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetElectronDensity();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,6 +208,7 @@ void VtkProgrammableElectronicDataWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkProgrammableElectronicDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,7 +224,7 @@ void VtkProgrammableElectronicDataWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkProgrammableElectronicDataWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableElectronicDataWrap>(info.Holder());
 	vtkProgrammableElectronicData *native = (vtkProgrammableElectronicData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProgrammableElectronicData * r;
@@ -231,6 +236,7 @@ void VtkProgrammableElectronicDataWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProgrammableElectronicDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -249,7 +255,7 @@ void VtkProgrammableElectronicDataWrap::SetElectronDensity(const Nan::FunctionCa
 {
 	VtkProgrammableElectronicDataWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableElectronicDataWrap>(info.Holder());
 	vtkProgrammableElectronicData *native = (vtkProgrammableElectronicData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

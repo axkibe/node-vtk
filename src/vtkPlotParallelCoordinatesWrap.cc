@@ -29,26 +29,27 @@ VtkPlotParallelCoordinatesWrap::~VtkPlotParallelCoordinatesWrap()
 
 void VtkPlotParallelCoordinatesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPlotWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPlotParallelCoordinatesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPlotParallelCoordinates").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PlotParallelCoordinates").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPlotParallelCoordinates").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PlotParallelCoordinates").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPlotParallelCoordinatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPlotParallelCoordinatesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPlotParallelCoordinatesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPlotWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPlotParallelCoordinatesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLookupTable", CreateDefaultLookupTable);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLookupTable", CreateDefaultLookupTable);
 
@@ -88,6 +89,8 @@ void VtkPlotParallelCoordinatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPlotParallelCoordinatesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -150,6 +153,7 @@ void VtkPlotParallelCoordinatesWrap::GetLookupTable(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,6 +212,7 @@ void VtkPlotParallelCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkPlotParallelCoordinatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +228,7 @@ void VtkPlotParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
 	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPlotParallelCoordinates * r;
@@ -235,6 +240,7 @@ void VtkPlotParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPlotParallelCoordinatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -277,7 +283,7 @@ void VtkPlotParallelCoordinatesWrap::SetInputData(const Nan::FunctionCallbackInf
 {
 	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
 	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -297,7 +303,7 @@ void VtkPlotParallelCoordinatesWrap::SetLookupTable(const Nan::FunctionCallbackI
 {
 	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
 	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

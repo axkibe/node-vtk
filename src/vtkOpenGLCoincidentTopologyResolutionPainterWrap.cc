@@ -27,26 +27,27 @@ VtkOpenGLCoincidentTopologyResolutionPainterWrap::~VtkOpenGLCoincidentTopologyRe
 
 void VtkOpenGLCoincidentTopologyResolutionPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCoincidentTopologyResolutionPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCoincidentTopologyResolutionPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLCoincidentTopologyResolutionPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLCoincidentTopologyResolutionPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLCoincidentTopologyResolutionPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLCoincidentTopologyResolutionPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLCoincidentTopologyResolutionPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLCoincidentTopologyResolutionPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCoincidentTopologyResolutionPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCoincidentTopologyResolutionPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLCoincidentTopologyResolutionPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitTpl(v8::Local<v8::Fun
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLCoincidentTopologyResolutionPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkOpenGLCoincidentTopologyResolutionPainterWrap::NewInstance(const Nan::Fu
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkOpenGLCoincidentTopologyResolutionPainterWrap::SafeDownCast(const Nan::F
 {
 	VtkOpenGLCoincidentTopologyResolutionPainterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLCoincidentTopologyResolutionPainterWrap>(info.Holder());
 	vtkOpenGLCoincidentTopologyResolutionPainter *native = (vtkOpenGLCoincidentTopologyResolutionPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLCoincidentTopologyResolutionPainter * r;
@@ -158,6 +162,7 @@ void VtkOpenGLCoincidentTopologyResolutionPainterWrap::SafeDownCast(const Nan::F
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

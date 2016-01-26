@@ -27,26 +27,27 @@ VtkClearZPassWrap::~VtkClearZPassWrap()
 
 void VtkClearZPassWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderPassWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkClearZPassWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkClearZPass").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ClearZPass").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkClearZPass").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ClearZPass").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkClearZPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkClearZPassWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkClearZPassWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderPassWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkClearZPassWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkClearZPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDepth", SetDepth);
 	Nan::SetPrototypeMethod(tpl, "setDepth", SetDepth);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkClearZPassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -185,6 +188,7 @@ void VtkClearZPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkClearZPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +204,7 @@ void VtkClearZPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkClearZPassWrap *wrapper = ObjectWrap::Unwrap<VtkClearZPassWrap>(info.Holder());
 	vtkClearZPass *native = (vtkClearZPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkClearZPass * r;
@@ -212,6 +216,7 @@ void VtkClearZPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkClearZPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

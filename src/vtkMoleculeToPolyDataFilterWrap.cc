@@ -28,26 +28,27 @@ VtkMoleculeToPolyDataFilterWrap::~VtkMoleculeToPolyDataFilterWrap()
 
 void VtkMoleculeToPolyDataFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMoleculeToPolyDataFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMoleculeToPolyDataFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MoleculeToPolyDataFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMoleculeToPolyDataFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MoleculeToPolyDataFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMoleculeToPolyDataFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMoleculeToPolyDataFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMoleculeToPolyDataFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMoleculeToPolyDataFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkMoleculeToPolyDataFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMoleculeToPolyDataFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -113,6 +116,7 @@ void VtkMoleculeToPolyDataFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetInput();
+		VtkMoleculeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -157,6 +161,7 @@ void VtkMoleculeToPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkMoleculeToPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +177,7 @@ void VtkMoleculeToPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkMoleculeToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeToPolyDataFilterWrap>(info.Holder());
 	vtkMoleculeToPolyDataFilter *native = (vtkMoleculeToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMoleculeToPolyDataFilter * r;
@@ -184,6 +189,7 @@ void VtkMoleculeToPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMoleculeToPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

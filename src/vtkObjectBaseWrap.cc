@@ -24,24 +24,25 @@ VtkObjectBaseWrap::~VtkObjectBaseWrap()
 
 void VtkObjectBaseWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-
-	tpl->SetClassName(Nan::New("VtkObjectBaseWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkObjectBase").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ObjectBase").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkObjectBase").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ObjectBase").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkObjectBaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkObjectBaseWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkObjectBaseWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	tpl->SetClassName(Nan::New("VtkObjectBaseWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -51,6 +52,8 @@ void VtkObjectBaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "IsTypeOf", IsTypeOf);
 	Nan::SetPrototypeMethod(tpl, "isTypeOf", IsTypeOf);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkObjectBaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)

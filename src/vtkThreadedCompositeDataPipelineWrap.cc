@@ -27,26 +27,27 @@ VtkThreadedCompositeDataPipelineWrap::~VtkThreadedCompositeDataPipelineWrap()
 
 void VtkThreadedCompositeDataPipelineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCompositeDataPipelineWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataPipelineWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkThreadedCompositeDataPipelineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkThreadedCompositeDataPipeline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ThreadedCompositeDataPipeline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkThreadedCompositeDataPipeline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ThreadedCompositeDataPipeline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkThreadedCompositeDataPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkThreadedCompositeDataPipelineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkThreadedCompositeDataPipelineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeDataPipelineWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataPipelineWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkThreadedCompositeDataPipelineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkThreadedCompositeDataPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkThreadedCompositeDataPipelineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkThreadedCompositeDataPipelineWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkThreadedCompositeDataPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkThreadedCompositeDataPipelineWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkThreadedCompositeDataPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedCompositeDataPipelineWrap>(info.Holder());
 	vtkThreadedCompositeDataPipeline *native = (vtkThreadedCompositeDataPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkThreadedCompositeDataPipeline * r;
@@ -158,6 +162,7 @@ void VtkThreadedCompositeDataPipelineWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkThreadedCompositeDataPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

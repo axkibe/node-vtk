@@ -28,26 +28,27 @@ VtkXMLDataReaderWrap::~VtkXMLDataReaderWrap()
 
 void VtkXMLDataReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLDataReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLDataReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLDataReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLDataReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLDataReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLDataReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLDataReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLDataReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLDataReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CopyOutputInformation", CopyOutputInformation);
 	Nan::SetPrototypeMethod(tpl, "copyOutputInformation", CopyOutputInformation);
 
@@ -63,6 +64,8 @@ void VtkXMLDataReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLDataReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -92,7 +95,7 @@ void VtkXMLDataReaderWrap::CopyOutputInformation(const Nan::FunctionCallbackInfo
 {
 	VtkXMLDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataReaderWrap>(info.Holder());
 	vtkXMLDataReader *native = (vtkXMLDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -159,6 +162,7 @@ void VtkXMLDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLDataReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -174,7 +178,7 @@ void VtkXMLDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXMLDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataReaderWrap>(info.Holder());
 	vtkXMLDataReader *native = (vtkXMLDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLDataReader * r;
@@ -186,6 +190,7 @@ void VtkXMLDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLDataReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

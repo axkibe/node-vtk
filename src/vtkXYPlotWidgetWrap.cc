@@ -28,26 +28,27 @@ VtkXYPlotWidgetWrap::~VtkXYPlotWidgetWrap()
 
 void VtkXYPlotWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorObserverWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXYPlotWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXYPlotWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XYPlotWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXYPlotWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XYPlotWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXYPlotWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXYPlotWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXYPlotWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorObserverWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXYPlotWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkXYPlotWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetXYPlotActor", SetXYPlotActor);
 	Nan::SetPrototypeMethod(tpl, "setXYPlotActor", SetXYPlotActor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXYPlotWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -119,6 +122,7 @@ void VtkXYPlotWidgetWrap::GetXYPlotActor(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetXYPlotActor();
+		VtkXYPlotActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,6 +167,7 @@ void VtkXYPlotWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkXYPlotWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +183,7 @@ void VtkXYPlotWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkXYPlotWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotWidgetWrap>(info.Holder());
 	vtkXYPlotWidget *native = (vtkXYPlotWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXYPlotWidget * r;
@@ -190,6 +195,7 @@ void VtkXYPlotWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXYPlotWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +233,7 @@ void VtkXYPlotWidgetWrap::SetXYPlotActor(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXYPlotWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotWidgetWrap>(info.Holder());
 	vtkXYPlotWidget *native = (vtkXYPlotWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXYPlotActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXYPlotActorWrap *a0 = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

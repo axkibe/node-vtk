@@ -28,26 +28,27 @@ VtkAngleWidgetWrap::~VtkAngleWidgetWrap()
 
 void VtkAngleWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAngleWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAngleWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AngleWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAngleWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AngleWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAngleWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAngleWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAngleWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAngleWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -87,6 +88,8 @@ void VtkAngleWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWidgetStateToStart", SetWidgetStateToStart);
 	Nan::SetPrototypeMethod(tpl, "setWidgetStateToStart", SetWidgetStateToStart);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAngleWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkAngleWidgetWrap::GetAngleRepresentation(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetAngleRepresentation();
+		VtkAngleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,6 +225,7 @@ void VtkAngleWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkAngleWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,7 +241,7 @@ void VtkAngleWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAngleWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAngleWidgetWrap>(info.Holder());
 	vtkAngleWidget *native = (vtkAngleWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAngleWidget * r;
@@ -248,6 +253,7 @@ void VtkAngleWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAngleWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,7 +310,7 @@ void VtkAngleWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAngleWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAngleWidgetWrap>(info.Holder());
 	vtkAngleWidget *native = (vtkAngleWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAngleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAngleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

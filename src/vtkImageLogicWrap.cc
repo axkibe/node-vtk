@@ -28,26 +28,27 @@ VtkImageLogicWrap::~VtkImageLogicWrap()
 
 void VtkImageLogicWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageLogicWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageLogic").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageLogic").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageLogic").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageLogic").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageLogicWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageLogicWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageLogicWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageLogicWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -96,6 +97,8 @@ void VtkImageLogicWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutputTrueValue", SetOutputTrueValue);
 	Nan::SetPrototypeMethod(tpl, "setOutputTrueValue", SetOutputTrueValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageLogicWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -196,6 +199,7 @@ void VtkImageLogicWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageLogicWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +215,7 @@ void VtkImageLogicWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageLogic * r;
@@ -223,6 +227,7 @@ void VtkImageLogicWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageLogicWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -241,7 +246,7 @@ void VtkImageLogicWrap::SetInput1Data(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -261,7 +266,7 @@ void VtkImageLogicWrap::SetInput2Data(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

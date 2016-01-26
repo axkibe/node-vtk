@@ -28,26 +28,27 @@ VtkXMLPMultiBlockDataWriterWrap::~VtkXMLPMultiBlockDataWriterWrap()
 
 void VtkXMLPMultiBlockDataWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLMultiBlockDataWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLMultiBlockDataWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLPMultiBlockDataWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLPMultiBlockDataWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLPMultiBlockDataWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLPMultiBlockDataWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLPMultiBlockDataWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLPMultiBlockDataWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLPMultiBlockDataWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLPMultiBlockDataWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLMultiBlockDataWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLMultiBlockDataWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLPMultiBlockDataWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkXMLPMultiBlockDataWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetWriteMetaFile", SetWriteMetaFile);
 	Nan::SetPrototypeMethod(tpl, "setWriteMetaFile", SetWriteMetaFile);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLPMultiBlockDataWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -119,6 +122,7 @@ void VtkXMLPMultiBlockDataWriterWrap::GetController(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,6 +167,7 @@ void VtkXMLPMultiBlockDataWriterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLPMultiBlockDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +183,7 @@ void VtkXMLPMultiBlockDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkXMLPMultiBlockDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLPMultiBlockDataWriterWrap>(info.Holder());
 	vtkXMLPMultiBlockDataWriter *native = (vtkXMLPMultiBlockDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLPMultiBlockDataWriter * r;
@@ -190,6 +195,7 @@ void VtkXMLPMultiBlockDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLPMultiBlockDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -208,7 +214,7 @@ void VtkXMLPMultiBlockDataWriterWrap::SetController(const Nan::FunctionCallbackI
 {
 	VtkXMLPMultiBlockDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLPMultiBlockDataWriterWrap>(info.Holder());
 	vtkXMLPMultiBlockDataWriter *native = (vtkXMLPMultiBlockDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

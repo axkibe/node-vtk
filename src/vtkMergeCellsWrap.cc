@@ -28,26 +28,27 @@ VtkMergeCellsWrap::~VtkMergeCellsWrap()
 
 void VtkMergeCellsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMergeCellsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMergeCells").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MergeCells").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMergeCells").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MergeCells").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMergeCellsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMergeCellsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMergeCellsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMergeCellsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Finish", Finish);
 	Nan::SetPrototypeMethod(tpl, "finish", Finish);
 
@@ -102,6 +103,8 @@ void VtkMergeCellsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetUseGlobalIds", SetUseGlobalIds);
 	Nan::SetPrototypeMethod(tpl, "setUseGlobalIds", SetUseGlobalIds);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMergeCellsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -192,6 +195,7 @@ void VtkMergeCellsWrap::GetUnstructuredGrid(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetUnstructuredGrid();
+		VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +261,7 @@ void VtkMergeCellsWrap::MergeDataSet(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		int r;
@@ -310,6 +314,7 @@ void VtkMergeCellsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkMergeCellsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,7 +330,7 @@ void VtkMergeCellsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMergeCells * r;
@@ -337,6 +342,7 @@ void VtkMergeCellsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMergeCellsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -393,7 +399,7 @@ void VtkMergeCellsWrap::SetUnstructuredGrid(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

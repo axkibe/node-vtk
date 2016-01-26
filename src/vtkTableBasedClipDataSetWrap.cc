@@ -30,26 +30,27 @@ VtkTableBasedClipDataSetWrap::~VtkTableBasedClipDataSetWrap()
 
 void VtkTableBasedClipDataSetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTableBasedClipDataSetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTableBasedClipDataSet").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TableBasedClipDataSet").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTableBasedClipDataSet").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TableBasedClipDataSet").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTableBasedClipDataSetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTableBasedClipDataSetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTableBasedClipDataSetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTableBasedClipDataSetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLocator", CreateDefaultLocator);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLocator", CreateDefaultLocator);
 
@@ -152,6 +153,8 @@ void VtkTableBasedClipDataSetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseValueAsOffsetOn", UseValueAsOffsetOn);
 	Nan::SetPrototypeMethod(tpl, "useValueAsOffsetOn", UseValueAsOffsetOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTableBasedClipDataSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -262,6 +265,7 @@ void VtkTableBasedClipDataSetWrap::GetClipFunction(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetClipFunction();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,6 +288,7 @@ void VtkTableBasedClipDataSetWrap::GetClippedOutput(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetClippedOutput();
+		VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -348,6 +353,7 @@ void VtkTableBasedClipDataSetWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -514,6 +520,7 @@ void VtkTableBasedClipDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkTableBasedClipDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -529,7 +536,7 @@ void VtkTableBasedClipDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTableBasedClipDataSet * r;
@@ -541,6 +548,7 @@ void VtkTableBasedClipDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTableBasedClipDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -559,7 +567,7 @@ void VtkTableBasedClipDataSetWrap::SetClipFunction(const Nan::FunctionCallbackIn
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -636,7 +644,7 @@ void VtkTableBasedClipDataSetWrap::SetLocator(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkPolyDataStreamerWrap::~VtkPolyDataStreamerWrap()
 
 void VtkPolyDataStreamerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStreamerBaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamerBaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataStreamerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataStreamer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataStreamer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataStreamer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataStreamer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataStreamerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataStreamerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataStreamerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStreamerBaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamerBaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataStreamerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ColorByPieceOff", ColorByPieceOff);
 	Nan::SetPrototypeMethod(tpl, "colorByPieceOff", ColorByPieceOff);
 
@@ -77,6 +78,8 @@ void VtkPolyDataStreamerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfStreamDivisions", SetNumberOfStreamDivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfStreamDivisions", SetNumberOfStreamDivisions);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataStreamerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -201,6 +204,7 @@ void VtkPolyDataStreamerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataStreamerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +220,7 @@ void VtkPolyDataStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPolyDataStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataStreamerWrap>(info.Holder());
 	vtkPolyDataStreamer *native = (vtkPolyDataStreamer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataStreamer * r;
@@ -228,6 +232,7 @@ void VtkPolyDataStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataStreamerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

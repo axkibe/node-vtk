@@ -26,26 +26,27 @@ VtkMatrix4x4Wrap::~VtkMatrix4x4Wrap()
 
 void VtkMatrix4x4Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMatrix4x4Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMatrix4x4").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Matrix4x4").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMatrix4x4").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Matrix4x4").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMatrix4x4Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMatrix4x4Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMatrix4x4Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMatrix4x4Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Adjoint", Adjoint);
 	Nan::SetPrototypeMethod(tpl, "adjoint", Adjoint);
 
@@ -88,6 +89,8 @@ void VtkMatrix4x4Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Zero", Zero);
 	Nan::SetPrototypeMethod(tpl, "zero", Zero);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMatrix4x4Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -117,10 +120,10 @@ void VtkMatrix4x4Wrap::Adjoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMatrix4x4Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info.Holder());
 	vtkMatrix4x4 *native = (vtkMatrix4x4 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -142,7 +145,7 @@ void VtkMatrix4x4Wrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkMatrix4x4Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info.Holder());
 	vtkMatrix4x4 *native = (vtkMatrix4x4 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -162,7 +165,7 @@ void VtkMatrix4x4Wrap::Determinant(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMatrix4x4Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info.Holder());
 	vtkMatrix4x4 *native = (vtkMatrix4x4 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		double r;
@@ -242,10 +245,10 @@ void VtkMatrix4x4Wrap::Invert(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMatrix4x4Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info.Holder());
 	vtkMatrix4x4 *native = (vtkMatrix4x4 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -294,13 +297,13 @@ void VtkMatrix4x4Wrap::Multiply4x4(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMatrix4x4Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info.Holder());
 	vtkMatrix4x4 *native = (vtkMatrix4x4 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkMatrix4x4Wrap *a2 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -331,6 +334,7 @@ void VtkMatrix4x4Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -346,7 +350,7 @@ void VtkMatrix4x4Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkMatrix4x4Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info.Holder());
 	vtkMatrix4x4 *native = (vtkMatrix4x4 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMatrix4x4 * r;
@@ -358,6 +362,7 @@ void VtkMatrix4x4Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMatrix4x4Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -403,10 +408,10 @@ void VtkMatrix4x4Wrap::Transpose(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMatrix4x4Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info.Holder());
 	vtkMatrix4x4 *native = (vtkMatrix4x4 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
 			if(info.Length() != 2)

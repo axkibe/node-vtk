@@ -32,26 +32,27 @@ VtkCornerAnnotationWrap::~VtkCornerAnnotationWrap()
 
 void VtkCornerAnnotationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCornerAnnotationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCornerAnnotation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CornerAnnotation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCornerAnnotation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CornerAnnotation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCornerAnnotationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCornerAnnotationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCornerAnnotationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCornerAnnotationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClearAllTexts", ClearAllTexts);
 	Nan::SetPrototypeMethod(tpl, "clearAllTexts", ClearAllTexts);
 
@@ -163,6 +164,8 @@ void VtkCornerAnnotationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShowSliceAndImageOn", ShowSliceAndImageOn);
 	Nan::SetPrototypeMethod(tpl, "showSliceAndImageOn", ShowSliceAndImageOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCornerAnnotationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -204,7 +207,7 @@ void VtkCornerAnnotationWrap::CopyAllTextsFrom(const Nan::FunctionCallbackInfo<v
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCornerAnnotationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCornerAnnotationWrap *a0 = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -245,6 +248,7 @@ void VtkCornerAnnotationWrap::GetImageActor(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetImageActor();
+		VtkImageActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,6 +404,7 @@ void VtkCornerAnnotationWrap::GetTextProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -422,6 +427,7 @@ void VtkCornerAnnotationWrap::GetWindowLevel(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetWindowLevel();
+		VtkImageMapToWindowLevelColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -480,6 +486,7 @@ void VtkCornerAnnotationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkCornerAnnotationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -495,7 +502,7 @@ void VtkCornerAnnotationWrap::ReleaseGraphicsResources(const Nan::FunctionCallba
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -515,7 +522,7 @@ void VtkCornerAnnotationWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackIn
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -537,7 +544,7 @@ void VtkCornerAnnotationWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -559,7 +566,7 @@ void VtkCornerAnnotationWrap::RenderTranslucentPolygonalGeometry(const Nan::Func
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -581,7 +588,7 @@ void VtkCornerAnnotationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCornerAnnotation * r;
@@ -593,6 +600,7 @@ void VtkCornerAnnotationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCornerAnnotationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -611,7 +619,7 @@ void VtkCornerAnnotationWrap::SetImageActor(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageActorWrap *a0 = ObjectWrap::Unwrap<VtkImageActorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -807,7 +815,7 @@ void VtkCornerAnnotationWrap::SetTextProperty(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -827,7 +835,7 @@ void VtkCornerAnnotationWrap::SetWindowLevel(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMapToWindowLevelColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageMapToWindowLevelColorsWrap *a0 = ObjectWrap::Unwrap<VtkImageMapToWindowLevelColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

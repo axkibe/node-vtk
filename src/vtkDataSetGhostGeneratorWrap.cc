@@ -28,26 +28,27 @@ VtkDataSetGhostGeneratorWrap::~VtkDataSetGhostGeneratorWrap()
 
 void VtkDataSetGhostGeneratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataSetGhostGeneratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataSetGhostGenerator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataSetGhostGenerator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataSetGhostGenerator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataSetGhostGenerator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataSetGhostGeneratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataSetGhostGeneratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataSetGhostGeneratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataSetGhostGeneratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -72,6 +73,8 @@ void VtkDataSetGhostGeneratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfGhostLayers", SetNumberOfGhostLayers);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfGhostLayers", SetNumberOfGhostLayers);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataSetGhostGeneratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -103,7 +106,7 @@ void VtkDataSetGhostGeneratorWrap::FillInputPortInformation(const Nan::FunctionC
 	vtkDataSetGhostGenerator *native = (vtkDataSetGhostGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -129,7 +132,7 @@ void VtkDataSetGhostGeneratorWrap::FillOutputPortInformation(const Nan::Function
 	vtkDataSetGhostGenerator *native = (vtkDataSetGhostGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -210,6 +213,7 @@ void VtkDataSetGhostGeneratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataSetGhostGeneratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +229,7 @@ void VtkDataSetGhostGeneratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkDataSetGhostGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetGhostGeneratorWrap>(info.Holder());
 	vtkDataSetGhostGenerator *native = (vtkDataSetGhostGenerator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataSetGhostGenerator * r;
@@ -237,6 +241,7 @@ void VtkDataSetGhostGeneratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataSetGhostGeneratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

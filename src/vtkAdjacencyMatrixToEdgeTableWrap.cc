@@ -27,26 +27,27 @@ VtkAdjacencyMatrixToEdgeTableWrap::~VtkAdjacencyMatrixToEdgeTableWrap()
 
 void VtkAdjacencyMatrixToEdgeTableWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTableAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAdjacencyMatrixToEdgeTableWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAdjacencyMatrixToEdgeTable").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AdjacencyMatrixToEdgeTable").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAdjacencyMatrixToEdgeTable").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AdjacencyMatrixToEdgeTable").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAdjacencyMatrixToEdgeTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAdjacencyMatrixToEdgeTableWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAdjacencyMatrixToEdgeTableWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAdjacencyMatrixToEdgeTableWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkAdjacencyMatrixToEdgeTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetValueArrayName", SetValueArrayName);
 	Nan::SetPrototypeMethod(tpl, "setValueArrayName", SetValueArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAdjacencyMatrixToEdgeTableWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -171,6 +174,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkAdjacencyMatrixToEdgeTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +190,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkAdjacencyMatrixToEdgeTableWrap *wrapper = ObjectWrap::Unwrap<VtkAdjacencyMatrixToEdgeTableWrap>(info.Holder());
 	vtkAdjacencyMatrixToEdgeTable *native = (vtkAdjacencyMatrixToEdgeTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAdjacencyMatrixToEdgeTable * r;
@@ -198,6 +202,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAdjacencyMatrixToEdgeTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

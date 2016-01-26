@@ -27,26 +27,27 @@ VtkDataObjectTypesWrap::~VtkDataObjectTypesWrap()
 
 void VtkDataObjectTypesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataObjectTypesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataObjectTypes").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataObjectTypes").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataObjectTypes").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataObjectTypes").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataObjectTypesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataObjectTypesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataObjectTypesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataObjectTypesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkDataObjectTypesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataObjectTypesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -188,6 +191,7 @@ void VtkDataObjectTypesWrap::NewDataObject(const Nan::FunctionCallbackInfo<v8::V
 		r = native->NewDataObject(
 			*a0
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -210,6 +214,7 @@ void VtkDataObjectTypesWrap::NewDataObject(const Nan::FunctionCallbackInfo<v8::V
 		r = native->NewDataObject(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -235,6 +240,7 @@ void VtkDataObjectTypesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataObjectTypesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,7 +256,7 @@ void VtkDataObjectTypesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataObjectTypesWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTypesWrap>(info.Holder());
 	vtkDataObjectTypes *native = (vtkDataObjectTypes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataObjectTypes * r;
@@ -262,6 +268,7 @@ void VtkDataObjectTypesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataObjectTypesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

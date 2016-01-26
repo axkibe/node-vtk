@@ -32,26 +32,27 @@ VtkPolarAxesActorWrap::~VtkPolarAxesActorWrap()
 
 void VtkPolarAxesActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolarAxesActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolarAxesActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolarAxesActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolarAxesActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolarAxesActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolarAxesActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolarAxesActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolarAxesActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolarAxesActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoSubdividePolarAxisOff", AutoSubdividePolarAxisOff);
 	Nan::SetPrototypeMethod(tpl, "autoSubdividePolarAxisOff", AutoSubdividePolarAxisOff);
 
@@ -289,6 +290,8 @@ void VtkPolarAxesActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetViewAngleLODThreshold", SetViewAngleLODThreshold);
 	Nan::SetPrototypeMethod(tpl, "setViewAngleLODThreshold", SetViewAngleLODThreshold);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolarAxesActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -349,6 +352,7 @@ void VtkPolarAxesActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,6 +501,7 @@ void VtkPolarAxesActorWrap::GetPolarArcsProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPolarArcsProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -533,6 +538,7 @@ void VtkPolarAxesActorWrap::GetPolarAxisLabelTextProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetPolarAxisLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -555,6 +561,7 @@ void VtkPolarAxesActorWrap::GetPolarAxisProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPolarAxisProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -591,6 +598,7 @@ void VtkPolarAxesActorWrap::GetPolarAxisTitleTextProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetPolarAxisTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -683,6 +691,7 @@ void VtkPolarAxesActorWrap::GetRadialAxesProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetRadialAxesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -853,6 +862,7 @@ void VtkPolarAxesActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolarAxesActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1036,7 +1046,7 @@ void VtkPolarAxesActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1056,7 +1066,7 @@ void VtkPolarAxesActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1078,7 +1088,7 @@ void VtkPolarAxesActorWrap::RenderTranslucentPolygonalGeometry(const Nan::Functi
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1100,7 +1110,7 @@ void VtkPolarAxesActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolarAxesActor * r;
@@ -1112,6 +1122,7 @@ void VtkPolarAxesActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolarAxesActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1169,7 +1180,7 @@ void VtkPolarAxesActorWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1303,7 +1314,7 @@ void VtkPolarAxesActorWrap::SetPolarArcsProperty(const Nan::FunctionCallbackInfo
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1342,7 +1353,7 @@ void VtkPolarAxesActorWrap::SetPolarAxisLabelTextProperty(const Nan::FunctionCal
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1362,7 +1373,7 @@ void VtkPolarAxesActorWrap::SetPolarAxisProperty(const Nan::FunctionCallbackInfo
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1402,7 +1413,7 @@ void VtkPolarAxesActorWrap::SetPolarAxisTitleTextProperty(const Nan::FunctionCal
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1545,7 +1556,7 @@ void VtkPolarAxesActorWrap::SetRadialAxesProperty(const Nan::FunctionCallbackInf
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

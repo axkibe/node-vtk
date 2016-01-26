@@ -29,26 +29,27 @@ VtkTerrainDataPointPlacerWrap::~VtkTerrainDataPointPlacerWrap()
 
 void VtkTerrainDataPointPlacerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointPlacerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTerrainDataPointPlacerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTerrainDataPointPlacer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TerrainDataPointPlacer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTerrainDataPointPlacer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TerrainDataPointPlacer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTerrainDataPointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTerrainDataPointPlacerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTerrainDataPointPlacerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointPlacerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTerrainDataPointPlacerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddProp", AddProp);
 	Nan::SetPrototypeMethod(tpl, "addProp", AddProp);
 
@@ -76,6 +77,8 @@ void VtkTerrainDataPointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetHeightOffset", SetHeightOffset);
 	Nan::SetPrototypeMethod(tpl, "setHeightOffset", SetHeightOffset);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTerrainDataPointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -105,7 +108,7 @@ void VtkTerrainDataPointPlacerWrap::AddProp(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTerrainDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkTerrainDataPointPlacerWrap>(info.Holder());
 	vtkTerrainDataPointPlacer *native = (vtkTerrainDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -160,6 +163,7 @@ void VtkTerrainDataPointPlacerWrap::GetPropPicker(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPropPicker();
+		VtkPropPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,6 +208,7 @@ void VtkTerrainDataPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkTerrainDataPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -231,7 +236,7 @@ void VtkTerrainDataPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkTerrainDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkTerrainDataPointPlacerWrap>(info.Holder());
 	vtkTerrainDataPointPlacer *native = (vtkTerrainDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTerrainDataPointPlacer * r;
@@ -243,6 +248,7 @@ void VtkTerrainDataPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTerrainDataPointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

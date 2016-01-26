@@ -29,26 +29,27 @@ VtkExtractSelectedTreeWrap::~VtkExtractSelectedTreeWrap()
 
 void VtkExtractSelectedTreeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTreeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractSelectedTreeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractSelectedTree").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractSelectedTree").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractSelectedTree").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractSelectedTree").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractSelectedTreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractSelectedTreeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractSelectedTreeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTreeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractSelectedTreeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -67,6 +68,8 @@ void VtkExtractSelectedTreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractSelectedTreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -98,7 +101,7 @@ void VtkExtractSelectedTreeWrap::FillInputPortInformation(const Nan::FunctionCal
 	vtkExtractSelectedTree *native = (vtkExtractSelectedTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -165,6 +168,7 @@ void VtkExtractSelectedTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractSelectedTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +184,7 @@ void VtkExtractSelectedTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExtractSelectedTreeWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedTreeWrap>(info.Holder());
 	vtkExtractSelectedTree *native = (vtkExtractSelectedTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractSelectedTree * r;
@@ -192,6 +196,7 @@ void VtkExtractSelectedTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractSelectedTreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -210,7 +215,7 @@ void VtkExtractSelectedTreeWrap::SetSelectionConnection(const Nan::FunctionCallb
 {
 	VtkExtractSelectedTreeWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedTreeWrap>(info.Holder());
 	vtkExtractSelectedTree *native = (vtkExtractSelectedTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

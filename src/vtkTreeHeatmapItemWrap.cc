@@ -29,26 +29,27 @@ VtkTreeHeatmapItemWrap::~VtkTreeHeatmapItemWrap()
 
 void VtkTreeHeatmapItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContextItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTreeHeatmapItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTreeHeatmapItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TreeHeatmapItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTreeHeatmapItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TreeHeatmapItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTreeHeatmapItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTreeHeatmapItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTreeHeatmapItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTreeHeatmapItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -100,6 +101,8 @@ void VtkTreeHeatmapItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTreeColorArray", SetTreeColorArray);
 	Nan::SetPrototypeMethod(tpl, "setTreeColorArray", SetTreeColorArray);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTreeHeatmapItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -150,6 +153,7 @@ void VtkTreeHeatmapItemWrap::GetColumnTree(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetColumnTree();
+		VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,6 +190,7 @@ void VtkTreeHeatmapItemWrap::GetPrunedTree(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetPrunedTree();
+		VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,6 +213,7 @@ void VtkTreeHeatmapItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTable();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,6 +236,7 @@ void VtkTreeHeatmapItemWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTree();
+		VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,6 +281,7 @@ void VtkTreeHeatmapItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkTreeHeatmapItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,7 +333,7 @@ void VtkTreeHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
 	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTreeHeatmapItem * r;
@@ -337,6 +345,7 @@ void VtkTreeHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTreeHeatmapItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -355,7 +364,7 @@ void VtkTreeHeatmapItemWrap::SetColumnTree(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
 	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -394,7 +403,7 @@ void VtkTreeHeatmapItemWrap::SetTable(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
 	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -414,7 +423,7 @@ void VtkTreeHeatmapItemWrap::SetTree(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
 	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

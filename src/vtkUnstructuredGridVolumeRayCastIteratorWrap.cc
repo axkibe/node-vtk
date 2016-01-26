@@ -26,26 +26,27 @@ VtkUnstructuredGridVolumeRayCastIteratorWrap::~VtkUnstructuredGridVolumeRayCastI
 
 void VtkUnstructuredGridVolumeRayCastIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUnstructuredGridVolumeRayCastIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUnstructuredGridVolumeRayCastIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UnstructuredGridVolumeRayCastIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUnstructuredGridVolumeRayCastIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UnstructuredGridVolumeRayCastIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUnstructuredGridVolumeRayCastIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUnstructuredGridVolumeRayCastIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUnstructuredGridVolumeRayCastIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -64,6 +65,8 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::InitTpl(v8::Local<v8::Functio
 	Nan::SetPrototypeMethod(tpl, "SetBounds", SetBounds);
 	Nan::SetPrototypeMethod(tpl, "setBounds", SetBounds);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUnstructuredGridVolumeRayCastIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -159,6 +162,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::NewInstance(const Nan::Functi
 		return;
 	}
 	r = native->NewInstance();
+		VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -174,7 +178,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::SafeDownCast(const Nan::Funct
 {
 	VtkUnstructuredGridVolumeRayCastIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastIteratorWrap>(info.Holder());
 	vtkUnstructuredGridVolumeRayCastIterator *native = (vtkUnstructuredGridVolumeRayCastIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUnstructuredGridVolumeRayCastIterator * r;
@@ -186,6 +190,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::SafeDownCast(const Nan::Funct
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

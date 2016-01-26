@@ -28,26 +28,27 @@ VtkGenericGeometryFilterWrap::~VtkGenericGeometryFilterWrap()
 
 void VtkGenericGeometryFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericGeometryFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericGeometryFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericGeometryFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericGeometryFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericGeometryFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericGeometryFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericGeometryFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericGeometryFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CellClippingOff", CellClippingOff);
 	Nan::SetPrototypeMethod(tpl, "cellClippingOff", CellClippingOff);
 
@@ -132,6 +133,8 @@ void VtkGenericGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPointClipping", SetPointClipping);
 	Nan::SetPrototypeMethod(tpl, "setPointClipping", SetPointClipping);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericGeometryFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -270,6 +273,7 @@ void VtkGenericGeometryFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,6 +384,7 @@ void VtkGenericGeometryFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -443,7 +448,7 @@ void VtkGenericGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericGeometryFilter * r;
@@ -455,6 +460,7 @@ void VtkGenericGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -550,7 +556,7 @@ void VtkGenericGeometryFilterWrap::SetLocator(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

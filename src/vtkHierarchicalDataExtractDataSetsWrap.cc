@@ -27,26 +27,27 @@ VtkHierarchicalDataExtractDataSetsWrap::~VtkHierarchicalDataExtractDataSetsWrap(
 
 void VtkHierarchicalDataExtractDataSetsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExtractDataSetsWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractDataSetsWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHierarchicalDataExtractDataSetsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHierarchicalDataExtractDataSets").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HierarchicalDataExtractDataSets").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHierarchicalDataExtractDataSets").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HierarchicalDataExtractDataSets").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHierarchicalDataExtractDataSetsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHierarchicalDataExtractDataSetsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHierarchicalDataExtractDataSetsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtractDataSetsWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractDataSetsWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHierarchicalDataExtractDataSetsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkHierarchicalDataExtractDataSetsWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHierarchicalDataExtractDataSetsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkHierarchicalDataExtractDataSetsWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkHierarchicalDataExtractDataSetsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkHierarchicalDataExtractDataSetsWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkHierarchicalDataExtractDataSetsWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalDataExtractDataSetsWrap>(info.Holder());
 	vtkHierarchicalDataExtractDataSets *native = (vtkHierarchicalDataExtractDataSets *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHierarchicalDataExtractDataSets * r;
@@ -158,6 +162,7 @@ void VtkHierarchicalDataExtractDataSetsWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHierarchicalDataExtractDataSetsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

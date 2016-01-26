@@ -26,26 +26,27 @@ VtkGraphicsFactoryWrap::~VtkGraphicsFactoryWrap()
 
 void VtkGraphicsFactoryWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGraphicsFactoryWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGraphicsFactory").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GraphicsFactory").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGraphicsFactory").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GraphicsFactory").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGraphicsFactoryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGraphicsFactoryWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGraphicsFactoryWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGraphicsFactoryWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateInstance", CreateInstance);
 	Nan::SetPrototypeMethod(tpl, "createInstance", CreateInstance);
 
@@ -76,6 +77,8 @@ void VtkGraphicsFactoryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetUseMesaClasses", SetUseMesaClasses);
 	Nan::SetPrototypeMethod(tpl, "setUseMesaClasses", SetUseMesaClasses);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGraphicsFactoryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -117,6 +120,7 @@ void VtkGraphicsFactoryWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::
 		r = native->CreateInstance(
 			*a0
 		);
+			VtkObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -220,6 +224,7 @@ void VtkGraphicsFactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkGraphicsFactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +240,7 @@ void VtkGraphicsFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGraphicsFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkGraphicsFactoryWrap>(info.Holder());
 	vtkGraphicsFactory *native = (vtkGraphicsFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGraphicsFactory * r;
@@ -247,6 +252,7 @@ void VtkGraphicsFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGraphicsFactoryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

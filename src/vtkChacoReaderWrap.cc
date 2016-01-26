@@ -27,26 +27,27 @@ VtkChacoReaderWrap::~VtkChacoReaderWrap()
 
 void VtkChacoReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkChacoReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkChacoReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ChacoReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkChacoReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ChacoReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkChacoReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkChacoReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkChacoReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkChacoReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateEdgeWeightArraysOff", GenerateEdgeWeightArraysOff);
 	Nan::SetPrototypeMethod(tpl, "generateEdgeWeightArraysOff", GenerateEdgeWeightArraysOff);
 
@@ -140,6 +141,8 @@ void VtkChacoReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetGenerateVertexWeightArrays", SetGenerateVertexWeightArrays);
 	Nan::SetPrototypeMethod(tpl, "setGenerateVertexWeightArrays", SetGenerateVertexWeightArrays);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkChacoReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -518,6 +521,7 @@ void VtkChacoReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkChacoReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -533,7 +537,7 @@ void VtkChacoReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkChacoReader * r;
@@ -545,6 +549,7 @@ void VtkChacoReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkChacoReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

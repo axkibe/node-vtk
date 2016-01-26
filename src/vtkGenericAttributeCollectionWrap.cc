@@ -27,26 +27,27 @@ VtkGenericAttributeCollectionWrap::~VtkGenericAttributeCollectionWrap()
 
 void VtkGenericAttributeCollectionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericAttributeCollectionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericAttributeCollection").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericAttributeCollection").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericAttributeCollection").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericAttributeCollection").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericAttributeCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericAttributeCollectionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericAttributeCollectionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericAttributeCollectionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -116,6 +117,8 @@ void VtkGenericAttributeCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericAttributeCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -145,7 +148,7 @@ void VtkGenericAttributeCollectionWrap::DeepCopy(const Nan::FunctionCallbackInfo
 {
 	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
 	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeCollectionWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -226,6 +229,7 @@ void VtkGenericAttributeCollectionWrap::GetAttribute(const Nan::FunctionCallback
 		r = native->GetAttribute(
 			info[0]->Int32Value()
 		);
+			VtkGenericAttributeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -351,7 +355,7 @@ void VtkGenericAttributeCollectionWrap::InsertAttribute(const Nan::FunctionCallb
 	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericAttributeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGenericAttributeWrap *a1 = ObjectWrap::Unwrap<VtkGenericAttributeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -373,7 +377,7 @@ void VtkGenericAttributeCollectionWrap::InsertNextAttribute(const Nan::FunctionC
 {
 	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
 	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -436,6 +440,7 @@ void VtkGenericAttributeCollectionWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericAttributeCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -482,7 +487,7 @@ void VtkGenericAttributeCollectionWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
 	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericAttributeCollection * r;
@@ -494,6 +499,7 @@ void VtkGenericAttributeCollectionWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericAttributeCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -547,7 +553,7 @@ void VtkGenericAttributeCollectionWrap::ShallowCopy(const Nan::FunctionCallbackI
 {
 	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
 	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeCollectionWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

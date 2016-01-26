@@ -27,26 +27,27 @@ VtkForceDirectedLayoutStrategyWrap::~VtkForceDirectedLayoutStrategyWrap()
 
 void VtkForceDirectedLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkForceDirectedLayoutStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkForceDirectedLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ForceDirectedLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkForceDirectedLayoutStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ForceDirectedLayoutStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkForceDirectedLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkForceDirectedLayoutStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkForceDirectedLayoutStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkForceDirectedLayoutStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutomaticBoundsComputationOff", AutomaticBoundsComputationOff);
 	Nan::SetPrototypeMethod(tpl, "automaticBoundsComputationOff", AutomaticBoundsComputationOff);
 
@@ -155,6 +156,8 @@ void VtkForceDirectedLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "ThreeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 	Nan::SetPrototypeMethod(tpl, "threeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkForceDirectedLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -499,6 +502,7 @@ void VtkForceDirectedLayoutStrategyWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkForceDirectedLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -538,7 +542,7 @@ void VtkForceDirectedLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkForceDirectedLayoutStrategy * r;
@@ -550,6 +554,7 @@ void VtkForceDirectedLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkForceDirectedLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

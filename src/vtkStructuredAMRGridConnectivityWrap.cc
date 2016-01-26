@@ -27,26 +27,27 @@ VtkStructuredAMRGridConnectivityWrap::~VtkStructuredAMRGridConnectivityWrap()
 
 void VtkStructuredAMRGridConnectivityWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractGridConnectivityWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStructuredAMRGridConnectivityWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStructuredAMRGridConnectivity").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StructuredAMRGridConnectivity").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStructuredAMRGridConnectivity").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StructuredAMRGridConnectivity").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStructuredAMRGridConnectivityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStructuredAMRGridConnectivityWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStructuredAMRGridConnectivityWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractGridConnectivityWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStructuredAMRGridConnectivityWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeNeighbors", ComputeNeighbors);
 	Nan::SetPrototypeMethod(tpl, "computeNeighbors", ComputeNeighbors);
 
@@ -68,6 +69,8 @@ void VtkStructuredAMRGridConnectivityWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStructuredAMRGridConnectivityWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -192,6 +195,7 @@ void VtkStructuredAMRGridConnectivityWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkStructuredAMRGridConnectivityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,7 +211,7 @@ void VtkStructuredAMRGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
 	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStructuredAMRGridConnectivity * r;
@@ -219,6 +223,7 @@ void VtkStructuredAMRGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStructuredAMRGridConnectivityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

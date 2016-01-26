@@ -29,26 +29,27 @@ VtkAppendSelectionWrap::~VtkAppendSelectionWrap()
 
 void VtkAppendSelectionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSelectionAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAppendSelectionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAppendSelection").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AppendSelection").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAppendSelection").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AppendSelection").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAppendSelectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAppendSelectionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAppendSelectionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSelectionAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAppendSelectionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInputData", AddInputData);
 	Nan::SetPrototypeMethod(tpl, "addInputData", AddInputData);
 
@@ -100,6 +101,8 @@ void VtkAppendSelectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UserManagedInputsOn", UserManagedInputsOn);
 	Nan::SetPrototypeMethod(tpl, "userManagedInputsOn", UserManagedInputsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAppendSelectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -129,7 +132,7 @@ void VtkAppendSelectionWrap::AddInputData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAppendSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkAppendSelectionWrap>(info.Holder());
 	vtkAppendSelection *native = (vtkAppendSelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -212,6 +215,7 @@ void VtkAppendSelectionWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkSelectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -230,6 +234,7 @@ void VtkAppendSelectionWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
+		VtkSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,6 +293,7 @@ void VtkAppendSelectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkAppendSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +309,7 @@ void VtkAppendSelectionWrap::RemoveInputData(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAppendSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkAppendSelectionWrap>(info.Holder());
 	vtkAppendSelection *native = (vtkAppendSelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -323,7 +329,7 @@ void VtkAppendSelectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAppendSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkAppendSelectionWrap>(info.Holder());
 	vtkAppendSelection *native = (vtkAppendSelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAppendSelection * r;
@@ -335,6 +341,7 @@ void VtkAppendSelectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAppendSelectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -374,7 +381,7 @@ void VtkAppendSelectionWrap::SetInputConnectionByNumber(const Nan::FunctionCallb
 	vtkAppendSelection *native = (vtkAppendSelection *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

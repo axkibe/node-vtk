@@ -27,26 +27,27 @@ VtkWidgetCallbackMapperWrap::~VtkWidgetCallbackMapperWrap()
 
 void VtkWidgetCallbackMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWidgetCallbackMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWidgetCallbackMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WidgetCallbackMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWidgetCallbackMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WidgetCallbackMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWidgetCallbackMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWidgetCallbackMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWidgetCallbackMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWidgetCallbackMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkWidgetCallbackMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetEventTranslator", SetEventTranslator);
 	Nan::SetPrototypeMethod(tpl, "setEventTranslator", SetEventTranslator);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWidgetCallbackMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -115,6 +118,7 @@ void VtkWidgetCallbackMapperWrap::GetEventTranslator(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetEventTranslator();
+		VtkWidgetEventTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -159,6 +163,7 @@ void VtkWidgetCallbackMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkWidgetCallbackMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -174,7 +179,7 @@ void VtkWidgetCallbackMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkWidgetCallbackMapperWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetCallbackMapperWrap>(info.Holder());
 	vtkWidgetCallbackMapper *native = (vtkWidgetCallbackMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWidgetCallbackMapper * r;
@@ -186,6 +191,7 @@ void VtkWidgetCallbackMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWidgetCallbackMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +210,7 @@ void VtkWidgetCallbackMapperWrap::SetEventTranslator(const Nan::FunctionCallback
 {
 	VtkWidgetCallbackMapperWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetCallbackMapperWrap>(info.Holder());
 	vtkWidgetCallbackMapper *native = (vtkWidgetCallbackMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWidgetEventTranslatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWidgetEventTranslatorWrap *a0 = ObjectWrap::Unwrap<VtkWidgetEventTranslatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkDepthPeelingPassWrap::~VtkDepthPeelingPassWrap()
 
 void VtkDepthPeelingPassWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderPassWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDepthPeelingPassWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDepthPeelingPass").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DepthPeelingPass").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDepthPeelingPass").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DepthPeelingPass").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDepthPeelingPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDepthPeelingPassWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDepthPeelingPassWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderPassWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDepthPeelingPassWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -87,6 +88,8 @@ void VtkDepthPeelingPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTranslucentPass", SetTranslucentPass);
 	Nan::SetPrototypeMethod(tpl, "setTranslucentPass", SetTranslucentPass);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDepthPeelingPassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -193,6 +196,7 @@ void VtkDepthPeelingPassWrap::GetTranslucentPass(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetTranslucentPass();
+		VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,6 +241,7 @@ void VtkDepthPeelingPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkDepthPeelingPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +257,7 @@ void VtkDepthPeelingPassWrap::ReleaseGraphicsResources(const Nan::FunctionCallba
 {
 	VtkDepthPeelingPassWrap *wrapper = ObjectWrap::Unwrap<VtkDepthPeelingPassWrap>(info.Holder());
 	vtkDepthPeelingPass *native = (vtkDepthPeelingPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -272,7 +277,7 @@ void VtkDepthPeelingPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDepthPeelingPassWrap *wrapper = ObjectWrap::Unwrap<VtkDepthPeelingPassWrap>(info.Holder());
 	vtkDepthPeelingPass *native = (vtkDepthPeelingPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDepthPeelingPass * r;
@@ -284,6 +289,7 @@ void VtkDepthPeelingPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDepthPeelingPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -340,7 +346,7 @@ void VtkDepthPeelingPassWrap::SetTranslucentPass(const Nan::FunctionCallbackInfo
 {
 	VtkDepthPeelingPassWrap *wrapper = ObjectWrap::Unwrap<VtkDepthPeelingPassWrap>(info.Holder());
 	vtkDepthPeelingPass *native = (vtkDepthPeelingPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

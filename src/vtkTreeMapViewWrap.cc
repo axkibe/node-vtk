@@ -28,26 +28,27 @@ VtkTreeMapViewWrap::~VtkTreeMapViewWrap()
 
 void VtkTreeMapViewWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTreeAreaViewWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAreaViewWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTreeMapViewWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTreeMapView").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TreeMapView").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTreeMapView").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TreeMapView").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTreeMapViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTreeMapViewWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTreeMapViewWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTreeAreaViewWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAreaViewWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTreeMapViewWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkTreeMapViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategyToSquarify", SetLayoutStrategyToSquarify);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategyToSquarify", SetLayoutStrategyToSquarify);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTreeMapViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -147,6 +150,7 @@ void VtkTreeMapViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkTreeMapViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,7 +166,7 @@ void VtkTreeMapViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTreeMapViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapViewWrap>(info.Holder());
 	vtkTreeMapView *native = (vtkTreeMapView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTreeMapView * r;
@@ -174,6 +178,7 @@ void VtkTreeMapViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTreeMapViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,7 +237,7 @@ void VtkTreeMapViewWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 		);
 		return;
 	}
-	else if(info.Length() > 0 && info[0]->IsObject())
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

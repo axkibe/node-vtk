@@ -27,26 +27,27 @@ VtkOutlineFilterWrap::~VtkOutlineFilterWrap()
 
 void VtkOutlineFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOutlineFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOutlineFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OutlineFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOutlineFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OutlineFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOutlineFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOutlineFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOutlineFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOutlineFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateFacesOff", GenerateFacesOff);
 	Nan::SetPrototypeMethod(tpl, "generateFacesOff", GenerateFacesOff);
 
@@ -71,6 +72,8 @@ void VtkOutlineFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetGenerateFaces", SetGenerateFaces);
 	Nan::SetPrototypeMethod(tpl, "setGenerateFaces", SetGenerateFaces);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOutlineFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -181,6 +184,7 @@ void VtkOutlineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkOutlineFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +200,7 @@ void VtkOutlineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOutlineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkOutlineFilterWrap>(info.Holder());
 	vtkOutlineFilter *native = (vtkOutlineFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOutlineFilter * r;
@@ -208,6 +212,7 @@ void VtkOutlineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOutlineFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -30,26 +30,27 @@ VtkPolyDataPainterWrap::~VtkPolyDataPainterWrap()
 
 void VtkPolyDataPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BUILD_NORMALS", BUILD_NORMALS);
 
 	Nan::SetPrototypeMethod(tpl, "DATA_ARRAY_TO_VERTEX_ATTRIBUTE", DATA_ARRAY_TO_VERTEX_ATTRIBUTE);
@@ -76,6 +77,8 @@ void VtkPolyDataPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -112,6 +115,7 @@ void VtkPolyDataPainterWrap::BUILD_NORMALS(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->BUILD_NORMALS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -134,6 +138,7 @@ void VtkPolyDataPainterWrap::DATA_ARRAY_TO_VERTEX_ATTRIBUTE(const Nan::FunctionC
 		return;
 	}
 	r = native->DATA_ARRAY_TO_VERTEX_ATTRIBUTE();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -156,6 +161,7 @@ void VtkPolyDataPainterWrap::DISABLE_SCALAR_COLOR(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->DISABLE_SCALAR_COLOR();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,6 +198,7 @@ void VtkPolyDataPainterWrap::GetInputAsPolyData(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetInputAsPolyData();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,6 +221,7 @@ void VtkPolyDataPainterWrap::GetOutputAsPolyData(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetOutputAsPolyData();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,6 +266,7 @@ void VtkPolyDataPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,6 +289,7 @@ void VtkPolyDataPainterWrap::SHADER_DEVICE_ADAPTOR(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->SHADER_DEVICE_ADAPTOR();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,7 +305,7 @@ void VtkPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPainterWrap>(info.Holder());
 	vtkPolyDataPainter *native = (vtkPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataPainter * r;
@@ -307,6 +317,7 @@ void VtkPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -32,26 +32,27 @@ VtkBarChartActorWrap::~VtkBarChartActorWrap()
 
 void VtkBarChartActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBarChartActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBarChartActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BarChartActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBarChartActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BarChartActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBarChartActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBarChartActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBarChartActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBarChartActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBarLabel", GetBarLabel);
 	Nan::SetPrototypeMethod(tpl, "getBarLabel", GetBarLabel);
 
@@ -157,6 +158,8 @@ void VtkBarChartActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TitleVisibilityOn", TitleVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "titleVisibilityOn", TitleVisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBarChartActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -228,6 +231,7 @@ void VtkBarChartActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,6 +254,7 @@ void VtkBarChartActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -286,6 +291,7 @@ void VtkBarChartActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLegendActor();
+		VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -336,6 +342,7 @@ void VtkBarChartActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -470,6 +477,7 @@ void VtkBarChartActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkBarChartActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -485,7 +493,7 @@ void VtkBarChartActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackI
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -505,7 +513,7 @@ void VtkBarChartActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -527,7 +535,7 @@ void VtkBarChartActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -549,7 +557,7 @@ void VtkBarChartActorWrap::RenderTranslucentPolygonalGeometry(const Nan::Functio
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -571,7 +579,7 @@ void VtkBarChartActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBarChartActor * r;
@@ -583,6 +591,7 @@ void VtkBarChartActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBarChartActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -656,7 +665,7 @@ void VtkBarChartActorWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -676,7 +685,7 @@ void VtkBarChartActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo<
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -754,7 +763,7 @@ void VtkBarChartActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

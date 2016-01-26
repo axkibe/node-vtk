@@ -29,26 +29,27 @@ VtkAbstractPickerWrap::~VtkAbstractPickerWrap()
 
 void VtkAbstractPickerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAbstractPickerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAbstractPicker").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AbstractPicker").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAbstractPicker").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AbstractPicker").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAbstractPickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAbstractPickerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAbstractPickerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAbstractPickerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddPickList", AddPickList);
 	Nan::SetPrototypeMethod(tpl, "addPickList", AddPickList);
 
@@ -91,6 +92,8 @@ void VtkAbstractPickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPickFromList", SetPickFromList);
 	Nan::SetPrototypeMethod(tpl, "setPickFromList", SetPickFromList);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAbstractPickerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,7 +123,7 @@ void VtkAbstractPickerWrap::AddPickList(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
 	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -140,7 +143,7 @@ void VtkAbstractPickerWrap::DeletePickList(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
 	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -195,6 +198,7 @@ void VtkAbstractPickerWrap::GetPickList(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetPickList();
+		VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,6 +221,7 @@ void VtkAbstractPickerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,6 +278,7 @@ void VtkAbstractPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkAbstractPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +300,7 @@ void VtkAbstractPickerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkRendererWrap *a3 = ObjectWrap::Unwrap<VtkRendererWrap>(info[3]->ToObject());
 					int r;
@@ -346,7 +352,7 @@ void VtkAbstractPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
 	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAbstractPicker * r;
@@ -358,6 +364,7 @@ void VtkAbstractPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAbstractPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

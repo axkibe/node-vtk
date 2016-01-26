@@ -29,26 +29,27 @@ VtkTanglegramItemWrap::~VtkTanglegramItemWrap()
 
 void VtkTanglegramItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContextItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTanglegramItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTanglegramItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TanglegramItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTanglegramItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TanglegramItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTanglegramItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTanglegramItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTanglegramItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTanglegramItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -103,6 +104,8 @@ void VtkTanglegramItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTree2Label", SetTree2Label);
 	Nan::SetPrototypeMethod(tpl, "setTree2Label", SetTree2Label);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTanglegramItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -195,6 +198,7 @@ void VtkTanglegramItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTable();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,6 +271,7 @@ void VtkTanglegramItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkTanglegramItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,7 +287,7 @@ void VtkTanglegramItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
 	vtkTanglegramItem *native = (vtkTanglegramItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTanglegramItem * r;
@@ -294,6 +299,7 @@ void VtkTanglegramItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTanglegramItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -369,7 +375,7 @@ void VtkTanglegramItemWrap::SetTable(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
 	vtkTanglegramItem *native = (vtkTanglegramItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -389,7 +395,7 @@ void VtkTanglegramItemWrap::SetTree1(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
 	vtkTanglegramItem *native = (vtkTanglegramItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -429,7 +435,7 @@ void VtkTanglegramItemWrap::SetTree2(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTanglegramItemWrap *wrapper = ObjectWrap::Unwrap<VtkTanglegramItemWrap>(info.Holder());
 	vtkTanglegramItem *native = (vtkTanglegramItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

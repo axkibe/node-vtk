@@ -27,26 +27,27 @@ VtkMoleculeReaderBaseWrap::~VtkMoleculeReaderBaseWrap()
 
 void VtkMoleculeReaderBaseWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMoleculeReaderBaseWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMoleculeReaderBase").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MoleculeReaderBase").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMoleculeReaderBase").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MoleculeReaderBase").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMoleculeReaderBaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMoleculeReaderBaseWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMoleculeReaderBaseWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMoleculeReaderBaseWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBScale", GetBScale);
 	Nan::SetPrototypeMethod(tpl, "getBScale", GetBScale);
 
@@ -80,6 +81,8 @@ void VtkMoleculeReaderBaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetHBScale", SetHBScale);
 	Nan::SetPrototypeMethod(tpl, "setHBScale", SetHBScale);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMoleculeReaderBaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -208,6 +211,7 @@ void VtkMoleculeReaderBaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkMoleculeReaderBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +227,7 @@ void VtkMoleculeReaderBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMoleculeReaderBaseWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeReaderBaseWrap>(info.Holder());
 	vtkMoleculeReaderBase *native = (vtkMoleculeReaderBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMoleculeReaderBase * r;
@@ -235,6 +239,7 @@ void VtkMoleculeReaderBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMoleculeReaderBaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

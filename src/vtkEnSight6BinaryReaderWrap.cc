@@ -27,26 +27,27 @@ VtkEnSight6BinaryReaderWrap::~VtkEnSight6BinaryReaderWrap()
 
 void VtkEnSight6BinaryReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkEnSightReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEnSightReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEnSight6BinaryReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEnSight6BinaryReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EnSight6BinaryReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEnSight6BinaryReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EnSight6BinaryReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEnSight6BinaryReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEnSight6BinaryReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEnSight6BinaryReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkEnSightReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEnSightReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEnSight6BinaryReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkEnSight6BinaryReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEnSight6BinaryReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkEnSight6BinaryReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkEnSight6BinaryReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkEnSight6BinaryReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkEnSight6BinaryReaderWrap *wrapper = ObjectWrap::Unwrap<VtkEnSight6BinaryReaderWrap>(info.Holder());
 	vtkEnSight6BinaryReader *native = (vtkEnSight6BinaryReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEnSight6BinaryReader * r;
@@ -158,6 +162,7 @@ void VtkEnSight6BinaryReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEnSight6BinaryReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

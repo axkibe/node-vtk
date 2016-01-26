@@ -29,26 +29,27 @@ VtkExtractSelectedFrustumWrap::~VtkExtractSelectedFrustumWrap()
 
 void VtkExtractSelectedFrustumWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExtractSelectionBaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractSelectionBaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractSelectedFrustumWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractSelectedFrustum").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractSelectedFrustum").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractSelectedFrustum").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractSelectedFrustum").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractSelectedFrustumWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractSelectedFrustumWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractSelectedFrustumWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtractSelectionBaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractSelectionBaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractSelectedFrustumWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -106,6 +107,8 @@ void VtkExtractSelectedFrustumWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShowBoundsOn", ShowBoundsOn);
 	Nan::SetPrototypeMethod(tpl, "showBoundsOn", ShowBoundsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractSelectedFrustumWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -156,6 +159,7 @@ void VtkExtractSelectedFrustumWrap::GetClipPoints(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetClipPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,6 +210,7 @@ void VtkExtractSelectedFrustumWrap::GetFrustum(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetFrustum();
+		VtkPlanesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,6 +307,7 @@ void VtkExtractSelectedFrustumWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractSelectedFrustumWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,7 +323,7 @@ void VtkExtractSelectedFrustumWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkExtractSelectedFrustumWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedFrustumWrap>(info.Holder());
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractSelectedFrustum * r;
@@ -329,6 +335,7 @@ void VtkExtractSelectedFrustumWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractSelectedFrustumWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -385,7 +392,7 @@ void VtkExtractSelectedFrustumWrap::SetFrustum(const Nan::FunctionCallbackInfo<v
 {
 	VtkExtractSelectedFrustumWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedFrustumWrap>(info.Holder());
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

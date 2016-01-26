@@ -28,26 +28,27 @@ VtkPlanesIntersectionWrap::~VtkPlanesIntersectionWrap()
 
 void VtkPlanesIntersectionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPlanesWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlanesWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPlanesIntersectionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPlanesIntersection").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PlanesIntersection").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPlanesIntersection").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PlanesIntersection").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPlanesIntersectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPlanesIntersectionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPlanesIntersectionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPlanesWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlanesWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPlanesIntersectionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Convert3DCell", Convert3DCell);
 	Nan::SetPrototypeMethod(tpl, "convert3DCell", Convert3DCell);
 
@@ -60,6 +61,8 @@ void VtkPlanesIntersectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRegionVertices", SetRegionVertices);
 	Nan::SetPrototypeMethod(tpl, "setRegionVertices", SetRegionVertices);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPlanesIntersectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -89,7 +92,7 @@ void VtkPlanesIntersectionWrap::Convert3DCell(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPlanesIntersectionWrap *wrapper = ObjectWrap::Unwrap<VtkPlanesIntersectionWrap>(info.Holder());
 	vtkPlanesIntersection *native = (vtkPlanesIntersection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		vtkPlanesIntersection * r;
@@ -101,6 +104,7 @@ void VtkPlanesIntersectionWrap::Convert3DCell(const Nan::FunctionCallbackInfo<v8
 		r = native->Convert3DCell(
 			(vtkCell *) a0->native.GetPointer()
 		);
+			VtkPlanesIntersectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -133,7 +137,7 @@ void VtkPlanesIntersectionWrap::IntersectsRegion(const Nan::FunctionCallbackInfo
 {
 	VtkPlanesIntersectionWrap *wrapper = ObjectWrap::Unwrap<VtkPlanesIntersectionWrap>(info.Holder());
 	vtkPlanesIntersection *native = (vtkPlanesIntersection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		int r;
@@ -155,7 +159,7 @@ void VtkPlanesIntersectionWrap::SetRegionVertices(const Nan::FunctionCallbackInf
 {
 	VtkPlanesIntersectionWrap *wrapper = ObjectWrap::Unwrap<VtkPlanesIntersectionWrap>(info.Holder());
 	vtkPlanesIntersection *native = (vtkPlanesIntersection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

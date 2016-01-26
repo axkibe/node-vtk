@@ -32,26 +32,27 @@ VtkLogoRepresentationWrap::~VtkLogoRepresentationWrap()
 
 void VtkLogoRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkBorderRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLogoRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLogoRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LogoRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLogoRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LogoRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLogoRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLogoRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLogoRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkBorderRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLogoRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -88,6 +89,8 @@ void VtkLogoRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetImageProperty", SetImageProperty);
 	Nan::SetPrototypeMethod(tpl, "setImageProperty", SetImageProperty);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLogoRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -129,7 +132,7 @@ void VtkLogoRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLogoRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLogoRepresentationWrap>(info.Holder());
 	vtkLogoRepresentation *native = (vtkLogoRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -170,6 +173,7 @@ void VtkLogoRepresentationWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetImage();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,6 +196,7 @@ void VtkLogoRepresentationWrap::GetImageProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetImageProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,6 +241,7 @@ void VtkLogoRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkLogoRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,7 +257,7 @@ void VtkLogoRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 {
 	VtkLogoRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLogoRepresentationWrap>(info.Holder());
 	vtkLogoRepresentation *native = (vtkLogoRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -271,7 +277,7 @@ void VtkLogoRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLogoRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLogoRepresentationWrap>(info.Holder());
 	vtkLogoRepresentation *native = (vtkLogoRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -293,7 +299,7 @@ void VtkLogoRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLogoRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLogoRepresentationWrap>(info.Holder());
 	vtkLogoRepresentation *native = (vtkLogoRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLogoRepresentation * r;
@@ -305,6 +311,7 @@ void VtkLogoRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLogoRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -323,7 +330,7 @@ void VtkLogoRepresentationWrap::SetImage(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLogoRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLogoRepresentationWrap>(info.Holder());
 	vtkLogoRepresentation *native = (vtkLogoRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -343,7 +350,7 @@ void VtkLogoRepresentationWrap::SetImageProperty(const Nan::FunctionCallbackInfo
 {
 	VtkLogoRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLogoRepresentationWrap>(info.Holder());
 	vtkLogoRepresentation *native = (vtkLogoRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -31,26 +31,27 @@ VtkAxisFollowerWrap::~VtkAxisFollowerWrap()
 
 void VtkAxisFollowerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkFollowerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFollowerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAxisFollowerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAxisFollower").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AxisFollower").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAxisFollower").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AxisFollower").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAxisFollowerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAxisFollowerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAxisFollowerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkFollowerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFollowerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAxisFollowerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoCenterOff", AutoCenterOff);
 	Nan::SetPrototypeMethod(tpl, "autoCenterOff", AutoCenterOff);
 
@@ -138,6 +139,8 @@ void VtkAxisFollowerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAxisFollowerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -191,7 +194,7 @@ void VtkAxisFollowerWrap::ComputeTransformMatrix(const Nan::FunctionCallbackInfo
 {
 	VtkAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkAxisFollowerWrap>(info.Holder());
 	vtkAxisFollower *native = (vtkAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -232,6 +235,7 @@ void VtkAxisFollowerWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetAxis();
+		VtkAxisActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -416,6 +420,7 @@ void VtkAxisFollowerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkAxisFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -431,7 +436,7 @@ void VtkAxisFollowerWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkAxisFollowerWrap>(info.Holder());
 	vtkAxisFollower *native = (vtkAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -451,7 +456,7 @@ void VtkAxisFollowerWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v
 {
 	VtkAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkAxisFollowerWrap>(info.Holder());
 	vtkAxisFollower *native = (vtkAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -473,7 +478,7 @@ void VtkAxisFollowerWrap::RenderTranslucentPolygonalGeometry(const Nan::Function
 {
 	VtkAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkAxisFollowerWrap>(info.Holder());
 	vtkAxisFollower *native = (vtkAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -495,7 +500,7 @@ void VtkAxisFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkAxisFollowerWrap>(info.Holder());
 	vtkAxisFollower *native = (vtkAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAxisFollower * r;
@@ -507,6 +512,7 @@ void VtkAxisFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAxisFollowerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -544,7 +550,7 @@ void VtkAxisFollowerWrap::SetAxis(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkAxisFollowerWrap>(info.Holder());
 	vtkAxisFollower *native = (vtkAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAxisActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAxisActorWrap *a0 = ObjectWrap::Unwrap<VtkAxisActorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -659,7 +665,7 @@ void VtkAxisFollowerWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkAxisFollowerWrap>(info.Holder());
 	vtkAxisFollower *native = (vtkAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

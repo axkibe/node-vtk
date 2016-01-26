@@ -28,26 +28,27 @@ VtkXMLUnstructuredGridWriterWrap::~VtkXMLUnstructuredGridWriterWrap()
 
 void VtkXMLUnstructuredGridWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLUnstructuredDataWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLUnstructuredDataWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLUnstructuredGridWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLUnstructuredGridWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLUnstructuredGridWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLUnstructuredGridWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLUnstructuredGridWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLUnstructuredGridWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLUnstructuredGridWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLUnstructuredGridWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLUnstructuredDataWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLUnstructuredDataWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLUnstructuredGridWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkXMLUnstructuredGridWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLUnstructuredGridWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -130,6 +133,7 @@ void VtkXMLUnstructuredGridWriterWrap::GetInput(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetInput();
+		VtkUnstructuredGridBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -174,6 +178,7 @@ void VtkXMLUnstructuredGridWriterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLUnstructuredGridWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +194,7 @@ void VtkXMLUnstructuredGridWriterWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkXMLUnstructuredGridWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLUnstructuredGridWriterWrap>(info.Holder());
 	vtkXMLUnstructuredGridWriter *native = (vtkXMLUnstructuredGridWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLUnstructuredGridWriter * r;
@@ -201,6 +206,7 @@ void VtkXMLUnstructuredGridWriterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLUnstructuredGridWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

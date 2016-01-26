@@ -27,26 +27,27 @@ VtkTreeOrbitLayoutStrategyWrap::~VtkTreeOrbitLayoutStrategyWrap()
 
 void VtkTreeOrbitLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTreeOrbitLayoutStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTreeOrbitLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TreeOrbitLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTreeOrbitLayoutStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TreeOrbitLayoutStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTreeOrbitLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTreeOrbitLayoutStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTreeOrbitLayoutStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTreeOrbitLayoutStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetChildRadiusFactor", GetChildRadiusFactor);
 	Nan::SetPrototypeMethod(tpl, "getChildRadiusFactor", GetChildRadiusFactor);
 
@@ -86,6 +87,8 @@ void VtkTreeOrbitLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetLogSpacingValue", SetLogSpacingValue);
 	Nan::SetPrototypeMethod(tpl, "setLogSpacingValue", SetLogSpacingValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTreeOrbitLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -240,6 +243,7 @@ void VtkTreeOrbitLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkTreeOrbitLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,7 +259,7 @@ void VtkTreeOrbitLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkTreeOrbitLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkTreeOrbitLayoutStrategyWrap>(info.Holder());
 	vtkTreeOrbitLayoutStrategy *native = (vtkTreeOrbitLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTreeOrbitLayoutStrategy * r;
@@ -267,6 +271,7 @@ void VtkTreeOrbitLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTreeOrbitLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

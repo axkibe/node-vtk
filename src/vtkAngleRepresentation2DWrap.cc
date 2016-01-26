@@ -30,26 +30,27 @@ VtkAngleRepresentation2DWrap::~VtkAngleRepresentation2DWrap()
 
 void VtkAngleRepresentation2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAngleRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAngleRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAngleRepresentation2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAngleRepresentation2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AngleRepresentation2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAngleRepresentation2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AngleRepresentation2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAngleRepresentation2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAngleRepresentation2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAngleRepresentation2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAngleRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAngleRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAngleRepresentation2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -83,6 +84,8 @@ void VtkAngleRepresentation2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAngleRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -145,6 +148,7 @@ void VtkAngleRepresentation2DWrap::GetArc(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetArc();
+		VtkLeaderActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,6 +185,7 @@ void VtkAngleRepresentation2DWrap::GetRay1(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetRay1();
+		VtkLeaderActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,6 +208,7 @@ void VtkAngleRepresentation2DWrap::GetRay2(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetRay2();
+		VtkLeaderActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -247,6 +253,7 @@ void VtkAngleRepresentation2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkAngleRepresentation2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +269,7 @@ void VtkAngleRepresentation2DWrap::ReleaseGraphicsResources(const Nan::FunctionC
 {
 	VtkAngleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation2DWrap>(info.Holder());
 	vtkAngleRepresentation2D *native = (vtkAngleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -282,7 +289,7 @@ void VtkAngleRepresentation2DWrap::RenderOverlay(const Nan::FunctionCallbackInfo
 {
 	VtkAngleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation2DWrap>(info.Holder());
 	vtkAngleRepresentation2D *native = (vtkAngleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -304,7 +311,7 @@ void VtkAngleRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkAngleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation2DWrap>(info.Holder());
 	vtkAngleRepresentation2D *native = (vtkAngleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAngleRepresentation2D * r;
@@ -316,6 +323,7 @@ void VtkAngleRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAngleRepresentation2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

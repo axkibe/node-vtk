@@ -28,26 +28,27 @@ VtkOrientationMarkerWidgetWrap::~VtkOrientationMarkerWidgetWrap()
 
 void VtkOrientationMarkerWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorObserverWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOrientationMarkerWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOrientationMarkerWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OrientationMarkerWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOrientationMarkerWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OrientationMarkerWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOrientationMarkerWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOrientationMarkerWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOrientationMarkerWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorObserverWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOrientationMarkerWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -99,6 +100,8 @@ void VtkOrientationMarkerWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
 	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOrientationMarkerWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -163,6 +166,7 @@ void VtkOrientationMarkerWidgetWrap::GetOrientationMarker(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetOrientationMarker();
+		VtkPropWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,6 +277,7 @@ void VtkOrientationMarkerWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkOrientationMarkerWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,7 +293,7 @@ void VtkOrientationMarkerWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkOrientationMarkerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkOrientationMarkerWidgetWrap>(info.Holder());
 	vtkOrientationMarkerWidget *native = (vtkOrientationMarkerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOrientationMarkerWidget * r;
@@ -300,6 +305,7 @@ void VtkOrientationMarkerWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOrientationMarkerWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -356,7 +362,7 @@ void VtkOrientationMarkerWidgetWrap::SetOrientationMarker(const Nan::FunctionCal
 {
 	VtkOrientationMarkerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkOrientationMarkerWidgetWrap>(info.Holder());
 	vtkOrientationMarkerWidget *native = (vtkOrientationMarkerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -30,26 +30,27 @@ VtkResliceCursorPickerWrap::~VtkResliceCursorPickerWrap()
 
 void VtkResliceCursorPickerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPickerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPickerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkResliceCursorPickerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkResliceCursorPicker").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ResliceCursorPicker").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkResliceCursorPicker").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ResliceCursorPicker").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkResliceCursorPickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkResliceCursorPickerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkResliceCursorPickerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPickerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPickerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkResliceCursorPickerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -83,6 +84,8 @@ void VtkResliceCursorPickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTransformMatrix", SetTransformMatrix);
 	Nan::SetPrototypeMethod(tpl, "setTransformMatrix", SetTransformMatrix);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkResliceCursorPickerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -175,6 +178,7 @@ void VtkResliceCursorPickerWrap::GetResliceCursorAlgorithm(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetResliceCursorAlgorithm();
+		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,6 +223,7 @@ void VtkResliceCursorPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkResliceCursorPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +245,7 @@ void VtkResliceCursorPickerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkRendererWrap *a3 = ObjectWrap::Unwrap<VtkRendererWrap>(info[3]->ToObject());
 					int r;
@@ -268,7 +273,7 @@ void VtkResliceCursorPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkResliceCursorPickerWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPickerWrap>(info.Holder());
 	vtkResliceCursorPicker *native = (vtkResliceCursorPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkResliceCursorPicker * r;
@@ -280,6 +285,7 @@ void VtkResliceCursorPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkResliceCursorPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -298,7 +304,7 @@ void VtkResliceCursorPickerWrap::SetResliceCursorAlgorithm(const Nan::FunctionCa
 {
 	VtkResliceCursorPickerWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPickerWrap>(info.Holder());
 	vtkResliceCursorPicker *native = (vtkResliceCursorPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkResliceCursorPolyDataAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkResliceCursorPolyDataAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -318,7 +324,7 @@ void VtkResliceCursorPickerWrap::SetTransformMatrix(const Nan::FunctionCallbackI
 {
 	VtkResliceCursorPickerWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPickerWrap>(info.Holder());
 	vtkResliceCursorPicker *native = (vtkResliceCursorPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)

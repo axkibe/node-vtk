@@ -27,26 +27,27 @@ VtkThreadedImageAlgorithmWrap::~VtkThreadedImageAlgorithmWrap()
 
 void VtkThreadedImageAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkThreadedImageAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkThreadedImageAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ThreadedImageAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkThreadedImageAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ThreadedImageAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkThreadedImageAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkThreadedImageAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkThreadedImageAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkThreadedImageAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkThreadedImageAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfThreads", SetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfThreads", SetNumberOfThreads);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkThreadedImageAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -185,6 +188,7 @@ void VtkThreadedImageAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkThreadedImageAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +204,7 @@ void VtkThreadedImageAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkThreadedImageAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedImageAlgorithmWrap>(info.Holder());
 	vtkThreadedImageAlgorithm *native = (vtkThreadedImageAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkThreadedImageAlgorithm * r;
@@ -212,6 +216,7 @@ void VtkThreadedImageAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkThreadedImageAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

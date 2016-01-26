@@ -30,26 +30,27 @@ VtkContextSceneWrap::~VtkContextSceneWrap()
 
 void VtkContextSceneWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkContextSceneWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkContextScene").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ContextScene").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkContextScene").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ContextScene").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkContextSceneWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkContextSceneWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkContextSceneWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkContextSceneWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClearItems", ClearItems);
 	Nan::SetPrototypeMethod(tpl, "clearItems", ClearItems);
 
@@ -107,6 +108,8 @@ void VtkContextSceneWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkContextSceneWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -155,6 +158,7 @@ void VtkContextSceneWrap::GetAnnotationLink(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAnnotationLink();
+		VtkAnnotationLinkWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,6 +181,7 @@ void VtkContextSceneWrap::GetBufferId(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetBufferId();
+		VtkAbstractContextBufferIdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,6 +246,7 @@ void VtkContextSceneWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetTransform();
+		VtkTransform2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,6 +319,7 @@ void VtkContextSceneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkContextSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -340,7 +347,7 @@ void VtkContextSceneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkContextScene * r;
@@ -352,6 +359,7 @@ void VtkContextSceneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkContextSceneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -394,7 +402,7 @@ void VtkContextSceneWrap::SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationLinkWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationLinkWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationLinkWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -437,7 +445,7 @@ void VtkContextSceneWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -457,7 +465,7 @@ void VtkContextSceneWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransform2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransform2DWrap *a0 = ObjectWrap::Unwrap<VtkTransform2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

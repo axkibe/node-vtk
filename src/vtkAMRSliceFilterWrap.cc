@@ -29,26 +29,27 @@ VtkAMRSliceFilterWrap::~VtkAMRSliceFilterWrap()
 
 void VtkAMRSliceFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkOverlappingAMRAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOverlappingAMRAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMRSliceFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMRSliceFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMRSliceFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMRSliceFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMRSliceFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMRSliceFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMRSliceFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMRSliceFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkOverlappingAMRAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOverlappingAMRAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMRSliceFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EnablePrefetchingOff", EnablePrefetchingOff);
 	Nan::SetPrototypeMethod(tpl, "enablePrefetchingOff", EnablePrefetchingOff);
 
@@ -115,6 +116,8 @@ void VtkAMRSliceFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOffSetFromOrigin", SetOffSetFromOrigin);
 	Nan::SetPrototypeMethod(tpl, "setOffSetFromOrigin", SetOffSetFromOrigin);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMRSliceFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -170,7 +173,7 @@ void VtkAMRSliceFilterWrap::FillInputPortInformation(const Nan::FunctionCallback
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -196,7 +199,7 @@ void VtkAMRSliceFilterWrap::FillOutputPortInformation(const Nan::FunctionCallbac
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -265,6 +268,7 @@ void VtkAMRSliceFilterWrap::GetController(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -379,6 +383,7 @@ void VtkAMRSliceFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMRSliceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,7 +399,7 @@ void VtkAMRSliceFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAMRSliceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRSliceFilterWrap>(info.Holder());
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMRSliceFilter * r;
@@ -406,6 +411,7 @@ void VtkAMRSliceFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMRSliceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -424,7 +430,7 @@ void VtkAMRSliceFilterWrap::SetController(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAMRSliceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRSliceFilterWrap>(info.Holder());
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

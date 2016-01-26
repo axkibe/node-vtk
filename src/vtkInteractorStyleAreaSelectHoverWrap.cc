@@ -29,26 +29,27 @@ VtkInteractorStyleAreaSelectHoverWrap::~VtkInteractorStyleAreaSelectHoverWrap()
 
 void VtkInteractorStyleAreaSelectHoverWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleRubberBand2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleRubberBand2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleAreaSelectHoverWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyleAreaSelectHover").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyleAreaSelectHover").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyleAreaSelectHover").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyleAreaSelectHover").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleAreaSelectHoverWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleAreaSelectHoverWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleAreaSelectHoverWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleRubberBand2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleRubberBand2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleAreaSelectHoverWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -94,6 +95,8 @@ void VtkInteractorStyleAreaSelectHoverWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleAreaSelectHoverWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -172,6 +175,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::GetLayout(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetLayout();
+		VtkAreaLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,6 +220,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleAreaSelectHoverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +248,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyleAreaSelectHover * r;
@@ -255,6 +260,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleAreaSelectHoverWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -319,7 +325,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetInteractor(const Nan::FunctionCal
 {
 	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -359,7 +365,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetLayout(const Nan::FunctionCallbac
 {
 	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

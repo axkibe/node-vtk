@@ -28,26 +28,27 @@ VtkExtractPolyDataGeometryWrap::~VtkExtractPolyDataGeometryWrap()
 
 void VtkExtractPolyDataGeometryWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractPolyDataGeometryWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractPolyDataGeometry").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractPolyDataGeometry").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractPolyDataGeometry").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractPolyDataGeometry").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractPolyDataGeometryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractPolyDataGeometryWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractPolyDataGeometryWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractPolyDataGeometryWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ExtractBoundaryCellsOff", ExtractBoundaryCellsOff);
 	Nan::SetPrototypeMethod(tpl, "extractBoundaryCellsOff", ExtractBoundaryCellsOff);
 
@@ -90,6 +91,8 @@ void VtkExtractPolyDataGeometryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetImplicitFunction", SetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "setImplicitFunction", SetImplicitFunction);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractPolyDataGeometryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -216,6 +219,7 @@ void VtkExtractPolyDataGeometryWrap::GetImplicitFunction(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetImplicitFunction();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,6 +264,7 @@ void VtkExtractPolyDataGeometryWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractPolyDataGeometryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +280,7 @@ void VtkExtractPolyDataGeometryWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractPolyDataGeometry * r;
@@ -287,6 +292,7 @@ void VtkExtractPolyDataGeometryWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractPolyDataGeometryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -343,7 +349,7 @@ void VtkExtractPolyDataGeometryWrap::SetImplicitFunction(const Nan::FunctionCall
 {
 	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

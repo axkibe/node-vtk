@@ -30,26 +30,27 @@ VtkInteractorStyleSwitchWrap::~VtkInteractorStyleSwitchWrap()
 
 void VtkInteractorStyleSwitchWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleSwitchBaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleSwitchBaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleSwitchWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyleSwitch").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyleSwitch").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyleSwitch").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyleSwitch").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleSwitchWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleSwitchWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleSwitchWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleSwitchBaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleSwitchBaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleSwitchWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -92,6 +93,8 @@ void VtkInteractorStyleSwitchWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
 	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleSwitchWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -142,6 +145,7 @@ void VtkInteractorStyleSwitchWrap::GetCurrentStyle(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCurrentStyle();
+		VtkInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,6 +190,7 @@ void VtkInteractorStyleSwitchWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleSwitchWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +218,7 @@ void VtkInteractorStyleSwitchWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyleSwitch * r;
@@ -225,6 +230,7 @@ void VtkInteractorStyleSwitchWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleSwitchWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -262,7 +268,7 @@ void VtkInteractorStyleSwitchWrap::SetCurrentRenderer(const Nan::FunctionCallbac
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -330,7 +336,7 @@ void VtkInteractorStyleSwitchWrap::SetDefaultRenderer(const Nan::FunctionCallbac
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -350,7 +356,7 @@ void VtkInteractorStyleSwitchWrap::SetInteractor(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

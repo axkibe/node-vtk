@@ -27,26 +27,27 @@ VtkKdNodeWrap::~VtkKdNodeWrap()
 
 void VtkKdNodeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkKdNodeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkKdNode").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("KdNode").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkKdNode").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("KdNode").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkKdNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkKdNodeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkKdNodeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkKdNodeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddChildNodes", AddChildNodes);
 	Nan::SetPrototypeMethod(tpl, "addChildNodes", AddChildNodes);
 
@@ -149,6 +150,8 @@ void VtkKdNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetUp", SetUp);
 	Nan::SetPrototypeMethod(tpl, "setUp", SetUp);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkKdNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -178,10 +181,10 @@ void VtkKdNodeWrap::AddChildNodes(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkKdNodeWrap *a1 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -418,6 +421,7 @@ void VtkKdNodeWrap::GetLeft(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLeft();
+		VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -482,6 +486,7 @@ void VtkKdNodeWrap::GetRight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetRight();
+		VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -504,6 +509,7 @@ void VtkKdNodeWrap::GetUp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetUp();
+		VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -564,7 +570,7 @@ void VtkKdNodeWrap::IntersectsRegion(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesIntersectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesIntersectionWrap *a0 = ObjectWrap::Unwrap<VtkPlanesIntersectionWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -656,6 +662,7 @@ void VtkKdNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
+		VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -709,7 +716,7 @@ void VtkKdNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkKdNode * r;
@@ -721,6 +728,7 @@ void VtkKdNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkKdNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -855,7 +863,7 @@ void VtkKdNodeWrap::SetLeft(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -932,7 +940,7 @@ void VtkKdNodeWrap::SetRight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -952,7 +960,7 @@ void VtkKdNodeWrap::SetUp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

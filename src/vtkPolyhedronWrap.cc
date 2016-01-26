@@ -31,26 +31,27 @@ VtkPolyhedronWrap::~VtkPolyhedronWrap()
 
 void VtkPolyhedronWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCell3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCell3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyhedronWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyhedron").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Polyhedron").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyhedron").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Polyhedron").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyhedronWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyhedronWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyhedronWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCell3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCell3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyhedronWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellType", GetCellType);
 	Nan::SetPrototypeMethod(tpl, "getCellType", GetCellType);
 
@@ -96,6 +97,8 @@ void VtkPolyhedronWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyhedronWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -164,6 +167,7 @@ void VtkPolyhedronWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
+			VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -193,6 +197,7 @@ void VtkPolyhedronWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
+			VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -246,6 +251,7 @@ void VtkPolyhedronWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPolyData();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -316,6 +322,7 @@ void VtkPolyhedronWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyhedronWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,7 +366,7 @@ void VtkPolyhedronWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkPolyhedronWrap>(info.Holder());
 	vtkPolyhedron *native = (vtkPolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyhedron * r;
@@ -371,6 +378,7 @@ void VtkPolyhedronWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyhedronWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -391,10 +399,10 @@ void VtkPolyhedronWrap::Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkPolyhedron *native = (vtkPolyhedron *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
 				int r;

@@ -28,26 +28,27 @@ VtkLinearSelectorWrap::~VtkLinearSelectorWrap()
 
 void VtkLinearSelectorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSelectionAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLinearSelectorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLinearSelector").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LinearSelector").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLinearSelector").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LinearSelector").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLinearSelectorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLinearSelectorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLinearSelectorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSelectionAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLinearSelectorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -96,6 +97,8 @@ void VtkLinearSelectorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVertexEliminationTolerance", SetVertexEliminationTolerance);
 	Nan::SetPrototypeMethod(tpl, "setVertexEliminationTolerance", SetVertexEliminationTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLinearSelectorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -146,6 +149,7 @@ void VtkLinearSelectorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -270,6 +274,7 @@ void VtkLinearSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkLinearSelectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,7 +290,7 @@ void VtkLinearSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLinearSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkLinearSelectorWrap>(info.Holder());
 	vtkLinearSelector *native = (vtkLinearSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLinearSelector * r;
@@ -297,6 +302,7 @@ void VtkLinearSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLinearSelectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -342,7 +348,7 @@ void VtkLinearSelectorWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLinearSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkLinearSelectorWrap>(info.Holder());
 	vtkLinearSelector *native = (vtkLinearSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

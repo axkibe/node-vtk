@@ -29,26 +29,27 @@ VtkMergeGraphsWrap::~VtkMergeGraphsWrap()
 
 void VtkMergeGraphsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMergeGraphsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMergeGraphs").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MergeGraphs").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMergeGraphs").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MergeGraphs").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMergeGraphsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMergeGraphsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMergeGraphsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMergeGraphsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ExtendGraph", ExtendGraph);
 	Nan::SetPrototypeMethod(tpl, "extendGraph", ExtendGraph);
 
@@ -82,6 +83,8 @@ void VtkMergeGraphsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseEdgeWindowOn", UseEdgeWindowOn);
 	Nan::SetPrototypeMethod(tpl, "useEdgeWindowOn", UseEdgeWindowOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMergeGraphsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -111,10 +114,10 @@ void VtkMergeGraphsWrap::ExtendGraph(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMergeGraphsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeGraphsWrap>(info.Holder());
 	vtkMergeGraphs *native = (vtkMergeGraphs *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMutableGraphHelperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMutableGraphHelperWrap *a0 = ObjectWrap::Unwrap<VtkMutableGraphHelperWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGraphWrap *a1 = ObjectWrap::Unwrap<VtkGraphWrap>(info[1]->ToObject());
 			int r;
@@ -209,6 +212,7 @@ void VtkMergeGraphsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkMergeGraphsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -224,7 +228,7 @@ void VtkMergeGraphsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMergeGraphsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeGraphsWrap>(info.Holder());
 	vtkMergeGraphs *native = (vtkMergeGraphs *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMergeGraphs * r;
@@ -236,6 +240,7 @@ void VtkMergeGraphsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMergeGraphsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

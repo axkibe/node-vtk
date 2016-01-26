@@ -32,26 +32,27 @@ VtkBorderRepresentationWrap::~VtkBorderRepresentationWrap()
 
 void VtkBorderRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBorderRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBorderRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BorderRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBorderRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BorderRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBorderRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBorderRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBorderRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBorderRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -190,6 +191,8 @@ void VtkBorderRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBorderRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -260,7 +263,7 @@ void VtkBorderRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -287,6 +290,7 @@ void VtkBorderRepresentationWrap::GetBorderProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetBorderProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -337,6 +341,7 @@ void VtkBorderRepresentationWrap::GetPosition2Coordinate(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetPosition2Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,6 +364,7 @@ void VtkBorderRepresentationWrap::GetPositionCoordinate(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPositionCoordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -623,6 +629,7 @@ void VtkBorderRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkBorderRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -662,7 +669,7 @@ void VtkBorderRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -682,7 +689,7 @@ void VtkBorderRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCallba
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -704,7 +711,7 @@ void VtkBorderRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo<
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -726,7 +733,7 @@ void VtkBorderRepresentationWrap::RenderTranslucentPolygonalGeometry(const Nan::
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -748,7 +755,7 @@ void VtkBorderRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBorderRepresentation * r;
@@ -760,6 +767,7 @@ void VtkBorderRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBorderRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkTransformToGridWrap::~VtkTransformToGridWrap()
 
 void VtkTransformToGridWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransformToGridWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransformToGrid").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TransformToGrid").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransformToGrid").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TransformToGrid").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransformToGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransformToGridWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransformToGridWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransformToGridWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -109,6 +110,8 @@ void VtkTransformToGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransformToGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -201,6 +204,7 @@ void VtkTransformToGridWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,6 +227,7 @@ void VtkTransformToGridWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetOutput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,6 +272,7 @@ void VtkTransformToGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransformToGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,7 +288,7 @@ void VtkTransformToGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransformToGrid * r;
@@ -294,6 +300,7 @@ void VtkTransformToGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransformToGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -496,7 +503,7 @@ void VtkTransformToGridWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

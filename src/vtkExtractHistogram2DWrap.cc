@@ -31,26 +31,27 @@ VtkExtractHistogram2DWrap::~VtkExtractHistogram2DWrap()
 
 void VtkExtractHistogram2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStatisticsAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractHistogram2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractHistogram2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractHistogram2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractHistogram2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractHistogram2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStatisticsAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractHistogram2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Aggregate", Aggregate);
 	Nan::SetPrototypeMethod(tpl, "aggregate", Aggregate);
 
@@ -135,6 +136,8 @@ void VtkExtractHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseCustomHistogramExtentsOn", UseCustomHistogramExtentsOn);
 	Nan::SetPrototypeMethod(tpl, "useCustomHistogramExtentsOn", UseCustomHistogramExtentsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -164,10 +167,10 @@ void VtkExtractHistogram2DWrap::Aggregate(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkExtractHistogram2DWrap>(info.Holder());
 	vtkExtractHistogram2D *native = (vtkExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectCollectionWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectCollectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -224,6 +227,7 @@ void VtkExtractHistogram2DWrap::GetOutputHistogramImage(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetOutputHistogramImage();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,6 +250,7 @@ void VtkExtractHistogram2DWrap::GetRowMask(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetRowMask();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,6 +337,7 @@ void VtkExtractHistogram2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractHistogram2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -347,7 +353,7 @@ void VtkExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkExtractHistogram2DWrap>(info.Holder());
 	vtkExtractHistogram2D *native = (vtkExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractHistogram2D * r;
@@ -359,6 +365,7 @@ void VtkExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -454,7 +461,7 @@ void VtkExtractHistogram2DWrap::SetRowMask(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkExtractHistogram2DWrap>(info.Holder());
 	vtkExtractHistogram2D *native = (vtkExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

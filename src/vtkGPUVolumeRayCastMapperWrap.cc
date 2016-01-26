@@ -33,26 +33,27 @@ VtkGPUVolumeRayCastMapperWrap::~VtkGPUVolumeRayCastMapperWrap()
 
 void VtkGPUVolumeRayCastMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGPUVolumeRayCastMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGPUVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GPUVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGPUVolumeRayCastMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GPUVolumeRayCastMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGPUVolumeRayCastMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGPUVolumeRayCastMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGPUVolumeRayCastMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGPUVolumeRayCastMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoAdjustSampleDistancesOff", AutoAdjustSampleDistancesOff);
 	Nan::SetPrototypeMethod(tpl, "autoAdjustSampleDistancesOff", AutoAdjustSampleDistancesOff);
 
@@ -113,6 +114,8 @@ void VtkGPUVolumeRayCastMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetMaskTypeToLabelMap", SetMaskTypeToLabelMap);
 	Nan::SetPrototypeMethod(tpl, "setMaskTypeToLabelMap", SetMaskTypeToLabelMap);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGPUVolumeRayCastMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -166,10 +169,10 @@ void VtkGPUVolumeRayCastMapperWrap::GPURender(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -254,6 +257,7 @@ void VtkGPUVolumeRayCastMapperWrap::GetMaskInput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetMaskInput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -305,10 +309,10 @@ void VtkGPUVolumeRayCastMapperWrap::IsRenderSupported(const Nan::FunctionCallbac
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumePropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumePropertyWrap *a1 = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info[1]->ToObject());
 			int r;
@@ -339,6 +343,7 @@ void VtkGPUVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkGPUVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -354,7 +359,7 @@ void VtkGPUVolumeRayCastMapperWrap::ReleaseGraphicsResources(const Nan::Function
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -374,10 +379,10 @@ void VtkGPUVolumeRayCastMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -399,7 +404,7 @@ void VtkGPUVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGPUVolumeRayCastMapper * r;
@@ -411,6 +416,7 @@ void VtkGPUVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGPUVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -448,7 +454,7 @@ void VtkGPUVolumeRayCastMapperWrap::SetMaskInput(const Nan::FunctionCallbackInfo
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

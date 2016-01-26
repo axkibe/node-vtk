@@ -32,26 +32,27 @@ VtkUniformGridWrap::~VtkUniformGridWrap()
 
 void VtkUniformGridWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageDataWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageDataWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUniformGridWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUniformGrid").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UniformGrid").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUniformGrid").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UniformGrid").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUniformGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUniformGridWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUniformGridWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageDataWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageDataWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUniformGridWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AttachCellVisibilityToCellData", AttachCellVisibilityToCellData);
 	Nan::SetPrototypeMethod(tpl, "attachCellVisibilityToCellData", AttachCellVisibilityToCellData);
 
@@ -121,6 +122,8 @@ void VtkUniformGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UnBlankPoint", UnBlankPoint);
 	Nan::SetPrototypeMethod(tpl, "unBlankPoint", UnBlankPoint);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUniformGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -228,7 +231,7 @@ void VtkUniformGridWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
 	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -248,7 +251,7 @@ void VtkUniformGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
 	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -275,6 +278,7 @@ void VtkUniformGridWrap::GetCellVisibilityArray(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetCellVisibilityArray();
+		VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -304,7 +308,7 @@ void VtkUniformGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
 	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -319,6 +323,7 @@ void VtkUniformGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkUniformGridWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -339,6 +344,7 @@ void VtkUniformGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkUniformGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -406,6 +412,7 @@ void VtkUniformGridWrap::GetPointVisibilityArray(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPointVisibilityArray();
+		VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -462,6 +469,7 @@ void VtkUniformGridWrap::NewImageDataCopy(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewImageDataCopy();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -484,6 +492,7 @@ void VtkUniformGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkUniformGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -499,7 +508,7 @@ void VtkUniformGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
 	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUniformGrid * r;
@@ -511,6 +520,7 @@ void VtkUniformGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUniformGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -529,7 +539,7 @@ void VtkUniformGridWrap::SetCellVisibilityArray(const Nan::FunctionCallbackInfo<
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
 	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -549,7 +559,7 @@ void VtkUniformGridWrap::SetPointVisibilityArray(const Nan::FunctionCallbackInfo
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
 	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -569,7 +579,7 @@ void VtkUniformGridWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
 	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

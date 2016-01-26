@@ -38,26 +38,27 @@ VtkStreamingDemandDrivenPipelineWrap::~VtkStreamingDemandDrivenPipelineWrap()
 
 void VtkStreamingDemandDrivenPipelineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDemandDrivenPipelineWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDemandDrivenPipelineWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStreamingDemandDrivenPipelineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStreamingDemandDrivenPipeline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StreamingDemandDrivenPipeline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStreamingDemandDrivenPipeline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StreamingDemandDrivenPipeline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStreamingDemandDrivenPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStreamingDemandDrivenPipelineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStreamingDemandDrivenPipelineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDemandDrivenPipelineWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDemandDrivenPipelineWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStreamingDemandDrivenPipelineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BOUNDS", BOUNDS);
 
 	Nan::SetPrototypeMethod(tpl, "COMBINED_UPDATE_EXTENT", COMBINED_UPDATE_EXTENT);
@@ -213,6 +214,8 @@ void VtkStreamingDemandDrivenPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplat
 
 	Nan::SetPrototypeMethod(tpl, "WHOLE_EXTENT", WHOLE_EXTENT);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStreamingDemandDrivenPipelineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -249,6 +252,7 @@ void VtkStreamingDemandDrivenPipelineWrap::BOUNDS(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->BOUNDS();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -271,6 +275,7 @@ void VtkStreamingDemandDrivenPipelineWrap::COMBINED_UPDATE_EXTENT(const Nan::Fun
 		return;
 	}
 	r = native->COMBINED_UPDATE_EXTENT();
+		VtkInformationIntegerVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -293,6 +298,7 @@ void VtkStreamingDemandDrivenPipelineWrap::CONTINUE_EXECUTING(const Nan::Functio
 		return;
 	}
 	r = native->CONTINUE_EXECUTING();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,6 +349,7 @@ void VtkStreamingDemandDrivenPipelineWrap::EXACT_EXTENT(const Nan::FunctionCallb
 		return;
 	}
 	r = native->EXACT_EXTENT();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -365,6 +372,7 @@ void VtkStreamingDemandDrivenPipelineWrap::EXTENT_TRANSLATOR(const Nan::Function
 		return;
 	}
 	r = native->EXTENT_TRANSLATOR();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -387,6 +395,7 @@ void VtkStreamingDemandDrivenPipelineWrap::FAST_PATH_FOR_TEMPORAL_DATA(const Nan
 		return;
 	}
 	r = native->FAST_PATH_FOR_TEMPORAL_DATA();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -409,6 +418,7 @@ void VtkStreamingDemandDrivenPipelineWrap::FAST_PATH_ID_TYPE(const Nan::Function
 		return;
 	}
 	r = native->FAST_PATH_ID_TYPE();
+		VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -431,6 +441,7 @@ void VtkStreamingDemandDrivenPipelineWrap::FAST_PATH_OBJECT_ID(const Nan::Functi
 		return;
 	}
 	r = native->FAST_PATH_OBJECT_ID();
+		VtkInformationIdTypeKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,6 +464,7 @@ void VtkStreamingDemandDrivenPipelineWrap::FAST_PATH_OBJECT_TYPE(const Nan::Func
 		return;
 	}
 	r = native->FAST_PATH_OBJECT_TYPE();
+		VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -482,7 +494,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetExtentTranslator(const Nan::Functi
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		vtkExtentTranslator * r;
@@ -494,6 +506,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetExtentTranslator(const Nan::Functi
 		r = native->GetExtentTranslator(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkExtentTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -516,6 +529,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetExtentTranslator(const Nan::Functi
 		r = native->GetExtentTranslator(
 			info[0]->Int32Value()
 		);
+			VtkExtentTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -534,7 +548,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetMaximumNumberOfPieces(const Nan::F
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -591,7 +605,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetUpdateGhostLevel(const Nan::Functi
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -613,7 +627,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetUpdateNumberOfPieces(const Nan::Fu
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -635,7 +649,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetUpdatePiece(const Nan::FunctionCal
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -657,7 +671,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetUpdateResolution(const Nan::Functi
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		double r;
@@ -708,6 +722,7 @@ void VtkStreamingDemandDrivenPipelineWrap::MAXIMUM_NUMBER_OF_PIECES(const Nan::F
 		return;
 	}
 	r = native->MAXIMUM_NUMBER_OF_PIECES();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -730,6 +745,7 @@ void VtkStreamingDemandDrivenPipelineWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkStreamingDemandDrivenPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -752,6 +768,7 @@ void VtkStreamingDemandDrivenPipelineWrap::ORIGINAL_NUMBER_OF_CELLS(const Nan::F
 		return;
 	}
 	r = native->ORIGINAL_NUMBER_OF_CELLS();
+		VtkInformationUnsignedLongKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -774,6 +791,7 @@ void VtkStreamingDemandDrivenPipelineWrap::PIECE_BOUNDING_BOX(const Nan::Functio
 		return;
 	}
 	r = native->PIECE_BOUNDING_BOX();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -796,6 +814,7 @@ void VtkStreamingDemandDrivenPipelineWrap::PIECE_NORMAL(const Nan::FunctionCallb
 		return;
 	}
 	r = native->PIECE_NORMAL();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -818,6 +837,7 @@ void VtkStreamingDemandDrivenPipelineWrap::PRIORITY(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->PRIORITY();
+		VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -882,6 +902,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REMOVE_ATTRIBUTE_INFORMATION(const Na
 		return;
 	}
 	r = native->REMOVE_ATTRIBUTE_INFORMATION();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -904,6 +925,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_MANAGE_INFORMATION(const Nan:
 		return;
 	}
 	r = native->REQUEST_MANAGE_INFORMATION();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -926,6 +948,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_RESOLUTION_PROPAGATE(const Na
 		return;
 	}
 	r = native->REQUEST_RESOLUTION_PROPAGATE();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -948,6 +971,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_TIME_DEPENDENT_INFORMATION(co
 		return;
 	}
 	r = native->REQUEST_TIME_DEPENDENT_INFORMATION();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -970,6 +994,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_UPDATE_EXTENT(const Nan::Func
 		return;
 	}
 	r = native->REQUEST_UPDATE_EXTENT();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -992,6 +1017,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_UPDATE_EXTENT_INFORMATION(con
 		return;
 	}
 	r = native->REQUEST_UPDATE_EXTENT_INFORMATION();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1014,6 +1040,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_UPDATE_TIME(const Nan::Functi
 		return;
 	}
 	r = native->REQUEST_UPDATE_TIME();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1029,7 +1056,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStreamingDemandDrivenPipeline * r;
@@ -1041,6 +1068,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStreamingDemandDrivenPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1059,10 +1087,10 @@ void VtkStreamingDemandDrivenPipelineWrap::SetExtentTranslator(const Nan::Functi
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkExtentTranslatorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkExtentTranslatorWrap *a1 = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info[1]->ToObject());
 			int r;
@@ -1081,7 +1109,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetExtentTranslator(const Nan::Functi
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkExtentTranslatorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkExtentTranslatorWrap *a1 = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info[1]->ToObject());
 			int r;
@@ -1105,7 +1133,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetMaximumNumberOfPieces(const Nan::F
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1174,7 +1202,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateExtent(const Nan::FunctionCa
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1260,7 +1288,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateExtentToWholeExtent(const Na
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -1296,7 +1324,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateGhostLevel(const Nan::Functi
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1322,7 +1350,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateNumberOfPieces(const Nan::Fu
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1348,7 +1376,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdatePiece(const Nan::FunctionCal
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1374,7 +1402,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateResolution(const Nan::Functi
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -1418,7 +1446,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateTimeStep(const Nan::Function
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -1469,6 +1497,7 @@ void VtkStreamingDemandDrivenPipelineWrap::TIME_DEPENDENT_INFORMATION(const Nan:
 		return;
 	}
 	r = native->TIME_DEPENDENT_INFORMATION();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1491,6 +1520,7 @@ void VtkStreamingDemandDrivenPipelineWrap::TIME_LABEL_ANNOTATION(const Nan::Func
 		return;
 	}
 	r = native->TIME_LABEL_ANNOTATION();
+		VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1513,6 +1543,7 @@ void VtkStreamingDemandDrivenPipelineWrap::TIME_RANGE(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->TIME_RANGE();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1535,6 +1566,7 @@ void VtkStreamingDemandDrivenPipelineWrap::TIME_STEPS(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->TIME_STEPS();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1557,6 +1589,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UNRESTRICTED_UPDATE_EXTENT(const Nan:
 		return;
 	}
 	r = native->UNRESTRICTED_UPDATE_EXTENT();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1579,6 +1612,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_AMR_LEVEL(const Nan::FunctionC
 		return;
 	}
 	r = native->UPDATE_AMR_LEVEL();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1601,6 +1635,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_EXTENT(const Nan::FunctionCall
 		return;
 	}
 	r = native->UPDATE_EXTENT();
+		VtkInformationIntegerVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1623,6 +1658,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_EXTENT_INITIALIZED(const Nan::
 		return;
 	}
 	r = native->UPDATE_EXTENT_INITIALIZED();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1645,6 +1681,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_EXTENT_TRANSLATED(const Nan::F
 		return;
 	}
 	r = native->UPDATE_EXTENT_TRANSLATED();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1667,6 +1704,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_NUMBER_OF_GHOST_LEVELS(const N
 		return;
 	}
 	r = native->UPDATE_NUMBER_OF_GHOST_LEVELS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1689,6 +1727,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_NUMBER_OF_PIECES(const Nan::Fu
 		return;
 	}
 	r = native->UPDATE_NUMBER_OF_PIECES();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1711,6 +1750,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_PIECE_NUMBER(const Nan::Functi
 		return;
 	}
 	r = native->UPDATE_PIECE_NUMBER();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1733,6 +1773,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_RESOLUTION(const Nan::Function
 		return;
 	}
 	r = native->UPDATE_RESOLUTION();
+		VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1755,6 +1796,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_TIME_STEP(const Nan::FunctionC
 		return;
 	}
 	r = native->UPDATE_TIME_STEP();
+		VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1840,6 +1882,7 @@ void VtkStreamingDemandDrivenPipelineWrap::WHOLE_BOUNDING_BOX(const Nan::Functio
 		return;
 	}
 	r = native->WHOLE_BOUNDING_BOX();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1862,6 +1905,7 @@ void VtkStreamingDemandDrivenPipelineWrap::WHOLE_EXTENT(const Nan::FunctionCallb
 		return;
 	}
 	r = native->WHOLE_EXTENT();
+		VtkInformationIntegerVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

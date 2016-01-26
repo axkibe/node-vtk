@@ -27,26 +27,27 @@ VtkRearrangeFieldsWrap::~VtkRearrangeFieldsWrap()
 
 void VtkRearrangeFieldsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRearrangeFieldsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRearrangeFields").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RearrangeFields").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRearrangeFields").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RearrangeFields").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRearrangeFieldsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRearrangeFieldsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRearrangeFieldsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRearrangeFieldsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddOperation", AddOperation);
 	Nan::SetPrototypeMethod(tpl, "addOperation", AddOperation);
 
@@ -68,6 +69,8 @@ void VtkRearrangeFieldsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRearrangeFieldsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -227,6 +230,7 @@ void VtkRearrangeFieldsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkRearrangeFieldsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -352,7 +356,7 @@ void VtkRearrangeFieldsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRearrangeFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkRearrangeFieldsWrap>(info.Holder());
 	vtkRearrangeFields *native = (vtkRearrangeFields *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRearrangeFields * r;
@@ -364,6 +368,7 @@ void VtkRearrangeFieldsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRearrangeFieldsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

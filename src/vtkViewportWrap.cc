@@ -31,26 +31,27 @@ VtkViewportWrap::~VtkViewportWrap()
 
 void VtkViewportWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkViewportWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkViewport").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Viewport").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkViewport").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Viewport").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkViewportWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkViewportWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkViewportWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddActor2D", AddActor2D);
 	Nan::SetPrototypeMethod(tpl, "addActor2D", AddActor2D);
 
@@ -183,6 +184,8 @@ void VtkViewportWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
 	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkViewportWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -212,7 +215,7 @@ void VtkViewportWrap::AddActor2D(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -232,7 +235,7 @@ void VtkViewportWrap::AddViewProp(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -295,6 +298,7 @@ void VtkViewportWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetActors2D();
+		VtkActor2DCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,6 +363,7 @@ void VtkViewportWrap::GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetPickResultProps();
+		VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -493,6 +498,7 @@ void VtkViewportWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetVTKWindow();
+		VtkWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -515,6 +521,7 @@ void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetViewProps();
+		VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -554,7 +561,7 @@ void VtkViewportWrap::HasViewProp(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		int r;
@@ -630,6 +637,7 @@ void VtkViewportWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkViewportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -659,6 +667,7 @@ void VtkViewportWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				info[0]->NumberValue(),
 				info[1]->NumberValue()
 			);
+				VtkAssemblyPathWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -682,7 +691,7 @@ void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& i
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPropCollectionWrap *a2 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[2]->ToObject());
 				vtkAssemblyPath * r;
@@ -696,6 +705,7 @@ void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& i
 					info[1]->NumberValue(),
 					(vtkPropCollection *) a2->native.GetPointer()
 				);
+					VtkAssemblyPathWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -716,7 +726,7 @@ void VtkViewportWrap::RemoveActor2D(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -748,7 +758,7 @@ void VtkViewportWrap::RemoveViewProp(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -768,7 +778,7 @@ void VtkViewportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkViewport * r;
@@ -780,6 +790,7 @@ void VtkViewportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkViewportWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

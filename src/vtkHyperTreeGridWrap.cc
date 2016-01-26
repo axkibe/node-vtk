@@ -33,26 +33,27 @@ VtkHyperTreeGridWrap::~VtkHyperTreeGridWrap()
 
 void VtkHyperTreeGridWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperTreeGridWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperTreeGrid").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperTreeGrid").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperTreeGrid").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperTreeGrid").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperTreeGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperTreeGridWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperTreeGridWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperTreeGridWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CopyStructure", CopyStructure);
 	Nan::SetPrototypeMethod(tpl, "copyStructure", CopyStructure);
 
@@ -131,6 +132,8 @@ void VtkHyperTreeGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperTreeGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -160,7 +163,7 @@ void VtkHyperTreeGridWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -187,6 +190,7 @@ void VtkHyperTreeGridWrap::DIMENSION(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->DIMENSION();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +206,7 @@ void VtkHyperTreeGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -281,6 +285,7 @@ void VtkHyperTreeGridWrap::GetMaterialMask(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetMaterialMask();
+		VtkBitArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,6 +308,7 @@ void VtkHyperTreeGridWrap::GetMaterialMaskIndex(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetMaterialMaskIndex();
+		VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -339,6 +345,7 @@ void VtkHyperTreeGridWrap::GetXCoordinates(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetXCoordinates();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -361,6 +368,7 @@ void VtkHyperTreeGridWrap::GetYCoordinates(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetYCoordinates();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -383,6 +391,7 @@ void VtkHyperTreeGridWrap::GetZCoordinates(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetZCoordinates();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -439,6 +448,7 @@ void VtkHyperTreeGridWrap::LEVELS(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->LEVELS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -461,6 +471,7 @@ void VtkHyperTreeGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperTreeGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -483,6 +494,7 @@ void VtkHyperTreeGridWrap::SIZES(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->SIZES();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -498,7 +510,7 @@ void VtkHyperTreeGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperTreeGrid * r;
@@ -510,6 +522,7 @@ void VtkHyperTreeGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperTreeGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -552,7 +565,7 @@ void VtkHyperTreeGridWrap::SetMaterialMask(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBitArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBitArrayWrap *a0 = ObjectWrap::Unwrap<VtkBitArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -572,7 +585,7 @@ void VtkHyperTreeGridWrap::SetMaterialMaskIndex(const Nan::FunctionCallbackInfo<
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -592,7 +605,7 @@ void VtkHyperTreeGridWrap::SetXCoordinates(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -612,7 +625,7 @@ void VtkHyperTreeGridWrap::SetYCoordinates(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -632,7 +645,7 @@ void VtkHyperTreeGridWrap::SetZCoordinates(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -652,7 +665,7 @@ void VtkHyperTreeGridWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

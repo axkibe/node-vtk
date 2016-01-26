@@ -30,26 +30,27 @@ VtkMINCImageAttributesWrap::~VtkMINCImageAttributesWrap()
 
 void VtkMINCImageAttributesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMINCImageAttributesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMINCImageAttributes").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MINCImageAttributes").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMINCImageAttributes").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MINCImageAttributes").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMINCImageAttributesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMINCImageAttributesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMINCImageAttributesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMINCImageAttributesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddDimension", AddDimension);
 	Nan::SetPrototypeMethod(tpl, "addDimension", AddDimension);
 
@@ -158,6 +159,8 @@ void VtkMINCImageAttributesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ValidateAttributesOn", ValidateAttributesOn);
 	Nan::SetPrototypeMethod(tpl, "validateAttributesOn", ValidateAttributesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMINCImageAttributesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -219,6 +222,7 @@ void VtkMINCImageAttributesWrap::GetAttributeNames(const Nan::FunctionCallbackIn
 		r = native->GetAttributeNames(
 			*a0
 		);
+			VtkStringArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -253,6 +257,7 @@ void VtkMINCImageAttributesWrap::GetAttributeValueAsArray(const Nan::FunctionCal
 				*a0,
 				*a1
 			);
+				VtkDataArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -388,6 +393,7 @@ void VtkMINCImageAttributesWrap::GetDimensionLengths(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetDimensionLengths();
+		VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -410,6 +416,7 @@ void VtkMINCImageAttributesWrap::GetDimensionNames(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetDimensionNames();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,6 +439,7 @@ void VtkMINCImageAttributesWrap::GetImageMax(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetImageMax();
+		VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -454,6 +462,7 @@ void VtkMINCImageAttributesWrap::GetImageMin(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetImageMin();
+		VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -518,6 +527,7 @@ void VtkMINCImageAttributesWrap::GetVariableNames(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetVariableNames();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -589,6 +599,7 @@ void VtkMINCImageAttributesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkMINCImageAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -628,7 +639,7 @@ void VtkMINCImageAttributesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMINCImageAttributes * r;
@@ -640,6 +651,7 @@ void VtkMINCImageAttributesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMINCImageAttributesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -664,7 +676,7 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsArray(const Nan::FunctionCal
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -795,7 +807,7 @@ void VtkMINCImageAttributesWrap::SetImageMax(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -815,7 +827,7 @@ void VtkMINCImageAttributesWrap::SetImageMin(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -893,7 +905,7 @@ void VtkMINCImageAttributesWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMINCImageAttributesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMINCImageAttributesWrap *a0 = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -919,7 +931,7 @@ void VtkMINCImageAttributesWrap::ValidateAttribute(const Nan::FunctionCallbackIn
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
 				int r;

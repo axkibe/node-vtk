@@ -35,26 +35,27 @@ VtkHyperOctreeWrap::~VtkHyperOctreeWrap()
 
 void VtkHyperOctreeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperOctreeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperOctree").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperOctree").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperOctree").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperOctree").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperOctreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperOctreeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperOctreeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperOctreeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CollapseTerminalNode", CollapseTerminalNode);
 	Nan::SetPrototypeMethod(tpl, "collapseTerminalNode", CollapseTerminalNode);
 
@@ -139,6 +140,8 @@ void VtkHyperOctreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SubdivideLeaf", SubdivideLeaf);
 	Nan::SetPrototypeMethod(tpl, "subdivideLeaf", SubdivideLeaf);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperOctreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -168,7 +171,7 @@ void VtkHyperOctreeWrap::CollapseTerminalNode(const Nan::FunctionCallbackInfo<v8
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -188,7 +191,7 @@ void VtkHyperOctreeWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -215,6 +218,7 @@ void VtkHyperOctreeWrap::DIMENSION(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->DIMENSION();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +234,7 @@ void VtkHyperOctreeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -264,7 +268,7 @@ void VtkHyperOctreeWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -279,6 +283,7 @@ void VtkHyperOctreeWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkHyperOctreeWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -299,6 +304,7 @@ void VtkHyperOctreeWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkHyperOctreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -366,6 +372,7 @@ void VtkHyperOctreeWrap::GetLeafData(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetLeafData();
+		VtkDataSetAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,7 +402,7 @@ void VtkHyperOctreeWrap::GetPointsOnEdge(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -406,7 +413,7 @@ void VtkHyperOctreeWrap::GetPointsOnEdge(const Nan::FunctionCallbackInfo<v8::Val
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkHyperOctreePointsGrabberWrap *a5 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[5]->ToObject());
 							if(info.Length() != 6)
@@ -436,14 +443,14 @@ void VtkHyperOctreeWrap::GetPointsOnEdge2D(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
 					if(info.Length() != 4)
@@ -469,14 +476,14 @@ void VtkHyperOctreeWrap::GetPointsOnFace(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
 					if(info.Length() != 4)
@@ -502,7 +509,7 @@ void VtkHyperOctreeWrap::GetPointsOnParentEdge(const Nan::FunctionCallbackInfo<v
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -513,7 +520,7 @@ void VtkHyperOctreeWrap::GetPointsOnParentEdge(const Nan::FunctionCallbackInfo<v
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkHyperOctreePointsGrabberWrap *a5 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[5]->ToObject());
 							if(info.Length() != 6)
@@ -543,14 +550,14 @@ void VtkHyperOctreeWrap::GetPointsOnParentEdge2D(const Nan::FunctionCallbackInfo
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
 					if(info.Length() != 4)
@@ -617,6 +624,7 @@ void VtkHyperOctreeWrap::LEVELS(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->LEVELS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -639,6 +647,7 @@ void VtkHyperOctreeWrap::NewCellCursor(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewCellCursor();
+		VtkHyperOctreeCursorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -661,6 +670,7 @@ void VtkHyperOctreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperOctreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -683,6 +693,7 @@ void VtkHyperOctreeWrap::SIZES(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->SIZES();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -698,7 +709,7 @@ void VtkHyperOctreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperOctree * r;
@@ -710,6 +721,7 @@ void VtkHyperOctreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperOctreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -820,7 +832,7 @@ void VtkHyperOctreeWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -840,7 +852,7 @@ void VtkHyperOctreeWrap::SubdivideLeaf(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

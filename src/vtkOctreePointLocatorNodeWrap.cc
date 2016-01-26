@@ -27,26 +27,27 @@ VtkOctreePointLocatorNodeWrap::~VtkOctreePointLocatorNodeWrap()
 
 void VtkOctreePointLocatorNodeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOctreePointLocatorNodeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOctreePointLocatorNode").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OctreePointLocatorNode").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOctreePointLocatorNode").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OctreePointLocatorNode").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOctreePointLocatorNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOctreePointLocatorNodeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOctreePointLocatorNodeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOctreePointLocatorNodeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ContainsPoint", ContainsPoint);
 	Nan::SetPrototypeMethod(tpl, "containsPoint", ContainsPoint);
 
@@ -98,6 +99,8 @@ void VtkOctreePointLocatorNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPoints", SetNumberOfPoints);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPoints", SetNumberOfPoints);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOctreePointLocatorNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -195,6 +198,7 @@ void VtkOctreePointLocatorNodeWrap::GetChild(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetChild(
 			info[0]->Int32Value()
 		);
+			VtkOctreePointLocatorNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -233,7 +237,7 @@ void VtkOctreePointLocatorNodeWrap::GetDistance2ToBoundary(const Nan::FunctionCa
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkOctreePointLocatorNodeWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkOctreePointLocatorNodeWrap *a3 = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info[3]->ToObject());
 					if(info.Length() > 4 && info[4]->IsInt32())
@@ -271,7 +275,7 @@ void VtkOctreePointLocatorNodeWrap::GetDistance2ToInnerBoundary(const Nan::Funct
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkOctreePointLocatorNodeWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkOctreePointLocatorNodeWrap *a3 = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info[3]->ToObject());
 					double r;
@@ -341,7 +345,7 @@ void VtkOctreePointLocatorNodeWrap::IntersectsRegion(const Nan::FunctionCallback
 {
 	VtkOctreePointLocatorNodeWrap *wrapper = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info.Holder());
 	vtkOctreePointLocatorNode *native = (vtkOctreePointLocatorNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesIntersectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesIntersectionWrap *a0 = ObjectWrap::Unwrap<VtkPlanesIntersectionWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -396,6 +400,7 @@ void VtkOctreePointLocatorNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkOctreePointLocatorNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -411,7 +416,7 @@ void VtkOctreePointLocatorNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkOctreePointLocatorNodeWrap *wrapper = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info.Holder());
 	vtkOctreePointLocatorNode *native = (vtkOctreePointLocatorNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOctreePointLocatorNode * r;
@@ -423,6 +428,7 @@ void VtkOctreePointLocatorNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOctreePointLocatorNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

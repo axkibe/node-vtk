@@ -28,26 +28,27 @@ VtkImageCroppingRegionsWidgetWrap::~VtkImageCroppingRegionsWidgetWrap()
 
 void VtkImageCroppingRegionsWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	Vtk3DWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageCroppingRegionsWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageCroppingRegionsWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageCroppingRegionsWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageCroppingRegionsWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageCroppingRegionsWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageCroppingRegionsWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageCroppingRegionsWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageCroppingRegionsWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	Vtk3DWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageCroppingRegionsWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -135,6 +136,8 @@ void VtkImageCroppingRegionsWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "UpdateCursorIcon", UpdateCursorIcon);
 	Nan::SetPrototypeMethod(tpl, "updateCursorIcon", UpdateCursorIcon);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageCroppingRegionsWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -227,6 +230,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetVolumeMapper(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetVolumeMapper();
+		VtkVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -307,6 +311,7 @@ void VtkImageCroppingRegionsWidgetWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageCroppingRegionsWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -358,7 +363,7 @@ void VtkImageCroppingRegionsWidgetWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageCroppingRegionsWidget * r;
@@ -370,6 +375,7 @@ void VtkImageCroppingRegionsWidgetWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageCroppingRegionsWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -647,7 +653,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetVolumeMapper(const Nan::FunctionCallb
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeMapperWrap *a0 = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

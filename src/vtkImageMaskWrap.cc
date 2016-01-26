@@ -29,26 +29,27 @@ VtkImageMaskWrap::~VtkImageMaskWrap()
 
 void VtkImageMaskWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageMaskWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageMask").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageMask").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageMask").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageMask").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageMaskWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageMaskWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageMaskWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageMaskWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -103,6 +104,8 @@ void VtkImageMaskWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNotMask", SetNotMask);
 	Nan::SetPrototypeMethod(tpl, "setNotMask", SetNotMask);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageMaskWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -245,6 +248,7 @@ void VtkImageMaskWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageMaskWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +288,7 @@ void VtkImageMaskWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkImageMaskWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskWrap>(info.Holder());
 	vtkImageMask *native = (vtkImageMask *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageMask * r;
@@ -296,6 +300,7 @@ void VtkImageMaskWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageMaskWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -314,7 +319,7 @@ void VtkImageMaskWrap::SetImageInputData(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageMaskWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskWrap>(info.Holder());
 	vtkImageMask *native = (vtkImageMask *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -334,7 +339,7 @@ void VtkImageMaskWrap::SetInput1Data(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageMaskWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskWrap>(info.Holder());
 	vtkImageMask *native = (vtkImageMask *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -354,7 +359,7 @@ void VtkImageMaskWrap::SetInput2Data(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageMaskWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskWrap>(info.Holder());
 	vtkImageMask *native = (vtkImageMask *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -393,7 +398,7 @@ void VtkImageMaskWrap::SetMaskInputData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageMaskWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskWrap>(info.Holder());
 	vtkImageMask *native = (vtkImageMask *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

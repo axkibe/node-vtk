@@ -28,26 +28,27 @@ VtkXMLPUniformGridAMRWriterWrap::~VtkXMLPUniformGridAMRWriterWrap()
 
 void VtkXMLPUniformGridAMRWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLUniformGridAMRWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLUniformGridAMRWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLPUniformGridAMRWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLPUniformGridAMRWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLPUniformGridAMRWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLPUniformGridAMRWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLPUniformGridAMRWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLPUniformGridAMRWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLPUniformGridAMRWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLPUniformGridAMRWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLUniformGridAMRWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLUniformGridAMRWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLPUniformGridAMRWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkXMLPUniformGridAMRWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetWriteMetaFile", SetWriteMetaFile);
 	Nan::SetPrototypeMethod(tpl, "setWriteMetaFile", SetWriteMetaFile);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLPUniformGridAMRWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -119,6 +122,7 @@ void VtkXMLPUniformGridAMRWriterWrap::GetController(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,6 +167,7 @@ void VtkXMLPUniformGridAMRWriterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLPUniformGridAMRWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +183,7 @@ void VtkXMLPUniformGridAMRWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkXMLPUniformGridAMRWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLPUniformGridAMRWriterWrap>(info.Holder());
 	vtkXMLPUniformGridAMRWriter *native = (vtkXMLPUniformGridAMRWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLPUniformGridAMRWriter * r;
@@ -190,6 +195,7 @@ void VtkXMLPUniformGridAMRWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLPUniformGridAMRWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -208,7 +214,7 @@ void VtkXMLPUniformGridAMRWriterWrap::SetController(const Nan::FunctionCallbackI
 {
 	VtkXMLPUniformGridAMRWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLPUniformGridAMRWriterWrap>(info.Holder());
 	vtkXMLPUniformGridAMRWriter *native = (vtkXMLPUniformGridAMRWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

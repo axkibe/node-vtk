@@ -33,26 +33,27 @@ VtkPieChartActorWrap::~VtkPieChartActorWrap()
 
 void VtkPieChartActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPieChartActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPieChartActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PieChartActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPieChartActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PieChartActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPieChartActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPieChartActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPieChartActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPieChartActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -155,6 +156,8 @@ void VtkPieChartActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TitleVisibilityOn", TitleVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "titleVisibilityOn", TitleVisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPieChartActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -205,6 +208,7 @@ void VtkPieChartActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -227,6 +231,7 @@ void VtkPieChartActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -263,6 +268,7 @@ void VtkPieChartActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLegendActor();
+		VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -334,6 +340,7 @@ void VtkPieChartActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -454,6 +461,7 @@ void VtkPieChartActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkPieChartActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -469,7 +477,7 @@ void VtkPieChartActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackI
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -489,7 +497,7 @@ void VtkPieChartActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -511,7 +519,7 @@ void VtkPieChartActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -533,7 +541,7 @@ void VtkPieChartActorWrap::RenderTranslucentPolygonalGeometry(const Nan::Functio
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -555,7 +563,7 @@ void VtkPieChartActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPieChartActor * r;
@@ -567,6 +575,7 @@ void VtkPieChartActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPieChartActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -585,7 +594,7 @@ void VtkPieChartActorWrap::SetInputConnection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -605,7 +614,7 @@ void VtkPieChartActorWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -625,7 +634,7 @@ void VtkPieChartActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo<
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -758,7 +767,7 @@ void VtkPieChartActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

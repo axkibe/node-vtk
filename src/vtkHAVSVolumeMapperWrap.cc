@@ -27,26 +27,27 @@ VtkHAVSVolumeMapperWrap::~VtkHAVSVolumeMapperWrap()
 
 void VtkHAVSVolumeMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHAVSVolumeMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHAVSVolumeMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HAVSVolumeMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHAVSVolumeMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HAVSVolumeMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHAVSVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHAVSVolumeMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHAVSVolumeMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHAVSVolumeMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -83,6 +84,8 @@ void VtkHAVSVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetLevelOfDetailMethodField", SetLevelOfDetailMethodField);
 	Nan::SetPrototypeMethod(tpl, "setLevelOfDetailMethodField", SetLevelOfDetailMethodField);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHAVSVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -183,6 +186,7 @@ void VtkHAVSVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkHAVSVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +202,7 @@ void VtkHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHAVSVolumeMapper * r;
@@ -210,6 +214,7 @@ void VtkHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHAVSVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

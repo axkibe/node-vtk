@@ -28,26 +28,27 @@ VtkKdTreeSelectorWrap::~VtkKdTreeSelectorWrap()
 
 void VtkKdTreeSelectorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSelectionAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkKdTreeSelectorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkKdTreeSelector").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("KdTreeSelector").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkKdTreeSelector").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("KdTreeSelector").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkKdTreeSelectorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkKdTreeSelectorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkKdTreeSelectorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSelectionAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkKdTreeSelectorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -93,6 +94,8 @@ void VtkKdTreeSelectorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SingleSelectionOn", SingleSelectionOn);
 	Nan::SetPrototypeMethod(tpl, "singleSelectionOn", SingleSelectionOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkKdTreeSelectorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -143,6 +146,7 @@ void VtkKdTreeSelectorWrap::GetKdTree(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetKdTree();
+		VtkKdTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,6 +233,7 @@ void VtkKdTreeSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkKdTreeSelectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,7 +249,7 @@ void VtkKdTreeSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkKdTreeSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeSelectorWrap>(info.Holder());
 	vtkKdTreeSelector *native = (vtkKdTreeSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkKdTreeSelector * r;
@@ -256,6 +261,7 @@ void VtkKdTreeSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkKdTreeSelectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -274,7 +280,7 @@ void VtkKdTreeSelectorWrap::SetKdTree(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkKdTreeSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeSelectorWrap>(info.Holder());
 	vtkKdTreeSelector *native = (vtkKdTreeSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdTreeWrap *a0 = ObjectWrap::Unwrap<VtkKdTreeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkQuadRotationalExtrusionFilterWrap::~VtkQuadRotationalExtrusionFilterWrap()
 
 void VtkQuadRotationalExtrusionFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkQuadRotationalExtrusionFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkQuadRotationalExtrusionFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("QuadRotationalExtrusionFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkQuadRotationalExtrusionFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("QuadRotationalExtrusionFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkQuadRotationalExtrusionFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkQuadRotationalExtrusionFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkQuadRotationalExtrusionFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkQuadRotationalExtrusionFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CappingOff", CappingOff);
 	Nan::SetPrototypeMethod(tpl, "cappingOff", CappingOff);
 
@@ -125,6 +126,8 @@ void VtkQuadRotationalExtrusionFilterWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetTranslation", SetTranslation);
 	Nan::SetPrototypeMethod(tpl, "setTranslation", SetTranslation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkQuadRotationalExtrusionFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -361,6 +364,7 @@ void VtkQuadRotationalExtrusionFilterWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkQuadRotationalExtrusionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -388,7 +392,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkQuadRotationalExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkQuadRotationalExtrusionFilterWrap>(info.Holder());
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkQuadRotationalExtrusionFilter * r;
@@ -400,6 +404,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkQuadRotationalExtrusionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -28,26 +28,27 @@ VtkCameraInterpolatorWrap::~VtkCameraInterpolatorWrap()
 
 void VtkCameraInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCameraInterpolatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCameraInterpolator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CameraInterpolator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCameraInterpolator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CameraInterpolator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCameraInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCameraInterpolatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCameraInterpolatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCameraInterpolatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddCamera", AddCamera);
 	Nan::SetPrototypeMethod(tpl, "addCamera", AddCamera);
 
@@ -138,6 +139,8 @@ void VtkCameraInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetViewUpInterpolator", SetViewUpInterpolator);
 	Nan::SetPrototypeMethod(tpl, "setViewUpInterpolator", SetViewUpInterpolator);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCameraInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -169,7 +172,7 @@ void VtkCameraInterpolatorWrap::AddCamera(const Nan::FunctionCallbackInfo<v8::Va
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCameraWrap *a1 = ObjectWrap::Unwrap<VtkCameraWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -212,6 +215,7 @@ void VtkCameraInterpolatorWrap::GetClippingRangeInterpolator(const Nan::Function
 		return;
 	}
 	r = native->GetClippingRangeInterpolator();
+		VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,6 +238,7 @@ void VtkCameraInterpolatorWrap::GetFocalPointInterpolator(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetFocalPointInterpolator();
+		VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -340,6 +345,7 @@ void VtkCameraInterpolatorWrap::GetParallelScaleInterpolator(const Nan::Function
 		return;
 	}
 	r = native->GetParallelScaleInterpolator();
+		VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -362,6 +368,7 @@ void VtkCameraInterpolatorWrap::GetPositionInterpolator(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPositionInterpolator();
+		VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -384,6 +391,7 @@ void VtkCameraInterpolatorWrap::GetViewAngleInterpolator(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetViewAngleInterpolator();
+		VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -406,6 +414,7 @@ void VtkCameraInterpolatorWrap::GetViewUpInterpolator(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetViewUpInterpolator();
+		VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -435,7 +444,7 @@ void VtkCameraInterpolatorWrap::InterpolateCamera(const Nan::FunctionCallbackInf
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCameraWrap *a1 = ObjectWrap::Unwrap<VtkCameraWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -486,6 +495,7 @@ void VtkCameraInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkCameraInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -520,7 +530,7 @@ void VtkCameraInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCameraInterpolator * r;
@@ -532,6 +542,7 @@ void VtkCameraInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCameraInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -550,7 +561,7 @@ void VtkCameraInterpolatorWrap::SetClippingRangeInterpolator(const Nan::Function
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -570,7 +581,7 @@ void VtkCameraInterpolatorWrap::SetFocalPointInterpolator(const Nan::FunctionCal
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -645,7 +656,7 @@ void VtkCameraInterpolatorWrap::SetParallelScaleInterpolator(const Nan::Function
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -665,7 +676,7 @@ void VtkCameraInterpolatorWrap::SetPositionInterpolator(const Nan::FunctionCallb
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -685,7 +696,7 @@ void VtkCameraInterpolatorWrap::SetViewAngleInterpolator(const Nan::FunctionCall
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -705,7 +716,7 @@ void VtkCameraInterpolatorWrap::SetViewUpInterpolator(const Nan::FunctionCallbac
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

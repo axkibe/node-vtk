@@ -29,26 +29,27 @@ VtkScalarBarWidgetWrap::~VtkScalarBarWidgetWrap()
 
 void VtkScalarBarWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkBorderWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkScalarBarWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkScalarBarWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ScalarBarWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkScalarBarWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ScalarBarWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkScalarBarWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkScalarBarWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkScalarBarWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkBorderWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkScalarBarWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -88,6 +89,8 @@ void VtkScalarBarWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScalarBarActor", SetScalarBarActor);
 	Nan::SetPrototypeMethod(tpl, "setScalarBarActor", SetScalarBarActor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkScalarBarWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -164,6 +167,7 @@ void VtkScalarBarWidgetWrap::GetScalarBarActor(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetScalarBarActor();
+		VtkScalarBarActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,6 +190,7 @@ void VtkScalarBarWidgetWrap::GetScalarBarRepresentation(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetScalarBarRepresentation();
+		VtkScalarBarRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,6 +235,7 @@ void VtkScalarBarWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkScalarBarWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,7 +275,7 @@ void VtkScalarBarWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkScalarBarWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarWidgetWrap>(info.Holder());
 	vtkScalarBarWidget *native = (vtkScalarBarWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkScalarBarWidget * r;
@@ -281,6 +287,7 @@ void VtkScalarBarWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkScalarBarWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -318,7 +325,7 @@ void VtkScalarBarWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v
 {
 	VtkScalarBarWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarWidgetWrap>(info.Holder());
 	vtkScalarBarWidget *native = (vtkScalarBarWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarBarRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarBarRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkScalarBarRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -338,7 +345,7 @@ void VtkScalarBarWidgetWrap::SetScalarBarActor(const Nan::FunctionCallbackInfo<v
 {
 	VtkScalarBarWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarWidgetWrap>(info.Holder());
 	vtkScalarBarWidget *native = (vtkScalarBarWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarBarActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarBarActorWrap *a0 = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

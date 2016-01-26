@@ -31,26 +31,27 @@ VtkSimple3DCirclesStrategyWrap::~VtkSimple3DCirclesStrategyWrap()
 
 void VtkSimple3DCirclesStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSimple3DCirclesStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSimple3DCirclesStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Simple3DCirclesStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSimple3DCirclesStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Simple3DCirclesStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSimple3DCirclesStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSimple3DCirclesStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSimple3DCirclesStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSimple3DCirclesStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoHeightOff", AutoHeightOff);
 	Nan::SetPrototypeMethod(tpl, "autoHeightOff", AutoHeightOff);
 
@@ -147,6 +148,8 @@ void VtkSimple3DCirclesStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSimple3DCirclesStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -287,6 +290,7 @@ void VtkSimple3DCirclesStrategyWrap::GetHierarchicalLayers(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetHierarchicalLayers();
+		VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -309,6 +313,7 @@ void VtkSimple3DCirclesStrategyWrap::GetHierarchicalOrder(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetHierarchicalOrder();
+		VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -331,6 +336,7 @@ void VtkSimple3DCirclesStrategyWrap::GetMarkedStartVertices(const Nan::FunctionC
 		return;
 	}
 	r = native->GetMarkedStartVertices();
+		VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -443,6 +449,7 @@ void VtkSimple3DCirclesStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkSimple3DCirclesStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -458,7 +465,7 @@ void VtkSimple3DCirclesStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSimple3DCirclesStrategy * r;
@@ -470,6 +477,7 @@ void VtkSimple3DCirclesStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSimple3DCirclesStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -553,7 +561,7 @@ void VtkSimple3DCirclesStrategyWrap::SetGraph(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -592,7 +600,7 @@ void VtkSimple3DCirclesStrategyWrap::SetHierarchicalLayers(const Nan::FunctionCa
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIntArrayWrap *a0 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -612,7 +620,7 @@ void VtkSimple3DCirclesStrategyWrap::SetHierarchicalOrder(const Nan::FunctionCal
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -632,7 +640,7 @@ void VtkSimple3DCirclesStrategyWrap::SetMarkedStartVertices(const Nan::FunctionC
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

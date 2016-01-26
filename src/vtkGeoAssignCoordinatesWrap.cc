@@ -28,26 +28,27 @@ VtkGeoAssignCoordinatesWrap::~VtkGeoAssignCoordinatesWrap()
 
 void VtkGeoAssignCoordinatesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoAssignCoordinatesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoAssignCoordinates").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoAssignCoordinates").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoAssignCoordinates").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoAssignCoordinates").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoAssignCoordinatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoAssignCoordinatesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoAssignCoordinatesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoAssignCoordinatesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CoordinatesInArraysOff", CoordinatesInArraysOff);
 	Nan::SetPrototypeMethod(tpl, "coordinatesInArraysOff", CoordinatesInArraysOff);
 
@@ -90,6 +91,8 @@ void VtkGeoAssignCoordinatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoAssignCoordinatesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -206,6 +209,7 @@ void VtkGeoAssignCoordinatesWrap::GetTransform(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,6 +254,7 @@ void VtkGeoAssignCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoAssignCoordinatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -265,7 +270,7 @@ void VtkGeoAssignCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoAssignCoordinates * r;
@@ -277,6 +282,7 @@ void VtkGeoAssignCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoAssignCoordinatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -354,7 +360,7 @@ void VtkGeoAssignCoordinatesWrap::SetTransform(const Nan::FunctionCallbackInfo<v
 {
 	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

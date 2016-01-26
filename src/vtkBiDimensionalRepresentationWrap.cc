@@ -28,26 +28,27 @@ VtkBiDimensionalRepresentationWrap::~VtkBiDimensionalRepresentationWrap()
 
 void VtkBiDimensionalRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBiDimensionalRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBiDimensionalRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BiDimensionalRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBiDimensionalRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BiDimensionalRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBiDimensionalRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBiDimensionalRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBiDimensionalRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBiDimensionalRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -141,6 +142,8 @@ void VtkBiDimensionalRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "ShowLabelAboveWidgetOn", ShowLabelAboveWidgetOn);
 	Nan::SetPrototypeMethod(tpl, "showLabelAboveWidgetOn", ShowLabelAboveWidgetOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBiDimensionalRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -275,6 +278,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint1Representation(const Nan::Func
 		return;
 	}
 	r = native->GetPoint1Representation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,6 +301,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint2Representation(const Nan::Func
 		return;
 	}
 	r = native->GetPoint2Representation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,6 +324,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint3Representation(const Nan::Func
 		return;
 	}
 	r = native->GetPoint3Representation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -341,6 +347,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint4Representation(const Nan::Func
 		return;
 	}
 	r = native->GetPoint4Representation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -501,6 +508,7 @@ void VtkBiDimensionalRepresentationWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkBiDimensionalRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -516,7 +524,7 @@ void VtkBiDimensionalRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBiDimensionalRepresentation * r;
@@ -528,6 +536,7 @@ void VtkBiDimensionalRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBiDimensionalRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -546,7 +555,7 @@ void VtkBiDimensionalRepresentationWrap::SetHandleRepresentation(const Nan::Func
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHandleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHandleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

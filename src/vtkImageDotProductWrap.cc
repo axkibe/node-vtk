@@ -28,26 +28,27 @@ VtkImageDotProductWrap::~VtkImageDotProductWrap()
 
 void VtkImageDotProductWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageDotProductWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageDotProduct").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageDotProduct").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageDotProduct").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageDotProduct").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageDotProductWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageDotProductWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageDotProductWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageDotProductWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkImageDotProductWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInput2Data", SetInput2Data);
 	Nan::SetPrototypeMethod(tpl, "setInput2Data", SetInput2Data);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageDotProductWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -138,6 +141,7 @@ void VtkImageDotProductWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageDotProductWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -153,7 +157,7 @@ void VtkImageDotProductWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageDotProductWrap *wrapper = ObjectWrap::Unwrap<VtkImageDotProductWrap>(info.Holder());
 	vtkImageDotProduct *native = (vtkImageDotProduct *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageDotProduct * r;
@@ -165,6 +169,7 @@ void VtkImageDotProductWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageDotProductWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -183,7 +188,7 @@ void VtkImageDotProductWrap::SetInput1Data(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageDotProductWrap *wrapper = ObjectWrap::Unwrap<VtkImageDotProductWrap>(info.Holder());
 	vtkImageDotProduct *native = (vtkImageDotProduct *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -203,7 +208,7 @@ void VtkImageDotProductWrap::SetInput2Data(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageDotProductWrap *wrapper = ObjectWrap::Unwrap<VtkImageDotProductWrap>(info.Holder());
 	vtkImageDotProduct *native = (vtkImageDotProduct *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

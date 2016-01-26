@@ -29,26 +29,27 @@ VtkAMRResampleFilterWrap::~VtkAMRResampleFilterWrap()
 
 void VtkAMRResampleFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMRResampleFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMRResampleFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMRResampleFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMRResampleFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMRResampleFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMRResampleFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMRResampleFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMRResampleFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMRResampleFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -103,6 +104,8 @@ void VtkAMRResampleFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTransferToNodes", SetTransferToNodes);
 	Nan::SetPrototypeMethod(tpl, "setTransferToNodes", SetTransferToNodes);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMRResampleFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,7 +137,7 @@ void VtkAMRResampleFilterWrap::FillInputPortInformation(const Nan::FunctionCallb
 	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -160,7 +163,7 @@ void VtkAMRResampleFilterWrap::FillOutputPortInformation(const Nan::FunctionCall
 	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -205,6 +208,7 @@ void VtkAMRResampleFilterWrap::GetController(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,6 +295,7 @@ void VtkAMRResampleFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMRResampleFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -306,7 +311,7 @@ void VtkAMRResampleFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
 	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMRResampleFilter * r;
@@ -318,6 +323,7 @@ void VtkAMRResampleFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMRResampleFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -363,7 +369,7 @@ void VtkAMRResampleFilterWrap::SetController(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
 	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

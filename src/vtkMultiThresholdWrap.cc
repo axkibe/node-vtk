@@ -27,26 +27,27 @@ VtkMultiThresholdWrap::~VtkMultiThresholdWrap()
 
 void VtkMultiThresholdWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMultiThresholdWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMultiThreshold").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MultiThreshold").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMultiThreshold").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MultiThreshold").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMultiThresholdWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMultiThresholdWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMultiThresholdWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMultiThresholdWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddBandpassIntervalSet", AddBandpassIntervalSet);
 	Nan::SetPrototypeMethod(tpl, "addBandpassIntervalSet", AddBandpassIntervalSet);
 
@@ -80,6 +81,8 @@ void VtkMultiThresholdWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMultiThresholdWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -389,6 +392,7 @@ void VtkMultiThresholdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkMultiThresholdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -437,7 +441,7 @@ void VtkMultiThresholdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMultiThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkMultiThresholdWrap>(info.Holder());
 	vtkMultiThreshold *native = (vtkMultiThreshold *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMultiThreshold * r;
@@ -449,6 +453,7 @@ void VtkMultiThresholdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMultiThresholdWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

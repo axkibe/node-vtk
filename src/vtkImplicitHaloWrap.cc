@@ -27,26 +27,27 @@ VtkImplicitHaloWrap::~VtkImplicitHaloWrap()
 
 void VtkImplicitHaloWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImplicitFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitHaloWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitHalo").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitHalo").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitHalo").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitHalo").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitHaloWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitHaloWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitHaloWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitHaloWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EvaluateFunction", EvaluateFunction);
 	Nan::SetPrototypeMethod(tpl, "evaluateFunction", EvaluateFunction);
 
@@ -77,6 +78,8 @@ void VtkImplicitHaloWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitHaloWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -206,6 +209,7 @@ void VtkImplicitHaloWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitHaloWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +225,7 @@ void VtkImplicitHaloWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImplicitHaloWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitHaloWrap>(info.Holder());
 	vtkImplicitHalo *native = (vtkImplicitHalo *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitHalo * r;
@@ -233,6 +237,7 @@ void VtkImplicitHaloWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitHaloWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

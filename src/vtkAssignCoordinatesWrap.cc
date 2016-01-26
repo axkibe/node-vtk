@@ -27,26 +27,27 @@ VtkAssignCoordinatesWrap::~VtkAssignCoordinatesWrap()
 
 void VtkAssignCoordinatesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAssignCoordinatesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAssignCoordinates").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AssignCoordinates").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAssignCoordinates").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AssignCoordinates").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAssignCoordinatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAssignCoordinatesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAssignCoordinatesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAssignCoordinatesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkAssignCoordinatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetZCoordArrayName", SetZCoordArrayName);
 	Nan::SetPrototypeMethod(tpl, "setZCoordArrayName", SetZCoordArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAssignCoordinatesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -191,6 +194,7 @@ void VtkAssignCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkAssignCoordinatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +210,7 @@ void VtkAssignCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkAssignCoordinatesWrap>(info.Holder());
 	vtkAssignCoordinates *native = (vtkAssignCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAssignCoordinates * r;
@@ -218,6 +222,7 @@ void VtkAssignCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAssignCoordinatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

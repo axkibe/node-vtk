@@ -27,26 +27,27 @@ VtkOverlappingAMRLevelIdScalarsWrap::~VtkOverlappingAMRLevelIdScalarsWrap()
 
 void VtkOverlappingAMRLevelIdScalarsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkOverlappingAMRAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOverlappingAMRAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOverlappingAMRLevelIdScalarsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOverlappingAMRLevelIdScalars").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OverlappingAMRLevelIdScalars").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOverlappingAMRLevelIdScalars").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OverlappingAMRLevelIdScalars").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOverlappingAMRLevelIdScalarsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOverlappingAMRLevelIdScalarsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOverlappingAMRLevelIdScalarsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkOverlappingAMRAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOverlappingAMRAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOverlappingAMRLevelIdScalarsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkOverlappingAMRLevelIdScalarsWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOverlappingAMRLevelIdScalarsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkOverlappingAMRLevelIdScalarsWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkOverlappingAMRLevelIdScalarsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkOverlappingAMRLevelIdScalarsWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkOverlappingAMRLevelIdScalarsWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRLevelIdScalarsWrap>(info.Holder());
 	vtkOverlappingAMRLevelIdScalars *native = (vtkOverlappingAMRLevelIdScalars *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOverlappingAMRLevelIdScalars * r;
@@ -158,6 +162,7 @@ void VtkOverlappingAMRLevelIdScalarsWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOverlappingAMRLevelIdScalarsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

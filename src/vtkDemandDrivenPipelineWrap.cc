@@ -30,26 +30,27 @@ VtkDemandDrivenPipelineWrap::~VtkDemandDrivenPipelineWrap()
 
 void VtkDemandDrivenPipelineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExecutiveWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExecutiveWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDemandDrivenPipelineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDemandDrivenPipeline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DemandDrivenPipeline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDemandDrivenPipeline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DemandDrivenPipeline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDemandDrivenPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDemandDrivenPipelineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDemandDrivenPipelineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExecutiveWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExecutiveWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDemandDrivenPipelineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DATA_NOT_GENERATED", DATA_NOT_GENERATED);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
@@ -100,6 +101,8 @@ void VtkDemandDrivenPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdatePipelineMTime", UpdatePipelineMTime);
 	Nan::SetPrototypeMethod(tpl, "updatePipelineMTime", UpdatePipelineMTime);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDemandDrivenPipelineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,6 +139,7 @@ void VtkDemandDrivenPipelineWrap::DATA_NOT_GENERATED(const Nan::FunctionCallback
 		return;
 	}
 	r = native->DATA_NOT_GENERATED();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,6 +224,7 @@ void VtkDemandDrivenPipelineWrap::NewDataObject(const Nan::FunctionCallbackInfo<
 		r = native->NewDataObject(
 			*a0
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -245,6 +250,7 @@ void VtkDemandDrivenPipelineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkDemandDrivenPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,6 +273,7 @@ void VtkDemandDrivenPipelineWrap::RELEASE_DATA(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->RELEASE_DATA();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -289,6 +296,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->REQUEST_DATA();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,6 +319,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA_NOT_GENERATED(const Nan::Function
 		return;
 	}
 	r = native->REQUEST_DATA_NOT_GENERATED();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -333,6 +342,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA_OBJECT(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->REQUEST_DATA_OBJECT();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -355,6 +365,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_INFORMATION(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->REQUEST_INFORMATION();
+		VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -377,6 +388,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_REGENERATE_INFORMATION(const Nan::Func
 		return;
 	}
 	r = native->REQUEST_REGENERATE_INFORMATION();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,7 +404,7 @@ void VtkDemandDrivenPipelineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkDemandDrivenPipelineWrap>(info.Holder());
 	vtkDemandDrivenPipeline *native = (vtkDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDemandDrivenPipeline * r;
@@ -404,6 +416,7 @@ void VtkDemandDrivenPipelineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDemandDrivenPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

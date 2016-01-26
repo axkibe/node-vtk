@@ -28,26 +28,27 @@ VtkUnstructuredGridGeometryFilterWrap::~VtkUnstructuredGridGeometryFilterWrap()
 
 void VtkUnstructuredGridGeometryFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUnstructuredGridGeometryFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUnstructuredGridGeometryFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UnstructuredGridGeometryFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUnstructuredGridGeometryFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UnstructuredGridGeometryFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUnstructuredGridGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUnstructuredGridGeometryFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUnstructuredGridGeometryFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUnstructuredGridGeometryFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CellClippingOff", CellClippingOff);
 	Nan::SetPrototypeMethod(tpl, "cellClippingOff", CellClippingOff);
 
@@ -156,6 +157,8 @@ void VtkUnstructuredGridGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetPointClipping", SetPointClipping);
 	Nan::SetPrototypeMethod(tpl, "setPointClipping", SetPointClipping);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUnstructuredGridGeometryFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -294,6 +297,7 @@ void VtkUnstructuredGridGeometryFilterWrap::GetLocator(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -446,6 +450,7 @@ void VtkUnstructuredGridGeometryFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkUnstructuredGridGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -533,7 +538,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUnstructuredGridGeometryFilter * r;
@@ -545,6 +550,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUnstructuredGridGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -640,7 +646,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetLocator(const Nan::FunctionCallba
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

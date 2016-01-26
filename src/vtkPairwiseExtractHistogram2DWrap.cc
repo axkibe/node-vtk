@@ -31,26 +31,27 @@ VtkPairwiseExtractHistogram2DWrap::~VtkPairwiseExtractHistogram2DWrap()
 
 void VtkPairwiseExtractHistogram2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStatisticsAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPairwiseExtractHistogram2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPairwiseExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PairwiseExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPairwiseExtractHistogram2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PairwiseExtractHistogram2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPairwiseExtractHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPairwiseExtractHistogram2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPairwiseExtractHistogram2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStatisticsAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPairwiseExtractHistogram2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Aggregate", Aggregate);
 	Nan::SetPrototypeMethod(tpl, "aggregate", Aggregate);
 
@@ -105,6 +106,8 @@ void VtkPairwiseExtractHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 	Nan::SetPrototypeMethod(tpl, "setScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPairwiseExtractHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,10 +137,10 @@ void VtkPairwiseExtractHistogram2DWrap::Aggregate(const Nan::FunctionCallbackInf
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectCollectionWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectCollectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -184,6 +187,7 @@ void VtkPairwiseExtractHistogram2DWrap::GetHistogramFilter(const Nan::FunctionCa
 		r = native->GetHistogramFilter(
 			info[0]->Int32Value()
 		);
+			VtkExtractHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -241,6 +245,7 @@ void VtkPairwiseExtractHistogram2DWrap::GetOutputHistogramImage(const Nan::Funct
 		r = native->GetOutputHistogramImage(
 			info[0]->Int32Value()
 		);
+			VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -302,6 +307,7 @@ void VtkPairwiseExtractHistogram2DWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkPairwiseExtractHistogram2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,7 +323,7 @@ void VtkPairwiseExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPairwiseExtractHistogram2D * r;
@@ -329,6 +335,7 @@ void VtkPairwiseExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPairwiseExtractHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

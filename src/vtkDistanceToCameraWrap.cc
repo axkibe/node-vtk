@@ -28,26 +28,27 @@ VtkDistanceToCameraWrap::~VtkDistanceToCameraWrap()
 
 void VtkDistanceToCameraWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDistanceToCameraWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDistanceToCamera").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DistanceToCamera").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDistanceToCamera").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DistanceToCamera").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDistanceToCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDistanceToCameraWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDistanceToCameraWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDistanceToCameraWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -78,6 +79,8 @@ void VtkDistanceToCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScreenSize", SetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "setScreenSize", SetScreenSize);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDistanceToCameraWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -128,6 +131,7 @@ void VtkDistanceToCameraWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,6 +190,7 @@ void VtkDistanceToCameraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkDistanceToCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +206,7 @@ void VtkDistanceToCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDistanceToCameraWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceToCameraWrap>(info.Holder());
 	vtkDistanceToCamera *native = (vtkDistanceToCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDistanceToCamera * r;
@@ -213,6 +218,7 @@ void VtkDistanceToCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDistanceToCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -255,7 +261,7 @@ void VtkDistanceToCameraWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDistanceToCameraWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceToCameraWrap>(info.Holder());
 	vtkDistanceToCamera *native = (vtkDistanceToCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

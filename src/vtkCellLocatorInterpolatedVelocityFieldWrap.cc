@@ -30,26 +30,27 @@ VtkCellLocatorInterpolatedVelocityFieldWrap::~VtkCellLocatorInterpolatedVelocity
 
 void VtkCellLocatorInterpolatedVelocityFieldWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCompositeInterpolatedVelocityFieldWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeInterpolatedVelocityFieldWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellLocatorInterpolatedVelocityFieldWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellLocatorInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellLocatorInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellLocatorInterpolatedVelocityField").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellLocatorInterpolatedVelocityField").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellLocatorInterpolatedVelocityFieldWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellLocatorInterpolatedVelocityFieldWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellLocatorInterpolatedVelocityFieldWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeInterpolatedVelocityFieldWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeInterpolatedVelocityFieldWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellLocatorInterpolatedVelocityFieldWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddDataSet", AddDataSet);
 	Nan::SetPrototypeMethod(tpl, "addDataSet", AddDataSet);
 
@@ -77,6 +78,8 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::InitTpl(v8::Local<v8::Function
 	Nan::SetPrototypeMethod(tpl, "SetCellLocatorPrototype", SetCellLocatorPrototype);
 	Nan::SetPrototypeMethod(tpl, "setCellLocatorPrototype", SetCellLocatorPrototype);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellLocatorInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -106,7 +109,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::AddDataSet(const Nan::Function
 {
 	VtkCellLocatorInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCellLocatorInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkCellLocatorInterpolatedVelocityField *native = (vtkCellLocatorInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -126,7 +129,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::CopyParameters(const Nan::Func
 {
 	VtkCellLocatorInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCellLocatorInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkCellLocatorInterpolatedVelocityField *native = (vtkCellLocatorInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractInterpolatedVelocityFieldWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractInterpolatedVelocityFieldWrap *a0 = ObjectWrap::Unwrap<VtkAbstractInterpolatedVelocityFieldWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -153,6 +156,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::GetCellLocatorPrototype(const 
 		return;
 	}
 	r = native->GetCellLocatorPrototype();
+		VtkAbstractCellLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,6 +193,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::GetLastCellLocator(const Nan::
 		return;
 	}
 	r = native->GetLastCellLocator();
+		VtkAbstractCellLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,6 +238,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellLocatorInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -248,7 +254,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::Functi
 {
 	VtkCellLocatorInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCellLocatorInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkCellLocatorInterpolatedVelocityField *native = (vtkCellLocatorInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCellLocatorInterpolatedVelocityField * r;
@@ -260,6 +266,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCellLocatorInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -278,7 +285,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::SetCellLocatorPrototype(const 
 {
 	VtkCellLocatorInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCellLocatorInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkCellLocatorInterpolatedVelocityField *native = (vtkCellLocatorInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractCellLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractCellLocatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

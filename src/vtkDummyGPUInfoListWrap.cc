@@ -27,26 +27,27 @@ VtkDummyGPUInfoListWrap::~VtkDummyGPUInfoListWrap()
 
 void VtkDummyGPUInfoListWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGPUInfoListWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGPUInfoListWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDummyGPUInfoListWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDummyGPUInfoList").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DummyGPUInfoList").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDummyGPUInfoList").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DummyGPUInfoList").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDummyGPUInfoListWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDummyGPUInfoListWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDummyGPUInfoListWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGPUInfoListWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGPUInfoListWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDummyGPUInfoListWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkDummyGPUInfoListWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDummyGPUInfoListWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkDummyGPUInfoListWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkDummyGPUInfoListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +165,7 @@ void VtkDummyGPUInfoListWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDummyGPUInfoListWrap *wrapper = ObjectWrap::Unwrap<VtkDummyGPUInfoListWrap>(info.Holder());
 	vtkDummyGPUInfoList *native = (vtkDummyGPUInfoList *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDummyGPUInfoList * r;
@@ -173,6 +177,7 @@ void VtkDummyGPUInfoListWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDummyGPUInfoListWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

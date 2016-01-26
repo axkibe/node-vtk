@@ -28,26 +28,27 @@ VtkSmoothPolyDataFilterWrap::~VtkSmoothPolyDataFilterWrap()
 
 void VtkSmoothPolyDataFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSmoothPolyDataFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSmoothPolyDataFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SmoothPolyDataFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSmoothPolyDataFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SmoothPolyDataFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSmoothPolyDataFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSmoothPolyDataFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSmoothPolyDataFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSmoothPolyDataFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BoundarySmoothingOff", BoundarySmoothingOff);
 	Nan::SetPrototypeMethod(tpl, "boundarySmoothingOff", BoundarySmoothingOff);
 
@@ -174,6 +175,8 @@ void VtkSmoothPolyDataFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSmoothPolyDataFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -572,6 +575,7 @@ void VtkSmoothPolyDataFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetSource();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -616,6 +620,7 @@ void VtkSmoothPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkSmoothPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -631,7 +636,7 @@ void VtkSmoothPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSmoothPolyDataFilter * r;
@@ -643,6 +648,7 @@ void VtkSmoothPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSmoothPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -851,7 +857,7 @@ void VtkSmoothPolyDataFilterWrap::SetSourceData(const Nan::FunctionCallbackInfo<
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

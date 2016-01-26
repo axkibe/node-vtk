@@ -28,26 +28,27 @@ VtkGraphHierarchicalBundleEdgesWrap::~VtkGraphHierarchicalBundleEdgesWrap()
 
 void VtkGraphHierarchicalBundleEdgesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGraphHierarchicalBundleEdgesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGraphHierarchicalBundleEdges").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GraphHierarchicalBundleEdges").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGraphHierarchicalBundleEdges").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GraphHierarchicalBundleEdges").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGraphHierarchicalBundleEdgesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGraphHierarchicalBundleEdgesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGraphHierarchicalBundleEdgesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGraphHierarchicalBundleEdgesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DirectMappingOff", DirectMappingOff);
 	Nan::SetPrototypeMethod(tpl, "directMappingOff", DirectMappingOff);
 
@@ -81,6 +82,8 @@ void VtkGraphHierarchicalBundleEdgesWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SetBundlingStrength", SetBundlingStrength);
 	Nan::SetPrototypeMethod(tpl, "setBundlingStrength", SetBundlingStrength);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGraphHierarchicalBundleEdgesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,7 +139,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::FillInputPortInformation(const Nan::Fu
 	vtkGraphHierarchicalBundleEdges *native = (vtkGraphHierarchicalBundleEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -245,6 +248,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkGraphHierarchicalBundleEdgesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +264,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkGraphHierarchicalBundleEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkGraphHierarchicalBundleEdgesWrap>(info.Holder());
 	vtkGraphHierarchicalBundleEdges *native = (vtkGraphHierarchicalBundleEdges *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGraphHierarchicalBundleEdges * r;
@@ -272,6 +276,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGraphHierarchicalBundleEdgesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

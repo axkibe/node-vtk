@@ -27,26 +27,27 @@ VtkImageDataToUniformGridWrap::~VtkImageDataToUniformGridWrap()
 
 void VtkImageDataToUniformGridWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageDataToUniformGridWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageDataToUniformGrid").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageDataToUniformGrid").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageDataToUniformGrid").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageDataToUniformGrid").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageDataToUniformGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageDataToUniformGridWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageDataToUniformGridWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageDataToUniformGridWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkImageDataToUniformGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetReverse", SetReverse);
 	Nan::SetPrototypeMethod(tpl, "setReverse", SetReverse);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageDataToUniformGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -191,6 +194,7 @@ void VtkImageDataToUniformGridWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageDataToUniformGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +234,7 @@ void VtkImageDataToUniformGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkImageDataToUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataToUniformGridWrap>(info.Holder());
 	vtkImageDataToUniformGrid *native = (vtkImageDataToUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageDataToUniformGrid * r;
@@ -242,6 +246,7 @@ void VtkImageDataToUniformGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageDataToUniformGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

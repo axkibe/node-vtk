@@ -29,26 +29,27 @@ VtkDuplicatePolyDataWrap::~VtkDuplicatePolyDataWrap()
 
 void VtkDuplicatePolyDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDuplicatePolyDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDuplicatePolyData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DuplicatePolyData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDuplicatePolyData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DuplicatePolyData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDuplicatePolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDuplicatePolyDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDuplicatePolyDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDuplicatePolyDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -94,6 +95,8 @@ void VtkDuplicatePolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SynchronousOn", SynchronousOn);
 	Nan::SetPrototypeMethod(tpl, "synchronousOn", SynchronousOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDuplicatePolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -158,6 +161,7 @@ void VtkDuplicatePolyDataWrap::GetController(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,6 +184,7 @@ void VtkDuplicatePolyDataWrap::GetSocketController(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetSocketController();
+		VtkSocketControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,6 +262,7 @@ void VtkDuplicatePolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkDuplicatePolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,7 +278,7 @@ void VtkDuplicatePolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDuplicatePolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDuplicatePolyDataWrap>(info.Holder());
 	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDuplicatePolyData * r;
@@ -284,6 +290,7 @@ void VtkDuplicatePolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDuplicatePolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -321,7 +328,7 @@ void VtkDuplicatePolyDataWrap::SetController(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDuplicatePolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDuplicatePolyDataWrap>(info.Holder());
 	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -341,7 +348,7 @@ void VtkDuplicatePolyDataWrap::SetSocketController(const Nan::FunctionCallbackIn
 {
 	VtkDuplicatePolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDuplicatePolyDataWrap>(info.Holder());
 	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketControllerWrap *a0 = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

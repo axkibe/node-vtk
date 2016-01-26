@@ -27,26 +27,27 @@ VtkSmoothErrorMetricWrap::~VtkSmoothErrorMetricWrap()
 
 void VtkSmoothErrorMetricWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGenericSubdivisionErrorMetricWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericSubdivisionErrorMetricWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSmoothErrorMetricWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSmoothErrorMetric").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SmoothErrorMetric").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSmoothErrorMetric").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SmoothErrorMetric").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSmoothErrorMetricWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSmoothErrorMetricWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSmoothErrorMetricWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGenericSubdivisionErrorMetricWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericSubdivisionErrorMetricWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSmoothErrorMetricWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAngleTolerance", GetAngleTolerance);
 	Nan::SetPrototypeMethod(tpl, "getAngleTolerance", GetAngleTolerance);
 
@@ -65,6 +66,8 @@ void VtkSmoothErrorMetricWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetAngleTolerance", SetAngleTolerance);
 	Nan::SetPrototypeMethod(tpl, "setAngleTolerance", SetAngleTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSmoothErrorMetricWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkSmoothErrorMetricWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkSmoothErrorMetricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +170,7 @@ void VtkSmoothErrorMetricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSmoothErrorMetricWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothErrorMetricWrap>(info.Holder());
 	vtkSmoothErrorMetric *native = (vtkSmoothErrorMetric *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSmoothErrorMetric * r;
@@ -178,6 +182,7 @@ void VtkSmoothErrorMetricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSmoothErrorMetricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

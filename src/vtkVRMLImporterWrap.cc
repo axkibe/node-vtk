@@ -27,26 +27,27 @@ VtkVRMLImporterWrap::~VtkVRMLImporterWrap()
 
 void VtkVRMLImporterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImporterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImporterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVRMLImporterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVRMLImporter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VRMLImporter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVRMLImporter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VRMLImporter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVRMLImporterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVRMLImporterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVRMLImporterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImporterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImporterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVRMLImporterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -83,6 +84,8 @@ void VtkVRMLImporterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "useNode", useNode);
 	Nan::SetPrototypeMethod(tpl, "useNode", useNode);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVRMLImporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -152,6 +155,7 @@ void VtkVRMLImporterWrap::GetVRMLDEFObject(const Nan::FunctionCallbackInfo<v8::V
 		r = native->GetVRMLDEFObject(
 			*a0
 		);
+			VtkObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -199,6 +203,7 @@ void VtkVRMLImporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkVRMLImporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +219,7 @@ void VtkVRMLImporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkVRMLImporterWrap *wrapper = ObjectWrap::Unwrap<VtkVRMLImporterWrap>(info.Holder());
 	vtkVRMLImporter *native = (vtkVRMLImporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVRMLImporter * r;
@@ -226,6 +231,7 @@ void VtkVRMLImporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVRMLImporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

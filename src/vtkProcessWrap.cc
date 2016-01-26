@@ -27,26 +27,27 @@ VtkProcessWrap::~VtkProcessWrap()
 
 void VtkProcessWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProcessWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProcess").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Process").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProcess").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Process").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProcessWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProcessWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProcessWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProcessWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Execute", Execute);
 	Nan::SetPrototypeMethod(tpl, "execute", Execute);
 
@@ -71,6 +72,8 @@ void VtkProcessWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProcessWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -133,6 +136,7 @@ void VtkProcessWrap::GetController(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,6 +195,7 @@ void VtkProcessWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
+		VtkProcessWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +211,7 @@ void VtkProcessWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkProcessWrap *wrapper = ObjectWrap::Unwrap<VtkProcessWrap>(info.Holder());
 	vtkProcess *native = (vtkProcess *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProcess * r;
@@ -218,6 +223,7 @@ void VtkProcessWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProcessWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -236,7 +242,7 @@ void VtkProcessWrap::SetController(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkProcessWrap *wrapper = ObjectWrap::Unwrap<VtkProcessWrap>(info.Holder());
 	vtkProcess *native = (vtkProcess *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

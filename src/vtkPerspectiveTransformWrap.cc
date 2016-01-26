@@ -29,26 +29,27 @@ VtkPerspectiveTransformWrap::~VtkPerspectiveTransformWrap()
 
 void VtkPerspectiveTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHomogeneousTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHomogeneousTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPerspectiveTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPerspectiveTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PerspectiveTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPerspectiveTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PerspectiveTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPerspectiveTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPerspectiveTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPerspectiveTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHomogeneousTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHomogeneousTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPerspectiveTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AdjustViewport", AdjustViewport);
 	Nan::SetPrototypeMethod(tpl, "adjustViewport", AdjustViewport);
 
@@ -148,6 +149,8 @@ void VtkPerspectiveTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPerspectiveTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -255,7 +258,7 @@ void VtkPerspectiveTransformWrap::CircuitCheck(const Nan::FunctionCallbackInfo<v
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		int r;
@@ -277,7 +280,7 @@ void VtkPerspectiveTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHomogeneousTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHomogeneousTransformWrap *a0 = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -361,6 +364,7 @@ void VtkPerspectiveTransformWrap::GetConcatenatedTransform(const Nan::FunctionCa
 		r = native->GetConcatenatedTransform(
 			info[0]->Int32Value()
 		);
+			VtkHomogeneousTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -386,6 +390,7 @@ void VtkPerspectiveTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetInput();
+		VtkHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -482,6 +487,7 @@ void VtkPerspectiveTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -504,6 +510,7 @@ void VtkPerspectiveTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkPerspectiveTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -725,7 +732,7 @@ void VtkPerspectiveTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPerspectiveTransform * r;
@@ -737,6 +744,7 @@ void VtkPerspectiveTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPerspectiveTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -782,7 +790,7 @@ void VtkPerspectiveTransformWrap::SetInput(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHomogeneousTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHomogeneousTransformWrap *a0 = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -802,7 +810,7 @@ void VtkPerspectiveTransformWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)

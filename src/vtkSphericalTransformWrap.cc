@@ -28,26 +28,27 @@ VtkSphericalTransformWrap::~VtkSphericalTransformWrap()
 
 void VtkSphericalTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWarpTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWarpTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSphericalTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSphericalTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SphericalTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSphericalTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SphericalTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSphericalTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSphericalTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSphericalTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWarpTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWarpTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSphericalTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkSphericalTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSphericalTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkSphericalTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -157,6 +161,7 @@ void VtkSphericalTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkSphericalTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +177,7 @@ void VtkSphericalTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSphericalTransformWrap *wrapper = ObjectWrap::Unwrap<VtkSphericalTransformWrap>(info.Holder());
 	vtkSphericalTransform *native = (vtkSphericalTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSphericalTransform * r;
@@ -184,6 +189,7 @@ void VtkSphericalTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSphericalTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

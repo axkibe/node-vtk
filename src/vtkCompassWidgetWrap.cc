@@ -28,26 +28,27 @@ VtkCompassWidgetWrap::~VtkCompassWidgetWrap()
 
 void VtkCompassWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompassWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompassWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompassWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompassWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompassWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompassWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompassWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompassWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompassWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -84,6 +85,8 @@ void VtkCompassWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTilt", SetTilt);
 	Nan::SetPrototypeMethod(tpl, "setTilt", SetTilt);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompassWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -210,6 +213,7 @@ void VtkCompassWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompassWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +229,7 @@ void VtkCompassWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCompassWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCompassWidgetWrap>(info.Holder());
 	vtkCompassWidget *native = (vtkCompassWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompassWidget * r;
@@ -237,6 +241,7 @@ void VtkCompassWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompassWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -293,7 +298,7 @@ void VtkCompassWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCompassWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCompassWidgetWrap>(info.Holder());
 	vtkCompassWidget *native = (vtkCompassWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompassRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompassRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

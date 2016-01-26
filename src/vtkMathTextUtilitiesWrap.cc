@@ -26,26 +26,27 @@ VtkMathTextUtilitiesWrap::~VtkMathTextUtilitiesWrap()
 
 void VtkMathTextUtilitiesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMathTextUtilitiesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMathTextUtilities").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MathTextUtilities").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMathTextUtilities").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MathTextUtilities").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMathTextUtilitiesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMathTextUtilitiesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMathTextUtilitiesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMathTextUtilitiesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -64,6 +65,8 @@ void VtkMathTextUtilitiesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInstance", SetInstance);
 	Nan::SetPrototypeMethod(tpl, "setInstance", SetInstance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMathTextUtilitiesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -114,6 +117,7 @@ void VtkMathTextUtilitiesWrap::GetInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetInstance();
+		VtkMathTextUtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -158,6 +162,7 @@ void VtkMathTextUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkMathTextUtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -173,7 +178,7 @@ void VtkMathTextUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMathTextUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkMathTextUtilitiesWrap>(info.Holder());
 	vtkMathTextUtilities *native = (vtkMathTextUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMathTextUtilities * r;
@@ -185,6 +190,7 @@ void VtkMathTextUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMathTextUtilitiesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -203,7 +209,7 @@ void VtkMathTextUtilitiesWrap::SetInstance(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMathTextUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkMathTextUtilitiesWrap>(info.Holder());
 	vtkMathTextUtilities *native = (vtkMathTextUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMathTextUtilitiesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMathTextUtilitiesWrap *a0 = ObjectWrap::Unwrap<VtkMathTextUtilitiesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

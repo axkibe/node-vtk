@@ -27,26 +27,27 @@ VtkWindowLevelLookupTableWrap::~VtkWindowLevelLookupTableWrap()
 
 void VtkWindowLevelLookupTableWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLookupTableWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLookupTableWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWindowLevelLookupTableWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWindowLevelLookupTable").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WindowLevelLookupTable").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWindowLevelLookupTable").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WindowLevelLookupTable").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWindowLevelLookupTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWindowLevelLookupTableWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWindowLevelLookupTableWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLookupTableWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLookupTableWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWindowLevelLookupTableWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Build", Build);
 	Nan::SetPrototypeMethod(tpl, "build", Build);
 
@@ -92,6 +93,8 @@ void VtkWindowLevelLookupTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWindow", SetWindow);
 	Nan::SetPrototypeMethod(tpl, "setWindow", SetWindow);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWindowLevelLookupTableWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -242,6 +245,7 @@ void VtkWindowLevelLookupTableWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkWindowLevelLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +261,7 @@ void VtkWindowLevelLookupTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkWindowLevelLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkWindowLevelLookupTableWrap>(info.Holder());
 	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWindowLevelLookupTable * r;
@@ -269,6 +273,7 @@ void VtkWindowLevelLookupTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWindowLevelLookupTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

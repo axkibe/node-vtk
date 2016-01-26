@@ -27,26 +27,27 @@ VtkCachingInterpolatedVelocityFieldWrap::~VtkCachingInterpolatedVelocityFieldWra
 
 void VtkCachingInterpolatedVelocityFieldWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkFunctionSetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFunctionSetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCachingInterpolatedVelocityFieldWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCachingInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CachingInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCachingInterpolatedVelocityField").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CachingInterpolatedVelocityField").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCachingInterpolatedVelocityFieldWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCachingInterpolatedVelocityFieldWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCachingInterpolatedVelocityFieldWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkFunctionSetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFunctionSetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCachingInterpolatedVelocityFieldWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClearLastCellInfo", ClearLastCellInfo);
 	Nan::SetPrototypeMethod(tpl, "clearLastCellInfo", ClearLastCellInfo);
 
@@ -77,6 +78,8 @@ void VtkCachingInterpolatedVelocityFieldWrap::InitTpl(v8::Local<v8::FunctionTemp
 	Nan::SetPrototypeMethod(tpl, "SelectVectors", SelectVectors);
 	Nan::SetPrototypeMethod(tpl, "selectVectors", SelectVectors);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCachingInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -217,6 +220,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
+		VtkCachingInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +236,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCa
 {
 	VtkCachingInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCachingInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkCachingInterpolatedVelocityField *native = (vtkCachingInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCachingInterpolatedVelocityField * r;
@@ -244,6 +248,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCachingInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

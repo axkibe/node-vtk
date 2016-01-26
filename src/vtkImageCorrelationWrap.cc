@@ -28,26 +28,27 @@ VtkImageCorrelationWrap::~VtkImageCorrelationWrap()
 
 void VtkImageCorrelationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageCorrelationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageCorrelation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageCorrelation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageCorrelation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageCorrelation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageCorrelationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageCorrelationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageCorrelationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageCorrelationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -78,6 +79,8 @@ void VtkImageCorrelationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInput2Data", SetInput2Data);
 	Nan::SetPrototypeMethod(tpl, "setInput2Data", SetInput2Data);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageCorrelationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -192,6 +195,7 @@ void VtkImageCorrelationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageCorrelationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,7 +211,7 @@ void VtkImageCorrelationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageCorrelationWrap *wrapper = ObjectWrap::Unwrap<VtkImageCorrelationWrap>(info.Holder());
 	vtkImageCorrelation *native = (vtkImageCorrelation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageCorrelation * r;
@@ -219,6 +223,7 @@ void VtkImageCorrelationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageCorrelationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -256,7 +261,7 @@ void VtkImageCorrelationWrap::SetInput1Data(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageCorrelationWrap *wrapper = ObjectWrap::Unwrap<VtkImageCorrelationWrap>(info.Holder());
 	vtkImageCorrelation *native = (vtkImageCorrelation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -276,7 +281,7 @@ void VtkImageCorrelationWrap::SetInput2Data(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageCorrelationWrap *wrapper = ObjectWrap::Unwrap<VtkImageCorrelationWrap>(info.Holder());
 	vtkImageCorrelation *native = (vtkImageCorrelation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

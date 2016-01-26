@@ -27,26 +27,27 @@ VtkQuadricWrap::~VtkQuadricWrap()
 
 void VtkQuadricWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImplicitFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkQuadricWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkQuadric").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Quadric").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkQuadric").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Quadric").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkQuadricWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkQuadricWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkQuadricWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkQuadricWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EvaluateFunction", EvaluateFunction);
 	Nan::SetPrototypeMethod(tpl, "evaluateFunction", EvaluateFunction);
 
@@ -65,6 +66,8 @@ void VtkQuadricWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCoefficients", SetCoefficients);
 	Nan::SetPrototypeMethod(tpl, "setCoefficients", SetCoefficients);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkQuadricWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -166,6 +169,7 @@ void VtkQuadricWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
+		VtkQuadricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,7 +185,7 @@ void VtkQuadricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkQuadricWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricWrap>(info.Holder());
 	vtkQuadric *native = (vtkQuadric *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkQuadric * r;
@@ -193,6 +197,7 @@ void VtkQuadricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkQuadricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

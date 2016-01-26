@@ -27,26 +27,27 @@ VtkImageHistogramStatisticsWrap::~VtkImageHistogramStatisticsWrap()
 
 void VtkImageHistogramStatisticsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageHistogramWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageHistogramWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageHistogramStatisticsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageHistogramStatistics").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageHistogramStatistics").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageHistogramStatistics").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageHistogramStatistics").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageHistogramStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageHistogramStatisticsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageHistogramStatisticsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageHistogramWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageHistogramWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageHistogramStatisticsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -80,6 +81,8 @@ void VtkImageHistogramStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetAutoRangePercentiles", SetAutoRangePercentiles);
 	Nan::SetPrototypeMethod(tpl, "setAutoRangePercentiles", SetAutoRangePercentiles);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageHistogramStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -222,6 +225,7 @@ void VtkImageHistogramStatisticsWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageHistogramStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,7 +241,7 @@ void VtkImageHistogramStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkImageHistogramStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramStatisticsWrap>(info.Holder());
 	vtkImageHistogramStatistics *native = (vtkImageHistogramStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageHistogramStatistics * r;
@@ -249,6 +253,7 @@ void VtkImageHistogramStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageHistogramStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

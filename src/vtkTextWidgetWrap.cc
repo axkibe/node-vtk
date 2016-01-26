@@ -29,26 +29,27 @@ VtkTextWidgetWrap::~VtkTextWidgetWrap()
 
 void VtkTextWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkBorderWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTextWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TextWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTextWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TextWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkBorderWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -73,6 +74,8 @@ void VtkTextWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTextActor", SetTextActor);
 	Nan::SetPrototypeMethod(tpl, "setTextActor", SetTextActor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkTextWidgetWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTextActor();
+		VtkTextActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,6 +183,7 @@ void VtkTextWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +199,7 @@ void VtkTextWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTextWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkTextWidgetWrap>(info.Holder());
 	vtkTextWidget *native = (vtkTextWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTextWidget * r;
@@ -206,6 +211,7 @@ void VtkTextWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -224,7 +230,7 @@ void VtkTextWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTextWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkTextWidgetWrap>(info.Holder());
 	vtkTextWidget *native = (vtkTextWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkTextRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -244,7 +250,7 @@ void VtkTextWidgetWrap::SetTextActor(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTextWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkTextWidgetWrap>(info.Holder());
 	vtkTextWidget *native = (vtkTextWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextActorWrap *a0 = ObjectWrap::Unwrap<VtkTextActorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

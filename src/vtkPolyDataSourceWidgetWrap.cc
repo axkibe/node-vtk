@@ -28,26 +28,27 @@ VtkPolyDataSourceWidgetWrap::~VtkPolyDataSourceWidgetWrap()
 
 void VtkPolyDataSourceWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	Vtk3DWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataSourceWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataSourceWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataSourceWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataSourceWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataSourceWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataSourceWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataSourceWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataSourceWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	Vtk3DWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataSourceWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkPolyDataSourceWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdatePlacement", UpdatePlacement);
 	Nan::SetPrototypeMethod(tpl, "updatePlacement", UpdatePlacement);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataSourceWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -119,6 +122,7 @@ void VtkPolyDataSourceWidgetWrap::GetPolyDataAlgorithm(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetPolyDataAlgorithm();
+		VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,6 +167,7 @@ void VtkPolyDataSourceWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataSourceWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +227,7 @@ void VtkPolyDataSourceWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkPolyDataSourceWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSourceWidgetWrap>(info.Holder());
 	vtkPolyDataSourceWidget *native = (vtkPolyDataSourceWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataSourceWidget * r;
@@ -234,6 +239,7 @@ void VtkPolyDataSourceWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataSourceWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

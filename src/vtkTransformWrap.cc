@@ -29,26 +29,27 @@ VtkTransformWrap::~VtkTransformWrap()
 
 void VtkTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLinearTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLinearTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Transform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Transform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLinearTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLinearTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CircuitCheck", CircuitCheck);
 	Nan::SetPrototypeMethod(tpl, "circuitCheck", CircuitCheck);
 
@@ -130,6 +131,8 @@ void VtkTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -159,7 +162,7 @@ void VtkTransformWrap::CircuitCheck(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		int r;
@@ -181,7 +184,7 @@ void VtkTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLinearTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLinearTransformWrap *a0 = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -226,6 +229,7 @@ void VtkTransformWrap::GetConcatenatedTransform(const Nan::FunctionCallbackInfo<
 		r = native->GetConcatenatedTransform(
 			info[0]->Int32Value()
 		);
+			VtkLinearTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -251,6 +255,7 @@ void VtkTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetInput();
+		VtkLinearTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,7 +271,7 @@ void VtkTransformWrap::GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -286,6 +291,7 @@ void VtkTransformWrap::GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetInverse();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +335,7 @@ void VtkTransformWrap::GetTranspose(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -402,6 +408,7 @@ void VtkTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -424,6 +431,7 @@ void VtkTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -575,7 +583,7 @@ void VtkTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransform * r;
@@ -587,6 +595,7 @@ void VtkTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -632,7 +641,7 @@ void VtkTransformWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLinearTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLinearTransformWrap *a0 = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -652,7 +661,7 @@ void VtkTransformWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)

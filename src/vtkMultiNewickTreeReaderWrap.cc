@@ -28,26 +28,27 @@ VtkMultiNewickTreeReaderWrap::~VtkMultiNewickTreeReaderWrap()
 
 void VtkMultiNewickTreeReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMultiNewickTreeReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMultiNewickTreeReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MultiNewickTreeReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMultiNewickTreeReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MultiNewickTreeReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMultiNewickTreeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMultiNewickTreeReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMultiNewickTreeReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMultiNewickTreeReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkMultiNewickTreeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMultiNewickTreeReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +123,7 @@ void VtkMultiNewickTreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkMultiPieceDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -138,6 +142,7 @@ void VtkMultiNewickTreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetOutput();
+		VtkMultiPieceDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,6 +187,7 @@ void VtkMultiNewickTreeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkMultiNewickTreeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +203,7 @@ void VtkMultiNewickTreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkMultiNewickTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiNewickTreeReaderWrap>(info.Holder());
 	vtkMultiNewickTreeReader *native = (vtkMultiNewickTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMultiNewickTreeReader * r;
@@ -209,6 +215,7 @@ void VtkMultiNewickTreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMultiNewickTreeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +234,7 @@ void VtkMultiNewickTreeReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMultiNewickTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiNewickTreeReaderWrap>(info.Holder());
 	vtkMultiNewickTreeReader *native = (vtkMultiNewickTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiPieceDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiPieceDataSetWrap *a0 = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

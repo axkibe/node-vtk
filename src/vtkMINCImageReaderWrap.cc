@@ -29,26 +29,27 @@ VtkMINCImageReaderWrap::~VtkMINCImageReaderWrap()
 
 void VtkMINCImageReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageReader2Wrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageReader2Wrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMINCImageReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMINCImageReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MINCImageReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMINCImageReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MINCImageReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMINCImageReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMINCImageReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMINCImageReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageReader2Wrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageReader2Wrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMINCImageReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CanReadFile", CanReadFile);
 	Nan::SetPrototypeMethod(tpl, "canReadFile", CanReadFile);
 
@@ -106,6 +107,8 @@ void VtkMINCImageReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTimeStep", SetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "setTimeStep", SetTimeStep);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMINCImageReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -192,6 +195,7 @@ void VtkMINCImageReaderWrap::GetDirectionCosines(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetDirectionCosines();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,6 +232,7 @@ void VtkMINCImageReaderWrap::GetImageAttributes(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetImageAttributes();
+		VtkMINCImageAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -342,6 +347,7 @@ void VtkMINCImageReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkMINCImageReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,7 +387,7 @@ void VtkMINCImageReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMINCImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageReaderWrap>(info.Holder());
 	vtkMINCImageReader *native = (vtkMINCImageReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMINCImageReader * r;
@@ -393,6 +399,7 @@ void VtkMINCImageReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMINCImageReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

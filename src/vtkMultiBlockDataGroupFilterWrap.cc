@@ -28,26 +28,27 @@ VtkMultiBlockDataGroupFilterWrap::~VtkMultiBlockDataGroupFilterWrap()
 
 void VtkMultiBlockDataGroupFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMultiBlockDataGroupFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMultiBlockDataGroupFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MultiBlockDataGroupFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMultiBlockDataGroupFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MultiBlockDataGroupFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMultiBlockDataGroupFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMultiBlockDataGroupFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMultiBlockDataGroupFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMultiBlockDataGroupFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInputData", AddInputData);
 	Nan::SetPrototypeMethod(tpl, "addInputData", AddInputData);
 
@@ -63,6 +64,8 @@ void VtkMultiBlockDataGroupFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMultiBlockDataGroupFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -92,7 +95,7 @@ void VtkMultiBlockDataGroupFilterWrap::AddInputData(const Nan::FunctionCallbackI
 {
 	VtkMultiBlockDataGroupFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataGroupFilterWrap>(info.Holder());
 	vtkMultiBlockDataGroupFilter *native = (vtkMultiBlockDataGroupFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -107,7 +110,7 @@ void VtkMultiBlockDataGroupFilterWrap::AddInputData(const Nan::FunctionCallbackI
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -172,6 +175,7 @@ void VtkMultiBlockDataGroupFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkMultiBlockDataGroupFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,7 +191,7 @@ void VtkMultiBlockDataGroupFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkMultiBlockDataGroupFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataGroupFilterWrap>(info.Holder());
 	vtkMultiBlockDataGroupFilter *native = (vtkMultiBlockDataGroupFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMultiBlockDataGroupFilter * r;
@@ -199,6 +203,7 @@ void VtkMultiBlockDataGroupFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMultiBlockDataGroupFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

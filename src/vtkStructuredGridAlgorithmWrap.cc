@@ -29,26 +29,27 @@ VtkStructuredGridAlgorithmWrap::~VtkStructuredGridAlgorithmWrap()
 
 void VtkStructuredGridAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStructuredGridAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStructuredGridAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StructuredGridAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStructuredGridAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StructuredGridAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStructuredGridAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStructuredGridAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStructuredGridAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStructuredGridAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInputData", AddInputData);
 	Nan::SetPrototypeMethod(tpl, "addInputData", AddInputData);
 
@@ -79,6 +80,8 @@ void VtkStructuredGridAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStructuredGridAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -108,7 +111,7 @@ void VtkStructuredGridAlgorithmWrap::AddInputData(const Nan::FunctionCallbackInf
 {
 	VtkStructuredGridAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridAlgorithmWrap>(info.Holder());
 	vtkStructuredGridAlgorithm *native = (vtkStructuredGridAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -123,7 +126,7 @@ void VtkStructuredGridAlgorithmWrap::AddInputData(const Nan::FunctionCallbackInf
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -170,6 +173,7 @@ void VtkStructuredGridAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -188,6 +192,7 @@ void VtkStructuredGridAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,6 +219,7 @@ void VtkStructuredGridAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkStructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,6 +238,7 @@ void VtkStructuredGridAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetOutput();
+		VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,6 +265,7 @@ void VtkStructuredGridAlgorithmWrap::GetStructuredGridInput(const Nan::FunctionC
 		r = native->GetStructuredGridInput(
 			info[0]->Int32Value()
 		);
+			VtkStructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -305,6 +313,7 @@ void VtkStructuredGridAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkStructuredGridAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -320,7 +329,7 @@ void VtkStructuredGridAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkStructuredGridAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridAlgorithmWrap>(info.Holder());
 	vtkStructuredGridAlgorithm *native = (vtkStructuredGridAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStructuredGridAlgorithm * r;
@@ -332,6 +341,7 @@ void VtkStructuredGridAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStructuredGridAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -350,7 +360,7 @@ void VtkStructuredGridAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInf
 {
 	VtkStructuredGridAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridAlgorithmWrap>(info.Holder());
 	vtkStructuredGridAlgorithm *native = (vtkStructuredGridAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -365,7 +375,7 @@ void VtkStructuredGridAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInf
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -387,7 +397,7 @@ void VtkStructuredGridAlgorithmWrap::SetOutput(const Nan::FunctionCallbackInfo<v
 {
 	VtkStructuredGridAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridAlgorithmWrap>(info.Holder());
 	vtkStructuredGridAlgorithm *native = (vtkStructuredGridAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

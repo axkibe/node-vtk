@@ -28,26 +28,27 @@ VtkCylindricalTransformWrap::~VtkCylindricalTransformWrap()
 
 void VtkCylindricalTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWarpTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWarpTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCylindricalTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCylindricalTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CylindricalTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCylindricalTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CylindricalTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCylindricalTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCylindricalTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCylindricalTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWarpTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWarpTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCylindricalTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkCylindricalTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCylindricalTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkCylindricalTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -157,6 +161,7 @@ void VtkCylindricalTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkCylindricalTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +177,7 @@ void VtkCylindricalTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkCylindricalTransformWrap *wrapper = ObjectWrap::Unwrap<VtkCylindricalTransformWrap>(info.Holder());
 	vtkCylindricalTransform *native = (vtkCylindricalTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCylindricalTransform * r;
@@ -184,6 +189,7 @@ void VtkCylindricalTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCylindricalTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

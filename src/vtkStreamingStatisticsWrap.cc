@@ -28,26 +28,27 @@ VtkStreamingStatisticsWrap::~VtkStreamingStatisticsWrap()
 
 void VtkStreamingStatisticsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTableAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStreamingStatisticsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStreamingStatistics").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StreamingStatistics").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStreamingStatistics").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StreamingStatistics").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStreamingStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStreamingStatisticsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStreamingStatisticsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStreamingStatisticsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkStreamingStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetStatisticsAlgorithm", SetStatisticsAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "setStatisticsAlgorithm", SetStatisticsAlgorithm);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStreamingStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkStreamingStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkStreamingStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -150,7 +154,7 @@ void VtkStreamingStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkStreamingStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingStatisticsWrap>(info.Holder());
 	vtkStreamingStatistics *native = (vtkStreamingStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStreamingStatistics * r;
@@ -162,6 +166,7 @@ void VtkStreamingStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStreamingStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -180,7 +185,7 @@ void VtkStreamingStatisticsWrap::SetStatisticsAlgorithm(const Nan::FunctionCallb
 {
 	VtkStreamingStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingStatisticsWrap>(info.Holder());
 	vtkStreamingStatistics *native = (vtkStreamingStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStatisticsAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStatisticsAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

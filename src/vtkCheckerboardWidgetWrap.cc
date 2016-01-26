@@ -28,26 +28,27 @@ VtkCheckerboardWidgetWrap::~VtkCheckerboardWidgetWrap()
 
 void VtkCheckerboardWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCheckerboardWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCheckerboardWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CheckerboardWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCheckerboardWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CheckerboardWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCheckerboardWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCheckerboardWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCheckerboardWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCheckerboardWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -72,6 +73,8 @@ void VtkCheckerboardWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCheckerboardWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +123,7 @@ void VtkCheckerboardWidgetWrap::GetCheckerboardRepresentation(const Nan::Functio
 		return;
 	}
 	r = native->GetCheckerboardRepresentation();
+		VtkCheckerboardRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,6 +182,7 @@ void VtkCheckerboardWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkCheckerboardWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +198,7 @@ void VtkCheckerboardWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCheckerboardWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardWidgetWrap>(info.Holder());
 	vtkCheckerboardWidget *native = (vtkCheckerboardWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCheckerboardWidget * r;
@@ -205,6 +210,7 @@ void VtkCheckerboardWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCheckerboardWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -242,7 +248,7 @@ void VtkCheckerboardWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInf
 {
 	VtkCheckerboardWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardWidgetWrap>(info.Holder());
 	vtkCheckerboardWidget *native = (vtkCheckerboardWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCheckerboardRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCheckerboardRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkCheckerboardRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

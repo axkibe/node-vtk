@@ -27,26 +27,27 @@ VtkApplyIconsWrap::~VtkApplyIconsWrap()
 
 void VtkApplyIconsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkApplyIconsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkApplyIcons").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ApplyIcons").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkApplyIcons").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ApplyIcons").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkApplyIconsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkApplyIconsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkApplyIconsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkApplyIconsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClearAllIconTypes", ClearAllIconTypes);
 	Nan::SetPrototypeMethod(tpl, "clearAllIconTypes", ClearAllIconTypes);
 
@@ -113,6 +114,8 @@ void VtkApplyIconsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableOn", UseLookupTableOn);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableOn", UseLookupTableOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkApplyIconsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -267,6 +270,7 @@ void VtkApplyIconsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkApplyIconsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,7 +286,7 @@ void VtkApplyIconsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkApplyIcons * r;
@@ -294,6 +298,7 @@ void VtkApplyIconsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkApplyIconsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

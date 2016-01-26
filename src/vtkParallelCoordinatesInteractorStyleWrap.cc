@@ -27,26 +27,27 @@ VtkParallelCoordinatesInteractorStyleWrap::~VtkParallelCoordinatesInteractorStyl
 
 void VtkParallelCoordinatesInteractorStyleWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleTrackballCameraWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParallelCoordinatesInteractorStyleWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParallelCoordinatesInteractorStyle").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParallelCoordinatesInteractorStyle").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParallelCoordinatesInteractorStyle").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParallelCoordinatesInteractorStyle").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParallelCoordinatesInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParallelCoordinatesInteractorStyleWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParallelCoordinatesInteractorStyleWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleTrackballCameraWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParallelCoordinatesInteractorStyleWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EndInspect", EndInspect);
 	Nan::SetPrototypeMethod(tpl, "endInspect", EndInspect);
 
@@ -113,6 +114,8 @@ void VtkParallelCoordinatesInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTe
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParallelCoordinatesInteractorStyleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -244,6 +247,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
+		VtkParallelCoordinatesInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -379,7 +383,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::SafeDownCast(const Nan::Function
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParallelCoordinatesInteractorStyle * r;
@@ -391,6 +395,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParallelCoordinatesInteractorStyleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

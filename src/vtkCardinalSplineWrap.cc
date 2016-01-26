@@ -27,26 +27,27 @@ VtkCardinalSplineWrap::~VtkCardinalSplineWrap()
 
 void VtkCardinalSplineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSplineWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSplineWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCardinalSplineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCardinalSpline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CardinalSpline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCardinalSpline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CardinalSpline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCardinalSplineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCardinalSplineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCardinalSplineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSplineWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSplineWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCardinalSplineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Compute", Compute);
 	Nan::SetPrototypeMethod(tpl, "compute", Compute);
 
@@ -68,6 +69,8 @@ void VtkCardinalSplineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCardinalSplineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -109,7 +112,7 @@ void VtkCardinalSplineWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCardinalSplineWrap *wrapper = ObjectWrap::Unwrap<VtkCardinalSplineWrap>(info.Holder());
 	vtkCardinalSpline *native = (vtkCardinalSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -193,6 +196,7 @@ void VtkCardinalSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkCardinalSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +212,7 @@ void VtkCardinalSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCardinalSplineWrap *wrapper = ObjectWrap::Unwrap<VtkCardinalSplineWrap>(info.Holder());
 	vtkCardinalSpline *native = (vtkCardinalSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCardinalSpline * r;
@@ -220,6 +224,7 @@ void VtkCardinalSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCardinalSplineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

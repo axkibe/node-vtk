@@ -32,26 +32,27 @@ VtkImageTracerWidgetWrap::~VtkImageTracerWidgetWrap()
 
 void VtkImageTracerWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	Vtk3DWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageTracerWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageTracerWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageTracerWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageTracerWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageTracerWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageTracerWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageTracerWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageTracerWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	Vtk3DWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageTracerWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoCloseOff", AutoCloseOff);
 	Nan::SetPrototypeMethod(tpl, "autoCloseOff", AutoCloseOff);
 
@@ -247,6 +248,8 @@ void VtkImageTracerWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SnapToImageOn", SnapToImageOn);
 	Nan::SetPrototypeMethod(tpl, "snapToImageOn", SnapToImageOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageTracerWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -349,6 +352,7 @@ void VtkImageTracerWidgetWrap::GetGlyphSource(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetGlyphSource();
+		VtkGlyphSource2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -399,6 +403,7 @@ void VtkImageTracerWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -491,6 +496,7 @@ void VtkImageTracerWidgetWrap::GetLineProperty(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -520,7 +526,7 @@ void VtkImageTracerWidgetWrap::GetPath(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -617,6 +623,7 @@ void VtkImageTracerWidgetWrap::GetSelectedHandleProperty(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -639,6 +646,7 @@ void VtkImageTracerWidgetWrap::GetSelectedLineProperty(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetSelectedLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -740,7 +748,7 @@ void VtkImageTracerWidgetWrap::InitializeHandles(const Nan::FunctionCallbackInfo
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -827,6 +835,7 @@ void VtkImageTracerWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageTracerWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -910,7 +919,7 @@ void VtkImageTracerWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageTracerWidget * r;
@@ -922,6 +931,7 @@ void VtkImageTracerWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageTracerWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1066,7 +1076,7 @@ void VtkImageTracerWidgetWrap::SetHandleProperty(const Nan::FunctionCallbackInfo
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1143,7 +1153,7 @@ void VtkImageTracerWidgetWrap::SetLineProperty(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1256,7 +1266,7 @@ void VtkImageTracerWidgetWrap::SetProp(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1276,7 +1286,7 @@ void VtkImageTracerWidgetWrap::SetSelectedHandleProperty(const Nan::FunctionCall
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1296,7 +1306,7 @@ void VtkImageTracerWidgetWrap::SetSelectedLineProperty(const Nan::FunctionCallba
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1335,7 +1345,7 @@ void VtkImageTracerWidgetWrap::SetViewProp(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

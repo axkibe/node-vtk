@@ -27,26 +27,27 @@ VtkTemporalFractalWrap::~VtkTemporalFractalWrap()
 
 void VtkTemporalFractalWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTemporalFractalWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTemporalFractal").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TemporalFractal").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTemporalFractal").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TemporalFractal").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTemporalFractalWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTemporalFractalWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTemporalFractalWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTemporalFractalWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AdaptiveSubdivisionOff", AdaptiveSubdivisionOff);
 	Nan::SetPrototypeMethod(tpl, "adaptiveSubdivisionOff", AdaptiveSubdivisionOff);
 
@@ -137,6 +138,8 @@ void VtkTemporalFractalWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TwoDimensionalOn", TwoDimensionalOn);
 	Nan::SetPrototypeMethod(tpl, "twoDimensionalOn", TwoDimensionalOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTemporalFractalWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -417,6 +420,7 @@ void VtkTemporalFractalWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkTemporalFractalWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,7 +436,7 @@ void VtkTemporalFractalWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTemporalFractal * r;
@@ -444,6 +448,7 @@ void VtkTemporalFractalWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTemporalFractalWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

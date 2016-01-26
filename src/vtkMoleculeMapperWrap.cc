@@ -34,26 +34,27 @@ VtkMoleculeMapperWrap::~VtkMoleculeMapperWrap()
 
 void VtkMoleculeMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMoleculeMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMoleculeMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MoleculeMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMoleculeMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MoleculeMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMoleculeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMoleculeMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMoleculeMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMoleculeMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -153,6 +154,8 @@ void VtkMoleculeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseVDWSpheresSettings", UseVDWSpheresSettings);
 	Nan::SetPrototypeMethod(tpl, "useVDWSpheresSettings", UseVDWSpheresSettings);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMoleculeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -184,7 +187,7 @@ void VtkMoleculeMapperWrap::FillInputPortInformation(const Nan::FunctionCallback
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -285,6 +288,7 @@ void VtkMoleculeMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetInput();
+		VtkMoleculeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -300,10 +304,10 @@ void VtkMoleculeMapperWrap::GetSelectedAtoms(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -325,13 +329,13 @@ void VtkMoleculeMapperWrap::GetSelectedAtomsAndBonds(const Nan::FunctionCallback
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdTypeArrayWrap *a2 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -355,10 +359,10 @@ void VtkMoleculeMapperWrap::GetSelectedBonds(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -409,6 +413,7 @@ void VtkMoleculeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkMoleculeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -424,7 +429,7 @@ void VtkMoleculeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -444,10 +449,10 @@ void VtkMoleculeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -517,7 +522,7 @@ void VtkMoleculeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMoleculeMapper * r;
@@ -529,6 +534,7 @@ void VtkMoleculeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMoleculeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -645,7 +651,7 @@ void VtkMoleculeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMoleculeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMoleculeWrap *a0 = ObjectWrap::Unwrap<VtkMoleculeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -30,26 +30,27 @@ VtkGeoView2DWrap::~VtkGeoView2DWrap()
 
 void VtkGeoView2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderViewWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderViewWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoView2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoView2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoView2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoView2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoView2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoView2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoView2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoView2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderViewWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderViewWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoView2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ApplyViewTheme", ApplyViewTheme);
 	Nan::SetPrototypeMethod(tpl, "applyViewTheme", ApplyViewTheme);
 
@@ -77,6 +78,8 @@ void VtkGeoView2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSurface", SetSurface);
 	Nan::SetPrototypeMethod(tpl, "setSurface", SetSurface);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoView2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -106,7 +109,7 @@ void VtkGeoView2DWrap::ApplyViewTheme(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGeoView2DWrap *wrapper = ObjectWrap::Unwrap<VtkGeoView2DWrap>(info.Holder());
 	vtkGeoView2D *native = (vtkGeoView2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -147,6 +150,7 @@ void VtkGeoView2DWrap::GetSurface(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetSurface();
+		VtkGeoTerrain2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,6 +173,7 @@ void VtkGeoView2DWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,6 +218,7 @@ void VtkGeoView2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoView2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +246,7 @@ void VtkGeoView2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGeoView2DWrap *wrapper = ObjectWrap::Unwrap<VtkGeoView2DWrap>(info.Holder());
 	vtkGeoView2D *native = (vtkGeoView2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoView2D * r;
@@ -252,6 +258,7 @@ void VtkGeoView2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoView2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -270,7 +277,7 @@ void VtkGeoView2DWrap::SetSurface(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGeoView2DWrap *wrapper = ObjectWrap::Unwrap<VtkGeoView2DWrap>(info.Holder());
 	vtkGeoView2D *native = (vtkGeoView2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTerrain2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTerrain2DWrap *a0 = ObjectWrap::Unwrap<VtkGeoTerrain2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

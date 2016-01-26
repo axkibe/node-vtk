@@ -27,26 +27,27 @@ VtkAnimationSceneWrap::~VtkAnimationSceneWrap()
 
 void VtkAnimationSceneWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAnimationCueWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAnimationCueWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAnimationSceneWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAnimationScene").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AnimationScene").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAnimationScene").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AnimationScene").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAnimationSceneWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAnimationSceneWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAnimationSceneWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAnimationCueWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAnimationCueWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAnimationSceneWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddCue", AddCue);
 	Nan::SetPrototypeMethod(tpl, "addCue", AddCue);
 
@@ -113,6 +114,8 @@ void VtkAnimationSceneWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAnimationSceneWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -142,7 +145,7 @@ void VtkAnimationSceneWrap::AddCue(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkAnimationSceneWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationSceneWrap>(info.Holder());
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnimationCueWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnimationCueWrap *a0 = ObjectWrap::Unwrap<VtkAnimationCueWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -289,6 +292,7 @@ void VtkAnimationSceneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkAnimationSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -328,7 +332,7 @@ void VtkAnimationSceneWrap::RemoveCue(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAnimationSceneWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationSceneWrap>(info.Holder());
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnimationCueWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnimationCueWrap *a0 = ObjectWrap::Unwrap<VtkAnimationCueWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -348,7 +352,7 @@ void VtkAnimationSceneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAnimationSceneWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationSceneWrap>(info.Holder());
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAnimationScene * r;
@@ -360,6 +364,7 @@ void VtkAnimationSceneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAnimationSceneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

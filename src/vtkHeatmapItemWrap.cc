@@ -28,26 +28,27 @@ VtkHeatmapItemWrap::~VtkHeatmapItemWrap()
 
 void VtkHeatmapItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContextItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHeatmapItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHeatmapItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HeatmapItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHeatmapItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HeatmapItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHeatmapItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHeatmapItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHeatmapItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHeatmapItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellHeight", GetCellHeight);
 	Nan::SetPrototypeMethod(tpl, "getCellHeight", GetCellHeight);
 
@@ -87,6 +88,8 @@ void VtkHeatmapItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTable", SetTable);
 	Nan::SetPrototypeMethod(tpl, "setTable", SetTable);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHeatmapItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -179,6 +182,7 @@ void VtkHeatmapItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetTable();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,6 +248,7 @@ void VtkHeatmapItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkHeatmapItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +264,7 @@ void VtkHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info.Holder());
 	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHeatmapItem * r;
@@ -271,6 +276,7 @@ void VtkHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHeatmapItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -346,7 +352,7 @@ void VtkHeatmapItemWrap::SetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info.Holder());
 	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

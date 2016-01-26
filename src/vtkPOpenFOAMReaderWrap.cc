@@ -28,26 +28,27 @@ VtkPOpenFOAMReaderWrap::~VtkPOpenFOAMReaderWrap()
 
 void VtkPOpenFOAMReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkOpenFOAMReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOpenFOAMReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPOpenFOAMReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPOpenFOAMReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("POpenFOAMReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPOpenFOAMReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("POpenFOAMReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPOpenFOAMReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPOpenFOAMReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPOpenFOAMReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkOpenFOAMReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOpenFOAMReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPOpenFOAMReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkPOpenFOAMReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPOpenFOAMReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -119,6 +122,7 @@ void VtkPOpenFOAMReaderWrap::GetController(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,6 +167,7 @@ void VtkPOpenFOAMReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkPOpenFOAMReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +183,7 @@ void VtkPOpenFOAMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPOpenFOAMReaderWrap>(info.Holder());
 	vtkPOpenFOAMReader *native = (vtkPOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPOpenFOAMReader * r;
@@ -190,6 +195,7 @@ void VtkPOpenFOAMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPOpenFOAMReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +233,7 @@ void VtkPOpenFOAMReaderWrap::SetController(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPOpenFOAMReaderWrap>(info.Holder());
 	vtkPOpenFOAMReader *native = (vtkPOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

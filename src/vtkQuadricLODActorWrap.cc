@@ -34,26 +34,27 @@ VtkQuadricLODActorWrap::~VtkQuadricLODActorWrap()
 
 void VtkQuadricLODActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkQuadricLODActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkQuadricLODActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("QuadricLODActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkQuadricLODActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("QuadricLODActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkQuadricLODActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkQuadricLODActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkQuadricLODActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkQuadricLODActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeferLODConstructionOff", DeferLODConstructionOff);
 	Nan::SetPrototypeMethod(tpl, "deferLODConstructionOff", DeferLODConstructionOff);
 
@@ -192,6 +193,8 @@ void VtkQuadricLODActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "StaticOn", StaticOn);
 	Nan::SetPrototypeMethod(tpl, "staticOn", StaticOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkQuadricLODActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -252,6 +255,7 @@ void VtkQuadricLODActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -386,6 +390,7 @@ void VtkQuadricLODActorWrap::GetLODFilter(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLODFilter();
+		VtkQuadricClusteringWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -528,6 +533,7 @@ void VtkQuadricLODActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkQuadricLODActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -543,7 +549,7 @@ void VtkQuadricLODActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbac
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -563,10 +569,10 @@ void VtkQuadricLODActorWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMapperWrap *a1 = ObjectWrap::Unwrap<VtkMapperWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -588,7 +594,7 @@ void VtkQuadricLODActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInf
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -610,7 +616,7 @@ void VtkQuadricLODActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkQuadricLODActor * r;
@@ -622,6 +628,7 @@ void VtkQuadricLODActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkQuadricLODActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -640,7 +647,7 @@ void VtkQuadricLODActorWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -813,7 +820,7 @@ void VtkQuadricLODActorWrap::SetLODFilter(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkQuadricClusteringWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkQuadricClusteringWrap *a0 = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -914,7 +921,7 @@ void VtkQuadricLODActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

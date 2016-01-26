@@ -32,26 +32,27 @@ VtkFollowerWrap::~VtkFollowerWrap()
 
 void VtkFollowerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFollowerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFollower").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Follower").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFollower").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Follower").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFollowerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFollowerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFollowerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFollowerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeMatrix", ComputeMatrix);
 	Nan::SetPrototypeMethod(tpl, "computeMatrix", ComputeMatrix);
 
@@ -91,6 +92,8 @@ void VtkFollowerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFollowerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -139,6 +142,7 @@ void VtkFollowerWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,6 +215,7 @@ void VtkFollowerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,7 +231,7 @@ void VtkFollowerWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v
 {
 	VtkFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkFollowerWrap>(info.Holder());
 	vtkFollower *native = (vtkFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -246,7 +251,7 @@ void VtkFollowerWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkFollowerWrap>(info.Holder());
 	vtkFollower *native = (vtkFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -266,7 +271,7 @@ void VtkFollowerWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkFollowerWrap>(info.Holder());
 	vtkFollower *native = (vtkFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -288,7 +293,7 @@ void VtkFollowerWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCall
 {
 	VtkFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkFollowerWrap>(info.Holder());
 	vtkFollower *native = (vtkFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -310,7 +315,7 @@ void VtkFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkFollowerWrap>(info.Holder());
 	vtkFollower *native = (vtkFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFollower * r;
@@ -322,6 +327,7 @@ void VtkFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFollowerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -340,7 +346,7 @@ void VtkFollowerWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkFollowerWrap>(info.Holder());
 	vtkFollower *native = (vtkFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -360,7 +366,7 @@ void VtkFollowerWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkFollowerWrap>(info.Holder());
 	vtkFollower *native = (vtkFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

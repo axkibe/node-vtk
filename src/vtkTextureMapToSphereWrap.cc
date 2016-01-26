@@ -27,26 +27,27 @@ VtkTextureMapToSphereWrap::~VtkTextureMapToSphereWrap()
 
 void VtkTextureMapToSphereWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextureMapToSphereWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTextureMapToSphere").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TextureMapToSphere").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTextureMapToSphere").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TextureMapToSphere").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextureMapToSphereWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextureMapToSphereWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextureMapToSphereWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextureMapToSphereWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutomaticSphereGenerationOff", AutomaticSphereGenerationOff);
 	Nan::SetPrototypeMethod(tpl, "automaticSphereGenerationOff", AutomaticSphereGenerationOff);
 
@@ -86,6 +87,8 @@ void VtkTextureMapToSphereWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPreventSeam", SetPreventSeam);
 	Nan::SetPrototypeMethod(tpl, "setPreventSeam", SetPreventSeam);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextureMapToSphereWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -210,6 +213,7 @@ void VtkTextureMapToSphereWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextureMapToSphereWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,7 +253,7 @@ void VtkTextureMapToSphereWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTextureMapToSphereWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToSphereWrap>(info.Holder());
 	vtkTextureMapToSphere *native = (vtkTextureMapToSphere *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTextureMapToSphere * r;
@@ -261,6 +265,7 @@ void VtkTextureMapToSphereWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextureMapToSphereWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

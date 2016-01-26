@@ -28,26 +28,27 @@ VtkLightWrap::~VtkLightWrap()
 
 void VtkLightWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLightWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLight").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Light").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLight").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Light").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLightWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLightWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLightWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLightWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -171,6 +172,8 @@ void VtkLightWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SwitchOn", SwitchOn);
 	Nan::SetPrototypeMethod(tpl, "switchOn", SwitchOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLightWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -200,7 +203,7 @@ void VtkLightWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightWrap *a0 = ObjectWrap::Unwrap<VtkLightWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -353,6 +356,7 @@ void VtkLightWrap::GetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTransformMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -439,6 +443,7 @@ void VtkLightWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
+		VtkLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -478,7 +483,7 @@ void VtkLightWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -502,7 +507,7 @@ void VtkLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLight * r;
@@ -514,6 +519,7 @@ void VtkLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLightWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -894,7 +900,7 @@ void VtkLightWrap::SetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -921,6 +927,7 @@ void VtkLightWrap::ShallowClone(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->ShallowClone();
+		VtkLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

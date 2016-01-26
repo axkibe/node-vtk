@@ -28,26 +28,27 @@ VtkImageResliceToColorsWrap::~VtkImageResliceToColorsWrap()
 
 void VtkImageResliceToColorsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageResliceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageResliceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageResliceToColorsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageResliceToColors").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageResliceToColors").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageResliceToColors").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageResliceToColors").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageResliceToColorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageResliceToColorsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageResliceToColorsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageResliceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageResliceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageResliceToColorsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BypassOff", BypassOff);
 	Nan::SetPrototypeMethod(tpl, "bypassOff", BypassOff);
 
@@ -102,6 +103,8 @@ void VtkImageResliceToColorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutputFormatToRGBA", SetOutputFormatToRGBA);
 	Nan::SetPrototypeMethod(tpl, "setOutputFormatToRGBA", SetOutputFormatToRGBA);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageResliceToColorsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -190,6 +193,7 @@ void VtkImageResliceToColorsWrap::GetLookupTable(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,6 +280,7 @@ void VtkImageResliceToColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageResliceToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +296,7 @@ void VtkImageResliceToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageResliceToColors * r;
@@ -303,6 +308,7 @@ void VtkImageResliceToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageResliceToColorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -340,7 +346,7 @@ void VtkImageResliceToColorsWrap::SetLookupTable(const Nan::FunctionCallbackInfo
 {
 	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

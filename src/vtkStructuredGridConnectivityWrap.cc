@@ -28,26 +28,27 @@ VtkStructuredGridConnectivityWrap::~VtkStructuredGridConnectivityWrap()
 
 void VtkStructuredGridConnectivityWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractGridConnectivityWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStructuredGridConnectivityWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStructuredGridConnectivity").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StructuredGridConnectivity").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStructuredGridConnectivity").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StructuredGridConnectivity").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStructuredGridConnectivityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStructuredGridConnectivityWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStructuredGridConnectivityWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractGridConnectivityWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStructuredGridConnectivityWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeNeighbors", ComputeNeighbors);
 	Nan::SetPrototypeMethod(tpl, "computeNeighbors", ComputeNeighbors);
 
@@ -78,6 +79,8 @@ void VtkStructuredGridConnectivityWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStructuredGridConnectivityWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,10 +143,10 @@ void VtkStructuredGridConnectivityWrap::FillGhostArrays(const Nan::FunctionCallb
 	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkUnsignedCharArrayWrap *a1 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkUnsignedCharArrayWrap *a2 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -245,6 +248,7 @@ void VtkStructuredGridConnectivityWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkStructuredGridConnectivityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +264,7 @@ void VtkStructuredGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
 	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStructuredGridConnectivity * r;
@@ -272,6 +276,7 @@ void VtkStructuredGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStructuredGridConnectivityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

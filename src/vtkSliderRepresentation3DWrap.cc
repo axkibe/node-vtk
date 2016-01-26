@@ -32,26 +32,27 @@ VtkSliderRepresentation3DWrap::~VtkSliderRepresentation3DWrap()
 
 void VtkSliderRepresentation3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSliderRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSliderRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSliderRepresentation3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSliderRepresentation3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SliderRepresentation3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSliderRepresentation3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SliderRepresentation3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSliderRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSliderRepresentation3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSliderRepresentation3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSliderRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSliderRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSliderRepresentation3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -139,6 +140,8 @@ void VtkSliderRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTitleText", SetTitleText);
 	Nan::SetPrototypeMethod(tpl, "setTitleText", SetTitleText);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSliderRepresentation3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -180,7 +183,7 @@ void VtkSliderRepresentation3DWrap::GetActors(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -207,6 +210,7 @@ void VtkSliderRepresentation3DWrap::GetCapProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCapProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,6 +247,7 @@ void VtkSliderRepresentation3DWrap::GetPoint1Coordinate(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPoint1Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -265,6 +270,7 @@ void VtkSliderRepresentation3DWrap::GetPoint2Coordinate(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPoint2Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,6 +307,7 @@ void VtkSliderRepresentation3DWrap::GetSelectedProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetSelectedProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +330,7 @@ void VtkSliderRepresentation3DWrap::GetSliderProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetSliderProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,6 +409,7 @@ void VtkSliderRepresentation3DWrap::GetTubeProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetTubeProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -478,6 +487,7 @@ void VtkSliderRepresentation3DWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkSliderRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -493,7 +503,7 @@ void VtkSliderRepresentation3DWrap::ReleaseGraphicsResources(const Nan::Function
 {
 	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -513,7 +523,7 @@ void VtkSliderRepresentation3DWrap::RenderOpaqueGeometry(const Nan::FunctionCall
 {
 	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -535,7 +545,7 @@ void VtkSliderRepresentation3DWrap::RenderTranslucentPolygonalGeometry(const Nan
 {
 	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -557,7 +567,7 @@ void VtkSliderRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSliderRepresentation3D * r;
@@ -569,6 +579,7 @@ void VtkSliderRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSliderRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

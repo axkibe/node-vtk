@@ -29,26 +29,27 @@ VtkTemporalPathLineFilterWrap::~VtkTemporalPathLineFilterWrap()
 
 void VtkTemporalPathLineFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTemporalPathLineFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTemporalPathLineFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TemporalPathLineFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTemporalPathLineFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TemporalPathLineFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTemporalPathLineFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTemporalPathLineFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTemporalPathLineFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTemporalPathLineFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Flush", Flush);
 	Nan::SetPrototypeMethod(tpl, "flush", Flush);
 
@@ -91,6 +92,8 @@ void VtkTemporalPathLineFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelectionData", SetSelectionData);
 	Nan::SetPrototypeMethod(tpl, "setSelectionData", SetSelectionData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTemporalPathLineFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -217,6 +220,7 @@ void VtkTemporalPathLineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkTemporalPathLineFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +236,7 @@ void VtkTemporalPathLineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkTemporalPathLineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalPathLineFilterWrap>(info.Holder());
 	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTemporalPathLineFilter * r;
@@ -244,6 +248,7 @@ void VtkTemporalPathLineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTemporalPathLineFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -347,7 +352,7 @@ void VtkTemporalPathLineFilterWrap::SetSelectionConnection(const Nan::FunctionCa
 {
 	VtkTemporalPathLineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalPathLineFilterWrap>(info.Holder());
 	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -367,7 +372,7 @@ void VtkTemporalPathLineFilterWrap::SetSelectionData(const Nan::FunctionCallback
 {
 	VtkTemporalPathLineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalPathLineFilterWrap>(info.Holder());
 	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

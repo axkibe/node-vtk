@@ -27,26 +27,27 @@ VtkExecutionTimerWrap::~VtkExecutionTimerWrap()
 
 void VtkExecutionTimerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExecutionTimerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExecutionTimer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExecutionTimer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExecutionTimer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExecutionTimer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExecutionTimerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExecutionTimerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExecutionTimerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExecutionTimerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkExecutionTimerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFilter", SetFilter);
 	Nan::SetPrototypeMethod(tpl, "setFilter", SetFilter);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExecutionTimerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -149,6 +152,7 @@ void VtkExecutionTimerWrap::GetFilter(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetFilter();
+		VtkAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,6 +197,7 @@ void VtkExecutionTimerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkExecutionTimerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +213,7 @@ void VtkExecutionTimerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkExecutionTimerWrap *wrapper = ObjectWrap::Unwrap<VtkExecutionTimerWrap>(info.Holder());
 	vtkExecutionTimer *native = (vtkExecutionTimer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExecutionTimer * r;
@@ -220,6 +225,7 @@ void VtkExecutionTimerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExecutionTimerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +244,7 @@ void VtkExecutionTimerWrap::SetFilter(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkExecutionTimerWrap *wrapper = ObjectWrap::Unwrap<VtkExecutionTimerWrap>(info.Holder());
 	vtkExecutionTimer *native = (vtkExecutionTimer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

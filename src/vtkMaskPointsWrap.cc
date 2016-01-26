@@ -27,26 +27,27 @@ VtkMaskPointsWrap::~VtkMaskPointsWrap()
 
 void VtkMaskPointsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMaskPointsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMaskPoints").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MaskPoints").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMaskPoints").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MaskPoints").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMaskPointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMaskPointsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMaskPointsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMaskPointsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateVerticesOff", GenerateVerticesOff);
 	Nan::SetPrototypeMethod(tpl, "generateVerticesOff", GenerateVerticesOff);
 
@@ -137,6 +138,8 @@ void VtkMaskPointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SingleVertexPerCellOn", SingleVertexPerCellOn);
 	Nan::SetPrototypeMethod(tpl, "singleVertexPerCellOn", SingleVertexPerCellOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMaskPointsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -387,6 +390,7 @@ void VtkMaskPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkMaskPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -450,7 +454,7 @@ void VtkMaskPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMaskPoints * r;
@@ -462,6 +466,7 @@ void VtkMaskPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMaskPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

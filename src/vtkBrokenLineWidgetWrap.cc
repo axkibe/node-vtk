@@ -31,26 +31,27 @@ VtkBrokenLineWidgetWrap::~VtkBrokenLineWidgetWrap()
 
 void VtkBrokenLineWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	Vtk3DWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBrokenLineWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBrokenLineWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BrokenLineWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBrokenLineWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BrokenLineWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBrokenLineWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBrokenLineWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBrokenLineWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	Vtk3DWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBrokenLineWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -186,6 +187,8 @@ void VtkBrokenLineWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelectedLineProperty", SetSelectedLineProperty);
 	Nan::SetPrototypeMethod(tpl, "setSelectedLineProperty", SetSelectedLineProperty);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBrokenLineWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -236,6 +239,7 @@ void VtkBrokenLineWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -300,6 +304,7 @@ void VtkBrokenLineWidgetWrap::GetLineProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +334,7 @@ void VtkBrokenLineWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -468,6 +473,7 @@ void VtkBrokenLineWidgetWrap::GetSelectedHandleProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -490,6 +496,7 @@ void VtkBrokenLineWidgetWrap::GetSelectedLineProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetSelectedLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -519,7 +526,7 @@ void VtkBrokenLineWidgetWrap::InitializeHandles(const Nan::FunctionCallbackInfo<
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -568,6 +575,7 @@ void VtkBrokenLineWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkBrokenLineWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -675,7 +683,7 @@ void VtkBrokenLineWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBrokenLineWidget * r;
@@ -687,6 +695,7 @@ void VtkBrokenLineWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBrokenLineWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -755,7 +764,7 @@ void VtkBrokenLineWidgetWrap::SetHandleProperty(const Nan::FunctionCallbackInfo<
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -794,7 +803,7 @@ void VtkBrokenLineWidgetWrap::SetLineProperty(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -833,7 +842,7 @@ void VtkBrokenLineWidgetWrap::SetPlaneSource(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneSourceWrap *a0 = ObjectWrap::Unwrap<VtkPlaneSourceWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -977,7 +986,7 @@ void VtkBrokenLineWidgetWrap::SetSelectedHandleProperty(const Nan::FunctionCallb
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -997,7 +1006,7 @@ void VtkBrokenLineWidgetWrap::SetSelectedLineProperty(const Nan::FunctionCallbac
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

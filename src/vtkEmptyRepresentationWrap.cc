@@ -28,26 +28,27 @@ VtkEmptyRepresentationWrap::~VtkEmptyRepresentationWrap()
 
 void VtkEmptyRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEmptyRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEmptyRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EmptyRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEmptyRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EmptyRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEmptyRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEmptyRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEmptyRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEmptyRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkEmptyRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEmptyRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +123,7 @@ void VtkEmptyRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Func
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
+				VtkAlgorithmOutputWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -140,6 +144,7 @@ void VtkEmptyRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Func
 		r = native->GetInternalAnnotationOutputPort(
 			info[0]->Int32Value()
 		);
+			VtkAlgorithmOutputWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -158,6 +163,7 @@ void VtkEmptyRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Func
 		return;
 	}
 	r = native->GetInternalAnnotationOutputPort();
+		VtkAlgorithmOutputWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,6 +208,7 @@ void VtkEmptyRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkEmptyRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +224,7 @@ void VtkEmptyRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkEmptyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkEmptyRepresentationWrap>(info.Holder());
 	vtkEmptyRepresentation *native = (vtkEmptyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEmptyRepresentation * r;
@@ -229,6 +236,7 @@ void VtkEmptyRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEmptyRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkImageThresholdConnectivityWrap::~VtkImageThresholdConnectivityWrap()
 
 void VtkImageThresholdConnectivityWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageThresholdConnectivityWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageThresholdConnectivity").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageThresholdConnectivity").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageThresholdConnectivity").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageThresholdConnectivity").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageThresholdConnectivityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageThresholdConnectivityWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageThresholdConnectivityWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageThresholdConnectivityWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetActiveComponent", GetActiveComponent);
 	Nan::SetPrototypeMethod(tpl, "getActiveComponent", GetActiveComponent);
 
@@ -157,6 +158,8 @@ void VtkImageThresholdConnectivityWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "ThresholdByUpper", ThresholdByUpper);
 	Nan::SetPrototypeMethod(tpl, "thresholdByUpper", ThresholdByUpper);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageThresholdConnectivityWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -347,6 +350,7 @@ void VtkImageThresholdConnectivityWrap::GetSeedPoints(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetSeedPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -369,6 +373,7 @@ void VtkImageThresholdConnectivityWrap::GetStencil(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetStencil();
+		VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -427,6 +432,7 @@ void VtkImageThresholdConnectivityWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageThresholdConnectivityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -490,7 +496,7 @@ void VtkImageThresholdConnectivityWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageThresholdConnectivity * r;
@@ -502,6 +508,7 @@ void VtkImageThresholdConnectivityWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageThresholdConnectivityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -661,7 +668,7 @@ void VtkImageThresholdConnectivityWrap::SetSeedPoints(const Nan::FunctionCallbac
 {
 	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -750,7 +757,7 @@ void VtkImageThresholdConnectivityWrap::SetStencilData(const Nan::FunctionCallba
 {
 	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

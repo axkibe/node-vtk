@@ -27,26 +27,27 @@ VtkWindowedSincPolyDataFilterWrap::~VtkWindowedSincPolyDataFilterWrap()
 
 void VtkWindowedSincPolyDataFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWindowedSincPolyDataFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWindowedSincPolyDataFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WindowedSincPolyDataFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWindowedSincPolyDataFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WindowedSincPolyDataFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWindowedSincPolyDataFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWindowedSincPolyDataFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWindowedSincPolyDataFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWindowedSincPolyDataFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BoundarySmoothingOff", BoundarySmoothingOff);
 	Nan::SetPrototypeMethod(tpl, "boundarySmoothingOff", BoundarySmoothingOff);
 
@@ -179,6 +180,8 @@ void VtkWindowedSincPolyDataFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetPassBand", SetPassBand);
 	Nan::SetPrototypeMethod(tpl, "setPassBand", SetPassBand);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWindowedSincPolyDataFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -599,6 +602,7 @@ void VtkWindowedSincPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkWindowedSincPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -662,7 +666,7 @@ void VtkWindowedSincPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWindowedSincPolyDataFilter * r;
@@ -674,6 +678,7 @@ void VtkWindowedSincPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWindowedSincPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

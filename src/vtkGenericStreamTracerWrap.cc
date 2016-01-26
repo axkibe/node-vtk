@@ -33,26 +33,27 @@ VtkGenericStreamTracerWrap::~VtkGenericStreamTracerWrap()
 
 void VtkGenericStreamTracerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericStreamTracerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericStreamTracer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericStreamTracer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericStreamTracer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericStreamTracer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericStreamTracerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericStreamTracerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericStreamTracerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericStreamTracerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInputData", AddInputData);
 	Nan::SetPrototypeMethod(tpl, "addInputData", AddInputData);
 
@@ -251,6 +252,8 @@ void VtkGenericStreamTracerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTerminalSpeed", SetTerminalSpeed);
 	Nan::SetPrototypeMethod(tpl, "setTerminalSpeed", SetTerminalSpeed);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericStreamTracerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -280,7 +283,7 @@ void VtkGenericStreamTracerWrap::AddInputData(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericDataSetWrap *a0 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -326,7 +329,7 @@ void VtkGenericStreamTracerWrap::FillInputPortInformation(const Nan::FunctionCal
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -469,6 +472,7 @@ void VtkGenericStreamTracerWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetIntegrator();
+		VtkInitialValueProblemSolverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -617,6 +621,7 @@ void VtkGenericStreamTracerWrap::GetSource(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetSource();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -675,6 +680,7 @@ void VtkGenericStreamTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericStreamTracerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -690,7 +696,7 @@ void VtkGenericStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericStreamTracer * r;
@@ -702,6 +708,7 @@ void VtkGenericStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericStreamTracerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -923,7 +930,7 @@ void VtkGenericStreamTracerWrap::SetIntegrator(const Nan::FunctionCallbackInfo<v
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInitialValueProblemSolverWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInitialValueProblemSolverWrap *a0 = ObjectWrap::Unwrap<VtkInitialValueProblemSolverWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -998,7 +1005,7 @@ void VtkGenericStreamTracerWrap::SetInterpolatorPrototype(const Nan::FunctionCal
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericInterpolatedVelocityFieldWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericInterpolatedVelocityFieldWrap *a0 = ObjectWrap::Unwrap<VtkGenericInterpolatedVelocityFieldWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1326,7 +1333,7 @@ void VtkGenericStreamTracerWrap::SetSourceConnection(const Nan::FunctionCallback
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1346,7 +1353,7 @@ void VtkGenericStreamTracerWrap::SetSourceData(const Nan::FunctionCallbackInfo<v
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

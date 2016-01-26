@@ -30,26 +30,27 @@ VtkClipHyperOctreeWrap::~VtkClipHyperOctreeWrap()
 
 void VtkClipHyperOctreeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkClipHyperOctreeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkClipHyperOctree").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ClipHyperOctree").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkClipHyperOctree").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ClipHyperOctree").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkClipHyperOctreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkClipHyperOctreeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkClipHyperOctreeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkClipHyperOctreeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLocator", CreateDefaultLocator);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLocator", CreateDefaultLocator);
 
@@ -122,6 +123,8 @@ void VtkClipHyperOctreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkClipHyperOctreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -232,6 +235,7 @@ void VtkClipHyperOctreeWrap::GetClipFunction(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetClipFunction();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -254,6 +258,7 @@ void VtkClipHyperOctreeWrap::GetClippedOutput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetClippedOutput();
+		VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -318,6 +323,7 @@ void VtkClipHyperOctreeWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,6 +406,7 @@ void VtkClipHyperOctreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkClipHyperOctreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -415,7 +422,7 @@ void VtkClipHyperOctreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkClipHyperOctree * r;
@@ -427,6 +434,7 @@ void VtkClipHyperOctreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkClipHyperOctreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -445,7 +453,7 @@ void VtkClipHyperOctreeWrap::SetClipFunction(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -522,7 +530,7 @@ void VtkClipHyperOctreeWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

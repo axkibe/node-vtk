@@ -29,26 +29,27 @@ VtkLabelRenderStrategyWrap::~VtkLabelRenderStrategyWrap()
 
 void VtkLabelRenderStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLabelRenderStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLabelRenderStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LabelRenderStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLabelRenderStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LabelRenderStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLabelRenderStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLabelRenderStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLabelRenderStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLabelRenderStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EndFrame", EndFrame);
 	Nan::SetPrototypeMethod(tpl, "endFrame", EndFrame);
 
@@ -82,6 +83,8 @@ void VtkLabelRenderStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "StartFrame", StartFrame);
 	Nan::SetPrototypeMethod(tpl, "startFrame", StartFrame);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLabelRenderStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -144,6 +147,7 @@ void VtkLabelRenderStrategyWrap::GetDefaultTextProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetDefaultTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,6 +170,7 @@ void VtkLabelRenderStrategyWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,6 +215,7 @@ void VtkLabelRenderStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkLabelRenderStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +231,7 @@ void VtkLabelRenderStrategyWrap::ReleaseGraphicsResources(const Nan::FunctionCal
 {
 	VtkLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkLabelRenderStrategyWrap>(info.Holder());
 	vtkLabelRenderStrategy *native = (vtkLabelRenderStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -245,7 +251,7 @@ void VtkLabelRenderStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkLabelRenderStrategyWrap>(info.Holder());
 	vtkLabelRenderStrategy *native = (vtkLabelRenderStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLabelRenderStrategy * r;
@@ -257,6 +263,7 @@ void VtkLabelRenderStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLabelRenderStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -275,7 +282,7 @@ void VtkLabelRenderStrategyWrap::SetDefaultTextProperty(const Nan::FunctionCallb
 {
 	VtkLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkLabelRenderStrategyWrap>(info.Holder());
 	vtkLabelRenderStrategy *native = (vtkLabelRenderStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -295,7 +302,7 @@ void VtkLabelRenderStrategyWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkLabelRenderStrategyWrap>(info.Holder());
 	vtkLabelRenderStrategy *native = (vtkLabelRenderStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

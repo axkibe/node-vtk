@@ -27,26 +27,27 @@ VtkEdgeSubdivisionCriterionWrap::~VtkEdgeSubdivisionCriterionWrap()
 
 void VtkEdgeSubdivisionCriterionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEdgeSubdivisionCriterionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEdgeSubdivisionCriterion").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EdgeSubdivisionCriterion").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEdgeSubdivisionCriterion").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EdgeSubdivisionCriterion").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEdgeSubdivisionCriterionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEdgeSubdivisionCriterionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEdgeSubdivisionCriterionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEdgeSubdivisionCriterionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkEdgeSubdivisionCriterionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEdgeSubdivisionCriterionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -178,6 +181,7 @@ void VtkEdgeSubdivisionCriterionWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkEdgeSubdivisionCriterionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +201,7 @@ void VtkEdgeSubdivisionCriterionWrap::PassField(const Nan::FunctionCallbackInfo<
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkStreamingTessellatorWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkStreamingTessellatorWrap *a2 = ObjectWrap::Unwrap<VtkStreamingTessellatorWrap>(info[2]->ToObject());
 				int r;
@@ -235,7 +239,7 @@ void VtkEdgeSubdivisionCriterionWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkEdgeSubdivisionCriterionWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeSubdivisionCriterionWrap>(info.Holder());
 	vtkEdgeSubdivisionCriterion *native = (vtkEdgeSubdivisionCriterion *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEdgeSubdivisionCriterion * r;
@@ -247,6 +251,7 @@ void VtkEdgeSubdivisionCriterionWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEdgeSubdivisionCriterionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

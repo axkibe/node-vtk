@@ -34,26 +34,27 @@ VtkImageResliceWrap::~VtkImageResliceWrap()
 
 void VtkImageResliceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageResliceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageReslice").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageReslice").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageReslice").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageReslice").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageResliceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageResliceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageResliceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageResliceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoCropOutputOff", AutoCropOutputOff);
 	Nan::SetPrototypeMethod(tpl, "autoCropOutputOff", AutoCropOutputOff);
 
@@ -312,6 +313,8 @@ void VtkImageResliceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WrapOn", WrapOn);
 	Nan::SetPrototypeMethod(tpl, "wrapOn", WrapOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageResliceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -490,6 +493,7 @@ void VtkImageResliceWrap::GetInformationInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetInformationInput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -582,6 +586,7 @@ void VtkImageResliceWrap::GetInterpolator(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInterpolator();
+		VtkAbstractImageInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -646,6 +651,7 @@ void VtkImageResliceWrap::GetResliceAxes(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetResliceAxes();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -668,6 +674,7 @@ void VtkImageResliceWrap::GetResliceTransform(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetResliceTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -774,6 +781,7 @@ void VtkImageResliceWrap::GetStencil(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetStencil();
+		VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -796,6 +804,7 @@ void VtkImageResliceWrap::GetStencilOutput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetStencilOutput();
+		VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -818,6 +827,7 @@ void VtkImageResliceWrap::GetStencilOutputPort(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetStencilOutputPort();
+		VtkAlgorithmOutputWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -938,6 +948,7 @@ void VtkImageResliceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageResliceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -977,7 +988,7 @@ void VtkImageResliceWrap::ReportReferences(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGarbageCollectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGarbageCollectorWrap *a0 = ObjectWrap::Unwrap<VtkGarbageCollectorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -997,7 +1008,7 @@ void VtkImageResliceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageReslice * r;
@@ -1009,6 +1020,7 @@ void VtkImageResliceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageResliceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1134,7 +1146,7 @@ void VtkImageResliceWrap::SetInformationInput(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1228,7 +1240,7 @@ void VtkImageResliceWrap::SetInterpolator(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractImageInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractImageInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1434,7 +1446,7 @@ void VtkImageResliceWrap::SetResliceAxes(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1532,7 +1544,7 @@ void VtkImageResliceWrap::SetResliceTransform(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1657,7 +1669,7 @@ void VtkImageResliceWrap::SetStencilData(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1677,7 +1689,7 @@ void VtkImageResliceWrap::SetStencilOutput(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

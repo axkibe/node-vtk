@@ -27,26 +27,27 @@ VtkTypeInt16ArrayWrap::~VtkTypeInt16ArrayWrap()
 
 void VtkTypeInt16ArrayWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkShortArrayWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkShortArrayWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTypeInt16ArrayWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTypeInt16Array").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TypeInt16Array").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTypeInt16Array").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TypeInt16Array").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTypeInt16ArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTypeInt16ArrayWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTypeInt16ArrayWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkShortArrayWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkShortArrayWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTypeInt16ArrayWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkTypeInt16ArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTypeInt16ArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkTypeInt16ArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkTypeInt16ArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkTypeInt16ArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTypeInt16ArrayWrap *wrapper = ObjectWrap::Unwrap<VtkTypeInt16ArrayWrap>(info.Holder());
 	vtkTypeInt16Array *native = (vtkTypeInt16Array *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTypeInt16Array * r;
@@ -158,6 +162,7 @@ void VtkTypeInt16ArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTypeInt16ArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

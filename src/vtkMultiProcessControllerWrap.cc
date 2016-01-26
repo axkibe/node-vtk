@@ -31,26 +31,27 @@ VtkMultiProcessControllerWrap::~VtkMultiProcessControllerWrap()
 
 void VtkMultiProcessControllerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMultiProcessControllerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMultiProcessController").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MultiProcessController").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMultiProcessController").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MultiProcessController").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMultiProcessControllerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMultiProcessControllerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMultiProcessControllerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMultiProcessControllerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AllGather", AllGather);
 	Nan::SetPrototypeMethod(tpl, "allGather", AllGather);
 
@@ -171,6 +172,8 @@ void VtkMultiProcessControllerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TriggerRMIOnAllChildren", TriggerRMIOnAllChildren);
 	Nan::SetPrototypeMethod(tpl, "triggerRMIOnAllChildren", TriggerRMIOnAllChildren);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMultiProcessControllerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -200,10 +203,10 @@ void VtkMultiProcessControllerWrap::AllGather(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			int r;
@@ -227,10 +230,10 @@ void VtkMultiProcessControllerWrap::AllGatherV(const Nan::FunctionCallbackInfo<v
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			int r;
@@ -254,10 +257,10 @@ void VtkMultiProcessControllerWrap::AllReduce(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -297,7 +300,7 @@ void VtkMultiProcessControllerWrap::Broadcast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -335,7 +338,7 @@ void VtkMultiProcessControllerWrap::CreateSubController(const Nan::FunctionCallb
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProcessGroupWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProcessGroupWrap *a0 = ObjectWrap::Unwrap<VtkProcessGroupWrap>(info[0]->ToObject());
 		vtkMultiProcessController * r;
@@ -347,6 +350,7 @@ void VtkMultiProcessControllerWrap::CreateSubController(const Nan::FunctionCallb
 		r = native->CreateSubController(
 			(vtkProcessGroup *) a0->native.GetPointer()
 		);
+			VtkMultiProcessControllerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -389,10 +393,10 @@ void VtkMultiProcessControllerWrap::Gather(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -420,10 +424,10 @@ void VtkMultiProcessControllerWrap::GatherV(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -500,6 +504,7 @@ void VtkMultiProcessControllerWrap::GetCommunicator(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetCommunicator();
+		VtkCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -522,6 +527,7 @@ void VtkMultiProcessControllerWrap::GetGlobalController(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetGlobalController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -634,6 +640,7 @@ void VtkMultiProcessControllerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -663,6 +670,7 @@ void VtkMultiProcessControllerWrap::PartitionController(const Nan::FunctionCallb
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
+				VtkMultiProcessControllerWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -714,7 +722,7 @@ void VtkMultiProcessControllerWrap::Receive(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -758,6 +766,7 @@ void VtkMultiProcessControllerWrap::ReceiveDataObject(const Nan::FunctionCallbac
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
+				VtkDataObjectWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -777,10 +786,10 @@ void VtkMultiProcessControllerWrap::Reduce(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -852,7 +861,7 @@ void VtkMultiProcessControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMultiProcessController * r;
@@ -864,6 +873,7 @@ void VtkMultiProcessControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMultiProcessControllerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -882,10 +892,10 @@ void VtkMultiProcessControllerWrap::Scatter(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -913,7 +923,7 @@ void VtkMultiProcessControllerWrap::Send(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -962,7 +972,7 @@ void VtkMultiProcessControllerWrap::SetGlobalController(const Nan::FunctionCallb
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1001,7 +1011,7 @@ void VtkMultiProcessControllerWrap::SetSingleProcessObject(const Nan::FunctionCa
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProcessWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProcessWrap *a0 = ObjectWrap::Unwrap<VtkProcessWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

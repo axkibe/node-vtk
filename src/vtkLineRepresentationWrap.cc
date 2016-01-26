@@ -35,26 +35,27 @@ VtkLineRepresentationWrap::~VtkLineRepresentationWrap()
 
 void VtkLineRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLineRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLineRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LineRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLineRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LineRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLineRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLineRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLineRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLineRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -193,6 +194,8 @@ void VtkLineRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLineRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -287,7 +290,7 @@ void VtkLineRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -356,6 +359,7 @@ void VtkLineRepresentationWrap::GetDistanceAnnotationProperty(const Nan::Functio
 		return;
 	}
 	r = native->GetDistanceAnnotationProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,6 +396,7 @@ void VtkLineRepresentationWrap::GetEndPoint2Property(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetEndPoint2Property();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -414,6 +419,7 @@ void VtkLineRepresentationWrap::GetEndPointProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetEndPointProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -464,6 +470,7 @@ void VtkLineRepresentationWrap::GetLineHandleRepresentation(const Nan::FunctionC
 		return;
 	}
 	r = native->GetLineHandleRepresentation();
+		VtkPointHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -486,6 +493,7 @@ void VtkLineRepresentationWrap::GetLineProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -508,6 +516,7 @@ void VtkLineRepresentationWrap::GetPoint1Representation(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPoint1Representation();
+		VtkPointHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -530,6 +539,7 @@ void VtkLineRepresentationWrap::GetPoint2Representation(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPoint2Representation();
+		VtkPointHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -545,7 +555,7 @@ void VtkLineRepresentationWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -600,6 +610,7 @@ void VtkLineRepresentationWrap::GetSelectedEndPoint2Property(const Nan::Function
 		return;
 	}
 	r = native->GetSelectedEndPoint2Property();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -622,6 +633,7 @@ void VtkLineRepresentationWrap::GetSelectedEndPointProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSelectedEndPointProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -644,6 +656,7 @@ void VtkLineRepresentationWrap::GetSelectedLineProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetSelectedLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -666,6 +679,7 @@ void VtkLineRepresentationWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetTextActor();
+		VtkFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -778,6 +792,7 @@ void VtkLineRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkLineRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -793,7 +808,7 @@ void VtkLineRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -813,7 +828,7 @@ void VtkLineRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCallback
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -835,7 +850,7 @@ void VtkLineRepresentationWrap::RenderTranslucentPolygonalGeometry(const Nan::Fu
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -857,7 +872,7 @@ void VtkLineRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLineRepresentation * r;
@@ -869,6 +884,7 @@ void VtkLineRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLineRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -953,7 +969,7 @@ void VtkLineRepresentationWrap::SetHandleRepresentation(const Nan::FunctionCallb
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointHandleRepresentation3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointHandleRepresentation3DWrap *a0 = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1019,7 +1035,7 @@ void VtkLineRepresentationWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

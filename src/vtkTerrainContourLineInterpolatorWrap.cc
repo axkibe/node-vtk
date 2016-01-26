@@ -31,26 +31,27 @@ VtkTerrainContourLineInterpolatorWrap::~VtkTerrainContourLineInterpolatorWrap()
 
 void VtkTerrainContourLineInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContourLineInterpolatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourLineInterpolatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTerrainContourLineInterpolatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTerrainContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TerrainContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTerrainContourLineInterpolator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TerrainContourLineInterpolator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTerrainContourLineInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTerrainContourLineInterpolatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTerrainContourLineInterpolatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContourLineInterpolatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourLineInterpolatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTerrainContourLineInterpolatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkTerrainContourLineInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetImageData", SetImageData);
 	Nan::SetPrototypeMethod(tpl, "setImageData", SetImageData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTerrainContourLineInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -125,6 +128,7 @@ void VtkTerrainContourLineInterpolatorWrap::GetImageData(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetImageData();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -147,6 +151,7 @@ void VtkTerrainContourLineInterpolatorWrap::GetProjector(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetProjector();
+		VtkProjectedTerrainPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,10 +167,10 @@ void VtkTerrainContourLineInterpolatorWrap::InterpolateLine(const Nan::FunctionC
 {
 	VtkTerrainContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTerrainContourLineInterpolatorWrap>(info.Holder());
 	vtkTerrainContourLineInterpolator *native = (vtkTerrainContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkContourRepresentationWrap *a1 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -226,6 +231,7 @@ void VtkTerrainContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkTerrainContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +247,7 @@ void VtkTerrainContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkTerrainContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTerrainContourLineInterpolatorWrap>(info.Holder());
 	vtkTerrainContourLineInterpolator *native = (vtkTerrainContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTerrainContourLineInterpolator * r;
@@ -253,6 +259,7 @@ void VtkTerrainContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTerrainContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -271,7 +278,7 @@ void VtkTerrainContourLineInterpolatorWrap::SetImageData(const Nan::FunctionCall
 {
 	VtkTerrainContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTerrainContourLineInterpolatorWrap>(info.Holder());
 	vtkTerrainContourLineInterpolator *native = (vtkTerrainContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

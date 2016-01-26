@@ -27,26 +27,27 @@ VtkSQLiteToTableReaderWrap::~VtkSQLiteToTableReaderWrap()
 
 void VtkSQLiteToTableReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDatabaseToTableReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDatabaseToTableReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSQLiteToTableReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSQLiteToTableReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SQLiteToTableReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSQLiteToTableReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SQLiteToTableReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSQLiteToTableReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSQLiteToTableReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSQLiteToTableReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDatabaseToTableReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDatabaseToTableReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSQLiteToTableReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkSQLiteToTableReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSQLiteToTableReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkSQLiteToTableReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkSQLiteToTableReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkSQLiteToTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSQLiteToTableReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSQLiteToTableReaderWrap>(info.Holder());
 	vtkSQLiteToTableReader *native = (vtkSQLiteToTableReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSQLiteToTableReader * r;
@@ -158,6 +162,7 @@ void VtkSQLiteToTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSQLiteToTableReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

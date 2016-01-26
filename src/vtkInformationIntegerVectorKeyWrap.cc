@@ -28,26 +28,27 @@ VtkInformationIntegerVectorKeyWrap::~VtkInformationIntegerVectorKeyWrap()
 
 void VtkInformationIntegerVectorKeyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInformationKeyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInformationKeyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInformationIntegerVectorKeyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInformationIntegerVectorKey").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InformationIntegerVectorKey").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInformationIntegerVectorKey").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InformationIntegerVectorKey").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInformationIntegerVectorKeyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInformationIntegerVectorKeyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInformationIntegerVectorKeyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInformationKeyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInformationKeyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInformationIntegerVectorKeyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Append", Append);
 	Nan::SetPrototypeMethod(tpl, "append", Append);
 
@@ -75,6 +76,8 @@ void VtkInformationIntegerVectorKeyWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInformationIntegerVectorKeyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -104,7 +107,7 @@ void VtkInformationIntegerVectorKeyWrap::Append(const Nan::FunctionCallbackInfo<
 {
 	VtkInformationIntegerVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info.Holder());
 	vtkInformationIntegerVectorKey *native = (vtkInformationIntegerVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -128,7 +131,7 @@ void VtkInformationIntegerVectorKeyWrap::Get(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInformationIntegerVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info.Holder());
 	vtkInformationIntegerVectorKey *native = (vtkInformationIntegerVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -190,7 +193,7 @@ void VtkInformationIntegerVectorKeyWrap::Length(const Nan::FunctionCallbackInfo<
 {
 	VtkInformationIntegerVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info.Holder());
 	vtkInformationIntegerVectorKey *native = (vtkInformationIntegerVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -219,6 +222,7 @@ void VtkInformationIntegerVectorKeyWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkInformationIntegerVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +238,7 @@ void VtkInformationIntegerVectorKeyWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkInformationIntegerVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info.Holder());
 	vtkInformationIntegerVectorKey *native = (vtkInformationIntegerVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInformationIntegerVectorKey * r;
@@ -246,6 +250,7 @@ void VtkInformationIntegerVectorKeyWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInformationIntegerVectorKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +269,7 @@ void VtkInformationIntegerVectorKeyWrap::Set(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInformationIntegerVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info.Holder());
 	vtkInformationIntegerVectorKey *native = (vtkInformationIntegerVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -284,10 +289,10 @@ void VtkInformationIntegerVectorKeyWrap::ShallowCopy(const Nan::FunctionCallback
 {
 	VtkInformationIntegerVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info.Holder());
 	vtkInformationIntegerVectorKey *native = (vtkInformationIntegerVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

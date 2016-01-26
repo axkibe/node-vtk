@@ -36,26 +36,27 @@ VtkAxisActorWrap::~VtkAxisActorWrap()
 
 void VtkAxisActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAxisActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAxisActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AxisActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAxisActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AxisActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAxisActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAxisActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAxisActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAxisActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AxisVisibilityOff", AxisVisibilityOff);
 	Nan::SetPrototypeMethod(tpl, "axisVisibilityOff", AxisVisibilityOff);
 
@@ -521,6 +522,8 @@ void VtkAxisActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TitleVisibilityOn", TitleVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "titleVisibilityOn", TitleVisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAxisActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -725,6 +728,7 @@ void VtkAxisActorWrap::GetAxisLinesProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAxisLinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -887,6 +891,7 @@ void VtkAxisActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1098,6 +1103,7 @@ void VtkAxisActorWrap::GetGridlinesProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetGridlinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1120,6 +1126,7 @@ void VtkAxisActorWrap::GetGridpolysProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetGridpolysProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1156,6 +1163,7 @@ void VtkAxisActorWrap::GetInnerGridlinesProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetInnerGridlinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1206,6 +1214,7 @@ void VtkAxisActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1361,6 +1370,7 @@ void VtkAxisActorWrap::GetPoint1Coordinate(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetPoint1Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1383,6 +1393,7 @@ void VtkAxisActorWrap::GetPoint2Coordinate(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetPoint2Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1503,6 +1514,7 @@ void VtkAxisActorWrap::GetTitleActor(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTitleActor();
+		VtkAxisFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1539,6 +1551,7 @@ void VtkAxisActorWrap::GetTitleProp3D(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTitleProp3D();
+		VtkProp3DAxisFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1561,6 +1574,7 @@ void VtkAxisActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1723,6 +1737,7 @@ void VtkAxisActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkAxisActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1738,7 +1753,7 @@ void VtkAxisActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1758,7 +1773,7 @@ void VtkAxisActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1780,7 +1795,7 @@ void VtkAxisActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1802,7 +1817,7 @@ void VtkAxisActorWrap::RenderTranslucentGeometry(const Nan::FunctionCallbackInfo
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1824,7 +1839,7 @@ void VtkAxisActorWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCal
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1846,7 +1861,7 @@ void VtkAxisActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAxisActor * r;
@@ -1858,6 +1873,7 @@ void VtkAxisActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAxisActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1957,7 +1973,7 @@ void VtkAxisActorWrap::SetAxisLinesProperty(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2214,7 +2230,7 @@ void VtkAxisActorWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2466,7 +2482,7 @@ void VtkAxisActorWrap::SetGridlinesProperty(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2486,7 +2502,7 @@ void VtkAxisActorWrap::SetGridpolysProperty(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2525,7 +2541,7 @@ void VtkAxisActorWrap::SetInnerGridlinesProperty(const Nan::FunctionCallbackInfo
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2619,7 +2635,7 @@ void VtkAxisActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2658,7 +2674,7 @@ void VtkAxisActorWrap::SetLabels(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3062,7 +3078,7 @@ void VtkAxisActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

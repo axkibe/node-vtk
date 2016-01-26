@@ -27,26 +27,27 @@ VtkResliceCursorThickLineRepresentationWrap::~VtkResliceCursorThickLineRepresent
 
 void VtkResliceCursorThickLineRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkResliceCursorLineRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkResliceCursorLineRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkResliceCursorThickLineRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkResliceCursorThickLineRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ResliceCursorThickLineRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkResliceCursorThickLineRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ResliceCursorThickLineRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkResliceCursorThickLineRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkResliceCursorThickLineRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkResliceCursorThickLineRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkResliceCursorLineRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkResliceCursorLineRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkResliceCursorThickLineRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultResliceAlgorithm", CreateDefaultResliceAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "createDefaultResliceAlgorithm", CreateDefaultResliceAlgorithm);
 
@@ -65,6 +66,8 @@ void VtkResliceCursorThickLineRepresentationWrap::InitTpl(v8::Local<v8::Function
 	Nan::SetPrototypeMethod(tpl, "SetResliceParameters", SetResliceParameters);
 	Nan::SetPrototypeMethod(tpl, "setResliceParameters", SetResliceParameters);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkResliceCursorThickLineRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -149,6 +152,7 @@ void VtkResliceCursorThickLineRepresentationWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
+		VtkResliceCursorThickLineRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,7 +168,7 @@ void VtkResliceCursorThickLineRepresentationWrap::SafeDownCast(const Nan::Functi
 {
 	VtkResliceCursorThickLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorThickLineRepresentationWrap>(info.Holder());
 	vtkResliceCursorThickLineRepresentation *native = (vtkResliceCursorThickLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkResliceCursorThickLineRepresentation * r;
@@ -176,6 +180,7 @@ void VtkResliceCursorThickLineRepresentationWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkResliceCursorThickLineRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkGenericCellIteratorWrap::~VtkGenericCellIteratorWrap()
 
 void VtkGenericCellIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericCellIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericCellIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericCellIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericCellIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericCellIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericCellIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericCellIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericCellIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericCellIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Begin", Begin);
 	Nan::SetPrototypeMethod(tpl, "begin", Begin);
 
@@ -74,6 +75,8 @@ void VtkGenericCellIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericCellIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -115,7 +118,7 @@ void VtkGenericCellIteratorWrap::GetCell(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGenericCellIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellIteratorWrap>(info.Holder());
 	vtkGenericCellIterator *native = (vtkGenericCellIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAdaptorCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAdaptorCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -135,6 +138,7 @@ void VtkGenericCellIteratorWrap::GetCell(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetCell();
+		VtkGenericAdaptorCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,6 +211,7 @@ void VtkGenericCellIteratorWrap::NewCell(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewCell();
+		VtkGenericAdaptorCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,6 +234,7 @@ void VtkGenericCellIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericCellIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +262,7 @@ void VtkGenericCellIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericCellIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellIteratorWrap>(info.Holder());
 	vtkGenericCellIterator *native = (vtkGenericCellIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericCellIterator * r;
@@ -268,6 +274,7 @@ void VtkGenericCellIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericCellIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

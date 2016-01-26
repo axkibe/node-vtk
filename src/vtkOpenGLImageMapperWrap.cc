@@ -30,26 +30,27 @@ VtkOpenGLImageMapperWrap::~VtkOpenGLImageMapperWrap()
 
 void VtkOpenGLImageMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLImageMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLImageMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLImageMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLImageMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLImageMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLImageMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLImageMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLImageMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLImageMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkOpenGLImageMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLImageMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,6 +143,7 @@ void VtkOpenGLImageMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLImageMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -155,13 +159,13 @@ void VtkOpenGLImageMapperWrap::RenderData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkOpenGLImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLImageMapperWrap>(info.Holder());
 	vtkOpenGLImageMapper *native = (vtkOpenGLImageMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageDataWrap *a1 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkActor2DWrap *a2 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -185,10 +189,10 @@ void VtkOpenGLImageMapperWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkOpenGLImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLImageMapperWrap>(info.Holder());
 	vtkOpenGLImageMapper *native = (vtkOpenGLImageMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -210,7 +214,7 @@ void VtkOpenGLImageMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkOpenGLImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLImageMapperWrap>(info.Holder());
 	vtkOpenGLImageMapper *native = (vtkOpenGLImageMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLImageMapper * r;
@@ -222,6 +226,7 @@ void VtkOpenGLImageMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLImageMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

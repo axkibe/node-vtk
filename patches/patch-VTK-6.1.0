@@ -398,8 +398,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-25 16:47:44.873352616 +0100
-@@ -0,0 +1,1426 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-26 11:02:53.246072884 +0100
+@@ -0,0 +1,1431 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -746,40 +746,6 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +}
 +
 +
-+
-+/* -------------------------------------------------------------------- */
-+/* Recursevily writes the template init preparation calls       */
-+
-+static void writeTplCalls(
-+  FILE *f,
-+  HierarchyInfo *hinfo,
-+  HierarchyEntry *he
-+)
-+{
-+  int i;
-+  HierarchyEntry *nhe;
-+  char const *sname;
-+
-+  for (i = 0; i < he->NumberOfSuperClasses; i++)
-+    {
-+    sname = he->SuperClasses[i];
-+    nhe = vtkParseHierarchy_FindEntry(hinfo, sname);
-+    if (!nhe)
-+      {
-+      fprintf(stderr,
-+        "broken hierarchy chain, cannot find \"%s\"\n",
-+        he->SuperClasses[i]
-+      );
-+      continue;
-+      }
-+    if (vtkParseHierarchy_GetProperty(nhe, "WRAP_EXCLUDE")) continue;
-+
-+    writeTplCalls(f, hinfo, nhe);
-+    fprintf(f, "\t%c%sWrap::InitTpl(tpl);\n", toupper(*sname), sname+1);
-+    }
-+}
-+
-+
 +/* -------------------------------------------------------------------- */
 +/* Returns true if there is no lowercase char in s.       */
 +
@@ -814,54 +780,61 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  char const *sname;
 +  FunctionInfo **m;
 +
-+  fprintf(f, "void %s::Init(v8::Local<v8::Object> exports)\n", wrapperName);
-+  fprintf(f, "{\n");
-+  fprintf(f, "\tif (!constructor.IsEmpty()) return;\n");
-+  fprintf(f, "\tNan::HandleScope scope;\n");
-+  fprintf(f, "\n");
-+  fprintf(f, "\tv8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);\n");
-+
-+  //writeTplCalls(f, hinfo, he);
 +  if(he->NumberOfSuperClasses > 1 )
 +    {
 +    fprintf(stderr, "Cannot do multiple inheritance\n");
 +    exit(1);
 +    }
-+  if(he->NumberOfSuperClasses > 0 )
-+    {
-+    sname = he->SuperClasses[0];
-+    fprintf(f, "\t%c%sWrap::Init( exports );\n", toupper(*sname), sname + 1 );
-+    fprintf(f, "\ttpl->Inherit(Nan::New<FunctionTemplate>(%c%sWrap::ptpl));\n", toupper(*sname), sname + 1 );
-+    }
-+  fprintf(f, "\n");
 +
-+  fprintf(f, "\ttpl->SetClassName(Nan::New(\"%s\").ToLocalChecked());\n", wrapperName);
-+  fprintf(f, "\ttpl->InstanceTemplate()->SetInternalFieldCount(1);\n");
-+  fprintf(f, "\tInitTpl(tpl);\n");
-+
-+  fprintf(f, "\n");
-+  fprintf(f, "\tconstructor.Reset( tpl->GetFunction() );\n");
-+  fprintf(f, "\tptpl.Reset( tpl );\n");
-+  fprintf(f, "\n");
++  fprintf(f, "void %s::Init(v8::Local<v8::Object> exports)\n", wrapperName);
++  fprintf(f, "{\n");
 +
 +  fprintf(f,
-+    "\texports->Set(Nan::New(\"%s\").ToLocalChecked(),tpl->GetFunction());\n",
++    "\tNan::SetAccessor(exports, Nan::New(\"%s\").ToLocalChecked(), ConstructorGetter);\n",
 +    name
 +    );
 +
 +  if(!strncmp(name, "vtk", 3 )) 
 +    {
-+    fprintf( f,
-+      "\texports->Set(Nan::New(\"%s\").ToLocalChecked(),tpl->GetFunction());\n",
++    fprintf(f,
++      "\tNan::SetAccessor(exports, Nan::New(\"%s\").ToLocalChecked(), ConstructorGetter);\n",
 +      name + 3
 +      );
 +    }
 +
 +  fprintf(f, "}\n");
 +  fprintf(f, "\n");
-+
-+  fprintf(f, "void %s::InitTpl(v8::Local<v8::FunctionTemplate> tpl)\n", wrapperName);
++  
++  fprintf(f, "void %s::ConstructorGetter(\n", wrapperName);
++  fprintf(f, "\tv8::Local<v8::String> property,\n");
++  fprintf(f, "\tconst Nan::PropertyCallbackInfo<v8::Value>& info)\n");
 +  fprintf(f, "{\n");
++  fprintf(f, "\tInitPtpl();\n");
++  fprintf(f, "\tinfo.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());\n");
++  fprintf(f, "}\n");
++  fprintf(f, "\n");
++
++  fprintf(f, "void %s::InitPtpl()\n", wrapperName);
++  fprintf(f, "{\n");
++  fprintf(f, "\tif (!ptpl.IsEmpty()) return;\n");
++
++  fprintf(f, "\tv8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);\n");
++
++  if(he->NumberOfSuperClasses > 0 )
++    {
++    sname = he->SuperClasses[0];
++    fprintf(f, "\t%c%sWrap::InitPtpl( );\n", toupper(*sname), sname + 1 );
++    fprintf(f,
++      "\ttpl->Inherit(Nan::New<FunctionTemplate>(%c%sWrap::ptpl));\n",
++      toupper(*sname),
++      sname + 1
++      );
++    }
++
++  fprintf(f, "\ttpl->SetClassName(Nan::New(\"%s\").ToLocalChecked());\n", wrapperName);
++  fprintf(f, "\ttpl->InstanceTemplate()->SetInternalFieldCount(1);\n");
++  fprintf(f, "\n");
++
 +  lastName = 0;
 +  for (m = minfo; *m; m++)
 +    {
@@ -875,7 +848,6 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      finfo->Name
 +      );
 +
-+
 +    if (!isUpperString(finfo->Name ))
 +      {
 +      fprintf(f,
@@ -888,6 +860,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    fprintf(f, "\n");
 +    }
 +
++	fprintf(f, "\tconstructor.Reset( tpl->GetFunction() );\n");
++	fprintf(f, "\tptpl.Reset( tpl );\n");
 +  fprintf(f, "}\n");
 +}
 +
@@ -958,9 +932,6 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      if(!vtkWrap_IsPointer(vinfo)) return "IsString";
 +      else return "IsInt32";
 +
-+    case VTK_PARSE_OBJECT :
-+      return "IsObject";
-+ 
 +    default :
 +      fprintf(stderr,
 +        "Unexpected parameter type %d/%d for %s.\n",
@@ -1177,6 +1148,12 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      break;
 + 
 +    case VTK_PARSE_OBJECT :
++      fprintf(f,
++        "\t%s\t%c%sWrap::InitPtpl();\n",
++        indent,
++        toupper(*rinfo->Class),
++        rinfo->Class + 1
++        );
 +      fprintf(f, "\t%sv8::Local<v8::Value> argv[1] =\n", indent );
 +      fprintf(f, "\t%s\t{ Nan::New(vtkNodeJsNoWrap) };\n", indent);
 +      fprintf(f, "\t%sv8::Local<v8::Function> cons =\n", indent );
@@ -1214,7 +1191,11 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  ValueInfo *p2info
 +)
 +{
-+  return p1info->Type == p2info->Type;
++  if( p1info->Type == p2info->Type ) return 1;
++
++  if( p1info->Type != VTK_PARSE_OBJECT ) return 0;
++
++  return !strcmp(p1info->Class, p2info->Class );
 +}
 +
 +/* -------------------------------------------------------------------- */
@@ -1273,15 +1254,36 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    for (; p < nop; p++)
 +      {
 +      ValueInfo *vinfo = finfo->Parameters[p];
-+ 
-+      fprintf(f,
-+        "\t%s%sif(info.Length() > %d && info[%d]->%s())\n",
-+        indent,
-+        writeElse ? "else " : "",
-+        p,
-+        p,
-+        v8ParameterTestFuncName(vinfo)
-+        );
++      unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++      const char *sname;
++
++      if( baseType != VTK_PARSE_OBJECT )
++        {
++        fprintf(f,
++          "\t%s%sif(info.Length() > %d && info[%d]->%s())\n",
++          indent,
++          writeElse ? "else " : "",
++          p,
++          p,
++          v8ParameterTestFuncName(vinfo)
++          );
++        }
++        else
++        {
++        sname = vinfo->Class;
++
++        fprintf(f,
++          "\t%s%sif(info.Length() > %d && info[%d]->IsObject() && "
++          "(Nan::New(%c%sWrap::ptpl))->HasInstance(info[%d]))\n",
++          indent,
++          writeElse ? "else " : "",
++          p,
++          p,
++          toupper(*sname),
++          sname + 1,
++          p
++          );
++        }
 +
 +      writeElse = 0;
 + 
@@ -1523,7 +1525,10 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  fprintf(f, "\tpublic:\n");
 +  fprintf(f, "\t\tusing Nan::ObjectWrap::Wrap;\n");
 +  fprintf(f, "\t\tstatic void Init(v8::Local<v8::Object> exports);\n");
-+  fprintf(f, "\t\tstatic void InitTpl(v8::Local<v8::FunctionTemplate> tpl);\n");
++  fprintf(f, "\t\tstatic void InitPtpl();\n");
++  fprintf(f, "\t\tstatic void ConstructorGetter(\n");
++  fprintf(f, "\t\t\tv8::Local<v8::String> property,\n");
++  fprintf(f, "\t\t\tconst Nan::PropertyCallbackInfo<v8::Value>& info);\n");
 +  fprintf(f, "\n");
 +
 +  if(!he->NumberOfSuperClasses)
@@ -1828,8 +1833,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +// vim:set ts=2 sw=2 expandtab:
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsInit.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsInit.c	2016-01-25 14:09:33.607042758 +0100
-@@ -0,0 +1,145 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsInit.c	2016-01-26 11:09:32.941710004 +0100
+@@ -0,0 +1,146 @@
 +#include <stdio.h>
 +#include <stdlib.h>
 +#include <string.h>
@@ -1849,12 +1854,13 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/T
 +    if (!strcmp(*e, name) ) return 1;
 +    }
 +  return 0;
-+#endif DO_WHITELIST
++#else
 +  for (e = whitelist; *e; e++)
 +    {
 +    if (!strcmp(*e, name) ) return 0;
 +    }
 +  return 1;
++#endif
 +}
 +
 +
@@ -1977,12 +1983,12 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/T
 +
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-25 16:54:05.009464820 +0100
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-26 11:08:49.046628754 +0100
 @@ -0,0 +1,47 @@
 +
 +/* used for development for a minimal vtk lib wrapper */
 +/* to quickly test stuff out */
-+//#define DO_WHITELIST
++/* #define DO_WHITELIST */
 +
 +/* TODO REMOVE */
 +char const *whitelist[] =

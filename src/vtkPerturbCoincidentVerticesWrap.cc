@@ -27,26 +27,27 @@ VtkPerturbCoincidentVerticesWrap::~VtkPerturbCoincidentVerticesWrap()
 
 void VtkPerturbCoincidentVerticesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPerturbCoincidentVerticesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPerturbCoincidentVertices").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PerturbCoincidentVertices").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPerturbCoincidentVertices").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PerturbCoincidentVertices").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPerturbCoincidentVerticesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPerturbCoincidentVerticesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPerturbCoincidentVerticesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPerturbCoincidentVerticesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkPerturbCoincidentVerticesWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetPerturbFactor", SetPerturbFactor);
 	Nan::SetPrototypeMethod(tpl, "setPerturbFactor", SetPerturbFactor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPerturbCoincidentVerticesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkPerturbCoincidentVerticesWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkPerturbCoincidentVerticesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +170,7 @@ void VtkPerturbCoincidentVerticesWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkPerturbCoincidentVerticesWrap *wrapper = ObjectWrap::Unwrap<VtkPerturbCoincidentVerticesWrap>(info.Holder());
 	vtkPerturbCoincidentVertices *native = (vtkPerturbCoincidentVertices *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPerturbCoincidentVertices * r;
@@ -178,6 +182,7 @@ void VtkPerturbCoincidentVerticesWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPerturbCoincidentVerticesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

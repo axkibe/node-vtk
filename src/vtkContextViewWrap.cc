@@ -29,26 +29,27 @@ VtkContextViewWrap::~VtkContextViewWrap()
 
 void VtkContextViewWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderViewBaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderViewBaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkContextViewWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkContextView").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ContextView").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkContextView").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ContextView").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkContextViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkContextViewWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkContextViewWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderViewBaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderViewBaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkContextViewWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,6 +74,8 @@ void VtkContextViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScene", SetScene);
 	Nan::SetPrototypeMethod(tpl, "setScene", SetScene);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkContextViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -123,6 +126,7 @@ void VtkContextViewWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetContext();
+		VtkContext2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -145,6 +149,7 @@ void VtkContextViewWrap::GetScene(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetScene();
+		VtkContextSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,6 +194,7 @@ void VtkContextViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkContextViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,7 +210,7 @@ void VtkContextViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkContextViewWrap *wrapper = ObjectWrap::Unwrap<VtkContextViewWrap>(info.Holder());
 	vtkContextView *native = (vtkContextView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkContextView * r;
@@ -216,6 +222,7 @@ void VtkContextViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkContextViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +241,7 @@ void VtkContextViewWrap::SetContext(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkContextViewWrap *wrapper = ObjectWrap::Unwrap<VtkContextViewWrap>(info.Holder());
 	vtkContextView *native = (vtkContextView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -254,7 +261,7 @@ void VtkContextViewWrap::SetScene(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkContextViewWrap *wrapper = ObjectWrap::Unwrap<VtkContextViewWrap>(info.Holder());
 	vtkContextView *native = (vtkContextView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContextSceneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContextSceneWrap *a0 = ObjectWrap::Unwrap<VtkContextSceneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

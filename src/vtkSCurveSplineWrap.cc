@@ -27,26 +27,27 @@ VtkSCurveSplineWrap::~VtkSCurveSplineWrap()
 
 void VtkSCurveSplineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSplineWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSplineWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSCurveSplineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSCurveSpline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SCurveSpline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSCurveSpline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SCurveSpline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSCurveSplineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSCurveSplineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSCurveSplineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSplineWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSplineWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSCurveSplineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Compute", Compute);
 	Nan::SetPrototypeMethod(tpl, "compute", Compute);
 
@@ -74,6 +75,8 @@ void VtkSCurveSplineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNodeWeight", SetNodeWeight);
 	Nan::SetPrototypeMethod(tpl, "setNodeWeight", SetNodeWeight);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSCurveSplineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -115,7 +118,7 @@ void VtkSCurveSplineWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkSCurveSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSCurveSplineWrap>(info.Holder());
 	vtkSCurveSpline *native = (vtkSCurveSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -213,6 +216,7 @@ void VtkSCurveSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkSCurveSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +232,7 @@ void VtkSCurveSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSCurveSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSCurveSplineWrap>(info.Holder());
 	vtkSCurveSpline *native = (vtkSCurveSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSCurveSpline * r;
@@ -240,6 +244,7 @@ void VtkSCurveSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSCurveSplineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

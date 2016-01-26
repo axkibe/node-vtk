@@ -27,26 +27,27 @@ VtkMoleculeToBondStickFilterWrap::~VtkMoleculeToBondStickFilterWrap()
 
 void VtkMoleculeToBondStickFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMoleculeToPolyDataFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeToPolyDataFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMoleculeToBondStickFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMoleculeToBondStickFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MoleculeToBondStickFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMoleculeToBondStickFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MoleculeToBondStickFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMoleculeToBondStickFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMoleculeToBondStickFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMoleculeToBondStickFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMoleculeToPolyDataFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeToPolyDataFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMoleculeToBondStickFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkMoleculeToBondStickFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMoleculeToBondStickFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkMoleculeToBondStickFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkMoleculeToBondStickFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkMoleculeToBondStickFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkMoleculeToBondStickFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeToBondStickFilterWrap>(info.Holder());
 	vtkMoleculeToBondStickFilter *native = (vtkMoleculeToBondStickFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMoleculeToBondStickFilter * r;
@@ -158,6 +162,7 @@ void VtkMoleculeToBondStickFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMoleculeToBondStickFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

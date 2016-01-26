@@ -26,26 +26,27 @@ VtkFunctionParserWrap::~VtkFunctionParserWrap()
 
 void VtkFunctionParserWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFunctionParserWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFunctionParser").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FunctionParser").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFunctionParser").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FunctionParser").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFunctionParserWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFunctionParserWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFunctionParserWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFunctionParserWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -124,6 +125,8 @@ void VtkFunctionParserWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVectorVariableValue", SetVectorVariableValue);
 	Nan::SetPrototypeMethod(tpl, "setVectorVariableValue", SetVectorVariableValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFunctionParserWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -398,6 +401,7 @@ void VtkFunctionParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkFunctionParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -473,7 +477,7 @@ void VtkFunctionParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFunctionParser * r;
@@ -485,6 +489,7 @@ void VtkFunctionParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFunctionParserWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

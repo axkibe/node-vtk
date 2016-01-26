@@ -29,26 +29,27 @@ VtkPCAAnalysisFilterWrap::~VtkPCAAnalysisFilterWrap()
 
 void VtkPCAAnalysisFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPCAAnalysisFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPCAAnalysisFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PCAAnalysisFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPCAAnalysisFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PCAAnalysisFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPCAAnalysisFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPCAAnalysisFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPCAAnalysisFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPCAAnalysisFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,6 +74,8 @@ void VtkPCAAnalysisFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPCAAnalysisFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -123,6 +126,7 @@ void VtkPCAAnalysisFilterWrap::GetEvals(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetEvals();
+		VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -159,10 +163,10 @@ void VtkPCAAnalysisFilterWrap::GetParameterisedShape(const Nan::FunctionCallback
 {
 	VtkPCAAnalysisFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPCAAnalysisFilterWrap>(info.Holder());
 	vtkPCAAnalysisFilter *native = (vtkPCAAnalysisFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFloatArrayWrap *a0 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointSetWrap *a1 = ObjectWrap::Unwrap<VtkPointSetWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -184,10 +188,10 @@ void VtkPCAAnalysisFilterWrap::GetShapeParameters(const Nan::FunctionCallbackInf
 {
 	VtkPCAAnalysisFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPCAAnalysisFilterWrap>(info.Holder());
 	vtkPCAAnalysisFilter *native = (vtkPCAAnalysisFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointSetWrap *a0 = ObjectWrap::Unwrap<VtkPointSetWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkFloatArrayWrap *a1 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -242,6 +246,7 @@ void VtkPCAAnalysisFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkPCAAnalysisFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +262,7 @@ void VtkPCAAnalysisFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPCAAnalysisFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPCAAnalysisFilterWrap>(info.Holder());
 	vtkPCAAnalysisFilter *native = (vtkPCAAnalysisFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPCAAnalysisFilter * r;
@@ -269,6 +274,7 @@ void VtkPCAAnalysisFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPCAAnalysisFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

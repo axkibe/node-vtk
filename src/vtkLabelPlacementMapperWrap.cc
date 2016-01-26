@@ -31,26 +31,27 @@ VtkLabelPlacementMapperWrap::~VtkLabelPlacementMapperWrap()
 
 void VtkLabelPlacementMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMapper2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapper2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLabelPlacementMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLabelPlacementMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LabelPlacementMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLabelPlacementMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LabelPlacementMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLabelPlacementMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLabelPlacementMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLabelPlacementMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMapper2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapper2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLabelPlacementMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GeneratePerturbedLabelSpokesOff", GeneratePerturbedLabelSpokesOff);
 	Nan::SetPrototypeMethod(tpl, "generatePerturbedLabelSpokesOff", GeneratePerturbedLabelSpokesOff);
 
@@ -189,6 +190,8 @@ void VtkLabelPlacementMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseUnicodeStringsOn", UseUnicodeStringsOn);
 	Nan::SetPrototypeMethod(tpl, "useUnicodeStringsOn", UseUnicodeStringsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLabelPlacementMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -249,6 +252,7 @@ void VtkLabelPlacementMapperWrap::GetAnchorTransform(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetAnchorTransform();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -397,6 +401,7 @@ void VtkLabelPlacementMapperWrap::GetRenderStrategy(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetRenderStrategy();
+		VtkLabelRenderStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -525,6 +530,7 @@ void VtkLabelPlacementMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkLabelPlacementMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -612,10 +618,10 @@ void VtkLabelPlacementMapperWrap::RenderOverlay(const Nan::FunctionCallbackInfo<
 {
 	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
 	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -637,7 +643,7 @@ void VtkLabelPlacementMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
 	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLabelPlacementMapper * r;
@@ -649,6 +655,7 @@ void VtkLabelPlacementMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLabelPlacementMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -770,7 +777,7 @@ void VtkLabelPlacementMapperWrap::SetRenderStrategy(const Nan::FunctionCallbackI
 {
 	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
 	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLabelRenderStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLabelRenderStrategyWrap *a0 = ObjectWrap::Unwrap<VtkLabelRenderStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

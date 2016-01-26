@@ -28,26 +28,27 @@ VtkDSPFilterGroupWrap::~VtkDSPFilterGroupWrap()
 
 void VtkDSPFilterGroupWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDSPFilterGroupWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDSPFilterGroup").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DSPFilterGroup").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDSPFilterGroup").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DSPFilterGroup").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDSPFilterGroupWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDSPFilterGroupWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDSPFilterGroupWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDSPFilterGroupWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddFilter", AddFilter);
 	Nan::SetPrototypeMethod(tpl, "addFilter", AddFilter);
 
@@ -87,6 +88,8 @@ void VtkDSPFilterGroupWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDSPFilterGroupWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,7 +119,7 @@ void VtkDSPFilterGroupWrap::AddFilter(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDSPFilterGroupWrap *wrapper = ObjectWrap::Unwrap<VtkDSPFilterGroupWrap>(info.Holder());
 	vtkDSPFilterGroup *native = (vtkDSPFilterGroup *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDSPFilterDefinitionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDSPFilterDefinitionWrap *a0 = ObjectWrap::Unwrap<VtkDSPFilterDefinitionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -141,7 +144,7 @@ void VtkDSPFilterGroupWrap::AddInputVariableInstance(const Nan::FunctionCallback
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkFloatArrayWrap *a2 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -165,7 +168,7 @@ void VtkDSPFilterGroupWrap::Copy(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkDSPFilterGroupWrap *wrapper = ObjectWrap::Unwrap<VtkDSPFilterGroupWrap>(info.Holder());
 	vtkDSPFilterGroup *native = (vtkDSPFilterGroup *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDSPFilterGroupWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDSPFilterGroupWrap *a0 = ObjectWrap::Unwrap<VtkDSPFilterGroupWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -199,6 +202,7 @@ void VtkDSPFilterGroupWrap::GetCachedInput(const Nan::FunctionCallbackInfo<v8::V
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
+				VtkFloatArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -232,6 +236,7 @@ void VtkDSPFilterGroupWrap::GetCachedOutput(const Nan::FunctionCallbackInfo<v8::
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
+				VtkFloatArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -276,6 +281,7 @@ void VtkDSPFilterGroupWrap::GetFilter(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetFilter(
 			info[0]->Int32Value()
 		);
+			VtkDSPFilterDefinitionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -358,6 +364,7 @@ void VtkDSPFilterGroupWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkDSPFilterGroupWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -393,7 +400,7 @@ void VtkDSPFilterGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDSPFilterGroupWrap *wrapper = ObjectWrap::Unwrap<VtkDSPFilterGroupWrap>(info.Holder());
 	vtkDSPFilterGroup *native = (vtkDSPFilterGroup *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDSPFilterGroup * r;
@@ -405,6 +412,7 @@ void VtkDSPFilterGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDSPFilterGroupWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

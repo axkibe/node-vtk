@@ -26,26 +26,27 @@ VtkThreadMessagerWrap::~VtkThreadMessagerWrap()
 
 void VtkThreadMessagerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkThreadMessagerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkThreadMessager").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ThreadMessager").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkThreadMessager").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ThreadMessager").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkThreadMessagerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkThreadMessagerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkThreadMessagerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkThreadMessagerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DisableWaitForReceiver", DisableWaitForReceiver);
 	Nan::SetPrototypeMethod(tpl, "disableWaitForReceiver", DisableWaitForReceiver);
 
@@ -73,6 +74,8 @@ void VtkThreadMessagerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WaitForReceiver", WaitForReceiver);
 	Nan::SetPrototypeMethod(tpl, "waitForReceiver", WaitForReceiver);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkThreadMessagerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -169,6 +172,7 @@ void VtkThreadMessagerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkThreadMessagerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +188,7 @@ void VtkThreadMessagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkThreadMessagerWrap *wrapper = ObjectWrap::Unwrap<VtkThreadMessagerWrap>(info.Holder());
 	vtkThreadMessager *native = (vtkThreadMessager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkThreadMessager * r;
@@ -196,6 +200,7 @@ void VtkThreadMessagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkThreadMessagerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

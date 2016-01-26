@@ -29,26 +29,27 @@ VtkGeoImageNodeWrap::~VtkGeoImageNodeWrap()
 
 void VtkGeoImageNodeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGeoTreeNodeWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGeoTreeNodeWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoImageNodeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoImageNode").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoImageNode").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoImageNode").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoImageNode").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoImageNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoImageNodeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoImageNodeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGeoTreeNodeWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGeoTreeNodeWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoImageNodeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -91,6 +92,8 @@ void VtkGeoImageNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoImageNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,7 +123,7 @@ void VtkGeoImageNodeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGeoImageNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoImageNodeWrap>(info.Holder());
 	vtkGeoImageNode *native = (vtkGeoImageNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -163,6 +166,7 @@ void VtkGeoImageNodeWrap::GetChild(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->GetChild(
 			info[0]->Int32Value()
 		);
+			VtkGeoImageNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -202,6 +206,7 @@ void VtkGeoImageNodeWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetImage();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -224,6 +229,7 @@ void VtkGeoImageNodeWrap::GetParent(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetParent();
+		VtkGeoImageNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,6 +252,7 @@ void VtkGeoImageNodeWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTexture();
+		VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,6 +317,7 @@ void VtkGeoImageNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoImageNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,7 +333,7 @@ void VtkGeoImageNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGeoImageNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoImageNodeWrap>(info.Holder());
 	vtkGeoImageNode *native = (vtkGeoImageNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoImageNode * r;
@@ -337,6 +345,7 @@ void VtkGeoImageNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoImageNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -355,7 +364,7 @@ void VtkGeoImageNodeWrap::SetImage(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGeoImageNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoImageNodeWrap>(info.Holder());
 	vtkGeoImageNode *native = (vtkGeoImageNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -375,7 +384,7 @@ void VtkGeoImageNodeWrap::SetTexture(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGeoImageNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoImageNodeWrap>(info.Holder());
 	vtkGeoImageNode *native = (vtkGeoImageNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextureWrap *a0 = ObjectWrap::Unwrap<VtkTextureWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -395,7 +404,7 @@ void VtkGeoImageNodeWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGeoImageNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoImageNodeWrap>(info.Holder());
 	vtkGeoImageNode *native = (vtkGeoImageNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

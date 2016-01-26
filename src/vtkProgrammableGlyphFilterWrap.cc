@@ -30,26 +30,27 @@ VtkProgrammableGlyphFilterWrap::~VtkProgrammableGlyphFilterWrap()
 
 void VtkProgrammableGlyphFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProgrammableGlyphFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProgrammableGlyphFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ProgrammableGlyphFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProgrammableGlyphFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ProgrammableGlyphFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProgrammableGlyphFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProgrammableGlyphFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProgrammableGlyphFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProgrammableGlyphFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -89,6 +90,8 @@ void VtkProgrammableGlyphFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProgrammableGlyphFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -167,6 +170,7 @@ void VtkProgrammableGlyphFilterWrap::GetPointData(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPointData();
+		VtkPointDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,6 +193,7 @@ void VtkProgrammableGlyphFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetSource();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,6 +238,7 @@ void VtkProgrammableGlyphFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkProgrammableGlyphFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -248,7 +254,7 @@ void VtkProgrammableGlyphFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkProgrammableGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableGlyphFilterWrap>(info.Holder());
 	vtkProgrammableGlyphFilter *native = (vtkProgrammableGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProgrammableGlyphFilter * r;
@@ -260,6 +266,7 @@ void VtkProgrammableGlyphFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProgrammableGlyphFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -321,7 +328,7 @@ void VtkProgrammableGlyphFilterWrap::SetSourceConnection(const Nan::FunctionCall
 {
 	VtkProgrammableGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableGlyphFilterWrap>(info.Holder());
 	vtkProgrammableGlyphFilter *native = (vtkProgrammableGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -341,7 +348,7 @@ void VtkProgrammableGlyphFilterWrap::SetSourceData(const Nan::FunctionCallbackIn
 {
 	VtkProgrammableGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableGlyphFilterWrap>(info.Holder());
 	vtkProgrammableGlyphFilter *native = (vtkProgrammableGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkGraphReaderWrap::~VtkGraphReaderWrap()
 
 void VtkGraphReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGraphReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGraphReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GraphReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGraphReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GraphReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGraphReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGraphReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGraphReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGraphReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkGraphReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGraphReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +123,7 @@ void VtkGraphReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -138,6 +142,7 @@ void VtkGraphReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetOutput();
+		VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,6 +187,7 @@ void VtkGraphReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkGraphReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +203,7 @@ void VtkGraphReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGraphReaderWrap>(info.Holder());
 	vtkGraphReader *native = (vtkGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGraphReader * r;
@@ -209,6 +215,7 @@ void VtkGraphReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGraphReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +234,7 @@ void VtkGraphReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGraphReaderWrap>(info.Holder());
 	vtkGraphReader *native = (vtkGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

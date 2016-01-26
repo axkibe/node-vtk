@@ -27,26 +27,27 @@ VtkHierarchicalDataLevelFilterWrap::~VtkHierarchicalDataLevelFilterWrap()
 
 void VtkHierarchicalDataLevelFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLevelIdScalarsWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLevelIdScalarsWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHierarchicalDataLevelFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHierarchicalDataLevelFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HierarchicalDataLevelFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHierarchicalDataLevelFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HierarchicalDataLevelFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHierarchicalDataLevelFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHierarchicalDataLevelFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHierarchicalDataLevelFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLevelIdScalarsWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLevelIdScalarsWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHierarchicalDataLevelFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkHierarchicalDataLevelFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHierarchicalDataLevelFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkHierarchicalDataLevelFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkHierarchicalDataLevelFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkHierarchicalDataLevelFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkHierarchicalDataLevelFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalDataLevelFilterWrap>(info.Holder());
 	vtkHierarchicalDataLevelFilter *native = (vtkHierarchicalDataLevelFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHierarchicalDataLevelFilter * r;
@@ -158,6 +162,7 @@ void VtkHierarchicalDataLevelFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHierarchicalDataLevelFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -26,26 +26,27 @@ VtkTDxInteractorStyleSettingsWrap::~VtkTDxInteractorStyleSettingsWrap()
 
 void VtkTDxInteractorStyleSettingsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTDxInteractorStyleSettingsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTDxInteractorStyleSettings").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TDxInteractorStyleSettings").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTDxInteractorStyleSettings").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TDxInteractorStyleSettings").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTDxInteractorStyleSettingsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTDxInteractorStyleSettingsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTDxInteractorStyleSettingsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTDxInteractorStyleSettingsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAngleSensitivity", GetAngleSensitivity);
 	Nan::SetPrototypeMethod(tpl, "getAngleSensitivity", GetAngleSensitivity);
 
@@ -82,6 +83,8 @@ void VtkTDxInteractorStyleSettingsWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetTranslationZSensitivity", SetTranslationZSensitivity);
 	Nan::SetPrototypeMethod(tpl, "setTranslationZSensitivity", SetTranslationZSensitivity);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTDxInteractorStyleSettingsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -210,6 +213,7 @@ void VtkTDxInteractorStyleSettingsWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkTDxInteractorStyleSettingsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +229,7 @@ void VtkTDxInteractorStyleSettingsWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkTDxInteractorStyleSettingsWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleSettingsWrap>(info.Holder());
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTDxInteractorStyleSettings * r;
@@ -237,6 +241,7 @@ void VtkTDxInteractorStyleSettingsWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTDxInteractorStyleSettingsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

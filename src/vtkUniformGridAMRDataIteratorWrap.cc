@@ -29,26 +29,27 @@ VtkUniformGridAMRDataIteratorWrap::~VtkUniformGridAMRDataIteratorWrap()
 
 void VtkUniformGridAMRDataIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCompositeDataIteratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUniformGridAMRDataIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUniformGridAMRDataIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UniformGridAMRDataIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUniformGridAMRDataIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UniformGridAMRDataIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUniformGridAMRDataIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUniformGridAMRDataIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUniformGridAMRDataIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeDataIteratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUniformGridAMRDataIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -79,6 +80,8 @@ void VtkUniformGridAMRDataIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUniformGridAMRDataIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -129,6 +132,7 @@ void VtkUniformGridAMRDataIteratorWrap::GetCurrentDataObject(const Nan::Function
 		return;
 	}
 	r = native->GetCurrentDataObject();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -151,6 +155,7 @@ void VtkUniformGridAMRDataIteratorWrap::GetCurrentMetaData(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetCurrentMetaData();
+		VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -247,6 +252,7 @@ void VtkUniformGridAMRDataIteratorWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkUniformGridAMRDataIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +268,7 @@ void VtkUniformGridAMRDataIteratorWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkUniformGridAMRDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRDataIteratorWrap>(info.Holder());
 	vtkUniformGridAMRDataIterator *native = (vtkUniformGridAMRDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUniformGridAMRDataIterator * r;
@@ -274,6 +280,7 @@ void VtkUniformGridAMRDataIteratorWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUniformGridAMRDataIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

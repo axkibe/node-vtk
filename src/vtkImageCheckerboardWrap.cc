@@ -28,26 +28,27 @@ VtkImageCheckerboardWrap::~VtkImageCheckerboardWrap()
 
 void VtkImageCheckerboardWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageCheckerboardWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageCheckerboard").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageCheckerboard").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageCheckerboard").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageCheckerboard").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageCheckerboardWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageCheckerboardWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageCheckerboardWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageCheckerboardWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkImageCheckerboardWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfDivisions", SetNumberOfDivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfDivisions", SetNumberOfDivisions);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageCheckerboardWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -141,6 +144,7 @@ void VtkImageCheckerboardWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageCheckerboardWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -156,7 +160,7 @@ void VtkImageCheckerboardWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageCheckerboardWrap *wrapper = ObjectWrap::Unwrap<VtkImageCheckerboardWrap>(info.Holder());
 	vtkImageCheckerboard *native = (vtkImageCheckerboard *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageCheckerboard * r;
@@ -168,6 +172,7 @@ void VtkImageCheckerboardWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageCheckerboardWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -186,7 +191,7 @@ void VtkImageCheckerboardWrap::SetInput1Data(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageCheckerboardWrap *wrapper = ObjectWrap::Unwrap<VtkImageCheckerboardWrap>(info.Holder());
 	vtkImageCheckerboard *native = (vtkImageCheckerboard *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -206,7 +211,7 @@ void VtkImageCheckerboardWrap::SetInput2Data(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageCheckerboardWrap *wrapper = ObjectWrap::Unwrap<VtkImageCheckerboardWrap>(info.Holder());
 	vtkImageCheckerboard *native = (vtkImageCheckerboard *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

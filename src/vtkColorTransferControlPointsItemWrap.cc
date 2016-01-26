@@ -28,26 +28,27 @@ VtkColorTransferControlPointsItemWrap::~VtkColorTransferControlPointsItemWrap()
 
 void VtkColorTransferControlPointsItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkControlPointsItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkControlPointsItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkColorTransferControlPointsItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkColorTransferControlPointsItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ColorTransferControlPointsItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkColorTransferControlPointsItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ColorTransferControlPointsItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkColorTransferControlPointsItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkColorTransferControlPointsItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkColorTransferControlPointsItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkControlPointsItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkControlPointsItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkColorTransferControlPointsItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkColorTransferControlPointsItemWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetColorTransferFunction", SetColorTransferFunction);
 	Nan::SetPrototypeMethod(tpl, "setColorTransferFunction", SetColorTransferFunction);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkColorTransferControlPointsItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkColorTransferControlPointsItemWrap::GetColorTransferFunction(const Nan::
 		return;
 	}
 	r = native->GetColorTransferFunction();
+		VtkColorTransferFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkColorTransferControlPointsItemWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkColorTransferControlPointsItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkColorTransferControlPointsItemWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkColorTransferControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferControlPointsItemWrap>(info.Holder());
 	vtkColorTransferControlPointsItem *native = (vtkColorTransferControlPointsItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkColorTransferControlPointsItem * r;
@@ -187,6 +192,7 @@ void VtkColorTransferControlPointsItemWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkColorTransferControlPointsItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkColorTransferControlPointsItemWrap::SetColorTransferFunction(const Nan::
 {
 	VtkColorTransferControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferControlPointsItemWrap>(info.Holder());
 	vtkColorTransferControlPointsItem *native = (vtkColorTransferControlPointsItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorTransferFunctionWrap *a0 = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

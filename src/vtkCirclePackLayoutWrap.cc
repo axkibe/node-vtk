@@ -28,26 +28,27 @@ VtkCirclePackLayoutWrap::~VtkCirclePackLayoutWrap()
 
 void VtkCirclePackLayoutWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTreeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCirclePackLayoutWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCirclePackLayout").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CirclePackLayout").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCirclePackLayout").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CirclePackLayout").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCirclePackLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCirclePackLayoutWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCirclePackLayoutWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTreeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCirclePackLayoutWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCirclesFieldName", GetCirclesFieldName);
 	Nan::SetPrototypeMethod(tpl, "getCirclesFieldName", GetCirclesFieldName);
 
@@ -75,6 +76,8 @@ void VtkCirclePackLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSizeArrayName", SetSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setSizeArrayName", SetSizeArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCirclePackLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -139,6 +142,7 @@ void VtkCirclePackLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLayoutStrategy();
+		VtkCirclePackLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,6 +187,7 @@ void VtkCirclePackLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkCirclePackLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +203,7 @@ void VtkCirclePackLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCirclePackLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkCirclePackLayoutWrap>(info.Holder());
 	vtkCirclePackLayout *native = (vtkCirclePackLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCirclePackLayout * r;
@@ -210,6 +215,7 @@ void VtkCirclePackLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCirclePackLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -248,7 +254,7 @@ void VtkCirclePackLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<
 {
 	VtkCirclePackLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkCirclePackLayoutWrap>(info.Holder());
 	vtkCirclePackLayout *native = (vtkCirclePackLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCirclePackLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCirclePackLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkCirclePackLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

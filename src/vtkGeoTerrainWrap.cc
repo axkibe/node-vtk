@@ -30,26 +30,27 @@ VtkGeoTerrainWrap::~VtkGeoTerrainWrap()
 
 void VtkGeoTerrainWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoTerrainWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoTerrain").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoTerrain").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoTerrain").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoTerrain").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoTerrainWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoTerrainWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoTerrainWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoTerrainWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddActors", AddActors);
 	Nan::SetPrototypeMethod(tpl, "addActors", AddActors);
 
@@ -89,6 +90,8 @@ void VtkGeoTerrainWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSource", SetSource);
 	Nan::SetPrototypeMethod(tpl, "setSource", SetSource);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoTerrainWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -118,13 +121,13 @@ void VtkGeoTerrainWrap::AddActors(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGeoTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainWrap>(info.Holder());
 	vtkGeoTerrain *native = (vtkGeoTerrain *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAssemblyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAssemblyWrap *a1 = ObjectWrap::Unwrap<VtkAssemblyWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkCollectionWrap *a2 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -211,6 +214,7 @@ void VtkGeoTerrainWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetSource();
+		VtkGeoSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,6 +259,7 @@ void VtkGeoTerrainWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoTerrainWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -270,7 +275,7 @@ void VtkGeoTerrainWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGeoTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainWrap>(info.Holder());
 	vtkGeoTerrain *native = (vtkGeoTerrain *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoTerrain * r;
@@ -282,6 +287,7 @@ void VtkGeoTerrainWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoTerrainWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -370,7 +376,7 @@ void VtkGeoTerrainWrap::SetSource(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGeoTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainWrap>(info.Holder());
 	vtkGeoTerrain *native = (vtkGeoTerrain *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoSourceWrap *a0 = ObjectWrap::Unwrap<VtkGeoSourceWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

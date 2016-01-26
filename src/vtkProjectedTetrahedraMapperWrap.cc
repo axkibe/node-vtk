@@ -30,26 +30,27 @@ VtkProjectedTetrahedraMapperWrap::~VtkProjectedTetrahedraMapperWrap()
 
 void VtkProjectedTetrahedraMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProjectedTetrahedraMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProjectedTetrahedraMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ProjectedTetrahedraMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProjectedTetrahedraMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ProjectedTetrahedraMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProjectedTetrahedraMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProjectedTetrahedraMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProjectedTetrahedraMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProjectedTetrahedraMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkProjectedTetrahedraMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetVisibilitySort", SetVisibilitySort);
 	Nan::SetPrototypeMethod(tpl, "setVisibilitySort", SetVisibilitySort);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProjectedTetrahedraMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -121,6 +124,7 @@ void VtkProjectedTetrahedraMapperWrap::GetVisibilitySort(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetVisibilitySort();
+		VtkVisibilitySortWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -158,13 +162,13 @@ void VtkProjectedTetrahedraMapperWrap::MapScalarsToColors(const Nan::FunctionCal
 {
 	VtkProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTetrahedraMapperWrap>(info.Holder());
 	vtkProjectedTetrahedraMapper *native = (vtkProjectedTetrahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumePropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumePropertyWrap *a1 = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -195,6 +199,7 @@ void VtkProjectedTetrahedraMapperWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkProjectedTetrahedraMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +215,7 @@ void VtkProjectedTetrahedraMapperWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTetrahedraMapperWrap>(info.Holder());
 	vtkProjectedTetrahedraMapper *native = (vtkProjectedTetrahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProjectedTetrahedraMapper * r;
@@ -222,6 +227,7 @@ void VtkProjectedTetrahedraMapperWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProjectedTetrahedraMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -240,7 +246,7 @@ void VtkProjectedTetrahedraMapperWrap::SetVisibilitySort(const Nan::FunctionCall
 {
 	VtkProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTetrahedraMapperWrap>(info.Holder());
 	vtkProjectedTetrahedraMapper *native = (vtkProjectedTetrahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVisibilitySortWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVisibilitySortWrap *a0 = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkXMLUtilitiesWrap::~VtkXMLUtilitiesWrap()
 
 void VtkXMLUtilitiesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLUtilitiesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLUtilities").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLUtilities").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLUtilities").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLUtilities").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLUtilitiesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLUtilitiesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLUtilitiesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLUtilitiesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FactorElements", FactorElements);
 	Nan::SetPrototypeMethod(tpl, "factorElements", FactorElements);
 
@@ -71,6 +72,8 @@ void VtkXMLUtilitiesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UnFactorElements", UnFactorElements);
 	Nan::SetPrototypeMethod(tpl, "unFactorElements", UnFactorElements);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLUtilitiesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -100,7 +103,7 @@ void VtkXMLUtilitiesWrap::FactorElements(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXMLUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkXMLUtilitiesWrap>(info.Holder());
 	vtkXMLUtilities *native = (vtkXMLUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -163,6 +166,7 @@ void VtkXMLUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLUtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,6 +197,7 @@ void VtkXMLUtilitiesWrap::ReadElementFromFile(const Nan::FunctionCallbackInfo<v8
 				*a0,
 				info[1]->Int32Value()
 			);
+				VtkXMLDataElementWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -227,6 +232,7 @@ void VtkXMLUtilitiesWrap::ReadElementFromString(const Nan::FunctionCallbackInfo<
 				*a0,
 				info[1]->Int32Value()
 			);
+				VtkXMLDataElementWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -246,7 +252,7 @@ void VtkXMLUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkXMLUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkXMLUtilitiesWrap>(info.Holder());
 	vtkXMLUtilities *native = (vtkXMLUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLUtilities * r;
@@ -258,6 +264,7 @@ void VtkXMLUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLUtilitiesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -276,7 +283,7 @@ void VtkXMLUtilitiesWrap::UnFactorElements(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXMLUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkXMLUtilitiesWrap>(info.Holder());
 	vtkXMLUtilities *native = (vtkXMLUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

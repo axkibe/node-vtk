@@ -29,26 +29,27 @@ VtkUniformGridAMRAlgorithmWrap::~VtkUniformGridAMRAlgorithmWrap()
 
 void VtkUniformGridAMRAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUniformGridAMRAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUniformGridAMRAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UniformGridAMRAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUniformGridAMRAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UniformGridAMRAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUniformGridAMRAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUniformGridAMRAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUniformGridAMRAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUniformGridAMRAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -67,6 +68,8 @@ void VtkUniformGridAMRAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUniformGridAMRAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -121,6 +124,7 @@ void VtkUniformGridAMRAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkUniformGridAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -139,6 +143,7 @@ void VtkUniformGridAMRAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetOutput();
+		VtkUniformGridAMRWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,6 +188,7 @@ void VtkUniformGridAMRAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkUniformGridAMRAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +204,7 @@ void VtkUniformGridAMRAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkUniformGridAMRAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRAlgorithmWrap>(info.Holder());
 	vtkUniformGridAMRAlgorithm *native = (vtkUniformGridAMRAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUniformGridAMRAlgorithm * r;
@@ -210,6 +216,7 @@ void VtkUniformGridAMRAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUniformGridAMRAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -228,7 +235,7 @@ void VtkUniformGridAMRAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInf
 {
 	VtkUniformGridAMRAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRAlgorithmWrap>(info.Holder());
 	vtkUniformGridAMRAlgorithm *native = (vtkUniformGridAMRAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -243,7 +250,7 @@ void VtkUniformGridAMRAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInf
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

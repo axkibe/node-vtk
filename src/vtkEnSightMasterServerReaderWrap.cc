@@ -27,26 +27,27 @@ VtkEnSightMasterServerReaderWrap::~VtkEnSightMasterServerReaderWrap()
 
 void VtkEnSightMasterServerReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGenericEnSightReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericEnSightReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEnSightMasterServerReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEnSightMasterServerReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EnSightMasterServerReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEnSightMasterServerReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EnSightMasterServerReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEnSightMasterServerReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEnSightMasterServerReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEnSightMasterServerReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGenericEnSightReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericEnSightReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEnSightMasterServerReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CanReadFile", CanReadFile);
 	Nan::SetPrototypeMethod(tpl, "canReadFile", CanReadFile);
 
@@ -74,6 +75,8 @@ void VtkEnSightMasterServerReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetCurrentPiece", SetCurrentPiece);
 	Nan::SetPrototypeMethod(tpl, "setCurrentPiece", SetCurrentPiece);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEnSightMasterServerReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -217,6 +220,7 @@ void VtkEnSightMasterServerReaderWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkEnSightMasterServerReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +236,7 @@ void VtkEnSightMasterServerReaderWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkEnSightMasterServerReaderWrap *wrapper = ObjectWrap::Unwrap<VtkEnSightMasterServerReaderWrap>(info.Holder());
 	vtkEnSightMasterServerReader *native = (vtkEnSightMasterServerReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEnSightMasterServerReader * r;
@@ -244,6 +248,7 @@ void VtkEnSightMasterServerReaderWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEnSightMasterServerReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

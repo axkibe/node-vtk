@@ -36,26 +36,27 @@ VtkGraphWrap::~VtkGraphWrap()
 
 void VtkGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Graph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Graph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeBounds", ComputeBounds);
 	Nan::SetPrototypeMethod(tpl, "computeBounds", ComputeBounds);
 
@@ -131,6 +132,8 @@ void VtkGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -172,7 +175,7 @@ void VtkGraphWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -192,7 +195,7 @@ void VtkGraphWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -212,7 +215,7 @@ void VtkGraphWrap::DeepCopyEdgePoints(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -255,6 +258,7 @@ void VtkGraphWrap::GetAttributesAsFieldData(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetAttributesAsFieldData(
 			info[0]->Int32Value()
 		);
+			VtkFieldDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -287,7 +291,7 @@ void VtkGraphWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -302,6 +306,7 @@ void VtkGraphWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkGraphWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -322,6 +327,7 @@ void VtkGraphWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -361,6 +367,7 @@ void VtkGraphWrap::GetDistributedGraphHelper(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetDistributedGraphHelper();
+		VtkDistributedGraphHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -383,6 +390,7 @@ void VtkGraphWrap::GetEdgeData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetEdgeData();
+		VtkDataSetAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,7 +406,7 @@ void VtkGraphWrap::GetEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEdgeListIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEdgeListIteratorWrap *a0 = ObjectWrap::Unwrap<VtkEdgeListIteratorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -418,10 +426,10 @@ void VtkGraphWrap::GetInducedEdges(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -450,6 +458,7 @@ void VtkGraphWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -472,6 +481,7 @@ void VtkGraphWrap::GetVertexData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetVertexData();
+		VtkDataSetAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -487,7 +497,7 @@ void VtkGraphWrap::GetVertices(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVertexListIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVertexListIteratorWrap *a0 = ObjectWrap::Unwrap<VtkVertexListIteratorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -548,6 +558,7 @@ void VtkGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
+		VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -563,7 +574,7 @@ void VtkGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGraph * r;
@@ -575,6 +586,7 @@ void VtkGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -593,7 +605,7 @@ void VtkGraphWrap::SetDistributedGraphHelper(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDistributedGraphHelperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDistributedGraphHelperWrap *a0 = ObjectWrap::Unwrap<VtkDistributedGraphHelperWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -613,7 +625,7 @@ void VtkGraphWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -633,7 +645,7 @@ void VtkGraphWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -653,7 +665,7 @@ void VtkGraphWrap::ShallowCopyEdgePoints(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
 	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkMutableGraphHelperWrap::~VtkMutableGraphHelperWrap()
 
 void VtkMutableGraphHelperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMutableGraphHelperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMutableGraphHelper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MutableGraphHelper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMutableGraphHelper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MutableGraphHelper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMutableGraphHelperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMutableGraphHelperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMutableGraphHelperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMutableGraphHelperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkMutableGraphHelperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMutableGraphHelperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,6 +125,7 @@ void VtkMutableGraphHelperWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetGraph();
+		VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,6 +170,7 @@ void VtkMutableGraphHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkMutableGraphHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,7 +186,7 @@ void VtkMutableGraphHelperWrap::RemoveEdges(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMutableGraphHelperWrap *wrapper = ObjectWrap::Unwrap<VtkMutableGraphHelperWrap>(info.Holder());
 	vtkMutableGraphHelper *native = (vtkMutableGraphHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -201,7 +206,7 @@ void VtkMutableGraphHelperWrap::RemoveVertices(const Nan::FunctionCallbackInfo<v
 {
 	VtkMutableGraphHelperWrap *wrapper = ObjectWrap::Unwrap<VtkMutableGraphHelperWrap>(info.Holder());
 	vtkMutableGraphHelper *native = (vtkMutableGraphHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -221,7 +226,7 @@ void VtkMutableGraphHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMutableGraphHelperWrap *wrapper = ObjectWrap::Unwrap<VtkMutableGraphHelperWrap>(info.Holder());
 	vtkMutableGraphHelper *native = (vtkMutableGraphHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMutableGraphHelper * r;
@@ -233,6 +238,7 @@ void VtkMutableGraphHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMutableGraphHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -251,7 +257,7 @@ void VtkMutableGraphHelperWrap::SetGraph(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMutableGraphHelperWrap *wrapper = ObjectWrap::Unwrap<VtkMutableGraphHelperWrap>(info.Holder());
 	vtkMutableGraphHelper *native = (vtkMutableGraphHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

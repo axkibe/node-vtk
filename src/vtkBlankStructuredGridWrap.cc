@@ -27,26 +27,27 @@ VtkBlankStructuredGridWrap::~VtkBlankStructuredGridWrap()
 
 void VtkBlankStructuredGridWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBlankStructuredGridWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBlankStructuredGrid").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BlankStructuredGrid").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBlankStructuredGrid").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BlankStructuredGrid").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBlankStructuredGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBlankStructuredGridWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBlankStructuredGridWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBlankStructuredGridWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetArrayId", GetArrayId);
 	Nan::SetPrototypeMethod(tpl, "getArrayId", GetArrayId);
 
@@ -95,6 +96,8 @@ void VtkBlankStructuredGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetMinBlankingValue", SetMinBlankingValue);
 	Nan::SetPrototypeMethod(tpl, "setMinBlankingValue", SetMinBlankingValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBlankStructuredGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -265,6 +268,7 @@ void VtkBlankStructuredGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkBlankStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +284,7 @@ void VtkBlankStructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBlankStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkBlankStructuredGridWrap>(info.Holder());
 	vtkBlankStructuredGrid *native = (vtkBlankStructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBlankStructuredGrid * r;
@@ -292,6 +296,7 @@ void VtkBlankStructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBlankStructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

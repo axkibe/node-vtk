@@ -29,26 +29,27 @@ VtkEncodedGradientShaderWrap::~VtkEncodedGradientShaderWrap()
 
 void VtkEncodedGradientShaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEncodedGradientShaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEncodedGradientShader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EncodedGradientShader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEncodedGradientShader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EncodedGradientShader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEncodedGradientShaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEncodedGradientShaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEncodedGradientShaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEncodedGradientShaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetActiveComponent", GetActiveComponent);
 	Nan::SetPrototypeMethod(tpl, "getActiveComponent", GetActiveComponent);
 
@@ -76,6 +77,8 @@ void VtkEncodedGradientShaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateShadingTable", UpdateShadingTable);
 	Nan::SetPrototypeMethod(tpl, "updateShadingTable", UpdateShadingTable);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEncodedGradientShaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -190,6 +193,7 @@ void VtkEncodedGradientShaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkEncodedGradientShaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +209,7 @@ void VtkEncodedGradientShaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
 	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEncodedGradientShader * r;
@@ -217,6 +221,7 @@ void VtkEncodedGradientShaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEncodedGradientShaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -254,13 +259,13 @@ void VtkEncodedGradientShaderWrap::UpdateShadingTable(const Nan::FunctionCallbac
 {
 	VtkEncodedGradientShaderWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientShaderWrap>(info.Holder());
 	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkEncodedGradientEstimatorWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkEncodedGradientEstimatorWrap *a2 = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info[2]->ToObject());
 				if(info.Length() != 3)

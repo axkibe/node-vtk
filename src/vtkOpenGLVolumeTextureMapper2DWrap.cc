@@ -29,26 +29,27 @@ VtkOpenGLVolumeTextureMapper2DWrap::~VtkOpenGLVolumeTextureMapper2DWrap()
 
 void VtkOpenGLVolumeTextureMapper2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeTextureMapper2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeTextureMapper2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLVolumeTextureMapper2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLVolumeTextureMapper2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLVolumeTextureMapper2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLVolumeTextureMapper2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLVolumeTextureMapper2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLVolumeTextureMapper2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLVolumeTextureMapper2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLVolumeTextureMapper2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeTextureMapper2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeTextureMapper2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLVolumeTextureMapper2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -64,6 +65,8 @@ void VtkOpenGLVolumeTextureMapper2DWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLVolumeTextureMapper2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,6 +139,7 @@ void VtkOpenGLVolumeTextureMapper2DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLVolumeTextureMapper2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -151,10 +155,10 @@ void VtkOpenGLVolumeTextureMapper2DWrap::Render(const Nan::FunctionCallbackInfo<
 {
 	VtkOpenGLVolumeTextureMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLVolumeTextureMapper2DWrap>(info.Holder());
 	vtkOpenGLVolumeTextureMapper2D *native = (vtkOpenGLVolumeTextureMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -176,7 +180,7 @@ void VtkOpenGLVolumeTextureMapper2DWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkOpenGLVolumeTextureMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLVolumeTextureMapper2DWrap>(info.Holder());
 	vtkOpenGLVolumeTextureMapper2D *native = (vtkOpenGLVolumeTextureMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLVolumeTextureMapper2D * r;
@@ -188,6 +192,7 @@ void VtkOpenGLVolumeTextureMapper2DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLVolumeTextureMapper2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

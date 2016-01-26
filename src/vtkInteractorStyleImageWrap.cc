@@ -28,26 +28,27 @@ VtkInteractorStyleImageWrap::~VtkInteractorStyleImageWrap()
 
 void VtkInteractorStyleImageWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleTrackballCameraWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleImageWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyleImage").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyleImage").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyleImage").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyleImage").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleImageWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleImageWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleTrackballCameraWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleImageWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EndPick", EndPick);
 	Nan::SetPrototypeMethod(tpl, "endPick", EndPick);
 
@@ -153,6 +154,8 @@ void VtkInteractorStyleImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WindowLevel", WindowLevel);
 	Nan::SetPrototypeMethod(tpl, "windowLevel", WindowLevel);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleImageWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -239,6 +242,7 @@ void VtkInteractorStyleImageWrap::GetCurrentImageProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetCurrentImageProperty();
+		VtkImagePropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,6 +329,7 @@ void VtkInteractorStyleImageWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -448,7 +453,7 @@ void VtkInteractorStyleImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyleImage * r;
@@ -460,6 +465,7 @@ void VtkInteractorStyleImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

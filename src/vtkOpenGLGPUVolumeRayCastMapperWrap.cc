@@ -30,26 +30,27 @@ VtkOpenGLGPUVolumeRayCastMapperWrap::~VtkOpenGLGPUVolumeRayCastMapperWrap()
 
 void VtkOpenGLGPUVolumeRayCastMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGPUVolumeRayCastMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGPUVolumeRayCastMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLGPUVolumeRayCastMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLGPUVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLGPUVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLGPUVolumeRayCastMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLGPUVolumeRayCastMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLGPUVolumeRayCastMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLGPUVolumeRayCastMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGPUVolumeRayCastMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGPUVolumeRayCastMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLGPUVolumeRayCastMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLGPUVolumeRayCastMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,10 +139,10 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::IsRenderSupported(const Nan::FunctionC
 {
 	VtkOpenGLGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkOpenGLGPUVolumeRayCastMapper *native = (vtkOpenGLGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumePropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumePropertyWrap *a1 = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info[1]->ToObject());
 			int r;
@@ -170,6 +173,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +209,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::ReleaseGraphicsResources(const Nan::Fu
 {
 	VtkOpenGLGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkOpenGLGPUVolumeRayCastMapper *native = (vtkOpenGLGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -225,7 +229,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkOpenGLGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkOpenGLGPUVolumeRayCastMapper *native = (vtkOpenGLGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLGPUVolumeRayCastMapper * r;
@@ -237,6 +241,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -34,26 +34,27 @@ VtkAMRVolumeMapperWrap::~VtkAMRVolumeMapperWrap()
 
 void VtkAMRVolumeMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMRVolumeMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMRVolumeMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMRVolumeMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMRVolumeMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMRVolumeMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMRVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMRVolumeMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMRVolumeMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMRVolumeMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetArrayAccessMode", GetArrayAccessMode);
 	Nan::SetPrototypeMethod(tpl, "getArrayAccessMode", GetArrayAccessMode);
 
@@ -180,6 +181,8 @@ void VtkAMRVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateResamplerFrustrumMethod", UpdateResamplerFrustrumMethod);
 	Nan::SetPrototypeMethod(tpl, "updateResamplerFrustrumMethod", UpdateResamplerFrustrumMethod);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMRVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -420,6 +423,7 @@ void VtkAMRVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMRVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -435,7 +439,7 @@ void VtkAMRVolumeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbac
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -455,10 +459,10 @@ void VtkAMRVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -480,7 +484,7 @@ void VtkAMRVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMRVolumeMapper * r;
@@ -492,6 +496,7 @@ void VtkAMRVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMRVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -638,7 +643,7 @@ void VtkAMRVolumeMapperWrap::SetInputConnection(const Nan::FunctionCallbackInfo<
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -653,7 +658,7 @@ void VtkAMRVolumeMapperWrap::SetInputConnection(const Nan::FunctionCallbackInfo<
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -675,7 +680,7 @@ void VtkAMRVolumeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOverlappingAMRWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkOverlappingAMRWrap *a0 = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -932,10 +937,10 @@ void VtkAMRVolumeMapperWrap::UpdateResampler(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkOverlappingAMRWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkOverlappingAMRWrap *a1 = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -957,10 +962,10 @@ void VtkAMRVolumeMapperWrap::UpdateResamplerFrustrumMethod(const Nan::FunctionCa
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkOverlappingAMRWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkOverlappingAMRWrap *a1 = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

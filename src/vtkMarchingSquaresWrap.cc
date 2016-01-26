@@ -28,26 +28,27 @@ VtkMarchingSquaresWrap::~VtkMarchingSquaresWrap()
 
 void VtkMarchingSquaresWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMarchingSquaresWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMarchingSquares").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MarchingSquares").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMarchingSquares").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MarchingSquares").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMarchingSquaresWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMarchingSquaresWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMarchingSquaresWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMarchingSquaresWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLocator", CreateDefaultLocator);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLocator", CreateDefaultLocator);
 
@@ -87,6 +88,8 @@ void VtkMarchingSquaresWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMarchingSquaresWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -176,6 +179,7 @@ void VtkMarchingSquaresWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,6 +259,7 @@ void VtkMarchingSquaresWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkMarchingSquaresWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -270,7 +275,7 @@ void VtkMarchingSquaresWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMarchingSquaresWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingSquaresWrap>(info.Holder());
 	vtkMarchingSquares *native = (vtkMarchingSquares *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMarchingSquares * r;
@@ -282,6 +287,7 @@ void VtkMarchingSquaresWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMarchingSquaresWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -339,7 +345,7 @@ void VtkMarchingSquaresWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMarchingSquaresWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingSquaresWrap>(info.Holder());
 	vtkMarchingSquares *native = (vtkMarchingSquares *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

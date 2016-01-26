@@ -27,26 +27,27 @@ VtkOggTheoraWriterWrap::~VtkOggTheoraWriterWrap()
 
 void VtkOggTheoraWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGenericMovieWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericMovieWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOggTheoraWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOggTheoraWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OggTheoraWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOggTheoraWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OggTheoraWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOggTheoraWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOggTheoraWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOggTheoraWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGenericMovieWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericMovieWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOggTheoraWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "End", End);
 	Nan::SetPrototypeMethod(tpl, "end", End);
 
@@ -104,6 +105,8 @@ void VtkOggTheoraWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOggTheoraWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -286,6 +289,7 @@ void VtkOggTheoraWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkOggTheoraWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +305,7 @@ void VtkOggTheoraWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkOggTheoraWriterWrap *wrapper = ObjectWrap::Unwrap<VtkOggTheoraWriterWrap>(info.Holder());
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOggTheoraWriter * r;
@@ -313,6 +317,7 @@ void VtkOggTheoraWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOggTheoraWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

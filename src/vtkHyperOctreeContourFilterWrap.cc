@@ -28,26 +28,27 @@ VtkHyperOctreeContourFilterWrap::~VtkHyperOctreeContourFilterWrap()
 
 void VtkHyperOctreeContourFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperOctreeContourFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperOctreeContourFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperOctreeContourFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperOctreeContourFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperOctreeContourFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperOctreeContourFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperOctreeContourFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperOctreeContourFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperOctreeContourFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLocator", CreateDefaultLocator);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLocator", CreateDefaultLocator);
 
@@ -84,6 +85,8 @@ void VtkHyperOctreeContourFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperOctreeContourFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -173,6 +176,7 @@ void VtkHyperOctreeContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,6 +256,7 @@ void VtkHyperOctreeContourFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperOctreeContourFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +272,7 @@ void VtkHyperOctreeContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkHyperOctreeContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeContourFilterWrap>(info.Holder());
 	vtkHyperOctreeContourFilter *native = (vtkHyperOctreeContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperOctreeContourFilter * r;
@@ -279,6 +284,7 @@ void VtkHyperOctreeContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperOctreeContourFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -297,7 +303,7 @@ void VtkHyperOctreeContourFilterWrap::SetLocator(const Nan::FunctionCallbackInfo
 {
 	VtkHyperOctreeContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeContourFilterWrap>(info.Holder());
 	vtkHyperOctreeContourFilter *native = (vtkHyperOctreeContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

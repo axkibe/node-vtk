@@ -31,26 +31,27 @@ VtkChartLegendWrap::~VtkChartLegendWrap()
 
 void VtkChartLegendWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContextItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkChartLegendWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkChartLegend").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ChartLegend").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkChartLegend").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ChartLegend").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkChartLegendWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkChartLegendWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkChartLegendWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkChartLegendWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CacheBoundsOff", CacheBoundsOff);
 	Nan::SetPrototypeMethod(tpl, "cacheBoundsOff", CacheBoundsOff);
 
@@ -117,6 +118,8 @@ void VtkChartLegendWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkChartLegendWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -177,6 +180,7 @@ void VtkChartLegendWrap::GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetBrush();
+		VtkBrushWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,6 +203,7 @@ void VtkChartLegendWrap::GetChart(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetChart();
+		VtkChartWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,6 +254,7 @@ void VtkChartLegendWrap::GetLabelProperties(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLabelProperties();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,6 +305,7 @@ void VtkChartLegendWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetPen();
+		VtkPenWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -371,6 +378,7 @@ void VtkChartLegendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkChartLegendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -386,7 +394,7 @@ void VtkChartLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkChartLegend * r;
@@ -398,6 +406,7 @@ void VtkChartLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkChartLegendWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -416,7 +425,7 @@ void VtkChartLegendWrap::SetChart(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkChartWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkChartWrap *a0 = ObjectWrap::Unwrap<VtkChartWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

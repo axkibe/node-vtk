@@ -27,26 +27,27 @@ VtkFileOutputWindowWrap::~VtkFileOutputWindowWrap()
 
 void VtkFileOutputWindowWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkOutputWindowWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOutputWindowWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFileOutputWindowWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFileOutputWindow").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FileOutputWindow").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFileOutputWindow").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FileOutputWindow").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFileOutputWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFileOutputWindowWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFileOutputWindowWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkOutputWindowWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOutputWindowWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFileOutputWindowWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AppendOff", AppendOff);
 	Nan::SetPrototypeMethod(tpl, "appendOff", AppendOff);
 
@@ -92,6 +93,8 @@ void VtkFileOutputWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFlush", SetFlush);
 	Nan::SetPrototypeMethod(tpl, "setFlush", SetFlush);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFileOutputWindowWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -274,6 +277,7 @@ void VtkFileOutputWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkFileOutputWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -289,7 +293,7 @@ void VtkFileOutputWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkFileOutputWindowWrap>(info.Holder());
 	vtkFileOutputWindow *native = (vtkFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFileOutputWindow * r;
@@ -301,6 +305,7 @@ void VtkFileOutputWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFileOutputWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkImplicitSumWrap::~VtkImplicitSumWrap()
 
 void VtkImplicitSumWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImplicitFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitSumWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitSum").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitSum").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitSum").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitSum").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitSumWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitSumWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitSumWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitSumWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddFunction", AddFunction);
 	Nan::SetPrototypeMethod(tpl, "addFunction", AddFunction);
 
@@ -83,6 +84,8 @@ void VtkImplicitSumWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNormalizeByWeight", SetNormalizeByWeight);
 	Nan::SetPrototypeMethod(tpl, "setNormalizeByWeight", SetNormalizeByWeight);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitSumWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -112,7 +115,7 @@ void VtkImplicitSumWrap::AddFunction(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImplicitSumWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSumWrap>(info.Holder());
 	vtkImplicitSum *native = (vtkImplicitSum *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -231,6 +234,7 @@ void VtkImplicitSumWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitSumWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,7 +286,7 @@ void VtkImplicitSumWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImplicitSumWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSumWrap>(info.Holder());
 	vtkImplicitSum *native = (vtkImplicitSum *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitSum * r;
@@ -294,6 +298,7 @@ void VtkImplicitSumWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitSumWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +317,7 @@ void VtkImplicitSumWrap::SetFunctionWeight(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImplicitSumWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSumWrap>(info.Holder());
 	vtkImplicitSum *native = (vtkImplicitSum *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())

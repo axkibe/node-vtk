@@ -28,26 +28,27 @@ VtkAMRInterpolatedVelocityFieldWrap::~VtkAMRInterpolatedVelocityFieldWrap()
 
 void VtkAMRInterpolatedVelocityFieldWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractInterpolatedVelocityFieldWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractInterpolatedVelocityFieldWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMRInterpolatedVelocityFieldWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMRInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMRInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMRInterpolatedVelocityField").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMRInterpolatedVelocityField").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMRInterpolatedVelocityFieldWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMRInterpolatedVelocityFieldWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMRInterpolatedVelocityFieldWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractInterpolatedVelocityFieldWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractInterpolatedVelocityFieldWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMRInterpolatedVelocityFieldWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAmrDataSet", GetAmrDataSet);
 	Nan::SetPrototypeMethod(tpl, "getAmrDataSet", GetAmrDataSet);
 
@@ -66,6 +67,8 @@ void VtkAMRInterpolatedVelocityFieldWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SetAMRData", SetAMRData);
 	Nan::SetPrototypeMethod(tpl, "setAMRData", SetAMRData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMRInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -102,6 +105,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::GetAmrDataSet(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetAmrDataSet();
+		VtkOverlappingAMRWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMRInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkAMRInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkAMRInterpolatedVelocityField *native = (vtkAMRInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMRInterpolatedVelocityField * r;
@@ -187,6 +192,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMRInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::SetAMRData(const Nan::FunctionCallback
 {
 	VtkAMRInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkAMRInterpolatedVelocityField *native = (vtkAMRInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOverlappingAMRWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkOverlappingAMRWrap *a0 = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

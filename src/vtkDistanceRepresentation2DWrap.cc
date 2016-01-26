@@ -31,26 +31,27 @@ VtkDistanceRepresentation2DWrap::~VtkDistanceRepresentation2DWrap()
 
 void VtkDistanceRepresentation2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDistanceRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDistanceRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDistanceRepresentation2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDistanceRepresentation2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DistanceRepresentation2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDistanceRepresentation2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DistanceRepresentation2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDistanceRepresentation2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDistanceRepresentation2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDistanceRepresentation2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDistanceRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDistanceRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDistanceRepresentation2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -84,6 +85,8 @@ void VtkDistanceRepresentation2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDistanceRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -132,6 +135,7 @@ void VtkDistanceRepresentation2DWrap::GetAxis(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetAxis();
+		VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -154,6 +158,7 @@ void VtkDistanceRepresentation2DWrap::GetAxisProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetAxisProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,6 +231,7 @@ void VtkDistanceRepresentation2DWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkDistanceRepresentation2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +247,7 @@ void VtkDistanceRepresentation2DWrap::ReleaseGraphicsResources(const Nan::Functi
 {
 	VtkDistanceRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation2DWrap>(info.Holder());
 	vtkDistanceRepresentation2D *native = (vtkDistanceRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -261,7 +267,7 @@ void VtkDistanceRepresentation2DWrap::RenderOpaqueGeometry(const Nan::FunctionCa
 {
 	VtkDistanceRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation2DWrap>(info.Holder());
 	vtkDistanceRepresentation2D *native = (vtkDistanceRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -283,7 +289,7 @@ void VtkDistanceRepresentation2DWrap::RenderOverlay(const Nan::FunctionCallbackI
 {
 	VtkDistanceRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation2DWrap>(info.Holder());
 	vtkDistanceRepresentation2D *native = (vtkDistanceRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -305,7 +311,7 @@ void VtkDistanceRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkDistanceRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation2DWrap>(info.Holder());
 	vtkDistanceRepresentation2D *native = (vtkDistanceRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDistanceRepresentation2D * r;
@@ -317,6 +323,7 @@ void VtkDistanceRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDistanceRepresentation2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

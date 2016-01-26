@@ -27,26 +27,27 @@ VtkHardwareSelectionPolyDataPainterWrap::~VtkHardwareSelectionPolyDataPainterWra
 
 void VtkHardwareSelectionPolyDataPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStandardPolyDataPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStandardPolyDataPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHardwareSelectionPolyDataPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHardwareSelectionPolyDataPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HardwareSelectionPolyDataPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHardwareSelectionPolyDataPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HardwareSelectionPolyDataPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHardwareSelectionPolyDataPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHardwareSelectionPolyDataPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHardwareSelectionPolyDataPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStandardPolyDataPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStandardPolyDataPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHardwareSelectionPolyDataPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EnableSelectionOff", EnableSelectionOff);
 	Nan::SetPrototypeMethod(tpl, "enableSelectionOff", EnableSelectionOff);
 
@@ -95,6 +96,8 @@ void VtkHardwareSelectionPolyDataPainterWrap::InitTpl(v8::Local<v8::FunctionTemp
 	Nan::SetPrototypeMethod(tpl, "SetProcessIdArrayName", SetProcessIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setProcessIdArrayName", SetProcessIdArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHardwareSelectionPolyDataPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -261,6 +264,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
+		VtkHardwareSelectionPolyDataPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +280,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCa
 {
 	VtkHardwareSelectionPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectionPolyDataPainterWrap>(info.Holder());
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHardwareSelectionPolyDataPainter * r;
@@ -288,6 +292,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHardwareSelectionPolyDataPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -30,26 +30,27 @@ VtkKMeansStatisticsWrap::~VtkKMeansStatisticsWrap()
 
 void VtkKMeansStatisticsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStatisticsAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkKMeansStatisticsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkKMeansStatistics").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("KMeansStatistics").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkKMeansStatistics").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("KMeansStatistics").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkKMeansStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkKMeansStatisticsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkKMeansStatisticsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStatisticsAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkKMeansStatisticsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Aggregate", Aggregate);
 	Nan::SetPrototypeMethod(tpl, "aggregate", Aggregate);
 
@@ -95,6 +96,8 @@ void VtkKMeansStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkKMeansStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -124,10 +127,10 @@ void VtkKMeansStatisticsWrap::Aggregate(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkKMeansStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkKMeansStatisticsWrap>(info.Holder());
 	vtkKMeansStatistics *native = (vtkKMeansStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectCollectionWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectCollectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -184,6 +187,7 @@ void VtkKMeansStatisticsWrap::GetDistanceFunctor(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetDistanceFunctor();
+		VtkKMeansDistanceFunctorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -270,6 +274,7 @@ void VtkKMeansStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkKMeansStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,7 +290,7 @@ void VtkKMeansStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkKMeansStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkKMeansStatisticsWrap>(info.Holder());
 	vtkKMeansStatistics *native = (vtkKMeansStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkKMeansStatistics * r;
@@ -297,6 +302,7 @@ void VtkKMeansStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkKMeansStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -334,7 +340,7 @@ void VtkKMeansStatisticsWrap::SetDistanceFunctor(const Nan::FunctionCallbackInfo
 {
 	VtkKMeansStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkKMeansStatisticsWrap>(info.Holder());
 	vtkKMeansStatistics *native = (vtkKMeansStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKMeansDistanceFunctorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKMeansDistanceFunctorWrap *a0 = ObjectWrap::Unwrap<VtkKMeansDistanceFunctorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

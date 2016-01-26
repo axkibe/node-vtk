@@ -29,26 +29,27 @@ VtkDepthSortPolyDataWrap::~VtkDepthSortPolyDataWrap()
 
 void VtkDepthSortPolyDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDepthSortPolyDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDepthSortPolyData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DepthSortPolyData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDepthSortPolyData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DepthSortPolyData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDepthSortPolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDepthSortPolyDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDepthSortPolyDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDepthSortPolyDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCamera", GetCamera);
 	Nan::SetPrototypeMethod(tpl, "getCamera", GetCamera);
 
@@ -121,6 +122,8 @@ void VtkDepthSortPolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SortScalarsOn", SortScalarsOn);
 	Nan::SetPrototypeMethod(tpl, "sortScalarsOn", SortScalarsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDepthSortPolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -157,6 +160,7 @@ void VtkDepthSortPolyDataWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,6 +225,7 @@ void VtkDepthSortPolyDataWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetProp3D();
+		VtkProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,6 +284,7 @@ void VtkDepthSortPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkDepthSortPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +300,7 @@ void VtkDepthSortPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDepthSortPolyData * r;
@@ -306,6 +312,7 @@ void VtkDepthSortPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDepthSortPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -324,7 +331,7 @@ void VtkDepthSortPolyDataWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -481,7 +488,7 @@ void VtkDepthSortPolyDataWrap::SetProp3D(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

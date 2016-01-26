@@ -29,26 +29,27 @@ VtkStackedTreeLayoutStrategyWrap::~VtkStackedTreeLayoutStrategyWrap()
 
 void VtkStackedTreeLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAreaLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAreaLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStackedTreeLayoutStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStackedTreeLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StackedTreeLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStackedTreeLayoutStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StackedTreeLayoutStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStackedTreeLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStackedTreeLayoutStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStackedTreeLayoutStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAreaLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAreaLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStackedTreeLayoutStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -109,6 +110,8 @@ void VtkStackedTreeLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStackedTreeLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -244,13 +247,13 @@ void VtkStackedTreeLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -274,16 +277,16 @@ void VtkStackedTreeLayoutStrategyWrap::LayoutEdgePoints(const Nan::FunctionCallb
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkTreeWrap *a3 = ObjectWrap::Unwrap<VtkTreeWrap>(info[3]->ToObject());
 					if(info.Length() != 4)
@@ -316,6 +319,7 @@ void VtkStackedTreeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkStackedTreeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -355,7 +359,7 @@ void VtkStackedTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStackedTreeLayoutStrategy * r;
@@ -367,6 +371,7 @@ void VtkStackedTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStackedTreeLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

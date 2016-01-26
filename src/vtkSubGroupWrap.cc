@@ -27,26 +27,27 @@ VtkSubGroupWrap::~VtkSubGroupWrap()
 
 void VtkSubGroupWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSubGroupWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSubGroup").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SubGroup").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSubGroup").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SubGroup").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSubGroupWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSubGroupWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSubGroupWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSubGroupWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Barrier", Barrier);
 	Nan::SetPrototypeMethod(tpl, "barrier", Barrier);
 
@@ -80,6 +81,8 @@ void VtkSubGroupWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "setGatherPattern", setGatherPattern);
 	Nan::SetPrototypeMethod(tpl, "setGatherPattern", setGatherPattern);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSubGroupWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -210,7 +213,7 @@ void VtkSubGroupWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkCommunicatorWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkCommunicatorWrap *a4 = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info[4]->ToObject());
 						int r;
@@ -269,6 +272,7 @@ void VtkSubGroupWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkSubGroupWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -296,7 +300,7 @@ void VtkSubGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkSubGroupWrap *wrapper = ObjectWrap::Unwrap<VtkSubGroupWrap>(info.Holder());
 	vtkSubGroup *native = (vtkSubGroup *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSubGroup * r;
@@ -308,6 +312,7 @@ void VtkSubGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSubGroupWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkImageSinusoidSourceWrap::~VtkImageSinusoidSourceWrap()
 
 void VtkImageSinusoidSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageSinusoidSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageSinusoidSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageSinusoidSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageSinusoidSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageSinusoidSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageSinusoidSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageSinusoidSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageSinusoidSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageSinusoidSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAmplitude", GetAmplitude);
 	Nan::SetPrototypeMethod(tpl, "getAmplitude", GetAmplitude);
 
@@ -83,6 +84,8 @@ void VtkImageSinusoidSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageSinusoidSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -197,6 +200,7 @@ void VtkImageSinusoidSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageSinusoidSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +216,7 @@ void VtkImageSinusoidSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageSinusoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageSinusoidSourceWrap>(info.Holder());
 	vtkImageSinusoidSource *native = (vtkImageSinusoidSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageSinusoidSource * r;
@@ -224,6 +228,7 @@ void VtkImageSinusoidSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageSinusoidSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -32,26 +32,27 @@ VtkPlot3DWrap::~VtkPlot3DWrap()
 
 void VtkPlot3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContextItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPlot3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPlot3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Plot3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPlot3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Plot3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPlot3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPlot3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPlot3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPlot3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetChart", GetChart);
 	Nan::SetPrototypeMethod(tpl, "getChart", GetChart);
 
@@ -88,6 +89,8 @@ void VtkPlot3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelection", SetSelection);
 	Nan::SetPrototypeMethod(tpl, "setSelection", SetSelection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPlot3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -124,6 +127,7 @@ void VtkPlot3DWrap::GetChart(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetChart();
+		VtkChartXYZWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkPlot3DWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetPen();
+		VtkPenWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,6 +187,7 @@ void VtkPlot3DWrap::GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetSelection();
+		VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,6 +232,7 @@ void VtkPlot3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
+		VtkPlot3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +248,7 @@ void VtkPlot3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPlot3DWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DWrap>(info.Holder());
 	vtkPlot3D *native = (vtkPlot3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPlot3D * r;
@@ -253,6 +260,7 @@ void VtkPlot3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPlot3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -271,7 +279,7 @@ void VtkPlot3DWrap::SetChart(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlot3DWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DWrap>(info.Holder());
 	vtkPlot3D *native = (vtkPlot3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkChartXYZWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkChartXYZWrap *a0 = ObjectWrap::Unwrap<VtkChartXYZWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -291,7 +299,7 @@ void VtkPlot3DWrap::SetColors(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlot3DWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DWrap>(info.Holder());
 	vtkPlot3D *native = (vtkPlot3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -311,7 +319,7 @@ void VtkPlot3DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPlot3DWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DWrap>(info.Holder());
 	vtkPlot3D *native = (vtkPlot3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -331,7 +339,7 @@ void VtkPlot3DWrap::SetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlot3DWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DWrap>(info.Holder());
 	vtkPlot3D *native = (vtkPlot3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPenWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPenWrap *a0 = ObjectWrap::Unwrap<VtkPenWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -351,7 +359,7 @@ void VtkPlot3DWrap::SetSelection(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPlot3DWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DWrap>(info.Holder());
 	vtkPlot3D *native = (vtkPlot3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

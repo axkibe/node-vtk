@@ -31,26 +31,27 @@ VtkOpenGLRenderWindowWrap::~VtkOpenGLRenderWindowWrap()
 
 void VtkOpenGLRenderWindowWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderWindowWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderWindowWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLRenderWindowWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLRenderWindow").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLRenderWindow").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLRenderWindow").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLRenderWindow").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLRenderWindowWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLRenderWindowWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderWindowWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderWindowWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLRenderWindowWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CheckGraphicError", CheckGraphicError);
 	Nan::SetPrototypeMethod(tpl, "checkGraphicError", CheckGraphicError);
 
@@ -126,6 +127,8 @@ void VtkOpenGLRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WaitForCompletion", WaitForCompletion);
 	Nan::SetPrototypeMethod(tpl, "waitForCompletion", WaitForCompletion);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLRenderWindowWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -202,6 +205,7 @@ void VtkOpenGLRenderWindowWrap::GetExtensionManager(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetExtensionManager();
+		VtkOpenGLExtensionManagerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,6 +242,7 @@ void VtkOpenGLRenderWindowWrap::GetHardwareSupport(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetHardwareSupport();
+		VtkOpenGLHardwareSupportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -277,7 +282,7 @@ void VtkOpenGLRenderWindowWrap::GetPixelData(const Nan::FunctionCallbackInfo<v8:
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkUnsignedCharArrayWrap *a5 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[5]->ToObject());
 							int r;
@@ -319,7 +324,7 @@ void VtkOpenGLRenderWindowWrap::GetRGBACharPixelData(const Nan::FunctionCallback
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkUnsignedCharArrayWrap *a5 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[5]->ToObject());
 							int r;
@@ -361,7 +366,7 @@ void VtkOpenGLRenderWindowWrap::GetRGBAPixelData(const Nan::FunctionCallbackInfo
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkFloatArrayWrap *a5 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[5]->ToObject());
 							int r;
@@ -401,7 +406,7 @@ void VtkOpenGLRenderWindowWrap::GetZbufferData(const Nan::FunctionCallbackInfo<v
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
 						int r;
@@ -474,6 +479,7 @@ void VtkOpenGLRenderWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -525,7 +531,7 @@ void VtkOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
 	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLRenderWindow * r;
@@ -537,6 +543,7 @@ void VtkOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLRenderWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -582,7 +589,7 @@ void VtkOpenGLRenderWindowWrap::SetPixelData(const Nan::FunctionCallbackInfo<v8:
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkUnsignedCharArrayWrap *a4 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[4]->ToObject());
 						if(info.Length() > 5 && info[5]->IsInt32())
@@ -624,7 +631,7 @@ void VtkOpenGLRenderWindowWrap::SetRGBACharPixelData(const Nan::FunctionCallback
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkUnsignedCharArrayWrap *a4 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[4]->ToObject());
 						if(info.Length() > 5 && info[5]->IsInt32())
@@ -670,7 +677,7 @@ void VtkOpenGLRenderWindowWrap::SetRGBAPixelData(const Nan::FunctionCallbackInfo
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
 						if(info.Length() > 5 && info[5]->IsInt32())
@@ -716,7 +723,7 @@ void VtkOpenGLRenderWindowWrap::SetZbufferData(const Nan::FunctionCallbackInfo<v
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
 						int r;

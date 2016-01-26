@@ -27,26 +27,27 @@ VtkXRenderWindowInteractorWrap::~VtkXRenderWindowInteractorWrap()
 
 void VtkXRenderWindowInteractorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderWindowInteractorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderWindowInteractorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXRenderWindowInteractorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXRenderWindowInteractor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XRenderWindowInteractor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXRenderWindowInteractor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XRenderWindowInteractor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXRenderWindowInteractorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXRenderWindowInteractorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderWindowInteractorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderWindowInteractorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXRenderWindowInteractorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BreakLoopFlagOff", BreakLoopFlagOff);
 	Nan::SetPrototypeMethod(tpl, "breakLoopFlagOff", BreakLoopFlagOff);
 
@@ -89,6 +90,8 @@ void VtkXRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "UpdateSize", UpdateSize);
 	Nan::SetPrototypeMethod(tpl, "updateSize", UpdateSize);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXRenderWindowInteractorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -235,6 +238,7 @@ void VtkXRenderWindowInteractorWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkXRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,7 +254,7 @@ void VtkXRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkXRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkXRenderWindowInteractorWrap>(info.Holder());
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXRenderWindowInteractor * r;
@@ -262,6 +266,7 @@ void VtkXRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXRenderWindowInteractorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkDicerWrap::~VtkDicerWrap()
 
 void VtkDicerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDicerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDicer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Dicer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDicer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Dicer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDicerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDicerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDicerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDicerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FieldDataOff", FieldDataOff);
 	Nan::SetPrototypeMethod(tpl, "fieldDataOff", FieldDataOff);
 
@@ -119,6 +120,8 @@ void VtkDicerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPointsPerPiece", SetNumberOfPointsPerPiece);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPointsPerPiece", SetNumberOfPointsPerPiece);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDicerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -369,6 +372,7 @@ void VtkDicerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
+		VtkDicerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -384,7 +388,7 @@ void VtkDicerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDicer * r;
@@ -396,6 +400,7 @@ void VtkDicerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDicerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

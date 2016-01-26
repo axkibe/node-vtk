@@ -32,26 +32,27 @@ VtkAxisActor2DWrap::~VtkAxisActor2DWrap()
 
 void VtkAxisActor2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAxisActor2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAxisActor2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AxisActor2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAxisActor2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AxisActor2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAxisActor2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAxisActor2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAxisActor2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAxisActor2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AdjustLabelsOff", AdjustLabelsOff);
 	Nan::SetPrototypeMethod(tpl, "adjustLabelsOff", AdjustLabelsOff);
 
@@ -310,6 +311,8 @@ void VtkAxisActor2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TitleVisibilityOn", TitleVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "titleVisibilityOn", TitleVisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAxisActor2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -548,6 +551,7 @@ void VtkAxisActor2DWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -710,6 +714,7 @@ void VtkAxisActor2DWrap::GetPoint1Coordinate(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetPoint1Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -732,6 +737,7 @@ void VtkAxisActor2DWrap::GetPoint2Coordinate(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetPoint2Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -950,6 +956,7 @@ void VtkAxisActor2DWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1046,6 +1053,7 @@ void VtkAxisActor2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1061,7 +1069,7 @@ void VtkAxisActor2DWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInf
 {
 	VtkAxisActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActor2DWrap>(info.Holder());
 	vtkAxisActor2D *native = (vtkAxisActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1081,7 +1089,7 @@ void VtkAxisActor2DWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAxisActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActor2DWrap>(info.Holder());
 	vtkAxisActor2D *native = (vtkAxisActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1103,7 +1111,7 @@ void VtkAxisActor2DWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAxisActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActor2DWrap>(info.Holder());
 	vtkAxisActor2D *native = (vtkAxisActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1125,7 +1133,7 @@ void VtkAxisActor2DWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionC
 {
 	VtkAxisActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActor2DWrap>(info.Holder());
 	vtkAxisActor2D *native = (vtkAxisActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1171,7 +1179,7 @@ void VtkAxisActor2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAxisActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActor2DWrap>(info.Holder());
 	vtkAxisActor2D *native = (vtkAxisActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAxisActor2D * r;
@@ -1183,6 +1191,7 @@ void VtkAxisActor2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAxisActor2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1297,7 +1306,7 @@ void VtkAxisActor2DWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAxisActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActor2DWrap>(info.Holder());
 	vtkAxisActor2D *native = (vtkAxisActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1615,7 +1624,7 @@ void VtkAxisActor2DWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAxisActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActor2DWrap>(info.Holder());
 	vtkAxisActor2D *native = (vtkAxisActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1654,7 +1663,7 @@ void VtkAxisActor2DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkAxisActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActor2DWrap>(info.Holder());
 	vtkAxisActor2D *native = (vtkAxisActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

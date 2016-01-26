@@ -33,26 +33,27 @@ VtkSphereRepresentationWrap::~VtkSphereRepresentationWrap()
 
 void VtkSphereRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSphereRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSphereRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SphereRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSphereRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SphereRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSphereRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSphereRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSphereRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSphereRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -197,6 +198,8 @@ void VtkSphereRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetThetaResolution", SetThetaResolution);
 	Nan::SetPrototypeMethod(tpl, "setThetaResolution", SetThetaResolution);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSphereRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -288,6 +291,7 @@ void VtkSphereRepresentationWrap::GetHandleProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -324,6 +328,7 @@ void VtkSphereRepresentationWrap::GetHandleTextProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetHandleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -367,7 +372,7 @@ void VtkSphereRepresentationWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -408,6 +413,7 @@ void VtkSphereRepresentationWrap::GetRadialLineProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetRadialLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -486,6 +492,7 @@ void VtkSphereRepresentationWrap::GetSelectedHandleProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -508,6 +515,7 @@ void VtkSphereRepresentationWrap::GetSelectedSphereProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSelectedSphereProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -523,7 +531,7 @@ void VtkSphereRepresentationWrap::GetSphere(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSphereWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSphereWrap *a0 = ObjectWrap::Unwrap<VtkSphereWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -550,6 +558,7 @@ void VtkSphereRepresentationWrap::GetSphereProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetSphereProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -670,6 +679,7 @@ void VtkSphereRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkSphereRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -709,7 +719,7 @@ void VtkSphereRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -729,7 +739,7 @@ void VtkSphereRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCallba
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -751,7 +761,7 @@ void VtkSphereRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo<
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -773,7 +783,7 @@ void VtkSphereRepresentationWrap::RenderTranslucentPolygonalGeometry(const Nan::
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -795,7 +805,7 @@ void VtkSphereRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSphereRepresentation * r;
@@ -807,6 +817,7 @@ void VtkSphereRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSphereRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -38,26 +38,27 @@ VtkXYPlotActorWrap::~VtkXYPlotActorWrap()
 
 void VtkXYPlotActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXYPlotActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXYPlotActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XYPlotActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXYPlotActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XYPlotActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXYPlotActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXYPlotActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXYPlotActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXYPlotActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddDataObjectInput", AddDataObjectInput);
 	Nan::SetPrototypeMethod(tpl, "addDataObjectInput", AddDataObjectInput);
 
@@ -679,6 +680,8 @@ void VtkXYPlotActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ViewportToPlotCoordinate", ViewportToPlotCoordinate);
 	Nan::SetPrototypeMethod(tpl, "viewportToPlotCoordinate", ViewportToPlotCoordinate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXYPlotActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -708,7 +711,7 @@ void VtkXYPlotActorWrap::AddDataObjectInput(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -728,7 +731,7 @@ void VtkXYPlotActorWrap::AddDataObjectInputConnection(const Nan::FunctionCallbac
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -748,7 +751,7 @@ void VtkXYPlotActorWrap::AddDataSetInput(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -786,7 +789,7 @@ void VtkXYPlotActorWrap::AddDataSetInputConnection(const Nan::FunctionCallbackIn
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1010,6 +1013,7 @@ void VtkXYPlotActorWrap::GetAxisLabelTextProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetAxisLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1032,6 +1036,7 @@ void VtkXYPlotActorWrap::GetAxisTitleTextProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetAxisTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1124,6 +1129,7 @@ void VtkXYPlotActorWrap::GetChartBoxProperty(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetChartBoxProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1314,6 +1320,7 @@ void VtkXYPlotActorWrap::GetGlyphSource(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetGlyphSource();
+		VtkGlyphSource2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1364,6 +1371,7 @@ void VtkXYPlotActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetLegendActor();
+		VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1621,6 +1629,7 @@ void VtkXYPlotActorWrap::GetPlotSymbol(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetPlotSymbol(
 			info[0]->Int32Value()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1765,6 +1774,7 @@ void VtkXYPlotActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1787,6 +1797,7 @@ void VtkXYPlotActorWrap::GetXAxisActor2D(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetXAxisActor2D();
+		VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1907,6 +1918,7 @@ void VtkXYPlotActorWrap::GetYAxisActor2D(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetYAxisActor2D();
+		VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -2000,7 +2012,7 @@ void VtkXYPlotActorWrap::IsInPlot(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -2085,6 +2097,7 @@ void VtkXYPlotActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkXYPlotActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -2196,7 +2209,7 @@ void VtkXYPlotActorWrap::PlotToViewportCoordinate(const Nan::FunctionCallbackInf
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2216,7 +2229,7 @@ void VtkXYPlotActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInf
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2260,7 +2273,7 @@ void VtkXYPlotActorWrap::RemoveDataObjectInput(const Nan::FunctionCallbackInfo<v
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2280,7 +2293,7 @@ void VtkXYPlotActorWrap::RemoveDataObjectInputConnection(const Nan::FunctionCall
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2300,7 +2313,7 @@ void VtkXYPlotActorWrap::RemoveDataSetInput(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2338,7 +2351,7 @@ void VtkXYPlotActorWrap::RemoveDataSetInputConnection(const Nan::FunctionCallbac
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2376,7 +2389,7 @@ void VtkXYPlotActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -2398,7 +2411,7 @@ void VtkXYPlotActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -2420,7 +2433,7 @@ void VtkXYPlotActorWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionC
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -2490,7 +2503,7 @@ void VtkXYPlotActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXYPlotActor * r;
@@ -2502,6 +2515,7 @@ void VtkXYPlotActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXYPlotActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -2737,7 +2751,7 @@ void VtkXYPlotActorWrap::SetAxisLabelTextProperty(const Nan::FunctionCallbackInf
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2917,7 +2931,7 @@ void VtkXYPlotActorWrap::SetAxisTitleTextProperty(const Nan::FunctionCallbackInf
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3678,7 +3692,7 @@ void VtkXYPlotActorWrap::SetPlotSymbol(const Nan::FunctionCallbackInfo<v8::Value
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -4021,7 +4035,7 @@ void VtkXYPlotActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -4452,7 +4466,7 @@ void VtkXYPlotActorWrap::ViewportToPlotCoordinate(const Nan::FunctionCallbackInf
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

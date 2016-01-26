@@ -28,26 +28,27 @@ VtkBiDimensionalWidgetWrap::~VtkBiDimensionalWidgetWrap()
 
 void VtkBiDimensionalWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBiDimensionalWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBiDimensionalWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BiDimensionalWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBiDimensionalWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BiDimensionalWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBiDimensionalWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBiDimensionalWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBiDimensionalWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBiDimensionalWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -87,6 +88,8 @@ void VtkBiDimensionalWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWidgetStateToStart", SetWidgetStateToStart);
 	Nan::SetPrototypeMethod(tpl, "setWidgetStateToStart", SetWidgetStateToStart);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBiDimensionalWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkBiDimensionalWidgetWrap::GetBiDimensionalRepresentation(const Nan::Funct
 		return;
 	}
 	r = native->GetBiDimensionalRepresentation();
+		VtkBiDimensionalRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,6 +225,7 @@ void VtkBiDimensionalWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkBiDimensionalWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,7 +241,7 @@ void VtkBiDimensionalWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBiDimensionalWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalWidgetWrap>(info.Holder());
 	vtkBiDimensionalWidget *native = (vtkBiDimensionalWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBiDimensionalWidget * r;
@@ -248,6 +253,7 @@ void VtkBiDimensionalWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBiDimensionalWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,7 +310,7 @@ void VtkBiDimensionalWidgetWrap::SetRepresentation(const Nan::FunctionCallbackIn
 {
 	VtkBiDimensionalWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalWidgetWrap>(info.Holder());
 	vtkBiDimensionalWidget *native = (vtkBiDimensionalWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBiDimensionalRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBiDimensionalRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

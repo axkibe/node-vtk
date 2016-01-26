@@ -31,26 +31,27 @@ VtkExodusIIReaderWrap::~VtkExodusIIReaderWrap()
 
 void VtkExodusIIReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExodusIIReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExodusIIReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExodusIIReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExodusIIReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExodusIIReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExodusIIReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExodusIIReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExodusIIReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExodusIIReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AnimateModeShapesOff", AnimateModeShapesOff);
 	Nan::SetPrototypeMethod(tpl, "animateModeShapesOff", AnimateModeShapesOff);
 
@@ -753,6 +754,8 @@ void VtkExodusIIReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateTimeInformation", UpdateTimeInformation);
 	Nan::SetPrototypeMethod(tpl, "updateTimeInformation", UpdateTimeInformation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExodusIIReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1632,6 +1635,7 @@ void VtkExodusIIReaderWrap::GetExodusModel(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetExodusModel();
+		VtkExodusModelWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1988,7 +1992,7 @@ void VtkExodusIIReaderWrap::GetGlobalEdgeID(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2044,7 +2048,7 @@ void VtkExodusIIReaderWrap::GetGlobalElementID(const Nan::FunctionCallbackInfo<v
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2100,7 +2104,7 @@ void VtkExodusIIReaderWrap::GetGlobalFaceID(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2156,7 +2160,7 @@ void VtkExodusIIReaderWrap::GetGlobalNodeID(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -3775,6 +3779,7 @@ void VtkExodusIIReaderWrap::GetSIL(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetSIL();
+		VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -3926,7 +3931,7 @@ void VtkExodusIIReaderWrap::GetTimeSeriesData(const Nan::FunctionCallbackInfo<v8
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkFloatArrayWrap *a3 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[3]->ToObject());
 					int r;
@@ -4103,6 +4108,7 @@ void VtkExodusIIReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkExodusIIReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -4178,7 +4184,7 @@ void VtkExodusIIReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExodusIIReader * r;
@@ -4190,6 +4196,7 @@ void VtkExodusIIReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExodusIIReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

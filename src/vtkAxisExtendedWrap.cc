@@ -26,26 +26,27 @@ VtkAxisExtendedWrap::~VtkAxisExtendedWrap()
 
 void VtkAxisExtendedWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAxisExtendedWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAxisExtended").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AxisExtended").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAxisExtended").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AxisExtended").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAxisExtendedWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAxisExtendedWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAxisExtendedWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAxisExtendedWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Coverage", Coverage);
 	Nan::SetPrototypeMethod(tpl, "coverage", Coverage);
 
@@ -112,6 +113,8 @@ void VtkAxisExtendedWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SimplicityMax", SimplicityMax);
 	Nan::SetPrototypeMethod(tpl, "simplicityMax", SimplicityMax);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAxisExtendedWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -436,6 +439,7 @@ void VtkAxisExtendedWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkAxisExtendedWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -451,7 +455,7 @@ void VtkAxisExtendedWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAxisExtendedWrap *wrapper = ObjectWrap::Unwrap<VtkAxisExtendedWrap>(info.Holder());
 	vtkAxisExtended *native = (vtkAxisExtended *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAxisExtended * r;
@@ -463,6 +467,7 @@ void VtkAxisExtendedWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAxisExtendedWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkCaptionWidgetWrap::~VtkCaptionWidgetWrap()
 
 void VtkCaptionWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkBorderWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCaptionWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCaptionWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CaptionWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCaptionWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CaptionWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCaptionWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCaptionWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCaptionWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkBorderWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCaptionWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -76,6 +77,8 @@ void VtkCaptionWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCaptionWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -124,6 +127,7 @@ void VtkCaptionWidgetWrap::GetCaptionActor2D(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetCaptionActor2D();
+		VtkCaptionActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,6 +186,7 @@ void VtkCaptionWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkCaptionWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +202,7 @@ void VtkCaptionWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCaptionWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionWidgetWrap>(info.Holder());
 	vtkCaptionWidget *native = (vtkCaptionWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCaptionWidget * r;
@@ -209,6 +214,7 @@ void VtkCaptionWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCaptionWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +233,7 @@ void VtkCaptionWidgetWrap::SetCaptionActor2D(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCaptionWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionWidgetWrap>(info.Holder());
 	vtkCaptionWidget *native = (vtkCaptionWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCaptionActor2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCaptionActor2DWrap *a0 = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -266,7 +272,7 @@ void VtkCaptionWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCaptionWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionWidgetWrap>(info.Holder());
 	vtkCaptionWidget *native = (vtkCaptionWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCaptionRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCaptionRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkCaptionRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

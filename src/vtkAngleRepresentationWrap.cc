@@ -28,26 +28,27 @@ VtkAngleRepresentationWrap::~VtkAngleRepresentationWrap()
 
 void VtkAngleRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAngleRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAngleRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AngleRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAngleRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AngleRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAngleRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAngleRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAngleRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAngleRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ArcVisibilityOff", ArcVisibilityOff);
 	Nan::SetPrototypeMethod(tpl, "arcVisibilityOff", ArcVisibilityOff);
 
@@ -138,6 +139,8 @@ void VtkAngleRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAngleRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -267,6 +270,7 @@ void VtkAngleRepresentationWrap::GetCenterRepresentation(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetCenterRepresentation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,6 +321,7 @@ void VtkAngleRepresentationWrap::GetPoint1Representation(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetPoint1Representation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -339,6 +344,7 @@ void VtkAngleRepresentationWrap::GetPoint2Representation(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetPoint2Representation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -465,6 +471,7 @@ void VtkAngleRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkAngleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -528,7 +535,7 @@ void VtkAngleRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAngleRepresentation * r;
@@ -540,6 +547,7 @@ void VtkAngleRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAngleRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -577,7 +585,7 @@ void VtkAngleRepresentationWrap::SetHandleRepresentation(const Nan::FunctionCall
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHandleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHandleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -29,26 +29,27 @@ VtkPCAStatisticsWrap::~VtkPCAStatisticsWrap()
 
 void VtkPCAStatisticsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiCorrelativeStatisticsWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiCorrelativeStatisticsWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPCAStatisticsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPCAStatistics").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PCAStatistics").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPCAStatistics").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PCAStatistics").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPCAStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPCAStatisticsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPCAStatisticsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiCorrelativeStatisticsWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiCorrelativeStatisticsWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPCAStatisticsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBasisScheme", GetBasisScheme);
 	Nan::SetPrototypeMethod(tpl, "getBasisScheme", GetBasisScheme);
 
@@ -121,6 +122,8 @@ void VtkPCAStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSpecifiedNormalization", SetSpecifiedNormalization);
 	Nan::SetPrototypeMethod(tpl, "setSpecifiedNormalization", SetSpecifiedNormalization);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPCAStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -235,7 +238,7 @@ void VtkPCAStatisticsWrap::GetEigenvalues(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPCAStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkPCAStatisticsWrap>(info.Holder());
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -250,7 +253,7 @@ void VtkPCAStatisticsWrap::GetEigenvalues(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDoubleArrayWrap *a1 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -274,7 +277,7 @@ void VtkPCAStatisticsWrap::GetEigenvector(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDoubleArrayWrap *a1 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -290,7 +293,7 @@ void VtkPCAStatisticsWrap::GetEigenvector(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDoubleArrayWrap *a2 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -314,7 +317,7 @@ void VtkPCAStatisticsWrap::GetEigenvectors(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPCAStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkPCAStatisticsWrap>(info.Holder());
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -329,7 +332,7 @@ void VtkPCAStatisticsWrap::GetEigenvectors(const Nan::FunctionCallbackInfo<v8::V
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDoubleArrayWrap *a1 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -449,6 +452,7 @@ void VtkPCAStatisticsWrap::GetSpecifiedNormalization(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetSpecifiedNormalization();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -493,6 +497,7 @@ void VtkPCAStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkPCAStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -508,7 +513,7 @@ void VtkPCAStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPCAStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkPCAStatisticsWrap>(info.Holder());
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPCAStatistics * r;
@@ -520,6 +525,7 @@ void VtkPCAStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPCAStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -654,7 +660,7 @@ void VtkPCAStatisticsWrap::SetSpecifiedNormalization(const Nan::FunctionCallback
 {
 	VtkPCAStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkPCAStatisticsWrap>(info.Holder());
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

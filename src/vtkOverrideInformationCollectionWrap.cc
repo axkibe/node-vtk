@@ -28,26 +28,27 @@ VtkOverrideInformationCollectionWrap::~VtkOverrideInformationCollectionWrap()
 
 void VtkOverrideInformationCollectionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCollectionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOverrideInformationCollectionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOverrideInformationCollection").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OverrideInformationCollection").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOverrideInformationCollection").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OverrideInformationCollection").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOverrideInformationCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOverrideInformationCollectionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOverrideInformationCollectionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCollectionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOverrideInformationCollectionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddItem", AddItem);
 	Nan::SetPrototypeMethod(tpl, "addItem", AddItem);
 
@@ -66,6 +67,8 @@ void VtkOverrideInformationCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOverrideInformationCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -95,7 +98,7 @@ void VtkOverrideInformationCollectionWrap::AddItem(const Nan::FunctionCallbackIn
 {
 	VtkOverrideInformationCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkOverrideInformationCollectionWrap>(info.Holder());
 	vtkOverrideInformationCollection *native = (vtkOverrideInformationCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOverrideInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkOverrideInformationWrap *a0 = ObjectWrap::Unwrap<VtkOverrideInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -136,6 +139,7 @@ void VtkOverrideInformationCollectionWrap::GetNextItem(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetNextItem();
+		VtkOverrideInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,6 +184,7 @@ void VtkOverrideInformationCollectionWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkOverrideInformationCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +200,7 @@ void VtkOverrideInformationCollectionWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkOverrideInformationCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkOverrideInformationCollectionWrap>(info.Holder());
 	vtkOverrideInformationCollection *native = (vtkOverrideInformationCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOverrideInformationCollection * r;
@@ -207,6 +212,7 @@ void VtkOverrideInformationCollectionWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOverrideInformationCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

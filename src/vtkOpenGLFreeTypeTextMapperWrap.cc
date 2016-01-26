@@ -30,26 +30,27 @@ VtkOpenGLFreeTypeTextMapperWrap::~VtkOpenGLFreeTypeTextMapperWrap()
 
 void VtkOpenGLFreeTypeTextMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTextMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTextMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLFreeTypeTextMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLFreeTypeTextMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLFreeTypeTextMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLFreeTypeTextMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLFreeTypeTextMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLFreeTypeTextMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLFreeTypeTextMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLFreeTypeTextMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTextMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTextMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLFreeTypeTextMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkOpenGLFreeTypeTextMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLFreeTypeTextMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -143,6 +146,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLFreeTypeTextMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -158,7 +162,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::ReleaseGraphicsResources(const Nan::Functi
 {
 	VtkOpenGLFreeTypeTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLFreeTypeTextMapperWrap>(info.Holder());
 	vtkOpenGLFreeTypeTextMapper *native = (vtkOpenGLFreeTypeTextMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -178,10 +182,10 @@ void VtkOpenGLFreeTypeTextMapperWrap::RenderOverlay(const Nan::FunctionCallbackI
 {
 	VtkOpenGLFreeTypeTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLFreeTypeTextMapperWrap>(info.Holder());
 	vtkOpenGLFreeTypeTextMapper *native = (vtkOpenGLFreeTypeTextMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -203,7 +207,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkOpenGLFreeTypeTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLFreeTypeTextMapperWrap>(info.Holder());
 	vtkOpenGLFreeTypeTextMapper *native = (vtkOpenGLFreeTypeTextMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLFreeTypeTextMapper * r;
@@ -215,6 +219,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLFreeTypeTextMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

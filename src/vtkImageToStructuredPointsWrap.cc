@@ -29,26 +29,27 @@ VtkImageToStructuredPointsWrap::~VtkImageToStructuredPointsWrap()
 
 void VtkImageToStructuredPointsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageToStructuredPointsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageToStructuredPoints").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageToStructuredPoints").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageToStructuredPoints").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageToStructuredPoints").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageToStructuredPointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageToStructuredPointsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageToStructuredPointsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageToStructuredPointsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,6 +71,8 @@ void VtkImageToStructuredPointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetVectorInputData", SetVectorInputData);
 	Nan::SetPrototypeMethod(tpl, "setVectorInputData", SetVectorInputData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageToStructuredPointsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +123,7 @@ void VtkImageToStructuredPointsWrap::GetStructuredPointsOutput(const Nan::Functi
 		return;
 	}
 	r = native->GetStructuredPointsOutput();
+		VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -142,6 +146,7 @@ void VtkImageToStructuredPointsWrap::GetVectorInput(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetVectorInput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,6 +191,7 @@ void VtkImageToStructuredPointsWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageToStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +207,7 @@ void VtkImageToStructuredPointsWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkImageToStructuredPointsWrap *wrapper = ObjectWrap::Unwrap<VtkImageToStructuredPointsWrap>(info.Holder());
 	vtkImageToStructuredPoints *native = (vtkImageToStructuredPoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageToStructuredPoints * r;
@@ -213,6 +219,7 @@ void VtkImageToStructuredPointsWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageToStructuredPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -231,7 +238,7 @@ void VtkImageToStructuredPointsWrap::SetVectorInputData(const Nan::FunctionCallb
 {
 	VtkImageToStructuredPointsWrap *wrapper = ObjectWrap::Unwrap<VtkImageToStructuredPointsWrap>(info.Holder());
 	vtkImageToStructuredPoints *native = (vtkImageToStructuredPoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

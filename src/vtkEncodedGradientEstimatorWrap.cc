@@ -28,26 +28,27 @@ VtkEncodedGradientEstimatorWrap::~VtkEncodedGradientEstimatorWrap()
 
 void VtkEncodedGradientEstimatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEncodedGradientEstimatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEncodedGradientEstimator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EncodedGradientEstimator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEncodedGradientEstimator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EncodedGradientEstimator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEncodedGradientEstimatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEncodedGradientEstimatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEncodedGradientEstimatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEncodedGradientEstimatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BoundsClipOff", BoundsClipOff);
 	Nan::SetPrototypeMethod(tpl, "boundsClipOff", BoundsClipOff);
 
@@ -156,6 +157,8 @@ void VtkEncodedGradientEstimatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "ZeroPadOn", ZeroPadOn);
 	Nan::SetPrototypeMethod(tpl, "zeroPadOn", ZeroPadOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEncodedGradientEstimatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -348,6 +351,7 @@ void VtkEncodedGradientEstimatorWrap::GetDirectionEncoder(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetDirectionEncoder();
+		VtkDirectionEncoderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -399,6 +403,7 @@ void VtkEncodedGradientEstimatorWrap::GetInputData(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetInputData();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -541,6 +546,7 @@ void VtkEncodedGradientEstimatorWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkEncodedGradientEstimatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -556,7 +562,7 @@ void VtkEncodedGradientEstimatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEncodedGradientEstimator * r;
@@ -568,6 +574,7 @@ void VtkEncodedGradientEstimatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEncodedGradientEstimatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -682,7 +689,7 @@ void VtkEncodedGradientEstimatorWrap::SetDirectionEncoder(const Nan::FunctionCal
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDirectionEncoderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDirectionEncoderWrap *a0 = ObjectWrap::Unwrap<VtkDirectionEncoderWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -702,7 +709,7 @@ void VtkEncodedGradientEstimatorWrap::SetInputData(const Nan::FunctionCallbackIn
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

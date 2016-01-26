@@ -29,26 +29,27 @@ VtkParametricSplineWrap::~VtkParametricSplineWrap()
 
 void VtkParametricSplineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkParametricFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParametricFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParametricSplineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParametricSpline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParametricSpline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParametricSpline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParametricSpline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParametricSplineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParametricSplineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParametricSplineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkParametricFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParametricFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParametricSplineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClosedOff", ClosedOff);
 	Nan::SetPrototypeMethod(tpl, "closedOff", ClosedOff);
 
@@ -148,6 +149,8 @@ void VtkParametricSplineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetZSpline", SetZSpline);
 	Nan::SetPrototypeMethod(tpl, "setZSpline", SetZSpline);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParametricSplineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -320,6 +323,7 @@ void VtkParametricSplineWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,6 +402,7 @@ void VtkParametricSplineWrap::GetXSpline(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetXSpline();
+		VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -420,6 +425,7 @@ void VtkParametricSplineWrap::GetYSpline(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetYSpline();
+		VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -442,6 +448,7 @@ void VtkParametricSplineWrap::GetZSpline(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetZSpline();
+		VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -486,6 +493,7 @@ void VtkParametricSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkParametricSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -525,7 +533,7 @@ void VtkParametricSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParametricSpline * r;
@@ -537,6 +545,7 @@ void VtkParametricSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParametricSplineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -631,7 +640,7 @@ void VtkParametricSplineWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -689,7 +698,7 @@ void VtkParametricSplineWrap::SetXSpline(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -709,7 +718,7 @@ void VtkParametricSplineWrap::SetYSpline(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -729,7 +738,7 @@ void VtkParametricSplineWrap::SetZSpline(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

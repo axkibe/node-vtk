@@ -28,26 +28,27 @@ VtkPOutlineCornerFilterWrap::~VtkPOutlineCornerFilterWrap()
 
 void VtkPOutlineCornerFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPOutlineCornerFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPOutlineCornerFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("POutlineCornerFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPOutlineCornerFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("POutlineCornerFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPOutlineCornerFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPOutlineCornerFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPOutlineCornerFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPOutlineCornerFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -78,6 +79,8 @@ void VtkPOutlineCornerFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCornerFactor", SetCornerFactor);
 	Nan::SetPrototypeMethod(tpl, "setCornerFactor", SetCornerFactor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPOutlineCornerFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -128,6 +131,7 @@ void VtkPOutlineCornerFilterWrap::GetController(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,6 +218,7 @@ void VtkPOutlineCornerFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkPOutlineCornerFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,7 +234,7 @@ void VtkPOutlineCornerFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkPOutlineCornerFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPOutlineCornerFilterWrap>(info.Holder());
 	vtkPOutlineCornerFilter *native = (vtkPOutlineCornerFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPOutlineCornerFilter * r;
@@ -241,6 +246,7 @@ void VtkPOutlineCornerFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPOutlineCornerFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -259,7 +265,7 @@ void VtkPOutlineCornerFilterWrap::SetController(const Nan::FunctionCallbackInfo<
 {
 	VtkPOutlineCornerFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPOutlineCornerFilterWrap>(info.Holder());
 	vtkPOutlineCornerFilter *native = (vtkPOutlineCornerFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

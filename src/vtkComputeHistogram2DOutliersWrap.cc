@@ -29,26 +29,27 @@ VtkComputeHistogram2DOutliersWrap::~VtkComputeHistogram2DOutliersWrap()
 
 void VtkComputeHistogram2DOutliersWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSelectionAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkComputeHistogram2DOutliersWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkComputeHistogram2DOutliers").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ComputeHistogram2DOutliers").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkComputeHistogram2DOutliers").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ComputeHistogram2DOutliers").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkComputeHistogram2DOutliersWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkComputeHistogram2DOutliersWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkComputeHistogram2DOutliersWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSelectionAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkComputeHistogram2DOutliersWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -79,6 +80,8 @@ void VtkComputeHistogram2DOutliersWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetPreferredNumberOfOutliers", SetPreferredNumberOfOutliers);
 	Nan::SetPrototypeMethod(tpl, "setPreferredNumberOfOutliers", SetPreferredNumberOfOutliers);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkComputeHistogram2DOutliersWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -129,6 +132,7 @@ void VtkComputeHistogram2DOutliersWrap::GetOutputTable(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetOutputTable();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,6 +191,7 @@ void VtkComputeHistogram2DOutliersWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkComputeHistogram2DOutliersWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +207,7 @@ void VtkComputeHistogram2DOutliersWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkComputeHistogram2DOutliersWrap *wrapper = ObjectWrap::Unwrap<VtkComputeHistogram2DOutliersWrap>(info.Holder());
 	vtkComputeHistogram2DOutliers *native = (vtkComputeHistogram2DOutliers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkComputeHistogram2DOutliers * r;
@@ -214,6 +219,7 @@ void VtkComputeHistogram2DOutliersWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkComputeHistogram2DOutliersWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,7 +238,7 @@ void VtkComputeHistogram2DOutliersWrap::SetInputHistogramImageDataConnection(con
 {
 	VtkComputeHistogram2DOutliersWrap *wrapper = ObjectWrap::Unwrap<VtkComputeHistogram2DOutliersWrap>(info.Holder());
 	vtkComputeHistogram2DOutliers *native = (vtkComputeHistogram2DOutliers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -252,7 +258,7 @@ void VtkComputeHistogram2DOutliersWrap::SetInputHistogramMultiBlockConnection(co
 {
 	VtkComputeHistogram2DOutliersWrap *wrapper = ObjectWrap::Unwrap<VtkComputeHistogram2DOutliersWrap>(info.Holder());
 	vtkComputeHistogram2DOutliers *native = (vtkComputeHistogram2DOutliers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -272,7 +278,7 @@ void VtkComputeHistogram2DOutliersWrap::SetInputTableConnection(const Nan::Funct
 {
 	VtkComputeHistogram2DOutliersWrap *wrapper = ObjectWrap::Unwrap<VtkComputeHistogram2DOutliersWrap>(info.Holder());
 	vtkComputeHistogram2DOutliers *native = (vtkComputeHistogram2DOutliers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

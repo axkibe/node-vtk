@@ -30,26 +30,27 @@ VtkContourTriangulatorWrap::~VtkContourTriangulatorWrap()
 
 void VtkContourTriangulatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkContourTriangulatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkContourTriangulator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ContourTriangulator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkContourTriangulator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ContourTriangulator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkContourTriangulatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkContourTriangulatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkContourTriangulatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkContourTriangulatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -80,6 +81,8 @@ void VtkContourTriangulatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TriangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 	Nan::SetPrototypeMethod(tpl, "triangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkContourTriangulatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -180,6 +183,7 @@ void VtkContourTriangulatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkContourTriangulatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +199,7 @@ void VtkContourTriangulatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkContourTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkContourTriangulatorWrap>(info.Holder());
 	vtkContourTriangulator *native = (vtkContourTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkContourTriangulator * r;
@@ -207,6 +211,7 @@ void VtkContourTriangulatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkContourTriangulatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,13 +249,13 @@ void VtkContourTriangulatorWrap::TriangulatePolygon(const Nan::FunctionCallbackI
 {
 	VtkContourTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkContourTriangulatorWrap>(info.Holder());
 	vtkContourTriangulator *native = (vtkContourTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkCellArrayWrap *a2 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[2]->ToObject());
 				int r;

@@ -29,26 +29,27 @@ VtkRendererSourceWrap::~VtkRendererSourceWrap()
 
 void VtkRendererSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRendererSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRendererSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RendererSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRendererSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RendererSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRendererSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRendererSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRendererSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRendererSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DepthValuesInScalarsOff", DepthValuesInScalarsOff);
 	Nan::SetPrototypeMethod(tpl, "depthValuesInScalarsOff", DepthValuesInScalarsOff);
 
@@ -118,6 +119,8 @@ void VtkRendererSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WholeWindowOn", WholeWindowOn);
 	Nan::SetPrototypeMethod(tpl, "wholeWindowOn", WholeWindowOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRendererSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -244,6 +247,7 @@ void VtkRendererSourceWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetInput();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,6 +270,7 @@ void VtkRendererSourceWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetOutput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -338,6 +343,7 @@ void VtkRendererSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkRendererSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -377,7 +383,7 @@ void VtkRendererSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRendererSource * r;
@@ -389,6 +395,7 @@ void VtkRendererSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRendererSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -445,7 +452,7 @@ void VtkRendererSourceWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

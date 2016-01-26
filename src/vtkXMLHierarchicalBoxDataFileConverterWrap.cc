@@ -26,26 +26,27 @@ VtkXMLHierarchicalBoxDataFileConverterWrap::~VtkXMLHierarchicalBoxDataFileConver
 
 void VtkXMLHierarchicalBoxDataFileConverterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLHierarchicalBoxDataFileConverterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLHierarchicalBoxDataFileConverter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLHierarchicalBoxDataFileConverter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLHierarchicalBoxDataFileConverter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLHierarchicalBoxDataFileConverter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLHierarchicalBoxDataFileConverterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLHierarchicalBoxDataFileConverterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLHierarchicalBoxDataFileConverterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,6 +71,8 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::InitTpl(v8::Local<v8::FunctionT
 	Nan::SetPrototypeMethod(tpl, "SetOutputFileName", SetOutputFileName);
 	Nan::SetPrototypeMethod(tpl, "setOutputFileName", SetOutputFileName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLHierarchicalBoxDataFileConverterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -170,6 +173,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +189,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::SafeDownCast(const Nan::Functio
 {
 	VtkXMLHierarchicalBoxDataFileConverterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLHierarchicalBoxDataFileConverterWrap>(info.Holder());
 	vtkXMLHierarchicalBoxDataFileConverter *native = (vtkXMLHierarchicalBoxDataFileConverter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLHierarchicalBoxDataFileConverter * r;
@@ -197,6 +201,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

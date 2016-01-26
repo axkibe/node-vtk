@@ -30,26 +30,27 @@ VtkVisibilitySortWrap::~VtkVisibilitySortWrap()
 
 void VtkVisibilitySortWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVisibilitySortWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVisibilitySort").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VisibilitySort").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVisibilitySort").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VisibilitySort").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVisibilitySortWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVisibilitySortWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVisibilitySortWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVisibilitySortWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCamera", GetCamera);
 	Nan::SetPrototypeMethod(tpl, "getCamera", GetCamera);
 
@@ -113,6 +114,8 @@ void VtkVisibilitySortWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetModelTransform", SetModelTransform);
 	Nan::SetPrototypeMethod(tpl, "setModelTransform", SetModelTransform);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVisibilitySortWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -149,6 +152,7 @@ void VtkVisibilitySortWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,6 +203,7 @@ void VtkVisibilitySortWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetInput();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,6 +226,7 @@ void VtkVisibilitySortWrap::GetInverseModelTransform(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetInverseModelTransform();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,6 +291,7 @@ void VtkVisibilitySortWrap::GetModelTransform(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetModelTransform();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -307,6 +314,7 @@ void VtkVisibilitySortWrap::GetNextCells(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetNextCells();
+		VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -363,6 +371,7 @@ void VtkVisibilitySortWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkVisibilitySortWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -378,7 +387,7 @@ void VtkVisibilitySortWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVisibilitySort * r;
@@ -390,6 +399,7 @@ void VtkVisibilitySortWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVisibilitySortWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -408,7 +418,7 @@ void VtkVisibilitySortWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -471,7 +481,7 @@ void VtkVisibilitySortWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -510,7 +520,7 @@ void VtkVisibilitySortWrap::SetModelTransform(const Nan::FunctionCallbackInfo<v8
 {
 	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)

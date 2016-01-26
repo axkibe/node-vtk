@@ -28,26 +28,27 @@ VtkCompositeDataReaderWrap::~VtkCompositeDataReaderWrap()
 
 void VtkCompositeDataReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompositeDataReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompositeDataReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompositeDataReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompositeDataReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompositeDataReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompositeDataReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompositeDataReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompositeDataReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompositeDataReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkCompositeDataReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompositeDataReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +123,7 @@ void VtkCompositeDataReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::V
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkCompositeDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -138,6 +142,7 @@ void VtkCompositeDataReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetOutput();
+		VtkCompositeDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,6 +187,7 @@ void VtkCompositeDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompositeDataReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +203,7 @@ void VtkCompositeDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCompositeDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataReaderWrap>(info.Holder());
 	vtkCompositeDataReader *native = (vtkCompositeDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompositeDataReader * r;
@@ -209,6 +215,7 @@ void VtkCompositeDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompositeDataReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +234,7 @@ void VtkCompositeDataReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCompositeDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataReaderWrap>(info.Holder());
 	vtkCompositeDataReader *native = (vtkCompositeDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataSetWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkSortDataArrayWrap::~VtkSortDataArrayWrap()
 
 void VtkSortDataArrayWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSortDataArrayWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSortDataArray").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SortDataArray").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSortDataArray").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SortDataArray").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSortDataArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSortDataArrayWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSortDataArrayWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSortDataArrayWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkSortDataArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SortArrayByComponent", SortArrayByComponent);
 	Nan::SetPrototypeMethod(tpl, "sortArrayByComponent", SortArrayByComponent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSortDataArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -138,6 +141,7 @@ void VtkSortDataArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkSortDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -153,7 +157,7 @@ void VtkSortDataArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSortDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkSortDataArrayWrap>(info.Holder());
 	vtkSortDataArray *native = (vtkSortDataArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSortDataArray * r;
@@ -165,6 +169,7 @@ void VtkSortDataArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSortDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -183,10 +188,10 @@ void VtkSortDataArrayWrap::Sort(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkSortDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkSortDataArrayWrap>(info.Holder());
 	vtkSortDataArray *native = (vtkSortDataArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAbstractArrayWrap *a1 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -217,7 +222,7 @@ void VtkSortDataArrayWrap::SortArrayByComponent(const Nan::FunctionCallbackInfo<
 {
 	VtkSortDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkSortDataArrayWrap>(info.Holder());
 	vtkSortDataArray *native = (vtkSortDataArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())

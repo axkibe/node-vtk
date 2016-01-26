@@ -28,26 +28,27 @@ VtkImageReader2FactoryWrap::~VtkImageReader2FactoryWrap()
 
 void VtkImageReader2FactoryWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageReader2FactoryWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageReader2Factory").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageReader2Factory").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageReader2Factory").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageReader2Factory").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageReader2FactoryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageReader2FactoryWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageReader2FactoryWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageReader2FactoryWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateImageReader2", CreateImageReader2);
 	Nan::SetPrototypeMethod(tpl, "createImageReader2", CreateImageReader2);
 
@@ -69,6 +70,8 @@ void VtkImageReader2FactoryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageReader2FactoryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -110,6 +113,7 @@ void VtkImageReader2FactoryWrap::CreateImageReader2(const Nan::FunctionCallbackI
 		r = native->CreateImageReader2(
 			*a0
 		);
+			VtkImageReader2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -142,7 +146,7 @@ void VtkImageReader2FactoryWrap::GetRegisteredReaders(const Nan::FunctionCallbac
 {
 	VtkImageReader2FactoryWrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2FactoryWrap>(info.Holder());
 	vtkImageReader2Factory *native = (vtkImageReader2Factory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageReader2CollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageReader2CollectionWrap *a0 = ObjectWrap::Unwrap<VtkImageReader2CollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -191,6 +195,7 @@ void VtkImageReader2FactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageReader2FactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +211,7 @@ void VtkImageReader2FactoryWrap::RegisterReader(const Nan::FunctionCallbackInfo<
 {
 	VtkImageReader2FactoryWrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2FactoryWrap>(info.Holder());
 	vtkImageReader2Factory *native = (vtkImageReader2Factory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageReader2Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageReader2Wrap *a0 = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -226,7 +231,7 @@ void VtkImageReader2FactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageReader2FactoryWrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2FactoryWrap>(info.Holder());
 	vtkImageReader2Factory *native = (vtkImageReader2Factory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageReader2Factory * r;
@@ -238,6 +243,7 @@ void VtkImageReader2FactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageReader2FactoryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

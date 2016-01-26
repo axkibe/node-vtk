@@ -28,26 +28,27 @@ VtkGeoAlignedImageRepresentationWrap::~VtkGeoAlignedImageRepresentationWrap()
 
 void VtkGeoAlignedImageRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoAlignedImageRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoAlignedImageRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoAlignedImageRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoAlignedImageRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoAlignedImageRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoAlignedImageRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoAlignedImageRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoAlignedImageRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoAlignedImageRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkGeoAlignedImageRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetSource", SetSource);
 	Nan::SetPrototypeMethod(tpl, "setSource", SetSource);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoAlignedImageRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -119,6 +122,7 @@ void VtkGeoAlignedImageRepresentationWrap::GetSource(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetSource();
+		VtkGeoSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,6 +167,7 @@ void VtkGeoAlignedImageRepresentationWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoAlignedImageRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +183,7 @@ void VtkGeoAlignedImageRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkGeoAlignedImageRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageRepresentationWrap>(info.Holder());
 	vtkGeoAlignedImageRepresentation *native = (vtkGeoAlignedImageRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoAlignedImageRepresentation * r;
@@ -190,6 +195,7 @@ void VtkGeoAlignedImageRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoAlignedImageRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -228,7 +234,7 @@ void VtkGeoAlignedImageRepresentationWrap::SetSource(const Nan::FunctionCallback
 {
 	VtkGeoAlignedImageRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageRepresentationWrap>(info.Holder());
 	vtkGeoAlignedImageRepresentation *native = (vtkGeoAlignedImageRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoSourceWrap *a0 = ObjectWrap::Unwrap<VtkGeoSourceWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

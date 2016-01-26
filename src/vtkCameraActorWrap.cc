@@ -31,26 +31,27 @@ VtkCameraActorWrap::~VtkCameraActorWrap()
 
 void VtkCameraActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProp3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCameraActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCameraActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CameraActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCameraActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CameraActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCameraActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCameraActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCameraActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProp3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCameraActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCamera", GetCamera);
 	Nan::SetPrototypeMethod(tpl, "getCamera", GetCamera);
 
@@ -90,6 +91,8 @@ void VtkCameraActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWidthByHeightRatio", SetWidthByHeightRatio);
 	Nan::SetPrototypeMethod(tpl, "setWidthByHeightRatio", SetWidthByHeightRatio);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCameraActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -126,6 +129,7 @@ void VtkCameraActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,6 +166,7 @@ void VtkCameraActorWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,6 +239,7 @@ void VtkCameraActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkCameraActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,7 +255,7 @@ void VtkCameraActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInf
 {
 	VtkCameraActorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraActorWrap>(info.Holder());
 	vtkCameraActor *native = (vtkCameraActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -269,7 +275,7 @@ void VtkCameraActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCameraActorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraActorWrap>(info.Holder());
 	vtkCameraActor *native = (vtkCameraActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -291,7 +297,7 @@ void VtkCameraActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCameraActorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraActorWrap>(info.Holder());
 	vtkCameraActor *native = (vtkCameraActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCameraActor * r;
@@ -303,6 +309,7 @@ void VtkCameraActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCameraActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -321,7 +328,7 @@ void VtkCameraActorWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkCameraActorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraActorWrap>(info.Holder());
 	vtkCameraActor *native = (vtkCameraActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -341,7 +348,7 @@ void VtkCameraActorWrap::SetProperty(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCameraActorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraActorWrap>(info.Holder());
 	vtkCameraActor *native = (vtkCameraActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

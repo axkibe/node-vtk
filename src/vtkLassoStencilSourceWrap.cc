@@ -28,26 +28,27 @@ VtkLassoStencilSourceWrap::~VtkLassoStencilSourceWrap()
 
 void VtkLassoStencilSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageStencilSourceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageStencilSourceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLassoStencilSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLassoStencilSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LassoStencilSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLassoStencilSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LassoStencilSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLassoStencilSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLassoStencilSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLassoStencilSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageStencilSourceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageStencilSourceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLassoStencilSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -108,6 +109,8 @@ void VtkLassoStencilSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSlicePoints", SetSlicePoints);
 	Nan::SetPrototypeMethod(tpl, "setSlicePoints", SetSlicePoints);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLassoStencilSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -158,6 +161,7 @@ void VtkLassoStencilSourceWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,6 +286,7 @@ void VtkLassoStencilSourceWrap::GetSlicePoints(const Nan::FunctionCallbackInfo<v
 		r = native->GetSlicePoints(
 			info[0]->Int32Value()
 		);
+			VtkPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -329,6 +334,7 @@ void VtkLassoStencilSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkLassoStencilSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -356,7 +362,7 @@ void VtkLassoStencilSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLassoStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkLassoStencilSourceWrap>(info.Holder());
 	vtkLassoStencilSource *native = (vtkLassoStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLassoStencilSource * r;
@@ -368,6 +374,7 @@ void VtkLassoStencilSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLassoStencilSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -386,7 +393,7 @@ void VtkLassoStencilSourceWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLassoStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkLassoStencilSourceWrap>(info.Holder());
 	vtkLassoStencilSource *native = (vtkLassoStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -470,7 +477,7 @@ void VtkLassoStencilSourceWrap::SetSlicePoints(const Nan::FunctionCallbackInfo<v
 	vtkLassoStencilSource *native = (vtkLassoStencilSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

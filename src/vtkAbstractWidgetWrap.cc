@@ -29,26 +29,27 @@ VtkAbstractWidgetWrap::~VtkAbstractWidgetWrap()
 
 void VtkAbstractWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorObserverWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAbstractWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAbstractWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AbstractWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAbstractWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AbstractWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAbstractWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAbstractWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAbstractWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorObserverWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAbstractWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -112,6 +113,8 @@ void VtkAbstractWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetProcessEvents", SetProcessEvents);
 	Nan::SetPrototypeMethod(tpl, "setProcessEvents", SetProcessEvents);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAbstractWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -174,6 +177,7 @@ void VtkAbstractWidgetWrap::GetEventTranslator(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetEventTranslator();
+		VtkWidgetEventTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,6 +214,7 @@ void VtkAbstractWidgetWrap::GetParent(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetParent();
+		VtkAbstractWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,6 +279,7 @@ void VtkAbstractWidgetWrap::GetRepresentation(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetRepresentation();
+		VtkWidgetRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -342,6 +348,7 @@ void VtkAbstractWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkAbstractWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -393,7 +400,7 @@ void VtkAbstractWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAbstractWidget * r;
@@ -405,6 +412,7 @@ void VtkAbstractWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAbstractWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -461,7 +469,7 @@ void VtkAbstractWidgetWrap::SetParent(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractWidgetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractWidgetWrap *a0 = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

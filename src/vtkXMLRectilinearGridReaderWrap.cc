@@ -28,26 +28,27 @@ VtkXMLRectilinearGridReaderWrap::~VtkXMLRectilinearGridReaderWrap()
 
 void VtkXMLRectilinearGridReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLStructuredDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLStructuredDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLRectilinearGridReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLRectilinearGridReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLRectilinearGridReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLRectilinearGridReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLRectilinearGridReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLRectilinearGridReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLRectilinearGridReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLRectilinearGridReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLStructuredDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLStructuredDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLRectilinearGridReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkXMLRectilinearGridReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLRectilinearGridReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -117,6 +120,7 @@ void VtkXMLRectilinearGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkRectilinearGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -135,6 +139,7 @@ void VtkXMLRectilinearGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetOutput();
+		VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,6 +184,7 @@ void VtkXMLRectilinearGridReaderWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLRectilinearGridReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +200,7 @@ void VtkXMLRectilinearGridReaderWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkXMLRectilinearGridReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLRectilinearGridReaderWrap>(info.Holder());
 	vtkXMLRectilinearGridReader *native = (vtkXMLRectilinearGridReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLRectilinearGridReader * r;
@@ -206,6 +212,7 @@ void VtkXMLRectilinearGridReaderWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLRectilinearGridReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

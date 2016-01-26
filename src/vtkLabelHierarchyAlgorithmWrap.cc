@@ -29,26 +29,27 @@ VtkLabelHierarchyAlgorithmWrap::~VtkLabelHierarchyAlgorithmWrap()
 
 void VtkLabelHierarchyAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLabelHierarchyAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLabelHierarchyAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LabelHierarchyAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLabelHierarchyAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LabelHierarchyAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLabelHierarchyAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLabelHierarchyAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLabelHierarchyAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLabelHierarchyAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInputData", AddInputData);
 	Nan::SetPrototypeMethod(tpl, "addInputData", AddInputData);
 
@@ -79,6 +80,8 @@ void VtkLabelHierarchyAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLabelHierarchyAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -108,7 +111,7 @@ void VtkLabelHierarchyAlgorithmWrap::AddInputData(const Nan::FunctionCallbackInf
 {
 	VtkLabelHierarchyAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyAlgorithmWrap>(info.Holder());
 	vtkLabelHierarchyAlgorithm *native = (vtkLabelHierarchyAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -123,7 +126,7 @@ void VtkLabelHierarchyAlgorithmWrap::AddInputData(const Nan::FunctionCallbackInf
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -170,6 +173,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -188,6 +192,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,6 +219,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetLabelHierarchyInput(const Nan::FunctionC
 		r = native->GetLabelHierarchyInput(
 			info[0]->Int32Value()
 		);
+			VtkLabelHierarchyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -243,6 +249,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkLabelHierarchyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,6 +268,7 @@ void VtkLabelHierarchyAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetOutput();
+		VtkLabelHierarchyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -305,6 +313,7 @@ void VtkLabelHierarchyAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkLabelHierarchyAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -320,7 +329,7 @@ void VtkLabelHierarchyAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkLabelHierarchyAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyAlgorithmWrap>(info.Holder());
 	vtkLabelHierarchyAlgorithm *native = (vtkLabelHierarchyAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLabelHierarchyAlgorithm * r;
@@ -332,6 +341,7 @@ void VtkLabelHierarchyAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLabelHierarchyAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -350,7 +360,7 @@ void VtkLabelHierarchyAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInf
 {
 	VtkLabelHierarchyAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyAlgorithmWrap>(info.Holder());
 	vtkLabelHierarchyAlgorithm *native = (vtkLabelHierarchyAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -365,7 +375,7 @@ void VtkLabelHierarchyAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInf
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -387,7 +397,7 @@ void VtkLabelHierarchyAlgorithmWrap::SetOutput(const Nan::FunctionCallbackInfo<v
 {
 	VtkLabelHierarchyAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyAlgorithmWrap>(info.Holder());
 	vtkLabelHierarchyAlgorithm *native = (vtkLabelHierarchyAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

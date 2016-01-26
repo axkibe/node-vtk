@@ -28,26 +28,27 @@ VtkImageResampleWrap::~VtkImageResampleWrap()
 
 void VtkImageResampleWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageResliceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageResliceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageResampleWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageResample").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageResample").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageResample").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageResample").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageResampleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageResampleWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageResampleWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageResliceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageResliceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageResampleWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAxisMagnificationFactor", GetAxisMagnificationFactor);
 	Nan::SetPrototypeMethod(tpl, "getAxisMagnificationFactor", GetAxisMagnificationFactor);
 
@@ -75,6 +76,8 @@ void VtkImageResampleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDimensionality", SetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "setDimensionality", SetDimensionality);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageResampleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -106,7 +109,7 @@ void VtkImageResampleWrap::GetAxisMagnificationFactor(const Nan::FunctionCallbac
 	vtkImageResample *native = (vtkImageResample *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			double r;
@@ -187,6 +190,7 @@ void VtkImageResampleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageResampleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +206,7 @@ void VtkImageResampleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageResampleWrap *wrapper = ObjectWrap::Unwrap<VtkImageResampleWrap>(info.Holder());
 	vtkImageResample *native = (vtkImageResample *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageResample * r;
@@ -214,6 +218,7 @@ void VtkImageResampleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageResampleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

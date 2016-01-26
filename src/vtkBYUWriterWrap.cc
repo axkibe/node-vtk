@@ -28,26 +28,27 @@ VtkBYUWriterWrap::~VtkBYUWriterWrap()
 
 void VtkBYUWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBYUWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBYUWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BYUWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBYUWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BYUWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBYUWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBYUWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBYUWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBYUWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -123,6 +124,8 @@ void VtkBYUWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WriteTextureOn", WriteTextureOn);
 	Nan::SetPrototypeMethod(tpl, "writeTextureOn", WriteTextureOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBYUWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -205,6 +208,7 @@ void VtkBYUWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -223,6 +227,7 @@ void VtkBYUWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetInput();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -337,6 +342,7 @@ void VtkBYUWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkBYUWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -352,7 +358,7 @@ void VtkBYUWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkBYUWriterWrap *wrapper = ObjectWrap::Unwrap<VtkBYUWriterWrap>(info.Holder());
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBYUWriter * r;
@@ -364,6 +370,7 @@ void VtkBYUWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBYUWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

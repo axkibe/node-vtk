@@ -33,26 +33,27 @@ VtkSimpleCellTessellatorWrap::~VtkSimpleCellTessellatorWrap()
 
 void VtkSimpleCellTessellatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGenericCellTessellatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericCellTessellatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSimpleCellTessellatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSimpleCellTessellator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SimpleCellTessellator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSimpleCellTessellator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SimpleCellTessellator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSimpleCellTessellatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSimpleCellTessellatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSimpleCellTessellatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGenericCellTessellatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericCellTessellatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSimpleCellTessellatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -98,6 +99,8 @@ void VtkSimpleCellTessellatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSimpleCellTessellatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -162,6 +165,7 @@ void VtkSimpleCellTessellatorWrap::GetGenericCell(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetGenericCell();
+		VtkGenericAdaptorCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +209,7 @@ void VtkSimpleCellTessellatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSimpleCellTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleCellTessellatorWrap>(info.Holder());
 	vtkSimpleCellTessellator *native = (vtkSimpleCellTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericDataSetWrap *a0 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -254,6 +258,7 @@ void VtkSimpleCellTessellatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkSimpleCellTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -281,7 +286,7 @@ void VtkSimpleCellTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkSimpleCellTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleCellTessellatorWrap>(info.Holder());
 	vtkSimpleCellTessellator *native = (vtkSimpleCellTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSimpleCellTessellator * r;
@@ -293,6 +298,7 @@ void VtkSimpleCellTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSimpleCellTessellatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -372,19 +378,19 @@ void VtkSimpleCellTessellatorWrap::Tessellate(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSimpleCellTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleCellTessellatorWrap>(info.Holder());
 	vtkSimpleCellTessellator *native = (vtkSimpleCellTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAdaptorCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAdaptorCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGenericAttributeCollectionWrap *a1 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDoubleArrayWrap *a2 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkCellArrayWrap *a3 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkPointDataWrap *a4 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[4]->ToObject());
 						if(info.Length() != 5)
@@ -412,19 +418,19 @@ void VtkSimpleCellTessellatorWrap::Triangulate(const Nan::FunctionCallbackInfo<v
 {
 	VtkSimpleCellTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleCellTessellatorWrap>(info.Holder());
 	vtkSimpleCellTessellator *native = (vtkSimpleCellTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAdaptorCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAdaptorCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGenericAttributeCollectionWrap *a1 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDoubleArrayWrap *a2 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkCellArrayWrap *a3 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkPointDataWrap *a4 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[4]->ToObject());
 						if(info.Length() != 5)

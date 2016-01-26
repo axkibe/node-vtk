@@ -30,26 +30,27 @@ VtkCellDistanceSelectorWrap::~VtkCellDistanceSelectorWrap()
 
 void VtkCellDistanceSelectorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSelectionAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellDistanceSelectorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellDistanceSelector").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellDistanceSelector").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellDistanceSelector").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellDistanceSelector").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellDistanceSelectorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellDistanceSelectorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellDistanceSelectorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSelectionAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellDistanceSelectorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddIntermediateOff", AddIntermediateOff);
 	Nan::SetPrototypeMethod(tpl, "addIntermediateOff", AddIntermediateOff);
 
@@ -104,6 +105,8 @@ void VtkCellDistanceSelectorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInputSelectionConnection", SetInputSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setInputSelectionConnection", SetInputSelectionConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellDistanceSelectorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -266,6 +269,7 @@ void VtkCellDistanceSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellDistanceSelectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -281,7 +285,7 @@ void VtkCellDistanceSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCellDistanceSelector * r;
@@ -293,6 +297,7 @@ void VtkCellDistanceSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCellDistanceSelectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -368,7 +373,7 @@ void VtkCellDistanceSelectorWrap::SetInputMesh(const Nan::FunctionCallbackInfo<v
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -388,7 +393,7 @@ void VtkCellDistanceSelectorWrap::SetInputMeshConnection(const Nan::FunctionCall
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -408,7 +413,7 @@ void VtkCellDistanceSelectorWrap::SetInputSelection(const Nan::FunctionCallbackI
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -428,7 +433,7 @@ void VtkCellDistanceSelectorWrap::SetInputSelectionConnection(const Nan::Functio
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkImplicitWindowFunctionWrap::~VtkImplicitWindowFunctionWrap()
 
 void VtkImplicitWindowFunctionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImplicitFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitWindowFunctionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitWindowFunction").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitWindowFunction").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitWindowFunction").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitWindowFunction").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitWindowFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitWindowFunctionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitWindowFunctionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitWindowFunctionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EvaluateFunction", EvaluateFunction);
 	Nan::SetPrototypeMethod(tpl, "evaluateFunction", EvaluateFunction);
 
@@ -74,6 +75,8 @@ void VtkImplicitWindowFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWindowValues", SetWindowValues);
 	Nan::SetPrototypeMethod(tpl, "setWindowValues", SetWindowValues);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitWindowFunctionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -153,6 +156,7 @@ void VtkImplicitWindowFunctionWrap::GetImplicitFunction(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetImplicitFunction();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,6 +201,7 @@ void VtkImplicitWindowFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitWindowFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +217,7 @@ void VtkImplicitWindowFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitWindowFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitWindowFunctionWrap>(info.Holder());
 	vtkImplicitWindowFunction *native = (vtkImplicitWindowFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitWindowFunction * r;
@@ -224,6 +229,7 @@ void VtkImplicitWindowFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitWindowFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -242,7 +248,7 @@ void VtkImplicitWindowFunctionWrap::SetImplicitFunction(const Nan::FunctionCallb
 {
 	VtkImplicitWindowFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitWindowFunctionWrap>(info.Holder());
 	vtkImplicitWindowFunction *native = (vtkImplicitWindowFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

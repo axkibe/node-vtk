@@ -27,26 +27,27 @@ VtkInitialValueProblemSolverWrap::~VtkInitialValueProblemSolverWrap()
 
 void VtkInitialValueProblemSolverWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInitialValueProblemSolverWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInitialValueProblemSolver").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InitialValueProblemSolver").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInitialValueProblemSolver").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InitialValueProblemSolver").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInitialValueProblemSolverWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInitialValueProblemSolverWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInitialValueProblemSolverWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInitialValueProblemSolverWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkInitialValueProblemSolverWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetFunctionSet", SetFunctionSet);
 	Nan::SetPrototypeMethod(tpl, "setFunctionSet", SetFunctionSet);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInitialValueProblemSolverWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -118,6 +121,7 @@ void VtkInitialValueProblemSolverWrap::GetFunctionSet(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetFunctionSet();
+		VtkFunctionSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,6 +180,7 @@ void VtkInitialValueProblemSolverWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkInitialValueProblemSolverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +196,7 @@ void VtkInitialValueProblemSolverWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkInitialValueProblemSolverWrap *wrapper = ObjectWrap::Unwrap<VtkInitialValueProblemSolverWrap>(info.Holder());
 	vtkInitialValueProblemSolver *native = (vtkInitialValueProblemSolver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInitialValueProblemSolver * r;
@@ -203,6 +208,7 @@ void VtkInitialValueProblemSolverWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInitialValueProblemSolverWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -221,7 +227,7 @@ void VtkInitialValueProblemSolverWrap::SetFunctionSet(const Nan::FunctionCallbac
 {
 	VtkInitialValueProblemSolverWrap *wrapper = ObjectWrap::Unwrap<VtkInitialValueProblemSolverWrap>(info.Holder());
 	vtkInitialValueProblemSolver *native = (vtkInitialValueProblemSolver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFunctionSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFunctionSetWrap *a0 = ObjectWrap::Unwrap<VtkFunctionSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

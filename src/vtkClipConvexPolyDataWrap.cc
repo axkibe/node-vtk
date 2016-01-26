@@ -28,26 +28,27 @@ VtkClipConvexPolyDataWrap::~VtkClipConvexPolyDataWrap()
 
 void VtkClipConvexPolyDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkClipConvexPolyDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkClipConvexPolyData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ClipConvexPolyData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkClipConvexPolyData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ClipConvexPolyData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkClipConvexPolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkClipConvexPolyDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkClipConvexPolyDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkClipConvexPolyDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkClipConvexPolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPlanes", SetPlanes);
 	Nan::SetPrototypeMethod(tpl, "setPlanes", SetPlanes);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkClipConvexPolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkClipConvexPolyDataWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetPlanes();
+		VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkClipConvexPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkClipConvexPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkClipConvexPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkClipConvexPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipConvexPolyDataWrap>(info.Holder());
 	vtkClipConvexPolyData *native = (vtkClipConvexPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkClipConvexPolyData * r;
@@ -187,6 +192,7 @@ void VtkClipConvexPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkClipConvexPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkClipConvexPolyDataWrap::SetPlanes(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkClipConvexPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipConvexPolyDataWrap>(info.Holder());
 	vtkClipConvexPolyData *native = (vtkClipConvexPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

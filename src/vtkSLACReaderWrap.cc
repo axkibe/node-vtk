@@ -30,26 +30,27 @@ VtkSLACReaderWrap::~VtkSLACReaderWrap()
 
 void VtkSLACReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSLACReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSLACReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SLACReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSLACReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SLACReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSLACReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSLACReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSLACReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSLACReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddModeFileName", AddModeFileName);
 	Nan::SetPrototypeMethod(tpl, "addModeFileName", AddModeFileName);
 
@@ -151,6 +152,8 @@ void VtkSLACReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVariableArrayStatus", SetVariableArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setVariableArrayStatus", SetVariableArrayStatus);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSLACReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -243,6 +246,7 @@ void VtkSLACReaderWrap::GetFrequencyScales(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetFrequencyScales();
+		VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -293,6 +297,7 @@ void VtkSLACReaderWrap::GetPhaseShifts(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetPhaseShifts();
+		VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,6 +405,7 @@ void VtkSLACReaderWrap::IS_EXTERNAL_SURFACE(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->IS_EXTERNAL_SURFACE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -422,6 +428,7 @@ void VtkSLACReaderWrap::IS_INTERNAL_VOLUME(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->IS_INTERNAL_VOLUME();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -466,6 +473,7 @@ void VtkSLACReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkSLACReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -488,6 +496,7 @@ void VtkSLACReaderWrap::POINTS(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->POINTS();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -510,6 +519,7 @@ void VtkSLACReaderWrap::POINT_DATA(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->POINT_DATA();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -633,7 +643,7 @@ void VtkSLACReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSLACReader * r;
@@ -645,6 +655,7 @@ void VtkSLACReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSLACReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

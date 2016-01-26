@@ -26,26 +26,27 @@ VtkFixedPointRayCastImageWrap::~VtkFixedPointRayCastImageWrap()
 
 void VtkFixedPointRayCastImageWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFixedPointRayCastImageWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFixedPointRayCastImage").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FixedPointRayCastImage").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFixedPointRayCastImage").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FixedPointRayCastImage").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFixedPointRayCastImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFixedPointRayCastImageWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFixedPointRayCastImageWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFixedPointRayCastImageWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AllocateImage", AllocateImage);
 	Nan::SetPrototypeMethod(tpl, "allocateImage", AllocateImage);
 
@@ -103,6 +104,8 @@ void VtkFixedPointRayCastImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseZBufferOn", UseZBufferOn);
 	Nan::SetPrototypeMethod(tpl, "useZBufferOn", UseZBufferOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFixedPointRayCastImageWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -253,6 +256,7 @@ void VtkFixedPointRayCastImageWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkFixedPointRayCastImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -268,7 +272,7 @@ void VtkFixedPointRayCastImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
 	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFixedPointRayCastImage * r;
@@ -280,6 +284,7 @@ void VtkFixedPointRayCastImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFixedPointRayCastImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

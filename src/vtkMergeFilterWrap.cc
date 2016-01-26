@@ -29,26 +29,27 @@ VtkMergeFilterWrap::~VtkMergeFilterWrap()
 
 void VtkMergeFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMergeFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMergeFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MergeFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMergeFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MergeFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMergeFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMergeFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMergeFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMergeFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddField", AddField);
 	Nan::SetPrototypeMethod(tpl, "addField", AddField);
 
@@ -118,6 +119,8 @@ void VtkMergeFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVectorsData", SetVectorsData);
 	Nan::SetPrototypeMethod(tpl, "setVectorsData", SetVectorsData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMergeFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -150,7 +153,7 @@ void VtkMergeFilterWrap::AddField(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataSetWrap *a1 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -193,6 +196,7 @@ void VtkMergeFilterWrap::GetGeometry(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetGeometry();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,6 +219,7 @@ void VtkMergeFilterWrap::GetNormals(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetNormals();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,6 +242,7 @@ void VtkMergeFilterWrap::GetScalars(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetScalars();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,6 +265,7 @@ void VtkMergeFilterWrap::GetTCoords(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetTCoords();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -281,6 +288,7 @@ void VtkMergeFilterWrap::GetTensors(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetTensors();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,6 +311,7 @@ void VtkMergeFilterWrap::GetVectors(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetVectors();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -347,6 +356,7 @@ void VtkMergeFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkMergeFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -362,7 +372,7 @@ void VtkMergeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMergeFilter * r;
@@ -374,6 +384,7 @@ void VtkMergeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMergeFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -392,7 +403,7 @@ void VtkMergeFilterWrap::SetGeometryConnection(const Nan::FunctionCallbackInfo<v
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -412,7 +423,7 @@ void VtkMergeFilterWrap::SetGeometryInputData(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -432,7 +443,7 @@ void VtkMergeFilterWrap::SetNormalsConnection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -452,7 +463,7 @@ void VtkMergeFilterWrap::SetNormalsData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -472,7 +483,7 @@ void VtkMergeFilterWrap::SetScalarsConnection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -492,7 +503,7 @@ void VtkMergeFilterWrap::SetScalarsData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -512,7 +523,7 @@ void VtkMergeFilterWrap::SetTCoordsConnection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -532,7 +543,7 @@ void VtkMergeFilterWrap::SetTCoordsData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -552,7 +563,7 @@ void VtkMergeFilterWrap::SetTensorsConnection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -572,7 +583,7 @@ void VtkMergeFilterWrap::SetTensorsData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -592,7 +603,7 @@ void VtkMergeFilterWrap::SetVectorsConnection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -612,7 +623,7 @@ void VtkMergeFilterWrap::SetVectorsData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkTransmitStructuredGridPieceWrap::~VtkTransmitStructuredGridPieceWrap()
 
 void VtkTransmitStructuredGridPieceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransmitStructuredGridPieceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransmitStructuredGridPiece").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TransmitStructuredGridPiece").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransmitStructuredGridPiece").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TransmitStructuredGridPiece").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransmitStructuredGridPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransmitStructuredGridPieceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransmitStructuredGridPieceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransmitStructuredGridPieceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateGhostCellsOff", CreateGhostCellsOff);
 	Nan::SetPrototypeMethod(tpl, "createGhostCellsOff", CreateGhostCellsOff);
 
@@ -78,6 +79,8 @@ void VtkTransmitStructuredGridPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetCreateGhostCells", SetCreateGhostCells);
 	Nan::SetPrototypeMethod(tpl, "setCreateGhostCells", SetCreateGhostCells);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransmitStructuredGridPieceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -152,6 +155,7 @@ void VtkTransmitStructuredGridPieceWrap::GetController(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,6 +214,7 @@ void VtkTransmitStructuredGridPieceWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransmitStructuredGridPieceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +230,7 @@ void VtkTransmitStructuredGridPieceWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkTransmitStructuredGridPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitStructuredGridPieceWrap>(info.Holder());
 	vtkTransmitStructuredGridPiece *native = (vtkTransmitStructuredGridPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransmitStructuredGridPiece * r;
@@ -237,6 +242,7 @@ void VtkTransmitStructuredGridPieceWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransmitStructuredGridPieceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -255,7 +261,7 @@ void VtkTransmitStructuredGridPieceWrap::SetController(const Nan::FunctionCallba
 {
 	VtkTransmitStructuredGridPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitStructuredGridPieceWrap>(info.Holder());
 	vtkTransmitStructuredGridPiece *native = (vtkTransmitStructuredGridPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

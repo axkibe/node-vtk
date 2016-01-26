@@ -28,26 +28,27 @@ VtkImplicitPlaneWidget2Wrap::~VtkImplicitPlaneWidget2Wrap()
 
 void VtkImplicitPlaneWidget2Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitPlaneWidget2Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitPlaneWidget2").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitPlaneWidget2").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitPlaneWidget2").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitPlaneWidget2").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitPlaneWidget2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitPlaneWidget2Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitPlaneWidget2Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitPlaneWidget2Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -75,6 +76,8 @@ void VtkImplicitPlaneWidget2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitPlaneWidget2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -137,6 +140,7 @@ void VtkImplicitPlaneWidget2Wrap::GetImplicitPlaneRepresentation(const Nan::Func
 		return;
 	}
 	r = native->GetImplicitPlaneRepresentation();
+		VtkImplicitPlaneRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,6 +185,7 @@ void VtkImplicitPlaneWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitPlaneWidget2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +201,7 @@ void VtkImplicitPlaneWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkImplicitPlaneWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidget2Wrap>(info.Holder());
 	vtkImplicitPlaneWidget2 *native = (vtkImplicitPlaneWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitPlaneWidget2 * r;
@@ -208,6 +213,7 @@ void VtkImplicitPlaneWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitPlaneWidget2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +270,7 @@ void VtkImplicitPlaneWidget2Wrap::SetRepresentation(const Nan::FunctionCallbackI
 {
 	VtkImplicitPlaneWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidget2Wrap>(info.Holder());
 	vtkImplicitPlaneWidget2 *native = (vtkImplicitPlaneWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitPlaneRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitPlaneRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkXMLFileOutputWindowWrap::~VtkXMLFileOutputWindowWrap()
 
 void VtkXMLFileOutputWindowWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkFileOutputWindowWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFileOutputWindowWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLFileOutputWindowWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLFileOutputWindow").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLFileOutputWindow").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLFileOutputWindow").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLFileOutputWindow").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLFileOutputWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLFileOutputWindowWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLFileOutputWindowWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkFileOutputWindowWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFileOutputWindowWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLFileOutputWindowWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DisplayDebugText", DisplayDebugText);
 	Nan::SetPrototypeMethod(tpl, "displayDebugText", DisplayDebugText);
 
@@ -77,6 +78,8 @@ void VtkXMLFileOutputWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLFileOutputWindowWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -269,6 +272,7 @@ void VtkXMLFileOutputWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLFileOutputWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +288,7 @@ void VtkXMLFileOutputWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXMLFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXMLFileOutputWindowWrap>(info.Holder());
 	vtkXMLFileOutputWindow *native = (vtkXMLFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLFileOutputWindow * r;
@@ -296,6 +300,7 @@ void VtkXMLFileOutputWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLFileOutputWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

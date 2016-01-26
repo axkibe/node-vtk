@@ -30,26 +30,27 @@ VtkClosedSurfacePointPlacerWrap::~VtkClosedSurfacePointPlacerWrap()
 
 void VtkClosedSurfacePointPlacerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointPlacerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkClosedSurfacePointPlacerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkClosedSurfacePointPlacer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ClosedSurfacePointPlacer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkClosedSurfacePointPlacer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ClosedSurfacePointPlacer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkClosedSurfacePointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkClosedSurfacePointPlacerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkClosedSurfacePointPlacerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointPlacerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkClosedSurfacePointPlacerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddBoundingPlane", AddBoundingPlane);
 	Nan::SetPrototypeMethod(tpl, "addBoundingPlane", AddBoundingPlane);
 
@@ -89,6 +90,8 @@ void VtkClosedSurfacePointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetMinimumDistance", SetMinimumDistance);
 	Nan::SetPrototypeMethod(tpl, "setMinimumDistance", SetMinimumDistance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkClosedSurfacePointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -118,7 +121,7 @@ void VtkClosedSurfacePointPlacerWrap::AddBoundingPlane(const Nan::FunctionCallba
 {
 	VtkClosedSurfacePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkClosedSurfacePointPlacerWrap>(info.Holder());
 	vtkClosedSurfacePointPlacer *native = (vtkClosedSurfacePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -145,6 +148,7 @@ void VtkClosedSurfacePointPlacerWrap::GetBoundingPlanes(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetBoundingPlanes();
+		VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,6 +249,7 @@ void VtkClosedSurfacePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkClosedSurfacePointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,7 +277,7 @@ void VtkClosedSurfacePointPlacerWrap::RemoveBoundingPlane(const Nan::FunctionCal
 {
 	VtkClosedSurfacePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkClosedSurfacePointPlacerWrap>(info.Holder());
 	vtkClosedSurfacePointPlacer *native = (vtkClosedSurfacePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -292,7 +297,7 @@ void VtkClosedSurfacePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkClosedSurfacePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkClosedSurfacePointPlacerWrap>(info.Holder());
 	vtkClosedSurfacePointPlacer *native = (vtkClosedSurfacePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkClosedSurfacePointPlacer * r;
@@ -304,6 +309,7 @@ void VtkClosedSurfacePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkClosedSurfacePointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -322,7 +328,7 @@ void VtkClosedSurfacePointPlacerWrap::SetBoundingPlanes(const Nan::FunctionCallb
 {
 	VtkClosedSurfacePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkClosedSurfacePointPlacerWrap>(info.Holder());
 	vtkClosedSurfacePointPlacer *native = (vtkClosedSurfacePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkSuperquadricSourceWrap::~VtkSuperquadricSourceWrap()
 
 void VtkSuperquadricSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSuperquadricSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSuperquadricSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SuperquadricSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSuperquadricSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SuperquadricSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSuperquadricSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSuperquadricSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSuperquadricSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSuperquadricSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAxisOfSymmetry", GetAxisOfSymmetry);
 	Nan::SetPrototypeMethod(tpl, "getAxisOfSymmetry", GetAxisOfSymmetry);
 
@@ -140,6 +141,8 @@ void VtkSuperquadricSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ToroidalOn", ToroidalOn);
 	Nan::SetPrototypeMethod(tpl, "toroidalOn", ToroidalOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSuperquadricSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -366,6 +369,7 @@ void VtkSuperquadricSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkSuperquadricSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,7 +385,7 @@ void VtkSuperquadricSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSuperquadricSource * r;
@@ -393,6 +397,7 @@ void VtkSuperquadricSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSuperquadricSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

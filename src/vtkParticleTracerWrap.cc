@@ -27,26 +27,27 @@ VtkParticleTracerWrap::~VtkParticleTracerWrap()
 
 void VtkParticleTracerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkParticleTracerBaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParticleTracerBaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParticleTracerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParticleTracer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParticleTracer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParticleTracer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParticleTracer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParticleTracerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParticleTracerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParticleTracerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkParticleTracerBaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParticleTracerBaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParticleTracerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkParticleTracerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParticleTracerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkParticleTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkParticleTracerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkParticleTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParticleTracerWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerWrap>(info.Holder());
 	vtkParticleTracer *native = (vtkParticleTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParticleTracer * r;
@@ -158,6 +162,7 @@ void VtkParticleTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParticleTracerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

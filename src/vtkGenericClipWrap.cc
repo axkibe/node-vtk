@@ -30,26 +30,27 @@ VtkGenericClipWrap::~VtkGenericClipWrap()
 
 void VtkGenericClipWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericClipWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericClip").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericClip").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericClip").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericClip").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericClipWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericClipWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericClipWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericClipWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLocator", CreateDefaultLocator);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLocator", CreateDefaultLocator);
 
@@ -143,6 +144,8 @@ void VtkGenericClipWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericClipWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -253,6 +256,7 @@ void VtkGenericClipWrap::GetClipFunction(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetClipFunction();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,6 +279,7 @@ void VtkGenericClipWrap::GetClippedOutput(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetClippedOutput();
+		VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -353,6 +358,7 @@ void VtkGenericClipWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -491,6 +497,7 @@ void VtkGenericClipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericClipWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -506,7 +513,7 @@ void VtkGenericClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGenericClipWrap *wrapper = ObjectWrap::Unwrap<VtkGenericClipWrap>(info.Holder());
 	vtkGenericClip *native = (vtkGenericClip *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericClip * r;
@@ -518,6 +525,7 @@ void VtkGenericClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericClipWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -556,7 +564,7 @@ void VtkGenericClipWrap::SetClipFunction(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGenericClipWrap *wrapper = ObjectWrap::Unwrap<VtkGenericClipWrap>(info.Holder());
 	vtkGenericClip *native = (vtkGenericClip *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -633,7 +641,7 @@ void VtkGenericClipWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGenericClipWrap *wrapper = ObjectWrap::Unwrap<VtkGenericClipWrap>(info.Holder());
 	vtkGenericClip *native = (vtkGenericClip *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

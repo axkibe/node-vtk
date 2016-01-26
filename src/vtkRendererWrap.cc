@@ -42,26 +42,27 @@ VtkRendererWrap::~VtkRendererWrap()
 
 void VtkRendererWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkViewportWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkViewportWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRendererWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Renderer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Renderer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRendererWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRendererWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkViewportWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkViewportWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRendererWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddActor", AddActor);
 	Nan::SetPrototypeMethod(tpl, "addActor", AddActor);
 
@@ -383,6 +384,8 @@ void VtkRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
 	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRendererWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -412,7 +415,7 @@ void VtkRendererWrap::AddActor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -432,7 +435,7 @@ void VtkRendererWrap::AddCuller(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCullerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCullerWrap *a0 = ObjectWrap::Unwrap<VtkCullerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -452,7 +455,7 @@ void VtkRendererWrap::AddLight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightWrap *a0 = ObjectWrap::Unwrap<VtkLightWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -472,7 +475,7 @@ void VtkRendererWrap::AddVolume(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -540,7 +543,7 @@ void VtkRendererWrap::CaptureGL2PSSpecialProp(const Nan::FunctionCallbackInfo<v8
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		int r;
@@ -665,6 +668,7 @@ void VtkRendererWrap::GetActiveCamera(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetActiveCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -687,6 +691,7 @@ void VtkRendererWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetActors();
+		VtkActorCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -737,6 +742,7 @@ void VtkRendererWrap::GetBackgroundTexture(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetBackgroundTexture();
+		VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -787,6 +793,7 @@ void VtkRendererWrap::GetCullers(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetCullers();
+		VtkCullerCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -809,6 +816,7 @@ void VtkRendererWrap::GetDelegate(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetDelegate();
+		VtkRendererDelegateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -929,6 +937,7 @@ void VtkRendererWrap::GetLights(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetLights();
+		VtkLightCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1077,6 +1086,7 @@ void VtkRendererWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetRenderWindow();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1099,6 +1109,7 @@ void VtkRendererWrap::GetSelector(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetSelector();
+		VtkHardwareSelectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1177,6 +1188,7 @@ void VtkRendererWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetVTKWindow();
+		VtkWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1199,6 +1211,7 @@ void VtkRendererWrap::GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetVolumes();
+		VtkVolumeCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1330,6 +1343,7 @@ void VtkRendererWrap::MakeCamera(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->MakeCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1352,6 +1366,7 @@ void VtkRendererWrap::MakeLight(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->MakeLight();
+		VtkLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1374,6 +1389,7 @@ void VtkRendererWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1409,6 +1425,7 @@ void VtkRendererWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 						info[2]->NumberValue(),
 						info[3]->NumberValue()
 					);
+						VtkAssemblyPathWrap::InitPtpl();
 					v8::Local<v8::Value> argv[1] =
 						{ Nan::New(vtkNodeJsNoWrap) };
 					v8::Local<v8::Function> cons =
@@ -1431,6 +1448,7 @@ void VtkRendererWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				info[0]->NumberValue(),
 				info[1]->NumberValue()
 			);
+				VtkAssemblyPathWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -1474,7 +1492,7 @@ void VtkRendererWrap::RemoveActor(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1506,7 +1524,7 @@ void VtkRendererWrap::RemoveCuller(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCullerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCullerWrap *a0 = ObjectWrap::Unwrap<VtkCullerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1526,7 +1544,7 @@ void VtkRendererWrap::RemoveLight(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightWrap *a0 = ObjectWrap::Unwrap<VtkLightWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1546,7 +1564,7 @@ void VtkRendererWrap::RemoveVolume(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1666,7 +1684,7 @@ void VtkRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderer * r;
@@ -1678,6 +1696,7 @@ void VtkRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRendererWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1696,7 +1715,7 @@ void VtkRendererWrap::SetActiveCamera(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1781,7 +1800,7 @@ void VtkRendererWrap::SetBackgroundTexture(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextureWrap *a0 = ObjectWrap::Unwrap<VtkTextureWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1820,7 +1839,7 @@ void VtkRendererWrap::SetDelegate(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererDelegateWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererDelegateWrap *a0 = ObjectWrap::Unwrap<VtkRendererDelegateWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1878,7 +1897,7 @@ void VtkRendererWrap::SetGL2PSSpecialPropCollection(const Nan::FunctionCallbackI
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1936,7 +1955,7 @@ void VtkRendererWrap::SetLightCollection(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightCollectionWrap *a0 = ObjectWrap::Unwrap<VtkLightCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2051,7 +2070,7 @@ void VtkRendererWrap::SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

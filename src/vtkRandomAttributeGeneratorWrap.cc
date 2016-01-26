@@ -27,26 +27,27 @@ VtkRandomAttributeGeneratorWrap::~VtkRandomAttributeGeneratorWrap()
 
 void VtkRandomAttributeGeneratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRandomAttributeGeneratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRandomAttributeGenerator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RandomAttributeGenerator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRandomAttributeGenerator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RandomAttributeGenerator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRandomAttributeGeneratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRandomAttributeGeneratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRandomAttributeGeneratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRandomAttributeGeneratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AttributesConstantPerBlockOff", AttributesConstantPerBlockOff);
 	Nan::SetPrototypeMethod(tpl, "attributesConstantPerBlockOff", AttributesConstantPerBlockOff);
 
@@ -305,6 +306,8 @@ void VtkRandomAttributeGeneratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfComponents", SetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfComponents", SetNumberOfComponents);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRandomAttributeGeneratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1051,6 +1054,7 @@ void VtkRandomAttributeGeneratorWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkRandomAttributeGeneratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1066,7 +1070,7 @@ void VtkRandomAttributeGeneratorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRandomAttributeGenerator * r;
@@ -1078,6 +1082,7 @@ void VtkRandomAttributeGeneratorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRandomAttributeGeneratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkControlPointsItemWrap::~VtkControlPointsItemWrap()
 
 void VtkControlPointsItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPlotWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkControlPointsItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkControlPointsItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ControlPointsItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkControlPointsItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ControlPointsItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkControlPointsItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkControlPointsItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkControlPointsItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPlotWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPlotWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkControlPointsItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeselectAllPoints", DeselectAllPoints);
 	Nan::SetPrototypeMethod(tpl, "deselectAllPoints", DeselectAllPoints);
 
@@ -91,6 +92,8 @@ void VtkControlPointsItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValidBounds", SetValidBounds);
 	Nan::SetPrototypeMethod(tpl, "setValidBounds", SetValidBounds);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkControlPointsItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -167,6 +170,7 @@ void VtkControlPointsItemWrap::GetSelectedPointBrush(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetSelectedPointBrush();
+		VtkBrushWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,6 +193,7 @@ void VtkControlPointsItemWrap::GetSelectedPointPen(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetSelectedPointPen();
+		VtkPenWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,6 +238,7 @@ void VtkControlPointsItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkControlPointsItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,7 +278,7 @@ void VtkControlPointsItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
 	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkControlPointsItem * r;
@@ -284,6 +290,7 @@ void VtkControlPointsItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkControlPointsItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

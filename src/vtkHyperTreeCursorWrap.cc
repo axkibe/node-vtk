@@ -27,26 +27,27 @@ VtkHyperTreeCursorWrap::~VtkHyperTreeCursorWrap()
 
 void VtkHyperTreeCursorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperTreeCursorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperTreeCursor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperTreeCursor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperTreeCursor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperTreeCursor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperTreeCursorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperTreeCursorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperTreeCursorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperTreeCursorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Clone", Clone);
 	Nan::SetPrototypeMethod(tpl, "clone", Clone);
 
@@ -95,6 +96,8 @@ void VtkHyperTreeCursorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ToSameNode", ToSameNode);
 	Nan::SetPrototypeMethod(tpl, "toSameNode", ToSameNode);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperTreeCursorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkHyperTreeCursorWrap::Clone(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->Clone();
+		VtkHyperTreeCursorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,6 +248,7 @@ void VtkHyperTreeCursorWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTree();
+		VtkHyperTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,6 +293,7 @@ void VtkHyperTreeCursorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperTreeCursorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +309,7 @@ void VtkHyperTreeCursorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkHyperTreeCursorWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info.Holder());
 	vtkHyperTreeCursor *native = (vtkHyperTreeCursor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperTreeCursor * r;
@@ -315,6 +321,7 @@ void VtkHyperTreeCursorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperTreeCursorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -333,7 +340,7 @@ void VtkHyperTreeCursorWrap::SameTree(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkHyperTreeCursorWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info.Holder());
 	vtkHyperTreeCursor *native = (vtkHyperTreeCursor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperTreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperTreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info[0]->ToObject());
 		int r;
@@ -398,7 +405,7 @@ void VtkHyperTreeCursorWrap::ToSameNode(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkHyperTreeCursorWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info.Holder());
 	vtkHyperTreeCursor *native = (vtkHyperTreeCursor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperTreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperTreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

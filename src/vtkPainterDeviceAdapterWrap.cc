@@ -28,26 +28,27 @@ VtkPainterDeviceAdapterWrap::~VtkPainterDeviceAdapterWrap()
 
 void VtkPainterDeviceAdapterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPainterDeviceAdapterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPainterDeviceAdapter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PainterDeviceAdapter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPainterDeviceAdapter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PainterDeviceAdapter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPainterDeviceAdapterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPainterDeviceAdapterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPainterDeviceAdapterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPainterDeviceAdapterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BeginPrimitive", BeginPrimitive);
 	Nan::SetPrototypeMethod(tpl, "beginPrimitive", BeginPrimitive);
 
@@ -102,6 +103,8 @@ void VtkPainterDeviceAdapterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Stencil", Stencil);
 	Nan::SetPrototypeMethod(tpl, "stencil", Stencil);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPainterDeviceAdapterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -150,7 +153,7 @@ void VtkPainterDeviceAdapterWrap::Compatible(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
 	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		int r;
@@ -343,6 +346,7 @@ void VtkPainterDeviceAdapterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkPainterDeviceAdapterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,7 +404,7 @@ void VtkPainterDeviceAdapterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
 	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPainterDeviceAdapter * r;
@@ -412,6 +416,7 @@ void VtkPainterDeviceAdapterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPainterDeviceAdapterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -432,7 +437,7 @@ void VtkPainterDeviceAdapterWrap::SetAttributePointer(const Nan::FunctionCallbac
 	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

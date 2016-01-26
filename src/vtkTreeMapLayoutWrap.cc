@@ -28,26 +28,27 @@ VtkTreeMapLayoutWrap::~VtkTreeMapLayoutWrap()
 
 void VtkTreeMapLayoutWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTreeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTreeMapLayoutWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTreeMapLayout").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TreeMapLayout").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTreeMapLayout").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TreeMapLayout").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTreeMapLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTreeMapLayoutWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTreeMapLayoutWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTreeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTreeMapLayoutWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkTreeMapLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSizeArrayName", SetSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setSizeArrayName", SetSizeArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTreeMapLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -125,6 +128,7 @@ void VtkTreeMapLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetLayoutStrategy();
+		VtkTreeMapLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,6 +187,7 @@ void VtkTreeMapLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkTreeMapLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +203,7 @@ void VtkTreeMapLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTreeMapLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapLayoutWrap>(info.Holder());
 	vtkTreeMapLayout *native = (vtkTreeMapLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTreeMapLayout * r;
@@ -210,6 +215,7 @@ void VtkTreeMapLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTreeMapLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -228,7 +234,7 @@ void VtkTreeMapLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTreeMapLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapLayoutWrap>(info.Holder());
 	vtkTreeMapLayout *native = (vtkTreeMapLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeMapLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeMapLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkTreeMapLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

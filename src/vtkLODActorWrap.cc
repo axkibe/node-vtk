@@ -34,26 +34,27 @@ VtkLODActorWrap::~VtkLODActorWrap()
 
 void VtkLODActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLODActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLODActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LODActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLODActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LODActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLODActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLODActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLODActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLODActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddLODMapper", AddLODMapper);
 	Nan::SetPrototypeMethod(tpl, "addLODMapper", AddLODMapper);
 
@@ -105,6 +106,8 @@ void VtkLODActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLODActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,7 +137,7 @@ void VtkLODActorWrap::AddLODMapper(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkLODActorWrap>(info.Holder());
 	vtkLODActor *native = (vtkLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMapperWrap *a0 = ObjectWrap::Unwrap<VtkMapperWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -175,6 +178,7 @@ void VtkLODActorWrap::GetLODMappers(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLODMappers();
+		VtkMapperCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,6 +201,7 @@ void VtkLODActorWrap::GetLowResFilter(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLowResFilter();
+		VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,6 +224,7 @@ void VtkLODActorWrap::GetMediumResFilter(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetMediumResFilter();
+		VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -289,6 +295,7 @@ void VtkLODActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkLODActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -304,7 +311,7 @@ void VtkLODActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v
 {
 	VtkLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkLODActorWrap>(info.Holder());
 	vtkLODActor *native = (vtkLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -324,10 +331,10 @@ void VtkLODActorWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkLODActorWrap>(info.Holder());
 	vtkLODActor *native = (vtkLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMapperWrap *a1 = ObjectWrap::Unwrap<VtkMapperWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -349,7 +356,7 @@ void VtkLODActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkLODActorWrap>(info.Holder());
 	vtkLODActor *native = (vtkLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -371,7 +378,7 @@ void VtkLODActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkLODActorWrap>(info.Holder());
 	vtkLODActor *native = (vtkLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLODActor * r;
@@ -383,6 +390,7 @@ void VtkLODActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLODActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -401,7 +409,7 @@ void VtkLODActorWrap::SetLowResFilter(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkLODActorWrap>(info.Holder());
 	vtkLODActor *native = (vtkLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataAlgorithmWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -421,7 +429,7 @@ void VtkLODActorWrap::SetMediumResFilter(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkLODActorWrap>(info.Holder());
 	vtkLODActor *native = (vtkLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataAlgorithmWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -460,7 +468,7 @@ void VtkLODActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkLODActorWrap>(info.Holder());
 	vtkLODActor *native = (vtkLODActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

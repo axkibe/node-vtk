@@ -28,26 +28,27 @@ VtkKMeansDistanceFunctorCalculatorWrap::~VtkKMeansDistanceFunctorCalculatorWrap(
 
 void VtkKMeansDistanceFunctorCalculatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkKMeansDistanceFunctorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkKMeansDistanceFunctorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkKMeansDistanceFunctorCalculatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkKMeansDistanceFunctorCalculator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("KMeansDistanceFunctorCalculator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkKMeansDistanceFunctorCalculator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("KMeansDistanceFunctorCalculator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkKMeansDistanceFunctorCalculatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkKMeansDistanceFunctorCalculatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkKMeansDistanceFunctorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkKMeansDistanceFunctorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkKMeansDistanceFunctorCalculatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkKMeansDistanceFunctorCalculatorWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SetFunctionParser", SetFunctionParser);
 	Nan::SetPrototypeMethod(tpl, "setFunctionParser", SetFunctionParser);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkKMeansDistanceFunctorCalculatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,6 +139,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::GetFunctionParser(const Nan::Functi
 		return;
 	}
 	r = native->GetFunctionParser();
+		VtkFunctionParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,6 +184,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +200,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkKMeansDistanceFunctorCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkKMeansDistanceFunctorCalculatorWrap>(info.Holder());
 	vtkKMeansDistanceFunctorCalculator *native = (vtkKMeansDistanceFunctorCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkKMeansDistanceFunctorCalculator * r;
@@ -207,6 +212,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -245,7 +251,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::SetFunctionParser(const Nan::Functi
 {
 	VtkKMeansDistanceFunctorCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkKMeansDistanceFunctorCalculatorWrap>(info.Holder());
 	vtkKMeansDistanceFunctorCalculator *native = (vtkKMeansDistanceFunctorCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFunctionParserWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFunctionParserWrap *a0 = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkRectilinearWipeWidgetWrap::~VtkRectilinearWipeWidgetWrap()
 
 void VtkRectilinearWipeWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRectilinearWipeWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRectilinearWipeWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RectilinearWipeWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRectilinearWipeWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RectilinearWipeWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRectilinearWipeWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRectilinearWipeWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRectilinearWipeWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRectilinearWipeWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -69,6 +70,8 @@ void VtkRectilinearWipeWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRectilinearWipeWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkRectilinearWipeWidgetWrap::GetRectilinearWipeRepresentation(const Nan::F
 		return;
 	}
 	r = native->GetRectilinearWipeRepresentation();
+		VtkRectilinearWipeRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,6 +179,7 @@ void VtkRectilinearWipeWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkRectilinearWipeWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -190,7 +195,7 @@ void VtkRectilinearWipeWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkRectilinearWipeWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearWipeWidgetWrap>(info.Holder());
 	vtkRectilinearWipeWidget *native = (vtkRectilinearWipeWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRectilinearWipeWidget * r;
@@ -202,6 +207,7 @@ void VtkRectilinearWipeWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRectilinearWipeWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -220,7 +226,7 @@ void VtkRectilinearWipeWidgetWrap::SetRepresentation(const Nan::FunctionCallback
 {
 	VtkRectilinearWipeWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearWipeWidgetWrap>(info.Holder());
 	vtkRectilinearWipeWidget *native = (vtkRectilinearWipeWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRectilinearWipeRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRectilinearWipeRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkRectilinearWipeRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkSurfaceLICDefaultPainterWrap::~VtkSurfaceLICDefaultPainterWrap()
 
 void VtkSurfaceLICDefaultPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDefaultPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDefaultPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSurfaceLICDefaultPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSurfaceLICDefaultPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SurfaceLICDefaultPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSurfaceLICDefaultPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SurfaceLICDefaultPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSurfaceLICDefaultPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSurfaceLICDefaultPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSurfaceLICDefaultPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDefaultPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDefaultPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSurfaceLICDefaultPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkSurfaceLICDefaultPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetSurfaceLICPainter", SetSurfaceLICPainter);
 	Nan::SetPrototypeMethod(tpl, "setSurfaceLICPainter", SetSurfaceLICPainter);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSurfaceLICDefaultPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkSurfaceLICDefaultPainterWrap::GetSurfaceLICPainter(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetSurfaceLICPainter();
+		VtkSurfaceLICPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkSurfaceLICDefaultPainterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkSurfaceLICDefaultPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkSurfaceLICDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkSurfaceLICDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICDefaultPainterWrap>(info.Holder());
 	vtkSurfaceLICDefaultPainter *native = (vtkSurfaceLICDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSurfaceLICDefaultPainter * r;
@@ -187,6 +192,7 @@ void VtkSurfaceLICDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSurfaceLICDefaultPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkSurfaceLICDefaultPainterWrap::SetSurfaceLICPainter(const Nan::FunctionCa
 {
 	VtkSurfaceLICDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICDefaultPainterWrap>(info.Holder());
 	vtkSurfaceLICDefaultPainter *native = (vtkSurfaceLICDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSurfaceLICPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSurfaceLICPainterWrap *a0 = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

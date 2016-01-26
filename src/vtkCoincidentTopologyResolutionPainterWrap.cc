@@ -30,26 +30,27 @@ VtkCoincidentTopologyResolutionPainterWrap::~VtkCoincidentTopologyResolutionPain
 
 void VtkCoincidentTopologyResolutionPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCoincidentTopologyResolutionPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCoincidentTopologyResolutionPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CoincidentTopologyResolutionPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCoincidentTopologyResolutionPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CoincidentTopologyResolutionPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCoincidentTopologyResolutionPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCoincidentTopologyResolutionPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCoincidentTopologyResolutionPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCoincidentTopologyResolutionPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,6 +71,8 @@ void VtkCoincidentTopologyResolutionPainterWrap::InitTpl(v8::Local<v8::FunctionT
 
 	Nan::SetPrototypeMethod(tpl, "Z_SHIFT", Z_SHIFT);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCoincidentTopologyResolutionPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -142,6 +145,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
+		VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,6 +168,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::POLYGON_OFFSET_FACES(const Nan:
 		return;
 	}
 	r = native->POLYGON_OFFSET_FACES();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,6 +191,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::POLYGON_OFFSET_PARAMETERS(const
 		return;
 	}
 	r = native->POLYGON_OFFSET_PARAMETERS();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,6 +214,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::RESOLVE_COINCIDENT_TOPOLOGY(con
 		return;
 	}
 	r = native->RESOLVE_COINCIDENT_TOPOLOGY();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +230,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::SafeDownCast(const Nan::Functio
 {
 	VtkCoincidentTopologyResolutionPainterWrap *wrapper = ObjectWrap::Unwrap<VtkCoincidentTopologyResolutionPainterWrap>(info.Holder());
 	vtkCoincidentTopologyResolutionPainter *native = (vtkCoincidentTopologyResolutionPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCoincidentTopologyResolutionPainter * r;
@@ -235,6 +242,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -260,6 +268,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::Z_SHIFT(const Nan::FunctionCall
 		return;
 	}
 	r = native->Z_SHIFT();
+		VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

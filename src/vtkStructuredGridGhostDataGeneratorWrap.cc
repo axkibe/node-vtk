@@ -27,26 +27,27 @@ VtkStructuredGridGhostDataGeneratorWrap::~VtkStructuredGridGhostDataGeneratorWra
 
 void VtkStructuredGridGhostDataGeneratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetGhostGeneratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetGhostGeneratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStructuredGridGhostDataGeneratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStructuredGridGhostDataGenerator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StructuredGridGhostDataGenerator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStructuredGridGhostDataGenerator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StructuredGridGhostDataGenerator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStructuredGridGhostDataGeneratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStructuredGridGhostDataGeneratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStructuredGridGhostDataGeneratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetGhostGeneratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetGhostGeneratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStructuredGridGhostDataGeneratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkStructuredGridGhostDataGeneratorWrap::InitTpl(v8::Local<v8::FunctionTemp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStructuredGridGhostDataGeneratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkStructuredGridGhostDataGeneratorWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
+		VtkStructuredGridGhostDataGeneratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkStructuredGridGhostDataGeneratorWrap::SafeDownCast(const Nan::FunctionCa
 {
 	VtkStructuredGridGhostDataGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridGhostDataGeneratorWrap>(info.Holder());
 	vtkStructuredGridGhostDataGenerator *native = (vtkStructuredGridGhostDataGenerator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStructuredGridGhostDataGenerator * r;
@@ -158,6 +162,7 @@ void VtkStructuredGridGhostDataGeneratorWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStructuredGridGhostDataGeneratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -32,26 +32,27 @@ VtkLegendScaleActorWrap::~VtkLegendScaleActorWrap()
 
 void VtkLegendScaleActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPropWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLegendScaleActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLegendScaleActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LegendScaleActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLegendScaleActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LegendScaleActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLegendScaleActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLegendScaleActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLegendScaleActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPropWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLegendScaleActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AllAnnotationsOff", AllAnnotationsOff);
 	Nan::SetPrototypeMethod(tpl, "allAnnotationsOff", AllAnnotationsOff);
 
@@ -247,6 +248,8 @@ void VtkLegendScaleActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TopAxisVisibilityOn", TopAxisVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "topAxisVisibilityOn", TopAxisVisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLegendScaleActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -348,7 +351,7 @@ void VtkLegendScaleActorWrap::BuildRepresentation(const Nan::FunctionCallbackInf
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -368,7 +371,7 @@ void VtkLegendScaleActorWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -395,6 +398,7 @@ void VtkLegendScaleActorWrap::GetBottomAxis(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetBottomAxis();
+		VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -571,6 +575,7 @@ void VtkLegendScaleActorWrap::GetLeftAxis(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLeftAxis();
+		VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -649,6 +654,7 @@ void VtkLegendScaleActorWrap::GetLegendLabelProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetLegendLabelProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -671,6 +677,7 @@ void VtkLegendScaleActorWrap::GetLegendTitleProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetLegendTitleProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -707,6 +714,7 @@ void VtkLegendScaleActorWrap::GetRightAxis(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetRightAxis();
+		VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -785,6 +793,7 @@ void VtkLegendScaleActorWrap::GetTopAxis(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetTopAxis();
+		VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -933,6 +942,7 @@ void VtkLegendScaleActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkLegendScaleActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -948,7 +958,7 @@ void VtkLegendScaleActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallba
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -968,7 +978,7 @@ void VtkLegendScaleActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackIn
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -990,7 +1000,7 @@ void VtkLegendScaleActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1036,7 +1046,7 @@ void VtkLegendScaleActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLegendScaleActor * r;
@@ -1048,6 +1058,7 @@ void VtkLegendScaleActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLegendScaleActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkAMRCutPlaneWrap::~VtkAMRCutPlaneWrap()
 
 void VtkAMRCutPlaneWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMRCutPlaneWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMRCutPlane").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMRCutPlane").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMRCutPlane").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMRCutPlane").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMRCutPlaneWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMRCutPlaneWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMRCutPlaneWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMRCutPlaneWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -91,6 +92,8 @@ void VtkAMRCutPlaneWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseNativeCutterOn", UseNativeCutterOn);
 	Nan::SetPrototypeMethod(tpl, "useNativeCutterOn", UseNativeCutterOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMRCutPlaneWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,7 +125,7 @@ void VtkAMRCutPlaneWrap::FillInputPortInformation(const Nan::FunctionCallbackInf
 	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -148,7 +151,7 @@ void VtkAMRCutPlaneWrap::FillOutputPortInformation(const Nan::FunctionCallbackIn
 	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -193,6 +196,7 @@ void VtkAMRCutPlaneWrap::GetController(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,6 +255,7 @@ void VtkAMRCutPlaneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMRCutPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,7 +271,7 @@ void VtkAMRCutPlaneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAMRCutPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkAMRCutPlaneWrap>(info.Holder());
 	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMRCutPlane * r;
@@ -278,6 +283,7 @@ void VtkAMRCutPlaneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMRCutPlaneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -323,7 +329,7 @@ void VtkAMRCutPlaneWrap::SetController(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAMRCutPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkAMRCutPlaneWrap>(info.Holder());
 	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

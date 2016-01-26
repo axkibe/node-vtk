@@ -29,26 +29,27 @@ VtkMutableUndirectedGraphWrap::~VtkMutableUndirectedGraphWrap()
 
 void VtkMutableUndirectedGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUndirectedGraphWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUndirectedGraphWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMutableUndirectedGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMutableUndirectedGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MutableUndirectedGraph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMutableUndirectedGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MutableUndirectedGraph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMutableUndirectedGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMutableUndirectedGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMutableUndirectedGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUndirectedGraphWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUndirectedGraphWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMutableUndirectedGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,6 +71,8 @@ void VtkMutableUndirectedGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMutableUndirectedGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,7 +138,7 @@ void VtkMutableUndirectedGraphWrap::LazyAddVertex(const Nan::FunctionCallbackInf
 {
 	VtkMutableUndirectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkMutableUndirectedGraphWrap>(info.Holder());
 	vtkMutableUndirectedGraph *native = (vtkMutableUndirectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVariantArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVariantArrayWrap *a0 = ObjectWrap::Unwrap<VtkVariantArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -167,6 +170,7 @@ void VtkMutableUndirectedGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkMutableUndirectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +186,7 @@ void VtkMutableUndirectedGraphWrap::RemoveEdges(const Nan::FunctionCallbackInfo<
 {
 	VtkMutableUndirectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkMutableUndirectedGraphWrap>(info.Holder());
 	vtkMutableUndirectedGraph *native = (vtkMutableUndirectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -202,7 +206,7 @@ void VtkMutableUndirectedGraphWrap::RemoveVertices(const Nan::FunctionCallbackIn
 {
 	VtkMutableUndirectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkMutableUndirectedGraphWrap>(info.Holder());
 	vtkMutableUndirectedGraph *native = (vtkMutableUndirectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -222,7 +226,7 @@ void VtkMutableUndirectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkMutableUndirectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkMutableUndirectedGraphWrap>(info.Holder());
 	vtkMutableUndirectedGraph *native = (vtkMutableUndirectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMutableUndirectedGraph * r;
@@ -234,6 +238,7 @@ void VtkMutableUndirectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMutableUndirectedGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

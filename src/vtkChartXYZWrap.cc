@@ -29,26 +29,27 @@ VtkChartXYZWrap::~VtkChartXYZWrap()
 
 void VtkChartXYZWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContextItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkChartXYZWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkChartXYZ").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ChartXYZ").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkChartXYZ").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ChartXYZ").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkChartXYZWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkChartXYZWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkChartXYZWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkChartXYZWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClearPlots", ClearPlots);
 	Nan::SetPrototypeMethod(tpl, "clearPlots", ClearPlots);
 
@@ -82,6 +83,8 @@ void VtkChartXYZWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkChartXYZWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkChartXYZWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetAxis(
 			info[0]->Int32Value()
 		);
+			VtkAxisWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -195,6 +199,7 @@ void VtkChartXYZWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkChartXYZWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +239,7 @@ void VtkChartXYZWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkChartXYZWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYZWrap>(info.Holder());
 	vtkChartXYZ *native = (vtkChartXYZ *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkChartXYZ * r;
@@ -246,6 +251,7 @@ void VtkChartXYZWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkChartXYZWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -283,7 +289,7 @@ void VtkChartXYZWrap::SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkChartXYZWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYZWrap>(info.Holder());
 	vtkChartXYZ *native = (vtkChartXYZ *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationLinkWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationLinkWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationLinkWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -16,7 +16,10 @@ class VtkSynchronizedTemplates2DWrap : public VtkPolyDataAlgorithmWrap
 	public:
 		using Nan::ObjectWrap::Wrap;
 		static void Init(v8::Local<v8::Object> exports);
-		static void InitTpl(v8::Local<v8::FunctionTemplate> tpl);
+		static void InitPtpl();
+		static void ConstructorGetter(
+			v8::Local<v8::String> property,
+			const Nan::PropertyCallbackInfo<v8::Value>& info);
 
 		VtkSynchronizedTemplates2DWrap(vtkSmartPointer<vtkSynchronizedTemplates2D>);
 		VtkSynchronizedTemplates2DWrap();

@@ -29,26 +29,27 @@ VtkQuadratureSchemeDefinitionWrap::~VtkQuadratureSchemeDefinitionWrap()
 
 void VtkQuadratureSchemeDefinitionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkQuadratureSchemeDefinitionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkQuadratureSchemeDefinition").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("QuadratureSchemeDefinition").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkQuadratureSchemeDefinition").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("QuadratureSchemeDefinition").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkQuadratureSchemeDefinitionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkQuadratureSchemeDefinitionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkQuadratureSchemeDefinitionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkQuadratureSchemeDefinitionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Clear", Clear);
 	Nan::SetPrototypeMethod(tpl, "clear", Clear);
 
@@ -89,6 +90,8 @@ void VtkQuadratureSchemeDefinitionWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SaveState", SaveState);
 	Nan::SetPrototypeMethod(tpl, "saveState", SaveState);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkQuadratureSchemeDefinitionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -137,6 +140,7 @@ void VtkQuadratureSchemeDefinitionWrap::DICTIONARY(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->DICTIONARY();
+		VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -152,7 +156,7 @@ void VtkQuadratureSchemeDefinitionWrap::DeepCopy(const Nan::FunctionCallbackInfo
 {
 	VtkQuadratureSchemeDefinitionWrap *wrapper = ObjectWrap::Unwrap<VtkQuadratureSchemeDefinitionWrap>(info.Holder());
 	vtkQuadratureSchemeDefinition *native = (vtkQuadratureSchemeDefinition *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkQuadratureSchemeDefinitionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkQuadratureSchemeDefinitionWrap *a0 = ObjectWrap::Unwrap<VtkQuadratureSchemeDefinitionWrap>(info[0]->ToObject());
 		int r;
@@ -273,6 +277,7 @@ void VtkQuadratureSchemeDefinitionWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkQuadratureSchemeDefinitionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,6 +300,7 @@ void VtkQuadratureSchemeDefinitionWrap::QUADRATURE_OFFSET_ARRAY_NAME(const Nan::
 		return;
 	}
 	r = native->QUADRATURE_OFFSET_ARRAY_NAME();
+		VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,7 +316,7 @@ void VtkQuadratureSchemeDefinitionWrap::RestoreState(const Nan::FunctionCallback
 {
 	VtkQuadratureSchemeDefinitionWrap *wrapper = ObjectWrap::Unwrap<VtkQuadratureSchemeDefinitionWrap>(info.Holder());
 	vtkQuadratureSchemeDefinition *native = (vtkQuadratureSchemeDefinition *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		int r;
@@ -332,7 +338,7 @@ void VtkQuadratureSchemeDefinitionWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkQuadratureSchemeDefinitionWrap *wrapper = ObjectWrap::Unwrap<VtkQuadratureSchemeDefinitionWrap>(info.Holder());
 	vtkQuadratureSchemeDefinition *native = (vtkQuadratureSchemeDefinition *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkQuadratureSchemeDefinition * r;
@@ -344,6 +350,7 @@ void VtkQuadratureSchemeDefinitionWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkQuadratureSchemeDefinitionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -362,7 +369,7 @@ void VtkQuadratureSchemeDefinitionWrap::SaveState(const Nan::FunctionCallbackInf
 {
 	VtkQuadratureSchemeDefinitionWrap *wrapper = ObjectWrap::Unwrap<VtkQuadratureSchemeDefinitionWrap>(info.Holder());
 	vtkQuadratureSchemeDefinition *native = (vtkQuadratureSchemeDefinition *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
 		int r;

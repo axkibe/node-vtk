@@ -28,26 +28,27 @@ VtkInterpolatedVelocityFieldWrap::~VtkInterpolatedVelocityFieldWrap()
 
 void VtkInterpolatedVelocityFieldWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCompositeInterpolatedVelocityFieldWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeInterpolatedVelocityFieldWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInterpolatedVelocityFieldWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InterpolatedVelocityField").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInterpolatedVelocityField").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InterpolatedVelocityField").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInterpolatedVelocityFieldWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInterpolatedVelocityFieldWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInterpolatedVelocityFieldWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeInterpolatedVelocityFieldWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeInterpolatedVelocityFieldWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInterpolatedVelocityFieldWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddDataSet", AddDataSet);
 	Nan::SetPrototypeMethod(tpl, "addDataSet", AddDataSet);
 
@@ -63,6 +64,8 @@ void VtkInterpolatedVelocityFieldWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -92,7 +95,7 @@ void VtkInterpolatedVelocityFieldWrap::AddDataSet(const Nan::FunctionCallbackInf
 {
 	VtkInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkInterpolatedVelocityField *native = (vtkInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -155,6 +158,7 @@ void VtkInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -170,7 +174,7 @@ void VtkInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkInterpolatedVelocityField *native = (vtkInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInterpolatedVelocityField * r;
@@ -182,6 +186,7 @@ void VtkInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

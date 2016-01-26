@@ -30,26 +30,27 @@ Vtk3DWidgetWrap::~Vtk3DWidgetWrap()
 
 void Vtk3DWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorObserverWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("Vtk3DWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtk3DWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("3DWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtk3DWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("3DWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void Vtk3DWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void Vtk3DWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void Vtk3DWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorObserverWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
+	tpl->SetClassName(Nan::New("Vtk3DWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -104,6 +105,8 @@ void Vtk3DWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetProp3D", SetProp3D);
 	Nan::SetPrototypeMethod(tpl, "setProp3D", SetProp3D);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void Vtk3DWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -196,6 +199,7 @@ void Vtk3DWidgetWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetInput();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,6 +264,7 @@ void Vtk3DWidgetWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetProp3D();
+		VtkProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -304,6 +309,7 @@ void Vtk3DWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		Vtk3DWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -363,7 +369,7 @@ void Vtk3DWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	Vtk3DWidgetWrap *wrapper = ObjectWrap::Unwrap<Vtk3DWidgetWrap>(info.Holder());
 	vtk3DWidget *native = (vtk3DWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtk3DWidget * r;
@@ -375,6 +381,7 @@ void Vtk3DWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			Vtk3DWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -412,7 +419,7 @@ void Vtk3DWidgetWrap::SetInputConnection(const Nan::FunctionCallbackInfo<v8::Val
 {
 	Vtk3DWidgetWrap *wrapper = ObjectWrap::Unwrap<Vtk3DWidgetWrap>(info.Holder());
 	vtk3DWidget *native = (vtk3DWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -432,7 +439,7 @@ void Vtk3DWidgetWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	Vtk3DWidgetWrap *wrapper = ObjectWrap::Unwrap<Vtk3DWidgetWrap>(info.Holder());
 	vtk3DWidget *native = (vtk3DWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -471,7 +478,7 @@ void Vtk3DWidgetWrap::SetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	Vtk3DWidgetWrap *wrapper = ObjectWrap::Unwrap<Vtk3DWidgetWrap>(info.Holder());
 	vtk3DWidget *native = (vtk3DWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

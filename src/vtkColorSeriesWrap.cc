@@ -27,26 +27,27 @@ VtkColorSeriesWrap::~VtkColorSeriesWrap()
 
 void VtkColorSeriesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkColorSeriesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkColorSeries").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ColorSeries").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkColorSeries").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ColorSeries").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkColorSeriesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkColorSeriesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkColorSeriesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkColorSeriesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildLookupTable", BuildLookupTable);
 	Nan::SetPrototypeMethod(tpl, "buildLookupTable", BuildLookupTable);
 
@@ -89,6 +90,8 @@ void VtkColorSeriesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfColors", SetNumberOfColors);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfColors", SetNumberOfColors);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkColorSeriesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -118,7 +121,7 @@ void VtkColorSeriesWrap::BuildLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkColorSeriesWrap *wrapper = ObjectWrap::Unwrap<VtkColorSeriesWrap>(info.Holder());
 	vtkColorSeries *native = (vtkColorSeries *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLookupTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLookupTableWrap *a0 = ObjectWrap::Unwrap<VtkLookupTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -157,6 +160,7 @@ void VtkColorSeriesWrap::CreateLookupTable(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->CreateLookupTable();
+		VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +176,7 @@ void VtkColorSeriesWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkColorSeriesWrap *wrapper = ObjectWrap::Unwrap<VtkColorSeriesWrap>(info.Holder());
 	vtkColorSeries *native = (vtkColorSeries *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorSeriesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorSeriesWrap *a0 = ObjectWrap::Unwrap<VtkColorSeriesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -277,6 +281,7 @@ void VtkColorSeriesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkColorSeriesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +316,7 @@ void VtkColorSeriesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkColorSeriesWrap *wrapper = ObjectWrap::Unwrap<VtkColorSeriesWrap>(info.Holder());
 	vtkColorSeries *native = (vtkColorSeries *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkColorSeries * r;
@@ -323,6 +328,7 @@ void VtkColorSeriesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkColorSeriesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

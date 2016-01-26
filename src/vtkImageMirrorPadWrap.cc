@@ -27,26 +27,27 @@ VtkImageMirrorPadWrap::~VtkImageMirrorPadWrap()
 
 void VtkImageMirrorPadWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImagePadFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImagePadFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageMirrorPadWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageMirrorPad").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageMirrorPad").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageMirrorPad").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageMirrorPad").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageMirrorPadWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageMirrorPadWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageMirrorPadWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImagePadFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImagePadFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageMirrorPadWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkImageMirrorPadWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageMirrorPadWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkImageMirrorPadWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageMirrorPadWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkImageMirrorPadWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageMirrorPadWrap *wrapper = ObjectWrap::Unwrap<VtkImageMirrorPadWrap>(info.Holder());
 	vtkImageMirrorPad *native = (vtkImageMirrorPad *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageMirrorPad * r;
@@ -158,6 +162,7 @@ void VtkImageMirrorPadWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageMirrorPadWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

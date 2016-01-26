@@ -29,26 +29,27 @@ VtkStructuredGridReaderWrap::~VtkStructuredGridReaderWrap()
 
 void VtkStructuredGridReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStructuredGridReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStructuredGridReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StructuredGridReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStructuredGridReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StructuredGridReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStructuredGridReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStructuredGridReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStructuredGridReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStructuredGridReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,6 +71,8 @@ void VtkStructuredGridReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStructuredGridReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -124,6 +127,7 @@ void VtkStructuredGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkStructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -142,6 +146,7 @@ void VtkStructuredGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetOutput();
+		VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,6 +191,7 @@ void VtkStructuredGridReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkStructuredGridReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +207,7 @@ void VtkStructuredGridReaderWrap::ReadMetaData(const Nan::FunctionCallbackInfo<v
 {
 	VtkStructuredGridReaderWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridReaderWrap>(info.Holder());
 	vtkStructuredGridReader *native = (vtkStructuredGridReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -223,7 +229,7 @@ void VtkStructuredGridReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkStructuredGridReaderWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridReaderWrap>(info.Holder());
 	vtkStructuredGridReader *native = (vtkStructuredGridReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStructuredGridReader * r;
@@ -235,6 +241,7 @@ void VtkStructuredGridReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStructuredGridReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -253,7 +260,7 @@ void VtkStructuredGridReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkStructuredGridReaderWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridReaderWrap>(info.Holder());
 	vtkStructuredGridReader *native = (vtkStructuredGridReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

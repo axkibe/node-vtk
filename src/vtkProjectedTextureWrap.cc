@@ -27,26 +27,27 @@ VtkProjectedTextureWrap::~VtkProjectedTextureWrap()
 
 void VtkProjectedTextureWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProjectedTextureWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProjectedTexture").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ProjectedTexture").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProjectedTexture").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ProjectedTexture").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProjectedTextureWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProjectedTextureWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProjectedTextureWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProjectedTextureWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCameraMode", GetCameraMode);
 	Nan::SetPrototypeMethod(tpl, "getCameraMode", GetCameraMode);
 
@@ -95,6 +96,8 @@ void VtkProjectedTextureWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetUp", SetUp);
 	Nan::SetPrototypeMethod(tpl, "setUp", SetUp);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProjectedTextureWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -195,6 +198,7 @@ void VtkProjectedTextureWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkProjectedTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +214,7 @@ void VtkProjectedTextureWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
 	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProjectedTexture * r;
@@ -222,6 +226,7 @@ void VtkProjectedTextureWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProjectedTextureWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

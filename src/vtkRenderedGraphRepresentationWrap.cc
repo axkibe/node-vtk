@@ -32,26 +32,27 @@ VtkRenderedGraphRepresentationWrap::~VtkRenderedGraphRepresentationWrap()
 
 void VtkRenderedGraphRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderedRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderedGraphRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderedGraphRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RenderedGraphRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderedGraphRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RenderedGraphRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderedGraphRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderedGraphRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderedGraphRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderedRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderedGraphRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddEdgeIconType", AddEdgeIconType);
 	Nan::SetPrototypeMethod(tpl, "addEdgeIconType", AddEdgeIconType);
 
@@ -388,6 +389,8 @@ void VtkRenderedGraphRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "VertexLabelVisibilityOn", VertexLabelVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "vertexLabelVisibilityOn", VertexLabelVisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderedGraphRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -465,7 +468,7 @@ void VtkRenderedGraphRepresentationWrap::ApplyViewTheme(const Nan::FunctionCallb
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -796,6 +799,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeLabelTextProperty(const Nan::Fun
 		return;
 	}
 	r = native->GetEdgeLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -818,6 +822,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeLayoutStrategy(const Nan::Functi
 		return;
 	}
 	r = native->GetEdgeLayoutStrategy();
+		VtkEdgeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -854,6 +859,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeScalarBar(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetEdgeScalarBar();
+		VtkScalarBarWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -918,6 +924,7 @@ void VtkRenderedGraphRepresentationWrap::GetLayoutStrategy(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetLayoutStrategy();
+		VtkGraphLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1094,6 +1101,7 @@ void VtkRenderedGraphRepresentationWrap::GetVertexLabelTextProperty(const Nan::F
 		return;
 	}
 	r = native->GetVertexLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1116,6 +1124,7 @@ void VtkRenderedGraphRepresentationWrap::GetVertexScalarBar(const Nan::FunctionC
 		return;
 	}
 	r = native->GetVertexScalarBar();
+		VtkScalarBarWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1222,6 +1231,7 @@ void VtkRenderedGraphRepresentationWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderedGraphRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1237,7 +1247,7 @@ void VtkRenderedGraphRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderedGraphRepresentation * r;
@@ -1249,6 +1259,7 @@ void VtkRenderedGraphRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderedGraphRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1430,7 +1441,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLabelTextProperty(const Nan::Fun
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1463,7 +1474,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLayoutStrategy(const Nan::Functi
 		);
 		return;
 	}
-	else if(info.Length() > 0 && info[0]->IsObject())
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEdgeLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEdgeLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkEdgeLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1598,7 +1609,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategy(const Nan::FunctionCa
 		);
 		return;
 	}
-	else if(info.Length() > 0 && info[0]->IsObject())
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2037,7 +2048,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexLabelTextProperty(const Nan::F
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

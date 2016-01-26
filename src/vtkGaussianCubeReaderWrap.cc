@@ -29,26 +29,27 @@ VtkGaussianCubeReaderWrap::~VtkGaussianCubeReaderWrap()
 
 void VtkGaussianCubeReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMoleculeReaderBaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeReaderBaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGaussianCubeReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGaussianCubeReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GaussianCubeReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGaussianCubeReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GaussianCubeReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGaussianCubeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGaussianCubeReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGaussianCubeReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMoleculeReaderBaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeReaderBaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGaussianCubeReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,6 +74,8 @@ void VtkGaussianCubeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGaussianCubeReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -137,6 +140,7 @@ void VtkGaussianCubeReaderWrap::GetGridOutput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetGridOutput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -159,6 +163,7 @@ void VtkGaussianCubeReaderWrap::GetTransform(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetTransform();
+		VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,6 +208,7 @@ void VtkGaussianCubeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkGaussianCubeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -218,7 +224,7 @@ void VtkGaussianCubeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGaussianCubeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianCubeReaderWrap>(info.Holder());
 	vtkGaussianCubeReader *native = (vtkGaussianCubeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGaussianCubeReader * r;
@@ -230,6 +236,7 @@ void VtkGaussianCubeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGaussianCubeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

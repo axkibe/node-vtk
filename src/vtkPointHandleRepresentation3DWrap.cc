@@ -32,26 +32,27 @@ VtkPointHandleRepresentation3DWrap::~VtkPointHandleRepresentation3DWrap()
 
 void VtkPointHandleRepresentation3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHandleRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHandleRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPointHandleRepresentation3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPointHandleRepresentation3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PointHandleRepresentation3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPointHandleRepresentation3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PointHandleRepresentation3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPointHandleRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPointHandleRepresentation3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPointHandleRepresentation3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHandleRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHandleRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPointHandleRepresentation3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AllOff", AllOff);
 	Nan::SetPrototypeMethod(tpl, "allOff", AllOff);
 
@@ -199,6 +200,8 @@ void VtkPointHandleRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "ZShadowsOn", ZShadowsOn);
 	Nan::SetPrototypeMethod(tpl, "zShadowsOn", ZShadowsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPointHandleRepresentation3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -293,7 +296,7 @@ void VtkPointHandleRepresentation3DWrap::DeepCopy(const Nan::FunctionCallbackInf
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -313,7 +316,7 @@ void VtkPointHandleRepresentation3DWrap::GetActors(const Nan::FunctionCallbackIn
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -410,6 +413,7 @@ void VtkPointHandleRepresentation3DWrap::GetProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,6 +436,7 @@ void VtkPointHandleRepresentation3DWrap::GetSelectedProperty(const Nan::Function
 		return;
 	}
 	r = native->GetSelectedProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -579,6 +584,7 @@ void VtkPointHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkPointHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -618,7 +624,7 @@ void VtkPointHandleRepresentation3DWrap::ReleaseGraphicsResources(const Nan::Fun
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -638,7 +644,7 @@ void VtkPointHandleRepresentation3DWrap::RenderOpaqueGeometry(const Nan::Functio
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -660,7 +666,7 @@ void VtkPointHandleRepresentation3DWrap::RenderTranslucentPolygonalGeometry(cons
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -682,7 +688,7 @@ void VtkPointHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPointHandleRepresentation3D * r;
@@ -694,6 +700,7 @@ void VtkPointHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPointHandleRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -769,7 +776,7 @@ void VtkPointHandleRepresentation3DWrap::SetProperty(const Nan::FunctionCallback
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -789,7 +796,7 @@ void VtkPointHandleRepresentation3DWrap::SetSelectedProperty(const Nan::Function
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -904,7 +911,7 @@ void VtkPointHandleRepresentation3DWrap::ShallowCopy(const Nan::FunctionCallback
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

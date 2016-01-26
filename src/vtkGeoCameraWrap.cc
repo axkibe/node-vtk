@@ -28,26 +28,27 @@ VtkGeoCameraWrap::~VtkGeoCameraWrap()
 
 void VtkGeoCameraWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoCameraWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoCamera").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoCamera").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoCamera").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoCamera").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoCameraWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoCameraWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoCameraWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -117,6 +118,8 @@ void VtkGeoCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTilt", SetTilt);
 	Nan::SetPrototypeMethod(tpl, "setTilt", SetTilt);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoCameraWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -216,7 +219,7 @@ void VtkGeoCameraWrap::GetNodeCoverage(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTerrainNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTerrainNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTerrainNodeWrap>(info[0]->ToObject());
 		double r;
@@ -287,6 +290,7 @@ void VtkGeoCameraWrap::GetVTKCamera(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetVTKCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -355,6 +359,7 @@ void VtkGeoCameraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -370,7 +375,7 @@ void VtkGeoCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoCamera * r;
@@ -382,6 +387,7 @@ void VtkGeoCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

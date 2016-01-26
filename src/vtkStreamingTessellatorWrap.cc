@@ -27,26 +27,27 @@ VtkStreamingTessellatorWrap::~VtkStreamingTessellatorWrap()
 
 void VtkStreamingTessellatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStreamingTessellatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStreamingTessellator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StreamingTessellator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStreamingTessellator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StreamingTessellator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStreamingTessellatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStreamingTessellatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStreamingTessellatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStreamingTessellatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -86,6 +87,8 @@ void VtkStreamingTessellatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSubdivisionAlgorithm", SetSubdivisionAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "setSubdivisionAlgorithm", SetSubdivisionAlgorithm);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStreamingTessellatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -192,6 +195,7 @@ void VtkStreamingTessellatorWrap::GetSubdivisionAlgorithm(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetSubdivisionAlgorithm();
+		VtkEdgeSubdivisionCriterionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,6 +240,7 @@ void VtkStreamingTessellatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkStreamingTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -263,7 +268,7 @@ void VtkStreamingTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkStreamingTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingTessellatorWrap>(info.Holder());
 	vtkStreamingTessellator *native = (vtkStreamingTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStreamingTessellator * r;
@@ -275,6 +280,7 @@ void VtkStreamingTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStreamingTessellatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -358,7 +364,7 @@ void VtkStreamingTessellatorWrap::SetSubdivisionAlgorithm(const Nan::FunctionCal
 {
 	VtkStreamingTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingTessellatorWrap>(info.Holder());
 	vtkStreamingTessellator *native = (vtkStreamingTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEdgeSubdivisionCriterionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEdgeSubdivisionCriterionWrap *a0 = ObjectWrap::Unwrap<VtkEdgeSubdivisionCriterionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

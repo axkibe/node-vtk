@@ -28,26 +28,27 @@ VtkOpenGLDisplayListPainterWrap::~VtkOpenGLDisplayListPainterWrap()
 
 void VtkOpenGLDisplayListPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDisplayListPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDisplayListPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLDisplayListPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLDisplayListPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLDisplayListPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLDisplayListPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLDisplayListPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLDisplayListPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLDisplayListPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLDisplayListPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDisplayListPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDisplayListPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLDisplayListPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkOpenGLDisplayListPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLDisplayListPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkOpenGLDisplayListPainterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLDisplayListPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -150,7 +154,7 @@ void VtkOpenGLDisplayListPainterWrap::ReleaseGraphicsResources(const Nan::Functi
 {
 	VtkOpenGLDisplayListPainterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLDisplayListPainterWrap>(info.Holder());
 	vtkOpenGLDisplayListPainter *native = (vtkOpenGLDisplayListPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -170,7 +174,7 @@ void VtkOpenGLDisplayListPainterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkOpenGLDisplayListPainterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLDisplayListPainterWrap>(info.Holder());
 	vtkOpenGLDisplayListPainter *native = (vtkOpenGLDisplayListPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLDisplayListPainter * r;
@@ -182,6 +186,7 @@ void VtkOpenGLDisplayListPainterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLDisplayListPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

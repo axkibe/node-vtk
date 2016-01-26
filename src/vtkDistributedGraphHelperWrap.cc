@@ -27,26 +27,27 @@ VtkDistributedGraphHelperWrap::~VtkDistributedGraphHelperWrap()
 
 void VtkDistributedGraphHelperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDistributedGraphHelperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDistributedGraphHelper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DistributedGraphHelper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDistributedGraphHelper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DistributedGraphHelper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDistributedGraphHelperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDistributedGraphHelperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDistributedGraphHelperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDistributedGraphHelperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Clone", Clone);
 	Nan::SetPrototypeMethod(tpl, "clone", Clone);
 
@@ -69,6 +70,8 @@ void VtkDistributedGraphHelperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Synchronize", Synchronize);
 	Nan::SetPrototypeMethod(tpl, "synchronize", Synchronize);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDistributedGraphHelperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -105,6 +108,7 @@ void VtkDistributedGraphHelperWrap::Clone(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->Clone();
+		VtkDistributedGraphHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -127,6 +131,7 @@ void VtkDistributedGraphHelperWrap::DISTRIBUTEDEDGEIDS(const Nan::FunctionCallba
 		return;
 	}
 	r = native->DISTRIBUTEDEDGEIDS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -149,6 +154,7 @@ void VtkDistributedGraphHelperWrap::DISTRIBUTEDVERTEXIDS(const Nan::FunctionCall
 		return;
 	}
 	r = native->DISTRIBUTEDVERTEXIDS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,6 +213,7 @@ void VtkDistributedGraphHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkDistributedGraphHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +229,7 @@ void VtkDistributedGraphHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkDistributedGraphHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDistributedGraphHelperWrap>(info.Holder());
 	vtkDistributedGraphHelper *native = (vtkDistributedGraphHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDistributedGraphHelper * r;
@@ -234,6 +241,7 @@ void VtkDistributedGraphHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDistributedGraphHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

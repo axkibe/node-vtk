@@ -28,26 +28,27 @@ VtkCenteredSliderWidgetWrap::~VtkCenteredSliderWidgetWrap()
 
 void VtkCenteredSliderWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCenteredSliderWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCenteredSliderWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CenteredSliderWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCenteredSliderWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CenteredSliderWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCenteredSliderWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCenteredSliderWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCenteredSliderWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCenteredSliderWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -72,6 +73,8 @@ void VtkCenteredSliderWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCenteredSliderWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkCenteredSliderWidgetWrap::GetSliderRepresentation(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetSliderRepresentation();
+		VtkSliderRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,6 +196,7 @@ void VtkCenteredSliderWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkCenteredSliderWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,7 +212,7 @@ void VtkCenteredSliderWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkCenteredSliderWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCenteredSliderWidgetWrap>(info.Holder());
 	vtkCenteredSliderWidget *native = (vtkCenteredSliderWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCenteredSliderWidget * r;
@@ -219,6 +224,7 @@ void VtkCenteredSliderWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCenteredSliderWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -237,7 +243,7 @@ void VtkCenteredSliderWidgetWrap::SetRepresentation(const Nan::FunctionCallbackI
 {
 	VtkCenteredSliderWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCenteredSliderWidgetWrap>(info.Holder());
 	vtkCenteredSliderWidget *native = (vtkCenteredSliderWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSliderRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSliderRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkSliderRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

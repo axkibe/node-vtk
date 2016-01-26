@@ -27,26 +27,27 @@ VtkPolygonalHandleRepresentation3DWrap::~VtkPolygonalHandleRepresentation3DWrap(
 
 void VtkPolygonalHandleRepresentation3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractPolygonalHandleRepresentation3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPolygonalHandleRepresentation3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolygonalHandleRepresentation3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolygonalHandleRepresentation3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolygonalHandleRepresentation3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolygonalHandleRepresentation3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolygonalHandleRepresentation3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolygonalHandleRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolygonalHandleRepresentation3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolygonalHandleRepresentation3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractPolygonalHandleRepresentation3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPolygonalHandleRepresentation3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolygonalHandleRepresentation3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkPolygonalHandleRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SetOffset", SetOffset);
 	Nan::SetPrototypeMethod(tpl, "setOffset", SetOffset);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolygonalHandleRepresentation3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkPolygonalHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolygonalHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -149,7 +153,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkPolygonalHandleRepresentation3D *native = (vtkPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolygonalHandleRepresentation3D * r;
@@ -161,6 +165,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolygonalHandleRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

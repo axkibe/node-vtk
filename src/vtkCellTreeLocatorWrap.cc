@@ -28,26 +28,27 @@ VtkCellTreeLocatorWrap::~VtkCellTreeLocatorWrap()
 
 void VtkCellTreeLocatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractCellLocatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellTreeLocatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellTreeLocator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellTreeLocator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellTreeLocator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellTreeLocator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellTreeLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellTreeLocatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellTreeLocatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractCellLocatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellTreeLocatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildLocator", BuildLocator);
 	Nan::SetPrototypeMethod(tpl, "buildLocator", BuildLocator);
 
@@ -78,6 +79,8 @@ void VtkCellTreeLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellTreeLocatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -169,7 +172,7 @@ void VtkCellTreeLocatorWrap::GenerateRepresentation(const Nan::FunctionCallbackI
 	vtkCellTreeLocator *native = (vtkCellTreeLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -234,6 +237,7 @@ void VtkCellTreeLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellTreeLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,7 +253,7 @@ void VtkCellTreeLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCellTreeLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkCellTreeLocatorWrap>(info.Holder());
 	vtkCellTreeLocator *native = (vtkCellTreeLocator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCellTreeLocator * r;
@@ -261,6 +265,7 @@ void VtkCellTreeLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCellTreeLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

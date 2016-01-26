@@ -28,26 +28,27 @@ VtkPiecewiseFunctionAlgorithmWrap::~VtkPiecewiseFunctionAlgorithmWrap()
 
 void VtkPiecewiseFunctionAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPiecewiseFunctionAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPiecewiseFunctionAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PiecewiseFunctionAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPiecewiseFunctionAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PiecewiseFunctionAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPiecewiseFunctionAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPiecewiseFunctionAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPiecewiseFunctionAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPiecewiseFunctionAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInputData", AddInputData);
 	Nan::SetPrototypeMethod(tpl, "addInputData", AddInputData);
 
@@ -75,6 +76,8 @@ void VtkPiecewiseFunctionAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPiecewiseFunctionAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -104,7 +107,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::AddInputData(const Nan::FunctionCallback
 {
 	VtkPiecewiseFunctionAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionAlgorithmWrap>(info.Holder());
 	vtkPiecewiseFunctionAlgorithm *native = (vtkPiecewiseFunctionAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -119,7 +122,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::AddInputData(const Nan::FunctionCallback
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -166,6 +169,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -184,6 +188,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,6 +215,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -228,6 +234,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetOutput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,6 +279,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkPiecewiseFunctionAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -287,7 +295,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkPiecewiseFunctionAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionAlgorithmWrap>(info.Holder());
 	vtkPiecewiseFunctionAlgorithm *native = (vtkPiecewiseFunctionAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPiecewiseFunctionAlgorithm * r;
@@ -299,6 +307,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPiecewiseFunctionAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -317,7 +326,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::SetInputData(const Nan::FunctionCallback
 {
 	VtkPiecewiseFunctionAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionAlgorithmWrap>(info.Holder());
 	vtkPiecewiseFunctionAlgorithm *native = (vtkPiecewiseFunctionAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -332,7 +341,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::SetInputData(const Nan::FunctionCallback
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -354,7 +363,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::SetOutput(const Nan::FunctionCallbackInf
 {
 	VtkPiecewiseFunctionAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionAlgorithmWrap>(info.Holder());
 	vtkPiecewiseFunctionAlgorithm *native = (vtkPiecewiseFunctionAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

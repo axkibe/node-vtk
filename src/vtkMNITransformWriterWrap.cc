@@ -28,26 +28,27 @@ VtkMNITransformWriterWrap::~VtkMNITransformWriterWrap()
 
 void VtkMNITransformWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMNITransformWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMNITransformWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MNITransformWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMNITransformWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MNITransformWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMNITransformWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMNITransformWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMNITransformWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMNITransformWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddTransform", AddTransform);
 	Nan::SetPrototypeMethod(tpl, "addTransform", AddTransform);
 
@@ -93,6 +94,8 @@ void VtkMNITransformWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMNITransformWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,7 +125,7 @@ void VtkMNITransformWriterWrap::AddTransform(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMNITransformWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformWriterWrap>(info.Holder());
 	vtkMNITransformWriter *native = (vtkMNITransformWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -233,6 +236,7 @@ void VtkMNITransformWriterWrap::GetTransform(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -277,6 +281,7 @@ void VtkMNITransformWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkMNITransformWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +297,7 @@ void VtkMNITransformWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMNITransformWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformWriterWrap>(info.Holder());
 	vtkMNITransformWriter *native = (vtkMNITransformWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMNITransformWriter * r;
@@ -304,6 +309,7 @@ void VtkMNITransformWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMNITransformWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -362,7 +368,7 @@ void VtkMNITransformWriterWrap::SetTransform(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMNITransformWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformWriterWrap>(info.Holder());
 	vtkMNITransformWriter *native = (vtkMNITransformWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

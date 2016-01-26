@@ -33,26 +33,27 @@ VtkOrientedGlyphFocalPlaneContourRepresentationWrap::~VtkOrientedGlyphFocalPlane
 
 void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkFocalPlaneContourRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFocalPlaneContourRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOrientedGlyphFocalPlaneContourRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOrientedGlyphFocalPlaneContourRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OrientedGlyphFocalPlaneContourRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOrientedGlyphFocalPlaneContourRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OrientedGlyphFocalPlaneContourRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkFocalPlaneContourRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkFocalPlaneContourRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOrientedGlyphFocalPlaneContourRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -116,6 +117,8 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitTpl(v8::Local<v8::
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -193,6 +196,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetActiveCursorShape(c
 		return;
 	}
 	r = native->GetActiveCursorShape();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,6 +219,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetActiveProperty(cons
 		return;
 	}
 	r = native->GetActiveProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +235,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetActors2D(const Nan:
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -271,6 +276,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetContourRepresentati
 		return;
 	}
 	r = native->GetContourRepresentationAsPolyData();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -293,6 +299,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetCursorShape(const N
 		return;
 	}
 	r = native->GetCursorShape();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -315,6 +322,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetLinesProperty(const
 		return;
 	}
 	r = native->GetLinesProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -337,6 +345,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetProperty(const Nan:
 		return;
 	}
 	r = native->GetProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,6 +404,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::NewInstance(const Nan:
 		return;
 	}
 	r = native->NewInstance();
+		VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -410,7 +420,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::ReleaseGraphicsResourc
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -430,7 +440,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::RenderOpaqueGeometry(c
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -452,7 +462,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::RenderOverlay(const Na
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -474,7 +484,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::RenderTranslucentPolyg
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -496,7 +506,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SafeDownCast(const Nan
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOrientedGlyphFocalPlaneContourRepresentation * r;
@@ -508,6 +518,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SafeDownCast(const Nan
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -526,7 +537,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SetActiveCursorShape(c
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -546,7 +557,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SetCursorShape(const N
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -566,7 +577,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SetRenderer(const Nan:
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

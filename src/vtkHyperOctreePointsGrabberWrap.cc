@@ -26,26 +26,27 @@ VtkHyperOctreePointsGrabberWrap::~VtkHyperOctreePointsGrabberWrap()
 
 void VtkHyperOctreePointsGrabberWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperOctreePointsGrabberWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperOctreePointsGrabber").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperOctreePointsGrabber").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperOctreePointsGrabber").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperOctreePointsGrabber").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperOctreePointsGrabberWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperOctreePointsGrabberWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperOctreePointsGrabberWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperOctreePointsGrabberWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -67,6 +68,8 @@ void VtkHyperOctreePointsGrabberWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetDimension", SetDimension);
 	Nan::SetPrototypeMethod(tpl, "setDimension", SetDimension);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperOctreePointsGrabberWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -165,6 +168,7 @@ void VtkHyperOctreePointsGrabberWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperOctreePointsGrabberWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +184,7 @@ void VtkHyperOctreePointsGrabberWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkHyperOctreePointsGrabberWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info.Holder());
 	vtkHyperOctreePointsGrabber *native = (vtkHyperOctreePointsGrabber *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperOctreePointsGrabber * r;
@@ -192,6 +196,7 @@ void VtkHyperOctreePointsGrabberWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperOctreePointsGrabberWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

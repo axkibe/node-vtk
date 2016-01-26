@@ -27,26 +27,27 @@ VtkSimpleScalarTreeWrap::~VtkSimpleScalarTreeWrap()
 
 void VtkSimpleScalarTreeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkScalarTreeWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkScalarTreeWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSimpleScalarTreeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSimpleScalarTree").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SimpleScalarTree").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSimpleScalarTree").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SimpleScalarTree").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSimpleScalarTreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSimpleScalarTreeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSimpleScalarTreeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkScalarTreeWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkScalarTreeWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSimpleScalarTreeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildTree", BuildTree);
 	Nan::SetPrototypeMethod(tpl, "buildTree", BuildTree);
 
@@ -95,6 +96,8 @@ void VtkSimpleScalarTreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetMaxLevel", SetMaxLevel);
 	Nan::SetPrototypeMethod(tpl, "setMaxLevel", SetMaxLevel);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSimpleScalarTreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -308,6 +311,7 @@ void VtkSimpleScalarTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkSimpleScalarTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,7 +327,7 @@ void VtkSimpleScalarTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSimpleScalarTreeWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleScalarTreeWrap>(info.Holder());
 	vtkSimpleScalarTree *native = (vtkSimpleScalarTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSimpleScalarTree * r;
@@ -335,6 +339,7 @@ void VtkSimpleScalarTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSimpleScalarTreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkReflectionFilterWrap::~VtkReflectionFilterWrap()
 
 void VtkReflectionFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkReflectionFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkReflectionFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ReflectionFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkReflectionFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ReflectionFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkReflectionFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkReflectionFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkReflectionFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkReflectionFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CopyInputOff", CopyInputOff);
 	Nan::SetPrototypeMethod(tpl, "copyInputOff", CopyInputOff);
 
@@ -116,6 +117,8 @@ void VtkReflectionFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPlaneToZMin", SetPlaneToZMin);
 	Nan::SetPrototypeMethod(tpl, "setPlaneToZMin", SetPlaneToZMin);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkReflectionFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -282,6 +285,7 @@ void VtkReflectionFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkReflectionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,7 +301,7 @@ void VtkReflectionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkReflectionFilter * r;
@@ -309,6 +313,7 @@ void VtkReflectionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkReflectionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkImageDecomposeFilterWrap::~VtkImageDecomposeFilterWrap()
 
 void VtkImageDecomposeFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageIterateFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageIterateFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageDecomposeFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageDecomposeFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageDecomposeFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageDecomposeFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageDecomposeFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageDecomposeFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageDecomposeFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageDecomposeFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageIterateFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageIterateFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageDecomposeFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkImageDecomposeFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDimensionality", SetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "setDimensionality", SetDimensionality);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageDecomposeFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkImageDecomposeFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageDecomposeFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +170,7 @@ void VtkImageDecomposeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageDecomposeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageDecomposeFilterWrap>(info.Holder());
 	vtkImageDecomposeFilter *native = (vtkImageDecomposeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageDecomposeFilter * r;
@@ -178,6 +182,7 @@ void VtkImageDecomposeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageDecomposeFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

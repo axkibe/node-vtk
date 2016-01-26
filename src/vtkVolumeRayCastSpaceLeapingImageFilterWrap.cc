@@ -29,26 +29,27 @@ VtkVolumeRayCastSpaceLeapingImageFilterWrap::~VtkVolumeRayCastSpaceLeapingImageF
 
 void VtkVolumeRayCastSpaceLeapingImageFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVolumeRayCastSpaceLeapingImageFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVolumeRayCastSpaceLeapingImageFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VolumeRayCastSpaceLeapingImageFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVolumeRayCastSpaceLeapingImageFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VolumeRayCastSpaceLeapingImageFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVolumeRayCastSpaceLeapingImageFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeGradientOpacityOff", ComputeGradientOpacityOff);
 	Nan::SetPrototypeMethod(tpl, "computeGradientOpacityOff", ComputeGradientOpacityOff);
 
@@ -118,6 +119,8 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitTpl(v8::Local<v8::Function
 	Nan::SetPrototypeMethod(tpl, "UpdateGradientOpacityFlagsOn", UpdateGradientOpacityFlagsOn);
 	Nan::SetPrototypeMethod(tpl, "updateGradientOpacityFlagsOn", UpdateGradientOpacityFlagsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVolumeRayCastSpaceLeapingImageFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -244,6 +247,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetCurrentScalars(const Nan::F
 		return;
 	}
 	r = native->GetCurrentScalars();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -330,6 +334,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
+		VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -345,7 +350,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SafeDownCast(const Nan::Functi
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVolumeRayCastSpaceLeapingImageFilter * r;
@@ -357,6 +362,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -375,7 +381,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetCache(const Nan::FunctionCa
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -433,7 +439,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetCurrentScalars(const Nan::F
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

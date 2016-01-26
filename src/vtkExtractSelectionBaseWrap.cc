@@ -28,26 +28,27 @@ VtkExtractSelectionBaseWrap::~VtkExtractSelectionBaseWrap()
 
 void VtkExtractSelectionBaseWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractSelectionBaseWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractSelectionBase").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractSelectionBase").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractSelectionBase").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractSelectionBase").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractSelectionBaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractSelectionBaseWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractSelectionBaseWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractSelectionBaseWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkExtractSelectionBaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractSelectionBaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -161,6 +164,7 @@ void VtkExtractSelectionBaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractSelectionBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +204,7 @@ void VtkExtractSelectionBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkExtractSelectionBaseWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectionBaseWrap>(info.Holder());
 	vtkExtractSelectionBase *native = (vtkExtractSelectionBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractSelectionBase * r;
@@ -212,6 +216,7 @@ void VtkExtractSelectionBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractSelectionBaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -249,7 +254,7 @@ void VtkExtractSelectionBaseWrap::SetSelectionConnection(const Nan::FunctionCall
 {
 	VtkExtractSelectionBaseWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectionBaseWrap>(info.Holder());
 	vtkExtractSelectionBase *native = (vtkExtractSelectionBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

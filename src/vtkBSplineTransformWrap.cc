@@ -30,26 +30,27 @@ VtkBSplineTransformWrap::~VtkBSplineTransformWrap()
 
 void VtkBSplineTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWarpTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWarpTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBSplineTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBSplineTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BSplineTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBSplineTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BSplineTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBSplineTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBSplineTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBSplineTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWarpTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWarpTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBSplineTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBorderMode", GetBorderMode);
 	Nan::SetPrototypeMethod(tpl, "getBorderMode", GetBorderMode);
 
@@ -101,6 +102,8 @@ void VtkBSplineTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDisplacementScale", SetDisplacementScale);
 	Nan::SetPrototypeMethod(tpl, "setDisplacementScale", SetDisplacementScale);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBSplineTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -207,6 +210,7 @@ void VtkBSplineTransformWrap::GetCoefficientData(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetCoefficientData();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,6 +255,7 @@ void VtkBSplineTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,6 +278,7 @@ void VtkBSplineTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkBSplineTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,7 +294,7 @@ void VtkBSplineTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkBSplineTransformWrap>(info.Holder());
 	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBSplineTransform * r;
@@ -300,6 +306,7 @@ void VtkBSplineTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBSplineTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -373,7 +380,7 @@ void VtkBSplineTransformWrap::SetCoefficientConnection(const Nan::FunctionCallba
 {
 	VtkBSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkBSplineTransformWrap>(info.Holder());
 	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -393,7 +400,7 @@ void VtkBSplineTransformWrap::SetCoefficientData(const Nan::FunctionCallbackInfo
 {
 	VtkBSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkBSplineTransformWrap>(info.Holder());
 	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

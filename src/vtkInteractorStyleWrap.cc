@@ -32,26 +32,27 @@ VtkInteractorStyleWrap::~VtkInteractorStyleWrap()
 
 void VtkInteractorStyleWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorObserverWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyle").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyle").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyle").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyle").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorObserverWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoAdjustCameraClippingRangeOff", AutoAdjustCameraClippingRangeOff);
 	Nan::SetPrototypeMethod(tpl, "autoAdjustCameraClippingRangeOff", AutoAdjustCameraClippingRangeOff);
 
@@ -271,6 +272,8 @@ void VtkInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -548,6 +551,7 @@ void VtkInteractorStyleWrap::GetTDxStyle(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetTDxStyle();
+		VtkTDxInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -601,7 +605,7 @@ void VtkInteractorStyleWrap::HighlightActor2D(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
 	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkActor2DWrap *a0 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -621,7 +625,7 @@ void VtkInteractorStyleWrap::HighlightProp(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
 	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -641,7 +645,7 @@ void VtkInteractorStyleWrap::HighlightProp3D(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
 	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -690,6 +694,7 @@ void VtkInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -957,7 +962,7 @@ void VtkInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
 	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyle * r;
@@ -969,6 +974,7 @@ void VtkInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1044,7 +1050,7 @@ void VtkInteractorStyleWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
 	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1110,7 +1116,7 @@ void VtkInteractorStyleWrap::SetTDxStyle(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleWrap>(info.Holder());
 	vtkInteractorStyle *native = (vtkInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTDxInteractorStyleWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTDxInteractorStyleWrap *a0 = ObjectWrap::Unwrap<VtkTDxInteractorStyleWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

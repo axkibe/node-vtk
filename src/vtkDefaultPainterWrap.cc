@@ -35,26 +35,27 @@ VtkDefaultPainterWrap::~VtkDefaultPainterWrap()
 
 void VtkDefaultPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDefaultPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDefaultPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DefaultPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDefaultPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DefaultPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDefaultPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDefaultPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDefaultPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDefaultPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -118,6 +119,8 @@ void VtkDefaultPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScalarsToColorsPainter", SetScalarsToColorsPainter);
 	Nan::SetPrototypeMethod(tpl, "setScalarsToColorsPainter", SetScalarsToColorsPainter);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDefaultPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -168,6 +171,7 @@ void VtkDefaultPainterWrap::GetClipPlanesPainter(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetClipPlanesPainter();
+		VtkClipPlanesPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -190,6 +194,7 @@ void VtkDefaultPainterWrap::GetCoincidentTopologyResolutionPainter(const Nan::Fu
 		return;
 	}
 	r = native->GetCoincidentTopologyResolutionPainter();
+		VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,6 +217,7 @@ void VtkDefaultPainterWrap::GetCompositePainter(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetCompositePainter();
+		VtkCompositePainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,6 +240,7 @@ void VtkDefaultPainterWrap::GetDelegatePainter(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetDelegatePainter();
+		VtkPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,6 +263,7 @@ void VtkDefaultPainterWrap::GetDisplayListPainter(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetDisplayListPainter();
+		VtkDisplayListPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,6 +286,7 @@ void VtkDefaultPainterWrap::GetLightingPainter(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetLightingPainter();
+		VtkLightingPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -300,6 +309,7 @@ void VtkDefaultPainterWrap::GetRepresentationPainter(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetRepresentationPainter();
+		VtkRepresentationPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -322,6 +332,7 @@ void VtkDefaultPainterWrap::GetScalarsToColorsPainter(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetScalarsToColorsPainter();
+		VtkScalarsToColorsPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,6 +377,7 @@ void VtkDefaultPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkDefaultPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,7 +393,7 @@ void VtkDefaultPainterWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -401,7 +413,7 @@ void VtkDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDefaultPainter * r;
@@ -413,6 +425,7 @@ void VtkDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDefaultPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -431,7 +444,7 @@ void VtkDefaultPainterWrap::SetClipPlanesPainter(const Nan::FunctionCallbackInfo
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkClipPlanesPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkClipPlanesPainterWrap *a0 = ObjectWrap::Unwrap<VtkClipPlanesPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -451,7 +464,7 @@ void VtkDefaultPainterWrap::SetCoincidentTopologyResolutionPainter(const Nan::Fu
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCoincidentTopologyResolutionPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCoincidentTopologyResolutionPainterWrap *a0 = ObjectWrap::Unwrap<VtkCoincidentTopologyResolutionPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -471,7 +484,7 @@ void VtkDefaultPainterWrap::SetCompositePainter(const Nan::FunctionCallbackInfo<
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositePainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositePainterWrap *a0 = ObjectWrap::Unwrap<VtkCompositePainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -491,7 +504,7 @@ void VtkDefaultPainterWrap::SetDelegatePainter(const Nan::FunctionCallbackInfo<v
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPainterWrap *a0 = ObjectWrap::Unwrap<VtkPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -511,7 +524,7 @@ void VtkDefaultPainterWrap::SetDisplayListPainter(const Nan::FunctionCallbackInf
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDisplayListPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDisplayListPainterWrap *a0 = ObjectWrap::Unwrap<VtkDisplayListPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -531,7 +544,7 @@ void VtkDefaultPainterWrap::SetLightingPainter(const Nan::FunctionCallbackInfo<v
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightingPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightingPainterWrap *a0 = ObjectWrap::Unwrap<VtkLightingPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -551,7 +564,7 @@ void VtkDefaultPainterWrap::SetRepresentationPainter(const Nan::FunctionCallback
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRepresentationPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRepresentationPainterWrap *a0 = ObjectWrap::Unwrap<VtkRepresentationPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -571,7 +584,7 @@ void VtkDefaultPainterWrap::SetScalarsToColorsPainter(const Nan::FunctionCallbac
 {
 	VtkDefaultPainterWrap *wrapper = ObjectWrap::Unwrap<VtkDefaultPainterWrap>(info.Holder());
 	vtkDefaultPainter *native = (vtkDefaultPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsPainterWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkExtractUserDefinedPieceWrap::~VtkExtractUserDefinedPieceWrap()
 
 void VtkExtractUserDefinedPieceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExtractUnstructuredGridPieceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractUnstructuredGridPieceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractUserDefinedPieceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractUserDefinedPiece").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractUserDefinedPiece").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractUserDefinedPiece").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractUserDefinedPiece").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractUserDefinedPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractUserDefinedPieceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractUserDefinedPieceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtractUnstructuredGridPieceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractUnstructuredGridPieceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractUserDefinedPieceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkExtractUserDefinedPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractUserDefinedPieceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkExtractUserDefinedPieceWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractUserDefinedPieceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkExtractUserDefinedPieceWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkExtractUserDefinedPieceWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUserDefinedPieceWrap>(info.Holder());
 	vtkExtractUserDefinedPiece *native = (vtkExtractUserDefinedPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractUserDefinedPiece * r;
@@ -158,6 +162,7 @@ void VtkExtractUserDefinedPieceWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractUserDefinedPieceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

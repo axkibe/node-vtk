@@ -30,26 +30,27 @@ VtkEllipsoidTensorProbeRepresentationWrap::~VtkEllipsoidTensorProbeRepresentatio
 
 void VtkEllipsoidTensorProbeRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTensorProbeRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTensorProbeRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEllipsoidTensorProbeRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEllipsoidTensorProbeRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EllipsoidTensorProbeRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEllipsoidTensorProbeRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EllipsoidTensorProbeRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEllipsoidTensorProbeRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEllipsoidTensorProbeRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTensorProbeRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTensorProbeRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEllipsoidTensorProbeRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -74,6 +75,8 @@ void VtkEllipsoidTensorProbeRepresentationWrap::InitTpl(v8::Local<v8::FunctionTe
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEllipsoidTensorProbeRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -115,7 +118,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::GetActors(const Nan::FunctionCal
 {
 	VtkEllipsoidTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkEllipsoidTensorProbeRepresentationWrap>(info.Holder());
 	vtkEllipsoidTensorProbeRepresentation *native = (vtkEllipsoidTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -178,6 +181,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
+		VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +197,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::ReleaseGraphicsResources(const N
 {
 	VtkEllipsoidTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkEllipsoidTensorProbeRepresentationWrap>(info.Holder());
 	vtkEllipsoidTensorProbeRepresentation *native = (vtkEllipsoidTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -213,7 +217,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::RenderOpaqueGeometry(const Nan::
 {
 	VtkEllipsoidTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkEllipsoidTensorProbeRepresentationWrap>(info.Holder());
 	vtkEllipsoidTensorProbeRepresentation *native = (vtkEllipsoidTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -235,7 +239,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::SafeDownCast(const Nan::Function
 {
 	VtkEllipsoidTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkEllipsoidTensorProbeRepresentationWrap>(info.Holder());
 	vtkEllipsoidTensorProbeRepresentation *native = (vtkEllipsoidTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEllipsoidTensorProbeRepresentation * r;
@@ -247,6 +251,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

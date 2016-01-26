@@ -28,26 +28,27 @@ VtkSobelGradientMagnitudePassWrap::~VtkSobelGradientMagnitudePassWrap()
 
 void VtkSobelGradientMagnitudePassWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageProcessingPassWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageProcessingPassWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSobelGradientMagnitudePassWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSobelGradientMagnitudePass").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SobelGradientMagnitudePass").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSobelGradientMagnitudePass").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SobelGradientMagnitudePass").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSobelGradientMagnitudePassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSobelGradientMagnitudePassWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSobelGradientMagnitudePassWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageProcessingPassWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageProcessingPassWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSobelGradientMagnitudePassWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkSobelGradientMagnitudePassWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSobelGradientMagnitudePassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkSobelGradientMagnitudePassWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkSobelGradientMagnitudePassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -150,7 +154,7 @@ void VtkSobelGradientMagnitudePassWrap::ReleaseGraphicsResources(const Nan::Func
 {
 	VtkSobelGradientMagnitudePassWrap *wrapper = ObjectWrap::Unwrap<VtkSobelGradientMagnitudePassWrap>(info.Holder());
 	vtkSobelGradientMagnitudePass *native = (vtkSobelGradientMagnitudePass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -170,7 +174,7 @@ void VtkSobelGradientMagnitudePassWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkSobelGradientMagnitudePassWrap *wrapper = ObjectWrap::Unwrap<VtkSobelGradientMagnitudePassWrap>(info.Holder());
 	vtkSobelGradientMagnitudePass *native = (vtkSobelGradientMagnitudePass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSobelGradientMagnitudePass * r;
@@ -182,6 +186,7 @@ void VtkSobelGradientMagnitudePassWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSobelGradientMagnitudePassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

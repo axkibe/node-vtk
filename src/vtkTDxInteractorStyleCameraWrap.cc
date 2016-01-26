@@ -27,26 +27,27 @@ VtkTDxInteractorStyleCameraWrap::~VtkTDxInteractorStyleCameraWrap()
 
 void VtkTDxInteractorStyleCameraWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTDxInteractorStyleWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTDxInteractorStyleWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTDxInteractorStyleCameraWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTDxInteractorStyleCamera").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TDxInteractorStyleCamera").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTDxInteractorStyleCamera").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TDxInteractorStyleCamera").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTDxInteractorStyleCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTDxInteractorStyleCameraWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTDxInteractorStyleCameraWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTDxInteractorStyleWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTDxInteractorStyleWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTDxInteractorStyleCameraWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkTDxInteractorStyleCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTDxInteractorStyleCameraWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkTDxInteractorStyleCameraWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkTDxInteractorStyleCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkTDxInteractorStyleCameraWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkTDxInteractorStyleCameraWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleCameraWrap>(info.Holder());
 	vtkTDxInteractorStyleCamera *native = (vtkTDxInteractorStyleCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTDxInteractorStyleCamera * r;
@@ -158,6 +162,7 @@ void VtkTDxInteractorStyleCameraWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTDxInteractorStyleCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkDataSetEdgeSubdivisionCriterionWrap::~VtkDataSetEdgeSubdivisionCriterionWrap(
 
 void VtkDataSetEdgeSubdivisionCriterionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkEdgeSubdivisionCriterionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEdgeSubdivisionCriterionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataSetEdgeSubdivisionCriterionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataSetEdgeSubdivisionCriterion").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataSetEdgeSubdivisionCriterion").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataSetEdgeSubdivisionCriterion").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataSetEdgeSubdivisionCriterion").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataSetEdgeSubdivisionCriterionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataSetEdgeSubdivisionCriterionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkEdgeSubdivisionCriterionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEdgeSubdivisionCriterionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataSetEdgeSubdivisionCriterionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetActiveFieldCriteria", GetActiveFieldCriteria);
 	Nan::SetPrototypeMethod(tpl, "getActiveFieldCriteria", GetActiveFieldCriteria);
 
@@ -88,6 +89,8 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SetMesh", SetMesh);
 	Nan::SetPrototypeMethod(tpl, "setMesh", SetMesh);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataSetEdgeSubdivisionCriterionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -138,6 +141,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::GetCell(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetCell();
+		VtkCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -209,6 +213,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::GetMesh(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetMesh();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,6 +258,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +286,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkDataSetEdgeSubdivisionCriterionWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetEdgeSubdivisionCriterionWrap>(info.Holder());
 	vtkDataSetEdgeSubdivisionCriterion *native = (vtkDataSetEdgeSubdivisionCriterion *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataSetEdgeSubdivisionCriterion * r;
@@ -292,6 +298,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -352,7 +359,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::SetMesh(const Nan::FunctionCallback
 {
 	VtkDataSetEdgeSubdivisionCriterionWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetEdgeSubdivisionCriterionWrap>(info.Holder());
 	vtkDataSetEdgeSubdivisionCriterion *native = (vtkDataSetEdgeSubdivisionCriterion *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

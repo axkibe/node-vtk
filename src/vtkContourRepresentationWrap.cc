@@ -32,26 +32,27 @@ VtkContourRepresentationWrap::~VtkContourRepresentationWrap()
 
 void VtkContourRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkContourRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkContourRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ContourRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkContourRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ContourRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkContourRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkContourRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkContourRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkContourRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ActivateNode", ActivateNode);
 	Nan::SetPrototypeMethod(tpl, "activateNode", ActivateNode);
 
@@ -223,6 +224,8 @@ void VtkContourRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ToggleActiveNodeSelected", ToggleActiveNodeSelected);
 	Nan::SetPrototypeMethod(tpl, "toggleActiveNodeSelected", ToggleActiveNodeSelected);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkContourRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -531,6 +534,7 @@ void VtkContourRepresentationWrap::GetContourRepresentationAsPolyData(const Nan:
 		return;
 	}
 	r = native->GetContourRepresentationAsPolyData();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -595,6 +599,7 @@ void VtkContourRepresentationWrap::GetLineInterpolator(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLineInterpolator();
+		VtkContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -610,7 +615,7 @@ void VtkContourRepresentationWrap::GetNodePolyData(const Nan::FunctionCallbackIn
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -735,6 +740,7 @@ void VtkContourRepresentationWrap::GetPointPlacer(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPointPlacer();
+		VtkPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -849,6 +855,7 @@ void VtkContourRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -864,7 +871,7 @@ void VtkContourRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionC
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -884,7 +891,7 @@ void VtkContourRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCallb
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -906,7 +913,7 @@ void VtkContourRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -928,7 +935,7 @@ void VtkContourRepresentationWrap::RenderTranslucentPolygonalGeometry(const Nan:
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -950,7 +957,7 @@ void VtkContourRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkContourRepresentation * r;
@@ -962,6 +969,7 @@ void VtkContourRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkContourRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1091,7 +1099,7 @@ void VtkContourRepresentationWrap::SetLineInterpolator(const Nan::FunctionCallba
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContourLineInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContourLineInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkContourLineInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1180,7 +1188,7 @@ void VtkContourRepresentationWrap::SetPointPlacer(const Nan::FunctionCallbackInf
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointPlacerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointPlacerWrap *a0 = ObjectWrap::Unwrap<VtkPointPlacerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

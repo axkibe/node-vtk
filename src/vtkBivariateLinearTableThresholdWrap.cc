@@ -28,26 +28,27 @@ VtkBivariateLinearTableThresholdWrap::~VtkBivariateLinearTableThresholdWrap()
 
 void VtkBivariateLinearTableThresholdWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTableAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBivariateLinearTableThresholdWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBivariateLinearTableThreshold").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BivariateLinearTableThreshold").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBivariateLinearTableThreshold").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BivariateLinearTableThreshold").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBivariateLinearTableThresholdWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBivariateLinearTableThresholdWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBivariateLinearTableThresholdWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBivariateLinearTableThresholdWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddLineEquation", AddLineEquation);
 	Nan::SetPrototypeMethod(tpl, "addLineEquation", AddLineEquation);
 
@@ -123,6 +124,8 @@ void VtkBivariateLinearTableThresholdWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "UseNormalizedDistanceOn", UseNormalizedDistanceOn);
 	Nan::SetPrototypeMethod(tpl, "useNormalizedDistanceOn", UseNormalizedDistanceOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBivariateLinearTableThresholdWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -284,6 +287,7 @@ void VtkBivariateLinearTableThresholdWrap::GetSelectedRowIds(const Nan::Function
 		r = native->GetSelectedRowIds(
 			info[0]->Int32Value()
 		);
+			VtkIdTypeArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -357,6 +361,7 @@ void VtkBivariateLinearTableThresholdWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkBivariateLinearTableThresholdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -372,7 +377,7 @@ void VtkBivariateLinearTableThresholdWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBivariateLinearTableThreshold * r;
@@ -384,6 +389,7 @@ void VtkBivariateLinearTableThresholdWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBivariateLinearTableThresholdWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

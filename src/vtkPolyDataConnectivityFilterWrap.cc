@@ -29,26 +29,27 @@ VtkPolyDataConnectivityFilterWrap::~VtkPolyDataConnectivityFilterWrap()
 
 void VtkPolyDataConnectivityFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataConnectivityFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataConnectivityFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataConnectivityFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataConnectivityFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataConnectivityFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataConnectivityFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataConnectivityFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataConnectivityFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataConnectivityFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddSeed", AddSeed);
 	Nan::SetPrototypeMethod(tpl, "addSeed", AddSeed);
 
@@ -181,6 +182,8 @@ void VtkPolyDataConnectivityFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataConnectivityFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -481,6 +484,7 @@ void VtkPolyDataConnectivityFilterWrap::GetRegionSizes(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetRegionSizes();
+		VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -517,6 +521,7 @@ void VtkPolyDataConnectivityFilterWrap::GetVisitedPointIds(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetVisitedPointIds();
+		VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -609,6 +614,7 @@ void VtkPolyDataConnectivityFilterWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataConnectivityFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -624,7 +630,7 @@ void VtkPolyDataConnectivityFilterWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkPolyDataConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataConnectivityFilterWrap>(info.Holder());
 	vtkPolyDataConnectivityFilter *native = (vtkPolyDataConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataConnectivityFilter * r;
@@ -636,6 +642,7 @@ void VtkPolyDataConnectivityFilterWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataConnectivityFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

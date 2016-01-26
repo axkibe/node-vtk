@@ -28,26 +28,27 @@ VtkImplicitModellerWrap::~VtkImplicitModellerWrap()
 
 void VtkImplicitModellerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitModellerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitModeller").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitModeller").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitModeller").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitModeller").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitModellerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitModellerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitModellerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitModellerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AdjustBoundsOff", AdjustBoundsOff);
 	Nan::SetPrototypeMethod(tpl, "adjustBoundsOff", AdjustBoundsOff);
 
@@ -219,6 +220,8 @@ void VtkImplicitModellerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "StartAppend", StartAppend);
 	Nan::SetPrototypeMethod(tpl, "startAppend", StartAppend);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitModellerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -272,7 +275,7 @@ void VtkImplicitModellerWrap::Append(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -316,7 +319,7 @@ void VtkImplicitModellerWrap::ComputeModelBounds(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		double r;
@@ -659,6 +662,7 @@ void VtkImplicitModellerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitModellerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -674,7 +678,7 @@ void VtkImplicitModellerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitModeller * r;
@@ -686,6 +690,7 @@ void VtkImplicitModellerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitModellerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

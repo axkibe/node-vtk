@@ -28,26 +28,27 @@ VtkTransmitRectilinearGridPieceWrap::~VtkTransmitRectilinearGridPieceWrap()
 
 void VtkTransmitRectilinearGridPieceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRectilinearGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRectilinearGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransmitRectilinearGridPieceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransmitRectilinearGridPiece").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TransmitRectilinearGridPiece").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransmitRectilinearGridPiece").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TransmitRectilinearGridPiece").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransmitRectilinearGridPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransmitRectilinearGridPieceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransmitRectilinearGridPieceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRectilinearGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRectilinearGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransmitRectilinearGridPieceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateGhostCellsOff", CreateGhostCellsOff);
 	Nan::SetPrototypeMethod(tpl, "createGhostCellsOff", CreateGhostCellsOff);
 
@@ -78,6 +79,8 @@ void VtkTransmitRectilinearGridPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SetCreateGhostCells", SetCreateGhostCells);
 	Nan::SetPrototypeMethod(tpl, "setCreateGhostCells", SetCreateGhostCells);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransmitRectilinearGridPieceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -152,6 +155,7 @@ void VtkTransmitRectilinearGridPieceWrap::GetController(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,6 +214,7 @@ void VtkTransmitRectilinearGridPieceWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransmitRectilinearGridPieceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +230,7 @@ void VtkTransmitRectilinearGridPieceWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkTransmitRectilinearGridPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitRectilinearGridPieceWrap>(info.Holder());
 	vtkTransmitRectilinearGridPiece *native = (vtkTransmitRectilinearGridPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransmitRectilinearGridPiece * r;
@@ -237,6 +242,7 @@ void VtkTransmitRectilinearGridPieceWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransmitRectilinearGridPieceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -255,7 +261,7 @@ void VtkTransmitRectilinearGridPieceWrap::SetController(const Nan::FunctionCallb
 {
 	VtkTransmitRectilinearGridPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitRectilinearGridPieceWrap>(info.Holder());
 	vtkTransmitRectilinearGridPiece *native = (vtkTransmitRectilinearGridPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

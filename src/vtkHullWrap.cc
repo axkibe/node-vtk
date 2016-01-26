@@ -29,26 +29,27 @@ VtkHullWrap::~VtkHullWrap()
 
 void VtkHullWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHullWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHull").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Hull").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHull").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Hull").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHullWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHullWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHullWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHullWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddCubeEdgePlanes", AddCubeEdgePlanes);
 	Nan::SetPrototypeMethod(tpl, "addCubeEdgePlanes", AddCubeEdgePlanes);
 
@@ -91,6 +92,8 @@ void VtkHullWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPlanes", SetPlanes);
 	Nan::SetPrototypeMethod(tpl, "setPlanes", SetPlanes);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHullWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -221,7 +224,7 @@ void VtkHullWrap::GenerateHull(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHullWrap *wrapper = ObjectWrap::Unwrap<VtkHullWrap>(info.Holder());
 	vtkHull *native = (vtkHull *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -322,6 +325,7 @@ void VtkHullWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
+		VtkHullWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +353,7 @@ void VtkHullWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHullWrap *wrapper = ObjectWrap::Unwrap<VtkHullWrap>(info.Holder());
 	vtkHull *native = (vtkHull *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHull * r;
@@ -361,6 +365,7 @@ void VtkHullWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHullWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -426,7 +431,7 @@ void VtkHullWrap::SetPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHullWrap *wrapper = ObjectWrap::Unwrap<VtkHullWrap>(info.Holder());
 	vtkHull *native = (vtkHull *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

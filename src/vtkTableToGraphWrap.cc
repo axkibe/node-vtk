@@ -31,26 +31,27 @@ VtkTableToGraphWrap::~VtkTableToGraphWrap()
 
 void VtkTableToGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTableToGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTableToGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TableToGraph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTableToGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TableToGraph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTableToGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTableToGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTableToGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTableToGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddLinkEdge", AddLinkEdge);
 	Nan::SetPrototypeMethod(tpl, "addLinkEdge", AddLinkEdge);
 
@@ -93,6 +94,8 @@ void VtkTableToGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVertexTableConnection", SetVertexTableConnection);
 	Nan::SetPrototypeMethod(tpl, "setVertexTableConnection", SetVertexTableConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTableToGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -245,6 +248,7 @@ void VtkTableToGraphWrap::GetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetLinkGraph();
+		VtkMutableDirectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,13 +286,13 @@ void VtkTableToGraphWrap::LinkColumnPath(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkStringArrayWrap *a1 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkBitArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkBitArrayWrap *a2 = ObjectWrap::Unwrap<VtkBitArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -319,6 +323,7 @@ void VtkTableToGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkTableToGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -334,7 +339,7 @@ void VtkTableToGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTableToGraph * r;
@@ -346,6 +351,7 @@ void VtkTableToGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTableToGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +370,7 @@ void VtkTableToGraphWrap::SetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMutableDirectedGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMutableDirectedGraphWrap *a0 = ObjectWrap::Unwrap<VtkMutableDirectedGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -384,7 +390,7 @@ void VtkTableToGraphWrap::SetVertexTableConnection(const Nan::FunctionCallbackIn
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkKdTreePointLocatorWrap::~VtkKdTreePointLocatorWrap()
 
 void VtkKdTreePointLocatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractPointLocatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPointLocatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkKdTreePointLocatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkKdTreePointLocator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("KdTreePointLocator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkKdTreePointLocator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("KdTreePointLocator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkKdTreePointLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkKdTreePointLocatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkKdTreePointLocatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractPointLocatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractPointLocatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkKdTreePointLocatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildLocator", BuildLocator);
 	Nan::SetPrototypeMethod(tpl, "buildLocator", BuildLocator);
 
@@ -69,6 +70,8 @@ void VtkKdTreePointLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkKdTreePointLocatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -124,7 +127,7 @@ void VtkKdTreePointLocatorWrap::GenerateRepresentation(const Nan::FunctionCallba
 	vtkKdTreePointLocator *native = (vtkKdTreePointLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -189,6 +192,7 @@ void VtkKdTreePointLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkKdTreePointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,7 +208,7 @@ void VtkKdTreePointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkKdTreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreePointLocatorWrap>(info.Holder());
 	vtkKdTreePointLocator *native = (vtkKdTreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkKdTreePointLocator * r;
@@ -216,6 +220,7 @@ void VtkKdTreePointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkKdTreePointLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

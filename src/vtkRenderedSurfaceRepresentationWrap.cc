@@ -28,26 +28,27 @@ VtkRenderedSurfaceRepresentationWrap::~VtkRenderedSurfaceRepresentationWrap()
 
 void VtkRenderedSurfaceRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderedRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderedSurfaceRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderedSurfaceRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RenderedSurfaceRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderedSurfaceRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RenderedSurfaceRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderedSurfaceRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderedSurfaceRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderedSurfaceRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderedRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderedSurfaceRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ApplyViewTheme", ApplyViewTheme);
 	Nan::SetPrototypeMethod(tpl, "applyViewTheme", ApplyViewTheme);
 
@@ -69,6 +70,8 @@ void VtkRenderedSurfaceRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetCellColorArrayName", SetCellColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setCellColorArrayName", SetCellColorArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderedSurfaceRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -98,7 +101,7 @@ void VtkRenderedSurfaceRepresentationWrap::ApplyViewTheme(const Nan::FunctionCal
 {
 	VtkRenderedSurfaceRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedSurfaceRepresentationWrap>(info.Holder());
 	vtkRenderedSurfaceRepresentation *native = (vtkRenderedSurfaceRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -175,6 +178,7 @@ void VtkRenderedSurfaceRepresentationWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderedSurfaceRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -190,7 +194,7 @@ void VtkRenderedSurfaceRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkRenderedSurfaceRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedSurfaceRepresentationWrap>(info.Holder());
 	vtkRenderedSurfaceRepresentation *native = (vtkRenderedSurfaceRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderedSurfaceRepresentation * r;
@@ -202,6 +206,7 @@ void VtkRenderedSurfaceRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderedSurfaceRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

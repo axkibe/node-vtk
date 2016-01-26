@@ -27,26 +27,27 @@ VtkMinimalStandardRandomSequenceWrap::~VtkMinimalStandardRandomSequenceWrap()
 
 void VtkMinimalStandardRandomSequenceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRandomSequenceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRandomSequenceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMinimalStandardRandomSequenceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMinimalStandardRandomSequence").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MinimalStandardRandomSequence").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMinimalStandardRandomSequence").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MinimalStandardRandomSequence").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMinimalStandardRandomSequenceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMinimalStandardRandomSequenceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMinimalStandardRandomSequenceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRandomSequenceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRandomSequenceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMinimalStandardRandomSequenceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkMinimalStandardRandomSequenceWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetSeedOnly", SetSeedOnly);
 	Nan::SetPrototypeMethod(tpl, "setSeedOnly", SetSeedOnly);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMinimalStandardRandomSequenceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -202,6 +205,7 @@ void VtkMinimalStandardRandomSequenceWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkMinimalStandardRandomSequenceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,7 +233,7 @@ void VtkMinimalStandardRandomSequenceWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkMinimalStandardRandomSequenceWrap *wrapper = ObjectWrap::Unwrap<VtkMinimalStandardRandomSequenceWrap>(info.Holder());
 	vtkMinimalStandardRandomSequence *native = (vtkMinimalStandardRandomSequence *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMinimalStandardRandomSequence * r;
@@ -241,6 +245,7 @@ void VtkMinimalStandardRandomSequenceWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMinimalStandardRandomSequenceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

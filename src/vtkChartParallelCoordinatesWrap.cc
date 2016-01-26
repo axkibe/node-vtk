@@ -30,26 +30,27 @@ VtkChartParallelCoordinatesWrap::~VtkChartParallelCoordinatesWrap()
 
 void VtkChartParallelCoordinatesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkChartWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkChartParallelCoordinatesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkChartParallelCoordinates").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ChartParallelCoordinates").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkChartParallelCoordinates").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ChartParallelCoordinates").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkChartParallelCoordinatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkChartParallelCoordinatesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkChartParallelCoordinatesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkChartWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkChartParallelCoordinatesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAxis", GetAxis);
 	Nan::SetPrototypeMethod(tpl, "getAxis", GetAxis);
 
@@ -77,6 +78,8 @@ void VtkChartParallelCoordinatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkChartParallelCoordinatesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -117,6 +120,7 @@ void VtkChartParallelCoordinatesWrap::GetAxis(const Nan::FunctionCallbackInfo<v8
 		r = native->GetAxis(
 			info[0]->Int32Value()
 		);
+			VtkAxisWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -156,6 +160,7 @@ void VtkChartParallelCoordinatesWrap::GetVisibleColumns(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetVisibleColumns();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,6 +205,7 @@ void VtkChartParallelCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkChartParallelCoordinatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -227,7 +233,7 @@ void VtkChartParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkChartParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkChartParallelCoordinatesWrap>(info.Holder());
 	vtkChartParallelCoordinates *native = (vtkChartParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkChartParallelCoordinates * r;
@@ -239,6 +245,7 @@ void VtkChartParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkChartParallelCoordinatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -257,7 +264,7 @@ void VtkChartParallelCoordinatesWrap::SetPlot(const Nan::FunctionCallbackInfo<v8
 {
 	VtkChartParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkChartParallelCoordinatesWrap>(info.Holder());
 	vtkChartParallelCoordinates *native = (vtkChartParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlotParallelCoordinatesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlotParallelCoordinatesWrap *a0 = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

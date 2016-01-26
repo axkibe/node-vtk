@@ -27,26 +27,27 @@ VtkHierarchicalDataSetGeometryFilterWrap::~VtkHierarchicalDataSetGeometryFilterW
 
 void VtkHierarchicalDataSetGeometryFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCompositeDataGeometryFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataGeometryFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHierarchicalDataSetGeometryFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHierarchicalDataSetGeometryFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HierarchicalDataSetGeometryFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHierarchicalDataSetGeometryFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HierarchicalDataSetGeometryFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHierarchicalDataSetGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHierarchicalDataSetGeometryFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHierarchicalDataSetGeometryFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeDataGeometryFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataGeometryFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHierarchicalDataSetGeometryFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkHierarchicalDataSetGeometryFilterWrap::InitTpl(v8::Local<v8::FunctionTem
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHierarchicalDataSetGeometryFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkHierarchicalDataSetGeometryFilterWrap::NewInstance(const Nan::FunctionCa
 		return;
 	}
 	r = native->NewInstance();
+		VtkHierarchicalDataSetGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkHierarchicalDataSetGeometryFilterWrap::SafeDownCast(const Nan::FunctionC
 {
 	VtkHierarchicalDataSetGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalDataSetGeometryFilterWrap>(info.Holder());
 	vtkHierarchicalDataSetGeometryFilter *native = (vtkHierarchicalDataSetGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHierarchicalDataSetGeometryFilter * r;
@@ -158,6 +162,7 @@ void VtkHierarchicalDataSetGeometryFilterWrap::SafeDownCast(const Nan::FunctionC
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHierarchicalDataSetGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

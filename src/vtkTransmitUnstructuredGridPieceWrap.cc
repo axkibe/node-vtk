@@ -28,26 +28,27 @@ VtkTransmitUnstructuredGridPieceWrap::~VtkTransmitUnstructuredGridPieceWrap()
 
 void VtkTransmitUnstructuredGridPieceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransmitUnstructuredGridPieceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransmitUnstructuredGridPiece").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TransmitUnstructuredGridPiece").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransmitUnstructuredGridPiece").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TransmitUnstructuredGridPiece").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransmitUnstructuredGridPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransmitUnstructuredGridPieceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransmitUnstructuredGridPieceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransmitUnstructuredGridPieceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateGhostCellsOff", CreateGhostCellsOff);
 	Nan::SetPrototypeMethod(tpl, "createGhostCellsOff", CreateGhostCellsOff);
 
@@ -78,6 +79,8 @@ void VtkTransmitUnstructuredGridPieceWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetCreateGhostCells", SetCreateGhostCells);
 	Nan::SetPrototypeMethod(tpl, "setCreateGhostCells", SetCreateGhostCells);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransmitUnstructuredGridPieceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -152,6 +155,7 @@ void VtkTransmitUnstructuredGridPieceWrap::GetController(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,6 +214,7 @@ void VtkTransmitUnstructuredGridPieceWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransmitUnstructuredGridPieceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +230,7 @@ void VtkTransmitUnstructuredGridPieceWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkTransmitUnstructuredGridPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitUnstructuredGridPieceWrap>(info.Holder());
 	vtkTransmitUnstructuredGridPiece *native = (vtkTransmitUnstructuredGridPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransmitUnstructuredGridPiece * r;
@@ -237,6 +242,7 @@ void VtkTransmitUnstructuredGridPieceWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransmitUnstructuredGridPieceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -255,7 +261,7 @@ void VtkTransmitUnstructuredGridPieceWrap::SetController(const Nan::FunctionCall
 {
 	VtkTransmitUnstructuredGridPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitUnstructuredGridPieceWrap>(info.Holder());
 	vtkTransmitUnstructuredGridPiece *native = (vtkTransmitUnstructuredGridPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

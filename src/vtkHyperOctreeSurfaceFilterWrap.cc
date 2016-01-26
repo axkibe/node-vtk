@@ -28,26 +28,27 @@ VtkHyperOctreeSurfaceFilterWrap::~VtkHyperOctreeSurfaceFilterWrap()
 
 void VtkHyperOctreeSurfaceFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperOctreeSurfaceFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperOctreeSurfaceFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperOctreeSurfaceFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperOctreeSurfaceFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperOctreeSurfaceFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperOctreeSurfaceFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperOctreeSurfaceFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperOctreeSurfaceFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperOctreeSurfaceFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -90,6 +91,8 @@ void VtkHyperOctreeSurfaceFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetPassThroughCellIds", SetPassThroughCellIds);
 	Nan::SetPrototypeMethod(tpl, "setPassThroughCellIds", SetPassThroughCellIds);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperOctreeSurfaceFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,6 +143,7 @@ void VtkHyperOctreeSurfaceFilterWrap::GetLocator(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,6 +240,7 @@ void VtkHyperOctreeSurfaceFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperOctreeSurfaceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +280,7 @@ void VtkHyperOctreeSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkHyperOctreeSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSurfaceFilterWrap>(info.Holder());
 	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperOctreeSurfaceFilter * r;
@@ -287,6 +292,7 @@ void VtkHyperOctreeSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperOctreeSurfaceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -305,7 +311,7 @@ void VtkHyperOctreeSurfaceFilterWrap::SetLocator(const Nan::FunctionCallbackInfo
 {
 	VtkHyperOctreeSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSurfaceFilterWrap>(info.Holder());
 	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

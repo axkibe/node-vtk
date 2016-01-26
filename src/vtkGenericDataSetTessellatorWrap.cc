@@ -28,26 +28,27 @@ VtkGenericDataSetTessellatorWrap::~VtkGenericDataSetTessellatorWrap()
 
 void VtkGenericDataSetTessellatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericDataSetTessellatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericDataSetTessellator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericDataSetTessellator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericDataSetTessellator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericDataSetTessellator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericDataSetTessellatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericDataSetTessellatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericDataSetTessellatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericDataSetTessellatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLocator", CreateDefaultLocator);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLocator", CreateDefaultLocator);
 
@@ -93,6 +94,8 @@ void VtkGenericDataSetTessellatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetMerging", SetMerging);
 	Nan::SetPrototypeMethod(tpl, "setMerging", SetMerging);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericDataSetTessellatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -169,6 +172,7 @@ void VtkGenericDataSetTessellatorWrap::GetLocator(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,6 +279,7 @@ void VtkGenericDataSetTessellatorWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericDataSetTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,7 +295,7 @@ void VtkGenericDataSetTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkGenericDataSetTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetTessellatorWrap>(info.Holder());
 	vtkGenericDataSetTessellator *native = (vtkGenericDataSetTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericDataSetTessellator * r;
@@ -302,6 +307,7 @@ void VtkGenericDataSetTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericDataSetTessellatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -339,7 +345,7 @@ void VtkGenericDataSetTessellatorWrap::SetLocator(const Nan::FunctionCallbackInf
 {
 	VtkGenericDataSetTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetTessellatorWrap>(info.Holder());
 	vtkGenericDataSetTessellator *native = (vtkGenericDataSetTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

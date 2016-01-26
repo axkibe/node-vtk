@@ -28,26 +28,27 @@ VtkInformationDoubleVectorKeyWrap::~VtkInformationDoubleVectorKeyWrap()
 
 void VtkInformationDoubleVectorKeyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInformationKeyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInformationKeyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInformationDoubleVectorKeyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInformationDoubleVectorKey").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InformationDoubleVectorKey").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInformationDoubleVectorKey").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InformationDoubleVectorKey").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInformationDoubleVectorKeyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInformationDoubleVectorKeyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInformationDoubleVectorKeyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInformationKeyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInformationKeyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInformationDoubleVectorKeyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Append", Append);
 	Nan::SetPrototypeMethod(tpl, "append", Append);
 
@@ -72,6 +73,8 @@ void VtkInformationDoubleVectorKeyWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInformationDoubleVectorKeyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -101,7 +104,7 @@ void VtkInformationDoubleVectorKeyWrap::Append(const Nan::FunctionCallbackInfo<v
 {
 	VtkInformationDoubleVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info.Holder());
 	vtkInformationDoubleVectorKey *native = (vtkInformationDoubleVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -125,7 +128,7 @@ void VtkInformationDoubleVectorKeyWrap::Get(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkInformationDoubleVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info.Holder());
 	vtkInformationDoubleVectorKey *native = (vtkInformationDoubleVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -187,7 +190,7 @@ void VtkInformationDoubleVectorKeyWrap::Length(const Nan::FunctionCallbackInfo<v
 {
 	VtkInformationDoubleVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info.Holder());
 	vtkInformationDoubleVectorKey *native = (vtkInformationDoubleVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -216,6 +219,7 @@ void VtkInformationDoubleVectorKeyWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -231,7 +235,7 @@ void VtkInformationDoubleVectorKeyWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkInformationDoubleVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info.Holder());
 	vtkInformationDoubleVectorKey *native = (vtkInformationDoubleVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInformationDoubleVectorKey * r;
@@ -243,6 +247,7 @@ void VtkInformationDoubleVectorKeyWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInformationDoubleVectorKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,10 +266,10 @@ void VtkInformationDoubleVectorKeyWrap::ShallowCopy(const Nan::FunctionCallbackI
 {
 	VtkInformationDoubleVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info.Holder());
 	vtkInformationDoubleVectorKey *native = (vtkInformationDoubleVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

@@ -28,26 +28,27 @@ VtkHyperOctreeSampleFunctionWrap::~VtkHyperOctreeSampleFunctionWrap()
 
 void VtkHyperOctreeSampleFunctionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHyperOctreeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperOctreeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperOctreeSampleFunctionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperOctreeSampleFunction").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperOctreeSampleFunction").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperOctreeSampleFunction").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperOctreeSampleFunction").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperOctreeSampleFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperOctreeSampleFunctionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperOctreeSampleFunctionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHyperOctreeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperOctreeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperOctreeSampleFunctionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -150,6 +151,8 @@ void VtkHyperOctreeSampleFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperOctreeSampleFunctionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -242,6 +245,7 @@ void VtkHyperOctreeSampleFunctionWrap::GetImplicitFunction(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetImplicitFunction();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -356,6 +360,7 @@ void VtkHyperOctreeSampleFunctionWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperOctreeSampleFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -371,7 +376,7 @@ void VtkHyperOctreeSampleFunctionWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperOctreeSampleFunction * r;
@@ -383,6 +388,7 @@ void VtkHyperOctreeSampleFunctionWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperOctreeSampleFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -458,7 +464,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetImplicitFunction(const Nan::FunctionCa
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

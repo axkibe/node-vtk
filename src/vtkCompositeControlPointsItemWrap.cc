@@ -29,26 +29,27 @@ VtkCompositeControlPointsItemWrap::~VtkCompositeControlPointsItemWrap()
 
 void VtkCompositeControlPointsItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkColorTransferControlPointsItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkColorTransferControlPointsItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompositeControlPointsItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompositeControlPointsItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompositeControlPointsItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompositeControlPointsItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompositeControlPointsItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompositeControlPointsItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompositeControlPointsItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompositeControlPointsItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkColorTransferControlPointsItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkColorTransferControlPointsItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompositeControlPointsItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -76,6 +77,8 @@ void VtkCompositeControlPointsItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetPointsFunction", SetPointsFunction);
 	Nan::SetPrototypeMethod(tpl, "setPointsFunction", SetPointsFunction);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompositeControlPointsItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -126,6 +129,7 @@ void VtkCompositeControlPointsItemWrap::GetOpacityFunction(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetOpacityFunction();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,6 +188,7 @@ void VtkCompositeControlPointsItemWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompositeControlPointsItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,7 +204,7 @@ void VtkCompositeControlPointsItemWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkCompositeControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeControlPointsItemWrap>(info.Holder());
 	vtkCompositeControlPointsItem *native = (vtkCompositeControlPointsItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompositeControlPointsItem * r;
@@ -211,6 +216,7 @@ void VtkCompositeControlPointsItemWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompositeControlPointsItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -229,7 +235,7 @@ void VtkCompositeControlPointsItemWrap::SetColorTransferFunction(const Nan::Func
 {
 	VtkCompositeControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeControlPointsItemWrap>(info.Holder());
 	vtkCompositeControlPointsItem *native = (vtkCompositeControlPointsItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorTransferFunctionWrap *a0 = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -249,7 +255,7 @@ void VtkCompositeControlPointsItemWrap::SetOpacityFunction(const Nan::FunctionCa
 {
 	VtkCompositeControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeControlPointsItemWrap>(info.Holder());
 	vtkCompositeControlPointsItem *native = (vtkCompositeControlPointsItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

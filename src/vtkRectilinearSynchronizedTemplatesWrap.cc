@@ -27,26 +27,27 @@ VtkRectilinearSynchronizedTemplatesWrap::~VtkRectilinearSynchronizedTemplatesWra
 
 void VtkRectilinearSynchronizedTemplatesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRectilinearSynchronizedTemplatesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRectilinearSynchronizedTemplates").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RectilinearSynchronizedTemplates").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRectilinearSynchronizedTemplates").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RectilinearSynchronizedTemplates").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRectilinearSynchronizedTemplatesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRectilinearSynchronizedTemplatesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRectilinearSynchronizedTemplatesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRectilinearSynchronizedTemplatesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeGradientsOff", ComputeGradientsOff);
 	Nan::SetPrototypeMethod(tpl, "computeGradientsOff", ComputeGradientsOff);
 
@@ -128,6 +129,8 @@ void VtkRectilinearSynchronizedTemplatesWrap::InitTpl(v8::Local<v8::FunctionTemp
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRectilinearSynchronizedTemplatesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -428,6 +431,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
+		VtkRectilinearSynchronizedTemplatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -443,7 +447,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SafeDownCast(const Nan::FunctionCa
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRectilinearSynchronizedTemplates * r;
@@ -455,6 +459,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRectilinearSynchronizedTemplatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

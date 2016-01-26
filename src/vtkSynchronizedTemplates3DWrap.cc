@@ -30,26 +30,27 @@ VtkSynchronizedTemplates3DWrap::~VtkSynchronizedTemplates3DWrap()
 
 void VtkSynchronizedTemplates3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSynchronizedTemplates3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSynchronizedTemplates3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SynchronizedTemplates3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSynchronizedTemplates3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SynchronizedTemplates3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSynchronizedTemplates3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSynchronizedTemplates3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSynchronizedTemplates3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSynchronizedTemplates3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeGradientsOff", ComputeGradientsOff);
 	Nan::SetPrototypeMethod(tpl, "computeGradientsOff", ComputeGradientsOff);
 
@@ -134,6 +135,8 @@ void VtkSynchronizedTemplates3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "ThreadedExecute", ThreadedExecute);
 	Nan::SetPrototypeMethod(tpl, "threadedExecute", ThreadedExecute);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSynchronizedTemplates3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -434,6 +437,7 @@ void VtkSynchronizedTemplates3DWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkSynchronizedTemplates3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -449,7 +453,7 @@ void VtkSynchronizedTemplates3DWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkSynchronizedTemplates3DWrap>(info.Holder());
 	vtkSynchronizedTemplates3D *native = (vtkSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSynchronizedTemplates3D * r;
@@ -461,6 +465,7 @@ void VtkSynchronizedTemplates3DWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSynchronizedTemplates3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -616,16 +621,16 @@ void VtkSynchronizedTemplates3DWrap::ThreadedExecute(const Nan::FunctionCallback
 {
 	VtkSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkSynchronizedTemplates3DWrap>(info.Holder());
 	vtkSynchronizedTemplates3D *native = (vtkSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkInformationWrap *a2 = ObjectWrap::Unwrap<VtkInformationWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkDataArrayWrap *a3 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[3]->ToObject());
 					if(info.Length() != 4)

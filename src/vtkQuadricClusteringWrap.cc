@@ -29,26 +29,27 @@ VtkQuadricClusteringWrap::~VtkQuadricClusteringWrap()
 
 void VtkQuadricClusteringWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkQuadricClusteringWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkQuadricClustering").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("QuadricClustering").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkQuadricClustering").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("QuadricClustering").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkQuadricClusteringWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkQuadricClusteringWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkQuadricClusteringWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkQuadricClusteringWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Append", Append);
 	Nan::SetPrototypeMethod(tpl, "append", Append);
 
@@ -196,6 +197,8 @@ void VtkQuadricClusteringWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseInternalTrianglesOn", UseInternalTrianglesOn);
 	Nan::SetPrototypeMethod(tpl, "useInternalTrianglesOn", UseInternalTrianglesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkQuadricClusteringWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -225,7 +228,7 @@ void VtkQuadricClusteringWrap::Append(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -354,6 +357,7 @@ void VtkQuadricClusteringWrap::GetFeatureEdges(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetFeatureEdges();
+		VtkFeatureEdgesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -552,6 +556,7 @@ void VtkQuadricClusteringWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkQuadricClusteringWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -591,7 +596,7 @@ void VtkQuadricClusteringWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkQuadricClustering * r;
@@ -603,6 +608,7 @@ void VtkQuadricClusteringWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkQuadricClusteringWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

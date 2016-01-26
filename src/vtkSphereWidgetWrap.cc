@@ -30,26 +30,27 @@ VtkSphereWidgetWrap::~VtkSphereWidgetWrap()
 
 void VtkSphereWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	Vtk3DWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSphereWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSphereWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SphereWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSphereWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SphereWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSphereWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSphereWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSphereWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	Vtk3DWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSphereWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -167,6 +168,8 @@ void VtkSphereWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TranslationOn", TranslationOn);
 	Nan::SetPrototypeMethod(tpl, "translationOn", TranslationOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSphereWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -217,6 +220,7 @@ void VtkSphereWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +264,7 @@ void VtkSphereWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSphereWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkSphereWidgetWrap>(info.Holder());
 	vtkSphereWidget *native = (vtkSphereWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -357,6 +361,7 @@ void VtkSphereWidgetWrap::GetSelectedHandleProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -379,6 +384,7 @@ void VtkSphereWidgetWrap::GetSelectedSphereProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetSelectedSphereProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,7 +400,7 @@ void VtkSphereWidgetWrap::GetSphere(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkSphereWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkSphereWidgetWrap>(info.Holder());
 	vtkSphereWidget *native = (vtkSphereWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSphereWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSphereWrap *a0 = ObjectWrap::Unwrap<VtkSphereWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -421,6 +427,7 @@ void VtkSphereWidgetWrap::GetSphereProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetSphereProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -517,6 +524,7 @@ void VtkSphereWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkSphereWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -576,7 +584,7 @@ void VtkSphereWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSphereWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkSphereWidgetWrap>(info.Holder());
 	vtkSphereWidget *native = (vtkSphereWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSphereWidget * r;
@@ -588,6 +596,7 @@ void VtkSphereWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSphereWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

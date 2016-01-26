@@ -28,26 +28,27 @@ VtkXMLUnstructuredDataReaderWrap::~VtkXMLUnstructuredDataReaderWrap()
 
 void VtkXMLUnstructuredDataReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLUnstructuredDataReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLUnstructuredDataReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLUnstructuredDataReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLUnstructuredDataReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLUnstructuredDataReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLUnstructuredDataReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLUnstructuredDataReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLUnstructuredDataReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLUnstructuredDataReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CopyOutputInformation", CopyOutputInformation);
 	Nan::SetPrototypeMethod(tpl, "copyOutputInformation", CopyOutputInformation);
 
@@ -66,6 +67,8 @@ void VtkXMLUnstructuredDataReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetupUpdateExtent", SetupUpdateExtent);
 	Nan::SetPrototypeMethod(tpl, "setupUpdateExtent", SetupUpdateExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLUnstructuredDataReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -95,7 +98,7 @@ void VtkXMLUnstructuredDataReaderWrap::CopyOutputInformation(const Nan::Function
 {
 	VtkXMLUnstructuredDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLUnstructuredDataReaderWrap>(info.Holder());
 	vtkXMLUnstructuredDataReader *native = (vtkXMLUnstructuredDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -162,6 +165,7 @@ void VtkXMLUnstructuredDataReaderWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLUnstructuredDataReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +181,7 @@ void VtkXMLUnstructuredDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkXMLUnstructuredDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLUnstructuredDataReaderWrap>(info.Holder());
 	vtkXMLUnstructuredDataReader *native = (vtkXMLUnstructuredDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLUnstructuredDataReader * r;
@@ -189,6 +193,7 @@ void VtkXMLUnstructuredDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLUnstructuredDataReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

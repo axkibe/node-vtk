@@ -29,26 +29,27 @@ VtkModifiedBSPTreeWrap::~VtkModifiedBSPTreeWrap()
 
 void VtkModifiedBSPTreeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractCellLocatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkModifiedBSPTreeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkModifiedBSPTree").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ModifiedBSPTree").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkModifiedBSPTree").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ModifiedBSPTree").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkModifiedBSPTreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkModifiedBSPTreeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkModifiedBSPTreeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractCellLocatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractCellLocatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkModifiedBSPTreeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildLocator", BuildLocator);
 	Nan::SetPrototypeMethod(tpl, "buildLocator", BuildLocator);
 
@@ -76,6 +77,8 @@ void VtkModifiedBSPTreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkModifiedBSPTreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,7 +134,7 @@ void VtkModifiedBSPTreeWrap::GenerateRepresentation(const Nan::FunctionCallbackI
 	vtkModifiedBSPTree *native = (vtkModifiedBSPTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -153,7 +156,7 @@ void VtkModifiedBSPTreeWrap::GenerateRepresentationLeafs(const Nan::FunctionCall
 {
 	VtkModifiedBSPTreeWrap *wrapper = ObjectWrap::Unwrap<VtkModifiedBSPTreeWrap>(info.Holder());
 	vtkModifiedBSPTree *native = (vtkModifiedBSPTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -194,6 +197,7 @@ void VtkModifiedBSPTreeWrap::GetLeafNodeCellInformation(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetLeafNodeCellInformation();
+		VtkIdListCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,6 +242,7 @@ void VtkModifiedBSPTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkModifiedBSPTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +258,7 @@ void VtkModifiedBSPTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkModifiedBSPTreeWrap *wrapper = ObjectWrap::Unwrap<VtkModifiedBSPTreeWrap>(info.Holder());
 	vtkModifiedBSPTree *native = (vtkModifiedBSPTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkModifiedBSPTree * r;
@@ -265,6 +270,7 @@ void VtkModifiedBSPTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkModifiedBSPTreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

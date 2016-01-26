@@ -28,26 +28,27 @@ VtkEnSightWriterWrap::~VtkEnSightWriterWrap()
 
 void VtkEnSightWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkEnSightWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkEnSightWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("EnSightWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkEnSightWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("EnSightWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkEnSightWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkEnSightWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkEnSightWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkEnSightWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBaseName", GetBaseName);
 	Nan::SetPrototypeMethod(tpl, "getBaseName", GetBaseName);
 
@@ -114,6 +115,8 @@ void VtkEnSightWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WriteSOSCaseFile", WriteSOSCaseFile);
 	Nan::SetPrototypeMethod(tpl, "writeSOSCaseFile", WriteSOSCaseFile);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkEnSightWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -206,6 +209,7 @@ void VtkEnSightWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInput();
+		VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -306,6 +310,7 @@ void VtkEnSightWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkEnSightWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +326,7 @@ void VtkEnSightWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkEnSightWriterWrap *wrapper = ObjectWrap::Unwrap<VtkEnSightWriterWrap>(info.Holder());
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkEnSightWriter * r;
@@ -333,6 +338,7 @@ void VtkEnSightWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkEnSightWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -410,7 +416,7 @@ void VtkEnSightWriterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkEnSightWriterWrap *wrapper = ObjectWrap::Unwrap<VtkEnSightWriterWrap>(info.Holder());
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

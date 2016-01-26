@@ -28,26 +28,27 @@ VtkParallelopipedWidgetWrap::~VtkParallelopipedWidgetWrap()
 
 void VtkParallelopipedWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParallelopipedWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParallelopipedWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParallelopipedWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParallelopipedWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParallelopipedWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParallelopipedWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParallelopipedWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParallelopipedWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParallelopipedWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -87,6 +88,8 @@ void VtkParallelopipedWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParallelopipedWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -187,6 +190,7 @@ void VtkParallelopipedWidgetWrap::GetParallelopipedRepresentation(const Nan::Fun
 		return;
 	}
 	r = native->GetParallelopipedRepresentation();
+		VtkParallelopipedRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -231,6 +235,7 @@ void VtkParallelopipedWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkParallelopipedWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +251,7 @@ void VtkParallelopipedWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkParallelopipedWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedWidgetWrap>(info.Holder());
 	vtkParallelopipedWidget *native = (vtkParallelopipedWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParallelopipedWidget * r;
@@ -258,6 +263,7 @@ void VtkParallelopipedWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParallelopipedWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -333,7 +339,7 @@ void VtkParallelopipedWidgetWrap::SetRepresentation(const Nan::FunctionCallbackI
 {
 	VtkParallelopipedWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedWidgetWrap>(info.Holder());
 	vtkParallelopipedWidget *native = (vtkParallelopipedWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkParallelopipedRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkParallelopipedRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

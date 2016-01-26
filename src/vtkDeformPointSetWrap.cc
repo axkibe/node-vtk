@@ -29,26 +29,27 @@ VtkDeformPointSetWrap::~VtkDeformPointSetWrap()
 
 void VtkDeformPointSetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDeformPointSetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDeformPointSet").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DeformPointSet").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDeformPointSet").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DeformPointSet").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDeformPointSetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDeformPointSetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDeformPointSetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDeformPointSetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -82,6 +83,8 @@ void VtkDeformPointSetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInitializeWeights", SetInitializeWeights);
 	Nan::SetPrototypeMethod(tpl, "setInitializeWeights", SetInitializeWeights);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDeformPointSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -132,6 +135,7 @@ void VtkDeformPointSetWrap::GetControlMeshData(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetControlMeshData();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,6 +218,7 @@ void VtkDeformPointSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkDeformPointSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,7 +234,7 @@ void VtkDeformPointSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDeformPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkDeformPointSetWrap>(info.Holder());
 	vtkDeformPointSet *native = (vtkDeformPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDeformPointSet * r;
@@ -241,6 +246,7 @@ void VtkDeformPointSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDeformPointSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -259,7 +265,7 @@ void VtkDeformPointSetWrap::SetControlMeshConnection(const Nan::FunctionCallback
 {
 	VtkDeformPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkDeformPointSetWrap>(info.Holder());
 	vtkDeformPointSet *native = (vtkDeformPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -279,7 +285,7 @@ void VtkDeformPointSetWrap::SetControlMeshData(const Nan::FunctionCallbackInfo<v
 {
 	VtkDeformPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkDeformPointSetWrap>(info.Holder());
 	vtkDeformPointSet *native = (vtkDeformPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

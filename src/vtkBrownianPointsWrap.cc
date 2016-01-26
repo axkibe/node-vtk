@@ -27,26 +27,27 @@ VtkBrownianPointsWrap::~VtkBrownianPointsWrap()
 
 void VtkBrownianPointsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBrownianPointsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBrownianPoints").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BrownianPoints").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBrownianPoints").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BrownianPoints").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBrownianPointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBrownianPointsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBrownianPointsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBrownianPointsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -83,6 +84,8 @@ void VtkBrownianPointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetMinimumSpeed", SetMinimumSpeed);
 	Nan::SetPrototypeMethod(tpl, "setMinimumSpeed", SetMinimumSpeed);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBrownianPointsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -239,6 +242,7 @@ void VtkBrownianPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkBrownianPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -254,7 +258,7 @@ void VtkBrownianPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkBrownianPointsWrap *wrapper = ObjectWrap::Unwrap<VtkBrownianPointsWrap>(info.Holder());
 	vtkBrownianPoints *native = (vtkBrownianPoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBrownianPoints * r;
@@ -266,6 +270,7 @@ void VtkBrownianPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBrownianPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

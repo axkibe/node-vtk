@@ -30,26 +30,27 @@ VtkPolyDataContourLineInterpolatorWrap::~VtkPolyDataContourLineInterpolatorWrap(
 
 void VtkPolyDataContourLineInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContourLineInterpolatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourLineInterpolatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataContourLineInterpolatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataContourLineInterpolator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataContourLineInterpolator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataContourLineInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataContourLineInterpolatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataContourLineInterpolatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContourLineInterpolatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourLineInterpolatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataContourLineInterpolatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkPolyDataContourLineInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataContourLineInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -118,6 +121,7 @@ void VtkPolyDataContourLineInterpolatorWrap::GetPolys(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetPolys();
+		VtkPolyDataCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -133,10 +137,10 @@ void VtkPolyDataContourLineInterpolatorWrap::InterpolateLine(const Nan::Function
 {
 	VtkPolyDataContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataContourLineInterpolatorWrap>(info.Holder());
 	vtkPolyDataContourLineInterpolator *native = (vtkPolyDataContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkContourRepresentationWrap *a1 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -197,6 +201,7 @@ void VtkPolyDataContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +217,7 @@ void VtkPolyDataContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkPolyDataContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataContourLineInterpolatorWrap>(info.Holder());
 	vtkPolyDataContourLineInterpolator *native = (vtkPolyDataContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataContourLineInterpolator * r;
@@ -224,6 +229,7 @@ void VtkPolyDataContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

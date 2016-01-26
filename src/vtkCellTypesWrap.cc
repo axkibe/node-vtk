@@ -28,26 +28,27 @@ VtkCellTypesWrap::~VtkCellTypesWrap()
 
 void VtkCellTypesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellTypesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellTypes").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellTypes").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellTypes").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellTypes").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellTypesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellTypesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellTypesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellTypesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Allocate", Allocate);
 	Nan::SetPrototypeMethod(tpl, "allocate", Allocate);
 
@@ -87,6 +88,8 @@ void VtkCellTypesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellTypesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -141,7 +144,7 @@ void VtkCellTypesWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
 	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellTypesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellTypesWrap *a0 = ObjectWrap::Unwrap<VtkCellTypesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -282,6 +285,7 @@ void VtkCellTypesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellTypesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -309,7 +313,7 @@ void VtkCellTypesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
 	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCellTypes * r;
@@ -321,6 +325,7 @@ void VtkCellTypesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCellTypesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -341,10 +346,10 @@ void VtkCellTypesWrap::SetCellTypes(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkUnsignedCharArrayWrap *a1 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIntArrayWrap *a2 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)

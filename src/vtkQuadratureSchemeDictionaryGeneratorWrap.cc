@@ -27,26 +27,27 @@ VtkQuadratureSchemeDictionaryGeneratorWrap::~VtkQuadratureSchemeDictionaryGenera
 
 void VtkQuadratureSchemeDictionaryGeneratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkQuadratureSchemeDictionaryGeneratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkQuadratureSchemeDictionaryGenerator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("QuadratureSchemeDictionaryGenerator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkQuadratureSchemeDictionaryGenerator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("QuadratureSchemeDictionaryGenerator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkQuadratureSchemeDictionaryGeneratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkQuadratureSchemeDictionaryGeneratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkQuadratureSchemeDictionaryGeneratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkQuadratureSchemeDictionaryGeneratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkQuadratureSchemeDictionaryGeneratorWrap::InitTpl(v8::Local<v8::FunctionT
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkQuadratureSchemeDictionaryGeneratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkQuadratureSchemeDictionaryGeneratorWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
+		VtkQuadratureSchemeDictionaryGeneratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkQuadratureSchemeDictionaryGeneratorWrap::SafeDownCast(const Nan::Functio
 {
 	VtkQuadratureSchemeDictionaryGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadratureSchemeDictionaryGeneratorWrap>(info.Holder());
 	vtkQuadratureSchemeDictionaryGenerator *native = (vtkQuadratureSchemeDictionaryGenerator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkQuadratureSchemeDictionaryGenerator * r;
@@ -158,6 +162,7 @@ void VtkQuadratureSchemeDictionaryGeneratorWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkQuadratureSchemeDictionaryGeneratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

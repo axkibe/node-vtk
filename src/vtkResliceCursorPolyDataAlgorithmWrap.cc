@@ -29,26 +29,27 @@ VtkResliceCursorPolyDataAlgorithmWrap::~VtkResliceCursorPolyDataAlgorithmWrap()
 
 void VtkResliceCursorPolyDataAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkResliceCursorPolyDataAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkResliceCursorPolyDataAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ResliceCursorPolyDataAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkResliceCursorPolyDataAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ResliceCursorPolyDataAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkResliceCursorPolyDataAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkResliceCursorPolyDataAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkResliceCursorPolyDataAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAxis1", GetAxis1);
 	Nan::SetPrototypeMethod(tpl, "getAxis1", GetAxis1);
 
@@ -112,6 +113,8 @@ void VtkResliceCursorPolyDataAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetSliceBounds", SetSliceBounds);
 	Nan::SetPrototypeMethod(tpl, "setSliceBounds", SetSliceBounds);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkResliceCursorPolyDataAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -176,6 +179,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetCenterlineAxis1(const Nan::Functi
 		return;
 	}
 	r = native->GetCenterlineAxis1();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,6 +202,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetCenterlineAxis2(const Nan::Functi
 		return;
 	}
 	r = native->GetCenterlineAxis2();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,6 +288,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetResliceCursor(const Nan::Function
 		return;
 	}
 	r = native->GetResliceCursor();
+		VtkResliceCursorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,6 +325,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetThickSlabAxis1(const Nan::Functio
 		return;
 	}
 	r = native->GetThickSlabAxis1();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -341,6 +348,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetThickSlabAxis2(const Nan::Functio
 		return;
 	}
 	r = native->GetThickSlabAxis2();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -385,6 +393,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,7 +409,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
 	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkResliceCursorPolyDataAlgorithm * r;
@@ -412,6 +421,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -430,7 +440,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetResliceCursor(const Nan::Function
 {
 	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
 	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkResliceCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkResliceCursorWrap *a0 = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkXMLPHierarchicalBoxDataWriterWrap::~VtkXMLPHierarchicalBoxDataWriterWrap()
 
 void VtkXMLPHierarchicalBoxDataWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLPUniformGridAMRWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLPUniformGridAMRWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLPHierarchicalBoxDataWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLPHierarchicalBoxDataWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLPHierarchicalBoxDataWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLPHierarchicalBoxDataWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLPHierarchicalBoxDataWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLPHierarchicalBoxDataWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLPHierarchicalBoxDataWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLPHierarchicalBoxDataWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLPUniformGridAMRWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLPUniformGridAMRWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLPHierarchicalBoxDataWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkXMLPHierarchicalBoxDataWriterWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLPHierarchicalBoxDataWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkXMLPHierarchicalBoxDataWriterWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLPHierarchicalBoxDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkXMLPHierarchicalBoxDataWriterWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkXMLPHierarchicalBoxDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLPHierarchicalBoxDataWriterWrap>(info.Holder());
 	vtkXMLPHierarchicalBoxDataWriter *native = (vtkXMLPHierarchicalBoxDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLPHierarchicalBoxDataWriter * r;
@@ -158,6 +162,7 @@ void VtkXMLPHierarchicalBoxDataWriterWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLPHierarchicalBoxDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

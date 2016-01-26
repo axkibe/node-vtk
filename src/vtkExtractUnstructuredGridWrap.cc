@@ -28,26 +28,27 @@ VtkExtractUnstructuredGridWrap::~VtkExtractUnstructuredGridWrap()
 
 void VtkExtractUnstructuredGridWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractUnstructuredGridWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractUnstructuredGrid").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractUnstructuredGrid").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractUnstructuredGrid").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractUnstructuredGrid").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractUnstructuredGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractUnstructuredGridWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractUnstructuredGridWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractUnstructuredGridWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CellClippingOff", CellClippingOff);
 	Nan::SetPrototypeMethod(tpl, "cellClippingOff", CellClippingOff);
 
@@ -120,6 +121,8 @@ void VtkExtractUnstructuredGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetPointClipping", SetPointClipping);
 	Nan::SetPrototypeMethod(tpl, "setPointClipping", SetPointClipping);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractUnstructuredGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -258,6 +261,7 @@ void VtkExtractUnstructuredGridWrap::GetLocator(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLocator();
+		VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -354,6 +358,7 @@ void VtkExtractUnstructuredGridWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -393,7 +398,7 @@ void VtkExtractUnstructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractUnstructuredGrid * r;
@@ -405,6 +410,7 @@ void VtkExtractUnstructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractUnstructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -500,7 +506,7 @@ void VtkExtractUnstructuredGridWrap::SetLocator(const Nan::FunctionCallbackInfo<
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

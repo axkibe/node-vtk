@@ -30,26 +30,27 @@ VtkGeoInteractorStyleWrap::~VtkGeoInteractorStyleWrap()
 
 void VtkGeoInteractorStyleWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleTrackballCameraWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoInteractorStyleWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoInteractorStyle").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoInteractorStyle").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoInteractorStyle").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoInteractorStyle").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoInteractorStyleWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoInteractorStyleWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleTrackballCameraWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoInteractorStyleWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Dolly", Dolly);
 	Nan::SetPrototypeMethod(tpl, "dolly", Dolly);
 
@@ -131,6 +132,8 @@ void VtkGeoInteractorStyleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
 	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoInteractorStyleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -193,6 +196,7 @@ void VtkGeoInteractorStyleWrap::GetGeoCamera(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetGeoCamera();
+		VtkGeoCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -261,6 +265,7 @@ void VtkGeoInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -456,7 +461,7 @@ void VtkGeoInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoInteractorStyle * r;
@@ -468,6 +473,7 @@ void VtkGeoInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoInteractorStyleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -486,7 +492,7 @@ void VtkGeoInteractorStyleWrap::SetCurrentRenderer(const Nan::FunctionCallbackIn
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -506,7 +512,7 @@ void VtkGeoInteractorStyleWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -545,7 +551,7 @@ void VtkGeoInteractorStyleWrap::WidgetInteraction(const Nan::FunctionCallbackInf
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

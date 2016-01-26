@@ -27,26 +27,27 @@ VtkMarkerUtilitiesWrap::~VtkMarkerUtilitiesWrap()
 
 void VtkMarkerUtilitiesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMarkerUtilitiesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMarkerUtilities").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MarkerUtilities").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMarkerUtilities").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MarkerUtilities").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMarkerUtilitiesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMarkerUtilitiesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMarkerUtilitiesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMarkerUtilitiesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateMarker", GenerateMarker);
 	Nan::SetPrototypeMethod(tpl, "generateMarker", GenerateMarker);
 
@@ -62,6 +63,8 @@ void VtkMarkerUtilitiesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMarkerUtilitiesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -91,7 +94,7 @@ void VtkMarkerUtilitiesWrap::GenerateMarker(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMarkerUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkMarkerUtilitiesWrap>(info.Holder());
 	vtkMarkerUtilities *native = (vtkMarkerUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -162,6 +165,7 @@ void VtkMarkerUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkMarkerUtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +181,7 @@ void VtkMarkerUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMarkerUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkMarkerUtilitiesWrap>(info.Holder());
 	vtkMarkerUtilities *native = (vtkMarkerUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMarkerUtilities * r;
@@ -189,6 +193,7 @@ void VtkMarkerUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMarkerUtilitiesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

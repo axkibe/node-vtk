@@ -29,26 +29,27 @@ VtkPKdTreeWrap::~VtkPKdTreeWrap()
 
 void VtkPKdTreeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkKdTreeWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkKdTreeWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPKdTreeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPKdTree").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PKdTree").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPKdTree").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PKdTree").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPKdTreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPKdTreeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPKdTreeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkKdTreeWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkKdTreeWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPKdTreeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AssignRegionsContiguous", AssignRegionsContiguous);
 	Nan::SetPrototypeMethod(tpl, "assignRegionsContiguous", AssignRegionsContiguous);
 
@@ -112,6 +113,8 @@ void VtkPKdTreeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPKdTreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -230,6 +233,7 @@ void VtkPKdTreeWrap::GetController(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -293,7 +297,7 @@ void VtkPKdTreeWrap::GetProcessListForRegion(const Nan::FunctionCallbackInfo<v8:
 	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIntArrayWrap *a1 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[1]->ToObject());
 			int r;
@@ -333,7 +337,7 @@ void VtkPKdTreeWrap::GetRegionAssignmentList(const Nan::FunctionCallbackInfo<v8:
 	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIntArrayWrap *a1 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[1]->ToObject());
 			int r;
@@ -373,7 +377,7 @@ void VtkPKdTreeWrap::GetRegionListForProcess(const Nan::FunctionCallbackInfo<v8:
 	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIntArrayWrap *a1 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[1]->ToObject());
 			int r;
@@ -493,6 +497,7 @@ void VtkPKdTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
+		VtkPKdTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -508,7 +513,7 @@ void VtkPKdTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkPKdTreeWrap>(info.Holder());
 	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPKdTree * r;
@@ -520,6 +525,7 @@ void VtkPKdTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPKdTreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -538,7 +544,7 @@ void VtkPKdTreeWrap::SetController(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkPKdTreeWrap>(info.Holder());
 	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

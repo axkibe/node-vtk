@@ -30,26 +30,27 @@ VtkImageHistogramWrap::~VtkImageHistogramWrap()
 
 void VtkImageHistogramWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageHistogramWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageHistogram").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageHistogram").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageHistogram").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageHistogram").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageHistogramWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageHistogramWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageHistogramWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageHistogramWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutomaticBinningOff", AutomaticBinningOff);
 	Nan::SetPrototypeMethod(tpl, "automaticBinningOff", AutomaticBinningOff);
 
@@ -155,6 +156,8 @@ void VtkImageHistogramWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetStencilData", SetStencilData);
 	Nan::SetPrototypeMethod(tpl, "setStencilData", SetStencilData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageHistogramWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -323,6 +326,7 @@ void VtkImageHistogramWrap::GetHistogram(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetHistogram();
+		VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -429,6 +433,7 @@ void VtkImageHistogramWrap::GetStencil(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetStencil();
+		VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -473,6 +478,7 @@ void VtkImageHistogramWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageHistogramWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -488,7 +494,7 @@ void VtkImageHistogramWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageHistogram * r;
@@ -500,6 +506,7 @@ void VtkImageHistogramWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageHistogramWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -729,7 +736,7 @@ void VtkImageHistogramWrap::SetStencilConnection(const Nan::FunctionCallbackInfo
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -749,7 +756,7 @@ void VtkImageHistogramWrap::SetStencilData(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

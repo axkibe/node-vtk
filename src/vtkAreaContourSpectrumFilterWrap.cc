@@ -28,26 +28,27 @@ VtkAreaContourSpectrumFilterWrap::~VtkAreaContourSpectrumFilterWrap()
 
 void VtkAreaContourSpectrumFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAreaContourSpectrumFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAreaContourSpectrumFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AreaContourSpectrumFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAreaContourSpectrumFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AreaContourSpectrumFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAreaContourSpectrumFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAreaContourSpectrumFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAreaContourSpectrumFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAreaContourSpectrumFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkAreaContourSpectrumFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSamples", SetNumberOfSamples);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSamples", SetNumberOfSamples);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAreaContourSpectrumFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -133,6 +136,7 @@ void VtkAreaContourSpectrumFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetOutput();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,6 +181,7 @@ void VtkAreaContourSpectrumFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkAreaContourSpectrumFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +197,7 @@ void VtkAreaContourSpectrumFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkAreaContourSpectrumFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAreaContourSpectrumFilterWrap>(info.Holder());
 	vtkAreaContourSpectrumFilter *native = (vtkAreaContourSpectrumFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAreaContourSpectrumFilter * r;
@@ -204,6 +209,7 @@ void VtkAreaContourSpectrumFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAreaContourSpectrumFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

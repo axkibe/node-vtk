@@ -29,26 +29,27 @@ VtkProbePolyhedronWrap::~VtkProbePolyhedronWrap()
 
 void VtkProbePolyhedronWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProbePolyhedronWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProbePolyhedron").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ProbePolyhedron").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProbePolyhedron").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ProbePolyhedron").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProbePolyhedronWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProbePolyhedronWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProbePolyhedronWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProbePolyhedronWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -94,6 +95,8 @@ void VtkProbePolyhedronWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProbePolyhedronWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -172,6 +175,7 @@ void VtkProbePolyhedronWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetSource();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,6 +220,7 @@ void VtkProbePolyhedronWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkProbePolyhedronWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,7 +284,7 @@ void VtkProbePolyhedronWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkProbePolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkProbePolyhedronWrap>(info.Holder());
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProbePolyhedron * r;
@@ -291,6 +296,7 @@ void VtkProbePolyhedronWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProbePolyhedronWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -347,7 +353,7 @@ void VtkProbePolyhedronWrap::SetSourceConnection(const Nan::FunctionCallbackInfo
 {
 	VtkProbePolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkProbePolyhedronWrap>(info.Holder());
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -367,7 +373,7 @@ void VtkProbePolyhedronWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkProbePolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkProbePolyhedronWrap>(info.Holder());
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

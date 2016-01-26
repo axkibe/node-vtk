@@ -29,26 +29,27 @@ VtkHighestDensityRegionsStatisticsWrap::~VtkHighestDensityRegionsStatisticsWrap(
 
 void VtkHighestDensityRegionsStatisticsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStatisticsAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHighestDensityRegionsStatisticsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHighestDensityRegionsStatistics").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HighestDensityRegionsStatistics").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHighestDensityRegionsStatistics").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HighestDensityRegionsStatistics").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHighestDensityRegionsStatisticsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHighestDensityRegionsStatisticsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHighestDensityRegionsStatisticsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStatisticsAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStatisticsAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHighestDensityRegionsStatisticsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Aggregate", Aggregate);
 	Nan::SetPrototypeMethod(tpl, "aggregate", Aggregate);
 
@@ -67,6 +68,8 @@ void VtkHighestDensityRegionsStatisticsWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SetSigma", SetSigma);
 	Nan::SetPrototypeMethod(tpl, "setSigma", SetSigma);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHighestDensityRegionsStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -96,10 +99,10 @@ void VtkHighestDensityRegionsStatisticsWrap::Aggregate(const Nan::FunctionCallba
 {
 	VtkHighestDensityRegionsStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkHighestDensityRegionsStatisticsWrap>(info.Holder());
 	vtkHighestDensityRegionsStatistics *native = (vtkHighestDensityRegionsStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectCollectionWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectCollectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -164,6 +167,7 @@ void VtkHighestDensityRegionsStatisticsWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkHighestDensityRegionsStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +183,7 @@ void VtkHighestDensityRegionsStatisticsWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkHighestDensityRegionsStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkHighestDensityRegionsStatisticsWrap>(info.Holder());
 	vtkHighestDensityRegionsStatistics *native = (vtkHighestDensityRegionsStatistics *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHighestDensityRegionsStatistics * r;
@@ -191,6 +195,7 @@ void VtkHighestDensityRegionsStatisticsWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHighestDensityRegionsStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -26,26 +26,27 @@ VtkTextPropertyWrap::~VtkTextPropertyWrap()
 
 void VtkTextPropertyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextPropertyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTextProperty").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TextProperty").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTextProperty").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TextProperty").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextPropertyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextPropertyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextPropertyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextPropertyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BoldOff", BoldOff);
 	Nan::SetPrototypeMethod(tpl, "boldOff", BoldOff);
 
@@ -220,6 +221,8 @@ void VtkTextPropertyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextPropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -684,6 +687,7 @@ void VtkTextPropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -699,7 +703,7 @@ void VtkTextPropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTextProperty * r;
@@ -711,6 +715,7 @@ void VtkTextPropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1160,7 +1165,7 @@ void VtkTextPropertyWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

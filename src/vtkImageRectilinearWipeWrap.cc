@@ -28,26 +28,27 @@ VtkImageRectilinearWipeWrap::~VtkImageRectilinearWipeWrap()
 
 void VtkImageRectilinearWipeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageRectilinearWipeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageRectilinearWipe").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageRectilinearWipe").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageRectilinearWipe").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageRectilinearWipe").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageRectilinearWipeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageRectilinearWipeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageRectilinearWipeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageRectilinearWipeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -105,6 +106,8 @@ void VtkImageRectilinearWipeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWipeToVertical", SetWipeToVertical);
 	Nan::SetPrototypeMethod(tpl, "setWipeToVertical", SetWipeToVertical);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageRectilinearWipeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -219,6 +222,7 @@ void VtkImageRectilinearWipeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageRectilinearWipeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +238,7 @@ void VtkImageRectilinearWipeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageRectilinearWipe * r;
@@ -246,6 +250,7 @@ void VtkImageRectilinearWipeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageRectilinearWipeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -287,7 +292,7 @@ void VtkImageRectilinearWipeWrap::SetInput1Data(const Nan::FunctionCallbackInfo<
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -307,7 +312,7 @@ void VtkImageRectilinearWipeWrap::SetInput2Data(const Nan::FunctionCallbackInfo<
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

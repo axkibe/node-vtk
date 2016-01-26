@@ -28,26 +28,27 @@ VtkSubPixelPositionEdgelsWrap::~VtkSubPixelPositionEdgelsWrap()
 
 void VtkSubPixelPositionEdgelsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSubPixelPositionEdgelsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSubPixelPositionEdgels").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SubPixelPositionEdgels").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSubPixelPositionEdgels").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SubPixelPositionEdgels").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSubPixelPositionEdgelsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSubPixelPositionEdgelsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSubPixelPositionEdgelsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSubPixelPositionEdgelsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -84,6 +85,8 @@ void VtkSubPixelPositionEdgelsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TargetFlagOn", TargetFlagOn);
 	Nan::SetPrototypeMethod(tpl, "targetFlagOn", TargetFlagOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSubPixelPositionEdgelsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkSubPixelPositionEdgelsWrap::GetGradMaps(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetGradMaps();
+		VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,6 +210,7 @@ void VtkSubPixelPositionEdgelsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkSubPixelPositionEdgelsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +226,7 @@ void VtkSubPixelPositionEdgelsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkSubPixelPositionEdgelsWrap *wrapper = ObjectWrap::Unwrap<VtkSubPixelPositionEdgelsWrap>(info.Holder());
 	vtkSubPixelPositionEdgels *native = (vtkSubPixelPositionEdgels *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSubPixelPositionEdgels * r;
@@ -233,6 +238,7 @@ void VtkSubPixelPositionEdgelsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSubPixelPositionEdgelsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -251,7 +257,7 @@ void VtkSubPixelPositionEdgelsWrap::SetGradMapsData(const Nan::FunctionCallbackI
 {
 	VtkSubPixelPositionEdgelsWrap *wrapper = ObjectWrap::Unwrap<VtkSubPixelPositionEdgelsWrap>(info.Holder());
 	vtkSubPixelPositionEdgels *native = (vtkSubPixelPositionEdgels *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStructuredPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStructuredPointsWrap *a0 = ObjectWrap::Unwrap<VtkStructuredPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkCompositeDataProbeFilterWrap::~VtkCompositeDataProbeFilterWrap()
 
 void VtkCompositeDataProbeFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProbeFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProbeFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompositeDataProbeFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompositeDataProbeFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompositeDataProbeFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompositeDataProbeFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompositeDataProbeFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompositeDataProbeFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompositeDataProbeFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompositeDataProbeFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProbeFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProbeFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompositeDataProbeFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkCompositeDataProbeFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompositeDataProbeFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -137,6 +140,7 @@ void VtkCompositeDataProbeFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompositeDataProbeFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +180,7 @@ void VtkCompositeDataProbeFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkCompositeDataProbeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataProbeFilterWrap>(info.Holder());
 	vtkCompositeDataProbeFilter *native = (vtkCompositeDataProbeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompositeDataProbeFilter * r;
@@ -188,6 +192,7 @@ void VtkCompositeDataProbeFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompositeDataProbeFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

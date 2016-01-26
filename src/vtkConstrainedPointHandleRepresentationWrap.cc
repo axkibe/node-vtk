@@ -37,26 +37,27 @@ VtkConstrainedPointHandleRepresentationWrap::~VtkConstrainedPointHandleRepresent
 
 void VtkConstrainedPointHandleRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHandleRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHandleRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkConstrainedPointHandleRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkConstrainedPointHandleRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ConstrainedPointHandleRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkConstrainedPointHandleRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ConstrainedPointHandleRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkConstrainedPointHandleRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkConstrainedPointHandleRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkConstrainedPointHandleRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHandleRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHandleRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkConstrainedPointHandleRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddBoundingPlane", AddBoundingPlane);
 	Nan::SetPrototypeMethod(tpl, "addBoundingPlane", AddBoundingPlane);
 
@@ -177,6 +178,8 @@ void VtkConstrainedPointHandleRepresentationWrap::InitTpl(v8::Local<v8::Function
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkConstrainedPointHandleRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -206,7 +209,7 @@ void VtkConstrainedPointHandleRepresentationWrap::AddBoundingPlane(const Nan::Fu
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -274,6 +277,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetActiveCursorShape(const Nan
 		return;
 	}
 	r = native->GetActiveCursorShape();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -296,6 +300,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetActiveProperty(const Nan::F
 		return;
 	}
 	r = native->GetActiveProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +316,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetActors(const Nan::FunctionC
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -338,6 +343,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetBoundingPlanes(const Nan::F
 		return;
 	}
 	r = native->GetBoundingPlanes();
+		VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -374,6 +380,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetCursorShape(const Nan::Func
 		return;
 	}
 	r = native->GetCursorShape();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -396,6 +403,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetObliquePlane(const Nan::Fun
 		return;
 	}
 	r = native->GetObliquePlane();
+		VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -474,6 +482,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetProperty(const Nan::Functio
 		return;
 	}
 	r = native->GetProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -496,6 +505,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetSelectedProperty(const Nan:
 		return;
 	}
 	r = native->GetSelectedProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -573,6 +583,7 @@ void VtkConstrainedPointHandleRepresentationWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
+		VtkConstrainedPointHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -588,7 +599,7 @@ void VtkConstrainedPointHandleRepresentationWrap::ReleaseGraphicsResources(const
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -620,7 +631,7 @@ void VtkConstrainedPointHandleRepresentationWrap::RemoveBoundingPlane(const Nan:
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -640,7 +651,7 @@ void VtkConstrainedPointHandleRepresentationWrap::RenderOpaqueGeometry(const Nan
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -662,7 +673,7 @@ void VtkConstrainedPointHandleRepresentationWrap::RenderOverlay(const Nan::Funct
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -684,7 +695,7 @@ void VtkConstrainedPointHandleRepresentationWrap::RenderTranslucentPolygonalGeom
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -706,7 +717,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SafeDownCast(const Nan::Functi
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkConstrainedPointHandleRepresentation * r;
@@ -718,6 +729,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkConstrainedPointHandleRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -736,7 +748,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetActiveCursorShape(const Nan
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -756,7 +768,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetBoundingPlanes(const Nan::F
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -776,7 +788,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetCursorShape(const Nan::Func
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -796,7 +808,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetObliquePlane(const Nan::Fun
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -929,7 +941,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetRenderer(const Nan::Functio
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -949,7 +961,7 @@ void VtkConstrainedPointHandleRepresentationWrap::ShallowCopy(const Nan::Functio
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

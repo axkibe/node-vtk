@@ -30,26 +30,27 @@ VtkChartPieWrap::~VtkChartPieWrap()
 
 void VtkChartPieWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkChartWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkChartPieWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkChartPie").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ChartPie").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkChartPie").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ChartPie").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkChartPieWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkChartPieWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkChartPieWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkChartWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkChartPieWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddPlot", AddPlot);
 	Nan::SetPrototypeMethod(tpl, "addPlot", AddPlot);
 
@@ -74,6 +75,8 @@ void VtkChartPieWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkChartPieWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -114,6 +117,7 @@ void VtkChartPieWrap::AddPlot(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->AddPlot(
 			info[0]->Int32Value()
 		);
+			VtkPlotWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -153,6 +157,7 @@ void VtkChartPieWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetLegend();
+		VtkChartLegendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,6 +202,7 @@ void VtkChartPieWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkChartPieWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +218,7 @@ void VtkChartPieWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkChartPieWrap *wrapper = ObjectWrap::Unwrap<VtkChartPieWrap>(info.Holder());
 	vtkChartPie *native = (vtkChartPie *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkChartPie * r;
@@ -224,6 +230,7 @@ void VtkChartPieWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkChartPieWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -242,7 +249,7 @@ void VtkChartPieWrap::SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartPieWrap *wrapper = ObjectWrap::Unwrap<VtkChartPieWrap>(info.Holder());
 	vtkChartPie *native = (vtkChartPie *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContextSceneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContextSceneWrap *a0 = ObjectWrap::Unwrap<VtkContextSceneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

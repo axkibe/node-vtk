@@ -27,26 +27,27 @@ VtkParametricDiniWrap::~VtkParametricDiniWrap()
 
 void VtkParametricDiniWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkParametricFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParametricFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParametricDiniWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParametricDini").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParametricDini").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParametricDini").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParametricDini").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParametricDiniWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParametricDiniWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParametricDiniWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkParametricFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParametricFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParametricDiniWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetA", GetA);
 	Nan::SetPrototypeMethod(tpl, "getA", GetA);
 
@@ -74,6 +75,8 @@ void VtkParametricDiniWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetB", SetB);
 	Nan::SetPrototypeMethod(tpl, "setB", SetB);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParametricDiniWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -188,6 +191,7 @@ void VtkParametricDiniWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkParametricDiniWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +207,7 @@ void VtkParametricDiniWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricDiniWrap *wrapper = ObjectWrap::Unwrap<VtkParametricDiniWrap>(info.Holder());
 	vtkParametricDini *native = (vtkParametricDini *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParametricDini * r;
@@ -215,6 +219,7 @@ void VtkParametricDiniWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParametricDiniWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

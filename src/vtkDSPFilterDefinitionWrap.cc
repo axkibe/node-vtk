@@ -26,26 +26,27 @@ VtkDSPFilterDefinitionWrap::~VtkDSPFilterDefinitionWrap()
 
 void VtkDSPFilterDefinitionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDSPFilterDefinitionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDSPFilterDefinition").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DSPFilterDefinition").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDSPFilterDefinition").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DSPFilterDefinition").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDSPFilterDefinitionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDSPFilterDefinitionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDSPFilterDefinitionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDSPFilterDefinitionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Clear", Clear);
 	Nan::SetPrototypeMethod(tpl, "clear", Clear);
 
@@ -103,6 +104,8 @@ void VtkDSPFilterDefinitionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutputVariableName", SetOutputVariableName);
 	Nan::SetPrototypeMethod(tpl, "setOutputVariableName", SetOutputVariableName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDSPFilterDefinitionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -144,7 +147,7 @@ void VtkDSPFilterDefinitionWrap::Copy(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDSPFilterDefinitionWrap *wrapper = ObjectWrap::Unwrap<VtkDSPFilterDefinitionWrap>(info.Holder());
 	vtkDSPFilterDefinition *native = (vtkDSPFilterDefinition *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDSPFilterDefinitionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDSPFilterDefinitionWrap *a0 = ObjectWrap::Unwrap<VtkDSPFilterDefinitionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -340,6 +343,7 @@ void VtkDSPFilterDefinitionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkDSPFilterDefinitionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -412,7 +416,7 @@ void VtkDSPFilterDefinitionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDSPFilterDefinitionWrap *wrapper = ObjectWrap::Unwrap<VtkDSPFilterDefinitionWrap>(info.Holder());
 	vtkDSPFilterDefinition *native = (vtkDSPFilterDefinition *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDSPFilterDefinition * r;
@@ -424,6 +428,7 @@ void VtkDSPFilterDefinitionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDSPFilterDefinitionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

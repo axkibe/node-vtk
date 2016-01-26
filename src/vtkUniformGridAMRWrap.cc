@@ -31,26 +31,27 @@ VtkUniformGridAMRWrap::~VtkUniformGridAMRWrap()
 
 void VtkUniformGridAMRWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCompositeDataSetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataSetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUniformGridAMRWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUniformGridAMR").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UniformGridAMR").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUniformGridAMR").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UniformGridAMR").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUniformGridAMRWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUniformGridAMRWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUniformGridAMRWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCompositeDataSetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCompositeDataSetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUniformGridAMRWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CopyStructure", CopyStructure);
 	Nan::SetPrototypeMethod(tpl, "copyStructure", CopyStructure);
 
@@ -96,6 +97,8 @@ void VtkUniformGridAMRWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUniformGridAMRWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -125,7 +128,7 @@ void VtkUniformGridAMRWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
 	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataSetWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -145,7 +148,7 @@ void VtkUniformGridAMRWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
 	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -179,7 +182,7 @@ void VtkUniformGridAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
 	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -194,6 +197,7 @@ void VtkUniformGridAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkUniformGridAMRWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -214,6 +218,7 @@ void VtkUniformGridAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkUniformGridAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -246,7 +251,7 @@ void VtkUniformGridAMRWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
 	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataIteratorWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info[0]->ToObject());
 		vtkDataObject * r;
@@ -258,6 +263,7 @@ void VtkUniformGridAMRWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetDataSet(
 			(vtkCompositeDataIterator *) a0->native.GetPointer()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -331,6 +337,7 @@ void VtkUniformGridAMRWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkUniformGridAMRWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -353,6 +360,7 @@ void VtkUniformGridAMRWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewIterator();
+		VtkCompositeDataIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -368,7 +376,7 @@ void VtkUniformGridAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
 	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUniformGridAMR * r;
@@ -380,6 +388,7 @@ void VtkUniformGridAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUniformGridAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -398,10 +407,10 @@ void VtkUniformGridAMRWrap::SetDataSet(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
 	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataIteratorWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -442,7 +451,7 @@ void VtkUniformGridAMRWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
 	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

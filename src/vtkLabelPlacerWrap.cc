@@ -29,26 +29,27 @@ VtkLabelPlacerWrap::~VtkLabelPlacerWrap()
 
 void VtkLabelPlacerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLabelPlacerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLabelPlacer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LabelPlacer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLabelPlacer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LabelPlacer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLabelPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLabelPlacerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLabelPlacerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLabelPlacerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GeneratePerturbedLabelSpokesOff", GeneratePerturbedLabelSpokesOff);
 	Nan::SetPrototypeMethod(tpl, "generatePerturbedLabelSpokesOff", GeneratePerturbedLabelSpokesOff);
 
@@ -142,6 +143,8 @@ void VtkLabelPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseUnicodeStringsOn", UseUnicodeStringsOn);
 	Nan::SetPrototypeMethod(tpl, "useUnicodeStringsOn", UseUnicodeStringsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLabelPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -202,6 +205,7 @@ void VtkLabelPlacerWrap::GetAnchorTransform(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAnchorTransform();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -350,6 +354,7 @@ void VtkLabelPlacerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,6 +399,7 @@ void VtkLabelPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkLabelPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -481,7 +487,7 @@ void VtkLabelPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLabelPlacer * r;
@@ -493,6 +499,7 @@ void VtkLabelPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLabelPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -587,7 +594,7 @@ void VtkLabelPlacerWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkOpenGLHardwareSelectorWrap::~VtkOpenGLHardwareSelectorWrap()
 
 void VtkOpenGLHardwareSelectorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHardwareSelectorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHardwareSelectorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLHardwareSelectorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLHardwareSelector").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLHardwareSelector").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLHardwareSelector").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLHardwareSelector").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLHardwareSelectorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLHardwareSelectorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLHardwareSelectorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHardwareSelectorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHardwareSelectorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLHardwareSelectorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BeginRenderProp", BeginRenderProp);
 	Nan::SetPrototypeMethod(tpl, "beginRenderProp", BeginRenderProp);
 
@@ -65,6 +66,8 @@ void VtkOpenGLHardwareSelectorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLHardwareSelectorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -161,6 +164,7 @@ void VtkOpenGLHardwareSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLHardwareSelectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +180,7 @@ void VtkOpenGLHardwareSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkOpenGLHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHardwareSelectorWrap>(info.Holder());
 	vtkOpenGLHardwareSelector *native = (vtkOpenGLHardwareSelector *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLHardwareSelector * r;
@@ -188,6 +192,7 @@ void VtkOpenGLHardwareSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLHardwareSelectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

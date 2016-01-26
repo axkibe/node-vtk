@@ -28,26 +28,27 @@ VtkLookupTableWrap::~VtkLookupTableWrap()
 
 void VtkLookupTableWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkScalarsToColorsWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkScalarsToColorsWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLookupTableWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLookupTable").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LookupTable").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLookupTable").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LookupTable").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLookupTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLookupTableWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLookupTableWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkScalarsToColorsWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkScalarsToColorsWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLookupTableWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Allocate", Allocate);
 	Nan::SetPrototypeMethod(tpl, "allocate", Allocate);
 
@@ -135,6 +136,8 @@ void VtkLookupTableWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UsingLogScale", UsingLogScale);
 	Nan::SetPrototypeMethod(tpl, "usingLogScale", UsingLogScale);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLookupTableWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -201,7 +204,7 @@ void VtkLookupTableWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -303,6 +306,7 @@ void VtkLookupTableWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetTable();
+		VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -361,6 +365,7 @@ void VtkLookupTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -376,7 +381,7 @@ void VtkLookupTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLookupTable * r;
@@ -388,6 +393,7 @@ void VtkLookupTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLookupTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -627,7 +633,7 @@ void VtkLookupTableWrap::SetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

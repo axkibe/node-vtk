@@ -29,26 +29,27 @@ VtkOrderedTriangulatorWrap::~VtkOrderedTriangulatorWrap()
 
 void VtkOrderedTriangulatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOrderedTriangulatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOrderedTriangulator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OrderedTriangulator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOrderedTriangulator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OrderedTriangulator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOrderedTriangulatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOrderedTriangulatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOrderedTriangulatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOrderedTriangulatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -115,6 +116,8 @@ void VtkOrderedTriangulatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseTwoSortIdsOn", UseTwoSortIdsOn);
 	Nan::SetPrototypeMethod(tpl, "useTwoSortIdsOn", UseTwoSortIdsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOrderedTriangulatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -160,13 +163,13 @@ void VtkOrderedTriangulatorWrap::GetNextTetra(const Nan::FunctionCallbackInfo<v8
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTetraWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTetraWrap *a1 = ObjectWrap::Unwrap<VtkTetraWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkDoubleArrayWrap *a3 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[3]->ToObject());
 					int r;
@@ -334,6 +337,7 @@ void VtkOrderedTriangulatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkOrderedTriangulatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -373,7 +377,7 @@ void VtkOrderedTriangulatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOrderedTriangulator * r;
@@ -385,6 +389,7 @@ void VtkOrderedTriangulatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOrderedTriangulatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

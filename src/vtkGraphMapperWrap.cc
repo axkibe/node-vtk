@@ -33,26 +33,27 @@ VtkGraphMapperWrap::~VtkGraphMapperWrap()
 
 void VtkGraphMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGraphMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGraphMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GraphMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGraphMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GraphMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGraphMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGraphMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGraphMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGraphMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddIconType", AddIconType);
 	Nan::SetPrototypeMethod(tpl, "addIconType", AddIconType);
 
@@ -188,6 +189,8 @@ void VtkGraphMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVertexColorArrayName", SetVertexColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVertexColorArrayName", SetVertexColorArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGraphMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -408,6 +411,7 @@ void VtkGraphMapperWrap::GetEdgeLookupTable(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetEdgeLookupTable();
+		VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -500,6 +504,7 @@ void VtkGraphMapperWrap::GetIconTexture(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetIconTexture();
+		VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -522,6 +527,7 @@ void VtkGraphMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetInput();
+		VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -572,6 +578,7 @@ void VtkGraphMapperWrap::GetVertexLookupTable(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetVertexLookupTable();
+		VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -640,6 +647,7 @@ void VtkGraphMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkGraphMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -655,7 +663,7 @@ void VtkGraphMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInf
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -675,10 +683,10 @@ void VtkGraphMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -700,7 +708,7 @@ void VtkGraphMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGraphMapper * r;
@@ -712,6 +720,7 @@ void VtkGraphMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGraphMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -891,7 +900,7 @@ void VtkGraphMapperWrap::SetIconTexture(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextureWrap *a0 = ObjectWrap::Unwrap<VtkTextureWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -911,7 +920,7 @@ void VtkGraphMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

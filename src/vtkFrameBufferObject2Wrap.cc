@@ -27,26 +27,27 @@ VtkFrameBufferObject2Wrap::~VtkFrameBufferObject2Wrap()
 
 void VtkFrameBufferObject2Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFrameBufferObject2Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFrameBufferObject2").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FrameBufferObject2").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFrameBufferObject2").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FrameBufferObject2").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFrameBufferObject2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFrameBufferObject2Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFrameBufferObject2Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFrameBufferObject2Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeactivateDrawBuffers", DeactivateDrawBuffers);
 	Nan::SetPrototypeMethod(tpl, "deactivateDrawBuffers", DeactivateDrawBuffers);
 
@@ -80,6 +81,8 @@ void VtkFrameBufferObject2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetContext", SetContext);
 	Nan::SetPrototypeMethod(tpl, "setContext", SetContext);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFrameBufferObject2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -154,6 +157,7 @@ void VtkFrameBufferObject2Wrap::GetContext(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetContext();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,6 +225,7 @@ void VtkFrameBufferObject2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkFrameBufferObject2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,7 +241,7 @@ void VtkFrameBufferObject2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
 	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFrameBufferObject2 * r;
@@ -248,6 +253,7 @@ void VtkFrameBufferObject2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFrameBufferObject2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -290,7 +296,7 @@ void VtkFrameBufferObject2Wrap::SetContext(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
 	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

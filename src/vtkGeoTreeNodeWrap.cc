@@ -26,26 +26,27 @@ VtkGeoTreeNodeWrap::~VtkGeoTreeNodeWrap()
 
 void VtkGeoTreeNodeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoTreeNodeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoTreeNode").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoTreeNode").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoTreeNode").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoTreeNode").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoTreeNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoTreeNodeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoTreeNodeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoTreeNodeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateChildren", CreateChildren);
 	Nan::SetPrototypeMethod(tpl, "createChildren", CreateChildren);
 
@@ -109,6 +110,8 @@ void VtkGeoTreeNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoTreeNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -152,7 +155,7 @@ void VtkGeoTreeNodeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
 	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -195,6 +198,7 @@ void VtkGeoTreeNodeWrap::GetChildTreeNode(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetChildTreeNode(
 			info[0]->Int32Value()
 		);
+			VtkGeoTreeNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -248,6 +252,7 @@ void VtkGeoTreeNodeWrap::GetNewer(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetNewer();
+		VtkGeoTreeNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -270,6 +275,7 @@ void VtkGeoTreeNodeWrap::GetOlder(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetOlder();
+		VtkGeoTreeNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,6 +298,7 @@ void VtkGeoTreeNodeWrap::GetParentTreeNode(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetParentTreeNode();
+		VtkGeoTreeNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -350,6 +357,7 @@ void VtkGeoTreeNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoTreeNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -365,7 +373,7 @@ void VtkGeoTreeNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
 	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoTreeNode * r;
@@ -377,6 +385,7 @@ void VtkGeoTreeNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoTreeNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -395,7 +404,7 @@ void VtkGeoTreeNodeWrap::SetChild(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
 	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -484,7 +493,7 @@ void VtkGeoTreeNodeWrap::SetNewer(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
 	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -504,7 +513,7 @@ void VtkGeoTreeNodeWrap::SetOlder(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
 	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -524,7 +533,7 @@ void VtkGeoTreeNodeWrap::SetParent(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
 	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -544,7 +553,7 @@ void VtkGeoTreeNodeWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
 	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

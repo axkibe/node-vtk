@@ -29,26 +29,27 @@ VtkUnstructuredGridPartialPreIntegrationWrap::~VtkUnstructuredGridPartialPreInte
 
 void VtkUnstructuredGridPartialPreIntegrationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridVolumeRayIntegratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUnstructuredGridPartialPreIntegrationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUnstructuredGridPartialPreIntegration").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UnstructuredGridPartialPreIntegration").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUnstructuredGridPartialPreIntegration").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UnstructuredGridPartialPreIntegration").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUnstructuredGridPartialPreIntegrationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUnstructuredGridPartialPreIntegrationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUnstructuredGridPartialPreIntegrationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUnstructuredGridPartialPreIntegrationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildPsiTable", BuildPsiTable);
 	Nan::SetPrototypeMethod(tpl, "buildPsiTable", BuildPsiTable);
 
@@ -67,6 +68,8 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::InitTpl(v8::Local<v8::Functio
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUnstructuredGridPartialPreIntegrationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,10 +125,10 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::Initialize(const Nan::Functio
 {
 	VtkUnstructuredGridPartialPreIntegrationWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridPartialPreIntegrationWrap>(info.Holder());
 	vtkUnstructuredGridPartialPreIntegration *native = (vtkUnstructuredGridPartialPreIntegration *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -176,6 +179,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::NewInstance(const Nan::Functi
 		return;
 	}
 	r = native->NewInstance();
+		VtkUnstructuredGridPartialPreIntegrationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +195,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::SafeDownCast(const Nan::Funct
 {
 	VtkUnstructuredGridPartialPreIntegrationWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridPartialPreIntegrationWrap>(info.Holder());
 	vtkUnstructuredGridPartialPreIntegration *native = (vtkUnstructuredGridPartialPreIntegration *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUnstructuredGridPartialPreIntegration * r;
@@ -203,6 +207,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::SafeDownCast(const Nan::Funct
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUnstructuredGridPartialPreIntegrationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

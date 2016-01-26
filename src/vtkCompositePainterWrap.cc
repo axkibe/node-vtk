@@ -30,26 +30,27 @@ VtkCompositePainterWrap::~VtkCompositePainterWrap()
 
 void VtkCompositePainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompositePainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompositePainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompositePainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompositePainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompositePainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompositePainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompositePainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompositePainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompositePainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DISPLAY_ATTRIBUTES", DISPLAY_ATTRIBUTES);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
@@ -73,6 +74,8 @@ void VtkCompositePainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 	Nan::SetPrototypeMethod(tpl, "setCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompositePainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -109,6 +112,7 @@ void VtkCompositePainterWrap::DISPLAY_ATTRIBUTES(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->DISPLAY_ATTRIBUTES();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -145,6 +149,7 @@ void VtkCompositePainterWrap::GetCompositeDataDisplayAttributes(const Nan::Funct
 		return;
 	}
 	r = native->GetCompositeDataDisplayAttributes();
+		VtkCompositeDataDisplayAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -167,6 +172,7 @@ void VtkCompositePainterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetOutput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,6 +217,7 @@ void VtkCompositePainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompositePainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,7 +233,7 @@ void VtkCompositePainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCompositePainterWrap *wrapper = ObjectWrap::Unwrap<VtkCompositePainterWrap>(info.Holder());
 	vtkCompositePainter *native = (vtkCompositePainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompositePainter * r;
@@ -238,6 +245,7 @@ void VtkCompositePainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompositePainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -256,7 +264,7 @@ void VtkCompositePainterWrap::SetCompositeDataDisplayAttributes(const Nan::Funct
 {
 	VtkCompositePainterWrap *wrapper = ObjectWrap::Unwrap<VtkCompositePainterWrap>(info.Holder());
 	vtkCompositePainter *native = (vtkCompositePainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataDisplayAttributesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataDisplayAttributesWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

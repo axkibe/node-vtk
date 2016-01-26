@@ -27,26 +27,27 @@ VtkNetCDFCAMReaderWrap::~VtkNetCDFCAMReaderWrap()
 
 void VtkNetCDFCAMReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkNetCDFCAMReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkNetCDFCAMReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("NetCDFCAMReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkNetCDFCAMReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("NetCDFCAMReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkNetCDFCAMReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkNetCDFCAMReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkNetCDFCAMReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkNetCDFCAMReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CanReadFile", CanReadFile);
 	Nan::SetPrototypeMethod(tpl, "canReadFile", CanReadFile);
 
@@ -98,6 +99,8 @@ void VtkNetCDFCAMReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SingleLevelOn", SingleLevelOn);
 	Nan::SetPrototypeMethod(tpl, "singleLevelOn", SingleLevelOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkNetCDFCAMReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -276,6 +279,7 @@ void VtkNetCDFCAMReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkNetCDFCAMReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +295,7 @@ void VtkNetCDFCAMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkNetCDFCAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCAMReaderWrap>(info.Holder());
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkNetCDFCAMReader * r;
@@ -303,6 +307,7 @@ void VtkNetCDFCAMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkNetCDFCAMReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

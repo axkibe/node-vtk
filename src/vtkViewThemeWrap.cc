@@ -28,26 +28,27 @@ VtkViewThemeWrap::~VtkViewThemeWrap()
 
 void VtkViewThemeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkViewThemeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkViewTheme").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ViewTheme").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkViewTheme").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ViewTheme").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkViewThemeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkViewThemeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkViewThemeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkViewThemeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateMellowTheme", CreateMellowTheme);
 	Nan::SetPrototypeMethod(tpl, "createMellowTheme", CreateMellowTheme);
 
@@ -192,6 +193,8 @@ void VtkViewThemeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVertexLabelColor", SetVertexLabelColor);
 	Nan::SetPrototypeMethod(tpl, "setVertexLabelColor", SetVertexLabelColor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkViewThemeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -228,6 +231,7 @@ void VtkViewThemeWrap::CreateMellowTheme(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->CreateMellowTheme();
+		VtkViewThemeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,6 +254,7 @@ void VtkViewThemeWrap::CreateNeonTheme(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->CreateNeonTheme();
+		VtkViewThemeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,6 +277,7 @@ void VtkViewThemeWrap::CreateOceanTheme(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->CreateOceanTheme();
+		VtkViewThemeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,6 +300,7 @@ void VtkViewThemeWrap::GetCellLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetCellLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -330,6 +337,7 @@ void VtkViewThemeWrap::GetCellTextProperty(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetCellTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,6 +388,7 @@ void VtkViewThemeWrap::GetPointLookupTable(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetPointLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -430,6 +439,7 @@ void VtkViewThemeWrap::GetPointTextProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetPointTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -502,6 +512,7 @@ void VtkViewThemeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkViewThemeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -517,7 +528,7 @@ void VtkViewThemeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkViewTheme * r;
@@ -529,6 +540,7 @@ void VtkViewThemeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkViewThemeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -722,7 +734,7 @@ void VtkViewThemeWrap::SetCellLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -784,7 +796,7 @@ void VtkViewThemeWrap::SetCellTextProperty(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -973,7 +985,7 @@ void VtkViewThemeWrap::SetPointLookupTable(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1054,7 +1066,7 @@ void VtkViewThemeWrap::SetPointTextProperty(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

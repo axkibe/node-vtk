@@ -27,26 +27,27 @@ VtkOnePieceExtentTranslatorWrap::~VtkOnePieceExtentTranslatorWrap()
 
 void VtkOnePieceExtentTranslatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExtentTranslatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtentTranslatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOnePieceExtentTranslatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOnePieceExtentTranslator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OnePieceExtentTranslator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOnePieceExtentTranslator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OnePieceExtentTranslator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOnePieceExtentTranslatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOnePieceExtentTranslatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOnePieceExtentTranslatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtentTranslatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtentTranslatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOnePieceExtentTranslatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkOnePieceExtentTranslatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOnePieceExtentTranslatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkOnePieceExtentTranslatorWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkOnePieceExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkOnePieceExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkOnePieceExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkOnePieceExtentTranslatorWrap>(info.Holder());
 	vtkOnePieceExtentTranslator *native = (vtkOnePieceExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOnePieceExtentTranslator * r;
@@ -158,6 +162,7 @@ void VtkOnePieceExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOnePieceExtentTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

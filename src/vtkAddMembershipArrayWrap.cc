@@ -28,26 +28,27 @@ VtkAddMembershipArrayWrap::~VtkAddMembershipArrayWrap()
 
 void VtkAddMembershipArrayWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAddMembershipArrayWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAddMembershipArray").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AddMembershipArray").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAddMembershipArray").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AddMembershipArray").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAddMembershipArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAddMembershipArrayWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAddMembershipArrayWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAddMembershipArrayWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -90,6 +91,8 @@ void VtkAddMembershipArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutputArrayName", SetOutputArrayName);
 	Nan::SetPrototypeMethod(tpl, "setOutputArrayName", SetOutputArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAddMembershipArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -196,6 +199,7 @@ void VtkAddMembershipArrayWrap::GetInputValues(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetInputValues();
+		VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -254,6 +258,7 @@ void VtkAddMembershipArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkAddMembershipArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,7 +274,7 @@ void VtkAddMembershipArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAddMembershipArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAddMembershipArrayWrap>(info.Holder());
 	vtkAddMembershipArray *native = (vtkAddMembershipArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAddMembershipArray * r;
@@ -281,6 +286,7 @@ void VtkAddMembershipArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAddMembershipArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -338,7 +344,7 @@ void VtkAddMembershipArrayWrap::SetInputValues(const Nan::FunctionCallbackInfo<v
 {
 	VtkAddMembershipArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAddMembershipArrayWrap>(info.Holder());
 	vtkAddMembershipArray *native = (vtkAddMembershipArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

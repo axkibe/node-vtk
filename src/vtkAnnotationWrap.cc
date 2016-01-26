@@ -35,26 +35,27 @@ VtkAnnotationWrap::~VtkAnnotationWrap()
 
 void VtkAnnotationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAnnotationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAnnotation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Annotation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAnnotation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Annotation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAnnotationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAnnotationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAnnotationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAnnotationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "COLOR", COLOR);
 
 	Nan::SetPrototypeMethod(tpl, "DATA", DATA);
@@ -99,6 +100,8 @@ void VtkAnnotationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAnnotationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkAnnotationWrap::COLOR(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->COLOR();
+		VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -157,6 +161,7 @@ void VtkAnnotationWrap::DATA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->DATA();
+		VtkInformationDataObjectKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +177,7 @@ void VtkAnnotationWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationWrap>(info.Holder());
 	vtkAnnotation *native = (vtkAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -199,6 +204,7 @@ void VtkAnnotationWrap::ENABLE(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->ENABLE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +234,7 @@ void VtkAnnotationWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationWrap>(info.Holder());
 	vtkAnnotation *native = (vtkAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -243,6 +249,7 @@ void VtkAnnotationWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkAnnotationWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -263,6 +270,7 @@ void VtkAnnotationWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkAnnotationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,6 +296,7 @@ void VtkAnnotationWrap::GetSelection(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetSelection();
+		VtkSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,6 +319,7 @@ void VtkAnnotationWrap::HIDE(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->HIDE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,6 +342,7 @@ void VtkAnnotationWrap::ICON_INDEX(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->ICON_INDEX();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -388,6 +399,7 @@ void VtkAnnotationWrap::LABEL(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->LABEL();
+		VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -410,6 +422,7 @@ void VtkAnnotationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkAnnotationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,6 +445,7 @@ void VtkAnnotationWrap::OPACITY(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->OPACITY();
+		VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -447,7 +461,7 @@ void VtkAnnotationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationWrap>(info.Holder());
 	vtkAnnotation *native = (vtkAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAnnotation * r;
@@ -459,6 +473,7 @@ void VtkAnnotationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAnnotationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -477,7 +492,7 @@ void VtkAnnotationWrap::SetSelection(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationWrap>(info.Holder());
 	vtkAnnotation *native = (vtkAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -497,7 +512,7 @@ void VtkAnnotationWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationWrap>(info.Holder());
 	vtkAnnotation *native = (vtkAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -29,26 +29,27 @@ VtkXMLWriterWrap::~VtkXMLWriterWrap()
 
 void VtkXMLWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EncodeAppendedDataOff", EncodeAppendedDataOff);
 	Nan::SetPrototypeMethod(tpl, "encodeAppendedDataOff", EncodeAppendedDataOff);
 
@@ -181,6 +182,8 @@ void VtkXMLWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WriteNextTime", WriteNextTime);
 	Nan::SetPrototypeMethod(tpl, "writeNextTime", WriteNextTime);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -269,6 +272,7 @@ void VtkXMLWriterWrap::GetCompressor(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetCompressor();
+		VtkDataCompressorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -379,6 +383,7 @@ void VtkXMLWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -397,6 +402,7 @@ void VtkXMLWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -469,6 +475,7 @@ void VtkXMLWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -484,7 +491,7 @@ void VtkXMLWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLWriter * r;
@@ -496,6 +503,7 @@ void VtkXMLWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -557,7 +565,7 @@ void VtkXMLWriterWrap::SetCompressor(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataCompressorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataCompressorWrap *a0 = ObjectWrap::Unwrap<VtkDataCompressorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -800,7 +808,7 @@ void VtkXMLWriterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -815,7 +823,7 @@ void VtkXMLWriterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

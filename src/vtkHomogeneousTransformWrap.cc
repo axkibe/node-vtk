@@ -30,26 +30,27 @@ VtkHomogeneousTransformWrap::~VtkHomogeneousTransformWrap()
 
 void VtkHomogeneousTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHomogeneousTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHomogeneousTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HomogeneousTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHomogeneousTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HomogeneousTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHomogeneousTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHomogeneousTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHomogeneousTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHomogeneousTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -74,6 +75,8 @@ void VtkHomogeneousTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TransformPointsNormalsVectors", TransformPointsNormalsVectors);
 	Nan::SetPrototypeMethod(tpl, "transformPointsNormalsVectors", TransformPointsNormalsVectors);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHomogeneousTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -124,6 +127,7 @@ void VtkHomogeneousTransformWrap::GetHomogeneousInverse(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetHomogeneousInverse();
+		VtkHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -139,7 +143,7 @@ void VtkHomogeneousTransformWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkHomogeneousTransformWrap *wrapper = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info.Holder());
 	vtkHomogeneousTransform *native = (vtkHomogeneousTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -159,6 +163,7 @@ void VtkHomogeneousTransformWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,6 +208,7 @@ void VtkHomogeneousTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -218,7 +224,7 @@ void VtkHomogeneousTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkHomogeneousTransformWrap *wrapper = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info.Holder());
 	vtkHomogeneousTransform *native = (vtkHomogeneousTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHomogeneousTransform * r;
@@ -230,6 +236,7 @@ void VtkHomogeneousTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHomogeneousTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -248,10 +255,10 @@ void VtkHomogeneousTransformWrap::TransformPoints(const Nan::FunctionCallbackInf
 {
 	VtkHomogeneousTransformWrap *wrapper = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info.Holder());
 	vtkHomogeneousTransform *native = (vtkHomogeneousTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -273,22 +280,22 @@ void VtkHomogeneousTransformWrap::TransformPointsNormalsVectors(const Nan::Funct
 {
 	VtkHomogeneousTransformWrap *wrapper = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info.Holder());
 	vtkHomogeneousTransform *native = (vtkHomogeneousTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkDataArrayWrap *a3 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkDataArrayWrap *a4 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[4]->ToObject());
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkDataArrayWrap *a5 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[5]->ToObject());
 							if(info.Length() != 6)

@@ -27,26 +27,27 @@ VtkTextCodecFactoryWrap::~VtkTextCodecFactoryWrap()
 
 void VtkTextCodecFactoryWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextCodecFactoryWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTextCodecFactory").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TextCodecFactory").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTextCodecFactory").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TextCodecFactory").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextCodecFactoryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextCodecFactoryWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextCodecFactoryWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextCodecFactoryWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CodecForName", CodecForName);
 	Nan::SetPrototypeMethod(tpl, "codecForName", CodecForName);
 
@@ -68,6 +69,8 @@ void VtkTextCodecFactoryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UnRegisterAllCreateCallbacks", UnRegisterAllCreateCallbacks);
 	Nan::SetPrototypeMethod(tpl, "unRegisterAllCreateCallbacks", UnRegisterAllCreateCallbacks);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextCodecFactoryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -109,6 +112,7 @@ void VtkTextCodecFactoryWrap::CodecForName(const Nan::FunctionCallbackInfo<v8::V
 		r = native->CodecForName(
 			*a0
 		);
+			VtkTextCodecWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -182,6 +186,7 @@ void VtkTextCodecFactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextCodecFactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +202,7 @@ void VtkTextCodecFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTextCodecFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkTextCodecFactoryWrap>(info.Holder());
 	vtkTextCodecFactory *native = (vtkTextCodecFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTextCodecFactory * r;
@@ -209,6 +214,7 @@ void VtkTextCodecFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextCodecFactoryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

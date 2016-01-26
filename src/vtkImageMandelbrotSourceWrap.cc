@@ -27,26 +27,27 @@ VtkImageMandelbrotSourceWrap::~VtkImageMandelbrotSourceWrap()
 
 void VtkImageMandelbrotSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageMandelbrotSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageMandelbrotSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageMandelbrotSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageMandelbrotSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageMandelbrotSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageMandelbrotSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageMandelbrotSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageMandelbrotSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageMandelbrotSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ConstantSizeOff", ConstantSizeOff);
 	Nan::SetPrototypeMethod(tpl, "constantSizeOff", ConstantSizeOff);
 
@@ -107,6 +108,8 @@ void VtkImageMandelbrotSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageMandelbrotSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -160,7 +163,7 @@ void VtkImageMandelbrotSourceWrap::CopyOriginAndSample(const Nan::FunctionCallba
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMandelbrotSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageMandelbrotSourceWrap *a0 = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -279,6 +282,7 @@ void VtkImageMandelbrotSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageMandelbrotSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +325,7 @@ void VtkImageMandelbrotSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageMandelbrotSource * r;
@@ -333,6 +337,7 @@ void VtkImageMandelbrotSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageMandelbrotSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

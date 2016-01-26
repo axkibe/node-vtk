@@ -27,26 +27,27 @@ VtkImagePropertyWrap::~VtkImagePropertyWrap()
 
 void VtkImagePropertyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImagePropertyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageProperty").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageProperty").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageProperty").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageProperty").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImagePropertyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImagePropertyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImagePropertyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImagePropertyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BackingOff", BackingOff);
 	Nan::SetPrototypeMethod(tpl, "backingOff", BackingOff);
 
@@ -191,6 +192,8 @@ void VtkImagePropertyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImagePropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -268,7 +271,7 @@ void VtkImagePropertyWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImagePropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImagePropertyWrap *a0 = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -519,6 +522,7 @@ void VtkImagePropertyWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -619,6 +623,7 @@ void VtkImagePropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkImagePropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -634,7 +639,7 @@ void VtkImagePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageProperty * r;
@@ -646,6 +651,7 @@ void VtkImagePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImagePropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -925,7 +931,7 @@ void VtkImagePropertyWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

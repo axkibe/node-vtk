@@ -26,26 +26,27 @@ VtkGenericVertexAttributeMappingWrap::~VtkGenericVertexAttributeMappingWrap()
 
 void VtkGenericVertexAttributeMappingWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericVertexAttributeMappingWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericVertexAttributeMapping").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericVertexAttributeMapping").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericVertexAttributeMapping").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericVertexAttributeMapping").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericVertexAttributeMappingWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericVertexAttributeMappingWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericVertexAttributeMappingWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericVertexAttributeMappingWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddMapping", AddMapping);
 	Nan::SetPrototypeMethod(tpl, "addMapping", AddMapping);
 
@@ -64,6 +65,8 @@ void VtkGenericVertexAttributeMappingWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericVertexAttributeMappingWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -194,6 +197,7 @@ void VtkGenericVertexAttributeMappingWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericVertexAttributeMappingWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +225,7 @@ void VtkGenericVertexAttributeMappingWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
 	vtkGenericVertexAttributeMapping *native = (vtkGenericVertexAttributeMapping *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericVertexAttributeMapping * r;
@@ -233,6 +237,7 @@ void VtkGenericVertexAttributeMappingWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericVertexAttributeMappingWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

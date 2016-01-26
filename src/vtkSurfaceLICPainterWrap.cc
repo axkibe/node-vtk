@@ -30,26 +30,27 @@ VtkSurfaceLICPainterWrap::~VtkSurfaceLICPainterWrap()
 
 void VtkSurfaceLICPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSurfaceLICPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSurfaceLICPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SurfaceLICPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSurfaceLICPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SurfaceLICPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSurfaceLICPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSurfaceLICPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSurfaceLICPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSurfaceLICPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AntiAliasOff", AntiAliasOff);
 	Nan::SetPrototypeMethod(tpl, "antiAliasOff", AntiAliasOff);
 
@@ -281,6 +282,8 @@ void VtkSurfaceLICPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WriteTimerLog", WriteTimerLog);
 	Nan::SetPrototypeMethod(tpl, "writeTimerLog", WriteTimerLog);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSurfaceLICPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -659,6 +662,7 @@ void VtkSurfaceLICPainterWrap::GetNoiseDataSet(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetNoiseDataSet();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -779,6 +783,7 @@ void VtkSurfaceLICPainterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetOutput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -861,6 +866,7 @@ void VtkSurfaceLICPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkSurfaceLICPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -900,7 +906,7 @@ void VtkSurfaceLICPainterWrap::ReleaseGraphicsResources(const Nan::FunctionCallb
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -920,7 +926,7 @@ void VtkSurfaceLICPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSurfaceLICPainter * r;
@@ -932,6 +938,7 @@ void VtkSurfaceLICPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSurfaceLICPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1418,7 +1425,7 @@ void VtkSurfaceLICPainterWrap::SetNoiseDataSet(const Nan::FunctionCallbackInfo<v
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

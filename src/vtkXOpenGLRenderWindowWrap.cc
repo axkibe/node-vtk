@@ -27,26 +27,27 @@ VtkXOpenGLRenderWindowWrap::~VtkXOpenGLRenderWindowWrap()
 
 void VtkXOpenGLRenderWindowWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkOpenGLRenderWindowWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOpenGLRenderWindowWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXOpenGLRenderWindowWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXOpenGLRenderWindow").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XOpenGLRenderWindow").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXOpenGLRenderWindow").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XOpenGLRenderWindow").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXOpenGLRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXOpenGLRenderWindowWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXOpenGLRenderWindowWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkOpenGLRenderWindowWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOpenGLRenderWindowWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXOpenGLRenderWindowWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Finalize", Finalize);
 	Nan::SetPrototypeMethod(tpl, "finalize", Finalize);
 
@@ -140,6 +141,8 @@ void VtkXOpenGLRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WindowRemap", WindowRemap);
 	Nan::SetPrototypeMethod(tpl, "windowRemap", WindowRemap);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXOpenGLRenderWindowWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -314,6 +317,7 @@ void VtkXOpenGLRenderWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkXOpenGLRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -367,7 +371,7 @@ void VtkXOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXOpenGLRenderWindow * r;
@@ -379,6 +383,7 @@ void VtkXOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXOpenGLRenderWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

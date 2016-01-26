@@ -28,26 +28,27 @@ VtkLabelSizeCalculatorWrap::~VtkLabelSizeCalculatorWrap()
 
 void VtkLabelSizeCalculatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLabelSizeCalculatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLabelSizeCalculator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LabelSizeCalculator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLabelSizeCalculator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LabelSizeCalculator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLabelSizeCalculatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLabelSizeCalculatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLabelSizeCalculatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLabelSizeCalculatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkLabelSizeCalculatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetLabelSizeArrayName", SetLabelSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setLabelSizeArrayName", SetLabelSizeArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLabelSizeCalculatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -126,6 +129,7 @@ void VtkLabelSizeCalculatorWrap::GetFontProperty(const Nan::FunctionCallbackInfo
 		r = native->GetFontProperty(
 			info[0]->Int32Value()
 		);
+			VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -187,6 +191,7 @@ void VtkLabelSizeCalculatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkLabelSizeCalculatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +207,7 @@ void VtkLabelSizeCalculatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLabelSizeCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelSizeCalculatorWrap>(info.Holder());
 	vtkLabelSizeCalculator *native = (vtkLabelSizeCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLabelSizeCalculator * r;
@@ -214,6 +219,7 @@ void VtkLabelSizeCalculatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLabelSizeCalculatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,7 +238,7 @@ void VtkLabelSizeCalculatorWrap::SetFontProperty(const Nan::FunctionCallbackInfo
 {
 	VtkLabelSizeCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelSizeCalculatorWrap>(info.Holder());
 	vtkLabelSizeCalculator *native = (vtkLabelSizeCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())

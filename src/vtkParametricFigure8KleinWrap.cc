@@ -27,26 +27,27 @@ VtkParametricFigure8KleinWrap::~VtkParametricFigure8KleinWrap()
 
 void VtkParametricFigure8KleinWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkParametricFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParametricFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParametricFigure8KleinWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParametricFigure8Klein").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParametricFigure8Klein").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParametricFigure8Klein").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParametricFigure8Klein").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParametricFigure8KleinWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParametricFigure8KleinWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParametricFigure8KleinWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkParametricFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParametricFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParametricFigure8KleinWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkParametricFigure8KleinWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParametricFigure8KleinWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -168,6 +171,7 @@ void VtkParametricFigure8KleinWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkParametricFigure8KleinWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +187,7 @@ void VtkParametricFigure8KleinWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkParametricFigure8KleinWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFigure8KleinWrap>(info.Holder());
 	vtkParametricFigure8Klein *native = (vtkParametricFigure8Klein *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParametricFigure8Klein * r;
@@ -195,6 +199,7 @@ void VtkParametricFigure8KleinWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParametricFigure8KleinWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

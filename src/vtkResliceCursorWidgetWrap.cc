@@ -28,26 +28,27 @@ VtkResliceCursorWidgetWrap::~VtkResliceCursorWidgetWrap()
 
 void VtkResliceCursorWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkResliceCursorWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkResliceCursorWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ResliceCursorWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkResliceCursorWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ResliceCursorWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkResliceCursorWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkResliceCursorWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkResliceCursorWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkResliceCursorWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -87,6 +88,8 @@ void VtkResliceCursorWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkResliceCursorWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -163,6 +166,7 @@ void VtkResliceCursorWidgetWrap::GetResliceCursorRepresentation(const Nan::Funct
 		return;
 	}
 	r = native->GetResliceCursorRepresentation();
+		VtkResliceCursorRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -231,6 +235,7 @@ void VtkResliceCursorWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkResliceCursorWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +263,7 @@ void VtkResliceCursorWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkResliceCursorWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWidgetWrap>(info.Holder());
 	vtkResliceCursorWidget *native = (vtkResliceCursorWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkResliceCursorWidget * r;
@@ -270,6 +275,7 @@ void VtkResliceCursorWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkResliceCursorWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -326,7 +332,7 @@ void VtkResliceCursorWidgetWrap::SetRepresentation(const Nan::FunctionCallbackIn
 {
 	VtkResliceCursorWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWidgetWrap>(info.Holder());
 	vtkResliceCursorWidget *native = (vtkResliceCursorWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkResliceCursorRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkResliceCursorRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

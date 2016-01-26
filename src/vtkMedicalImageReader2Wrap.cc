@@ -28,26 +28,27 @@ VtkMedicalImageReader2Wrap::~VtkMedicalImageReader2Wrap()
 
 void VtkMedicalImageReader2Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageReader2Wrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageReader2Wrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMedicalImageReader2Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMedicalImageReader2").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MedicalImageReader2").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMedicalImageReader2").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MedicalImageReader2").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMedicalImageReader2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMedicalImageReader2Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMedicalImageReader2Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageReader2Wrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageReader2Wrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMedicalImageReader2Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -105,6 +106,8 @@ void VtkMedicalImageReader2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetStudy", SetStudy);
 	Nan::SetPrototypeMethod(tpl, "setStudy", SetStudy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMedicalImageReader2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -183,6 +186,7 @@ void VtkMedicalImageReader2Wrap::GetMedicalImageProperties(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetMedicalImageProperties();
+		VtkMedicalImagePropertiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,6 +301,7 @@ void VtkMedicalImageReader2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkMedicalImageReader2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -312,7 +317,7 @@ void VtkMedicalImageReader2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMedicalImageReader2 * r;
@@ -324,6 +329,7 @@ void VtkMedicalImageReader2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMedicalImageReader2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

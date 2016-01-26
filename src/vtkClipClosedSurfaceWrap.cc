@@ -28,26 +28,27 @@ VtkClipClosedSurfaceWrap::~VtkClipClosedSurfaceWrap()
 
 void VtkClipClosedSurfaceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkClipClosedSurfaceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkClipClosedSurface").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ClipClosedSurface").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkClipClosedSurface").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ClipClosedSurface").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkClipClosedSurfaceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkClipClosedSurfaceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkClipClosedSurfaceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkClipClosedSurfaceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateFacesOff", GenerateFacesOff);
 	Nan::SetPrototypeMethod(tpl, "generateFacesOff", GenerateFacesOff);
 
@@ -159,6 +160,8 @@ void VtkClipClosedSurfaceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TriangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 	Nan::SetPrototypeMethod(tpl, "triangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkClipClosedSurfaceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -271,6 +274,7 @@ void VtkClipClosedSurfaceWrap::GetClippingPlanes(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetClippingPlanes();
+		VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -441,6 +445,7 @@ void VtkClipClosedSurfaceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkClipClosedSurfaceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -480,7 +485,7 @@ void VtkClipClosedSurfaceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkClipClosedSurface * r;
@@ -492,6 +497,7 @@ void VtkClipClosedSurfaceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkClipClosedSurfaceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -610,7 +616,7 @@ void VtkClipClosedSurfaceWrap::SetClippingPlanes(const Nan::FunctionCallbackInfo
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

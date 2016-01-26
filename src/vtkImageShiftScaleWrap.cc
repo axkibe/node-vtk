@@ -27,26 +27,27 @@ VtkImageShiftScaleWrap::~VtkImageShiftScaleWrap()
 
 void VtkImageShiftScaleWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageShiftScaleWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageShiftScale").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageShiftScale").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageShiftScale").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageShiftScale").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageShiftScaleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageShiftScaleWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageShiftScaleWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageShiftScaleWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClampOverflowOff", ClampOverflowOff);
 	Nan::SetPrototypeMethod(tpl, "clampOverflowOff", ClampOverflowOff);
 
@@ -119,6 +120,8 @@ void VtkImageShiftScaleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetShift", SetShift);
 	Nan::SetPrototypeMethod(tpl, "setShift", SetShift);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageShiftScaleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -271,6 +274,7 @@ void VtkImageShiftScaleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageShiftScaleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -286,7 +290,7 @@ void VtkImageShiftScaleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageShiftScaleWrap *wrapper = ObjectWrap::Unwrap<VtkImageShiftScaleWrap>(info.Holder());
 	vtkImageShiftScale *native = (vtkImageShiftScale *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageShiftScale * r;
@@ -298,6 +302,7 @@ void VtkImageShiftScaleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageShiftScaleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

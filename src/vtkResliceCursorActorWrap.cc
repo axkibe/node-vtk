@@ -33,26 +33,27 @@ VtkResliceCursorActorWrap::~VtkResliceCursorActorWrap()
 
 void VtkResliceCursorActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProp3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkResliceCursorActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkResliceCursorActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ResliceCursorActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkResliceCursorActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ResliceCursorActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkResliceCursorActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkResliceCursorActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkResliceCursorActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProp3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkResliceCursorActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCenterlineActor", GetCenterlineActor);
 	Nan::SetPrototypeMethod(tpl, "getCenterlineActor", GetCenterlineActor);
 
@@ -89,6 +90,8 @@ void VtkResliceCursorActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetUserMatrix", SetUserMatrix);
 	Nan::SetPrototypeMethod(tpl, "setUserMatrix", SetUserMatrix);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkResliceCursorActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -129,6 +132,7 @@ void VtkResliceCursorActorWrap::GetCenterlineActor(const Nan::FunctionCallbackIn
 		r = native->GetCenterlineActor(
 			info[0]->Int32Value()
 		);
+			VtkActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -158,6 +162,7 @@ void VtkResliceCursorActorWrap::GetCenterlineProperty(const Nan::FunctionCallbac
 		r = native->GetCenterlineProperty(
 			info[0]->Int32Value()
 		);
+			VtkPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -197,6 +202,7 @@ void VtkResliceCursorActorWrap::GetCursorAlgorithm(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCursorAlgorithm();
+		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,6 +229,7 @@ void VtkResliceCursorActorWrap::GetThickSlabProperty(const Nan::FunctionCallback
 		r = native->GetThickSlabProperty(
 			info[0]->Int32Value()
 		);
+			VtkPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -284,6 +291,7 @@ void VtkResliceCursorActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkResliceCursorActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,7 +307,7 @@ void VtkResliceCursorActorWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 {
 	VtkResliceCursorActorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorActorWrap>(info.Holder());
 	vtkResliceCursorActor *native = (vtkResliceCursorActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -319,7 +327,7 @@ void VtkResliceCursorActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallback
 {
 	VtkResliceCursorActorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorActorWrap>(info.Holder());
 	vtkResliceCursorActor *native = (vtkResliceCursorActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -341,7 +349,7 @@ void VtkResliceCursorActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkResliceCursorActorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorActorWrap>(info.Holder());
 	vtkResliceCursorActor *native = (vtkResliceCursorActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkResliceCursorActor * r;
@@ -353,6 +361,7 @@ void VtkResliceCursorActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkResliceCursorActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -371,7 +380,7 @@ void VtkResliceCursorActorWrap::SetUserMatrix(const Nan::FunctionCallbackInfo<v8
 {
 	VtkResliceCursorActorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorActorWrap>(info.Holder());
 	vtkResliceCursorActor *native = (vtkResliceCursorActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)

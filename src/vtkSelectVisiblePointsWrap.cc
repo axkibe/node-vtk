@@ -28,26 +28,27 @@ VtkSelectVisiblePointsWrap::~VtkSelectVisiblePointsWrap()
 
 void VtkSelectVisiblePointsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSelectVisiblePointsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSelectVisiblePoints").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SelectVisiblePoints").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSelectVisiblePoints").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SelectVisiblePoints").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSelectVisiblePointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSelectVisiblePointsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSelectVisiblePointsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSelectVisiblePointsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -105,6 +106,8 @@ void VtkSelectVisiblePointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSelectVisiblePointsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -155,6 +158,7 @@ void VtkSelectVisiblePointsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,6 +273,7 @@ void VtkSelectVisiblePointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkSelectVisiblePointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +289,7 @@ void VtkSelectVisiblePointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSelectVisiblePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectVisiblePointsWrap>(info.Holder());
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSelectVisiblePoints * r;
@@ -296,6 +301,7 @@ void VtkSelectVisiblePointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSelectVisiblePointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -362,7 +368,7 @@ void VtkSelectVisiblePointsWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSelectVisiblePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectVisiblePointsWrap>(info.Holder());
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

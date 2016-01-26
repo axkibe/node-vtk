@@ -28,26 +28,27 @@ VtkApplyColorsWrap::~VtkApplyColorsWrap()
 
 void VtkApplyColorsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkApplyColorsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkApplyColors").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ApplyColors").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkApplyColors").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ApplyColors").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkApplyColorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkApplyColorsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkApplyColorsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkApplyColorsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellColorOutputArrayName", GetCellColorOutputArrayName);
 	Nan::SetPrototypeMethod(tpl, "getCellColorOutputArrayName", GetCellColorOutputArrayName);
 
@@ -150,6 +151,8 @@ void VtkApplyColorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UsePointLookupTableOn", UsePointLookupTableOn);
 	Nan::SetPrototypeMethod(tpl, "usePointLookupTableOn", UsePointLookupTableOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkApplyColorsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -200,6 +203,7 @@ void VtkApplyColorsWrap::GetCellLookupTable(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetCellLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,6 +282,7 @@ void VtkApplyColorsWrap::GetPointLookupTable(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetPointLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -350,6 +355,7 @@ void VtkApplyColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkApplyColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -365,7 +371,7 @@ void VtkApplyColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkApplyColors * r;
@@ -377,6 +383,7 @@ void VtkApplyColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkApplyColorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -463,7 +470,7 @@ void VtkApplyColorsWrap::SetCellLookupTable(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -595,7 +602,7 @@ void VtkApplyColorsWrap::SetPointLookupTable(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

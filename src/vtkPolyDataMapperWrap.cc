@@ -31,26 +31,27 @@ VtkPolyDataMapperWrap::~VtkPolyDataMapperWrap()
 
 void VtkPolyDataMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -117,6 +118,8 @@ void VtkPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -181,6 +184,7 @@ void VtkPolyDataMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetInput();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,6 +336,7 @@ void VtkPolyDataMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -379,10 +384,10 @@ void VtkPolyDataMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -404,10 +409,10 @@ void VtkPolyDataMapperWrap::RenderPiece(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -429,7 +434,7 @@ void VtkPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataMapper * r;
@@ -441,6 +446,7 @@ void VtkPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -478,7 +484,7 @@ void VtkPolyDataMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -555,7 +561,7 @@ void VtkPolyDataMapperWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
 	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

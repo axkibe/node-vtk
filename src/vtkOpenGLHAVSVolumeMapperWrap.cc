@@ -30,26 +30,27 @@ VtkOpenGLHAVSVolumeMapperWrap::~VtkOpenGLHAVSVolumeMapperWrap()
 
 void VtkOpenGLHAVSVolumeMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHAVSVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHAVSVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLHAVSVolumeMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLHAVSVolumeMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLHAVSVolumeMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLHAVSVolumeMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLHAVSVolumeMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLHAVSVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLHAVSVolumeMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLHAVSVolumeMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHAVSVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHAVSVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLHAVSVolumeMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkOpenGLHAVSVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLHAVSVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,6 +143,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLHAVSVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -155,7 +159,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::ReleaseGraphicsResources(const Nan::Function
 {
 	VtkOpenGLHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHAVSVolumeMapperWrap>(info.Holder());
 	vtkOpenGLHAVSVolumeMapper *native = (vtkOpenGLHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -175,10 +179,10 @@ void VtkOpenGLHAVSVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkOpenGLHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHAVSVolumeMapperWrap>(info.Holder());
 	vtkOpenGLHAVSVolumeMapper *native = (vtkOpenGLHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -200,7 +204,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkOpenGLHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHAVSVolumeMapperWrap>(info.Holder());
 	vtkOpenGLHAVSVolumeMapper *native = (vtkOpenGLHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLHAVSVolumeMapper * r;
@@ -212,6 +216,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLHAVSVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -28,26 +28,27 @@ VtkImageResizeWrap::~VtkImageResizeWrap()
 
 void VtkImageResizeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageResizeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageResize").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageResize").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageResize").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageResize").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageResizeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageResizeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageResizeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageResizeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BorderOff", BorderOff);
 	Nan::SetPrototypeMethod(tpl, "borderOff", BorderOff);
 
@@ -138,6 +139,8 @@ void VtkImageResizeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetResizeMethodToOutputSpacing", SetResizeMethodToOutputSpacing);
 	Nan::SetPrototypeMethod(tpl, "setResizeMethodToOutputSpacing", SetResizeMethodToOutputSpacing);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageResizeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -278,6 +281,7 @@ void VtkImageResizeWrap::GetInterpolator(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetInterpolator();
+		VtkAbstractImageInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -402,6 +406,7 @@ void VtkImageResizeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageResizeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -417,7 +422,7 @@ void VtkImageResizeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageResizeWrap *wrapper = ObjectWrap::Unwrap<VtkImageResizeWrap>(info.Holder());
 	vtkImageResize *native = (vtkImageResize *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageResize * r;
@@ -429,6 +434,7 @@ void VtkImageResizeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageResizeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -543,7 +549,7 @@ void VtkImageResizeWrap::SetInterpolator(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageResizeWrap *wrapper = ObjectWrap::Unwrap<VtkImageResizeWrap>(info.Holder());
 	vtkImageResize *native = (vtkImageResize *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractImageInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractImageInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

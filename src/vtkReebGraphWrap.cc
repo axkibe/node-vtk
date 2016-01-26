@@ -32,26 +32,27 @@ VtkReebGraphWrap::~VtkReebGraphWrap()
 
 void VtkReebGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMutableDirectedGraphWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMutableDirectedGraphWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkReebGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkReebGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ReebGraph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkReebGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ReebGraph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkReebGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkReebGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkReebGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMutableDirectedGraphWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMutableDirectedGraphWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkReebGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Build", Build);
 	Nan::SetPrototypeMethod(tpl, "build", Build);
 
@@ -82,6 +83,8 @@ void VtkReebGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Simplify", Simplify);
 	Nan::SetPrototypeMethod(tpl, "simplify", Simplify);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkReebGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -111,7 +114,7 @@ void VtkReebGraphWrap::Build(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkReebGraphWrap *wrapper = ObjectWrap::Unwrap<VtkReebGraphWrap>(info.Holder());
 	vtkReebGraph *native = (vtkReebGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -130,7 +133,7 @@ void VtkReebGraphWrap::Build(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			info.GetReturnValue().Set(Nan::New(r));
 			return;
 		}
-		else if(info.Length() > 1 && info[1]->IsObject())
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			int r;
@@ -166,7 +169,7 @@ void VtkReebGraphWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkReebGraphWrap *wrapper = ObjectWrap::Unwrap<VtkReebGraphWrap>(info.Holder());
 	vtkReebGraph *native = (vtkReebGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -243,6 +246,7 @@ void VtkReebGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkReebGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +262,7 @@ void VtkReebGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkReebGraphWrap *wrapper = ObjectWrap::Unwrap<VtkReebGraphWrap>(info.Holder());
 	vtkReebGraph *native = (vtkReebGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkReebGraph * r;
@@ -270,6 +274,7 @@ void VtkReebGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkReebGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +293,7 @@ void VtkReebGraphWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkReebGraphWrap *wrapper = ObjectWrap::Unwrap<VtkReebGraphWrap>(info.Holder());
 	vtkReebGraph *native = (vtkReebGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMutableDirectedGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMutableDirectedGraphWrap *a0 = ObjectWrap::Unwrap<VtkMutableDirectedGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -310,7 +315,7 @@ void VtkReebGraphWrap::Simplify(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkReebGraph *native = (vtkReebGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkReebGraphSimplificationMetricWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkReebGraphSimplificationMetricWrap *a1 = ObjectWrap::Unwrap<VtkReebGraphSimplificationMetricWrap>(info[1]->ToObject());
 			int r;

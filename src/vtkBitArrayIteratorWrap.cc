@@ -28,26 +28,27 @@ VtkBitArrayIteratorWrap::~VtkBitArrayIteratorWrap()
 
 void VtkBitArrayIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkArrayIteratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkArrayIteratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBitArrayIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBitArrayIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BitArrayIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBitArrayIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BitArrayIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBitArrayIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBitArrayIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBitArrayIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkArrayIteratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkArrayIteratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBitArrayIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetArray", GetArray);
 	Nan::SetPrototypeMethod(tpl, "getArray", GetArray);
 
@@ -75,6 +76,8 @@ void VtkBitArrayIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBitArrayIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -111,6 +114,7 @@ void VtkBitArrayIteratorWrap::GetArray(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetArray();
+		VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +186,7 @@ void VtkBitArrayIteratorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkBitArrayIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkBitArrayIteratorWrap>(info.Holder());
 	vtkBitArrayIterator *native = (vtkBitArrayIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -231,6 +235,7 @@ void VtkBitArrayIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkBitArrayIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +251,7 @@ void VtkBitArrayIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBitArrayIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkBitArrayIteratorWrap>(info.Holder());
 	vtkBitArrayIterator *native = (vtkBitArrayIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBitArrayIterator * r;
@@ -258,6 +263,7 @@ void VtkBitArrayIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBitArrayIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

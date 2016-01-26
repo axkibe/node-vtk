@@ -29,26 +29,27 @@ VtkMatrixToHomogeneousTransformWrap::~VtkMatrixToHomogeneousTransformWrap()
 
 void VtkMatrixToHomogeneousTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHomogeneousTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHomogeneousTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMatrixToHomogeneousTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMatrixToHomogeneousTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MatrixToHomogeneousTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMatrixToHomogeneousTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MatrixToHomogeneousTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMatrixToHomogeneousTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMatrixToHomogeneousTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMatrixToHomogeneousTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHomogeneousTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHomogeneousTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMatrixToHomogeneousTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,6 +74,8 @@ void VtkMatrixToHomogeneousTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMatrixToHomogeneousTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -123,6 +126,7 @@ void VtkMatrixToHomogeneousTransformWrap::GetInput(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetInput();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,6 +183,7 @@ void VtkMatrixToHomogeneousTransformWrap::MakeTransform(const Nan::FunctionCallb
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,6 +206,7 @@ void VtkMatrixToHomogeneousTransformWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkMatrixToHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +222,7 @@ void VtkMatrixToHomogeneousTransformWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkMatrixToHomogeneousTransformWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixToHomogeneousTransformWrap>(info.Holder());
 	vtkMatrixToHomogeneousTransform *native = (vtkMatrixToHomogeneousTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMatrixToHomogeneousTransform * r;
@@ -228,6 +234,7 @@ void VtkMatrixToHomogeneousTransformWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMatrixToHomogeneousTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -246,7 +253,7 @@ void VtkMatrixToHomogeneousTransformWrap::SetInput(const Nan::FunctionCallbackIn
 {
 	VtkMatrixToHomogeneousTransformWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixToHomogeneousTransformWrap>(info.Holder());
 	vtkMatrixToHomogeneousTransform *native = (vtkMatrixToHomogeneousTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)

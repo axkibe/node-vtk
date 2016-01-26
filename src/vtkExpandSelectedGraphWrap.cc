@@ -29,26 +29,27 @@ VtkExpandSelectedGraphWrap::~VtkExpandSelectedGraphWrap()
 
 void VtkExpandSelectedGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSelectionAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExpandSelectedGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExpandSelectedGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExpandSelectedGraph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExpandSelectedGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExpandSelectedGraph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExpandSelectedGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExpandSelectedGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExpandSelectedGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSelectionAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSelectionAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExpandSelectedGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -91,6 +92,8 @@ void VtkExpandSelectedGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseDomainOn", UseDomainOn);
 	Nan::SetPrototypeMethod(tpl, "useDomainOn", UseDomainOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExpandSelectedGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,7 +125,7 @@ void VtkExpandSelectedGraphWrap::FillInputPortInformation(const Nan::FunctionCal
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -241,6 +244,7 @@ void VtkExpandSelectedGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkExpandSelectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +260,7 @@ void VtkExpandSelectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExpandSelectedGraph * r;
@@ -268,6 +272,7 @@ void VtkExpandSelectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExpandSelectedGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -325,7 +330,7 @@ void VtkExpandSelectedGraphWrap::SetGraphConnection(const Nan::FunctionCallbackI
 {
 	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

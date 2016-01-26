@@ -27,26 +27,27 @@ VtkGraphWeightEuclideanDistanceFilterWrap::~VtkGraphWeightEuclideanDistanceFilte
 
 void VtkGraphWeightEuclideanDistanceFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphWeightFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphWeightFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGraphWeightEuclideanDistanceFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGraphWeightEuclideanDistanceFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GraphWeightEuclideanDistanceFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGraphWeightEuclideanDistanceFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GraphWeightEuclideanDistanceFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGraphWeightEuclideanDistanceFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGraphWeightEuclideanDistanceFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGraphWeightEuclideanDistanceFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphWeightFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphWeightFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGraphWeightEuclideanDistanceFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkGraphWeightEuclideanDistanceFilterWrap::InitTpl(v8::Local<v8::FunctionTe
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGraphWeightEuclideanDistanceFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkGraphWeightEuclideanDistanceFilterWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
+		VtkGraphWeightEuclideanDistanceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkGraphWeightEuclideanDistanceFilterWrap::SafeDownCast(const Nan::Function
 {
 	VtkGraphWeightEuclideanDistanceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWeightEuclideanDistanceFilterWrap>(info.Holder());
 	vtkGraphWeightEuclideanDistanceFilter *native = (vtkGraphWeightEuclideanDistanceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGraphWeightEuclideanDistanceFilter * r;
@@ -158,6 +162,7 @@ void VtkGraphWeightEuclideanDistanceFilterWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGraphWeightEuclideanDistanceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

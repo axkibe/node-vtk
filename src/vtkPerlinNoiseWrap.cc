@@ -27,26 +27,27 @@ VtkPerlinNoiseWrap::~VtkPerlinNoiseWrap()
 
 void VtkPerlinNoiseWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImplicitFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPerlinNoiseWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPerlinNoise").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PerlinNoise").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPerlinNoise").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PerlinNoise").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPerlinNoiseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPerlinNoiseWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPerlinNoiseWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPerlinNoiseWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EvaluateFunction", EvaluateFunction);
 	Nan::SetPrototypeMethod(tpl, "evaluateFunction", EvaluateFunction);
 
@@ -74,6 +75,8 @@ void VtkPerlinNoiseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPhase", SetPhase);
 	Nan::SetPrototypeMethod(tpl, "setPhase", SetPhase);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPerlinNoiseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -189,6 +192,7 @@ void VtkPerlinNoiseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkPerlinNoiseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,7 +208,7 @@ void VtkPerlinNoiseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPerlinNoiseWrap *wrapper = ObjectWrap::Unwrap<VtkPerlinNoiseWrap>(info.Holder());
 	vtkPerlinNoise *native = (vtkPerlinNoise *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPerlinNoise * r;
@@ -216,6 +220,7 @@ void VtkPerlinNoiseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPerlinNoiseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

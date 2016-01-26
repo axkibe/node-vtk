@@ -27,26 +27,27 @@ VtkRecursiveDividingCubesWrap::~VtkRecursiveDividingCubesWrap()
 
 void VtkRecursiveDividingCubesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRecursiveDividingCubesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRecursiveDividingCubes").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RecursiveDividingCubes").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRecursiveDividingCubes").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RecursiveDividingCubes").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRecursiveDividingCubesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRecursiveDividingCubesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRecursiveDividingCubesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRecursiveDividingCubesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -89,6 +90,8 @@ void VtkRecursiveDividingCubesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRecursiveDividingCubesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -259,6 +262,7 @@ void VtkRecursiveDividingCubesWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkRecursiveDividingCubesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,7 +278,7 @@ void VtkRecursiveDividingCubesWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkRecursiveDividingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkRecursiveDividingCubesWrap>(info.Holder());
 	vtkRecursiveDividingCubes *native = (vtkRecursiveDividingCubes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRecursiveDividingCubes * r;
@@ -286,6 +290,7 @@ void VtkRecursiveDividingCubesWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRecursiveDividingCubesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

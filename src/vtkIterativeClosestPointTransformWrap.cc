@@ -31,26 +31,27 @@ VtkIterativeClosestPointTransformWrap::~VtkIterativeClosestPointTransformWrap()
 
 void VtkIterativeClosestPointTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLinearTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLinearTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkIterativeClosestPointTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkIterativeClosestPointTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("IterativeClosestPointTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkIterativeClosestPointTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("IterativeClosestPointTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkIterativeClosestPointTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkIterativeClosestPointTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkIterativeClosestPointTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLinearTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLinearTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkIterativeClosestPointTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CheckMeanDistanceOff", CheckMeanDistanceOff);
 	Nan::SetPrototypeMethod(tpl, "checkMeanDistanceOff", CheckMeanDistanceOff);
 
@@ -159,6 +160,8 @@ void VtkIterativeClosestPointTransformWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "StartByMatchingCentroidsOn", StartByMatchingCentroidsOn);
 	Nan::SetPrototypeMethod(tpl, "startByMatchingCentroidsOn", StartByMatchingCentroidsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkIterativeClosestPointTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -247,6 +250,7 @@ void VtkIterativeClosestPointTransformWrap::GetLandmarkTransform(const Nan::Func
 		return;
 	}
 	r = native->GetLandmarkTransform();
+		VtkLandmarkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,6 +273,7 @@ void VtkIterativeClosestPointTransformWrap::GetLocator(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLocator();
+		VtkCellLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -417,6 +422,7 @@ void VtkIterativeClosestPointTransformWrap::GetSource(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetSource();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,6 +459,7 @@ void VtkIterativeClosestPointTransformWrap::GetTarget(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetTarget();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -509,6 +516,7 @@ void VtkIterativeClosestPointTransformWrap::MakeTransform(const Nan::FunctionCal
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -531,6 +539,7 @@ void VtkIterativeClosestPointTransformWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkIterativeClosestPointTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -546,7 +555,7 @@ void VtkIterativeClosestPointTransformWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkIterativeClosestPointTransform * r;
@@ -558,6 +567,7 @@ void VtkIterativeClosestPointTransformWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkIterativeClosestPointTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -595,7 +605,7 @@ void VtkIterativeClosestPointTransformWrap::SetLocator(const Nan::FunctionCallba
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellLocatorWrap *a0 = ObjectWrap::Unwrap<VtkCellLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -715,7 +725,7 @@ void VtkIterativeClosestPointTransformWrap::SetSource(const Nan::FunctionCallbac
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -754,7 +764,7 @@ void VtkIterativeClosestPointTransformWrap::SetTarget(const Nan::FunctionCallbac
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

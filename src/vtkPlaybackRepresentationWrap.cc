@@ -31,26 +31,27 @@ VtkPlaybackRepresentationWrap::~VtkPlaybackRepresentationWrap()
 
 void VtkPlaybackRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkBorderRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPlaybackRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPlaybackRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PlaybackRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPlaybackRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PlaybackRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPlaybackRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPlaybackRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPlaybackRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkBorderRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkBorderRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPlaybackRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BackwardOneFrame", BackwardOneFrame);
 	Nan::SetPrototypeMethod(tpl, "backwardOneFrame", BackwardOneFrame);
 
@@ -105,6 +106,8 @@ void VtkPlaybackRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPlaybackRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -170,7 +173,7 @@ void VtkPlaybackRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -211,6 +214,7 @@ void VtkPlaybackRepresentationWrap::GetProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -293,6 +297,7 @@ void VtkPlaybackRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkPlaybackRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -320,7 +325,7 @@ void VtkPlaybackRepresentationWrap::ReleaseGraphicsResources(const Nan::Function
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -340,7 +345,7 @@ void VtkPlaybackRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCall
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -362,7 +367,7 @@ void VtkPlaybackRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInf
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -384,7 +389,7 @@ void VtkPlaybackRepresentationWrap::RenderTranslucentPolygonalGeometry(const Nan
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -406,7 +411,7 @@ void VtkPlaybackRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPlaybackRepresentation * r;
@@ -418,6 +423,7 @@ void VtkPlaybackRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPlaybackRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

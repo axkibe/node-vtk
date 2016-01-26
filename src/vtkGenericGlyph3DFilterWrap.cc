@@ -28,26 +28,27 @@ VtkGenericGlyph3DFilterWrap::~VtkGenericGlyph3DFilterWrap()
 
 void VtkGenericGlyph3DFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericGlyph3DFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericGlyph3DFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericGlyph3DFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericGlyph3DFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericGlyph3DFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericGlyph3DFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericGlyph3DFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericGlyph3DFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericGlyph3DFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClampingOff", ClampingOff);
 	Nan::SetPrototypeMethod(tpl, "clampingOff", ClampingOff);
 
@@ -222,6 +223,8 @@ void VtkGenericGlyph3DFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVectorModeToVectorRotationOff", SetVectorModeToVectorRotationOff);
 	Nan::SetPrototypeMethod(tpl, "setVectorModeToVectorRotationOff", SetVectorModeToVectorRotationOff);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericGlyph3DFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -534,6 +537,7 @@ void VtkGenericGlyph3DFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetSource(
 			info[0]->Int32Value()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -609,6 +613,7 @@ void VtkGenericGlyph3DFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericGlyph3DFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -648,7 +653,7 @@ void VtkGenericGlyph3DFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericGlyph3DFilter * r;
@@ -660,6 +665,7 @@ void VtkGenericGlyph3DFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericGlyph3DFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1077,7 +1083,7 @@ void VtkGenericGlyph3DFilterWrap::SetSourceData(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1092,7 +1098,7 @@ void VtkGenericGlyph3DFilterWrap::SetSourceData(const Nan::FunctionCallbackInfo<
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

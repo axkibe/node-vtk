@@ -30,26 +30,27 @@ VtkArrayDataWrap::~VtkArrayDataWrap()
 
 void VtkArrayDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkArrayDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkArrayData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ArrayData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkArrayData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ArrayData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkArrayDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkArrayDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkArrayDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkArrayDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddArray", AddArray);
 	Nan::SetPrototypeMethod(tpl, "addArray", AddArray);
 
@@ -83,6 +84,8 @@ void VtkArrayDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkArrayDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -112,7 +115,7 @@ void VtkArrayDataWrap::AddArray(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkArrayDataWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWrap>(info.Holder());
 	vtkArrayData *native = (vtkArrayData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkArrayWrap *a0 = ObjectWrap::Unwrap<VtkArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -144,7 +147,7 @@ void VtkArrayDataWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkArrayDataWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWrap>(info.Holder());
 	vtkArrayData *native = (vtkArrayData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -176,6 +179,7 @@ void VtkArrayDataWrap::GetArrayByName(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetArrayByName(
 			*a0
 		);
+			VtkArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -208,7 +212,7 @@ void VtkArrayDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkArrayDataWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWrap>(info.Holder());
 	vtkArrayData *native = (vtkArrayData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -223,6 +227,7 @@ void VtkArrayDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkArrayDataWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -243,6 +248,7 @@ void VtkArrayDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkArrayDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,6 +310,7 @@ void VtkArrayDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkArrayDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +326,7 @@ void VtkArrayDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkArrayDataWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWrap>(info.Holder());
 	vtkArrayData *native = (vtkArrayData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkArrayData * r;
@@ -331,6 +338,7 @@ void VtkArrayDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkArrayDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -349,7 +357,7 @@ void VtkArrayDataWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkArrayDataWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWrap>(info.Holder());
 	vtkArrayData *native = (vtkArrayData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

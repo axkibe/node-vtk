@@ -27,26 +27,27 @@ VtkCell3DWrap::~VtkCell3DWrap()
 
 void VtkCell3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCellWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCell3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCell3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Cell3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCell3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Cell3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCell3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCell3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCell3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCellWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCell3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellDimension", GetCellDimension);
 	Nan::SetPrototypeMethod(tpl, "getCellDimension", GetCellDimension);
 
@@ -74,6 +75,8 @@ void VtkCell3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetMergeTolerance", SetMergeTolerance);
 	Nan::SetPrototypeMethod(tpl, "setMergeTolerance", SetMergeTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCell3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -202,6 +205,7 @@ void VtkCell3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
+		VtkCell3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +221,7 @@ void VtkCell3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCell3DWrap *wrapper = ObjectWrap::Unwrap<VtkCell3DWrap>(info.Holder());
 	vtkCell3D *native = (vtkCell3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCell3D * r;
@@ -229,6 +233,7 @@ void VtkCell3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCell3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

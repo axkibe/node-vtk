@@ -27,26 +27,27 @@ VtkDelimitedTextReaderWrap::~VtkDelimitedTextReaderWrap()
 
 void VtkDelimitedTextReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTableAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDelimitedTextReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDelimitedTextReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DelimitedTextReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDelimitedTextReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DelimitedTextReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDelimitedTextReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDelimitedTextReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDelimitedTextReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDelimitedTextReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DetectNumericColumnsOff", DetectNumericColumnsOff);
 	Nan::SetPrototypeMethod(tpl, "detectNumericColumnsOff", DetectNumericColumnsOff);
 
@@ -182,6 +183,8 @@ void VtkDelimitedTextReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseStringDelimiterOn", UseStringDelimiterOn);
 	Nan::SetPrototypeMethod(tpl, "useStringDelimiterOn", UseStringDelimiterOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDelimitedTextReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -532,6 +535,7 @@ void VtkDelimitedTextReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkDelimitedTextReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -595,7 +599,7 @@ void VtkDelimitedTextReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDelimitedTextReader * r;
@@ -607,6 +611,7 @@ void VtkDelimitedTextReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDelimitedTextReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

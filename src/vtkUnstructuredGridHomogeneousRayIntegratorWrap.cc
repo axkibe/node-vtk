@@ -29,26 +29,27 @@ VtkUnstructuredGridHomogeneousRayIntegratorWrap::~VtkUnstructuredGridHomogeneous
 
 void VtkUnstructuredGridHomogeneousRayIntegratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridVolumeRayIntegratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUnstructuredGridHomogeneousRayIntegratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUnstructuredGridHomogeneousRayIntegrator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UnstructuredGridHomogeneousRayIntegrator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUnstructuredGridHomogeneousRayIntegrator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UnstructuredGridHomogeneousRayIntegrator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUnstructuredGridHomogeneousRayIntegratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUnstructuredGridHomogeneousRayIntegratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,6 +71,8 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitTpl(v8::Local<v8::Func
 	Nan::SetPrototypeMethod(tpl, "SetTransferFunctionTableSize", SetTransferFunctionTableSize);
 	Nan::SetPrototypeMethod(tpl, "setTransferFunctionTableSize", SetTransferFunctionTableSize);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUnstructuredGridHomogeneousRayIntegratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -127,10 +130,10 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::Initialize(const Nan::Func
 {
 	VtkUnstructuredGridHomogeneousRayIntegratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridHomogeneousRayIntegratorWrap>(info.Holder());
 	vtkUnstructuredGridHomogeneousRayIntegrator *native = (vtkUnstructuredGridHomogeneousRayIntegrator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -181,6 +184,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::NewInstance(const Nan::Fun
 		return;
 	}
 	r = native->NewInstance();
+		VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +200,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::SafeDownCast(const Nan::Fu
 {
 	VtkUnstructuredGridHomogeneousRayIntegratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridHomogeneousRayIntegratorWrap>(info.Holder());
 	vtkUnstructuredGridHomogeneousRayIntegrator *native = (vtkUnstructuredGridHomogeneousRayIntegrator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUnstructuredGridHomogeneousRayIntegrator * r;
@@ -208,6 +212,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::SafeDownCast(const Nan::Fu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

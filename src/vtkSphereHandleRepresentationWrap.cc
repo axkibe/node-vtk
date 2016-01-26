@@ -32,26 +32,27 @@ VtkSphereHandleRepresentationWrap::~VtkSphereHandleRepresentationWrap()
 
 void VtkSphereHandleRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHandleRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHandleRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSphereHandleRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSphereHandleRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SphereHandleRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSphereHandleRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SphereHandleRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSphereHandleRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSphereHandleRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSphereHandleRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHandleRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHandleRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSphereHandleRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -139,6 +140,8 @@ void VtkSphereHandleRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "TranslationModeOn", TranslationModeOn);
 	Nan::SetPrototypeMethod(tpl, "translationModeOn", TranslationModeOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSphereHandleRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -209,7 +212,7 @@ void VtkSphereHandleRepresentationWrap::DeepCopy(const Nan::FunctionCallbackInfo
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -229,7 +232,7 @@ void VtkSphereHandleRepresentationWrap::GetActors(const Nan::FunctionCallbackInf
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -312,6 +315,7 @@ void VtkSphereHandleRepresentationWrap::GetProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -334,6 +338,7 @@ void VtkSphereHandleRepresentationWrap::GetSelectedProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSelectedProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -439,6 +444,7 @@ void VtkSphereHandleRepresentationWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkSphereHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -454,7 +460,7 @@ void VtkSphereHandleRepresentationWrap::ReleaseGraphicsResources(const Nan::Func
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -474,7 +480,7 @@ void VtkSphereHandleRepresentationWrap::RenderOpaqueGeometry(const Nan::Function
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -496,7 +502,7 @@ void VtkSphereHandleRepresentationWrap::RenderTranslucentPolygonalGeometry(const
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -518,7 +524,7 @@ void VtkSphereHandleRepresentationWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSphereHandleRepresentation * r;
@@ -530,6 +536,7 @@ void VtkSphereHandleRepresentationWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSphereHandleRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -586,7 +593,7 @@ void VtkSphereHandleRepresentationWrap::SetProperty(const Nan::FunctionCallbackI
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -606,7 +613,7 @@ void VtkSphereHandleRepresentationWrap::SetSelectedProperty(const Nan::FunctionC
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -664,7 +671,7 @@ void VtkSphereHandleRepresentationWrap::ShallowCopy(const Nan::FunctionCallbackI
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
 	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

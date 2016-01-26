@@ -28,26 +28,27 @@ VtkCellQualityWrap::~VtkCellQualityWrap()
 
 void VtkCellQualityWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellQualityWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellQuality").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellQuality").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellQuality").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellQuality").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellQualityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellQualityWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellQualityWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellQualityWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -174,6 +175,8 @@ void VtkCellQualityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TriangleStripArea", TriangleStripArea);
 	Nan::SetPrototypeMethod(tpl, "triangleStripArea", TriangleStripArea);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellQualityWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -288,6 +291,7 @@ void VtkCellQualityWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellQualityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +307,7 @@ void VtkCellQualityWrap::PixelArea(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -325,7 +329,7 @@ void VtkCellQualityWrap::PolygonArea(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -347,7 +351,7 @@ void VtkCellQualityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCellQuality * r;
@@ -359,6 +363,7 @@ void VtkCellQualityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCellQualityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -782,7 +787,7 @@ void VtkCellQualityWrap::TriangleStripArea(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;

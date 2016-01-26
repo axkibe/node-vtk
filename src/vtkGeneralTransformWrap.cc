@@ -28,26 +28,27 @@ VtkGeneralTransformWrap::~VtkGeneralTransformWrap()
 
 void VtkGeneralTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeneralTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeneralTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeneralTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeneralTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeneralTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeneralTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeneralTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeneralTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeneralTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CircuitCheck", CircuitCheck);
 	Nan::SetPrototypeMethod(tpl, "circuitCheck", CircuitCheck);
 
@@ -120,6 +121,8 @@ void VtkGeneralTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeneralTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -149,7 +152,7 @@ void VtkGeneralTransformWrap::CircuitCheck(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
 	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		int r;
@@ -171,7 +174,7 @@ void VtkGeneralTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
 	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -216,6 +219,7 @@ void VtkGeneralTransformWrap::GetConcatenatedTransform(const Nan::FunctionCallba
 		r = native->GetConcatenatedTransform(
 			info[0]->Int32Value()
 		);
+			VtkAbstractTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -241,6 +245,7 @@ void VtkGeneralTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetInput();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -337,6 +342,7 @@ void VtkGeneralTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,6 +365,7 @@ void VtkGeneralTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeneralTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -510,7 +517,7 @@ void VtkGeneralTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
 	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeneralTransform * r;
@@ -522,6 +529,7 @@ void VtkGeneralTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeneralTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -567,7 +575,7 @@ void VtkGeneralTransformWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
 	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

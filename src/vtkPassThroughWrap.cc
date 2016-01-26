@@ -28,26 +28,27 @@ VtkPassThroughWrap::~VtkPassThroughWrap()
 
 void VtkPassThroughWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPassInputTypeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPassThroughWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPassThrough").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PassThrough").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPassThrough").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PassThrough").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPassThroughWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPassThroughWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPassThroughWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPassInputTypeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPassInputTypeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPassThroughWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopyInputOff", DeepCopyInputOff);
 	Nan::SetPrototypeMethod(tpl, "deepCopyInputOff", DeepCopyInputOff);
 
@@ -75,6 +76,8 @@ void VtkPassThroughWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDeepCopyInput", SetDeepCopyInput);
 	Nan::SetPrototypeMethod(tpl, "setDeepCopyInput", SetDeepCopyInput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPassThroughWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -130,7 +133,7 @@ void VtkPassThroughWrap::FillInputPortInformation(const Nan::FunctionCallbackInf
 	vtkPassThrough *native = (vtkPassThrough *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -211,6 +214,7 @@ void VtkPassThroughWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkPassThroughWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,7 +230,7 @@ void VtkPassThroughWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPassThroughWrap *wrapper = ObjectWrap::Unwrap<VtkPassThroughWrap>(info.Holder());
 	vtkPassThrough *native = (vtkPassThrough *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPassThrough * r;
@@ -238,6 +242,7 @@ void VtkPassThroughWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPassThroughWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

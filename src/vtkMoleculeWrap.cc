@@ -31,26 +31,27 @@ VtkMoleculeWrap::~VtkMoleculeWrap()
 
 void VtkMoleculeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUndirectedGraphWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUndirectedGraphWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMoleculeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMolecule").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Molecule").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMolecule").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Molecule").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMoleculeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMoleculeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMoleculeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUndirectedGraphWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUndirectedGraphWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMoleculeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -99,6 +100,8 @@ void VtkMoleculeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopyStructure", ShallowCopyStructure);
 	Nan::SetPrototypeMethod(tpl, "shallowCopyStructure", ShallowCopyStructure);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMoleculeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -128,7 +131,7 @@ void VtkMoleculeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMoleculeWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeWrap>(info.Holder());
 	vtkMolecule *native = (vtkMolecule *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -148,7 +151,7 @@ void VtkMoleculeWrap::DeepCopyAttributes(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMoleculeWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeWrap>(info.Holder());
 	vtkMolecule *native = (vtkMolecule *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMoleculeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMoleculeWrap *a0 = ObjectWrap::Unwrap<VtkMoleculeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -168,7 +171,7 @@ void VtkMoleculeWrap::DeepCopyStructure(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMoleculeWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeWrap>(info.Holder());
 	vtkMolecule *native = (vtkMolecule *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMoleculeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMoleculeWrap *a0 = ObjectWrap::Unwrap<VtkMoleculeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -195,6 +198,7 @@ void VtkMoleculeWrap::GetAtomicNumberArray(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetAtomicNumberArray();
+		VtkUnsignedShortArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,6 +221,7 @@ void VtkMoleculeWrap::GetAtomicPositionArray(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetAtomicPositionArray();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,6 +272,7 @@ void VtkMoleculeWrap::GetElectronicData(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetElectronicData();
+		VtkAbstractElectronicDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +329,7 @@ void VtkMoleculeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkMoleculeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -338,7 +345,7 @@ void VtkMoleculeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMoleculeWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeWrap>(info.Holder());
 	vtkMolecule *native = (vtkMolecule *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMolecule * r;
@@ -350,6 +357,7 @@ void VtkMoleculeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMoleculeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -368,7 +376,7 @@ void VtkMoleculeWrap::SetElectronicData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMoleculeWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeWrap>(info.Holder());
 	vtkMolecule *native = (vtkMolecule *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractElectronicDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractElectronicDataWrap *a0 = ObjectWrap::Unwrap<VtkAbstractElectronicDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -388,7 +396,7 @@ void VtkMoleculeWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMoleculeWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeWrap>(info.Holder());
 	vtkMolecule *native = (vtkMolecule *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -408,7 +416,7 @@ void VtkMoleculeWrap::ShallowCopyAttributes(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMoleculeWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeWrap>(info.Holder());
 	vtkMolecule *native = (vtkMolecule *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMoleculeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMoleculeWrap *a0 = ObjectWrap::Unwrap<VtkMoleculeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -428,7 +436,7 @@ void VtkMoleculeWrap::ShallowCopyStructure(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMoleculeWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeWrap>(info.Holder());
 	vtkMolecule *native = (vtkMolecule *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMoleculeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMoleculeWrap *a0 = ObjectWrap::Unwrap<VtkMoleculeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

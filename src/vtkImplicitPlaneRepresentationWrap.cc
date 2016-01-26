@@ -35,26 +35,27 @@ VtkImplicitPlaneRepresentationWrap::~VtkImplicitPlaneRepresentationWrap()
 
 void VtkImplicitPlaneRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitPlaneRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitPlaneRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitPlaneRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitPlaneRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitPlaneRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitPlaneRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitPlaneRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitPlaneRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitPlaneRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -274,6 +275,8 @@ void VtkImplicitPlaneRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "UpdatePlacement", UpdatePlacement);
 	Nan::SetPrototypeMethod(tpl, "updatePlacement", UpdatePlacement);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitPlaneRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -391,7 +394,7 @@ void VtkImplicitPlaneRepresentationWrap::GetActors(const Nan::FunctionCallbackIn
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -488,6 +491,7 @@ void VtkImplicitPlaneRepresentationWrap::GetEdgesProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetEdgesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -552,6 +556,7 @@ void VtkImplicitPlaneRepresentationWrap::GetNormalProperty(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetNormalProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -616,6 +621,7 @@ void VtkImplicitPlaneRepresentationWrap::GetOutlineProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetOutlineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -659,7 +665,7 @@ void VtkImplicitPlaneRepresentationWrap::GetPlane(const Nan::FunctionCallbackInf
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -686,6 +692,7 @@ void VtkImplicitPlaneRepresentationWrap::GetPlaneProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetPlaneProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -701,7 +708,7 @@ void VtkImplicitPlaneRepresentationWrap::GetPolyData(const Nan::FunctionCallback
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -728,6 +735,7 @@ void VtkImplicitPlaneRepresentationWrap::GetPolyDataAlgorithm(const Nan::Functio
 		return;
 	}
 	r = native->GetPolyDataAlgorithm();
+		VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -778,6 +786,7 @@ void VtkImplicitPlaneRepresentationWrap::GetSelectedNormalProperty(const Nan::Fu
 		return;
 	}
 	r = native->GetSelectedNormalProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -800,6 +809,7 @@ void VtkImplicitPlaneRepresentationWrap::GetSelectedOutlineProperty(const Nan::F
 		return;
 	}
 	r = native->GetSelectedOutlineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -822,6 +832,7 @@ void VtkImplicitPlaneRepresentationWrap::GetSelectedPlaneProperty(const Nan::Fun
 		return;
 	}
 	r = native->GetSelectedPlaneProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -918,6 +929,7 @@ void VtkImplicitPlaneRepresentationWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitPlaneRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1072,7 +1084,7 @@ void VtkImplicitPlaneRepresentationWrap::ReleaseGraphicsResources(const Nan::Fun
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1092,7 +1104,7 @@ void VtkImplicitPlaneRepresentationWrap::RenderOpaqueGeometry(const Nan::Functio
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1114,7 +1126,7 @@ void VtkImplicitPlaneRepresentationWrap::RenderTranslucentPolygonalGeometry(cons
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1136,7 +1148,7 @@ void VtkImplicitPlaneRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitPlaneRepresentation * r;
@@ -1148,6 +1160,7 @@ void VtkImplicitPlaneRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitPlaneRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1228,7 +1241,7 @@ void VtkImplicitPlaneRepresentationWrap::SetEdgeColor(const Nan::FunctionCallbac
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLookupTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLookupTableWrap *a0 = ObjectWrap::Unwrap<VtkLookupTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

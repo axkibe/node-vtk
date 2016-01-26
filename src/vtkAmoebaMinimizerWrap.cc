@@ -26,26 +26,27 @@ VtkAmoebaMinimizerWrap::~VtkAmoebaMinimizerWrap()
 
 void VtkAmoebaMinimizerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAmoebaMinimizerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAmoebaMinimizer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AmoebaMinimizer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAmoebaMinimizer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AmoebaMinimizer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAmoebaMinimizerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAmoebaMinimizerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAmoebaMinimizerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAmoebaMinimizerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EvaluateFunction", EvaluateFunction);
 	Nan::SetPrototypeMethod(tpl, "evaluateFunction", EvaluateFunction);
 
@@ -142,6 +143,8 @@ void VtkAmoebaMinimizerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAmoebaMinimizerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -539,6 +542,7 @@ void VtkAmoebaMinimizerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkAmoebaMinimizerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -554,7 +558,7 @@ void VtkAmoebaMinimizerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAmoebaMinimizer * r;
@@ -566,6 +570,7 @@ void VtkAmoebaMinimizerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAmoebaMinimizerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -31,26 +31,27 @@ VtkContextMapper2DWrap::~VtkContextMapper2DWrap()
 
 void VtkContextMapper2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkContextMapper2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkContextMapper2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ContextMapper2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkContextMapper2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ContextMapper2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkContextMapper2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkContextMapper2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkContextMapper2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkContextMapper2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkContextMapper2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkContextMapper2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -125,6 +128,7 @@ void VtkContextMapper2DWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
+		VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -142,7 +146,7 @@ void VtkContextMapper2DWrap::GetInputAbstractArrayToProcess(const Nan::FunctionC
 	vtkContextMapper2D *native = (vtkContextMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			vtkAbstractArray * r;
@@ -155,6 +159,7 @@ void VtkContextMapper2DWrap::GetInputAbstractArrayToProcess(const Nan::FunctionC
 				info[0]->Int32Value(),
 				(vtkDataObject *) a1->native.GetPointer()
 			);
+				VtkAbstractArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -176,7 +181,7 @@ void VtkContextMapper2DWrap::GetInputArrayToProcess(const Nan::FunctionCallbackI
 	vtkContextMapper2D *native = (vtkContextMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			vtkDataArray * r;
@@ -189,6 +194,7 @@ void VtkContextMapper2DWrap::GetInputArrayToProcess(const Nan::FunctionCallbackI
 				info[0]->Int32Value(),
 				(vtkDataObject *) a1->native.GetPointer()
 			);
+				VtkDataArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -237,6 +243,7 @@ void VtkContextMapper2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkContextMapper2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +259,7 @@ void VtkContextMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkContextMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkContextMapper2DWrap>(info.Holder());
 	vtkContextMapper2D *native = (vtkContextMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkContextMapper2D * r;
@@ -264,6 +271,7 @@ void VtkContextMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkContextMapper2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -282,7 +290,7 @@ void VtkContextMapper2DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkContextMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkContextMapper2DWrap>(info.Holder());
 	vtkContextMapper2D *native = (vtkContextMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

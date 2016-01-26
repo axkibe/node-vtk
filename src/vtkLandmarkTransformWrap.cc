@@ -29,26 +29,27 @@ VtkLandmarkTransformWrap::~VtkLandmarkTransformWrap()
 
 void VtkLandmarkTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLinearTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLinearTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLandmarkTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLandmarkTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LandmarkTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLandmarkTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LandmarkTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLandmarkTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLandmarkTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLandmarkTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLinearTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLinearTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLandmarkTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -97,6 +98,8 @@ void VtkLandmarkTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTargetLandmarks", SetTargetLandmarks);
 	Nan::SetPrototypeMethod(tpl, "setTargetLandmarks", SetTargetLandmarks);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLandmarkTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -175,6 +178,7 @@ void VtkLandmarkTransformWrap::GetSourceLandmarks(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetSourceLandmarks();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,6 +201,7 @@ void VtkLandmarkTransformWrap::GetTargetLandmarks(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetTargetLandmarks();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,6 +258,7 @@ void VtkLandmarkTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,6 +281,7 @@ void VtkLandmarkTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkLandmarkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,7 +297,7 @@ void VtkLandmarkTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLandmarkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLandmarkTransformWrap>(info.Holder());
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLandmarkTransform * r;
@@ -302,6 +309,7 @@ void VtkLandmarkTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLandmarkTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -375,7 +383,7 @@ void VtkLandmarkTransformWrap::SetSourceLandmarks(const Nan::FunctionCallbackInf
 {
 	VtkLandmarkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLandmarkTransformWrap>(info.Holder());
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -395,7 +403,7 @@ void VtkLandmarkTransformWrap::SetTargetLandmarks(const Nan::FunctionCallbackInf
 {
 	VtkLandmarkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLandmarkTransformWrap>(info.Holder());
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

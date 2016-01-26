@@ -27,26 +27,27 @@ VtkOpenGLRayCastImageDisplayHelperWrap::~VtkOpenGLRayCastImageDisplayHelperWrap(
 
 void VtkOpenGLRayCastImageDisplayHelperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRayCastImageDisplayHelperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRayCastImageDisplayHelperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLRayCastImageDisplayHelperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLRayCastImageDisplayHelper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLRayCastImageDisplayHelper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLRayCastImageDisplayHelper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLRayCastImageDisplayHelper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLRayCastImageDisplayHelperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLRayCastImageDisplayHelperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRayCastImageDisplayHelperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRayCastImageDisplayHelperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLRayCastImageDisplayHelperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLRayCastImageDisplayHelperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkOpenGLRayCastImageDisplayHelperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRayCastImageDisplayHelperWrap>(info.Holder());
 	vtkOpenGLRayCastImageDisplayHelper *native = (vtkOpenGLRayCastImageDisplayHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLRayCastImageDisplayHelper * r;
@@ -158,6 +162,7 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

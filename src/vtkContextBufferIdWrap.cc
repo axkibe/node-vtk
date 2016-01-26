@@ -27,26 +27,27 @@ VtkContextBufferIdWrap::~VtkContextBufferIdWrap()
 
 void VtkContextBufferIdWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractContextBufferIdWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractContextBufferIdWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkContextBufferIdWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkContextBufferId").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ContextBufferId").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkContextBufferId").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ContextBufferId").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkContextBufferIdWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkContextBufferIdWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkContextBufferIdWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractContextBufferIdWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractContextBufferIdWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkContextBufferIdWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Allocate", Allocate);
 	Nan::SetPrototypeMethod(tpl, "allocate", Allocate);
 
@@ -65,6 +66,8 @@ void VtkContextBufferIdWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValues", SetValues);
 	Nan::SetPrototypeMethod(tpl, "setValues", SetValues);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkContextBufferIdWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -149,6 +152,7 @@ void VtkContextBufferIdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkContextBufferIdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,7 +168,7 @@ void VtkContextBufferIdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkContextBufferIdWrap>(info.Holder());
 	vtkContextBufferId *native = (vtkContextBufferId *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkContextBufferId * r;
@@ -176,6 +180,7 @@ void VtkContextBufferIdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkContextBufferIdWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

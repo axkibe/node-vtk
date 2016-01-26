@@ -30,26 +30,27 @@ VtkPointLocatorWrap::~VtkPointLocatorWrap()
 
 void VtkPointLocatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkIncrementalPointLocatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPointLocatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPointLocator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PointLocator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPointLocator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PointLocator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPointLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPointLocatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPointLocatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkIncrementalPointLocatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPointLocatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildLocator", BuildLocator);
 	Nan::SetPrototypeMethod(tpl, "buildLocator", BuildLocator);
 
@@ -95,6 +96,8 @@ void VtkPointLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPointsPerBucket", SetNumberOfPointsPerBucket);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPointsPerBucket", SetNumberOfPointsPerBucket);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPointLocatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -144,7 +147,7 @@ void VtkPointLocatorWrap::FindDistributedPoints(const Nan::FunctionCallbackInfo<
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkIdListWrap *a4 = ObjectWrap::Unwrap<VtkIdListWrap>(info[4]->ToObject());
 						if(info.Length() > 5 && info[5]->IsInt32())
@@ -190,7 +193,7 @@ void VtkPointLocatorWrap::GenerateRepresentation(const Nan::FunctionCallbackInfo
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -275,6 +278,7 @@ void VtkPointLocatorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -331,6 +335,7 @@ void VtkPointLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -346,7 +351,7 @@ void VtkPointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPointLocator * r;
@@ -358,6 +363,7 @@ void VtkPointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPointLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

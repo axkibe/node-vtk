@@ -28,26 +28,27 @@ VtkOpenGLRendererWrap::~VtkOpenGLRendererWrap()
 
 void VtkOpenGLRendererWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRendererWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRendererWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLRendererWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLRenderer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLRenderer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLRenderer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLRenderer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLRendererWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLRendererWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRendererWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRendererWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLRendererWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Clear", Clear);
 	Nan::SetPrototypeMethod(tpl, "clear", Clear);
 
@@ -84,6 +85,8 @@ void VtkOpenGLRendererWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateLights", UpdateLights);
 	Nan::SetPrototypeMethod(tpl, "updateLights", UpdateLights);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLRendererWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -196,6 +199,7 @@ void VtkOpenGLRendererWrap::GetPass(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPass();
+		VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,6 +244,7 @@ void VtkOpenGLRendererWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,7 +260,7 @@ void VtkOpenGLRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkOpenGLRendererWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRendererWrap>(info.Holder());
 	vtkOpenGLRenderer *native = (vtkOpenGLRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLRenderer * r;
@@ -267,6 +272,7 @@ void VtkOpenGLRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLRendererWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -285,7 +291,7 @@ void VtkOpenGLRendererWrap::SetPass(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkOpenGLRendererWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRendererWrap>(info.Holder());
 	vtkOpenGLRenderer *native = (vtkOpenGLRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

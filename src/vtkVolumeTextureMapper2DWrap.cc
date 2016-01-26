@@ -29,26 +29,27 @@ VtkVolumeTextureMapper2DWrap::~VtkVolumeTextureMapper2DWrap()
 
 void VtkVolumeTextureMapper2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeTextureMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeTextureMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVolumeTextureMapper2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVolumeTextureMapper2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VolumeTextureMapper2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVolumeTextureMapper2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VolumeTextureMapper2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVolumeTextureMapper2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVolumeTextureMapper2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVolumeTextureMapper2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeTextureMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeTextureMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVolumeTextureMapper2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -85,6 +86,8 @@ void VtkVolumeTextureMapper2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTargetTextureSize", SetTargetTextureSize);
 	Nan::SetPrototypeMethod(tpl, "setTargetTextureSize", SetTargetTextureSize);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVolumeTextureMapper2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -213,6 +216,7 @@ void VtkVolumeTextureMapper2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkVolumeTextureMapper2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,10 +232,10 @@ void VtkVolumeTextureMapper2DWrap::Render(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkVolumeTextureMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper2DWrap>(info.Holder());
 	vtkVolumeTextureMapper2D *native = (vtkVolumeTextureMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -253,7 +257,7 @@ void VtkVolumeTextureMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkVolumeTextureMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper2DWrap>(info.Holder());
 	vtkVolumeTextureMapper2D *native = (vtkVolumeTextureMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVolumeTextureMapper2D * r;
@@ -265,6 +269,7 @@ void VtkVolumeTextureMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVolumeTextureMapper2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

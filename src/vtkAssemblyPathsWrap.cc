@@ -28,26 +28,27 @@ VtkAssemblyPathsWrap::~VtkAssemblyPathsWrap()
 
 void VtkAssemblyPathsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCollectionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAssemblyPathsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAssemblyPaths").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AssemblyPaths").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAssemblyPaths").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AssemblyPaths").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAssemblyPathsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAssemblyPathsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAssemblyPathsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCollectionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAssemblyPathsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddItem", AddItem);
 	Nan::SetPrototypeMethod(tpl, "addItem", AddItem);
 
@@ -72,6 +73,8 @@ void VtkAssemblyPathsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAssemblyPathsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -101,7 +104,7 @@ void VtkAssemblyPathsWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkAssemblyPathsWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyPathsWrap>(info.Holder());
 	vtkAssemblyPaths *native = (vtkAssemblyPaths *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAssemblyPathWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAssemblyPathWrap *a0 = ObjectWrap::Unwrap<VtkAssemblyPathWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -142,6 +145,7 @@ void VtkAssemblyPathsWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetNextItem();
+		VtkAssemblyPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +183,7 @@ void VtkAssemblyPathsWrap::IsItemPresent(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAssemblyPathsWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyPathsWrap>(info.Holder());
 	vtkAssemblyPaths *native = (vtkAssemblyPaths *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAssemblyPathWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAssemblyPathWrap *a0 = ObjectWrap::Unwrap<VtkAssemblyPathWrap>(info[0]->ToObject());
 		int r;
@@ -208,6 +212,7 @@ void VtkAssemblyPathsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkAssemblyPathsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +228,7 @@ void VtkAssemblyPathsWrap::RemoveItem(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAssemblyPathsWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyPathsWrap>(info.Holder());
 	vtkAssemblyPaths *native = (vtkAssemblyPaths *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAssemblyPathWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAssemblyPathWrap *a0 = ObjectWrap::Unwrap<VtkAssemblyPathWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -243,7 +248,7 @@ void VtkAssemblyPathsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAssemblyPathsWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyPathsWrap>(info.Holder());
 	vtkAssemblyPaths *native = (vtkAssemblyPaths *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAssemblyPaths * r;
@@ -255,6 +260,7 @@ void VtkAssemblyPathsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAssemblyPathsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

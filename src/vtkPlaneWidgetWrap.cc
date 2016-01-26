@@ -31,26 +31,27 @@ VtkPlaneWidgetWrap::~VtkPlaneWidgetWrap()
 
 void VtkPlaneWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataSourceWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataSourceWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPlaneWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPlaneWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PlaneWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPlaneWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PlaneWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPlaneWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPlaneWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPlaneWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataSourceWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataSourceWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPlaneWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -177,6 +178,8 @@ void VtkPlaneWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdatePlacement", UpdatePlacement);
 	Nan::SetPrototypeMethod(tpl, "updatePlacement", UpdatePlacement);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPlaneWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -227,6 +230,7 @@ void VtkPlaneWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +288,7 @@ void VtkPlaneWidgetWrap::GetPlane(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPlaneWidgetWrap>(info.Holder());
 	vtkPlaneWidget *native = (vtkPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -311,6 +315,7 @@ void VtkPlaneWidgetWrap::GetPlaneProperty(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetPlaneProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -326,7 +331,7 @@ void VtkPlaneWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPlaneWidgetWrap>(info.Holder());
 	vtkPlaneWidget *native = (vtkPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -353,6 +358,7 @@ void VtkPlaneWidgetWrap::GetPolyDataAlgorithm(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetPolyDataAlgorithm();
+		VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -431,6 +437,7 @@ void VtkPlaneWidgetWrap::GetSelectedHandleProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,6 +460,7 @@ void VtkPlaneWidgetWrap::GetSelectedPlaneProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetSelectedPlaneProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,6 +505,7 @@ void VtkPlaneWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkPlaneWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -628,7 +637,7 @@ void VtkPlaneWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPlaneWidgetWrap>(info.Holder());
 	vtkPlaneWidget *native = (vtkPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPlaneWidget * r;
@@ -640,6 +649,7 @@ void VtkPlaneWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPlaneWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -815,7 +825,7 @@ void VtkPlaneWidgetWrap::SetPlaneProperty(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPlaneWidgetWrap>(info.Holder());
 	vtkPlaneWidget *native = (vtkPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

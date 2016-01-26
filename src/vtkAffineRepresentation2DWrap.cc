@@ -34,26 +34,27 @@ VtkAffineRepresentation2DWrap::~VtkAffineRepresentation2DWrap()
 
 void VtkAffineRepresentation2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAffineRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAffineRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAffineRepresentation2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAffineRepresentation2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AffineRepresentation2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAffineRepresentation2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AffineRepresentation2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAffineRepresentation2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAffineRepresentation2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAffineRepresentation2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAffineRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAffineRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAffineRepresentation2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -156,6 +157,8 @@ void VtkAffineRepresentation2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAffineRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -250,7 +253,7 @@ void VtkAffineRepresentation2DWrap::GetActors2D(const Nan::FunctionCallbackInfo<
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -431,6 +434,7 @@ void VtkAffineRepresentation2DWrap::GetProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,6 +457,7 @@ void VtkAffineRepresentation2DWrap::GetSelectedProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetSelectedProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -475,6 +480,7 @@ void VtkAffineRepresentation2DWrap::GetTextProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -490,7 +496,7 @@ void VtkAffineRepresentation2DWrap::GetTransform(const Nan::FunctionCallbackInfo
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -539,6 +545,7 @@ void VtkAffineRepresentation2DWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkAffineRepresentation2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -554,7 +561,7 @@ void VtkAffineRepresentation2DWrap::ReleaseGraphicsResources(const Nan::Function
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -574,7 +581,7 @@ void VtkAffineRepresentation2DWrap::RenderOverlay(const Nan::FunctionCallbackInf
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -596,7 +603,7 @@ void VtkAffineRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAffineRepresentation2D * r;
@@ -608,6 +615,7 @@ void VtkAffineRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAffineRepresentation2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -729,7 +737,7 @@ void VtkAffineRepresentation2DWrap::SetProperty(const Nan::FunctionCallbackInfo<
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -749,7 +757,7 @@ void VtkAffineRepresentation2DWrap::SetSelectedProperty(const Nan::FunctionCallb
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -769,7 +777,7 @@ void VtkAffineRepresentation2DWrap::SetTextProperty(const Nan::FunctionCallbackI
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -789,7 +797,7 @@ void VtkAffineRepresentation2DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

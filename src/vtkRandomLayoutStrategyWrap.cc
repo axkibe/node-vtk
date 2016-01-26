@@ -28,26 +28,27 @@ VtkRandomLayoutStrategyWrap::~VtkRandomLayoutStrategyWrap()
 
 void VtkRandomLayoutStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRandomLayoutStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRandomLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RandomLayoutStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRandomLayoutStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RandomLayoutStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRandomLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRandomLayoutStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRandomLayoutStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRandomLayoutStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutomaticBoundsComputationOff", AutomaticBoundsComputationOff);
 	Nan::SetPrototypeMethod(tpl, "automaticBoundsComputationOff", AutomaticBoundsComputationOff);
 
@@ -105,6 +106,8 @@ void VtkRandomLayoutStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ThreeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 	Nan::SetPrototypeMethod(tpl, "threeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRandomLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -283,6 +286,7 @@ void VtkRandomLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkRandomLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +302,7 @@ void VtkRandomLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkRandomLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkRandomLayoutStrategyWrap>(info.Holder());
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRandomLayoutStrategy * r;
@@ -310,6 +314,7 @@ void VtkRandomLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRandomLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -347,7 +352,7 @@ void VtkRandomLayoutStrategyWrap::SetGraph(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRandomLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkRandomLayoutStrategyWrap>(info.Holder());
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkFreeTypeLabelRenderStrategyWrap::~VtkFreeTypeLabelRenderStrategyWrap()
 
 void VtkFreeTypeLabelRenderStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLabelRenderStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabelRenderStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFreeTypeLabelRenderStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFreeTypeLabelRenderStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FreeTypeLabelRenderStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFreeTypeLabelRenderStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FreeTypeLabelRenderStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFreeTypeLabelRenderStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFreeTypeLabelRenderStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFreeTypeLabelRenderStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLabelRenderStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabelRenderStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFreeTypeLabelRenderStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkFreeTypeLabelRenderStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFreeTypeLabelRenderStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkFreeTypeLabelRenderStrategyWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkFreeTypeLabelRenderStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -150,7 +154,7 @@ void VtkFreeTypeLabelRenderStrategyWrap::ReleaseGraphicsResources(const Nan::Fun
 {
 	VtkFreeTypeLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFreeTypeLabelRenderStrategyWrap>(info.Holder());
 	vtkFreeTypeLabelRenderStrategy *native = (vtkFreeTypeLabelRenderStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -170,7 +174,7 @@ void VtkFreeTypeLabelRenderStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkFreeTypeLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFreeTypeLabelRenderStrategyWrap>(info.Holder());
 	vtkFreeTypeLabelRenderStrategy *native = (vtkFreeTypeLabelRenderStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFreeTypeLabelRenderStrategy * r;
@@ -182,6 +186,7 @@ void VtkFreeTypeLabelRenderStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFreeTypeLabelRenderStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

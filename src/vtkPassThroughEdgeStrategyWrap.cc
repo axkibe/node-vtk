@@ -27,26 +27,27 @@ VtkPassThroughEdgeStrategyWrap::~VtkPassThroughEdgeStrategyWrap()
 
 void VtkPassThroughEdgeStrategyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkEdgeLayoutStrategyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEdgeLayoutStrategyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPassThroughEdgeStrategyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPassThroughEdgeStrategy").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PassThroughEdgeStrategy").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPassThroughEdgeStrategy").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PassThroughEdgeStrategy").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPassThroughEdgeStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPassThroughEdgeStrategyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPassThroughEdgeStrategyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkEdgeLayoutStrategyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkEdgeLayoutStrategyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPassThroughEdgeStrategyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkPassThroughEdgeStrategyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPassThroughEdgeStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -146,6 +149,7 @@ void VtkPassThroughEdgeStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkPassThroughEdgeStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +165,7 @@ void VtkPassThroughEdgeStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkPassThroughEdgeStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkPassThroughEdgeStrategyWrap>(info.Holder());
 	vtkPassThroughEdgeStrategy *native = (vtkPassThroughEdgeStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPassThroughEdgeStrategy * r;
@@ -173,6 +177,7 @@ void VtkPassThroughEdgeStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPassThroughEdgeStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

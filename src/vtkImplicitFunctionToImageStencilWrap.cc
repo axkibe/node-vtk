@@ -28,26 +28,27 @@ VtkImplicitFunctionToImageStencilWrap::~VtkImplicitFunctionToImageStencilWrap()
 
 void VtkImplicitFunctionToImageStencilWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageStencilSourceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageStencilSourceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitFunctionToImageStencilWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitFunctionToImageStencil").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitFunctionToImageStencil").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitFunctionToImageStencil").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitFunctionToImageStencil").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitFunctionToImageStencilWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitFunctionToImageStencilWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitFunctionToImageStencilWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageStencilSourceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageStencilSourceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitFunctionToImageStencilWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkImplicitFunctionToImageStencilWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetThreshold", SetThreshold);
 	Nan::SetPrototypeMethod(tpl, "setThreshold", SetThreshold);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitFunctionToImageStencilWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,6 +125,7 @@ void VtkImplicitFunctionToImageStencilWrap::GetInput(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetInput();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,6 +184,7 @@ void VtkImplicitFunctionToImageStencilWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitFunctionToImageStencilWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +200,7 @@ void VtkImplicitFunctionToImageStencilWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkImplicitFunctionToImageStencilWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitFunctionToImageStencilWrap>(info.Holder());
 	vtkImplicitFunctionToImageStencil *native = (vtkImplicitFunctionToImageStencil *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitFunctionToImageStencil * r;
@@ -207,6 +212,7 @@ void VtkImplicitFunctionToImageStencilWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitFunctionToImageStencilWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -225,7 +231,7 @@ void VtkImplicitFunctionToImageStencilWrap::SetInput(const Nan::FunctionCallback
 {
 	VtkImplicitFunctionToImageStencilWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitFunctionToImageStencilWrap>(info.Holder());
 	vtkImplicitFunctionToImageStencil *native = (vtkImplicitFunctionToImageStencil *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -28,26 +28,27 @@ VtkCompositePolyDataMapper2Wrap::~VtkCompositePolyDataMapper2Wrap()
 
 void VtkCompositePolyDataMapper2Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPainterPolyDataMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterPolyDataMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompositePolyDataMapper2Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompositePolyDataMapper2").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompositePolyDataMapper2").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompositePolyDataMapper2").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompositePolyDataMapper2").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompositePolyDataMapper2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompositePolyDataMapper2Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompositePolyDataMapper2Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterPolyDataMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterPolyDataMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompositePolyDataMapper2Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkCompositePolyDataMapper2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 	Nan::SetPrototypeMethod(tpl, "setCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompositePolyDataMapper2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -125,6 +128,7 @@ void VtkCompositePolyDataMapper2Wrap::GetCompositeDataDisplayAttributes(const Na
 		return;
 	}
 	r = native->GetCompositeDataDisplayAttributes();
+		VtkCompositeDataDisplayAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,6 +173,7 @@ void VtkCompositePolyDataMapper2Wrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompositePolyDataMapper2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,7 +225,7 @@ void VtkCompositePolyDataMapper2Wrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
 	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompositePolyDataMapper2 * r;
@@ -232,6 +237,7 @@ void VtkCompositePolyDataMapper2Wrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompositePolyDataMapper2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -250,7 +256,7 @@ void VtkCompositePolyDataMapper2Wrap::SetCompositeDataDisplayAttributes(const Na
 {
 	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
 	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataDisplayAttributesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataDisplayAttributesWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

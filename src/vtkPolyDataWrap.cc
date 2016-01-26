@@ -34,26 +34,27 @@ VtkPolyDataWrap::~VtkPolyDataWrap()
 
 void VtkPolyDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointSetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointSetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildCells", BuildCells);
 	Nan::SetPrototypeMethod(tpl, "buildCells", BuildCells);
 
@@ -159,6 +160,8 @@ void VtkPolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -231,13 +234,13 @@ void VtkPolyDataWrap::CopyCells(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointLocatorWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPointLocatorWrap *a2 = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -261,7 +264,7 @@ void VtkPolyDataWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -281,7 +284,7 @@ void VtkPolyDataWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -339,7 +342,7 @@ void VtkPolyDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -354,6 +357,7 @@ void VtkPolyDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkPolyDataWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -374,6 +378,7 @@ void VtkPolyDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -427,6 +432,7 @@ void VtkPolyDataWrap::GetLines(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLines();
+		VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -491,6 +497,7 @@ void VtkPolyDataWrap::GetPolys(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetPolys();
+		VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -513,6 +520,7 @@ void VtkPolyDataWrap::GetStrips(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetStrips();
+		VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -535,6 +543,7 @@ void VtkPolyDataWrap::GetVerts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetVerts();
+		VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -564,7 +573,7 @@ void VtkPolyDataWrap::InsertNextCell(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
 			int r;
@@ -667,6 +676,7 @@ void VtkPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -725,7 +735,7 @@ void VtkPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyData * r;
@@ -737,6 +747,7 @@ void VtkPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -755,7 +766,7 @@ void VtkPolyDataWrap::SetLines(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellArrayWrap *a0 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -775,7 +786,7 @@ void VtkPolyDataWrap::SetPolys(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellArrayWrap *a0 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -795,7 +806,7 @@ void VtkPolyDataWrap::SetStrips(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellArrayWrap *a0 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -815,7 +826,7 @@ void VtkPolyDataWrap::SetVerts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellArrayWrap *a0 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -835,7 +846,7 @@ void VtkPolyDataWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

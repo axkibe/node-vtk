@@ -29,26 +29,27 @@ VtkExtractSelectedGraphWrap::~VtkExtractSelectedGraphWrap()
 
 void VtkExtractSelectedGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractSelectedGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractSelectedGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractSelectedGraph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractSelectedGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractSelectedGraph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractSelectedGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractSelectedGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractSelectedGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractSelectedGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -76,6 +77,8 @@ void VtkExtractSelectedGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractSelectedGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -107,7 +110,7 @@ void VtkExtractSelectedGraphWrap::FillInputPortInformation(const Nan::FunctionCa
 	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -174,6 +177,7 @@ void VtkExtractSelectedGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractSelectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +217,7 @@ void VtkExtractSelectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkExtractSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedGraphWrap>(info.Holder());
 	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractSelectedGraph * r;
@@ -225,6 +229,7 @@ void VtkExtractSelectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractSelectedGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -243,7 +248,7 @@ void VtkExtractSelectedGraphWrap::SetAnnotationLayersConnection(const Nan::Funct
 {
 	VtkExtractSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedGraphWrap>(info.Holder());
 	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -263,7 +268,7 @@ void VtkExtractSelectedGraphWrap::SetSelectionConnection(const Nan::FunctionCall
 {
 	VtkExtractSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedGraphWrap>(info.Holder());
 	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -29,26 +29,27 @@ VtkIncrementalOctreePointLocatorWrap::~VtkIncrementalOctreePointLocatorWrap()
 
 void VtkIncrementalOctreePointLocatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkIncrementalPointLocatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkIncrementalOctreePointLocatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkIncrementalOctreePointLocator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("IncrementalOctreePointLocator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkIncrementalOctreePointLocator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("IncrementalOctreePointLocator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkIncrementalOctreePointLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkIncrementalOctreePointLocatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkIncrementalOctreePointLocatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkIncrementalPointLocatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkIncrementalOctreePointLocatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildCubicOctreeOff", BuildCubicOctreeOff);
 	Nan::SetPrototypeMethod(tpl, "buildCubicOctreeOff", BuildCubicOctreeOff);
 
@@ -103,6 +104,8 @@ void VtkIncrementalOctreePointLocatorWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetMaxPointsPerLeaf", SetMaxPointsPerLeaf);
 	Nan::SetPrototypeMethod(tpl, "setMaxPointsPerLeaf", SetMaxPointsPerLeaf);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkIncrementalOctreePointLocatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -182,7 +185,7 @@ void VtkIncrementalOctreePointLocatorWrap::GenerateRepresentation(const Nan::Fun
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -239,6 +242,7 @@ void VtkIncrementalOctreePointLocatorWrap::GetLocatorPoints(const Nan::FunctionC
 		return;
 	}
 	r = native->GetLocatorPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -351,6 +355,7 @@ void VtkIncrementalOctreePointLocatorWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkIncrementalOctreePointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,7 +371,7 @@ void VtkIncrementalOctreePointLocatorWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkIncrementalOctreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreePointLocatorWrap>(info.Holder());
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkIncrementalOctreePointLocator * r;
@@ -378,6 +383,7 @@ void VtkIncrementalOctreePointLocatorWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkIncrementalOctreePointLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

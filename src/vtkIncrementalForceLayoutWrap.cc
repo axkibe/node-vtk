@@ -27,26 +27,27 @@ VtkIncrementalForceLayoutWrap::~VtkIncrementalForceLayoutWrap()
 
 void VtkIncrementalForceLayoutWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkIncrementalForceLayoutWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkIncrementalForceLayout").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("IncrementalForceLayout").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkIncrementalForceLayout").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("IncrementalForceLayout").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkIncrementalForceLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkIncrementalForceLayoutWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkIncrementalForceLayoutWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkIncrementalForceLayoutWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkIncrementalForceLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdatePositions", UpdatePositions);
 	Nan::SetPrototypeMethod(tpl, "updatePositions", UpdatePositions);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkIncrementalForceLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -118,6 +121,7 @@ void VtkIncrementalForceLayoutWrap::GetGraph(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetGraph();
+		VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,6 +166,7 @@ void VtkIncrementalForceLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkIncrementalForceLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +182,7 @@ void VtkIncrementalForceLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
 	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkIncrementalForceLayout * r;
@@ -189,6 +194,7 @@ void VtkIncrementalForceLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkIncrementalForceLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -207,7 +213,7 @@ void VtkIncrementalForceLayoutWrap::SetGraph(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkIncrementalForceLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalForceLayoutWrap>(info.Holder());
 	vtkIncrementalForceLayout *native = (vtkIncrementalForceLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

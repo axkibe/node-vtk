@@ -31,26 +31,27 @@ VtkTensorProbeRepresentationWrap::~VtkTensorProbeRepresentationWrap()
 
 void VtkTensorProbeRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTensorProbeRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTensorProbeRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TensorProbeRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTensorProbeRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TensorProbeRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTensorProbeRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTensorProbeRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTensorProbeRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTensorProbeRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -84,6 +85,8 @@ void VtkTensorProbeRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetTrajectory", SetTrajectory);
 	Nan::SetPrototypeMethod(tpl, "setTrajectory", SetTrajectory);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTensorProbeRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -125,7 +128,7 @@ void VtkTensorProbeRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
 	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -200,6 +203,7 @@ void VtkTensorProbeRepresentationWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkTensorProbeRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +219,7 @@ void VtkTensorProbeRepresentationWrap::ReleaseGraphicsResources(const Nan::Funct
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
 	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -235,7 +239,7 @@ void VtkTensorProbeRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionC
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
 	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -257,7 +261,7 @@ void VtkTensorProbeRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
 	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTensorProbeRepresentation * r;
@@ -269,6 +273,7 @@ void VtkTensorProbeRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTensorProbeRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -314,7 +319,7 @@ void VtkTensorProbeRepresentationWrap::SetTrajectory(const Nan::FunctionCallback
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
 	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

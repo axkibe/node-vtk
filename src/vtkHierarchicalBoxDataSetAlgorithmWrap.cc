@@ -29,26 +29,27 @@ VtkHierarchicalBoxDataSetAlgorithmWrap::~VtkHierarchicalBoxDataSetAlgorithmWrap(
 
 void VtkHierarchicalBoxDataSetAlgorithmWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHierarchicalBoxDataSetAlgorithmWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHierarchicalBoxDataSetAlgorithm").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HierarchicalBoxDataSetAlgorithm").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHierarchicalBoxDataSetAlgorithm").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HierarchicalBoxDataSetAlgorithm").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHierarchicalBoxDataSetAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHierarchicalBoxDataSetAlgorithmWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHierarchicalBoxDataSetAlgorithmWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHierarchicalBoxDataSetAlgorithmWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -67,6 +68,8 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHierarchicalBoxDataSetAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -121,6 +124,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallba
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkHierarchicalBoxDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -139,6 +143,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetOutput();
+		VtkHierarchicalBoxDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,6 +188,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkHierarchicalBoxDataSetAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +204,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkHierarchicalBoxDataSetAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalBoxDataSetAlgorithmWrap>(info.Holder());
 	vtkHierarchicalBoxDataSetAlgorithm *native = (vtkHierarchicalBoxDataSetAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHierarchicalBoxDataSetAlgorithm * r;
@@ -210,6 +216,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHierarchicalBoxDataSetAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -228,7 +235,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SetInputData(const Nan::FunctionCal
 {
 	VtkHierarchicalBoxDataSetAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalBoxDataSetAlgorithmWrap>(info.Holder());
 	vtkHierarchicalBoxDataSetAlgorithm *native = (vtkHierarchicalBoxDataSetAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -243,7 +250,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SetInputData(const Nan::FunctionCal
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

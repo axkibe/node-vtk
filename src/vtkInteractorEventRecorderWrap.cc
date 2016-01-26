@@ -28,26 +28,27 @@ VtkInteractorEventRecorderWrap::~VtkInteractorEventRecorderWrap()
 
 void VtkInteractorEventRecorderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorObserverWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorEventRecorderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorEventRecorder").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorEventRecorder").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorEventRecorder").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorEventRecorder").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorEventRecorderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorEventRecorderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorEventRecorderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorObserverWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorObserverWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorEventRecorderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -102,6 +103,8 @@ void VtkInteractorEventRecorderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorEventRecorderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -216,6 +219,7 @@ void VtkInteractorEventRecorderWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorEventRecorderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +295,7 @@ void VtkInteractorEventRecorderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorEventRecorder * r;
@@ -303,6 +307,7 @@ void VtkInteractorEventRecorderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorEventRecorderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -380,7 +385,7 @@ void VtkInteractorEventRecorderWrap::SetInteractor(const Nan::FunctionCallbackIn
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

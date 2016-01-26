@@ -29,26 +29,27 @@ VtkAMRToMultiBlockFilterWrap::~VtkAMRToMultiBlockFilterWrap()
 
 void VtkAMRToMultiBlockFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMRToMultiBlockFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMRToMultiBlockFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMRToMultiBlockFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMRToMultiBlockFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMRToMultiBlockFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMRToMultiBlockFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMRToMultiBlockFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMRToMultiBlockFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMRToMultiBlockFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
@@ -73,6 +74,8 @@ void VtkAMRToMultiBlockFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMRToMultiBlockFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -104,7 +107,7 @@ void VtkAMRToMultiBlockFilterWrap::FillInputPortInformation(const Nan::FunctionC
 	vtkAMRToMultiBlockFilter *native = (vtkAMRToMultiBlockFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -130,7 +133,7 @@ void VtkAMRToMultiBlockFilterWrap::FillOutputPortInformation(const Nan::Function
 	vtkAMRToMultiBlockFilter *native = (vtkAMRToMultiBlockFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -175,6 +178,7 @@ void VtkAMRToMultiBlockFilterWrap::GetController(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,6 +223,7 @@ void VtkAMRToMultiBlockFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMRToMultiBlockFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +239,7 @@ void VtkAMRToMultiBlockFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkAMRToMultiBlockFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRToMultiBlockFilterWrap>(info.Holder());
 	vtkAMRToMultiBlockFilter *native = (vtkAMRToMultiBlockFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMRToMultiBlockFilter * r;
@@ -246,6 +251,7 @@ void VtkAMRToMultiBlockFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMRToMultiBlockFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +270,7 @@ void VtkAMRToMultiBlockFilterWrap::SetController(const Nan::FunctionCallbackInfo
 {
 	VtkAMRToMultiBlockFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRToMultiBlockFilterWrap>(info.Holder());
 	vtkAMRToMultiBlockFilter *native = (vtkAMRToMultiBlockFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

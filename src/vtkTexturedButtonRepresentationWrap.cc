@@ -35,26 +35,27 @@ VtkTexturedButtonRepresentationWrap::~VtkTexturedButtonRepresentationWrap()
 
 void VtkTexturedButtonRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkButtonRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkButtonRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTexturedButtonRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTexturedButtonRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TexturedButtonRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTexturedButtonRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TexturedButtonRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTexturedButtonRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTexturedButtonRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTexturedButtonRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkButtonRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkButtonRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTexturedButtonRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -139,6 +140,8 @@ void VtkTexturedButtonRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTexturedButtonRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -233,7 +236,7 @@ void VtkTexturedButtonRepresentationWrap::GetActors(const Nan::FunctionCallbackI
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -260,6 +263,7 @@ void VtkTexturedButtonRepresentationWrap::GetButtonGeometry(const Nan::FunctionC
 		return;
 	}
 	r = native->GetButtonGeometry();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -286,6 +290,7 @@ void VtkTexturedButtonRepresentationWrap::GetButtonTexture(const Nan::FunctionCa
 		r = native->GetButtonTexture(
 			info[0]->Int32Value()
 		);
+			VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -339,6 +344,7 @@ void VtkTexturedButtonRepresentationWrap::GetHoveringProperty(const Nan::Functio
 		return;
 	}
 	r = native->GetHoveringProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -361,6 +367,7 @@ void VtkTexturedButtonRepresentationWrap::GetProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -383,6 +390,7 @@ void VtkTexturedButtonRepresentationWrap::GetSelectingProperty(const Nan::Functi
 		return;
 	}
 	r = native->GetSelectingProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -460,6 +468,7 @@ void VtkTexturedButtonRepresentationWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkTexturedButtonRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -475,7 +484,7 @@ void VtkTexturedButtonRepresentationWrap::ReleaseGraphicsResources(const Nan::Fu
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -495,7 +504,7 @@ void VtkTexturedButtonRepresentationWrap::RenderOpaqueGeometry(const Nan::Functi
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -517,7 +526,7 @@ void VtkTexturedButtonRepresentationWrap::RenderTranslucentPolygonalGeometry(con
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -539,7 +548,7 @@ void VtkTexturedButtonRepresentationWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTexturedButtonRepresentation * r;
@@ -551,6 +560,7 @@ void VtkTexturedButtonRepresentationWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTexturedButtonRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -569,7 +579,7 @@ void VtkTexturedButtonRepresentationWrap::SetButtonGeometry(const Nan::FunctionC
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -589,7 +599,7 @@ void VtkTexturedButtonRepresentationWrap::SetButtonGeometryConnection(const Nan:
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -611,7 +621,7 @@ void VtkTexturedButtonRepresentationWrap::SetButtonTexture(const Nan::FunctionCa
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageDataWrap *a1 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -652,7 +662,7 @@ void VtkTexturedButtonRepresentationWrap::SetHoveringProperty(const Nan::Functio
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -672,7 +682,7 @@ void VtkTexturedButtonRepresentationWrap::SetProperty(const Nan::FunctionCallbac
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -692,7 +702,7 @@ void VtkTexturedButtonRepresentationWrap::SetSelectingProperty(const Nan::Functi
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -712,7 +722,7 @@ void VtkTexturedButtonRepresentationWrap::ShallowCopy(const Nan::FunctionCallbac
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

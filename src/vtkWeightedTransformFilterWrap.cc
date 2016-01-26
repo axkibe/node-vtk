@@ -28,26 +28,27 @@ VtkWeightedTransformFilterWrap::~VtkWeightedTransformFilterWrap()
 
 void VtkWeightedTransformFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWeightedTransformFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWeightedTransformFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WeightedTransformFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWeightedTransformFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WeightedTransformFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWeightedTransformFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWeightedTransformFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWeightedTransformFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWeightedTransformFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInputValuesOff", AddInputValuesOff);
 	Nan::SetPrototypeMethod(tpl, "addInputValuesOff", AddInputValuesOff);
 
@@ -108,6 +109,8 @@ void VtkWeightedTransformFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetWeightArray", SetWeightArray);
 	Nan::SetPrototypeMethod(tpl, "setWeightArray", SetWeightArray);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWeightedTransformFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -242,6 +245,7 @@ void VtkWeightedTransformFilterWrap::GetTransform(const Nan::FunctionCallbackInf
 		r = native->GetTransform(
 			info[0]->Int32Value()
 		);
+			VtkAbstractTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -317,6 +321,7 @@ void VtkWeightedTransformFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkWeightedTransformFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,7 +337,7 @@ void VtkWeightedTransformFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWeightedTransformFilter * r;
@@ -344,6 +349,7 @@ void VtkWeightedTransformFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWeightedTransformFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -440,7 +446,7 @@ void VtkWeightedTransformFilterWrap::SetTransform(const Nan::FunctionCallbackInf
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())

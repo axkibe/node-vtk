@@ -27,26 +27,27 @@ VtkVolumeRayCastCompositeFunctionWrap::~VtkVolumeRayCastCompositeFunctionWrap()
 
 void VtkVolumeRayCastCompositeFunctionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeRayCastFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeRayCastFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVolumeRayCastCompositeFunctionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVolumeRayCastCompositeFunction").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VolumeRayCastCompositeFunction").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVolumeRayCastCompositeFunction").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VolumeRayCastCompositeFunction").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVolumeRayCastCompositeFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVolumeRayCastCompositeFunctionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVolumeRayCastCompositeFunctionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeRayCastFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeRayCastFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVolumeRayCastCompositeFunctionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -80,6 +81,8 @@ void VtkVolumeRayCastCompositeFunctionWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetCompositeMethodToInterpolateFirst", SetCompositeMethodToInterpolateFirst);
 	Nan::SetPrototypeMethod(tpl, "setCompositeMethodToInterpolateFirst", SetCompositeMethodToInterpolateFirst);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVolumeRayCastCompositeFunctionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -208,6 +211,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkVolumeRayCastCompositeFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +227,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkVolumeRayCastCompositeFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastCompositeFunctionWrap>(info.Holder());
 	vtkVolumeRayCastCompositeFunction *native = (vtkVolumeRayCastCompositeFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVolumeRayCastCompositeFunction * r;
@@ -235,6 +239,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVolumeRayCastCompositeFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

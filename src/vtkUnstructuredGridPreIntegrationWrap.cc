@@ -29,26 +29,27 @@ VtkUnstructuredGridPreIntegrationWrap::~VtkUnstructuredGridPreIntegrationWrap()
 
 void VtkUnstructuredGridPreIntegrationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridVolumeRayIntegratorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUnstructuredGridPreIntegrationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUnstructuredGridPreIntegration").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UnstructuredGridPreIntegration").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUnstructuredGridPreIntegration").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UnstructuredGridPreIntegration").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUnstructuredGridPreIntegrationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUnstructuredGridPreIntegrationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUnstructuredGridPreIntegrationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUnstructuredGridPreIntegrationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -103,6 +104,8 @@ void VtkUnstructuredGridPreIntegrationWrap::InitTpl(v8::Local<v8::FunctionTempla
 	Nan::SetPrototypeMethod(tpl, "SetIntegrator", SetIntegrator);
 	Nan::SetPrototypeMethod(tpl, "setIntegrator", SetIntegrator);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUnstructuredGridPreIntegrationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -251,6 +254,7 @@ void VtkUnstructuredGridPreIntegrationWrap::GetIntegrator(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetIntegrator();
+		VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,10 +294,10 @@ void VtkUnstructuredGridPreIntegrationWrap::Initialize(const Nan::FunctionCallba
 {
 	VtkUnstructuredGridPreIntegrationWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridPreIntegrationWrap>(info.Holder());
 	vtkUnstructuredGridPreIntegration *native = (vtkUnstructuredGridPreIntegration *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -344,6 +348,7 @@ void VtkUnstructuredGridPreIntegrationWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
+		VtkUnstructuredGridPreIntegrationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,7 +364,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SafeDownCast(const Nan::FunctionCall
 {
 	VtkUnstructuredGridPreIntegrationWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridPreIntegrationWrap>(info.Holder());
 	vtkUnstructuredGridPreIntegration *native = (vtkUnstructuredGridPreIntegration *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUnstructuredGridPreIntegration * r;
@@ -371,6 +376,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUnstructuredGridPreIntegrationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -446,7 +452,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SetIntegrator(const Nan::FunctionCal
 {
 	VtkUnstructuredGridPreIntegrationWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridPreIntegrationWrap>(info.Holder());
 	vtkUnstructuredGridPreIntegration *native = (vtkUnstructuredGridPreIntegration *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridVolumeRayIntegratorWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayIntegratorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

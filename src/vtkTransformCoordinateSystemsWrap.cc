@@ -28,26 +28,27 @@ VtkTransformCoordinateSystemsWrap::~VtkTransformCoordinateSystemsWrap()
 
 void VtkTransformCoordinateSystemsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransformCoordinateSystemsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransformCoordinateSystems").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TransformCoordinateSystems").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransformCoordinateSystems").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TransformCoordinateSystems").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransformCoordinateSystemsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransformCoordinateSystemsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransformCoordinateSystemsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransformCoordinateSystemsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -96,6 +97,8 @@ void VtkTransformCoordinateSystemsWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
 	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransformCoordinateSystemsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -174,6 +177,7 @@ void VtkTransformCoordinateSystemsWrap::GetViewport(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetViewport();
+		VtkViewportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -218,6 +222,7 @@ void VtkTransformCoordinateSystemsWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransformCoordinateSystemsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +238,7 @@ void VtkTransformCoordinateSystemsWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransformCoordinateSystems * r;
@@ -245,6 +250,7 @@ void VtkTransformCoordinateSystemsWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransformCoordinateSystemsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -373,7 +379,7 @@ void VtkTransformCoordinateSystemsWrap::SetViewport(const Nan::FunctionCallbackI
 {
 	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -30,26 +30,27 @@ VtkGaussianSplatterWrap::~VtkGaussianSplatterWrap()
 
 void VtkGaussianSplatterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGaussianSplatterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGaussianSplatter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GaussianSplatter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGaussianSplatter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GaussianSplatter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGaussianSplatterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGaussianSplatterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGaussianSplatterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGaussianSplatterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CappingOff", CappingOff);
 	Nan::SetPrototypeMethod(tpl, "cappingOff", CappingOff);
 
@@ -185,6 +186,8 @@ void VtkGaussianSplatterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScaleFactor", SetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setScaleFactor", SetScaleFactor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGaussianSplatterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -238,13 +241,13 @@ void VtkGaussianSplatterWrap::ComputeModelBounds(const Nan::FunctionCallbackInfo
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageDataWrap *a1 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkInformationWrap *a2 = ObjectWrap::Unwrap<VtkInformationWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -577,6 +580,7 @@ void VtkGaussianSplatterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkGaussianSplatterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -616,7 +620,7 @@ void VtkGaussianSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGaussianSplatter * r;
@@ -628,6 +632,7 @@ void VtkGaussianSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGaussianSplatterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

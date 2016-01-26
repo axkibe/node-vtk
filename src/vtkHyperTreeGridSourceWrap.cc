@@ -30,26 +30,27 @@ VtkHyperTreeGridSourceWrap::~VtkHyperTreeGridSourceWrap()
 
 void VtkHyperTreeGridSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHyperTreeGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperTreeGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHyperTreeGridSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHyperTreeGridSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HyperTreeGridSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHyperTreeGridSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HyperTreeGridSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHyperTreeGridSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHyperTreeGridSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHyperTreeGridSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHyperTreeGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHyperTreeGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHyperTreeGridSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -119,6 +120,8 @@ void VtkHyperTreeGridSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseMaterialMaskOn", UseMaterialMaskOn);
 	Nan::SetPrototypeMethod(tpl, "useMaterialMaskOn", UseMaterialMaskOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHyperTreeGridSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -183,6 +186,7 @@ void VtkHyperTreeGridSourceWrap::GetDescriptorBits(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetDescriptorBits();
+		VtkBitArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,6 +223,7 @@ void VtkHyperTreeGridSourceWrap::GetMaterialMaskBits(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetMaterialMaskBits();
+		VtkBitArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,6 +246,7 @@ void VtkHyperTreeGridSourceWrap::GetQuadric(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetQuadric();
+		VtkQuadricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,6 +291,7 @@ void VtkHyperTreeGridSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkHyperTreeGridSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -300,7 +307,7 @@ void VtkHyperTreeGridSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
 	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHyperTreeGridSource * r;
@@ -312,6 +319,7 @@ void VtkHyperTreeGridSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHyperTreeGridSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -350,7 +358,7 @@ void VtkHyperTreeGridSourceWrap::SetDescriptorBits(const Nan::FunctionCallbackIn
 {
 	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
 	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBitArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBitArrayWrap *a0 = ObjectWrap::Unwrap<VtkBitArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -421,7 +429,7 @@ void VtkHyperTreeGridSourceWrap::SetLevelZeroMaterialIndex(const Nan::FunctionCa
 {
 	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
 	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -461,7 +469,7 @@ void VtkHyperTreeGridSourceWrap::SetMaterialMaskBits(const Nan::FunctionCallback
 {
 	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
 	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBitArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBitArrayWrap *a0 = ObjectWrap::Unwrap<VtkBitArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -508,7 +516,7 @@ void VtkHyperTreeGridSourceWrap::SetQuadric(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
 	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkQuadricWrap *a0 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

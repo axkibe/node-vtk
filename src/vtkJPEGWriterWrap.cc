@@ -28,26 +28,27 @@ VtkJPEGWriterWrap::~VtkJPEGWriterWrap()
 
 void VtkJPEGWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkJPEGWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkJPEGWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("JPEGWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkJPEGWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("JPEGWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkJPEGWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkJPEGWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkJPEGWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkJPEGWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -93,6 +94,8 @@ void VtkJPEGWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WriteToMemoryOn", WriteToMemoryOn);
 	Nan::SetPrototypeMethod(tpl, "writeToMemoryOn", WriteToMemoryOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkJPEGWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -185,6 +188,7 @@ void VtkJPEGWriterWrap::GetResult(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetResult();
+		VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,6 +233,7 @@ void VtkJPEGWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkJPEGWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -268,7 +273,7 @@ void VtkJPEGWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkJPEGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJPEGWriterWrap>(info.Holder());
 	vtkJPEGWriter *native = (vtkJPEGWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkJPEGWriter * r;
@@ -280,6 +285,7 @@ void VtkJPEGWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkJPEGWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -317,7 +323,7 @@ void VtkJPEGWriterWrap::SetResult(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkJPEGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJPEGWriterWrap>(info.Holder());
 	vtkJPEGWriter *native = (vtkJPEGWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkDiagonalMatrixSourceWrap::~VtkDiagonalMatrixSourceWrap()
 
 void VtkDiagonalMatrixSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkArrayDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkArrayDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDiagonalMatrixSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDiagonalMatrixSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DiagonalMatrixSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDiagonalMatrixSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DiagonalMatrixSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDiagonalMatrixSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDiagonalMatrixSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDiagonalMatrixSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkArrayDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkArrayDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDiagonalMatrixSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetArrayType", GetArrayType);
 	Nan::SetPrototypeMethod(tpl, "getArrayType", GetArrayType);
 
@@ -95,6 +96,8 @@ void VtkDiagonalMatrixSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSuperDiagonal", SetSuperDiagonal);
 	Nan::SetPrototypeMethod(tpl, "setSuperDiagonal", SetSuperDiagonal);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDiagonalMatrixSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -251,6 +254,7 @@ void VtkDiagonalMatrixSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkDiagonalMatrixSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,7 +270,7 @@ void VtkDiagonalMatrixSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkDiagonalMatrixSourceWrap *wrapper = ObjectWrap::Unwrap<VtkDiagonalMatrixSourceWrap>(info.Holder());
 	vtkDiagonalMatrixSource *native = (vtkDiagonalMatrixSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDiagonalMatrixSource * r;
@@ -278,6 +282,7 @@ void VtkDiagonalMatrixSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDiagonalMatrixSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

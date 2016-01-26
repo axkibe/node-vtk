@@ -28,26 +28,27 @@ VtkFastSplatterWrap::~VtkFastSplatterWrap()
 
 void VtkFastSplatterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFastSplatterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFastSplatter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FastSplatter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFastSplatter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FastSplatter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFastSplatterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFastSplatterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFastSplatterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFastSplatterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -102,6 +103,8 @@ void VtkFastSplatterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSplatConnection", SetSplatConnection);
 	Nan::SetPrototypeMethod(tpl, "setSplatConnection", SetSplatConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFastSplatterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -230,6 +233,7 @@ void VtkFastSplatterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkFastSplatterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,7 +249,7 @@ void VtkFastSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFastSplatter * r;
@@ -257,6 +261,7 @@ void VtkFastSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFastSplatterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -446,7 +451,7 @@ void VtkFastSplatterWrap::SetSplatConnection(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

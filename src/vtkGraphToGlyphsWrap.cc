@@ -28,26 +28,27 @@ VtkGraphToGlyphsWrap::~VtkGraphToGlyphsWrap()
 
 void VtkGraphToGlyphsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGraphToGlyphsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGraphToGlyphs").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GraphToGlyphs").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGraphToGlyphs").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GraphToGlyphs").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGraphToGlyphsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGraphToGlyphsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGraphToGlyphsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGraphToGlyphsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FilledOff", FilledOff);
 	Nan::SetPrototypeMethod(tpl, "filledOff", FilledOff);
 
@@ -84,6 +85,8 @@ void VtkGraphToGlyphsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScreenSize", SetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "setScreenSize", SetScreenSize);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGraphToGlyphsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -172,6 +175,7 @@ void VtkGraphToGlyphsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,6 +234,7 @@ void VtkGraphToGlyphsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkGraphToGlyphsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,7 +250,7 @@ void VtkGraphToGlyphsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
 	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGraphToGlyphs * r;
@@ -257,6 +262,7 @@ void VtkGraphToGlyphsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGraphToGlyphsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -294,7 +300,7 @@ void VtkGraphToGlyphsWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
 	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

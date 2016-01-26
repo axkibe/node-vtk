@@ -28,26 +28,27 @@ VtkCellCenterDepthSortWrap::~VtkCellCenterDepthSortWrap()
 
 void VtkCellCenterDepthSortWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVisibilitySortWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVisibilitySortWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellCenterDepthSortWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellCenterDepthSort").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellCenterDepthSort").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellCenterDepthSort").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellCenterDepthSort").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellCenterDepthSortWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellCenterDepthSortWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellCenterDepthSortWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVisibilitySortWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVisibilitySortWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellCenterDepthSortWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkCellCenterDepthSortWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellCenterDepthSortWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkCellCenterDepthSortWrap::GetNextCells(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetNextCells();
+		VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,6 +176,7 @@ void VtkCellCenterDepthSortWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellCenterDepthSortWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,7 +192,7 @@ void VtkCellCenterDepthSortWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCellCenterDepthSortWrap *wrapper = ObjectWrap::Unwrap<VtkCellCenterDepthSortWrap>(info.Holder());
 	vtkCellCenterDepthSort *native = (vtkCellCenterDepthSort *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCellCenterDepthSort * r;
@@ -199,6 +204,7 @@ void VtkCellCenterDepthSortWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCellCenterDepthSortWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

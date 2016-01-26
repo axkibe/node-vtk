@@ -27,26 +27,27 @@ VtkDataObjectWriterWrap::~VtkDataObjectWriterWrap()
 
 void VtkDataObjectWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDataObjectWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDataObjectWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DataObjectWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDataObjectWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DataObjectWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDataObjectWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDataObjectWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDataObjectWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDataObjectWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -107,6 +108,8 @@ void VtkDataObjectWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WriteToOutputStringOn", WriteToOutputStringOn);
 	Nan::SetPrototypeMethod(tpl, "writeToOutputStringOn", WriteToOutputStringOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDataObjectWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -277,6 +280,7 @@ void VtkDataObjectWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkDataObjectWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +296,7 @@ void VtkDataObjectWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWriterWrap>(info.Holder());
 	vtkDataObjectWriter *native = (vtkDataObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDataObjectWriter * r;
@@ -304,6 +308,7 @@ void VtkDataObjectWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDataObjectWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

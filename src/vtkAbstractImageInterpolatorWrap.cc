@@ -27,26 +27,27 @@ VtkAbstractImageInterpolatorWrap::~VtkAbstractImageInterpolatorWrap()
 
 void VtkAbstractImageInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAbstractImageInterpolatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAbstractImageInterpolator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AbstractImageInterpolator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAbstractImageInterpolator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AbstractImageInterpolator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAbstractImageInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAbstractImageInterpolatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAbstractImageInterpolatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAbstractImageInterpolatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeNumberOfComponents", ComputeNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "computeNumberOfComponents", ComputeNumberOfComponents);
 
@@ -122,6 +123,8 @@ void VtkAbstractImageInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAbstractImageInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -172,7 +175,7 @@ void VtkAbstractImageInterpolatorWrap::DeepCopy(const Nan::FunctionCallbackInfo<
 {
 	VtkAbstractImageInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info.Holder());
 	vtkAbstractImageInterpolator *native = (vtkAbstractImageInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractImageInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractImageInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -304,7 +307,7 @@ void VtkAbstractImageInterpolatorWrap::Initialize(const Nan::FunctionCallbackInf
 {
 	VtkAbstractImageInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info.Holder());
 	vtkAbstractImageInterpolator *native = (vtkAbstractImageInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -386,6 +389,7 @@ void VtkAbstractImageInterpolatorWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkAbstractImageInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -413,7 +417,7 @@ void VtkAbstractImageInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkAbstractImageInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info.Holder());
 	vtkAbstractImageInterpolator *native = (vtkAbstractImageInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAbstractImageInterpolator * r;
@@ -425,6 +429,7 @@ void VtkAbstractImageInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAbstractImageInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

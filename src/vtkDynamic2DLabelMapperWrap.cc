@@ -29,26 +29,27 @@ VtkDynamic2DLabelMapperWrap::~VtkDynamic2DLabelMapperWrap()
 
 void VtkDynamic2DLabelMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLabeledDataMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabeledDataMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDynamic2DLabelMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDynamic2DLabelMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Dynamic2DLabelMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDynamic2DLabelMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Dynamic2DLabelMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDynamic2DLabelMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDynamic2DLabelMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDynamic2DLabelMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLabeledDataMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabeledDataMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDynamic2DLabelMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -76,6 +77,8 @@ void VtkDynamic2DLabelMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPriorityArrayName", SetPriorityArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPriorityArrayName", SetPriorityArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDynamic2DLabelMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -148,6 +151,7 @@ void VtkDynamic2DLabelMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkDynamic2DLabelMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,10 +167,10 @@ void VtkDynamic2DLabelMapperWrap::RenderOpaqueGeometry(const Nan::FunctionCallba
 {
 	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
 	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -188,10 +192,10 @@ void VtkDynamic2DLabelMapperWrap::RenderOverlay(const Nan::FunctionCallbackInfo<
 {
 	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
 	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -237,7 +241,7 @@ void VtkDynamic2DLabelMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
 	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDynamic2DLabelMapper * r;
@@ -249,6 +253,7 @@ void VtkDynamic2DLabelMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDynamic2DLabelMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

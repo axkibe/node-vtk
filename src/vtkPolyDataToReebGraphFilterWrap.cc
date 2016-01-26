@@ -28,26 +28,27 @@ VtkPolyDataToReebGraphFilterWrap::~VtkPolyDataToReebGraphFilterWrap()
 
 void VtkPolyDataToReebGraphFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDirectedGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDirectedGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataToReebGraphFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataToReebGraphFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataToReebGraphFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataToReebGraphFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataToReebGraphFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataToReebGraphFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataToReebGraphFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataToReebGraphFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDirectedGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDirectedGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataToReebGraphFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +70,8 @@ void VtkPolyDataToReebGraphFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SetFieldId", SetFieldId);
 	Nan::SetPrototypeMethod(tpl, "setFieldId", SetFieldId);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataToReebGraphFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -133,6 +136,7 @@ void VtkPolyDataToReebGraphFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetOutput();
+		VtkReebGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,6 +181,7 @@ void VtkPolyDataToReebGraphFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataToReebGraphFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +197,7 @@ void VtkPolyDataToReebGraphFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkPolyDataToReebGraphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataToReebGraphFilterWrap>(info.Holder());
 	vtkPolyDataToReebGraphFilter *native = (vtkPolyDataToReebGraphFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataToReebGraphFilter * r;
@@ -204,6 +209,7 @@ void VtkPolyDataToReebGraphFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataToReebGraphFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

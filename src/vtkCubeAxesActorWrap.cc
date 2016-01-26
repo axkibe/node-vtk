@@ -33,26 +33,27 @@ VtkCubeAxesActorWrap::~VtkCubeAxesActorWrap()
 
 void VtkCubeAxesActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCubeAxesActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCubeAxesActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CubeAxesActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCubeAxesActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CubeAxesActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCubeAxesActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCubeAxesActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCubeAxesActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCubeAxesActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DrawXGridlinesOff", DrawXGridlinesOff);
 	Nan::SetPrototypeMethod(tpl, "drawXGridlinesOff", DrawXGridlinesOff);
 
@@ -659,6 +660,8 @@ void VtkCubeAxesActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ZAxisVisibilityOn", ZAxisVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "zAxisVisibilityOn", ZAxisVisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCubeAxesActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -915,6 +918,7 @@ void VtkCubeAxesActorWrap::GetAxisLabels(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetAxisLabels(
 			info[0]->Int32Value()
 		);
+			VtkStringArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -940,6 +944,7 @@ void VtkCubeAxesActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1302,6 +1307,7 @@ void VtkCubeAxesActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<
 		r = native->GetLabelTextProperty(
 			info[0]->Int32Value()
 		);
+			VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1401,6 +1407,7 @@ void VtkCubeAxesActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<
 		r = native->GetTitleTextProperty(
 			info[0]->Int32Value()
 		);
+			VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1524,6 +1531,7 @@ void VtkCubeAxesActorWrap::GetXAxesGridlinesProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetXAxesGridlinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1546,6 +1554,7 @@ void VtkCubeAxesActorWrap::GetXAxesGridpolysProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetXAxesGridpolysProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1568,6 +1577,7 @@ void VtkCubeAxesActorWrap::GetXAxesInnerGridlinesProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetXAxesInnerGridlinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1590,6 +1600,7 @@ void VtkCubeAxesActorWrap::GetXAxesLinesProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetXAxesLinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1710,6 +1721,7 @@ void VtkCubeAxesActorWrap::GetYAxesGridlinesProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetYAxesGridlinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1732,6 +1744,7 @@ void VtkCubeAxesActorWrap::GetYAxesGridpolysProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetYAxesGridpolysProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1754,6 +1767,7 @@ void VtkCubeAxesActorWrap::GetYAxesInnerGridlinesProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetYAxesInnerGridlinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1776,6 +1790,7 @@ void VtkCubeAxesActorWrap::GetYAxesLinesProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetYAxesLinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1896,6 +1911,7 @@ void VtkCubeAxesActorWrap::GetZAxesGridlinesProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetZAxesGridlinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1918,6 +1934,7 @@ void VtkCubeAxesActorWrap::GetZAxesGridpolysProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetZAxesGridpolysProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1940,6 +1957,7 @@ void VtkCubeAxesActorWrap::GetZAxesInnerGridlinesProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetZAxesInnerGridlinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1962,6 +1980,7 @@ void VtkCubeAxesActorWrap::GetZAxesLinesProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetZAxesLinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -2118,6 +2137,7 @@ void VtkCubeAxesActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkCubeAxesActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -2133,7 +2153,7 @@ void VtkCubeAxesActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackI
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2153,7 +2173,7 @@ void VtkCubeAxesActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -2175,7 +2195,7 @@ void VtkCubeAxesActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -2197,7 +2217,7 @@ void VtkCubeAxesActorWrap::RenderTranslucentGeometry(const Nan::FunctionCallback
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -2219,7 +2239,7 @@ void VtkCubeAxesActorWrap::RenderTranslucentPolygonalGeometry(const Nan::Functio
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -2241,7 +2261,7 @@ void VtkCubeAxesActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCubeAxesActor * r;
@@ -2253,6 +2273,7 @@ void VtkCubeAxesActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCubeAxesActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -2354,7 +2375,7 @@ void VtkCubeAxesActorWrap::SetAxisLabels(const Nan::FunctionCallbackInfo<v8::Val
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkStringArrayWrap *a1 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -2442,7 +2463,7 @@ void VtkCubeAxesActorWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3091,7 +3112,7 @@ void VtkCubeAxesActorWrap::SetXAxesGridlinesProperty(const Nan::FunctionCallback
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3111,7 +3132,7 @@ void VtkCubeAxesActorWrap::SetXAxesGridpolysProperty(const Nan::FunctionCallback
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3131,7 +3152,7 @@ void VtkCubeAxesActorWrap::SetXAxesInnerGridlinesProperty(const Nan::FunctionCal
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3151,7 +3172,7 @@ void VtkCubeAxesActorWrap::SetXAxesLinesProperty(const Nan::FunctionCallbackInfo
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3330,7 +3351,7 @@ void VtkCubeAxesActorWrap::SetYAxesGridlinesProperty(const Nan::FunctionCallback
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3350,7 +3371,7 @@ void VtkCubeAxesActorWrap::SetYAxesGridpolysProperty(const Nan::FunctionCallback
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3370,7 +3391,7 @@ void VtkCubeAxesActorWrap::SetYAxesInnerGridlinesProperty(const Nan::FunctionCal
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3390,7 +3411,7 @@ void VtkCubeAxesActorWrap::SetYAxesLinesProperty(const Nan::FunctionCallbackInfo
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3569,7 +3590,7 @@ void VtkCubeAxesActorWrap::SetZAxesGridlinesProperty(const Nan::FunctionCallback
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3589,7 +3610,7 @@ void VtkCubeAxesActorWrap::SetZAxesGridpolysProperty(const Nan::FunctionCallback
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3609,7 +3630,7 @@ void VtkCubeAxesActorWrap::SetZAxesInnerGridlinesProperty(const Nan::FunctionCal
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -3629,7 +3650,7 @@ void VtkCubeAxesActorWrap::SetZAxesLinesProperty(const Nan::FunctionCallbackInfo
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -32,26 +32,27 @@ VtkGlyph3DMapperWrap::~VtkGlyph3DMapperWrap()
 
 void VtkGlyph3DMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGlyph3DMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGlyph3DMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Glyph3DMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGlyph3DMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Glyph3DMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGlyph3DMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGlyph3DMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGlyph3DMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGlyph3DMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClampingOff", ClampingOff);
 	Nan::SetPrototypeMethod(tpl, "clampingOff", ClampingOff);
 
@@ -187,6 +188,8 @@ void VtkGlyph3DMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseSelectionIdsOn", UseSelectionIdsOn);
 	Nan::SetPrototypeMethod(tpl, "useSelectionIdsOn", UseSelectionIdsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGlyph3DMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -363,6 +366,7 @@ void VtkGlyph3DMapperWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->GetSource(
 			info[0]->Int32Value()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -458,6 +462,7 @@ void VtkGlyph3DMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkGlyph3DMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,10 +502,10 @@ void VtkGlyph3DMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
 	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -522,7 +527,7 @@ void VtkGlyph3DMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
 	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGlyph3DMapper * r;
@@ -534,6 +539,7 @@ void VtkGlyph3DMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGlyph3DMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -576,7 +582,7 @@ void VtkGlyph3DMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
 	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -883,7 +889,7 @@ void VtkGlyph3DMapperWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
 	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -898,7 +904,7 @@ void VtkGlyph3DMapperWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -920,7 +926,7 @@ void VtkGlyph3DMapperWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
 	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -935,7 +941,7 @@ void VtkGlyph3DMapperWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

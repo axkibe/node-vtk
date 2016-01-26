@@ -29,26 +29,27 @@ VtkMatrixToLinearTransformWrap::~VtkMatrixToLinearTransformWrap()
 
 void VtkMatrixToLinearTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLinearTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLinearTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMatrixToLinearTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMatrixToLinearTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MatrixToLinearTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMatrixToLinearTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MatrixToLinearTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMatrixToLinearTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMatrixToLinearTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMatrixToLinearTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLinearTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLinearTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMatrixToLinearTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,6 +74,8 @@ void VtkMatrixToLinearTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMatrixToLinearTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -123,6 +126,7 @@ void VtkMatrixToLinearTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetInput();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,6 +183,7 @@ void VtkMatrixToLinearTransformWrap::MakeTransform(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,6 +206,7 @@ void VtkMatrixToLinearTransformWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkMatrixToLinearTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +222,7 @@ void VtkMatrixToLinearTransformWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkMatrixToLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixToLinearTransformWrap>(info.Holder());
 	vtkMatrixToLinearTransform *native = (vtkMatrixToLinearTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMatrixToLinearTransform * r;
@@ -228,6 +234,7 @@ void VtkMatrixToLinearTransformWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMatrixToLinearTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -246,7 +253,7 @@ void VtkMatrixToLinearTransformWrap::SetInput(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMatrixToLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixToLinearTransformWrap>(info.Holder());
 	vtkMatrixToLinearTransform *native = (vtkMatrixToLinearTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)

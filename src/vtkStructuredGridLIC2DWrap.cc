@@ -28,26 +28,27 @@ VtkStructuredGridLIC2DWrap::~VtkStructuredGridLIC2DWrap()
 
 void VtkStructuredGridLIC2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStructuredGridLIC2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStructuredGridLIC2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StructuredGridLIC2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStructuredGridLIC2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StructuredGridLIC2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStructuredGridLIC2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStructuredGridLIC2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStructuredGridLIC2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStructuredGridLIC2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -99,6 +100,8 @@ void VtkStructuredGridLIC2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSteps", SetSteps);
 	Nan::SetPrototypeMethod(tpl, "setSteps", SetSteps);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStructuredGridLIC2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -149,6 +152,7 @@ void VtkStructuredGridLIC2DWrap::GetContext(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetContext();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -305,6 +309,7 @@ void VtkStructuredGridLIC2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkStructuredGridLIC2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -320,7 +325,7 @@ void VtkStructuredGridLIC2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkStructuredGridLIC2DWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridLIC2DWrap>(info.Holder());
 	vtkStructuredGridLIC2D *native = (vtkStructuredGridLIC2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStructuredGridLIC2D * r;
@@ -332,6 +337,7 @@ void VtkStructuredGridLIC2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStructuredGridLIC2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -350,7 +356,7 @@ void VtkStructuredGridLIC2DWrap::SetContext(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkStructuredGridLIC2DWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridLIC2DWrap>(info.Holder());
 	vtkStructuredGridLIC2D *native = (vtkStructuredGridLIC2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
 		int r;

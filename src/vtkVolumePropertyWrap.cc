@@ -28,26 +28,27 @@ VtkVolumePropertyWrap::~VtkVolumePropertyWrap()
 
 void VtkVolumePropertyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVolumePropertyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVolumeProperty").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VolumeProperty").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVolumeProperty").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VolumeProperty").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVolumePropertyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVolumePropertyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVolumePropertyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVolumePropertyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -192,6 +193,8 @@ void VtkVolumePropertyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateMTimes", UpdateMTimes);
 	Nan::SetPrototypeMethod(tpl, "updateMTimes", UpdateMTimes);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVolumePropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -221,7 +224,7 @@ void VtkVolumePropertyWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumePropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumePropertyWrap *a0 = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -447,6 +450,7 @@ void VtkVolumePropertyWrap::GetGradientOpacity(const Nan::FunctionCallbackInfo<v
 		r = native->GetGradientOpacity(
 			info[0]->Int32Value()
 		);
+			VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -465,6 +469,7 @@ void VtkVolumePropertyWrap::GetGradientOpacity(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetGradientOpacity();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -491,6 +496,7 @@ void VtkVolumePropertyWrap::GetGrayTransferFunction(const Nan::FunctionCallbackI
 		r = native->GetGrayTransferFunction(
 			info[0]->Int32Value()
 		);
+			VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -509,6 +515,7 @@ void VtkVolumePropertyWrap::GetGrayTransferFunction(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetGrayTransferFunction();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -633,6 +640,7 @@ void VtkVolumePropertyWrap::GetRGBTransferFunction(const Nan::FunctionCallbackIn
 		r = native->GetRGBTransferFunction(
 			info[0]->Int32Value()
 		);
+			VtkColorTransferFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -651,6 +659,7 @@ void VtkVolumePropertyWrap::GetRGBTransferFunction(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetRGBTransferFunction();
+		VtkColorTransferFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -677,6 +686,7 @@ void VtkVolumePropertyWrap::GetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetScalarOpacity(
 			info[0]->Int32Value()
 		);
+			VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -695,6 +705,7 @@ void VtkVolumePropertyWrap::GetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetScalarOpacity();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -833,6 +844,7 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 		r = native->GetStoredGradientOpacity(
 			info[0]->Int32Value()
 		);
+			VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -851,6 +863,7 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetStoredGradientOpacity();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -919,6 +932,7 @@ void VtkVolumePropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkVolumePropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -934,7 +948,7 @@ void VtkVolumePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVolumeProperty * r;
@@ -946,6 +960,7 @@ void VtkVolumePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVolumePropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -999,7 +1014,7 @@ void VtkVolumePropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorTransferFunctionWrap *a0 = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1014,7 +1029,7 @@ void VtkVolumePropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkColorTransferFunctionWrap *a1 = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1126,7 +1141,7 @@ void VtkVolumePropertyWrap::SetGradientOpacity(const Nan::FunctionCallbackInfo<v
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1141,7 +1156,7 @@ void VtkVolumePropertyWrap::SetGradientOpacity(const Nan::FunctionCallbackInfo<v
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPiecewiseFunctionWrap *a1 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1225,7 +1240,7 @@ void VtkVolumePropertyWrap::SetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1240,7 +1255,7 @@ void VtkVolumePropertyWrap::SetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPiecewiseFunctionWrap *a1 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

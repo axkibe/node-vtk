@@ -32,26 +32,27 @@ VtkTreeAreaViewWrap::~VtkTreeAreaViewWrap()
 
 void VtkTreeAreaViewWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderViewWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderViewWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTreeAreaViewWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTreeAreaView").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TreeAreaView").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTreeAreaView").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TreeAreaView").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTreeAreaViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTreeAreaViewWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTreeAreaViewWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderViewWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderViewWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTreeAreaViewWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AreaLabelVisibilityOff", AreaLabelVisibilityOff);
 	Nan::SetPrototypeMethod(tpl, "areaLabelVisibilityOff", AreaLabelVisibilityOff);
 
@@ -181,6 +182,8 @@ void VtkTreeAreaViewWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTreeAreaViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -467,6 +470,7 @@ void VtkTreeAreaViewWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLayoutStrategy();
+		VtkAreaLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -525,6 +529,7 @@ void VtkTreeAreaViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkTreeAreaViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -540,7 +545,7 @@ void VtkTreeAreaViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTreeAreaView * r;
@@ -552,6 +557,7 @@ void VtkTreeAreaViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTreeAreaViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -759,7 +765,7 @@ void VtkTreeAreaViewWrap::SetGraphFromInput(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -771,6 +777,7 @@ void VtkTreeAreaViewWrap::SetGraphFromInput(const Nan::FunctionCallbackInfo<v8::
 		r = native->SetGraphFromInput(
 			(vtkGraph *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -789,7 +796,7 @@ void VtkTreeAreaViewWrap::SetGraphFromInputConnection(const Nan::FunctionCallbac
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -801,6 +808,7 @@ void VtkTreeAreaViewWrap::SetGraphFromInputConnection(const Nan::FunctionCallbac
 		r = native->SetGraphFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -839,7 +847,7 @@ void VtkTreeAreaViewWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -878,7 +886,7 @@ void VtkTreeAreaViewWrap::SetTreeFromInput(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -890,6 +898,7 @@ void VtkTreeAreaViewWrap::SetTreeFromInput(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SetTreeFromInput(
 			(vtkTree *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -908,7 +917,7 @@ void VtkTreeAreaViewWrap::SetTreeFromInputConnection(const Nan::FunctionCallback
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		vtkDataRepresentation * r;
@@ -920,6 +929,7 @@ void VtkTreeAreaViewWrap::SetTreeFromInputConnection(const Nan::FunctionCallback
 		r = native->SetTreeFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
+			VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

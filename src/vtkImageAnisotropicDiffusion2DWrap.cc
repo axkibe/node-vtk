@@ -27,26 +27,27 @@ VtkImageAnisotropicDiffusion2DWrap::~VtkImageAnisotropicDiffusion2DWrap()
 
 void VtkImageAnisotropicDiffusion2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageSpatialAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageSpatialAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageAnisotropicDiffusion2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageAnisotropicDiffusion2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageAnisotropicDiffusion2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageAnisotropicDiffusion2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageAnisotropicDiffusion2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageAnisotropicDiffusion2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageAnisotropicDiffusion2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageAnisotropicDiffusion2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageSpatialAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageSpatialAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageAnisotropicDiffusion2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CornersOff", CornersOff);
 	Nan::SetPrototypeMethod(tpl, "cornersOff", CornersOff);
 
@@ -125,6 +126,8 @@ void VtkImageAnisotropicDiffusion2DWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfIterations", SetNumberOfIterations);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfIterations", SetNumberOfIterations);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageAnisotropicDiffusion2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -391,6 +394,7 @@ void VtkImageAnisotropicDiffusion2DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageAnisotropicDiffusion2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -406,7 +410,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageAnisotropicDiffusion2D * r;
@@ -418,6 +422,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageAnisotropicDiffusion2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

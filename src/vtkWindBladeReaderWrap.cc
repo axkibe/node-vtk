@@ -29,26 +29,27 @@ VtkWindBladeReaderWrap::~VtkWindBladeReaderWrap()
 
 void VtkWindBladeReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWindBladeReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWindBladeReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WindBladeReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWindBladeReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WindBladeReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWindBladeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWindBladeReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWindBladeReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWindBladeReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DisableAllPointArrays", DisableAllPointArrays);
 	Nan::SetPrototypeMethod(tpl, "disableAllPointArrays", DisableAllPointArrays);
 
@@ -100,6 +101,8 @@ void VtkWindBladeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWindBladeReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -160,6 +163,7 @@ void VtkWindBladeReaderWrap::GetBladeOutput(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetBladeOutput();
+		VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,6 +200,7 @@ void VtkWindBladeReaderWrap::GetFieldOutput(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetFieldOutput();
+		VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,6 +237,7 @@ void VtkWindBladeReaderWrap::GetGroundOutput(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetGroundOutput();
+		VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -333,6 +339,7 @@ void VtkWindBladeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkWindBladeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -348,7 +355,7 @@ void VtkWindBladeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
 	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWindBladeReader * r;
@@ -360,6 +367,7 @@ void VtkWindBladeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWindBladeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

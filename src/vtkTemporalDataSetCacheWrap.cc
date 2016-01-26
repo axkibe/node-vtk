@@ -27,26 +27,27 @@ VtkTemporalDataSetCacheWrap::~VtkTemporalDataSetCacheWrap()
 
 void VtkTemporalDataSetCacheWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTemporalDataSetCacheWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTemporalDataSetCache").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TemporalDataSetCache").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTemporalDataSetCache").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TemporalDataSetCache").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTemporalDataSetCacheWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTemporalDataSetCacheWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTemporalDataSetCacheWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTemporalDataSetCacheWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCacheSize", GetCacheSize);
 	Nan::SetPrototypeMethod(tpl, "getCacheSize", GetCacheSize);
 
@@ -65,6 +66,8 @@ void VtkTemporalDataSetCacheWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCacheSize", SetCacheSize);
 	Nan::SetPrototypeMethod(tpl, "setCacheSize", SetCacheSize);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTemporalDataSetCacheWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -151,6 +154,7 @@ void VtkTemporalDataSetCacheWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkTemporalDataSetCacheWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +170,7 @@ void VtkTemporalDataSetCacheWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkTemporalDataSetCacheWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalDataSetCacheWrap>(info.Holder());
 	vtkTemporalDataSetCache *native = (vtkTemporalDataSetCache *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTemporalDataSetCache * r;
@@ -178,6 +182,7 @@ void VtkTemporalDataSetCacheWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTemporalDataSetCacheWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

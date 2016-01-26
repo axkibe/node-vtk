@@ -28,26 +28,27 @@ VtkExtractGeometryWrap::~VtkExtractGeometryWrap()
 
 void VtkExtractGeometryWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractGeometryWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractGeometry").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractGeometry").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractGeometry").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractGeometry").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractGeometryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractGeometryWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractGeometryWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractGeometryWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ExtractBoundaryCellsOff", ExtractBoundaryCellsOff);
 	Nan::SetPrototypeMethod(tpl, "extractBoundaryCellsOff", ExtractBoundaryCellsOff);
 
@@ -102,6 +103,8 @@ void VtkExtractGeometryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetImplicitFunction", SetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "setImplicitFunction", SetImplicitFunction);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractGeometryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -266,6 +269,7 @@ void VtkExtractGeometryWrap::GetImplicitFunction(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetImplicitFunction();
+		VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,6 +314,7 @@ void VtkExtractGeometryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractGeometryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,7 +330,7 @@ void VtkExtractGeometryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractGeometry * r;
@@ -337,6 +342,7 @@ void VtkExtractGeometryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractGeometryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -412,7 +418,7 @@ void VtkExtractGeometryWrap::SetImplicitFunction(const Nan::FunctionCallbackInfo
 {
 	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

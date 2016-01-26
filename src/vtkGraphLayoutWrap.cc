@@ -29,26 +29,27 @@ VtkGraphLayoutWrap::~VtkGraphLayoutWrap()
 
 void VtkGraphLayoutWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGraphLayoutWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGraphLayout").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GraphLayout").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGraphLayout").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GraphLayout").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGraphLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGraphLayoutWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGraphLayoutWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGraphLayoutWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -88,6 +89,8 @@ void VtkGraphLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseTransformOn", UseTransformOn);
 	Nan::SetPrototypeMethod(tpl, "useTransformOn", UseTransformOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGraphLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -138,6 +141,7 @@ void VtkGraphLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLayoutStrategy();
+		VtkGraphLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkGraphLayoutWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,6 +237,7 @@ void VtkGraphLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkGraphLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -247,7 +253,7 @@ void VtkGraphLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGraphLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutWrap>(info.Holder());
 	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGraphLayout * r;
@@ -259,6 +265,7 @@ void VtkGraphLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGraphLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -277,7 +284,7 @@ void VtkGraphLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGraphLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutWrap>(info.Holder());
 	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -297,7 +304,7 @@ void VtkGraphLayoutWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGraphLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutWrap>(info.Holder());
 	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

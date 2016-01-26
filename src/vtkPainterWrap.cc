@@ -30,26 +30,27 @@ VtkPainterWrap::~VtkPainterWrap()
 
 void VtkPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Painter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Painter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CONSERVE_MEMORY", CONSERVE_MEMORY);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
@@ -107,6 +108,8 @@ void VtkPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetProgress", SetProgress);
 	Nan::SetPrototypeMethod(tpl, "setProgress", SetProgress);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -143,6 +146,7 @@ void VtkPainterWrap::CONSERVE_MEMORY(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->CONSERVE_MEMORY();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,6 +183,7 @@ void VtkPainterWrap::GetDelegatePainter(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetDelegatePainter();
+		VtkPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,6 +206,7 @@ void VtkPainterWrap::GetInformation(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInformation();
+		VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,6 +229,7 @@ void VtkPainterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,6 +252,7 @@ void VtkPainterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetOutput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +331,7 @@ void VtkPainterWrap::HIGH_QUALITY(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->HIGH_QUALITY();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -367,6 +376,7 @@ void VtkPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
+		VtkPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -382,7 +392,7 @@ void VtkPainterWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPainterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterWrap>(info.Holder());
 	vtkPainter *native = (vtkPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -409,6 +419,7 @@ void VtkPainterWrap::STATIC_DATA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->STATIC_DATA();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -424,7 +435,7 @@ void VtkPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPainterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterWrap>(info.Holder());
 	vtkPainter *native = (vtkPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPainter * r;
@@ -436,6 +447,7 @@ void VtkPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -454,7 +466,7 @@ void VtkPainterWrap::SetDelegatePainter(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPainterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterWrap>(info.Holder());
 	vtkPainter *native = (vtkPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPainterWrap *a0 = ObjectWrap::Unwrap<VtkPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -474,7 +486,7 @@ void VtkPainterWrap::SetInformation(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPainterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterWrap>(info.Holder());
 	vtkPainter *native = (vtkPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -494,7 +506,7 @@ void VtkPainterWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPainterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterWrap>(info.Holder());
 	vtkPainter *native = (vtkPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

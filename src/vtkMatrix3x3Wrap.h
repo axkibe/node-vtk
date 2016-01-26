@@ -16,7 +16,10 @@ class VtkMatrix3x3Wrap : public VtkObjectWrap
 	public:
 		using Nan::ObjectWrap::Wrap;
 		static void Init(v8::Local<v8::Object> exports);
-		static void InitTpl(v8::Local<v8::FunctionTemplate> tpl);
+		static void InitPtpl();
+		static void ConstructorGetter(
+			v8::Local<v8::String> property,
+			const Nan::PropertyCallbackInfo<v8::Value>& info);
 
 		VtkMatrix3x3Wrap(vtkSmartPointer<vtkMatrix3x3>);
 		VtkMatrix3x3Wrap();

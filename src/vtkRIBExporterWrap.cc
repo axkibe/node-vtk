@@ -27,26 +27,27 @@ VtkRIBExporterWrap::~VtkRIBExporterWrap()
 
 void VtkRIBExporterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExporterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExporterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRIBExporterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRIBExporter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RIBExporter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRIBExporter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RIBExporter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRIBExporterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRIBExporterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRIBExporterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExporterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExporterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRIBExporterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BackgroundOff", BackgroundOff);
 	Nan::SetPrototypeMethod(tpl, "backgroundOff", BackgroundOff);
 
@@ -107,6 +108,8 @@ void VtkRIBExporterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTexturePrefix", SetTexturePrefix);
 	Nan::SetPrototypeMethod(tpl, "setTexturePrefix", SetTexturePrefix);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRIBExporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -311,6 +314,7 @@ void VtkRIBExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkRIBExporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -326,7 +330,7 @@ void VtkRIBExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRIBExporter * r;
@@ -338,6 +342,7 @@ void VtkRIBExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRIBExporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

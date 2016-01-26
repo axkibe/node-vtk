@@ -27,26 +27,27 @@ VtkVolumeRayCastMIPFunctionWrap::~VtkVolumeRayCastMIPFunctionWrap()
 
 void VtkVolumeRayCastMIPFunctionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeRayCastFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeRayCastFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVolumeRayCastMIPFunctionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVolumeRayCastMIPFunction").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VolumeRayCastMIPFunction").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVolumeRayCastMIPFunction").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VolumeRayCastMIPFunction").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVolumeRayCastMIPFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVolumeRayCastMIPFunctionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVolumeRayCastMIPFunctionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeRayCastFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeRayCastFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVolumeRayCastMIPFunctionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -80,6 +81,8 @@ void VtkVolumeRayCastMIPFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetMaximizeMethodToScalarValue", SetMaximizeMethodToScalarValue);
 	Nan::SetPrototypeMethod(tpl, "setMaximizeMethodToScalarValue", SetMaximizeMethodToScalarValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVolumeRayCastMIPFunctionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -208,6 +211,7 @@ void VtkVolumeRayCastMIPFunctionWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkVolumeRayCastMIPFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +227,7 @@ void VtkVolumeRayCastMIPFunctionWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkVolumeRayCastMIPFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMIPFunctionWrap>(info.Holder());
 	vtkVolumeRayCastMIPFunction *native = (vtkVolumeRayCastMIPFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVolumeRayCastMIPFunction * r;
@@ -235,6 +239,7 @@ void VtkVolumeRayCastMIPFunctionWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVolumeRayCastMIPFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

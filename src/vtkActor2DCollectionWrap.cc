@@ -29,26 +29,27 @@ VtkActor2DCollectionWrap::~VtkActor2DCollectionWrap()
 
 void VtkActor2DCollectionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPropCollectionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropCollectionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkActor2DCollectionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkActor2DCollection").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Actor2DCollection").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkActor2DCollection").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Actor2DCollection").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkActor2DCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkActor2DCollectionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkActor2DCollectionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPropCollectionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropCollectionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkActor2DCollectionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddItem", AddItem);
 	Nan::SetPrototypeMethod(tpl, "addItem", AddItem);
 
@@ -85,6 +86,8 @@ void VtkActor2DCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Sort", Sort);
 	Nan::SetPrototypeMethod(tpl, "sort", Sort);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkActor2DCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -114,7 +117,7 @@ void VtkActor2DCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkActor2DCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DCollectionWrap>(info.Holder());
 	vtkActor2DCollection *native = (vtkActor2DCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkActor2DWrap *a0 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -155,6 +158,7 @@ void VtkActor2DCollectionWrap::GetLastActor2D(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLastActor2D();
+		VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,6 +181,7 @@ void VtkActor2DCollectionWrap::GetLastItem(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLastItem();
+		VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,6 +204,7 @@ void VtkActor2DCollectionWrap::GetNextActor2D(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetNextActor2D();
+		VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,6 +227,7 @@ void VtkActor2DCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetNextItem();
+		VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +265,7 @@ void VtkActor2DCollectionWrap::IsItemPresent(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkActor2DCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DCollectionWrap>(info.Holder());
 	vtkActor2DCollection *native = (vtkActor2DCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkActor2DWrap *a0 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[0]->ToObject());
 		int r;
@@ -287,6 +294,7 @@ void VtkActor2DCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkActor2DCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,7 +310,7 @@ void VtkActor2DCollectionWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkActor2DCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DCollectionWrap>(info.Holder());
 	vtkActor2DCollection *native = (vtkActor2DCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -322,7 +330,7 @@ void VtkActor2DCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkActor2DCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DCollectionWrap>(info.Holder());
 	vtkActor2DCollection *native = (vtkActor2DCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkActor2DCollection * r;
@@ -334,6 +342,7 @@ void VtkActor2DCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkActor2DCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

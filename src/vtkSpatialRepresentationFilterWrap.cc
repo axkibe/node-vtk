@@ -28,26 +28,27 @@ VtkSpatialRepresentationFilterWrap::~VtkSpatialRepresentationFilterWrap()
 
 void VtkSpatialRepresentationFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSpatialRepresentationFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSpatialRepresentationFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SpatialRepresentationFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSpatialRepresentationFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SpatialRepresentationFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSpatialRepresentationFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSpatialRepresentationFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSpatialRepresentationFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSpatialRepresentationFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddLevel", AddLevel);
 	Nan::SetPrototypeMethod(tpl, "addLevel", AddLevel);
 
@@ -81,6 +82,8 @@ void VtkSpatialRepresentationFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetSpatialRepresentation", SetSpatialRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setSpatialRepresentation", SetSpatialRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSpatialRepresentationFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -188,6 +191,7 @@ void VtkSpatialRepresentationFilterWrap::GetSpatialRepresentation(const Nan::Fun
 		return;
 	}
 	r = native->GetSpatialRepresentation();
+		VtkLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,6 +236,7 @@ void VtkSpatialRepresentationFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkSpatialRepresentationFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +264,7 @@ void VtkSpatialRepresentationFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkSpatialRepresentationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSpatialRepresentationFilterWrap>(info.Holder());
 	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSpatialRepresentationFilter * r;
@@ -271,6 +276,7 @@ void VtkSpatialRepresentationFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSpatialRepresentationFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -289,7 +295,7 @@ void VtkSpatialRepresentationFilterWrap::SetSpatialRepresentation(const Nan::Fun
 {
 	VtkSpatialRepresentationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSpatialRepresentationFilterWrap>(info.Holder());
 	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLocatorWrap *a0 = ObjectWrap::Unwrap<VtkLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

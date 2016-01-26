@@ -28,26 +28,27 @@ VtkImplicitPolyDataDistanceWrap::~VtkImplicitPolyDataDistanceWrap()
 
 void VtkImplicitPolyDataDistanceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImplicitFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitPolyDataDistanceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitPolyDataDistance").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitPolyDataDistance").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitPolyDataDistance").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitPolyDataDistance").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitPolyDataDistanceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitPolyDataDistanceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitPolyDataDistanceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitPolyDataDistanceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -78,6 +79,8 @@ void VtkImplicitPolyDataDistanceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitPolyDataDistanceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -178,6 +181,7 @@ void VtkImplicitPolyDataDistanceWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitPolyDataDistanceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +197,7 @@ void VtkImplicitPolyDataDistanceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkImplicitPolyDataDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPolyDataDistanceWrap>(info.Holder());
 	vtkImplicitPolyDataDistance *native = (vtkImplicitPolyDataDistance *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitPolyDataDistance * r;
@@ -205,6 +209,7 @@ void VtkImplicitPolyDataDistanceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitPolyDataDistanceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -223,7 +228,7 @@ void VtkImplicitPolyDataDistanceWrap::SetInput(const Nan::FunctionCallbackInfo<v
 {
 	VtkImplicitPolyDataDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPolyDataDistanceWrap>(info.Holder());
 	vtkImplicitPolyDataDistance *native = (vtkImplicitPolyDataDistance *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

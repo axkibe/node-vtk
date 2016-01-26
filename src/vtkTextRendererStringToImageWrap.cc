@@ -27,26 +27,27 @@ VtkTextRendererStringToImageWrap::~VtkTextRendererStringToImageWrap()
 
 void VtkTextRendererStringToImageWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStringToImageWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStringToImageWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextRendererStringToImageWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTextRendererStringToImage").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TextRendererStringToImage").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTextRendererStringToImage").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TextRendererStringToImage").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextRendererStringToImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextRendererStringToImageWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextRendererStringToImageWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStringToImageWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStringToImageWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextRendererStringToImageWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -62,6 +63,8 @@ void VtkTextRendererStringToImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextRendererStringToImageWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -91,7 +94,7 @@ void VtkTextRendererStringToImageWrap::DeepCopy(const Nan::FunctionCallbackInfo<
 {
 	VtkTextRendererStringToImageWrap *wrapper = ObjectWrap::Unwrap<VtkTextRendererStringToImageWrap>(info.Holder());
 	vtkTextRendererStringToImage *native = (vtkTextRendererStringToImage *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextRendererStringToImageWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextRendererStringToImageWrap *a0 = ObjectWrap::Unwrap<VtkTextRendererStringToImageWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -154,6 +157,7 @@ void VtkTextRendererStringToImageWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextRendererStringToImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +173,7 @@ void VtkTextRendererStringToImageWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkTextRendererStringToImageWrap *wrapper = ObjectWrap::Unwrap<VtkTextRendererStringToImageWrap>(info.Holder());
 	vtkTextRendererStringToImage *native = (vtkTextRendererStringToImage *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTextRendererStringToImage * r;
@@ -181,6 +185,7 @@ void VtkTextRendererStringToImageWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextRendererStringToImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

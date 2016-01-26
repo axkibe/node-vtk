@@ -34,26 +34,27 @@ VtkPointHandleRepresentation2DWrap::~VtkPointHandleRepresentation2DWrap()
 
 void VtkPointHandleRepresentation2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkHandleRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHandleRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPointHandleRepresentation2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPointHandleRepresentation2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PointHandleRepresentation2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPointHandleRepresentation2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PointHandleRepresentation2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPointHandleRepresentation2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPointHandleRepresentation2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPointHandleRepresentation2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkHandleRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkHandleRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPointHandleRepresentation2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -111,6 +112,8 @@ void VtkPointHandleRepresentation2DWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPointHandleRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -181,7 +184,7 @@ void VtkPointHandleRepresentation2DWrap::DeepCopy(const Nan::FunctionCallbackInf
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -201,7 +204,7 @@ void VtkPointHandleRepresentation2DWrap::GetActors2D(const Nan::FunctionCallback
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -242,6 +245,7 @@ void VtkPointHandleRepresentation2DWrap::GetCursorShape(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetCursorShape();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -264,6 +268,7 @@ void VtkPointHandleRepresentation2DWrap::GetProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -286,6 +291,7 @@ void VtkPointHandleRepresentation2DWrap::GetSelectedProperty(const Nan::Function
 		return;
 	}
 	r = native->GetSelectedProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,6 +355,7 @@ void VtkPointHandleRepresentation2DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkPointHandleRepresentation2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -364,7 +371,7 @@ void VtkPointHandleRepresentation2DWrap::ReleaseGraphicsResources(const Nan::Fun
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -384,7 +391,7 @@ void VtkPointHandleRepresentation2DWrap::RenderOverlay(const Nan::FunctionCallba
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -406,7 +413,7 @@ void VtkPointHandleRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPointHandleRepresentation2D * r;
@@ -418,6 +425,7 @@ void VtkPointHandleRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPointHandleRepresentation2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -436,7 +444,7 @@ void VtkPointHandleRepresentation2DWrap::SetCursorShape(const Nan::FunctionCallb
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -456,7 +464,7 @@ void VtkPointHandleRepresentation2DWrap::SetPointPlacer(const Nan::FunctionCallb
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointPlacerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointPlacerWrap *a0 = ObjectWrap::Unwrap<VtkPointPlacerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -476,7 +484,7 @@ void VtkPointHandleRepresentation2DWrap::SetProperty(const Nan::FunctionCallback
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -496,7 +504,7 @@ void VtkPointHandleRepresentation2DWrap::SetSelectedProperty(const Nan::Function
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -516,7 +524,7 @@ void VtkPointHandleRepresentation2DWrap::ShallowCopy(const Nan::FunctionCallback
 {
 	VtkPointHandleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation2DWrap>(info.Holder());
 	vtkPointHandleRepresentation2D *native = (vtkPointHandleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

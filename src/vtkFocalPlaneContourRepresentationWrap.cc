@@ -27,26 +27,27 @@ VtkFocalPlaneContourRepresentationWrap::~VtkFocalPlaneContourRepresentationWrap(
 
 void VtkFocalPlaneContourRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContourRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFocalPlaneContourRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFocalPlaneContourRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FocalPlaneContourRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFocalPlaneContourRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FocalPlaneContourRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFocalPlaneContourRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFocalPlaneContourRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFocalPlaneContourRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContourRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFocalPlaneContourRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkFocalPlaneContourRepresentationWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "UpdateLines", UpdateLines);
 	Nan::SetPrototypeMethod(tpl, "updateLines", UpdateLines);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFocalPlaneContourRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,6 +143,7 @@ void VtkFocalPlaneContourRepresentationWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkFocalPlaneContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -155,7 +159,7 @@ void VtkFocalPlaneContourRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkFocalPlaneContourRepresentation *native = (vtkFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFocalPlaneContourRepresentation * r;
@@ -167,6 +171,7 @@ void VtkFocalPlaneContourRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFocalPlaneContourRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

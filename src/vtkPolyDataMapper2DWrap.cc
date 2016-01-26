@@ -32,26 +32,27 @@ VtkPolyDataMapper2DWrap::~VtkPolyDataMapper2DWrap()
 
 void VtkPolyDataMapper2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMapper2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapper2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataMapper2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataMapper2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataMapper2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataMapper2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataMapper2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataMapper2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataMapper2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataMapper2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMapper2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapper2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataMapper2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ColorByArrayComponent", ColorByArrayComponent);
 	Nan::SetPrototypeMethod(tpl, "colorByArrayComponent", ColorByArrayComponent);
 
@@ -175,6 +176,8 @@ void VtkPolyDataMapper2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataMapper2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -361,6 +364,7 @@ void VtkPolyDataMapper2DWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetInput();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -383,6 +387,7 @@ void VtkPolyDataMapper2DWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -433,6 +438,7 @@ void VtkPolyDataMapper2DWrap::GetTransformCoordinate(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetTransformCoordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -495,6 +501,7 @@ void VtkPolyDataMapper2DWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->MapScalars(
 			info[0]->NumberValue()
 		);
+			VtkUnsignedCharArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -520,6 +527,7 @@ void VtkPolyDataMapper2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataMapper2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -535,7 +543,7 @@ void VtkPolyDataMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataMapper2D * r;
@@ -547,6 +555,7 @@ void VtkPolyDataMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataMapper2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -632,7 +641,7 @@ void VtkPolyDataMapper2DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -652,7 +661,7 @@ void VtkPolyDataMapper2DWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -793,7 +802,7 @@ void VtkPolyDataMapper2DWrap::SetTransformCoordinate(const Nan::FunctionCallback
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCoordinateWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCoordinateWrap *a0 = ObjectWrap::Unwrap<VtkCoordinateWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -832,7 +841,7 @@ void VtkPolyDataMapper2DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

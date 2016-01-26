@@ -32,26 +32,27 @@ VtkAxisWrap::~VtkAxisWrap()
 
 void VtkAxisWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContextItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAxisWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAxis").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Axis").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAxis").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Axis").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAxisWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAxisWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAxisWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContextItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAxisWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoScale", AutoScale);
 	Nan::SetPrototypeMethod(tpl, "autoScale", AutoScale);
 
@@ -211,6 +212,8 @@ void VtkAxisWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAxisWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -287,6 +290,7 @@ void VtkAxisWrap::GetGridPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetGridPen();
+		VtkPenWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -309,6 +313,7 @@ void VtkAxisWrap::GetLabelProperties(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetLabelProperties();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -415,6 +420,7 @@ void VtkAxisWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetPen();
+		VtkPenWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -507,6 +513,7 @@ void VtkAxisWrap::GetTickLabels(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetTickLabels();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -529,6 +536,7 @@ void VtkAxisWrap::GetTickPositions(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetTickPositions();
+		VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -551,6 +559,7 @@ void VtkAxisWrap::GetTickScenePositions(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetTickScenePositions();
+		VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -573,6 +582,7 @@ void VtkAxisWrap::GetTitleProperties(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTitleProperties();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -697,6 +707,7 @@ void VtkAxisWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
+		VtkAxisWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -724,7 +735,7 @@ void VtkAxisWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
 	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAxis * r;
@@ -736,6 +747,7 @@ void VtkAxisWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAxisWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1028,7 +1040,7 @@ void VtkAxisWrap::SetTickLabels(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
 	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1048,7 +1060,7 @@ void VtkAxisWrap::SetTickPositions(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
 	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -29,26 +29,27 @@ VtkInformationKeyWrap::~VtkInformationKeyWrap()
 
 void VtkInformationKeyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectBaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectBaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInformationKeyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInformationKey").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InformationKey").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInformationKey").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InformationKey").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInformationKeyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInformationKeyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInformationKeyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectBaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectBaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInformationKeyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -85,6 +86,8 @@ void VtkInformationKeyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInformationKeyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -114,10 +117,10 @@ void VtkInformationKeyWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
 	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -181,7 +184,7 @@ void VtkInformationKeyWrap::Has(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
 	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -232,6 +235,7 @@ void VtkInformationKeyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkInformationKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -247,7 +251,7 @@ void VtkInformationKeyWrap::Print(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
 	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -267,7 +271,7 @@ void VtkInformationKeyWrap::Remove(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
 	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -287,10 +291,10 @@ void VtkInformationKeyWrap::Report(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
 	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGarbageCollectorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGarbageCollectorWrap *a1 = ObjectWrap::Unwrap<VtkGarbageCollectorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -312,7 +316,7 @@ void VtkInformationKeyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
 	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInformationKey * r;
@@ -324,6 +328,7 @@ void VtkInformationKeyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInformationKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -342,10 +347,10 @@ void VtkInformationKeyWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
 	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

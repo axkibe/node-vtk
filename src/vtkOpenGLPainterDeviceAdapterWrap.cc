@@ -28,26 +28,27 @@ VtkOpenGLPainterDeviceAdapterWrap::~VtkOpenGLPainterDeviceAdapterWrap()
 
 void VtkOpenGLPainterDeviceAdapterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPainterDeviceAdapterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterDeviceAdapterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLPainterDeviceAdapterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLPainterDeviceAdapter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLPainterDeviceAdapter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLPainterDeviceAdapter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLPainterDeviceAdapter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLPainterDeviceAdapterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLPainterDeviceAdapterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLPainterDeviceAdapterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterDeviceAdapterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterDeviceAdapterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLPainterDeviceAdapterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BeginPrimitive", BeginPrimitive);
 	Nan::SetPrototypeMethod(tpl, "beginPrimitive", BeginPrimitive);
 
@@ -99,6 +100,8 @@ void VtkOpenGLPainterDeviceAdapterWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "Stencil", Stencil);
 	Nan::SetPrototypeMethod(tpl, "stencil", Stencil);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLPainterDeviceAdapterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -147,7 +150,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::Compatible(const Nan::FunctionCallbackIn
 {
 	VtkOpenGLPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPainterDeviceAdapterWrap>(info.Holder());
 	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		int r;
@@ -340,6 +343,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLPainterDeviceAdapterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -397,7 +401,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkOpenGLPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPainterDeviceAdapterWrap>(info.Holder());
 	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLPainterDeviceAdapter * r;
@@ -409,6 +413,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLPainterDeviceAdapterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

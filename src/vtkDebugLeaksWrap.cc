@@ -26,26 +26,27 @@ VtkDebugLeaksWrap::~VtkDebugLeaksWrap()
 
 void VtkDebugLeaksWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDebugLeaksWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDebugLeaks").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DebugLeaks").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDebugLeaks").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DebugLeaks").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDebugLeaksWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDebugLeaksWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDebugLeaksWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDebugLeaksWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ConstructClass", ConstructClass);
 	Nan::SetPrototypeMethod(tpl, "constructClass", ConstructClass);
 
@@ -73,6 +74,8 @@ void VtkDebugLeaksWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetExitError", SetExitError);
 	Nan::SetPrototypeMethod(tpl, "setExitError", SetExitError);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDebugLeaksWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -199,6 +202,7 @@ void VtkDebugLeaksWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkDebugLeaksWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +232,7 @@ void VtkDebugLeaksWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDebugLeaksWrap *wrapper = ObjectWrap::Unwrap<VtkDebugLeaksWrap>(info.Holder());
 	vtkDebugLeaks *native = (vtkDebugLeaks *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDebugLeaks * r;
@@ -240,6 +244,7 @@ void VtkDebugLeaksWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDebugLeaksWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

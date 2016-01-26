@@ -33,26 +33,27 @@ VtkSpiderPlotActorWrap::~VtkSpiderPlotActorWrap()
 
 void VtkSpiderPlotActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSpiderPlotActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSpiderPlotActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SpiderPlotActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSpiderPlotActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SpiderPlotActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSpiderPlotActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSpiderPlotActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSpiderPlotActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSpiderPlotActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAxisLabel", GetAxisLabel);
 	Nan::SetPrototypeMethod(tpl, "getAxisLabel", GetAxisLabel);
 
@@ -188,6 +189,8 @@ void VtkSpiderPlotActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TitleVisibilityOn", TitleVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "titleVisibilityOn", TitleVisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSpiderPlotActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -301,6 +304,7 @@ void VtkSpiderPlotActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +327,7 @@ void VtkSpiderPlotActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,6 +364,7 @@ void VtkSpiderPlotActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLegendActor();
+		VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -451,6 +457,7 @@ void VtkSpiderPlotActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -571,6 +578,7 @@ void VtkSpiderPlotActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkSpiderPlotActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -586,7 +594,7 @@ void VtkSpiderPlotActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbac
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -606,7 +614,7 @@ void VtkSpiderPlotActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInf
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -628,7 +636,7 @@ void VtkSpiderPlotActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -650,7 +658,7 @@ void VtkSpiderPlotActorWrap::RenderTranslucentPolygonalGeometry(const Nan::Funct
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -672,7 +680,7 @@ void VtkSpiderPlotActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSpiderPlotActor * r;
@@ -684,6 +692,7 @@ void VtkSpiderPlotActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSpiderPlotActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -796,7 +805,7 @@ void VtkSpiderPlotActorWrap::SetInputConnection(const Nan::FunctionCallbackInfo<
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -816,7 +825,7 @@ void VtkSpiderPlotActorWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -836,7 +845,7 @@ void VtkSpiderPlotActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInf
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -964,7 +973,7 @@ void VtkSpiderPlotActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInf
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkTimeSourceExampleWrap::~VtkTimeSourceExampleWrap()
 
 void VtkTimeSourceExampleWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTimeSourceExampleWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTimeSourceExample").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TimeSourceExample").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTimeSourceExample").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TimeSourceExample").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTimeSourceExampleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTimeSourceExampleWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTimeSourceExampleWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTimeSourceExampleWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AnalyticOff", AnalyticOff);
 	Nan::SetPrototypeMethod(tpl, "analyticOff", AnalyticOff);
 
@@ -107,6 +108,8 @@ void VtkTimeSourceExampleWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetYAmplitude", SetYAmplitude);
 	Nan::SetPrototypeMethod(tpl, "setYAmplitude", SetYAmplitude);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTimeSourceExampleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -339,6 +342,7 @@ void VtkTimeSourceExampleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkTimeSourceExampleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -354,7 +358,7 @@ void VtkTimeSourceExampleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTimeSourceExampleWrap *wrapper = ObjectWrap::Unwrap<VtkTimeSourceExampleWrap>(info.Holder());
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTimeSourceExample * r;
@@ -366,6 +370,7 @@ void VtkTimeSourceExampleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTimeSourceExampleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

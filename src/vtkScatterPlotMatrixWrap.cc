@@ -33,26 +33,27 @@ VtkScatterPlotMatrixWrap::~VtkScatterPlotMatrixWrap()
 
 void VtkScatterPlotMatrixWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkChartMatrixWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartMatrixWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkScatterPlotMatrixWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkScatterPlotMatrix").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ScatterPlotMatrix").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkScatterPlotMatrix").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ScatterPlotMatrix").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkScatterPlotMatrixWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkScatterPlotMatrixWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkScatterPlotMatrixWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkChartMatrixWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartMatrixWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkScatterPlotMatrixWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AdvanceAnimation", AdvanceAnimation);
 	Nan::SetPrototypeMethod(tpl, "advanceAnimation", AdvanceAnimation);
 
@@ -170,6 +171,8 @@ void VtkScatterPlotMatrixWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateSettings", UpdateSettings);
 	Nan::SetPrototypeMethod(tpl, "updateSettings", UpdateSettings);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkScatterPlotMatrixWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -230,6 +233,7 @@ void VtkScatterPlotMatrixWrap::GetActiveAnnotationLink(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetActiveAnnotationLink();
+		VtkAnnotationLinkWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,6 +256,7 @@ void VtkScatterPlotMatrixWrap::GetAnnotationLink(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetAnnotationLink();
+		VtkAnnotationLinkWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -320,6 +325,7 @@ void VtkScatterPlotMatrixWrap::GetAxisLabelProperties(const Nan::FunctionCallbac
 		r = native->GetAxisLabelProperties(
 			info[0]->Int32Value()
 		);
+			VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -359,6 +365,7 @@ void VtkScatterPlotMatrixWrap::GetIndexedLabels(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetIndexedLabels();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,6 +388,7 @@ void VtkScatterPlotMatrixWrap::GetMainChart(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetMainChart();
+		VtkChartWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -470,6 +478,7 @@ void VtkScatterPlotMatrixWrap::GetTitleProperties(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetTitleProperties();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -492,6 +501,7 @@ void VtkScatterPlotMatrixWrap::GetTooltip(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetTooltip();
+		VtkTooltipItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -556,6 +566,7 @@ void VtkScatterPlotMatrixWrap::GetVisibleColumns(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetVisibleColumns();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -600,6 +611,7 @@ void VtkScatterPlotMatrixWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkScatterPlotMatrixWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -615,7 +627,7 @@ void VtkScatterPlotMatrixWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkScatterPlotMatrix * r;
@@ -627,6 +639,7 @@ void VtkScatterPlotMatrixWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkScatterPlotMatrixWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -693,7 +706,7 @@ void VtkScatterPlotMatrixWrap::SetAxisLabelProperties(const Nan::FunctionCallbac
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTextPropertyWrap *a1 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -715,7 +728,7 @@ void VtkScatterPlotMatrixWrap::SetIndexedLabels(const Nan::FunctionCallbackInfo<
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -735,7 +748,7 @@ void VtkScatterPlotMatrixWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -835,7 +848,7 @@ void VtkScatterPlotMatrixWrap::SetTitleProperties(const Nan::FunctionCallbackInf
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -855,7 +868,7 @@ void VtkScatterPlotMatrixWrap::SetTooltip(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTooltipItemWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTooltipItemWrap *a0 = ObjectWrap::Unwrap<VtkTooltipItemWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -921,7 +934,7 @@ void VtkScatterPlotMatrixWrap::SetVisibleColumns(const Nan::FunctionCallbackInfo
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

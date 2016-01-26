@@ -28,26 +28,27 @@ VtkParametricFunctionSourceWrap::~VtkParametricFunctionSourceWrap()
 
 void VtkParametricFunctionSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParametricFunctionSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParametricFunctionSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParametricFunctionSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParametricFunctionSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParametricFunctionSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParametricFunctionSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParametricFunctionSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParametricFunctionSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParametricFunctionSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateTextureCoordinatesOff", GenerateTextureCoordinatesOff);
 	Nan::SetPrototypeMethod(tpl, "generateTextureCoordinatesOff", GenerateTextureCoordinatesOff);
 
@@ -156,6 +157,8 @@ void VtkParametricFunctionSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetWResolution", SetWResolution);
 	Nan::SetPrototypeMethod(tpl, "setWResolution", SetWResolution);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParametricFunctionSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -258,6 +261,7 @@ void VtkParametricFunctionSourceWrap::GetParametricFunction(const Nan::FunctionC
 		return;
 	}
 	r = native->GetParametricFunction();
+		VtkParametricFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -386,6 +390,7 @@ void VtkParametricFunctionSourceWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkParametricFunctionSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +406,7 @@ void VtkParametricFunctionSourceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkParametricFunctionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionSourceWrap>(info.Holder());
 	vtkParametricFunctionSource *native = (vtkParametricFunctionSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParametricFunctionSource * r;
@@ -413,6 +418,7 @@ void VtkParametricFunctionSourceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParametricFunctionSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -469,7 +475,7 @@ void VtkParametricFunctionSourceWrap::SetParametricFunction(const Nan::FunctionC
 {
 	VtkParametricFunctionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionSourceWrap>(info.Holder());
 	vtkParametricFunctionSource *native = (vtkParametricFunctionSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkParametricFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkParametricFunctionWrap *a0 = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

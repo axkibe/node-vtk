@@ -27,26 +27,27 @@ VtkRectangularButtonSourceWrap::~VtkRectangularButtonSourceWrap()
 
 void VtkRectangularButtonSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkButtonSourceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkButtonSourceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRectangularButtonSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRectangularButtonSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RectangularButtonSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRectangularButtonSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RectangularButtonSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRectangularButtonSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRectangularButtonSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRectangularButtonSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkButtonSourceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkButtonSourceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRectangularButtonSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBoxRatio", GetBoxRatio);
 	Nan::SetPrototypeMethod(tpl, "getBoxRatio", GetBoxRatio);
 
@@ -137,6 +138,8 @@ void VtkRectangularButtonSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRectangularButtonSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -475,6 +478,7 @@ void VtkRectangularButtonSourceWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkRectangularButtonSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -490,7 +494,7 @@ void VtkRectangularButtonSourceWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkRectangularButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRectangularButtonSourceWrap>(info.Holder());
 	vtkRectangularButtonSource *native = (vtkRectangularButtonSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRectangularButtonSource * r;
@@ -502,6 +506,7 @@ void VtkRectangularButtonSourceWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRectangularButtonSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

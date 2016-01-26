@@ -32,26 +32,27 @@ VtkPointSetWrap::~VtkPointSetWrap()
 
 void VtkPointSetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPointSetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPointSet").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PointSet").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPointSet").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PointSet").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPointSetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPointSetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPointSetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPointSetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeBounds", ComputeBounds);
 	Nan::SetPrototypeMethod(tpl, "computeBounds", ComputeBounds);
 
@@ -94,6 +95,8 @@ void VtkPointSetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPointSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,7 +138,7 @@ void VtkPointSetWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
 	vtkPointSet *native = (vtkPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -155,7 +158,7 @@ void VtkPointSetWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
 	vtkPointSet *native = (vtkPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -189,7 +192,7 @@ void VtkPointSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
 	vtkPointSet *native = (vtkPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -204,6 +207,7 @@ void VtkPointSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkPointSetWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -224,6 +228,7 @@ void VtkPointSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkPointSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -249,6 +254,7 @@ void VtkPointSetWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -305,6 +311,7 @@ void VtkPointSetWrap::NewCellIterator(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewCellIterator();
+		VtkCellIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -327,6 +334,7 @@ void VtkPointSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkPointSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -342,7 +350,7 @@ void VtkPointSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
 	vtkPointSet *native = (vtkPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPointSet * r;
@@ -354,6 +362,7 @@ void VtkPointSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPointSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -372,7 +381,7 @@ void VtkPointSetWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
 	vtkPointSet *native = (vtkPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -392,7 +401,7 @@ void VtkPointSetWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetWrap>(info.Holder());
 	vtkPointSet *native = (vtkPointSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

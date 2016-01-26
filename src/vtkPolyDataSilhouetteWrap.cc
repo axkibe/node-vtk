@@ -29,26 +29,27 @@ VtkPolyDataSilhouetteWrap::~VtkPolyDataSilhouetteWrap()
 
 void VtkPolyDataSilhouetteWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataSilhouetteWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataSilhouette").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataSilhouette").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataSilhouette").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataSilhouette").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataSilhouetteWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataSilhouetteWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataSilhouetteWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataSilhouetteWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BorderEdgesOff", BorderEdgesOff);
 	Nan::SetPrototypeMethod(tpl, "borderEdgesOff", BorderEdgesOff);
 
@@ -133,6 +134,8 @@ void VtkPolyDataSilhouetteWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVector", SetVector);
 	Nan::SetPrototypeMethod(tpl, "setVector", SetVector);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataSilhouetteWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -207,6 +210,7 @@ void VtkPolyDataSilhouetteWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetCamera();
+		VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,6 +303,7 @@ void VtkPolyDataSilhouetteWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetProp3D();
+		VtkProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,6 +348,7 @@ void VtkPolyDataSilhouetteWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataSilhouetteWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -382,7 +388,7 @@ void VtkPolyDataSilhouetteWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataSilhouette * r;
@@ -394,6 +400,7 @@ void VtkPolyDataSilhouetteWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataSilhouetteWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -431,7 +438,7 @@ void VtkPolyDataSilhouetteWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -602,7 +609,7 @@ void VtkPolyDataSilhouetteWrap::SetProp3D(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

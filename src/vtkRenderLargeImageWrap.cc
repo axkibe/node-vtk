@@ -29,26 +29,27 @@ VtkRenderLargeImageWrap::~VtkRenderLargeImageWrap()
 
 void VtkRenderLargeImageWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderLargeImageWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderLargeImage").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RenderLargeImage").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderLargeImage").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RenderLargeImage").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderLargeImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderLargeImageWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderLargeImageWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderLargeImageWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -76,6 +77,8 @@ void VtkRenderLargeImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetMagnification", SetMagnification);
 	Nan::SetPrototypeMethod(tpl, "setMagnification", SetMagnification);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderLargeImageWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -126,6 +129,7 @@ void VtkRenderLargeImageWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetInput();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,6 +166,7 @@ void VtkRenderLargeImageWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetOutput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,6 +211,7 @@ void VtkRenderLargeImageWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderLargeImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +227,7 @@ void VtkRenderLargeImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRenderLargeImageWrap *wrapper = ObjectWrap::Unwrap<VtkRenderLargeImageWrap>(info.Holder());
 	vtkRenderLargeImage *native = (vtkRenderLargeImage *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderLargeImage * r;
@@ -233,6 +239,7 @@ void VtkRenderLargeImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderLargeImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -251,7 +258,7 @@ void VtkRenderLargeImageWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRenderLargeImageWrap *wrapper = ObjectWrap::Unwrap<VtkRenderLargeImageWrap>(info.Holder());
 	vtkRenderLargeImage *native = (vtkRenderLargeImage *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

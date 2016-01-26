@@ -28,26 +28,27 @@ VtkXMLStructuredDataWriterWrap::~VtkXMLStructuredDataWriterWrap()
 
 void VtkXMLStructuredDataWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLStructuredDataWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLStructuredDataWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLStructuredDataWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLStructuredDataWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLStructuredDataWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLStructuredDataWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLStructuredDataWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLStructuredDataWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLStructuredDataWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkXMLStructuredDataWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetWriteExtent", SetWriteExtent);
 	Nan::SetPrototypeMethod(tpl, "setWriteExtent", SetWriteExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLStructuredDataWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -125,6 +128,7 @@ void VtkXMLStructuredDataWriterWrap::GetExtentTranslator(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetExtentTranslator();
+		VtkExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,6 +187,7 @@ void VtkXMLStructuredDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLStructuredDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +203,7 @@ void VtkXMLStructuredDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkXMLStructuredDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLStructuredDataWriterWrap>(info.Holder());
 	vtkXMLStructuredDataWriter *native = (vtkXMLStructuredDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLStructuredDataWriter * r;
@@ -210,6 +215,7 @@ void VtkXMLStructuredDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLStructuredDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -228,7 +234,7 @@ void VtkXMLStructuredDataWriterWrap::SetExtentTranslator(const Nan::FunctionCall
 {
 	VtkXMLStructuredDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLStructuredDataWriterWrap>(info.Holder());
 	vtkXMLStructuredDataWriter *native = (vtkXMLStructuredDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkExtentTranslatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkExtentTranslatorWrap *a0 = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

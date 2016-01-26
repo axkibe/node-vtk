@@ -28,26 +28,27 @@ VtkExtractCellsWrap::~VtkExtractCellsWrap()
 
 void VtkExtractCellsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractCellsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractCells").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractCells").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractCells").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractCells").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractCellsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractCellsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractCellsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractCellsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddCellList", AddCellList);
 	Nan::SetPrototypeMethod(tpl, "addCellList", AddCellList);
 
@@ -66,6 +67,8 @@ void VtkExtractCellsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCellList", SetCellList);
 	Nan::SetPrototypeMethod(tpl, "setCellList", SetCellList);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractCellsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -95,7 +98,7 @@ void VtkExtractCellsWrap::AddCellList(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkExtractCellsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCellsWrap>(info.Holder());
 	vtkExtractCells *native = (vtkExtractCells *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -158,6 +161,7 @@ void VtkExtractCellsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractCellsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -173,7 +177,7 @@ void VtkExtractCellsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkExtractCellsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCellsWrap>(info.Holder());
 	vtkExtractCells *native = (vtkExtractCells *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractCells * r;
@@ -185,6 +189,7 @@ void VtkExtractCellsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractCellsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -203,7 +208,7 @@ void VtkExtractCellsWrap::SetCellList(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkExtractCellsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCellsWrap>(info.Holder());
 	vtkExtractCells *native = (vtkExtractCells *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

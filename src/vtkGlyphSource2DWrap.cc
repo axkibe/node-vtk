@@ -27,26 +27,27 @@ VtkGlyphSource2DWrap::~VtkGlyphSource2DWrap()
 
 void VtkGlyphSource2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGlyphSource2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGlyphSource2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GlyphSource2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGlyphSource2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GlyphSource2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGlyphSource2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGlyphSource2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGlyphSource2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGlyphSource2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CrossOff", CrossOff);
 	Nan::SetPrototypeMethod(tpl, "crossOff", CrossOff);
 
@@ -188,6 +189,8 @@ void VtkGlyphSource2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScale2", SetScale2);
 	Nan::SetPrototypeMethod(tpl, "setScale2", SetScale2);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGlyphSource2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -528,6 +531,7 @@ void VtkGlyphSource2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkGlyphSource2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -543,7 +547,7 @@ void VtkGlyphSource2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGlyphSource2D * r;
@@ -555,6 +559,7 @@ void VtkGlyphSource2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGlyphSource2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

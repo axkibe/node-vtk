@@ -16,7 +16,10 @@ class VtkProp3DButtonRepresentationWrap : public VtkButtonRepresentationWrap
 	public:
 		using Nan::ObjectWrap::Wrap;
 		static void Init(v8::Local<v8::Object> exports);
-		static void InitTpl(v8::Local<v8::FunctionTemplate> tpl);
+		static void InitPtpl();
+		static void ConstructorGetter(
+			v8::Local<v8::String> property,
+			const Nan::PropertyCallbackInfo<v8::Value>& info);
 
 		VtkProp3DButtonRepresentationWrap(vtkSmartPointer<vtkProp3DButtonRepresentation>);
 		VtkProp3DButtonRepresentationWrap();

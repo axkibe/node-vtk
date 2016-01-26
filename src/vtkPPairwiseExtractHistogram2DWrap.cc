@@ -28,26 +28,27 @@ VtkPPairwiseExtractHistogram2DWrap::~VtkPPairwiseExtractHistogram2DWrap()
 
 void VtkPPairwiseExtractHistogram2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPairwiseExtractHistogram2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPairwiseExtractHistogram2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPPairwiseExtractHistogram2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPPairwiseExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PPairwiseExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPPairwiseExtractHistogram2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PPairwiseExtractHistogram2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPPairwiseExtractHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPPairwiseExtractHistogram2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPPairwiseExtractHistogram2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPairwiseExtractHistogram2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPairwiseExtractHistogram2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPPairwiseExtractHistogram2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkPPairwiseExtractHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPPairwiseExtractHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkPPairwiseExtractHistogram2DWrap::GetController(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkPPairwiseExtractHistogram2DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkPPairwiseExtractHistogram2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkPPairwiseExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkPPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPPairwiseExtractHistogram2D *native = (vtkPPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPPairwiseExtractHistogram2D * r;
@@ -187,6 +192,7 @@ void VtkPPairwiseExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPPairwiseExtractHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkPPairwiseExtractHistogram2DWrap::SetController(const Nan::FunctionCallba
 {
 	VtkPPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPPairwiseExtractHistogram2D *native = (vtkPPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -30,26 +30,27 @@ VtkImageDifferenceWrap::~VtkImageDifferenceWrap()
 
 void VtkImageDifferenceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageDifferenceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageDifference").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageDifference").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageDifference").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageDifference").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageDifferenceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageDifferenceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageDifferenceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageDifferenceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AllowShiftOff", AllowShiftOff);
 	Nan::SetPrototypeMethod(tpl, "allowShiftOff", AllowShiftOff);
 
@@ -107,6 +108,8 @@ void VtkImageDifferenceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetThreshold", SetThreshold);
 	Nan::SetPrototypeMethod(tpl, "setThreshold", SetThreshold);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageDifferenceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -247,6 +250,7 @@ void VtkImageDifferenceWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetImage();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,6 +323,7 @@ void VtkImageDifferenceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageDifferenceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -334,7 +339,7 @@ void VtkImageDifferenceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageDifferenceWrap *wrapper = ObjectWrap::Unwrap<VtkImageDifferenceWrap>(info.Holder());
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageDifference * r;
@@ -346,6 +351,7 @@ void VtkImageDifferenceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageDifferenceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -402,7 +408,7 @@ void VtkImageDifferenceWrap::SetImageConnection(const Nan::FunctionCallbackInfo<
 {
 	VtkImageDifferenceWrap *wrapper = ObjectWrap::Unwrap<VtkImageDifferenceWrap>(info.Holder());
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -422,7 +428,7 @@ void VtkImageDifferenceWrap::SetImageData(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageDifferenceWrap *wrapper = ObjectWrap::Unwrap<VtkImageDifferenceWrap>(info.Holder());
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

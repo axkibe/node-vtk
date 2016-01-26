@@ -28,26 +28,27 @@ VtkRenderedAreaPickerWrap::~VtkRenderedAreaPickerWrap()
 
 void VtkRenderedAreaPickerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAreaPickerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAreaPickerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderedAreaPickerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderedAreaPicker").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RenderedAreaPicker").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderedAreaPicker").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RenderedAreaPicker").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderedAreaPickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderedAreaPickerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderedAreaPickerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAreaPickerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAreaPickerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderedAreaPickerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AreaPick", AreaPick);
 	Nan::SetPrototypeMethod(tpl, "areaPick", AreaPick);
 
@@ -63,6 +64,8 @@ void VtkRenderedAreaPickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderedAreaPickerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -100,7 +103,7 @@ void VtkRenderedAreaPickerWrap::AreaPick(const Nan::FunctionCallbackInfo<v8::Val
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkRendererWrap *a4 = ObjectWrap::Unwrap<VtkRendererWrap>(info[4]->ToObject());
 						int r;
@@ -173,6 +176,7 @@ void VtkRenderedAreaPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderedAreaPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -188,7 +192,7 @@ void VtkRenderedAreaPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkRenderedAreaPickerWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedAreaPickerWrap>(info.Holder());
 	vtkRenderedAreaPicker *native = (vtkRenderedAreaPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderedAreaPicker * r;
@@ -200,6 +204,7 @@ void VtkRenderedAreaPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderedAreaPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

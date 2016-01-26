@@ -28,26 +28,27 @@ VtkBandedPolyDataContourFilterWrap::~VtkBandedPolyDataContourFilterWrap()
 
 void VtkBandedPolyDataContourFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBandedPolyDataContourFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBandedPolyDataContourFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BandedPolyDataContourFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBandedPolyDataContourFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BandedPolyDataContourFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBandedPolyDataContourFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBandedPolyDataContourFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBandedPolyDataContourFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBandedPolyDataContourFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClippingOff", ClippingOff);
 	Nan::SetPrototypeMethod(tpl, "clippingOff", ClippingOff);
 
@@ -120,6 +121,8 @@ void VtkBandedPolyDataContourFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBandedPolyDataContourFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -259,6 +262,7 @@ void VtkBandedPolyDataContourFilterWrap::GetContourEdgesOutput(const Nan::Functi
 		return;
 	}
 	r = native->GetContourEdgesOutput();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,6 +398,7 @@ void VtkBandedPolyDataContourFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkBandedPolyDataContourFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -409,7 +414,7 @@ void VtkBandedPolyDataContourFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkBandedPolyDataContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBandedPolyDataContourFilterWrap>(info.Holder());
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBandedPolyDataContourFilter * r;
@@ -421,6 +426,7 @@ void VtkBandedPolyDataContourFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBandedPolyDataContourFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -27,26 +27,27 @@ VtkRenderedHierarchyRepresentationWrap::~VtkRenderedHierarchyRepresentationWrap(
 
 void VtkRenderedHierarchyRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderedGraphRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedGraphRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderedHierarchyRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderedHierarchyRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RenderedHierarchyRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderedHierarchyRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RenderedHierarchyRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderedHierarchyRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderedHierarchyRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderedHierarchyRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderedGraphRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderedGraphRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderedHierarchyRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ColorGraphEdgesByArrayOff", ColorGraphEdgesByArrayOff);
 	Nan::SetPrototypeMethod(tpl, "colorGraphEdgesByArrayOff", ColorGraphEdgesByArrayOff);
 
@@ -110,6 +111,8 @@ void VtkRenderedHierarchyRepresentationWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SetGraphSplineType", SetGraphSplineType);
 	Nan::SetPrototypeMethod(tpl, "setGraphSplineType", SetGraphSplineType);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderedHierarchyRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -387,6 +390,7 @@ void VtkRenderedHierarchyRepresentationWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderedHierarchyRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -402,7 +406,7 @@ void VtkRenderedHierarchyRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderedHierarchyRepresentation * r;
@@ -414,6 +418,7 @@ void VtkRenderedHierarchyRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderedHierarchyRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

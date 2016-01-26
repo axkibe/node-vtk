@@ -28,26 +28,27 @@ VtkCompositeTransferFunctionItemWrap::~VtkCompositeTransferFunctionItemWrap()
 
 void VtkCompositeTransferFunctionItemWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkColorTransferFunctionItemWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkColorTransferFunctionItemWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompositeTransferFunctionItemWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompositeTransferFunctionItem").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompositeTransferFunctionItem").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompositeTransferFunctionItem").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompositeTransferFunctionItem").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompositeTransferFunctionItemWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompositeTransferFunctionItemWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompositeTransferFunctionItemWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkColorTransferFunctionItemWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkColorTransferFunctionItemWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompositeTransferFunctionItemWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkCompositeTransferFunctionItemWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetOpacityFunction", SetOpacityFunction);
 	Nan::SetPrototypeMethod(tpl, "setOpacityFunction", SetOpacityFunction);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompositeTransferFunctionItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkCompositeTransferFunctionItemWrap::GetOpacityFunction(const Nan::Functio
 		return;
 	}
 	r = native->GetOpacityFunction();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkCompositeTransferFunctionItemWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompositeTransferFunctionItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkCompositeTransferFunctionItemWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkCompositeTransferFunctionItemWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeTransferFunctionItemWrap>(info.Holder());
 	vtkCompositeTransferFunctionItem *native = (vtkCompositeTransferFunctionItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompositeTransferFunctionItem * r;
@@ -187,6 +192,7 @@ void VtkCompositeTransferFunctionItemWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompositeTransferFunctionItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkCompositeTransferFunctionItemWrap::SetOpacityFunction(const Nan::Functio
 {
 	VtkCompositeTransferFunctionItemWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeTransferFunctionItemWrap>(info.Holder());
 	vtkCompositeTransferFunctionItem *native = (vtkCompositeTransferFunctionItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

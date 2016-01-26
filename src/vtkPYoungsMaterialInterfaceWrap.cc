@@ -28,26 +28,27 @@ VtkPYoungsMaterialInterfaceWrap::~VtkPYoungsMaterialInterfaceWrap()
 
 void VtkPYoungsMaterialInterfaceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkYoungsMaterialInterfaceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkYoungsMaterialInterfaceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPYoungsMaterialInterfaceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPYoungsMaterialInterface").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PYoungsMaterialInterface").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPYoungsMaterialInterface").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PYoungsMaterialInterface").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPYoungsMaterialInterfaceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPYoungsMaterialInterfaceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPYoungsMaterialInterfaceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkYoungsMaterialInterfaceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkYoungsMaterialInterfaceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPYoungsMaterialInterfaceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkPYoungsMaterialInterfaceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPYoungsMaterialInterfaceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkPYoungsMaterialInterfaceWrap::GetController(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkPYoungsMaterialInterfaceWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkPYoungsMaterialInterfaceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkPYoungsMaterialInterfaceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkPYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkPYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkPYoungsMaterialInterface *native = (vtkPYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPYoungsMaterialInterface * r;
@@ -187,6 +192,7 @@ void VtkPYoungsMaterialInterfaceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPYoungsMaterialInterfaceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkPYoungsMaterialInterfaceWrap::SetController(const Nan::FunctionCallbackI
 {
 	VtkPYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkPYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkPYoungsMaterialInterface *native = (vtkPYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

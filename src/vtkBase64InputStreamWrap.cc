@@ -27,26 +27,27 @@ VtkBase64InputStreamWrap::~VtkBase64InputStreamWrap()
 
 void VtkBase64InputStreamWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInputStreamWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInputStreamWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBase64InputStreamWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBase64InputStream").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Base64InputStream").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBase64InputStream").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Base64InputStream").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBase64InputStreamWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBase64InputStreamWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBase64InputStreamWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInputStreamWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInputStreamWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBase64InputStreamWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EndReading", EndReading);
 	Nan::SetPrototypeMethod(tpl, "endReading", EndReading);
 
@@ -65,6 +66,8 @@ void VtkBase64InputStreamWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "StartReading", StartReading);
 	Nan::SetPrototypeMethod(tpl, "startReading", StartReading);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBase64InputStreamWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -149,6 +152,7 @@ void VtkBase64InputStreamWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkBase64InputStreamWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,7 +168,7 @@ void VtkBase64InputStreamWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkBase64InputStreamWrap *wrapper = ObjectWrap::Unwrap<VtkBase64InputStreamWrap>(info.Holder());
 	vtkBase64InputStream *native = (vtkBase64InputStream *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBase64InputStream * r;
@@ -176,6 +180,7 @@ void VtkBase64InputStreamWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBase64InputStreamWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -29,26 +29,27 @@ VtkVariantArrayWrap::~VtkVariantArrayWrap()
 
 void VtkVariantArrayWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractArrayWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractArrayWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVariantArrayWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVariantArray").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VariantArray").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVariantArray").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VariantArray").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVariantArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVariantArrayWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVariantArrayWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractArrayWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractArrayWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVariantArrayWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClearLookup", ClearLookup);
 	Nan::SetPrototypeMethod(tpl, "clearLookup", ClearLookup);
 
@@ -94,6 +95,8 @@ void VtkVariantArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVariantArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -147,7 +150,7 @@ void VtkVariantArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkVariantArrayWrap *wrapper = ObjectWrap::Unwrap<VtkVariantArrayWrap>(info.Holder());
 	vtkVariantArray *native = (vtkVariantArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -235,13 +238,13 @@ void VtkVariantArrayWrap::InsertTuples(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkVariantArrayWrap *wrapper = ObjectWrap::Unwrap<VtkVariantArrayWrap>(info.Holder());
 	vtkVariantArray *native = (vtkVariantArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkAbstractArrayWrap *a2 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -308,6 +311,7 @@ void VtkVariantArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkVariantArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -330,6 +334,7 @@ void VtkVariantArrayWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewIterator();
+		VtkArrayIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -345,7 +350,7 @@ void VtkVariantArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkVariantArrayWrap *wrapper = ObjectWrap::Unwrap<VtkVariantArrayWrap>(info.Holder());
 	vtkVariantArray *native = (vtkVariantArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVariantArray * r;
@@ -357,6 +362,7 @@ void VtkVariantArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVariantArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

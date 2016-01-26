@@ -30,26 +30,27 @@ VtkCellIteratorWrap::~VtkCellIteratorWrap()
 
 void VtkCellIteratorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellIteratorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellIterator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellIterator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellIterator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellIterator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellIteratorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellIteratorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellIteratorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCell", GetCell);
 	Nan::SetPrototypeMethod(tpl, "getCell", GetCell);
 
@@ -83,6 +84,8 @@ void VtkCellIteratorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -112,7 +115,7 @@ void VtkCellIteratorWrap::GetCell(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCellIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCellIteratorWrap>(info.Holder());
 	vtkCellIterator *native = (vtkCellIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericCellWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -153,6 +156,7 @@ void VtkCellIteratorWrap::GetFaces(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetFaces();
+		VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,6 +179,7 @@ void VtkCellIteratorWrap::GetPointIds(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetPointIds();
+		VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,6 +202,7 @@ void VtkCellIteratorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -287,6 +293,7 @@ void VtkCellIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,7 +309,7 @@ void VtkCellIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCellIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCellIteratorWrap>(info.Holder());
 	vtkCellIterator *native = (vtkCellIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectBaseWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectBaseWrap *a0 = ObjectWrap::Unwrap<VtkObjectBaseWrap>(info[0]->ToObject());
 		vtkCellIterator * r;
@@ -314,6 +321,7 @@ void VtkCellIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObjectBase *) a0->native.GetPointer()
 		);
+			VtkCellIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

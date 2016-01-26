@@ -28,26 +28,27 @@ VtkBlankStructuredGridWithImageWrap::~VtkBlankStructuredGridWithImageWrap()
 
 void VtkBlankStructuredGridWithImageWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBlankStructuredGridWithImageWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBlankStructuredGridWithImage").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BlankStructuredGridWithImage").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBlankStructuredGridWithImage").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BlankStructuredGridWithImage").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBlankStructuredGridWithImageWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBlankStructuredGridWithImageWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBlankStructuredGridWithImageWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBlankStructuredGridWithImageWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBlankingInput", GetBlankingInput);
 	Nan::SetPrototypeMethod(tpl, "getBlankingInput", GetBlankingInput);
 
@@ -66,6 +67,8 @@ void VtkBlankStructuredGridWithImageWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SetBlankingInputData", SetBlankingInputData);
 	Nan::SetPrototypeMethod(tpl, "setBlankingInputData", SetBlankingInputData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBlankStructuredGridWithImageWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -102,6 +105,7 @@ void VtkBlankStructuredGridWithImageWrap::GetBlankingInput(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetBlankingInput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkBlankStructuredGridWithImageWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkBlankStructuredGridWithImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkBlankStructuredGridWithImageWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkBlankStructuredGridWithImageWrap *wrapper = ObjectWrap::Unwrap<VtkBlankStructuredGridWithImageWrap>(info.Holder());
 	vtkBlankStructuredGridWithImage *native = (vtkBlankStructuredGridWithImage *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBlankStructuredGridWithImage * r;
@@ -187,6 +192,7 @@ void VtkBlankStructuredGridWithImageWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBlankStructuredGridWithImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkBlankStructuredGridWithImageWrap::SetBlankingInputData(const Nan::Functi
 {
 	VtkBlankStructuredGridWithImageWrap *wrapper = ObjectWrap::Unwrap<VtkBlankStructuredGridWithImageWrap>(info.Holder());
 	vtkBlankStructuredGridWithImage *native = (vtkBlankStructuredGridWithImage *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

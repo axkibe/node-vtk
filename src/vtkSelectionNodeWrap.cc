@@ -32,26 +32,27 @@ VtkSelectionNodeWrap::~VtkSelectionNodeWrap()
 
 void VtkSelectionNodeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSelectionNodeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSelectionNode").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SelectionNode").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSelectionNode").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SelectionNode").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSelectionNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSelectionNodeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSelectionNodeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSelectionNodeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "COMPONENT_NUMBER", COMPONENT_NUMBER);
 
 	Nan::SetPrototypeMethod(tpl, "COMPOSITE_INDEX", COMPOSITE_INDEX);
@@ -144,6 +145,8 @@ void VtkSelectionNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UnionSelectionList", UnionSelectionList);
 	Nan::SetPrototypeMethod(tpl, "unionSelectionList", UnionSelectionList);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSelectionNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -180,6 +183,7 @@ void VtkSelectionNodeWrap::COMPONENT_NUMBER(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->COMPONENT_NUMBER();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,6 +206,7 @@ void VtkSelectionNodeWrap::COMPOSITE_INDEX(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->COMPOSITE_INDEX();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -224,6 +229,7 @@ void VtkSelectionNodeWrap::CONTAINING_CELLS(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->CONTAINING_CELLS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,6 +252,7 @@ void VtkSelectionNodeWrap::CONTENT_TYPE(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->CONTENT_TYPE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -261,7 +268,7 @@ void VtkSelectionNodeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -288,6 +295,7 @@ void VtkSelectionNodeWrap::EPSILON(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->EPSILON();
+		VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,6 +318,7 @@ void VtkSelectionNodeWrap::FIELD_TYPE(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->FIELD_TYPE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -374,6 +383,7 @@ void VtkSelectionNodeWrap::GetProperties(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetProperties();
+		VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -410,6 +420,7 @@ void VtkSelectionNodeWrap::GetSelectionData(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetSelectionData();
+		VtkDataSetAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,6 +443,7 @@ void VtkSelectionNodeWrap::GetSelectionList(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetSelectionList();
+		VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -454,6 +466,7 @@ void VtkSelectionNodeWrap::HIERARCHICAL_INDEX(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->HIERARCHICAL_INDEX();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -476,6 +489,7 @@ void VtkSelectionNodeWrap::HIERARCHICAL_LEVEL(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->HIERARCHICAL_LEVEL();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -498,6 +512,7 @@ void VtkSelectionNodeWrap::INDEXED_VERTICES(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->INDEXED_VERTICES();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -520,6 +535,7 @@ void VtkSelectionNodeWrap::INVERSE(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->INVERSE();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -576,6 +592,7 @@ void VtkSelectionNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkSelectionNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -598,6 +615,7 @@ void VtkSelectionNodeWrap::PIXEL_COUNT(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->PIXEL_COUNT();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -620,6 +638,7 @@ void VtkSelectionNodeWrap::PROCESS_ID(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->PROCESS_ID();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -642,6 +661,7 @@ void VtkSelectionNodeWrap::PROP(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->PROP();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -664,6 +684,7 @@ void VtkSelectionNodeWrap::PROP_ID(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->PROP_ID();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -686,6 +707,7 @@ void VtkSelectionNodeWrap::SOURCE(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->SOURCE();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -708,6 +730,7 @@ void VtkSelectionNodeWrap::SOURCE_ID(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->SOURCE_ID();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -723,7 +746,7 @@ void VtkSelectionNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSelectionNode * r;
@@ -735,6 +758,7 @@ void VtkSelectionNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSelectionNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -811,7 +835,7 @@ void VtkSelectionNodeWrap::SetSelectionData(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetAttributesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetAttributesWrap *a0 = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -831,7 +855,7 @@ void VtkSelectionNodeWrap::SetSelectionList(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -851,7 +875,7 @@ void VtkSelectionNodeWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -871,7 +895,7 @@ void VtkSelectionNodeWrap::SubtractSelectionList(const Nan::FunctionCallbackInfo
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -891,7 +915,7 @@ void VtkSelectionNodeWrap::UnionSelectionList(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

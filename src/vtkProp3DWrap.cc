@@ -29,26 +29,27 @@ VtkProp3DWrap::~VtkProp3DWrap()
 
 void VtkProp3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPropWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProp3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProp3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Prop3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProp3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Prop3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProp3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProp3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPropWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPropWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProp3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddOrientation", AddOrientation);
 	Nan::SetPrototypeMethod(tpl, "addOrientation", AddOrientation);
 
@@ -124,6 +125,8 @@ void VtkProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProp3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -261,7 +264,7 @@ void VtkProp3DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -281,6 +284,7 @@ void VtkProp3DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,6 +307,7 @@ void VtkProp3DWrap::GetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetUserMatrix();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,6 +330,7 @@ void VtkProp3DWrap::GetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetUserTransform();
+		VtkLinearTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,6 +387,7 @@ void VtkProp3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
+		VtkProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -396,7 +403,7 @@ void VtkProp3DWrap::PokeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -504,7 +511,7 @@ void VtkProp3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProp3D * r;
@@ -516,6 +523,7 @@ void VtkProp3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProp3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -651,7 +659,7 @@ void VtkProp3DWrap::SetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -671,7 +679,7 @@ void VtkProp3DWrap::SetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLinearTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLinearTransformWrap *a0 = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -691,7 +699,7 @@ void VtkProp3DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

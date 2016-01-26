@@ -34,26 +34,27 @@ VtkImageViewer2Wrap::~VtkImageViewer2Wrap()
 
 void VtkImageViewer2Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageViewer2Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageViewer2").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageViewer2").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageViewer2").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageViewer2").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageViewer2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageViewer2Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageViewer2Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageViewer2Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -165,6 +166,8 @@ void VtkImageViewer2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateDisplayExtent", UpdateDisplayExtent);
 	Nan::SetPrototypeMethod(tpl, "updateDisplayExtent", UpdateDisplayExtent);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageViewer2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -243,6 +246,7 @@ void VtkImageViewer2Wrap::GetImageActor(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetImageActor();
+		VtkImageActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -265,6 +269,7 @@ void VtkImageViewer2Wrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetInput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -287,6 +292,7 @@ void VtkImageViewer2Wrap::GetInteractorStyle(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetInteractorStyle();
+		VtkInteractorStyleImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +329,7 @@ void VtkImageViewer2Wrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetRenderWindow();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -345,6 +352,7 @@ void VtkImageViewer2Wrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -423,6 +431,7 @@ void VtkImageViewer2Wrap::GetWindowLevel(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetWindowLevel();
+		VtkImageMapToWindowLevelColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -481,6 +490,7 @@ void VtkImageViewer2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageViewer2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -532,7 +542,7 @@ void VtkImageViewer2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
 	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageViewer2 * r;
@@ -544,6 +554,7 @@ void VtkImageViewer2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageViewer2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -600,7 +611,7 @@ void VtkImageViewer2Wrap::SetInputConnection(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
 	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -620,7 +631,7 @@ void VtkImageViewer2Wrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
 	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -682,7 +693,7 @@ void VtkImageViewer2Wrap::SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
 	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -702,7 +713,7 @@ void VtkImageViewer2Wrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
 	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -819,7 +830,7 @@ void VtkImageViewer2Wrap::SetupInteractor(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
 	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

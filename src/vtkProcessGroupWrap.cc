@@ -28,26 +28,27 @@ VtkProcessGroupWrap::~VtkProcessGroupWrap()
 
 void VtkProcessGroupWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkProcessGroupWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkProcessGroup").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ProcessGroup").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkProcessGroup").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ProcessGroup").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkProcessGroupWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkProcessGroupWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkProcessGroupWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkProcessGroupWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddProcessId", AddProcessId);
 	Nan::SetPrototypeMethod(tpl, "addProcessId", AddProcessId);
 
@@ -93,6 +94,8 @@ void VtkProcessGroupWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCommunicator", SetCommunicator);
 	Nan::SetPrototypeMethod(tpl, "setCommunicator", SetCommunicator);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkProcessGroupWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -143,7 +146,7 @@ void VtkProcessGroupWrap::Copy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProcessGroupWrap *wrapper = ObjectWrap::Unwrap<VtkProcessGroupWrap>(info.Holder());
 	vtkProcessGroup *native = (vtkProcessGroup *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProcessGroupWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProcessGroupWrap *a0 = ObjectWrap::Unwrap<VtkProcessGroupWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -205,6 +208,7 @@ void VtkProcessGroupWrap::GetCommunicator(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetCommunicator();
+		VtkCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,7 +273,7 @@ void VtkProcessGroupWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkProcessGroupWrap *wrapper = ObjectWrap::Unwrap<VtkProcessGroupWrap>(info.Holder());
 	vtkProcessGroup *native = (vtkProcessGroup *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommunicatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommunicatorWrap *a0 = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -318,6 +322,7 @@ void VtkProcessGroupWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkProcessGroupWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,7 +371,7 @@ void VtkProcessGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkProcessGroupWrap *wrapper = ObjectWrap::Unwrap<VtkProcessGroupWrap>(info.Holder());
 	vtkProcessGroup *native = (vtkProcessGroup *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkProcessGroup * r;
@@ -378,6 +383,7 @@ void VtkProcessGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkProcessGroupWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -396,7 +402,7 @@ void VtkProcessGroupWrap::SetCommunicator(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkProcessGroupWrap *wrapper = ObjectWrap::Unwrap<VtkProcessGroupWrap>(info.Holder());
 	vtkProcessGroup *native = (vtkProcessGroup *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommunicatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommunicatorWrap *a0 = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

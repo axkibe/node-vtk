@@ -27,26 +27,27 @@ VtkIncrementalOctreeNodeWrap::~VtkIncrementalOctreeNodeWrap()
 
 void VtkIncrementalOctreeNodeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkIncrementalOctreeNodeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkIncrementalOctreeNode").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("IncrementalOctreeNode").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkIncrementalOctreeNode").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("IncrementalOctreeNode").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkIncrementalOctreeNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkIncrementalOctreeNodeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkIncrementalOctreeNodeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkIncrementalOctreeNodeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DeleteChildNodes", DeleteChildNodes);
 	Nan::SetPrototypeMethod(tpl, "deleteChildNodes", DeleteChildNodes);
 
@@ -80,6 +81,8 @@ void VtkIncrementalOctreeNodeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetBounds", SetBounds);
 	Nan::SetPrototypeMethod(tpl, "setBounds", SetBounds);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkIncrementalOctreeNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -121,7 +124,7 @@ void VtkIncrementalOctreeNodeWrap::ExportAllPointIdsByInsertion(const Nan::Funct
 {
 	VtkIncrementalOctreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreeNodeWrap>(info.Holder());
 	vtkIncrementalOctreeNode *native = (vtkIncrementalOctreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -152,6 +155,7 @@ void VtkIncrementalOctreeNodeWrap::GetChild(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetChild(
 			info[0]->Int32Value()
 		);
+			VtkIncrementalOctreeNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,6 +209,7 @@ void VtkIncrementalOctreeNodeWrap::GetPointIdSet(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPointIdSet();
+		VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -263,6 +268,7 @@ void VtkIncrementalOctreeNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkIncrementalOctreeNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,7 +284,7 @@ void VtkIncrementalOctreeNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkIncrementalOctreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreeNodeWrap>(info.Holder());
 	vtkIncrementalOctreeNode *native = (vtkIncrementalOctreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkIncrementalOctreeNode * r;
@@ -290,6 +296,7 @@ void VtkIncrementalOctreeNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkIncrementalOctreeNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

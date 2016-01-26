@@ -28,26 +28,27 @@ VtkXMLHyperOctreeReaderWrap::~VtkXMLHyperOctreeReaderWrap()
 
 void VtkXMLHyperOctreeReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLHyperOctreeReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLHyperOctreeReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLHyperOctreeReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLHyperOctreeReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLHyperOctreeReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLHyperOctreeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLHyperOctreeReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLHyperOctreeReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLHyperOctreeReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkXMLHyperOctreeReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLHyperOctreeReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -117,6 +120,7 @@ void VtkXMLHyperOctreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkHyperOctreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -135,6 +139,7 @@ void VtkXMLHyperOctreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetOutput();
+		VtkHyperOctreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,6 +184,7 @@ void VtkXMLHyperOctreeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLHyperOctreeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +200,7 @@ void VtkXMLHyperOctreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkXMLHyperOctreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLHyperOctreeReaderWrap>(info.Holder());
 	vtkXMLHyperOctreeReader *native = (vtkXMLHyperOctreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLHyperOctreeReader * r;
@@ -206,6 +212,7 @@ void VtkXMLHyperOctreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLHyperOctreeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

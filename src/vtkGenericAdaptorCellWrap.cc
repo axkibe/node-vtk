@@ -39,26 +39,27 @@ VtkGenericAdaptorCellWrap::~VtkGenericAdaptorCellWrap()
 
 void VtkGenericAdaptorCellWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericAdaptorCellWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericAdaptorCell").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericAdaptorCell").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericAdaptorCell").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericAdaptorCell").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericAdaptorCellWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericAdaptorCellWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericAdaptorCellWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericAdaptorCellWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Clip", Clip);
 	Nan::SetPrototypeMethod(tpl, "clip", Clip);
 
@@ -143,6 +144,8 @@ void VtkGenericAdaptorCellWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TriangulateFace", TriangulateFace);
 	Nan::SetPrototypeMethod(tpl, "triangulateFace", TriangulateFace);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericAdaptorCellWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -174,36 +177,36 @@ void VtkGenericAdaptorCellWrap::Clip(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImplicitFunctionWrap *a1 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkGenericAttributeCollectionWrap *a2 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkGenericCellTessellatorWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkGenericCellTessellatorWrap *a3 = ObjectWrap::Unwrap<VtkGenericCellTessellatorWrap>(info[3]->ToObject());
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkIncrementalPointLocatorWrap *a5 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[5]->ToObject());
-							if(info.Length() > 6 && info[6]->IsObject())
+							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[6]))
 							{
 								VtkCellArrayWrap *a6 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[6]->ToObject());
-								if(info.Length() > 7 && info[7]->IsObject())
+								if(info.Length() > 7 && info[7]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[7]))
 								{
 									VtkPointDataWrap *a7 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[7]->ToObject());
-									if(info.Length() > 8 && info[8]->IsObject())
+									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[8]))
 									{
 										VtkCellDataWrap *a8 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[8]->ToObject());
-										if(info.Length() > 9 && info[9]->IsObject())
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[9]))
 										{
 											VtkPointDataWrap *a9 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[9]->ToObject());
-											if(info.Length() > 10 && info[10]->IsObject())
+											if(info.Length() > 10 && info[10]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[10]))
 											{
 												VtkPointDataWrap *a10 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[10]->ToObject());
-												if(info.Length() > 11 && info[11]->IsObject())
+												if(info.Length() > 11 && info[11]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[11]))
 												{
 													VtkCellDataWrap *a11 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[11]->ToObject());
 													if(info.Length() != 12)
@@ -245,43 +248,43 @@ void VtkGenericAdaptorCellWrap::Contour(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContourValuesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContourValuesWrap *a0 = ObjectWrap::Unwrap<VtkContourValuesWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImplicitFunctionWrap *a1 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkGenericAttributeCollectionWrap *a2 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkGenericCellTessellatorWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkGenericCellTessellatorWrap *a3 = ObjectWrap::Unwrap<VtkGenericCellTessellatorWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkIncrementalPointLocatorWrap *a4 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[4]->ToObject());
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkCellArrayWrap *a5 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[5]->ToObject());
-							if(info.Length() > 6 && info[6]->IsObject())
+							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[6]))
 							{
 								VtkCellArrayWrap *a6 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[6]->ToObject());
-								if(info.Length() > 7 && info[7]->IsObject())
+								if(info.Length() > 7 && info[7]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[7]))
 								{
 									VtkCellArrayWrap *a7 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[7]->ToObject());
-									if(info.Length() > 8 && info[8]->IsObject())
+									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[8]))
 									{
 										VtkPointDataWrap *a8 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[8]->ToObject());
-										if(info.Length() > 9 && info[9]->IsObject())
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[9]))
 										{
 											VtkCellDataWrap *a9 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[9]->ToObject());
-											if(info.Length() > 10 && info[10]->IsObject())
+											if(info.Length() > 10 && info[10]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[10]))
 											{
 												VtkPointDataWrap *a10 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[10]->ToObject());
-												if(info.Length() > 11 && info[11]->IsObject())
+												if(info.Length() > 11 && info[11]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[11]))
 												{
 													VtkPointDataWrap *a11 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[11]->ToObject());
-													if(info.Length() > 12 && info[12]->IsObject())
+													if(info.Length() > 12 && info[12]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[12]))
 													{
 														VtkCellDataWrap *a12 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[12]->ToObject());
 														if(info.Length() != 13)
@@ -325,7 +328,7 @@ void VtkGenericAdaptorCellWrap::CountNeighbors(const Nan::FunctionCallbackInfo<v
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAdaptorCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAdaptorCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info[0]->ToObject());
 		int r;
@@ -347,7 +350,7 @@ void VtkGenericAdaptorCellWrap::GetAttributeOrder(const Nan::FunctionCallbackInf
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeWrap>(info[0]->ToObject());
 		int r;
@@ -369,7 +372,7 @@ void VtkGenericAdaptorCellWrap::GetBoundaryIterator(const Nan::FunctionCallbackI
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericCellIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericCellIteratorWrap *a0 = ObjectWrap::Unwrap<VtkGenericCellIteratorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -435,7 +438,7 @@ void VtkGenericAdaptorCellWrap::GetHighestOrderAttribute(const Nan::FunctionCall
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeCollectionWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[0]->ToObject());
 		int r;
@@ -471,10 +474,10 @@ void VtkGenericAdaptorCellWrap::GetNeighbors(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAdaptorCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAdaptorCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericCellIteratorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGenericCellIteratorWrap *a1 = ObjectWrap::Unwrap<VtkGenericCellIteratorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -566,7 +569,7 @@ void VtkGenericAdaptorCellWrap::GetPointIterator(const Nan::FunctionCallbackInfo
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericPointIteratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericPointIteratorWrap *a0 = ObjectWrap::Unwrap<VtkGenericPointIteratorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -622,7 +625,7 @@ void VtkGenericAdaptorCellWrap::IsAttributeLinear(const Nan::FunctionCallbackInf
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeWrap>(info[0]->ToObject());
 		int r;
@@ -707,6 +710,7 @@ void VtkGenericAdaptorCellWrap::NewCellIterator(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewCellIterator();
+		VtkGenericCellIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -729,6 +733,7 @@ void VtkGenericAdaptorCellWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericAdaptorCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -744,7 +749,7 @@ void VtkGenericAdaptorCellWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericAdaptorCell * r;
@@ -756,6 +761,7 @@ void VtkGenericAdaptorCellWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericAdaptorCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -774,31 +780,31 @@ void VtkGenericAdaptorCellWrap::Tessellate(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeCollectionWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericCellTessellatorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGenericCellTessellatorWrap *a1 = ObjectWrap::Unwrap<VtkGenericCellTessellatorWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkIncrementalPointLocatorWrap *a3 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkCellArrayWrap *a4 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[4]->ToObject());
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkPointDataWrap *a5 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[5]->ToObject());
-							if(info.Length() > 6 && info[6]->IsObject())
+							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[6]))
 							{
 								VtkPointDataWrap *a6 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[6]->ToObject());
-								if(info.Length() > 7 && info[7]->IsObject())
+								if(info.Length() > 7 && info[7]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[7]))
 								{
 									VtkCellDataWrap *a7 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[7]->ToObject());
-									if(info.Length() > 8 && info[8]->IsObject())
+									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[8]))
 									{
 										VtkUnsignedCharArrayWrap *a8 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[8]->ToObject());
 										if(info.Length() != 9)
@@ -834,30 +840,30 @@ void VtkGenericAdaptorCellWrap::TriangulateFace(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericAdaptorCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info.Holder());
 	vtkGenericAdaptorCell *native = (vtkGenericAdaptorCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeCollectionWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericCellTessellatorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGenericCellTessellatorWrap *a1 = ObjectWrap::Unwrap<VtkGenericCellTessellatorWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkPointsWrap *a3 = ObjectWrap::Unwrap<VtkPointsWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkIncrementalPointLocatorWrap *a4 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[4]->ToObject());
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkCellArrayWrap *a5 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[5]->ToObject());
-							if(info.Length() > 6 && info[6]->IsObject())
+							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[6]))
 							{
 								VtkPointDataWrap *a6 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[6]->ToObject());
-								if(info.Length() > 7 && info[7]->IsObject())
+								if(info.Length() > 7 && info[7]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[7]))
 								{
 									VtkPointDataWrap *a7 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[7]->ToObject());
-									if(info.Length() > 8 && info[8]->IsObject())
+									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[8]))
 									{
 										VtkCellDataWrap *a8 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[8]->ToObject());
 										if(info.Length() != 9)

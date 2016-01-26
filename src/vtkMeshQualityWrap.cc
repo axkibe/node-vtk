@@ -28,26 +28,27 @@ VtkMeshQualityWrap::~VtkMeshQualityWrap()
 
 void VtkMeshQualityWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMeshQualityWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMeshQuality").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MeshQuality").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMeshQuality").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MeshQuality").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMeshQualityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMeshQualityWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMeshQualityWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMeshQualityWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CompatibilityModeOff", CompatibilityModeOff);
 	Nan::SetPrototypeMethod(tpl, "compatibilityModeOff", CompatibilityModeOff);
 
@@ -564,6 +565,8 @@ void VtkMeshQualityWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "VolumeOn", VolumeOn);
 	Nan::SetPrototypeMethod(tpl, "volumeOn", VolumeOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMeshQualityWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -743,7 +746,7 @@ void VtkMeshQualityWrap::HexCondition(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -765,7 +768,7 @@ void VtkMeshQualityWrap::HexDiagonal(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -787,7 +790,7 @@ void VtkMeshQualityWrap::HexDimension(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -809,7 +812,7 @@ void VtkMeshQualityWrap::HexDistortion(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -831,7 +834,7 @@ void VtkMeshQualityWrap::HexEdgeRatio(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -853,7 +856,7 @@ void VtkMeshQualityWrap::HexJacobian(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -875,7 +878,7 @@ void VtkMeshQualityWrap::HexMaxAspectFrobenius(const Nan::FunctionCallbackInfo<v
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -897,7 +900,7 @@ void VtkMeshQualityWrap::HexMaxEdgeRatio(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -919,7 +922,7 @@ void VtkMeshQualityWrap::HexMedAspectFrobenius(const Nan::FunctionCallbackInfo<v
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -941,7 +944,7 @@ void VtkMeshQualityWrap::HexOddy(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -963,7 +966,7 @@ void VtkMeshQualityWrap::HexRelativeSizeSquared(const Nan::FunctionCallbackInfo<
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -985,7 +988,7 @@ void VtkMeshQualityWrap::HexScaledJacobian(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1007,7 +1010,7 @@ void VtkMeshQualityWrap::HexShape(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1029,7 +1032,7 @@ void VtkMeshQualityWrap::HexShapeAndSize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1051,7 +1054,7 @@ void VtkMeshQualityWrap::HexShear(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1073,7 +1076,7 @@ void VtkMeshQualityWrap::HexShearAndSize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1095,7 +1098,7 @@ void VtkMeshQualityWrap::HexSkew(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1117,7 +1120,7 @@ void VtkMeshQualityWrap::HexStretch(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1139,7 +1142,7 @@ void VtkMeshQualityWrap::HexTaper(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1161,7 +1164,7 @@ void VtkMeshQualityWrap::HexVolume(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1212,6 +1215,7 @@ void VtkMeshQualityWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkMeshQualityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1227,7 +1231,7 @@ void VtkMeshQualityWrap::QuadArea(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1249,7 +1253,7 @@ void VtkMeshQualityWrap::QuadAspectRatio(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1271,7 +1275,7 @@ void VtkMeshQualityWrap::QuadCondition(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1293,7 +1297,7 @@ void VtkMeshQualityWrap::QuadDistortion(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1315,7 +1319,7 @@ void VtkMeshQualityWrap::QuadEdgeRatio(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1337,7 +1341,7 @@ void VtkMeshQualityWrap::QuadJacobian(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1359,7 +1363,7 @@ void VtkMeshQualityWrap::QuadMaxAngle(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1381,7 +1385,7 @@ void VtkMeshQualityWrap::QuadMaxAspectFrobenius(const Nan::FunctionCallbackInfo<
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1403,7 +1407,7 @@ void VtkMeshQualityWrap::QuadMaxEdgeRatios(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1425,7 +1429,7 @@ void VtkMeshQualityWrap::QuadMedAspectFrobenius(const Nan::FunctionCallbackInfo<
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1447,7 +1451,7 @@ void VtkMeshQualityWrap::QuadMinAngle(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1469,7 +1473,7 @@ void VtkMeshQualityWrap::QuadOddy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1491,7 +1495,7 @@ void VtkMeshQualityWrap::QuadRadiusRatio(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1513,7 +1517,7 @@ void VtkMeshQualityWrap::QuadRelativeSizeSquared(const Nan::FunctionCallbackInfo
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1535,7 +1539,7 @@ void VtkMeshQualityWrap::QuadScaledJacobian(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1557,7 +1561,7 @@ void VtkMeshQualityWrap::QuadShape(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1579,7 +1583,7 @@ void VtkMeshQualityWrap::QuadShapeAndSize(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1601,7 +1605,7 @@ void VtkMeshQualityWrap::QuadShear(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1623,7 +1627,7 @@ void VtkMeshQualityWrap::QuadShearAndSize(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1645,7 +1649,7 @@ void VtkMeshQualityWrap::QuadSkew(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1667,7 +1671,7 @@ void VtkMeshQualityWrap::QuadStretch(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1689,7 +1693,7 @@ void VtkMeshQualityWrap::QuadTaper(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1711,7 +1715,7 @@ void VtkMeshQualityWrap::QuadWarpage(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -1757,7 +1761,7 @@ void VtkMeshQualityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMeshQuality * r;
@@ -1769,6 +1773,7 @@ void VtkMeshQualityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMeshQualityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -2827,7 +2832,7 @@ void VtkMeshQualityWrap::TetAspectBeta(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -2849,7 +2854,7 @@ void VtkMeshQualityWrap::TetAspectFrobenius(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -2871,7 +2876,7 @@ void VtkMeshQualityWrap::TetAspectGamma(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -2893,7 +2898,7 @@ void VtkMeshQualityWrap::TetAspectRatio(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -2915,7 +2920,7 @@ void VtkMeshQualityWrap::TetCollapseRatio(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -2937,7 +2942,7 @@ void VtkMeshQualityWrap::TetCondition(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -2959,7 +2964,7 @@ void VtkMeshQualityWrap::TetDistortion(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -2981,7 +2986,7 @@ void VtkMeshQualityWrap::TetEdgeRatio(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3003,7 +3008,7 @@ void VtkMeshQualityWrap::TetJacobian(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3025,7 +3030,7 @@ void VtkMeshQualityWrap::TetMinAngle(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3047,7 +3052,7 @@ void VtkMeshQualityWrap::TetRadiusRatio(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3069,7 +3074,7 @@ void VtkMeshQualityWrap::TetRelativeSizeSquared(const Nan::FunctionCallbackInfo<
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3091,7 +3096,7 @@ void VtkMeshQualityWrap::TetScaledJacobian(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3113,7 +3118,7 @@ void VtkMeshQualityWrap::TetShape(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3135,7 +3140,7 @@ void VtkMeshQualityWrap::TetShapeandSize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3157,7 +3162,7 @@ void VtkMeshQualityWrap::TetVolume(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3179,7 +3184,7 @@ void VtkMeshQualityWrap::TriangleArea(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3201,7 +3206,7 @@ void VtkMeshQualityWrap::TriangleAspectFrobenius(const Nan::FunctionCallbackInfo
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3223,7 +3228,7 @@ void VtkMeshQualityWrap::TriangleAspectRatio(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3245,7 +3250,7 @@ void VtkMeshQualityWrap::TriangleCondition(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3267,7 +3272,7 @@ void VtkMeshQualityWrap::TriangleDistortion(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3289,7 +3294,7 @@ void VtkMeshQualityWrap::TriangleEdgeRatio(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3311,7 +3316,7 @@ void VtkMeshQualityWrap::TriangleMaxAngle(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3333,7 +3338,7 @@ void VtkMeshQualityWrap::TriangleMinAngle(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3355,7 +3360,7 @@ void VtkMeshQualityWrap::TriangleRadiusRatio(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3377,7 +3382,7 @@ void VtkMeshQualityWrap::TriangleRelativeSizeSquared(const Nan::FunctionCallback
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3399,7 +3404,7 @@ void VtkMeshQualityWrap::TriangleScaledJacobian(const Nan::FunctionCallbackInfo<
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3421,7 +3426,7 @@ void VtkMeshQualityWrap::TriangleShape(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;
@@ -3443,7 +3448,7 @@ void VtkMeshQualityWrap::TriangleShapeAndSize(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
 		double r;

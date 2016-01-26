@@ -28,26 +28,27 @@ VtkImageWeightedSumWrap::~VtkImageWeightedSumWrap()
 
 void VtkImageWeightedSumWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageWeightedSumWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageWeightedSum").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageWeightedSum").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageWeightedSum").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageWeightedSum").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageWeightedSumWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageWeightedSumWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageWeightedSumWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageWeightedSumWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CalculateTotalWeight", CalculateTotalWeight);
 	Nan::SetPrototypeMethod(tpl, "calculateTotalWeight", CalculateTotalWeight);
 
@@ -87,6 +88,8 @@ void VtkImageWeightedSumWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetWeights", SetWeights);
 	Nan::SetPrototypeMethod(tpl, "setWeights", SetWeights);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageWeightedSumWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -193,6 +196,7 @@ void VtkImageWeightedSumWrap::GetWeights(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetWeights();
+		VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,6 +241,7 @@ void VtkImageWeightedSumWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageWeightedSumWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +281,7 @@ void VtkImageWeightedSumWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageWeightedSumWrap *wrapper = ObjectWrap::Unwrap<VtkImageWeightedSumWrap>(info.Holder());
 	vtkImageWeightedSum *native = (vtkImageWeightedSum *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageWeightedSum * r;
@@ -288,6 +293,7 @@ void VtkImageWeightedSumWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageWeightedSumWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -325,7 +331,7 @@ void VtkImageWeightedSumWrap::SetWeights(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageWeightedSumWrap *wrapper = ObjectWrap::Unwrap<VtkImageWeightedSumWrap>(info.Holder());
 	vtkImageWeightedSum *native = (vtkImageWeightedSum *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

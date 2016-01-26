@@ -27,26 +27,27 @@ VtkOutlineCornerSourceWrap::~VtkOutlineCornerSourceWrap()
 
 void VtkOutlineCornerSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkOutlineSourceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOutlineSourceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOutlineCornerSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOutlineCornerSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OutlineCornerSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOutlineCornerSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OutlineCornerSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOutlineCornerSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOutlineCornerSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOutlineCornerSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkOutlineSourceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkOutlineSourceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOutlineCornerSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkOutlineCornerSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOutlineCornerSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -205,6 +208,7 @@ void VtkOutlineCornerSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkOutlineCornerSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,7 +224,7 @@ void VtkOutlineCornerSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkOutlineCornerSourceWrap *wrapper = ObjectWrap::Unwrap<VtkOutlineCornerSourceWrap>(info.Holder());
 	vtkOutlineCornerSource *native = (vtkOutlineCornerSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOutlineCornerSource * r;
@@ -232,6 +236,7 @@ void VtkOutlineCornerSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOutlineCornerSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

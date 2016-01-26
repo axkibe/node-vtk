@@ -27,26 +27,27 @@ VtkPCellDataToPointDataWrap::~VtkPCellDataToPointDataWrap()
 
 void VtkPCellDataToPointDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCellDataToPointDataWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellDataToPointDataWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPCellDataToPointDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPCellDataToPointData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PCellDataToPointData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPCellDataToPointData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PCellDataToPointData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPCellDataToPointDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPCellDataToPointDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPCellDataToPointDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCellDataToPointDataWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellDataToPointDataWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPCellDataToPointDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkPCellDataToPointDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPieceInvariant", SetPieceInvariant);
 	Nan::SetPrototypeMethod(tpl, "setPieceInvariant", SetPieceInvariant);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPCellDataToPointDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -157,6 +160,7 @@ void VtkPCellDataToPointDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkPCellDataToPointDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +200,7 @@ void VtkPCellDataToPointDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkPCellDataToPointDataWrap *wrapper = ObjectWrap::Unwrap<VtkPCellDataToPointDataWrap>(info.Holder());
 	vtkPCellDataToPointData *native = (vtkPCellDataToPointData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPCellDataToPointData * r;
@@ -208,6 +212,7 @@ void VtkPCellDataToPointDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPCellDataToPointDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

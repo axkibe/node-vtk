@@ -31,26 +31,27 @@ VtkLabeledTreeMapDataMapperWrap::~VtkLabeledTreeMapDataMapperWrap()
 
 void VtkLabeledTreeMapDataMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLabeledDataMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabeledDataMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLabeledTreeMapDataMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLabeledTreeMapDataMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LabeledTreeMapDataMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLabeledTreeMapDataMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LabeledTreeMapDataMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLabeledTreeMapDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLabeledTreeMapDataMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLabeledTreeMapDataMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLabeledDataMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLabeledDataMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLabeledTreeMapDataMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetChildMotion", GetChildMotion);
 	Nan::SetPrototypeMethod(tpl, "getChildMotion", GetChildMotion);
 
@@ -102,6 +103,8 @@ void VtkLabeledTreeMapDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetRectanglesArrayName", SetRectanglesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setRectanglesArrayName", SetRectanglesArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLabeledTreeMapDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -194,6 +197,7 @@ void VtkLabeledTreeMapDataMapperWrap::GetInputTree(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetInputTree();
+		VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,6 +242,7 @@ void VtkLabeledTreeMapDataMapperWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkLabeledTreeMapDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +258,7 @@ void VtkLabeledTreeMapDataMapperWrap::ReleaseGraphicsResources(const Nan::Functi
 {
 	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -273,10 +278,10 @@ void VtkLabeledTreeMapDataMapperWrap::RenderOpaqueGeometry(const Nan::FunctionCa
 {
 	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -298,10 +303,10 @@ void VtkLabeledTreeMapDataMapperWrap::RenderOverlay(const Nan::FunctionCallbackI
 {
 	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -323,7 +328,7 @@ void VtkLabeledTreeMapDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLabeledTreeMapDataMapper * r;
@@ -335,6 +340,7 @@ void VtkLabeledTreeMapDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLabeledTreeMapDataMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

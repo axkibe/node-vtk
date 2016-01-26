@@ -27,26 +27,27 @@ VtkTextureMapToCylinderWrap::~VtkTextureMapToCylinderWrap()
 
 void VtkTextureMapToCylinderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextureMapToCylinderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTextureMapToCylinder").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TextureMapToCylinder").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTextureMapToCylinder").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TextureMapToCylinder").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextureMapToCylinderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextureMapToCylinderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextureMapToCylinderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextureMapToCylinderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutomaticCylinderGenerationOff", AutomaticCylinderGenerationOff);
 	Nan::SetPrototypeMethod(tpl, "automaticCylinderGenerationOff", AutomaticCylinderGenerationOff);
 
@@ -89,6 +90,8 @@ void VtkTextureMapToCylinderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPreventSeam", SetPreventSeam);
 	Nan::SetPrototypeMethod(tpl, "setPreventSeam", SetPreventSeam);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextureMapToCylinderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -213,6 +216,7 @@ void VtkTextureMapToCylinderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextureMapToCylinderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +256,7 @@ void VtkTextureMapToCylinderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkTextureMapToCylinderWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToCylinderWrap>(info.Holder());
 	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTextureMapToCylinder * r;
@@ -264,6 +268,7 @@ void VtkTextureMapToCylinderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextureMapToCylinderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -28,26 +28,27 @@ VtkAxesTransformWidgetWrap::~VtkAxesTransformWidgetWrap()
 
 void VtkAxesTransformWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAxesTransformWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAxesTransformWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AxesTransformWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAxesTransformWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AxesTransformWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAxesTransformWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAxesTransformWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAxesTransformWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAxesTransformWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -75,6 +76,8 @@ void VtkAxesTransformWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAxesTransformWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -137,6 +140,7 @@ void VtkAxesTransformWidgetWrap::GetLineRepresentation(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLineRepresentation();
+		VtkAxesTransformRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,6 +185,7 @@ void VtkAxesTransformWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkAxesTransformWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +201,7 @@ void VtkAxesTransformWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAxesTransformWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformWidgetWrap>(info.Holder());
 	vtkAxesTransformWidget *native = (vtkAxesTransformWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAxesTransformWidget * r;
@@ -208,6 +213,7 @@ void VtkAxesTransformWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAxesTransformWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +270,7 @@ void VtkAxesTransformWidgetWrap::SetRepresentation(const Nan::FunctionCallbackIn
 {
 	VtkAxesTransformWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformWidgetWrap>(info.Holder());
 	vtkAxesTransformWidget *native = (vtkAxesTransformWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAxesTransformRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAxesTransformRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

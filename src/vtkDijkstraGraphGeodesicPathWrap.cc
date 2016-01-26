@@ -30,26 +30,27 @@ VtkDijkstraGraphGeodesicPathWrap::~VtkDijkstraGraphGeodesicPathWrap()
 
 void VtkDijkstraGraphGeodesicPathWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphGeodesicPathWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphGeodesicPathWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDijkstraGraphGeodesicPathWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDijkstraGraphGeodesicPath").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DijkstraGraphGeodesicPath").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDijkstraGraphGeodesicPath").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DijkstraGraphGeodesicPath").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDijkstraGraphGeodesicPathWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDijkstraGraphGeodesicPathWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDijkstraGraphGeodesicPathWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphGeodesicPathWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphGeodesicPathWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDijkstraGraphGeodesicPathWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -110,6 +111,8 @@ void VtkDijkstraGraphGeodesicPathWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "UseScalarWeightsOn", UseScalarWeightsOn);
 	Nan::SetPrototypeMethod(tpl, "useScalarWeightsOn", UseScalarWeightsOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDijkstraGraphGeodesicPathWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -153,7 +156,7 @@ void VtkDijkstraGraphGeodesicPathWrap::GetCumulativeWeights(const Nan::FunctionC
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -180,6 +183,7 @@ void VtkDijkstraGraphGeodesicPathWrap::GetIdList(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetIdList();
+		VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,6 +220,7 @@ void VtkDijkstraGraphGeodesicPathWrap::GetRepelVertices(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetRepelVertices();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,6 +293,7 @@ void VtkDijkstraGraphGeodesicPathWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkDijkstraGraphGeodesicPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -327,7 +333,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDijkstraGraphGeodesicPath * r;
@@ -339,6 +345,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDijkstraGraphGeodesicPathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -376,7 +383,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SetRepelVertices(const Nan::FunctionCallb
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

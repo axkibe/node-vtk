@@ -28,26 +28,27 @@ VtkFrustumSourceWrap::~VtkFrustumSourceWrap()
 
 void VtkFrustumSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFrustumSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFrustumSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FrustumSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFrustumSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FrustumSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFrustumSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFrustumSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFrustumSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFrustumSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -84,6 +85,8 @@ void VtkFrustumSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShowLinesOn", ShowLinesOn);
 	Nan::SetPrototypeMethod(tpl, "showLinesOn", ShowLinesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFrustumSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -162,6 +165,7 @@ void VtkFrustumSourceWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetPlanes();
+		VtkPlanesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,6 +210,7 @@ void VtkFrustumSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkFrustumSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +226,7 @@ void VtkFrustumSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkFrustumSourceWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumSourceWrap>(info.Holder());
 	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFrustumSource * r;
@@ -233,6 +238,7 @@ void VtkFrustumSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFrustumSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -289,7 +295,7 @@ void VtkFrustumSourceWrap::SetPlanes(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkFrustumSourceWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumSourceWrap>(info.Holder());
 	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

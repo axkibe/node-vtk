@@ -27,26 +27,27 @@ VtkAMRFlashParticlesReaderWrap::~VtkAMRFlashParticlesReaderWrap()
 
 void VtkAMRFlashParticlesReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAMRBaseParticlesReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAMRBaseParticlesReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAMRFlashParticlesReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAMRFlashParticlesReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AMRFlashParticlesReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAMRFlashParticlesReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AMRFlashParticlesReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAMRFlashParticlesReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAMRFlashParticlesReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAMRFlashParticlesReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAMRBaseParticlesReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAMRBaseParticlesReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAMRFlashParticlesReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkAMRFlashParticlesReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAMRFlashParticlesReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -148,6 +151,7 @@ void VtkAMRFlashParticlesReaderWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkAMRFlashParticlesReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +167,7 @@ void VtkAMRFlashParticlesReaderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkAMRFlashParticlesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRFlashParticlesReaderWrap>(info.Holder());
 	vtkAMRFlashParticlesReader *native = (vtkAMRFlashParticlesReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAMRFlashParticlesReader * r;
@@ -175,6 +179,7 @@ void VtkAMRFlashParticlesReaderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAMRFlashParticlesReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

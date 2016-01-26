@@ -27,26 +27,27 @@ VtkInteractorStyleRubberBandPickWrap::~VtkInteractorStyleRubberBandPickWrap()
 
 void VtkInteractorStyleRubberBandPickWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleTrackballCameraWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleRubberBandPickWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyleRubberBandPick").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyleRubberBandPick").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyleRubberBandPick").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyleRubberBandPick").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleRubberBandPickWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleRubberBandPickWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleRubberBandPickWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleTrackballCameraWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleTrackballCameraWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleRubberBandPickWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -74,6 +75,8 @@ void VtkInteractorStyleRubberBandPickWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "StartSelect", StartSelect);
 	Nan::SetPrototypeMethod(tpl, "startSelect", StartSelect);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleRubberBandPickWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -146,6 +149,7 @@ void VtkInteractorStyleRubberBandPickWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleRubberBandPickWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -209,7 +213,7 @@ void VtkInteractorStyleRubberBandPickWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkInteractorStyleRubberBandPickWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandPickWrap>(info.Holder());
 	vtkInteractorStyleRubberBandPick *native = (vtkInteractorStyleRubberBandPick *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyleRubberBandPick * r;
@@ -221,6 +225,7 @@ void VtkInteractorStyleRubberBandPickWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleRubberBandPickWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

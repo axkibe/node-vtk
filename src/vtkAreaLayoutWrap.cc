@@ -28,26 +28,27 @@ VtkAreaLayoutWrap::~VtkAreaLayoutWrap()
 
 void VtkAreaLayoutWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTreeAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAreaLayoutWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAreaLayout").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AreaLayout").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAreaLayout").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AreaLayout").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAreaLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAreaLayoutWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAreaLayoutWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTreeAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTreeAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAreaLayoutWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EdgeRoutingPointsOff", EdgeRoutingPointsOff);
 	Nan::SetPrototypeMethod(tpl, "edgeRoutingPointsOff", EdgeRoutingPointsOff);
 
@@ -81,6 +82,8 @@ void VtkAreaLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSizeArrayName", SetSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setSizeArrayName", SetSizeArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAreaLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -169,6 +172,7 @@ void VtkAreaLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLayoutStrategy();
+		VtkAreaLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,6 +217,7 @@ void VtkAreaLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkAreaLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +233,7 @@ void VtkAreaLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
 	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAreaLayout * r;
@@ -240,6 +245,7 @@ void VtkAreaLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAreaLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -278,7 +284,7 @@ void VtkAreaLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
 	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutStrategyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

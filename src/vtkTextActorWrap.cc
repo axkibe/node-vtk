@@ -32,26 +32,27 @@ VtkTextActorWrap::~VtkTextActorWrap()
 
 void VtkTextActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTextActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TextActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTextActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TextActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeScaledFont", ComputeScaledFont);
 	Nan::SetPrototypeMethod(tpl, "computeScaledFont", ComputeScaledFont);
 
@@ -151,6 +152,8 @@ void VtkTextActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseBorderAlignOn", UseBorderAlignOn);
 	Nan::SetPrototypeMethod(tpl, "useBorderAlignOn", UseBorderAlignOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -180,7 +183,7 @@ void VtkTextActorWrap::ComputeScaledFont(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -249,6 +252,7 @@ void VtkTextActorWrap::GetScaledTextProperty(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetScaledTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -271,6 +275,7 @@ void VtkTextActorWrap::GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -385,6 +390,7 @@ void VtkTextActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,7 +406,7 @@ void VtkTextActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -420,7 +426,7 @@ void VtkTextActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -442,7 +448,7 @@ void VtkTextActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -464,7 +470,7 @@ void VtkTextActorWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCal
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -486,7 +492,7 @@ void VtkTextActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTextActor * r;
@@ -498,6 +504,7 @@ void VtkTextActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -535,10 +542,10 @@ void VtkTextActorWrap::SetConstrainedFontSize(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextActorWrap *a0 = ObjectWrap::Unwrap<VtkTextActorWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -609,7 +616,7 @@ void VtkTextActorWrap::SetMapper(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataMapper2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataMapper2DWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -675,7 +682,7 @@ void VtkTextActorWrap::SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -769,7 +776,7 @@ void VtkTextActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

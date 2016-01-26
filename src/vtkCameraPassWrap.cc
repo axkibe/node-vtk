@@ -28,26 +28,27 @@ VtkCameraPassWrap::~VtkCameraPassWrap()
 
 void VtkCameraPassWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderPassWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCameraPassWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCameraPass").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CameraPass").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCameraPass").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CameraPass").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCameraPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCameraPassWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCameraPassWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderPassWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCameraPassWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetAspectRatioOverride", GetAspectRatioOverride);
 	Nan::SetPrototypeMethod(tpl, "getAspectRatioOverride", GetAspectRatioOverride);
 
@@ -75,6 +76,8 @@ void VtkCameraPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDelegatePass", SetDelegatePass);
 	Nan::SetPrototypeMethod(tpl, "setDelegatePass", SetDelegatePass);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCameraPassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -139,6 +142,7 @@ void VtkCameraPassWrap::GetDelegatePass(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetDelegatePass();
+		VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,6 +187,7 @@ void VtkCameraPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkCameraPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +203,7 @@ void VtkCameraPassWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo
 {
 	VtkCameraPassWrap *wrapper = ObjectWrap::Unwrap<VtkCameraPassWrap>(info.Holder());
 	vtkCameraPass *native = (vtkCameraPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -218,7 +223,7 @@ void VtkCameraPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCameraPassWrap *wrapper = ObjectWrap::Unwrap<VtkCameraPassWrap>(info.Holder());
 	vtkCameraPass *native = (vtkCameraPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCameraPass * r;
@@ -230,6 +235,7 @@ void VtkCameraPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCameraPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -267,7 +273,7 @@ void VtkCameraPassWrap::SetDelegatePass(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCameraPassWrap *wrapper = ObjectWrap::Unwrap<VtkCameraPassWrap>(info.Holder());
 	vtkCameraPass *native = (vtkCameraPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -34,26 +34,27 @@ VtkLegendBoxActorWrap::~VtkLegendBoxActorWrap()
 
 void VtkLegendBoxActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLegendBoxActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLegendBoxActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LegendBoxActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLegendBoxActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LegendBoxActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLegendBoxActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLegendBoxActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLegendBoxActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLegendBoxActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BorderOff", BorderOff);
 	Nan::SetPrototypeMethod(tpl, "borderOff", BorderOff);
 
@@ -207,6 +208,8 @@ void VtkLegendBoxActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseBackgroundOn", UseBackgroundOn);
 	Nan::SetPrototypeMethod(tpl, "useBackgroundOn", UseBackgroundOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLegendBoxActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -361,6 +364,7 @@ void VtkLegendBoxActorWrap::GetBoxProperty(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetBoxProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,6 +405,7 @@ void VtkLegendBoxActorWrap::GetEntryIcon(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetEntryIcon(
 			info[0]->Int32Value()
 		);
+			VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -451,6 +456,7 @@ void VtkLegendBoxActorWrap::GetEntrySymbol(const Nan::FunctionCallbackInfo<v8::V
 		r = native->GetEntrySymbol(
 			info[0]->Int32Value()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -476,6 +482,7 @@ void VtkLegendBoxActorWrap::GetEntryTextProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetEntryTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -656,6 +663,7 @@ void VtkLegendBoxActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -671,7 +679,7 @@ void VtkLegendBoxActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -691,7 +699,7 @@ void VtkLegendBoxActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -713,7 +721,7 @@ void VtkLegendBoxActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -735,7 +743,7 @@ void VtkLegendBoxActorWrap::RenderTranslucentPolygonalGeometry(const Nan::Functi
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -757,7 +765,7 @@ void VtkLegendBoxActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLegendBoxActor * r;
@@ -769,6 +777,7 @@ void VtkLegendBoxActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLegendBoxActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -928,7 +937,7 @@ void VtkLegendBoxActorWrap::SetEntryIcon(const Nan::FunctionCallbackInfo<v8::Val
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageDataWrap *a1 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -976,7 +985,7 @@ void VtkLegendBoxActorWrap::SetEntrySymbol(const Nan::FunctionCallbackInfo<v8::V
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -998,7 +1007,7 @@ void VtkLegendBoxActorWrap::SetEntryTextProperty(const Nan::FunctionCallbackInfo
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1113,7 +1122,7 @@ void VtkLegendBoxActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

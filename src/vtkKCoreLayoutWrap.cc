@@ -29,26 +29,27 @@ VtkKCoreLayoutWrap::~VtkKCoreLayoutWrap()
 
 void VtkKCoreLayoutWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkKCoreLayoutWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkKCoreLayout").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("KCoreLayout").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkKCoreLayout").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("KCoreLayout").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkKCoreLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkKCoreLayoutWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkKCoreLayoutWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkKCoreLayoutWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CartesianOff", CartesianOff);
 	Nan::SetPrototypeMethod(tpl, "cartesianOff", CartesianOff);
 
@@ -106,6 +107,8 @@ void VtkKCoreLayoutWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPolarCoordsRadiusArrayName", SetPolarCoordsRadiusArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPolarCoordsRadiusArrayName", SetPolarCoordsRadiusArrayName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkKCoreLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -161,7 +164,7 @@ void VtkKCoreLayoutWrap::FillInputPortInformation(const Nan::FunctionCallbackInf
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -284,6 +287,7 @@ void VtkKCoreLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkKCoreLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,7 +327,7 @@ void VtkKCoreLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkKCoreLayout * r;
@@ -335,6 +339,7 @@ void VtkKCoreLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkKCoreLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -393,7 +398,7 @@ void VtkKCoreLayoutWrap::SetGraphConnection(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

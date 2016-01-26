@@ -27,26 +27,27 @@ VtkImageSincInterpolatorWrap::~VtkImageSincInterpolatorWrap()
 
 void VtkImageSincInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractImageInterpolatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractImageInterpolatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageSincInterpolatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageSincInterpolator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageSincInterpolator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageSincInterpolator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageSincInterpolator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageSincInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageSincInterpolatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageSincInterpolatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractImageInterpolatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractImageInterpolatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageSincInterpolatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AntialiasingOff", AntialiasingOff);
 	Nan::SetPrototypeMethod(tpl, "antialiasingOff", AntialiasingOff);
 
@@ -152,6 +153,8 @@ void VtkImageSincInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseWindowParameterOn", UseWindowParameterOn);
 	Nan::SetPrototypeMethod(tpl, "useWindowParameterOn", UseWindowParameterOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageSincInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -346,6 +349,7 @@ void VtkImageSincInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageSincInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -385,7 +389,7 @@ void VtkImageSincInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageSincInterpolator * r;
@@ -397,6 +401,7 @@ void VtkImageSincInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageSincInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

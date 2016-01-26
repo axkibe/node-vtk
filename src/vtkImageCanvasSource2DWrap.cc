@@ -28,26 +28,27 @@ VtkImageCanvasSource2DWrap::~VtkImageCanvasSource2DWrap()
 
 void VtkImageCanvasSource2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageCanvasSource2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageCanvasSource2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageCanvasSource2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageCanvasSource2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageCanvasSource2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageCanvasSource2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageCanvasSource2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageCanvasSource2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageCanvasSource2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DrawCircle", DrawCircle);
 	Nan::SetPrototypeMethod(tpl, "drawCircle", DrawCircle);
 
@@ -144,6 +145,8 @@ void VtkImageCanvasSource2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 	Nan::SetPrototypeMethod(tpl, "setScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageCanvasSource2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -204,7 +207,7 @@ void VtkImageCanvasSource2DWrap::DrawImage(const Nan::FunctionCallbackInfo<v8::V
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkImageDataWrap *a2 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[2]->ToObject());
 				if(info.Length() > 3 && info[3]->IsInt32())
@@ -561,6 +564,7 @@ void VtkImageCanvasSource2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageCanvasSource2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -576,7 +580,7 @@ void VtkImageCanvasSource2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageCanvasSource2D * r;
@@ -588,6 +592,7 @@ void VtkImageCanvasSource2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageCanvasSource2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

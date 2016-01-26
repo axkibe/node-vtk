@@ -27,26 +27,27 @@ VtkSMPContourGridWrap::~VtkSMPContourGridWrap()
 
 void VtkSMPContourGridWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContourGridWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourGridWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSMPContourGridWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSMPContourGrid").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SMPContourGrid").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSMPContourGrid").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SMPContourGrid").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSMPContourGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSMPContourGridWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSMPContourGridWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContourGridWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourGridWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSMPContourGridWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkSMPContourGridWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSMPContourGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -161,6 +164,7 @@ void VtkSMPContourGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkSMPContourGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +180,7 @@ void VtkSMPContourGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSMPContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkSMPContourGridWrap>(info.Holder());
 	vtkSMPContourGrid *native = (vtkSMPContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSMPContourGrid * r;
@@ -188,6 +192,7 @@ void VtkSMPContourGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSMPContourGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

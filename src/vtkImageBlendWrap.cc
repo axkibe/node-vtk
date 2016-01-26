@@ -30,26 +30,27 @@ VtkImageBlendWrap::~VtkImageBlendWrap()
 
 void VtkImageBlendWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkThreadedImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageBlendWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageBlend").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageBlend").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageBlend").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageBlend").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageBlendWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageBlendWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageBlendWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkThreadedImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkThreadedImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageBlendWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBlendMode", GetBlendMode);
 	Nan::SetPrototypeMethod(tpl, "getBlendMode", GetBlendMode);
 
@@ -116,6 +117,8 @@ void VtkImageBlendWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetStencilData", SetStencilData);
 	Nan::SetPrototypeMethod(tpl, "setStencilData", SetStencilData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageBlendWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -240,6 +243,7 @@ void VtkImageBlendWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -258,6 +262,7 @@ void VtkImageBlendWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -315,6 +320,7 @@ void VtkImageBlendWrap::GetStencil(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetStencil();
+		VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,6 +365,7 @@ void VtkImageBlendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageBlendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -376,7 +383,7 @@ void VtkImageBlendWrap::ReplaceNthInputConnection(const Nan::FunctionCallbackInf
 	vtkImageBlend *native = (vtkImageBlend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -398,7 +405,7 @@ void VtkImageBlendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageBlendWrap *wrapper = ObjectWrap::Unwrap<VtkImageBlendWrap>(info.Holder());
 	vtkImageBlend *native = (vtkImageBlend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageBlend * r;
@@ -410,6 +417,7 @@ void VtkImageBlendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageBlendWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -490,7 +498,7 @@ void VtkImageBlendWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageBlendWrap *wrapper = ObjectWrap::Unwrap<VtkImageBlendWrap>(info.Holder());
 	vtkImageBlend *native = (vtkImageBlend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -505,7 +513,7 @@ void VtkImageBlendWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -550,7 +558,7 @@ void VtkImageBlendWrap::SetStencilConnection(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageBlendWrap *wrapper = ObjectWrap::Unwrap<VtkImageBlendWrap>(info.Holder());
 	vtkImageBlend *native = (vtkImageBlend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -570,7 +578,7 @@ void VtkImageBlendWrap::SetStencilData(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageBlendWrap *wrapper = ObjectWrap::Unwrap<VtkImageBlendWrap>(info.Holder());
 	vtkImageBlend *native = (vtkImageBlend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

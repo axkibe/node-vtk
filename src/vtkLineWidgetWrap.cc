@@ -29,26 +29,27 @@ VtkLineWidgetWrap::~VtkLineWidgetWrap()
 
 void VtkLineWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	Vtk3DWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLineWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLineWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LineWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLineWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LineWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLineWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLineWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLineWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	Vtk3DWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(Vtk3DWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLineWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClampToBoundsOff", ClampToBoundsOff);
 	Nan::SetPrototypeMethod(tpl, "clampToBoundsOff", ClampToBoundsOff);
 
@@ -130,6 +131,8 @@ void VtkLineWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLineWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -260,6 +263,7 @@ void VtkLineWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,6 +286,7 @@ void VtkLineWidgetWrap::GetLineProperty(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,7 +302,7 @@ void VtkLineWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkLineWidgetWrap>(info.Holder());
 	vtkLineWidget *native = (vtkLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -338,6 +343,7 @@ void VtkLineWidgetWrap::GetSelectedHandleProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -360,6 +366,7 @@ void VtkLineWidgetWrap::GetSelectedLineProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetSelectedLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -404,6 +411,7 @@ void VtkLineWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkLineWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -463,7 +471,7 @@ void VtkLineWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkLineWidgetWrap>(info.Holder());
 	vtkLineWidget *native = (vtkLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLineWidget * r;
@@ -475,6 +483,7 @@ void VtkLineWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLineWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

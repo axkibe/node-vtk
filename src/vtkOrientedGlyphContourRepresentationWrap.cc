@@ -33,26 +33,27 @@ VtkOrientedGlyphContourRepresentationWrap::~VtkOrientedGlyphContourRepresentatio
 
 void VtkOrientedGlyphContourRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContourRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOrientedGlyphContourRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOrientedGlyphContourRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OrientedGlyphContourRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOrientedGlyphContourRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OrientedGlyphContourRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOrientedGlyphContourRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOrientedGlyphContourRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOrientedGlyphContourRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContourRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOrientedGlyphContourRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AlwaysOnTopOff", AlwaysOnTopOff);
 	Nan::SetPrototypeMethod(tpl, "alwaysOnTopOff", AlwaysOnTopOff);
 
@@ -134,6 +135,8 @@ void VtkOrientedGlyphContourRepresentationWrap::InitTpl(v8::Local<v8::FunctionTe
 	Nan::SetPrototypeMethod(tpl, "SetShowSelectedNodes", SetShowSelectedNodes);
 	Nan::SetPrototypeMethod(tpl, "setShowSelectedNodes", SetShowSelectedNodes);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOrientedGlyphContourRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -235,6 +238,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetActiveCursorShape(const Nan::
 		return;
 	}
 	r = native->GetActiveCursorShape();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,6 +261,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetActiveProperty(const Nan::Fun
 		return;
 	}
 	r = native->GetActiveProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,7 +277,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetActors(const Nan::FunctionCal
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -327,6 +332,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetContourRepresentationAsPolyDa
 		return;
 	}
 	r = native->GetContourRepresentationAsPolyData();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,6 +355,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetCursorShape(const Nan::Functi
 		return;
 	}
 	r = native->GetCursorShape();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -371,6 +378,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetLinesProperty(const Nan::Func
 		return;
 	}
 	r = native->GetLinesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -393,6 +401,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -451,6 +460,7 @@ void VtkOrientedGlyphContourRepresentationWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
+		VtkOrientedGlyphContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -466,7 +476,7 @@ void VtkOrientedGlyphContourRepresentationWrap::ReleaseGraphicsResources(const N
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -486,7 +496,7 @@ void VtkOrientedGlyphContourRepresentationWrap::RenderOpaqueGeometry(const Nan::
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -508,7 +518,7 @@ void VtkOrientedGlyphContourRepresentationWrap::RenderOverlay(const Nan::Functio
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -530,7 +540,7 @@ void VtkOrientedGlyphContourRepresentationWrap::RenderTranslucentPolygonalGeomet
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -552,7 +562,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SafeDownCast(const Nan::Function
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOrientedGlyphContourRepresentation * r;
@@ -564,6 +574,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOrientedGlyphContourRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -582,7 +593,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetActiveCursorShape(const Nan::
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -621,7 +632,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetCursorShape(const Nan::Functi
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -668,7 +679,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetRenderer(const Nan::FunctionC
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

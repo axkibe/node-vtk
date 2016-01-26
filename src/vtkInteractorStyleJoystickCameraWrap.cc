@@ -27,26 +27,27 @@ VtkInteractorStyleJoystickCameraWrap::~VtkInteractorStyleJoystickCameraWrap()
 
 void VtkInteractorStyleJoystickCameraWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleJoystickCameraWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyleJoystickCamera").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyleJoystickCamera").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyleJoystickCamera").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyleJoystickCamera").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleJoystickCameraWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleJoystickCameraWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleJoystickCameraWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleJoystickCameraWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Dolly", Dolly);
 	Nan::SetPrototypeMethod(tpl, "dolly", Dolly);
 
@@ -98,6 +99,8 @@ void VtkInteractorStyleJoystickCameraWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "Spin", Spin);
 	Nan::SetPrototypeMethod(tpl, "spin", Spin);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleJoystickCameraWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -182,6 +185,7 @@ void VtkInteractorStyleJoystickCameraWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleJoystickCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +333,7 @@ void VtkInteractorStyleJoystickCameraWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyleJoystickCamera * r;
@@ -341,6 +345,7 @@ void VtkInteractorStyleJoystickCameraWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleJoystickCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

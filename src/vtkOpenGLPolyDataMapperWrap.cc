@@ -30,26 +30,27 @@ VtkOpenGLPolyDataMapperWrap::~VtkOpenGLPolyDataMapperWrap()
 
 void VtkOpenGLPolyDataMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLPolyDataMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLPolyDataMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLPolyDataMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLPolyDataMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLPolyDataMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLPolyDataMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLPolyDataMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLPolyDataMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Draw", Draw);
 	Nan::SetPrototypeMethod(tpl, "draw", Draw);
 
@@ -71,6 +72,8 @@ void VtkOpenGLPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLPolyDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -100,10 +103,10 @@ void VtkOpenGLPolyDataMapperWrap::Draw(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkOpenGLPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPolyDataMapperWrap>(info.Holder());
 	vtkOpenGLPolyDataMapper *native = (vtkOpenGLPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
 			int r;
@@ -170,6 +173,7 @@ void VtkOpenGLPolyDataMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLPolyDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +189,7 @@ void VtkOpenGLPolyDataMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 {
 	VtkOpenGLPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPolyDataMapperWrap>(info.Holder());
 	vtkOpenGLPolyDataMapper *native = (vtkOpenGLPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -205,10 +209,10 @@ void VtkOpenGLPolyDataMapperWrap::RenderPiece(const Nan::FunctionCallbackInfo<v8
 {
 	VtkOpenGLPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPolyDataMapperWrap>(info.Holder());
 	vtkOpenGLPolyDataMapper *native = (vtkOpenGLPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -230,7 +234,7 @@ void VtkOpenGLPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkOpenGLPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPolyDataMapperWrap>(info.Holder());
 	vtkOpenGLPolyDataMapper *native = (vtkOpenGLPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLPolyDataMapper * r;
@@ -242,6 +246,7 @@ void VtkOpenGLPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLPolyDataMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

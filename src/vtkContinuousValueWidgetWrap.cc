@@ -28,26 +28,27 @@ VtkContinuousValueWidgetWrap::~VtkContinuousValueWidgetWrap()
 
 void VtkContinuousValueWidgetWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkContinuousValueWidgetWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkContinuousValueWidget").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ContinuousValueWidget").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkContinuousValueWidget").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ContinuousValueWidget").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkContinuousValueWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkContinuousValueWidgetWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkContinuousValueWidgetWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkContinuousValueWidgetWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkContinuousValueWidgetWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkContinuousValueWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,6 +125,7 @@ void VtkContinuousValueWidgetWrap::GetContinuousValueWidgetRepresentation(const 
 		return;
 	}
 	r = native->GetContinuousValueWidgetRepresentation();
+		VtkContinuousValueWidgetRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,6 +184,7 @@ void VtkContinuousValueWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkContinuousValueWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +200,7 @@ void VtkContinuousValueWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkContinuousValueWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContinuousValueWidgetWrap>(info.Holder());
 	vtkContinuousValueWidget *native = (vtkContinuousValueWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkContinuousValueWidget * r;
@@ -207,6 +212,7 @@ void VtkContinuousValueWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkContinuousValueWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -225,7 +231,7 @@ void VtkContinuousValueWidgetWrap::SetRepresentation(const Nan::FunctionCallback
 {
 	VtkContinuousValueWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContinuousValueWidgetWrap>(info.Holder());
 	vtkContinuousValueWidget *native = (vtkContinuousValueWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContinuousValueWidgetRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContinuousValueWidgetRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkContinuousValueWidgetRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -30,26 +30,27 @@ VtkOpenGLProjectedAAHexahedraMapperWrap::~VtkOpenGLProjectedAAHexahedraMapperWra
 
 void VtkOpenGLProjectedAAHexahedraMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProjectedAAHexahedraMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProjectedAAHexahedraMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLProjectedAAHexahedraMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLProjectedAAHexahedraMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLProjectedAAHexahedraMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLProjectedAAHexahedraMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLProjectedAAHexahedraMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLProjectedAAHexahedraMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLProjectedAAHexahedraMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLProjectedAAHexahedraMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProjectedAAHexahedraMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProjectedAAHexahedraMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLProjectedAAHexahedraMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +69,8 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::InitTpl(v8::Local<v8::FunctionTemp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLProjectedAAHexahedraMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,6 +143,7 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLProjectedAAHexahedraMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -155,7 +159,7 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::ReleaseGraphicsResources(const Nan
 {
 	VtkOpenGLProjectedAAHexahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedAAHexahedraMapperWrap>(info.Holder());
 	vtkOpenGLProjectedAAHexahedraMapper *native = (vtkOpenGLProjectedAAHexahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -175,10 +179,10 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::Render(const Nan::FunctionCallback
 {
 	VtkOpenGLProjectedAAHexahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedAAHexahedraMapperWrap>(info.Holder());
 	vtkOpenGLProjectedAAHexahedraMapper *native = (vtkOpenGLProjectedAAHexahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -200,7 +204,7 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::SafeDownCast(const Nan::FunctionCa
 {
 	VtkOpenGLProjectedAAHexahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedAAHexahedraMapperWrap>(info.Holder());
 	vtkOpenGLProjectedAAHexahedraMapper *native = (vtkOpenGLProjectedAAHexahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLProjectedAAHexahedraMapper * r;
@@ -212,6 +216,7 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLProjectedAAHexahedraMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

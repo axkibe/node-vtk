@@ -34,26 +34,27 @@ VtkLabeledDataMapperWrap::~VtkLabeledDataMapperWrap()
 
 void VtkLabeledDataMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMapper2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapper2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLabeledDataMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLabeledDataMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LabeledDataMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLabeledDataMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LabeledDataMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLabeledDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLabeledDataMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLabeledDataMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMapper2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMapper2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLabeledDataMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CoordinateSystemDisplay", CoordinateSystemDisplay);
 	Nan::SetPrototypeMethod(tpl, "coordinateSystemDisplay", CoordinateSystemDisplay);
 
@@ -168,6 +169,8 @@ void VtkLabeledDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLabeledDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -312,6 +315,7 @@ void VtkLabeledDataMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetInput();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -387,6 +391,7 @@ void VtkLabeledDataMapperWrap::GetLabelTextProperty(const Nan::FunctionCallbackI
 		r = native->GetLabelTextProperty(
 			info[0]->Int32Value()
 		);
+			VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -405,6 +410,7 @@ void VtkLabeledDataMapperWrap::GetLabelTextProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -455,6 +461,7 @@ void VtkLabeledDataMapperWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetTransform();
+		VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -499,6 +506,7 @@ void VtkLabeledDataMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkLabeledDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -514,7 +522,7 @@ void VtkLabeledDataMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallb
 {
 	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
 	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -534,10 +542,10 @@ void VtkLabeledDataMapperWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackI
 {
 	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
 	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -559,10 +567,10 @@ void VtkLabeledDataMapperWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
 	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -584,7 +592,7 @@ void VtkLabeledDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
 	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLabeledDataMapper * r;
@@ -596,6 +604,7 @@ void VtkLabeledDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLabeledDataMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -672,7 +681,7 @@ void VtkLabeledDataMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
 	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -815,7 +824,7 @@ void VtkLabeledDataMapperWrap::SetLabelTextProperty(const Nan::FunctionCallbackI
 {
 	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
 	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -867,7 +876,7 @@ void VtkLabeledDataMapperWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
 	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

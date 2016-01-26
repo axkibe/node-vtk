@@ -29,26 +29,27 @@ VtkExtractSelectedRowsWrap::~VtkExtractSelectedRowsWrap()
 
 void VtkExtractSelectedRowsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkTableAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkExtractSelectedRowsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkExtractSelectedRows").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ExtractSelectedRows").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkExtractSelectedRows").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ExtractSelectedRows").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkExtractSelectedRowsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkExtractSelectedRowsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkExtractSelectedRowsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkTableAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkTableAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkExtractSelectedRowsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddOriginalRowIdsArrayOff", AddOriginalRowIdsArrayOff);
 	Nan::SetPrototypeMethod(tpl, "addOriginalRowIdsArrayOff", AddOriginalRowIdsArrayOff);
 
@@ -76,6 +77,8 @@ void VtkExtractSelectedRowsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkExtractSelectedRowsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,7 +134,7 @@ void VtkExtractSelectedRowsWrap::FillInputPortInformation(const Nan::FunctionCal
 	vtkExtractSelectedRows *native = (vtkExtractSelectedRows *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			int r;
@@ -198,6 +201,7 @@ void VtkExtractSelectedRowsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkExtractSelectedRowsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +217,7 @@ void VtkExtractSelectedRowsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExtractSelectedRowsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedRowsWrap>(info.Holder());
 	vtkExtractSelectedRows *native = (vtkExtractSelectedRows *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkExtractSelectedRows * r;
@@ -225,6 +229,7 @@ void VtkExtractSelectedRowsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkExtractSelectedRowsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -243,7 +248,7 @@ void VtkExtractSelectedRowsWrap::SetAnnotationLayersConnection(const Nan::Functi
 {
 	VtkExtractSelectedRowsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedRowsWrap>(info.Holder());
 	vtkExtractSelectedRows *native = (vtkExtractSelectedRows *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -263,7 +268,7 @@ void VtkExtractSelectedRowsWrap::SetSelectionConnection(const Nan::FunctionCallb
 {
 	VtkExtractSelectedRowsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedRowsWrap>(info.Holder());
 	vtkExtractSelectedRows *native = (vtkExtractSelectedRows *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

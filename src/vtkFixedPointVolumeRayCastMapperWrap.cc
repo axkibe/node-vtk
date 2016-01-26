@@ -37,26 +37,27 @@ VtkFixedPointVolumeRayCastMapperWrap::~VtkFixedPointVolumeRayCastMapperWrap()
 
 void VtkFixedPointVolumeRayCastMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFixedPointVolumeRayCastMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFixedPointVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FixedPointVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFixedPointVolumeRayCastMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FixedPointVolumeRayCastMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFixedPointVolumeRayCastMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFixedPointVolumeRayCastMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFixedPointVolumeRayCastMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFixedPointVolumeRayCastMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AbortRender", AbortRender);
 	Nan::SetPrototypeMethod(tpl, "abortRender", AbortRender);
 
@@ -195,6 +196,8 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "ShouldUseNearestNeighborInterpolation", ShouldUseNearestNeighborInterpolation);
 	Nan::SetPrototypeMethod(tpl, "shouldUseNearestNeighborInterpolation", ShouldUseNearestNeighborInterpolation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFixedPointVolumeRayCastMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -260,10 +263,10 @@ void VtkFixedPointVolumeRayCastMapperWrap::DisplayRenderedImage(const Nan::Funct
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -348,6 +351,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeGOHelper(const Nan::Funct
 		return;
 	}
 	r = native->GetCompositeGOHelper();
+		VtkFixedPointVolumeRayCastCompositeGOHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -370,6 +374,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeGOShadeHelper(const Nan::
 		return;
 	}
 	r = native->GetCompositeGOShadeHelper();
+		VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,6 +397,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeHelper(const Nan::Functio
 		return;
 	}
 	r = native->GetCompositeHelper();
+		VtkFixedPointVolumeRayCastCompositeHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -414,6 +420,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeShadeHelper(const Nan::Fu
 		return;
 	}
 	r = native->GetCompositeShadeHelper();
+		VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -436,6 +443,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCurrentScalars(const Nan::Function
 		return;
 	}
 	r = native->GetCurrentScalars();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -570,6 +578,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetMIPHelper(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetMIPHelper();
+		VtkFixedPointVolumeRayCastMIPHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -606,6 +615,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetPreviousScalars(const Nan::Functio
 		return;
 	}
 	r = native->GetPreviousScalars();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -628,6 +638,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetRayCastImage(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetRayCastImage();
+		VtkFixedPointRayCastImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -650,6 +661,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetRenderWindow(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetRenderWindow();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -686,6 +698,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetVolume(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetVolume();
+		VtkVolumeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -701,7 +714,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitializeRayInfo(const Nan::Function
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -798,6 +811,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkFixedPointVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -813,10 +827,10 @@ void VtkFixedPointVolumeRayCastMapperWrap::PerSubVolumeInitialization(const Nan:
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -842,10 +856,10 @@ void VtkFixedPointVolumeRayCastMapperWrap::PerVolumeInitialization(const Nan::Fu
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -867,10 +881,10 @@ void VtkFixedPointVolumeRayCastMapperWrap::Render(const Nan::FunctionCallbackInf
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -904,7 +918,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFixedPointVolumeRayCastMapper * r;
@@ -916,6 +930,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFixedPointVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1010,7 +1025,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetRayCastImage(const Nan::FunctionCa
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFixedPointRayCastImageWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFixedPointRayCastImageWrap *a0 = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1030,7 +1045,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::ShouldUseNearestNeighborInterpolation
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
 		int r;

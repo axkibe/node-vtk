@@ -27,26 +27,27 @@ VtkSMPMergePointsWrap::~VtkSMPMergePointsWrap()
 
 void VtkSMPMergePointsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMergePointsWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMergePointsWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSMPMergePointsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSMPMergePoints").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SMPMergePoints").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSMPMergePoints").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SMPMergePoints").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSMPMergePointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSMPMergePointsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSMPMergePointsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMergePointsWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMergePointsWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSMPMergePointsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FixSizeOfPointArray", FixSizeOfPointArray);
 	Nan::SetPrototypeMethod(tpl, "fixSizeOfPointArray", FixSizeOfPointArray);
 
@@ -65,6 +66,8 @@ void VtkSMPMergePointsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSMPMergePointsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -161,6 +164,7 @@ void VtkSMPMergePointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkSMPMergePointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +180,7 @@ void VtkSMPMergePointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSMPMergePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSMPMergePointsWrap>(info.Holder());
 	vtkSMPMergePoints *native = (vtkSMPMergePoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSMPMergePoints * r;
@@ -188,6 +192,7 @@ void VtkSMPMergePointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSMPMergePointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

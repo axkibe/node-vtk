@@ -28,26 +28,27 @@ VtkLookupTableWithEnablingWrap::~VtkLookupTableWithEnablingWrap()
 
 void VtkLookupTableWithEnablingWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkLookupTableWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLookupTableWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLookupTableWithEnablingWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLookupTableWithEnabling").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LookupTableWithEnabling").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLookupTableWithEnabling").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LookupTableWithEnabling").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLookupTableWithEnablingWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLookupTableWithEnablingWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLookupTableWithEnablingWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkLookupTableWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkLookupTableWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLookupTableWithEnablingWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkLookupTableWithEnablingWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetEnabledArray", SetEnabledArray);
 	Nan::SetPrototypeMethod(tpl, "setEnabledArray", SetEnabledArray);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLookupTableWithEnablingWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkLookupTableWithEnablingWrap::GetEnabledArray(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetEnabledArray();
+		VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkLookupTableWithEnablingWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkLookupTableWithEnablingWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkLookupTableWithEnablingWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkLookupTableWithEnablingWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWithEnablingWrap>(info.Holder());
 	vtkLookupTableWithEnabling *native = (vtkLookupTableWithEnabling *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLookupTableWithEnabling * r;
@@ -187,6 +192,7 @@ void VtkLookupTableWithEnablingWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLookupTableWithEnablingWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkLookupTableWithEnablingWrap::SetEnabledArray(const Nan::FunctionCallback
 {
 	VtkLookupTableWithEnablingWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWithEnablingWrap>(info.Holder());
 	vtkLookupTableWithEnabling *native = (vtkLookupTableWithEnabling *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

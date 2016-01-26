@@ -28,26 +28,27 @@ VtkStandardPolyDataPainterWrap::~VtkStandardPolyDataPainterWrap()
 
 void VtkStandardPolyDataPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStandardPolyDataPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStandardPolyDataPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StandardPolyDataPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStandardPolyDataPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StandardPolyDataPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStandardPolyDataPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStandardPolyDataPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStandardPolyDataPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStandardPolyDataPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddMultiTextureCoordsArray", AddMultiTextureCoordsArray);
 	Nan::SetPrototypeMethod(tpl, "addMultiTextureCoordsArray", AddMultiTextureCoordsArray);
 
@@ -63,6 +64,8 @@ void VtkStandardPolyDataPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStandardPolyDataPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -92,7 +95,7 @@ void VtkStandardPolyDataPainterWrap::AddMultiTextureCoordsArray(const Nan::Funct
 {
 	VtkStandardPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkStandardPolyDataPainterWrap>(info.Holder());
 	vtkStandardPolyDataPainter *native = (vtkStandardPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -155,6 +158,7 @@ void VtkStandardPolyDataPainterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkStandardPolyDataPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -170,7 +174,7 @@ void VtkStandardPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkStandardPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkStandardPolyDataPainterWrap>(info.Holder());
 	vtkStandardPolyDataPainter *native = (vtkStandardPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStandardPolyDataPainter * r;
@@ -182,6 +186,7 @@ void VtkStandardPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStandardPolyDataPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

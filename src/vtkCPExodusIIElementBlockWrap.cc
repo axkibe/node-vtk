@@ -27,26 +27,27 @@ VtkCPExodusIIElementBlockWrap::~VtkCPExodusIIElementBlockWrap()
 
 void VtkCPExodusIIElementBlockWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridBaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridBaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCPExodusIIElementBlockWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCPExodusIIElementBlock").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CPExodusIIElementBlock").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCPExodusIIElementBlock").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CPExodusIIElementBlock").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCPExodusIIElementBlockWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCPExodusIIElementBlockWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCPExodusIIElementBlockWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridBaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridBaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCPExodusIIElementBlockWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkCPExodusIIElementBlockWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCPExodusIIElementBlockWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkCPExodusIIElementBlockWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkCPExodusIIElementBlockWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkCPExodusIIElementBlockWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkCPExodusIIElementBlockWrap *wrapper = ObjectWrap::Unwrap<VtkCPExodusIIElementBlockWrap>(info.Holder());
 	vtkCPExodusIIElementBlock *native = (vtkCPExodusIIElementBlock *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCPExodusIIElementBlock * r;
@@ -158,6 +162,7 @@ void VtkCPExodusIIElementBlockWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCPExodusIIElementBlockWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

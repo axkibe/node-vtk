@@ -27,26 +27,27 @@ VtkStreamLineWrap::~VtkStreamLineWrap()
 
 void VtkStreamLineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStreamerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStreamLineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStreamLine").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("StreamLine").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStreamLine").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("StreamLine").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStreamLineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStreamLineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStreamLineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStreamerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStreamLineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkStreamLineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetStepLength", SetStepLength);
 	Nan::SetPrototypeMethod(tpl, "setStepLength", SetStepLength);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStreamLineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -185,6 +188,7 @@ void VtkStreamLineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkStreamLineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +204,7 @@ void VtkStreamLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkStreamLineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamLineWrap>(info.Holder());
 	vtkStreamLine *native = (vtkStreamLine *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStreamLine * r;
@@ -212,6 +216,7 @@ void VtkStreamLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStreamLineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

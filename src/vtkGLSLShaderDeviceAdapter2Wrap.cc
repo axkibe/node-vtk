@@ -27,26 +27,27 @@ VtkGLSLShaderDeviceAdapter2Wrap::~VtkGLSLShaderDeviceAdapter2Wrap()
 
 void VtkGLSLShaderDeviceAdapter2Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkShaderDeviceAdapter2Wrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkShaderDeviceAdapter2Wrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGLSLShaderDeviceAdapter2Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGLSLShaderDeviceAdapter2").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GLSLShaderDeviceAdapter2").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGLSLShaderDeviceAdapter2").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GLSLShaderDeviceAdapter2").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGLSLShaderDeviceAdapter2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGLSLShaderDeviceAdapter2Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGLSLShaderDeviceAdapter2Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkShaderDeviceAdapter2Wrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkShaderDeviceAdapter2Wrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGLSLShaderDeviceAdapter2Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkGLSLShaderDeviceAdapter2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGLSLShaderDeviceAdapter2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkGLSLShaderDeviceAdapter2Wrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkGLSLShaderDeviceAdapter2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +165,7 @@ void VtkGLSLShaderDeviceAdapter2Wrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkGLSLShaderDeviceAdapter2Wrap *wrapper = ObjectWrap::Unwrap<VtkGLSLShaderDeviceAdapter2Wrap>(info.Holder());
 	vtkGLSLShaderDeviceAdapter2 *native = (vtkGLSLShaderDeviceAdapter2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGLSLShaderDeviceAdapter2 * r;
@@ -173,6 +177,7 @@ void VtkGLSLShaderDeviceAdapter2Wrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGLSLShaderDeviceAdapter2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

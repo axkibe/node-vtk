@@ -36,26 +36,27 @@ VtkResliceCursorRepresentationWrap::~VtkResliceCursorRepresentationWrap()
 
 void VtkResliceCursorRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkResliceCursorRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkResliceCursorRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ResliceCursorRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkResliceCursorRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ResliceCursorRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkResliceCursorRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkResliceCursorRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkResliceCursorRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkResliceCursorRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ActivateText", ActivateText);
 	Nan::SetPrototypeMethod(tpl, "activateText", ActivateText);
 
@@ -203,6 +204,8 @@ void VtkResliceCursorRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "UseImageActorOn", UseImageActorOn);
 	Nan::SetPrototypeMethod(tpl, "useImageActorOn", UseImageActorOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkResliceCursorRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -308,6 +311,7 @@ void VtkResliceCursorRepresentationWrap::GetColorMap(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetColorMap();
+		VtkImageMapToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -330,6 +334,7 @@ void VtkResliceCursorRepresentationWrap::GetCursorAlgorithm(const Nan::FunctionC
 		return;
 	}
 	r = native->GetCursorAlgorithm();
+		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,6 +371,7 @@ void VtkResliceCursorRepresentationWrap::GetImageActor(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetImageActor();
+		VtkImageActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -402,6 +408,7 @@ void VtkResliceCursorRepresentationWrap::GetLookupTable(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -438,6 +445,7 @@ void VtkResliceCursorRepresentationWrap::GetPlaneSource(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPlaneSource();
+		VtkPlaneSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -460,6 +468,7 @@ void VtkResliceCursorRepresentationWrap::GetReslice(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetReslice();
+		VtkImageAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -482,6 +491,7 @@ void VtkResliceCursorRepresentationWrap::GetResliceAxes(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetResliceAxes();
+		VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -504,6 +514,7 @@ void VtkResliceCursorRepresentationWrap::GetResliceCursor(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetResliceCursor();
+		VtkResliceCursorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -554,6 +565,7 @@ void VtkResliceCursorRepresentationWrap::GetTextProperty(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -720,6 +732,7 @@ void VtkResliceCursorRepresentationWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkResliceCursorRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -771,7 +784,7 @@ void VtkResliceCursorRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
 	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkResliceCursorRepresentation * r;
@@ -783,6 +796,7 @@ void VtkResliceCursorRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkResliceCursorRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -801,7 +815,7 @@ void VtkResliceCursorRepresentationWrap::SetColorMap(const Nan::FunctionCallback
 {
 	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
 	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMapToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageMapToColorsWrap *a0 = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -840,7 +854,7 @@ void VtkResliceCursorRepresentationWrap::SetLookupTable(const Nan::FunctionCallb
 {
 	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
 	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -917,7 +931,7 @@ void VtkResliceCursorRepresentationWrap::SetTextProperty(const Nan::FunctionCall
 {
 	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
 	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

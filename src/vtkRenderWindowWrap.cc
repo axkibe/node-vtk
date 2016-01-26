@@ -34,26 +34,27 @@ VtkRenderWindowWrap::~VtkRenderWindowWrap()
 
 void VtkRenderWindowWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWindowWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWindowWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderWindowWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderWindow").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RenderWindow").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderWindow").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RenderWindow").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderWindowWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderWindowWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWindowWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWindowWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderWindowWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddRenderer", AddRenderer);
 	Nan::SetPrototypeMethod(tpl, "addRenderer", AddRenderer);
 
@@ -459,6 +460,8 @@ void VtkRenderWindowWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "WindowRemap", WindowRemap);
 	Nan::SetPrototypeMethod(tpl, "windowRemap", WindowRemap);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderWindowWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -488,7 +491,7 @@ void VtkRenderWindowWrap::AddRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -556,7 +559,7 @@ void VtkRenderWindowWrap::CaptureGL2PSSpecialProps(const Nan::FunctionCallbackIn
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCollectionWrap *a0 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -877,6 +880,7 @@ void VtkRenderWindowWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetInteractor();
+		VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1011,6 +1015,7 @@ void VtkRenderWindowWrap::GetPainterDeviceAdapter(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPainterDeviceAdapter();
+		VtkPainterDeviceAdapterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1064,7 +1069,7 @@ void VtkRenderWindowWrap::GetRGBACharPixelData(const Nan::FunctionCallbackInfo<v
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkUnsignedCharArrayWrap *a5 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[5]->ToObject());
 							int r;
@@ -1106,7 +1111,7 @@ void VtkRenderWindowWrap::GetRGBAPixelData(const Nan::FunctionCallbackInfo<v8::V
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkFloatArrayWrap *a5 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[5]->ToObject());
 							int r;
@@ -1159,6 +1164,7 @@ void VtkRenderWindowWrap::GetRenderers(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetRenderers();
+		VtkRendererCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1308,7 +1314,7 @@ void VtkRenderWindowWrap::GetZbufferData(const Nan::FunctionCallbackInfo<v8::Val
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
 						int r;
@@ -1352,7 +1358,7 @@ void VtkRenderWindowWrap::HasRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		int r;
@@ -1489,6 +1495,7 @@ void VtkRenderWindowWrap::MakeRenderWindowInteractor(const Nan::FunctionCallback
 		return;
 	}
 	r = native->MakeRenderWindowInteractor();
+		VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1511,6 +1518,7 @@ void VtkRenderWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1574,7 +1582,7 @@ void VtkRenderWindowWrap::RemoveRenderer(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1620,7 +1628,7 @@ void VtkRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderWindow * r;
@@ -1632,6 +1640,7 @@ void VtkRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1879,7 +1888,7 @@ void VtkRenderWindowWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2023,7 +2032,7 @@ void VtkRenderWindowWrap::SetPixelData(const Nan::FunctionCallbackInfo<v8::Value
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkUnsignedCharArrayWrap *a4 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[4]->ToObject());
 						if(info.Length() > 5 && info[5]->IsInt32())
@@ -2103,7 +2112,7 @@ void VtkRenderWindowWrap::SetRGBACharPixelData(const Nan::FunctionCallbackInfo<v
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkUnsignedCharArrayWrap *a4 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[4]->ToObject());
 						if(info.Length() > 5 && info[5]->IsInt32())
@@ -2149,7 +2158,7 @@ void VtkRenderWindowWrap::SetRGBAPixelData(const Nan::FunctionCallbackInfo<v8::V
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
 						if(info.Length() > 5 && info[5]->IsInt32())
@@ -2499,7 +2508,7 @@ void VtkRenderWindowWrap::SetZbufferData(const Nan::FunctionCallbackInfo<v8::Val
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
 						int r;

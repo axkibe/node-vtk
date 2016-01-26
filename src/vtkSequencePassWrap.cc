@@ -29,26 +29,27 @@ VtkSequencePassWrap::~VtkSequencePassWrap()
 
 void VtkSequencePassWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderPassWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSequencePassWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSequencePass").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SequencePass").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSequencePass").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SequencePass").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSequencePassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSequencePassWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSequencePassWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderPassWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSequencePassWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,6 +71,8 @@ void VtkSequencePassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPasses", SetPasses);
 	Nan::SetPrototypeMethod(tpl, "setPasses", SetPasses);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSequencePassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +123,7 @@ void VtkSequencePassWrap::GetPasses(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPasses();
+		VtkRenderPassCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,6 +168,7 @@ void VtkSequencePassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkSequencePassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +184,7 @@ void VtkSequencePassWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackIn
 {
 	VtkSequencePassWrap *wrapper = ObjectWrap::Unwrap<VtkSequencePassWrap>(info.Holder());
 	vtkSequencePass *native = (vtkSequencePass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -199,7 +204,7 @@ void VtkSequencePassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSequencePassWrap *wrapper = ObjectWrap::Unwrap<VtkSequencePassWrap>(info.Holder());
 	vtkSequencePass *native = (vtkSequencePass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSequencePass * r;
@@ -211,6 +216,7 @@ void VtkSequencePassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSequencePassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -229,7 +235,7 @@ void VtkSequencePassWrap::SetPasses(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkSequencePassWrap *wrapper = ObjectWrap::Unwrap<VtkSequencePassWrap>(info.Holder());
 	vtkSequencePass *native = (vtkSequencePass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassCollectionWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

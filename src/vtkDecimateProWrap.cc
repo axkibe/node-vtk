@@ -27,26 +27,27 @@ VtkDecimateProWrap::~VtkDecimateProWrap()
 
 void VtkDecimateProWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDecimateProWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDecimatePro").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DecimatePro").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDecimatePro").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DecimatePro").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDecimateProWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDecimateProWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDecimateProWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDecimateProWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AccumulateErrorOff", AccumulateErrorOff);
 	Nan::SetPrototypeMethod(tpl, "accumulateErrorOff", AccumulateErrorOff);
 
@@ -215,6 +216,8 @@ void VtkDecimateProWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SplittingOn", SplittingOn);
 	Nan::SetPrototypeMethod(tpl, "splittingOn", SplittingOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDecimateProWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -727,6 +730,7 @@ void VtkDecimateProWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkDecimateProWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -790,7 +794,7 @@ void VtkDecimateProWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDecimatePro * r;
@@ -802,6 +806,7 @@ void VtkDecimateProWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDecimateProWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

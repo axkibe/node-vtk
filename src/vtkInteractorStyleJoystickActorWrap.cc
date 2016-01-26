@@ -27,26 +27,27 @@ VtkInteractorStyleJoystickActorWrap::~VtkInteractorStyleJoystickActorWrap()
 
 void VtkInteractorStyleJoystickActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInteractorStyleWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorStyleJoystickActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorStyleJoystickActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorStyleJoystickActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorStyleJoystickActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorStyleJoystickActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorStyleJoystickActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorStyleJoystickActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorStyleJoystickActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInteractorStyleWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInteractorStyleWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorStyleJoystickActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Dolly", Dolly);
 	Nan::SetPrototypeMethod(tpl, "dolly", Dolly);
 
@@ -95,6 +96,8 @@ void VtkInteractorStyleJoystickActorWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "UniformScale", UniformScale);
 	Nan::SetPrototypeMethod(tpl, "uniformScale", UniformScale);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorStyleJoystickActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -179,6 +182,7 @@ void VtkInteractorStyleJoystickActorWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorStyleJoystickActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,7 +306,7 @@ void VtkInteractorStyleJoystickActorWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorStyleJoystickActor * r;
@@ -314,6 +318,7 @@ void VtkInteractorStyleJoystickActorWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorStyleJoystickActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -28,26 +28,27 @@ VtkDummyControllerWrap::~VtkDummyControllerWrap()
 
 void VtkDummyControllerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiProcessControllerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDummyControllerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDummyController").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DummyController").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDummyController").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DummyController").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDummyControllerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDummyControllerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDummyControllerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiProcessControllerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDummyControllerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateOutputWindow", CreateOutputWindow);
 	Nan::SetPrototypeMethod(tpl, "createOutputWindow", CreateOutputWindow);
 
@@ -87,6 +88,8 @@ void VtkDummyControllerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SingleMethodExecute", SingleMethodExecute);
 	Nan::SetPrototypeMethod(tpl, "singleMethodExecute", SingleMethodExecute);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDummyControllerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -173,6 +176,7 @@ void VtkDummyControllerWrap::GetCommunicator(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetCommunicator();
+		VtkCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -209,6 +213,7 @@ void VtkDummyControllerWrap::GetRMICommunicator(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetRMICommunicator();
+		VtkCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -265,6 +270,7 @@ void VtkDummyControllerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkDummyControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +286,7 @@ void VtkDummyControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDummyControllerWrap *wrapper = ObjectWrap::Unwrap<VtkDummyControllerWrap>(info.Holder());
 	vtkDummyController *native = (vtkDummyController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDummyController * r;
@@ -292,6 +298,7 @@ void VtkDummyControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDummyControllerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -310,7 +317,7 @@ void VtkDummyControllerWrap::SetCommunicator(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDummyControllerWrap *wrapper = ObjectWrap::Unwrap<VtkDummyControllerWrap>(info.Holder());
 	vtkDummyController *native = (vtkDummyController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommunicatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommunicatorWrap *a0 = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -330,7 +337,7 @@ void VtkDummyControllerWrap::SetRMICommunicator(const Nan::FunctionCallbackInfo<
 {
 	VtkDummyControllerWrap *wrapper = ObjectWrap::Unwrap<VtkDummyControllerWrap>(info.Holder());
 	vtkDummyController *native = (vtkDummyController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommunicatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommunicatorWrap *a0 = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

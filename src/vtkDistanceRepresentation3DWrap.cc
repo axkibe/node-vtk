@@ -32,26 +32,27 @@ VtkDistanceRepresentation3DWrap::~VtkDistanceRepresentation3DWrap()
 
 void VtkDistanceRepresentation3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDistanceRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDistanceRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDistanceRepresentation3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDistanceRepresentation3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DistanceRepresentation3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDistanceRepresentation3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DistanceRepresentation3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDistanceRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDistanceRepresentation3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDistanceRepresentation3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDistanceRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDistanceRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDistanceRepresentation3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -118,6 +119,8 @@ void VtkDistanceRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfRulerTicks", SetMaximumNumberOfRulerTicks);
 	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfRulerTicks", SetMaximumNumberOfRulerTicks);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDistanceRepresentation3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -194,6 +197,7 @@ void VtkDistanceRepresentation3DWrap::GetGlyphActor(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetGlyphActor();
+		VtkActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,6 +234,7 @@ void VtkDistanceRepresentation3DWrap::GetLabelActor(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLabelActor();
+		VtkFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,6 +271,7 @@ void VtkDistanceRepresentation3DWrap::GetLabelProperty(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLabelProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,6 +294,7 @@ void VtkDistanceRepresentation3DWrap::GetLineProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetLineProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -374,6 +381,7 @@ void VtkDistanceRepresentation3DWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkDistanceRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -389,7 +397,7 @@ void VtkDistanceRepresentation3DWrap::ReleaseGraphicsResources(const Nan::Functi
 {
 	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -409,7 +417,7 @@ void VtkDistanceRepresentation3DWrap::RenderOpaqueGeometry(const Nan::FunctionCa
 {
 	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -431,7 +439,7 @@ void VtkDistanceRepresentation3DWrap::RenderTranslucentPolygonalGeometry(const N
 {
 	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -453,7 +461,7 @@ void VtkDistanceRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDistanceRepresentation3D * r;
@@ -465,6 +473,7 @@ void VtkDistanceRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDistanceRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

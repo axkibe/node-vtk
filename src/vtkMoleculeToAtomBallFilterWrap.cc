@@ -27,26 +27,27 @@ VtkMoleculeToAtomBallFilterWrap::~VtkMoleculeToAtomBallFilterWrap()
 
 void VtkMoleculeToAtomBallFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMoleculeToPolyDataFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeToPolyDataFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMoleculeToAtomBallFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMoleculeToAtomBallFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MoleculeToAtomBallFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMoleculeToAtomBallFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MoleculeToAtomBallFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMoleculeToAtomBallFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMoleculeToAtomBallFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMoleculeToAtomBallFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMoleculeToPolyDataFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMoleculeToPolyDataFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMoleculeToAtomBallFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +78,8 @@ void VtkMoleculeToAtomBallFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMoleculeToAtomBallFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -191,6 +194,7 @@ void VtkMoleculeToAtomBallFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkMoleculeToAtomBallFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +210,7 @@ void VtkMoleculeToAtomBallFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkMoleculeToAtomBallFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeToAtomBallFilterWrap>(info.Holder());
 	vtkMoleculeToAtomBallFilter *native = (vtkMoleculeToAtomBallFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMoleculeToAtomBallFilter * r;
@@ -218,6 +222,7 @@ void VtkMoleculeToAtomBallFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMoleculeToAtomBallFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

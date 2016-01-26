@@ -26,26 +26,27 @@ VtkSQLDatabaseSchemaWrap::~VtkSQLDatabaseSchemaWrap()
 
 void VtkSQLDatabaseSchemaWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSQLDatabaseSchemaWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSQLDatabaseSchema").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SQLDatabaseSchema").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSQLDatabaseSchema").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SQLDatabaseSchema").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSQLDatabaseSchemaWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSQLDatabaseSchemaWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSQLDatabaseSchemaWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSQLDatabaseSchemaWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddColumnToIndex", AddColumnToIndex);
 	Nan::SetPrototypeMethod(tpl, "addColumnToIndex", AddColumnToIndex);
 
@@ -178,6 +179,8 @@ void VtkSQLDatabaseSchemaWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetName", SetName);
 	Nan::SetPrototypeMethod(tpl, "setName", SetName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSQLDatabaseSchemaWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1325,6 +1328,7 @@ void VtkSQLDatabaseSchemaWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkSQLDatabaseSchemaWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1352,7 +1356,7 @@ void VtkSQLDatabaseSchemaWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSQLDatabaseSchema * r;
@@ -1364,6 +1368,7 @@ void VtkSQLDatabaseSchemaWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSQLDatabaseSchemaWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

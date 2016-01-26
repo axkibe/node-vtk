@@ -29,26 +29,27 @@ VtkGeoTransformWrap::~VtkGeoTransformWrap()
 
 void VtkGeoTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -82,6 +83,8 @@ void VtkGeoTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TransformPoints", TransformPoints);
 	Nan::SetPrototypeMethod(tpl, "transformPoints", TransformPoints);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -132,6 +135,7 @@ void VtkGeoTransformWrap::GetDestinationProjection(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetDestinationProjection();
+		VtkGeoProjectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -154,6 +158,7 @@ void VtkGeoTransformWrap::GetSourceProjection(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetSourceProjection();
+		VtkGeoProjectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,6 +215,7 @@ void VtkGeoTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,6 +238,7 @@ void VtkGeoTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -247,7 +254,7 @@ void VtkGeoTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGeoTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTransformWrap>(info.Holder());
 	vtkGeoTransform *native = (vtkGeoTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoTransform * r;
@@ -259,6 +266,7 @@ void VtkGeoTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -277,7 +285,7 @@ void VtkGeoTransformWrap::SetDestinationProjection(const Nan::FunctionCallbackIn
 {
 	VtkGeoTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTransformWrap>(info.Holder());
 	vtkGeoTransform *native = (vtkGeoTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoProjectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoProjectionWrap *a0 = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -297,7 +305,7 @@ void VtkGeoTransformWrap::SetSourceProjection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGeoTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTransformWrap>(info.Holder());
 	vtkGeoTransform *native = (vtkGeoTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoProjectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoProjectionWrap *a0 = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -317,10 +325,10 @@ void VtkGeoTransformWrap::TransformPoints(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGeoTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTransformWrap>(info.Holder());
 	vtkGeoTransform *native = (vtkGeoTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

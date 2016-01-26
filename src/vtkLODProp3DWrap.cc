@@ -39,26 +39,27 @@ VtkLODProp3DWrap::~VtkLODProp3DWrap()
 
 void VtkLODProp3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProp3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLODProp3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLODProp3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LODProp3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLODProp3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LODProp3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLODProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLODProp3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLODProp3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProp3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLODProp3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddEstimatedRenderTime", AddEstimatedRenderTime);
 	Nan::SetPrototypeMethod(tpl, "addEstimatedRenderTime", AddEstimatedRenderTime);
 
@@ -209,6 +210,8 @@ void VtkLODProp3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLODProp3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -240,7 +243,7 @@ void VtkLODProp3DWrap::AddEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -262,16 +265,16 @@ void VtkLODProp3DWrap::AddLOD(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMapperWrap *a0 = ObjectWrap::Unwrap<VtkMapperWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPropertyWrap *a1 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPropertyWrap *a2 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkTextureWrap *a3 = ObjectWrap::Unwrap<VtkTextureWrap>(info[3]->ToObject());
 					if(info.Length() > 4 && info[4]->IsNumber())
@@ -437,7 +440,7 @@ void VtkLODProp3DWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -664,6 +667,7 @@ void VtkLODProp3DWrap::GetLODMapper(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetLODMapper(
 			info[0]->Int32Value()
 		);
+			VtkAbstractMapper3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -752,7 +756,7 @@ void VtkLODProp3DWrap::GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -836,6 +840,7 @@ void VtkLODProp3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkLODProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -851,7 +856,7 @@ void VtkLODProp3DWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -890,7 +895,7 @@ void VtkLODProp3DWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -912,7 +917,7 @@ void VtkLODProp3DWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCal
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -934,7 +939,7 @@ void VtkLODProp3DWrap::RenderVolumetricGeometry(const Nan::FunctionCallbackInfo<
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -968,7 +973,7 @@ void VtkLODProp3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLODProp3D * r;
@@ -980,6 +985,7 @@ void VtkLODProp3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLODProp3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1000,7 +1006,7 @@ void VtkLODProp3DWrap::SetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1062,7 +1068,7 @@ void VtkLODProp3DWrap::SetLODBackfaceProperty(const Nan::FunctionCallbackInfo<v8
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPropertyWrap *a1 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1109,7 +1115,7 @@ void VtkLODProp3DWrap::SetLODMapper(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageMapper3DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageMapper3DWrap *a1 = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1133,7 +1139,7 @@ void VtkLODProp3DWrap::SetLODProperty(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImagePropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImagePropertyWrap *a1 = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1157,7 +1163,7 @@ void VtkLODProp3DWrap::SetLODTexture(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTextureWrap *a1 = ObjectWrap::Unwrap<VtkTextureWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -1217,7 +1223,7 @@ void VtkLODProp3DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

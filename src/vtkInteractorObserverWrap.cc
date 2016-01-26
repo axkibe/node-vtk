@@ -29,26 +29,27 @@ VtkInteractorObserverWrap::~VtkInteractorObserverWrap()
 
 void VtkInteractorObserverWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInteractorObserverWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInteractorObserver").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InteractorObserver").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInteractorObserver").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InteractorObserver").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInteractorObserverWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInteractorObserverWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInteractorObserverWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInteractorObserverWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "EnabledOff", EnabledOff);
 	Nan::SetPrototypeMethod(tpl, "enabledOff", EnabledOff);
 
@@ -130,6 +131,8 @@ void VtkInteractorObserverWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetKeyPressActivationValue", SetKeyPressActivationValue);
 	Nan::SetPrototypeMethod(tpl, "setKeyPressActivationValue", SetKeyPressActivationValue);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInteractorObserverWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -204,6 +207,7 @@ void VtkInteractorObserverWrap::GetCurrentRenderer(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCurrentRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,6 +230,7 @@ void VtkInteractorObserverWrap::GetDefaultRenderer(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetDefaultRenderer();
+		VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,6 +267,7 @@ void VtkInteractorObserverWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetInteractor();
+		VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -305,10 +311,10 @@ void VtkInteractorObserverWrap::GrabFocus(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommandWrap *a0 = ObjectWrap::Unwrap<VtkCommandWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -383,6 +389,7 @@ void VtkInteractorObserverWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkInteractorObserverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -470,7 +477,7 @@ void VtkInteractorObserverWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInteractorObserver * r;
@@ -482,6 +489,7 @@ void VtkInteractorObserverWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInteractorObserverWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -500,7 +508,7 @@ void VtkInteractorObserverWrap::SetCurrentRenderer(const Nan::FunctionCallbackIn
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -520,7 +528,7 @@ void VtkInteractorObserverWrap::SetDefaultRenderer(const Nan::FunctionCallbackIn
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -559,7 +567,7 @@ void VtkInteractorObserverWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

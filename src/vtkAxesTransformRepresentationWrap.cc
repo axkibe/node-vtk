@@ -31,26 +31,27 @@ VtkAxesTransformRepresentationWrap::~VtkAxesTransformRepresentationWrap()
 
 void VtkAxesTransformRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAxesTransformRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAxesTransformRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AxesTransformRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAxesTransformRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AxesTransformRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAxesTransformRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAxesTransformRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAxesTransformRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAxesTransformRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -117,6 +118,8 @@ void VtkAxesTransformRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate>
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAxesTransformRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -250,6 +253,7 @@ void VtkAxesTransformRepresentationWrap::GetLabelProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetLabelProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,6 +276,7 @@ void VtkAxesTransformRepresentationWrap::GetOriginRepresentation(const Nan::Func
 		return;
 	}
 	r = native->GetOriginRepresentation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,6 +299,7 @@ void VtkAxesTransformRepresentationWrap::GetSelectionRepresentation(const Nan::F
 		return;
 	}
 	r = native->GetSelectionRepresentation();
+		VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,6 +386,7 @@ void VtkAxesTransformRepresentationWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
+		VtkAxesTransformRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,7 +402,7 @@ void VtkAxesTransformRepresentationWrap::ReleaseGraphicsResources(const Nan::Fun
 {
 	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
 	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -415,7 +422,7 @@ void VtkAxesTransformRepresentationWrap::RenderOpaqueGeometry(const Nan::Functio
 {
 	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
 	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -437,7 +444,7 @@ void VtkAxesTransformRepresentationWrap::RenderTranslucentPolygonalGeometry(cons
 {
 	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
 	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -459,7 +466,7 @@ void VtkAxesTransformRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 {
 	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
 	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAxesTransformRepresentation * r;
@@ -471,6 +478,7 @@ void VtkAxesTransformRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAxesTransformRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

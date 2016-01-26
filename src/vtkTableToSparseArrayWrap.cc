@@ -27,26 +27,27 @@ VtkTableToSparseArrayWrap::~VtkTableToSparseArrayWrap()
 
 void VtkTableToSparseArrayWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkArrayDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkArrayDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTableToSparseArrayWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTableToSparseArray").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TableToSparseArray").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTableToSparseArray").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TableToSparseArray").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTableToSparseArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTableToSparseArrayWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTableToSparseArrayWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkArrayDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkArrayDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTableToSparseArrayWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddCoordinateColumn", AddCoordinateColumn);
 	Nan::SetPrototypeMethod(tpl, "addCoordinateColumn", AddCoordinateColumn);
 
@@ -74,6 +75,8 @@ void VtkTableToSparseArrayWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValueColumn", SetValueColumn);
 	Nan::SetPrototypeMethod(tpl, "setValueColumn", SetValueColumn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTableToSparseArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -204,6 +207,7 @@ void VtkTableToSparseArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkTableToSparseArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,7 +223,7 @@ void VtkTableToSparseArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTableToSparseArrayWrap *wrapper = ObjectWrap::Unwrap<VtkTableToSparseArrayWrap>(info.Holder());
 	vtkTableToSparseArray *native = (vtkTableToSparseArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTableToSparseArray * r;
@@ -231,6 +235,7 @@ void VtkTableToSparseArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTableToSparseArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

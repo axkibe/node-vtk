@@ -27,26 +27,27 @@ VtkRandomGraphSourceWrap::~VtkRandomGraphSourceWrap()
 
 void VtkRandomGraphSourceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRandomGraphSourceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRandomGraphSource").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RandomGraphSource").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRandomGraphSource").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RandomGraphSource").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRandomGraphSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRandomGraphSourceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRandomGraphSourceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRandomGraphSourceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AllowParallelEdgesOff", AllowParallelEdgesOff);
 	Nan::SetPrototypeMethod(tpl, "allowParallelEdgesOff", AllowParallelEdgesOff);
 
@@ -161,6 +162,8 @@ void VtkRandomGraphSourceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseEdgeProbabilityOn", UseEdgeProbabilityOn);
 	Nan::SetPrototypeMethod(tpl, "useEdgeProbabilityOn", UseEdgeProbabilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRandomGraphSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -535,6 +538,7 @@ void VtkRandomGraphSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkRandomGraphSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -550,7 +554,7 @@ void VtkRandomGraphSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRandomGraphSource * r;
@@ -562,6 +566,7 @@ void VtkRandomGraphSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRandomGraphSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

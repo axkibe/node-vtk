@@ -31,26 +31,27 @@ VtkPickingManagerWrap::~VtkPickingManagerWrap()
 
 void VtkPickingManagerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPickingManagerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPickingManager").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PickingManager").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPickingManager").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PickingManager").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPickingManagerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPickingManagerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPickingManagerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPickingManagerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddPicker", AddPicker);
 	Nan::SetPrototypeMethod(tpl, "addPicker", AddPicker);
 
@@ -93,6 +94,8 @@ void VtkPickingManagerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
 	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPickingManagerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,10 +125,10 @@ void VtkPickingManagerWrap::AddPicker(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractPickerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractPickerWrap *a0 = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkObjectWrap *a1 = ObjectWrap::Unwrap<VtkObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -177,13 +180,13 @@ void VtkPickingManagerWrap::GetAssemblyPath(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkAbstractPropPickerWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkAbstractPropPickerWrap *a3 = ObjectWrap::Unwrap<VtkAbstractPropPickerWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject())
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkRendererWrap *a4 = ObjectWrap::Unwrap<VtkRendererWrap>(info[4]->ToObject());
-						if(info.Length() > 5 && info[5]->IsObject())
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkObjectWrap *a5 = ObjectWrap::Unwrap<VtkObjectWrap>(info[5]->ToObject());
 							vtkAssemblyPath * r;
@@ -200,6 +203,7 @@ void VtkPickingManagerWrap::GetAssemblyPath(const Nan::FunctionCallbackInfo<v8::
 								(vtkRenderer *) a4->native.GetPointer(),
 								(vtkObject *) a5->native.GetPointer()
 							);
+								VtkAssemblyPathWrap::InitPtpl();
 							v8::Local<v8::Value> argv[1] =
 								{ Nan::New(vtkNodeJsNoWrap) };
 							v8::Local<v8::Function> cons =
@@ -244,6 +248,7 @@ void VtkPickingManagerWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInteractor();
+		VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +264,7 @@ void VtkPickingManagerWrap::GetNumberOfObjectsLinked(const Nan::FunctionCallback
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractPickerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractPickerWrap *a0 = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info[0]->ToObject());
 		int r;
@@ -324,6 +329,7 @@ void VtkPickingManagerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkPickingManagerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -339,7 +345,7 @@ void VtkPickingManagerWrap::RemoveObject(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -359,10 +365,10 @@ void VtkPickingManagerWrap::RemovePicker(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractPickerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractPickerWrap *a0 = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkObjectWrap *a1 = ObjectWrap::Unwrap<VtkObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -384,7 +390,7 @@ void VtkPickingManagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPickingManager * r;
@@ -396,6 +402,7 @@ void VtkPickingManagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPickingManagerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -414,7 +421,7 @@ void VtkPickingManagerWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

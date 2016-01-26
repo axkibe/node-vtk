@@ -27,26 +27,27 @@ VtkCachedStreamingDemandDrivenPipelineWrap::~VtkCachedStreamingDemandDrivenPipel
 
 void VtkCachedStreamingDemandDrivenPipelineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStreamingDemandDrivenPipelineWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamingDemandDrivenPipelineWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCachedStreamingDemandDrivenPipelineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCachedStreamingDemandDrivenPipeline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CachedStreamingDemandDrivenPipeline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCachedStreamingDemandDrivenPipeline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CachedStreamingDemandDrivenPipeline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCachedStreamingDemandDrivenPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCachedStreamingDemandDrivenPipelineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCachedStreamingDemandDrivenPipelineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStreamingDemandDrivenPipelineWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamingDemandDrivenPipelineWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCachedStreamingDemandDrivenPipelineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetCacheSize", GetCacheSize);
 	Nan::SetPrototypeMethod(tpl, "getCacheSize", GetCacheSize);
 
@@ -68,6 +69,8 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::InitTpl(v8::Local<v8::FunctionT
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCachedStreamingDemandDrivenPipelineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -154,6 +157,7 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
+		VtkCachedStreamingDemandDrivenPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +173,7 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::SafeDownCast(const Nan::Functio
 {
 	VtkCachedStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkCachedStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkCachedStreamingDemandDrivenPipeline *native = (vtkCachedStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCachedStreamingDemandDrivenPipeline * r;
@@ -181,6 +185,7 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCachedStreamingDemandDrivenPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

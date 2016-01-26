@@ -27,26 +27,27 @@ VtkLSDynaSummaryParserWrap::~VtkLSDynaSummaryParserWrap()
 
 void VtkLSDynaSummaryParserWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLParserWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLParserWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLSDynaSummaryParserWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLSDynaSummaryParser").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LSDynaSummaryParser").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLSDynaSummaryParser").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LSDynaSummaryParser").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLSDynaSummaryParserWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLSDynaSummaryParserWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLSDynaSummaryParserWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLParserWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLParserWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLSDynaSummaryParserWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkLSDynaSummaryParserWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLSDynaSummaryParserWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkLSDynaSummaryParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkLSDynaSummaryParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkLSDynaSummaryParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLSDynaSummaryParserWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaSummaryParserWrap>(info.Holder());
 	vtkLSDynaSummaryParser *native = (vtkLSDynaSummaryParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLSDynaSummaryParser * r;
@@ -158,6 +162,7 @@ void VtkLSDynaSummaryParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLSDynaSummaryParserWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

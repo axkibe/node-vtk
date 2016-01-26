@@ -28,26 +28,27 @@ VtkImageQuantizeRGBToIndexWrap::~VtkImageQuantizeRGBToIndexWrap()
 
 void VtkImageQuantizeRGBToIndexWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageQuantizeRGBToIndexWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageQuantizeRGBToIndex").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageQuantizeRGBToIndex").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageQuantizeRGBToIndex").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageQuantizeRGBToIndex").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageQuantizeRGBToIndexWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageQuantizeRGBToIndexWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageQuantizeRGBToIndexWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageQuantizeRGBToIndexWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBuildTreeExecuteTime", GetBuildTreeExecuteTime);
 	Nan::SetPrototypeMethod(tpl, "getBuildTreeExecuteTime", GetBuildTreeExecuteTime);
 
@@ -96,6 +97,8 @@ void VtkImageQuantizeRGBToIndexWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfColors", SetNumberOfColors);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfColors", SetNumberOfColors);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageQuantizeRGBToIndexWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -202,6 +205,7 @@ void VtkImageQuantizeRGBToIndexWrap::GetLookupTable(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,6 +292,7 @@ void VtkImageQuantizeRGBToIndexWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageQuantizeRGBToIndexWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +308,7 @@ void VtkImageQuantizeRGBToIndexWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkImageQuantizeRGBToIndexWrap *wrapper = ObjectWrap::Unwrap<VtkImageQuantizeRGBToIndexWrap>(info.Holder());
 	vtkImageQuantizeRGBToIndex *native = (vtkImageQuantizeRGBToIndex *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageQuantizeRGBToIndex * r;
@@ -315,6 +320,7 @@ void VtkImageQuantizeRGBToIndexWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageQuantizeRGBToIndexWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

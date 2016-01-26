@@ -31,26 +31,27 @@ VtkCompositeDataPipelineWrap::~VtkCompositeDataPipelineWrap()
 
 void VtkCompositeDataPipelineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkStreamingDemandDrivenPipelineWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamingDemandDrivenPipelineWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompositeDataPipelineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompositeDataPipeline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompositeDataPipeline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompositeDataPipeline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompositeDataPipeline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompositeDataPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompositeDataPipelineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompositeDataPipelineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkStreamingDemandDrivenPipelineWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkStreamingDemandDrivenPipelineWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompositeDataPipelineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "COMPOSITE_DATA_META_DATA", COMPOSITE_DATA_META_DATA);
 
 	Nan::SetPrototypeMethod(tpl, "COMPOSITE_INDICES", COMPOSITE_INDICES);
@@ -74,6 +75,8 @@ void VtkCompositeDataPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 
 	Nan::SetPrototypeMethod(tpl, "UPDATE_COMPOSITE_INDICES", UPDATE_COMPOSITE_INDICES);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompositeDataPipelineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -110,6 +113,7 @@ void VtkCompositeDataPipelineWrap::COMPOSITE_DATA_META_DATA(const Nan::FunctionC
 		return;
 	}
 	r = native->COMPOSITE_DATA_META_DATA();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -132,6 +136,7 @@ void VtkCompositeDataPipelineWrap::COMPOSITE_INDICES(const Nan::FunctionCallback
 		return;
 	}
 	r = native->COMPOSITE_INDICES();
+		VtkInformationIntegerVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,6 +177,7 @@ void VtkCompositeDataPipelineWrap::GetCompositeOutputData(const Nan::FunctionCal
 		r = native->GetCompositeOutputData(
 			info[0]->Int32Value()
 		);
+			VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -219,6 +225,7 @@ void VtkCompositeDataPipelineWrap::LOAD_REQUESTED_BLOCKS(const Nan::FunctionCall
 		return;
 	}
 	r = native->LOAD_REQUESTED_BLOCKS();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,6 +248,7 @@ void VtkCompositeDataPipelineWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompositeDataPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +264,7 @@ void VtkCompositeDataPipelineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkCompositeDataPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataPipelineWrap>(info.Holder());
 	vtkCompositeDataPipeline *native = (vtkCompositeDataPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompositeDataPipeline * r;
@@ -268,6 +276,7 @@ void VtkCompositeDataPipelineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompositeDataPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -293,6 +302,7 @@ void VtkCompositeDataPipelineWrap::UPDATE_COMPOSITE_INDICES(const Nan::FunctionC
 		return;
 	}
 	r = native->UPDATE_COMPOSITE_INDICES();
+		VtkInformationIntegerVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

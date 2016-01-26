@@ -33,26 +33,27 @@ VtkRenderWindowInteractorWrap::~VtkRenderWindowInteractorWrap()
 
 void VtkRenderWindowInteractorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderWindowInteractorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderWindowInteractor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RenderWindowInteractor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderWindowInteractor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RenderWindowInteractor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderWindowInteractorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderWindowInteractorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderWindowInteractorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CharEvent", CharEvent);
 	Nan::SetPrototypeMethod(tpl, "charEvent", CharEvent);
 
@@ -362,6 +363,8 @@ void VtkRenderWindowInteractorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UserCallback", UserCallback);
 	Nan::SetPrototypeMethod(tpl, "userCallback", UserCallback);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderWindowInteractorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -422,6 +425,7 @@ void VtkRenderWindowInteractorWrap::CreateDefaultPicker(const Nan::FunctionCallb
 		return;
 	}
 	r = native->CreateDefaultPicker();
+		VtkAbstractPropPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -608,6 +612,7 @@ void VtkRenderWindowInteractorWrap::FindPokedRenderer(const Nan::FunctionCallbac
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
+				VtkRendererWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -627,7 +632,7 @@ void VtkRenderWindowInteractorWrap::FlyTo(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -659,7 +664,7 @@ void VtkRenderWindowInteractorWrap::FlyToImage(const Nan::FunctionCallbackInfo<v
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -820,6 +825,7 @@ void VtkRenderWindowInteractorWrap::GetInteractorStyle(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetInteractorStyle();
+		VtkInteractorObserverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -926,6 +932,7 @@ void VtkRenderWindowInteractorWrap::GetObserverMediator(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetObserverMediator();
+		VtkObserverMediatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -948,6 +955,7 @@ void VtkRenderWindowInteractorWrap::GetPicker(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetPicker();
+		VtkAbstractPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -970,6 +978,7 @@ void VtkRenderWindowInteractorWrap::GetPickingManager(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetPickingManager();
+		VtkPickingManagerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -992,6 +1001,7 @@ void VtkRenderWindowInteractorWrap::GetRenderWindow(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetRenderWindow();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1372,6 +1382,7 @@ void VtkRenderWindowInteractorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1456,7 +1467,7 @@ void VtkRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderWindowInteractor * r;
@@ -1468,6 +1479,7 @@ void VtkRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderWindowInteractorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1731,7 +1743,7 @@ void VtkRenderWindowInteractorWrap::SetInteractorStyle(const Nan::FunctionCallba
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInteractorObserverWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInteractorObserverWrap *a0 = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1899,7 +1911,7 @@ void VtkRenderWindowInteractorWrap::SetPicker(const Nan::FunctionCallbackInfo<v8
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractPickerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractPickerWrap *a0 = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1919,7 +1931,7 @@ void VtkRenderWindowInteractorWrap::SetPickingManager(const Nan::FunctionCallbac
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPickingManagerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPickingManagerWrap *a0 = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1939,7 +1951,7 @@ void VtkRenderWindowInteractorWrap::SetRenderWindow(const Nan::FunctionCallbackI
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

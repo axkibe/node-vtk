@@ -30,26 +30,27 @@ VtkInformationExecutivePortVectorKeyWrap::~VtkInformationExecutivePortVectorKeyW
 
 void VtkInformationExecutivePortVectorKeyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInformationKeyWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInformationKeyWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkInformationExecutivePortVectorKeyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkInformationExecutivePortVectorKey").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("InformationExecutivePortVectorKey").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkInformationExecutivePortVectorKey").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("InformationExecutivePortVectorKey").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkInformationExecutivePortVectorKeyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkInformationExecutivePortVectorKeyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkInformationExecutivePortVectorKeyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInformationKeyWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInformationKeyWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkInformationExecutivePortVectorKeyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Append", Append);
 	Nan::SetPrototypeMethod(tpl, "append", Append);
 
@@ -77,6 +78,8 @@ void VtkInformationExecutivePortVectorKeyWrap::InitTpl(v8::Local<v8::FunctionTem
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkInformationExecutivePortVectorKeyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -106,10 +109,10 @@ void VtkInformationExecutivePortVectorKeyWrap::Append(const Nan::FunctionCallbac
 {
 	VtkInformationExecutivePortVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationExecutivePortVectorKeyWrap>(info.Holder());
 	vtkInformationExecutivePortVectorKey *native = (vtkInformationExecutivePortVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkExecutiveWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkExecutiveWrap *a1 = ObjectWrap::Unwrap<VtkExecutiveWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -171,7 +174,7 @@ void VtkInformationExecutivePortVectorKeyWrap::Length(const Nan::FunctionCallbac
 {
 	VtkInformationExecutivePortVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationExecutivePortVectorKeyWrap>(info.Holder());
 	vtkInformationExecutivePortVectorKey *native = (vtkInformationExecutivePortVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -200,6 +203,7 @@ void VtkInformationExecutivePortVectorKeyWrap::NewInstance(const Nan::FunctionCa
 		return;
 	}
 	r = native->NewInstance();
+		VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,10 +219,10 @@ void VtkInformationExecutivePortVectorKeyWrap::Remove(const Nan::FunctionCallbac
 {
 	VtkInformationExecutivePortVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationExecutivePortVectorKeyWrap>(info.Holder());
 	vtkInformationExecutivePortVectorKey *native = (vtkInformationExecutivePortVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkExecutiveWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkExecutiveWrap *a1 = ObjectWrap::Unwrap<VtkExecutiveWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -253,10 +257,10 @@ void VtkInformationExecutivePortVectorKeyWrap::Report(const Nan::FunctionCallbac
 {
 	VtkInformationExecutivePortVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationExecutivePortVectorKeyWrap>(info.Holder());
 	vtkInformationExecutivePortVectorKey *native = (vtkInformationExecutivePortVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGarbageCollectorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGarbageCollectorWrap *a1 = ObjectWrap::Unwrap<VtkGarbageCollectorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -278,7 +282,7 @@ void VtkInformationExecutivePortVectorKeyWrap::SafeDownCast(const Nan::FunctionC
 {
 	VtkInformationExecutivePortVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationExecutivePortVectorKeyWrap>(info.Holder());
 	vtkInformationExecutivePortVectorKey *native = (vtkInformationExecutivePortVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkInformationExecutivePortVectorKey * r;
@@ -290,6 +294,7 @@ void VtkInformationExecutivePortVectorKeyWrap::SafeDownCast(const Nan::FunctionC
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -308,10 +313,10 @@ void VtkInformationExecutivePortVectorKeyWrap::ShallowCopy(const Nan::FunctionCa
 {
 	VtkInformationExecutivePortVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationExecutivePortVectorKeyWrap>(info.Holder());
 	vtkInformationExecutivePortVectorKey *native = (vtkInformationExecutivePortVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

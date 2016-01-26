@@ -34,26 +34,27 @@ VtkAssemblyWrap::~VtkAssemblyWrap()
 
 void VtkAssemblyWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProp3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAssemblyWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAssembly").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Assembly").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAssembly").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Assembly").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAssemblyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAssemblyWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAssemblyWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProp3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAssemblyWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddPart", AddPart);
 	Nan::SetPrototypeMethod(tpl, "addPart", AddPart);
 
@@ -111,6 +112,8 @@ void VtkAssemblyWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAssemblyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -140,7 +143,7 @@ void VtkAssemblyWrap::AddPart(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -160,10 +163,10 @@ void VtkAssemblyWrap::BuildPaths(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAssemblyPathsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAssemblyPathsWrap *a0 = ObjectWrap::Unwrap<VtkAssemblyPathsWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAssemblyPathWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAssemblyPathWrap *a1 = ObjectWrap::Unwrap<VtkAssemblyPathWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -185,7 +188,7 @@ void VtkAssemblyWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -226,6 +229,7 @@ void VtkAssemblyWrap::GetNextPath(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetNextPath();
+		VtkAssemblyPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,6 +266,7 @@ void VtkAssemblyWrap::GetParts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetParts();
+		VtkProp3DCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -277,7 +282,7 @@ void VtkAssemblyWrap::GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -352,6 +357,7 @@ void VtkAssemblyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkAssemblyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -367,7 +373,7 @@ void VtkAssemblyWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -387,7 +393,7 @@ void VtkAssemblyWrap::RemovePart(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -407,7 +413,7 @@ void VtkAssemblyWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -429,7 +435,7 @@ void VtkAssemblyWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCall
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -451,7 +457,7 @@ void VtkAssemblyWrap::RenderVolumetricGeometry(const Nan::FunctionCallbackInfo<v
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -473,7 +479,7 @@ void VtkAssemblyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAssembly * r;
@@ -485,6 +491,7 @@ void VtkAssemblyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAssemblyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -503,7 +510,7 @@ void VtkAssemblyWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyWrap>(info.Holder());
 	vtkAssembly *native = (vtkAssembly *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

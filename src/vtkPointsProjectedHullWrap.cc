@@ -26,26 +26,27 @@ VtkPointsProjectedHullWrap::~VtkPointsProjectedHullWrap()
 
 void VtkPointsProjectedHullWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointsWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointsWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPointsProjectedHullWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPointsProjectedHull").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PointsProjectedHull").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPointsProjectedHull").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PointsProjectedHull").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPointsProjectedHullWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPointsProjectedHullWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPointsProjectedHullWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointsWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointsWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPointsProjectedHullWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetSizeCCWHullX", GetSizeCCWHullX);
 	Nan::SetPrototypeMethod(tpl, "getSizeCCWHullX", GetSizeCCWHullX);
 
@@ -73,6 +74,8 @@ void VtkPointsProjectedHullWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPointsProjectedHullWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -156,7 +159,7 @@ void VtkPointsProjectedHullWrap::RectangleIntersectionX(const Nan::FunctionCallb
 {
 	VtkPointsProjectedHullWrap *wrapper = ObjectWrap::Unwrap<VtkPointsProjectedHullWrap>(info.Holder());
 	vtkPointsProjectedHull *native = (vtkPointsProjectedHull *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		int r;
@@ -204,7 +207,7 @@ void VtkPointsProjectedHullWrap::RectangleIntersectionY(const Nan::FunctionCallb
 {
 	VtkPointsProjectedHullWrap *wrapper = ObjectWrap::Unwrap<VtkPointsProjectedHullWrap>(info.Holder());
 	vtkPointsProjectedHull *native = (vtkPointsProjectedHull *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		int r;
@@ -252,7 +255,7 @@ void VtkPointsProjectedHullWrap::RectangleIntersectionZ(const Nan::FunctionCallb
 {
 	VtkPointsProjectedHullWrap *wrapper = ObjectWrap::Unwrap<VtkPointsProjectedHullWrap>(info.Holder());
 	vtkPointsProjectedHull *native = (vtkPointsProjectedHull *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		int r;

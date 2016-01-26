@@ -28,26 +28,27 @@ VtkGL2PSExporterWrap::~VtkGL2PSExporterWrap()
 
 void VtkGL2PSExporterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExporterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExporterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGL2PSExporterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGL2PSExporter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GL2PSExporter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGL2PSExporter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GL2PSExporter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGL2PSExporterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGL2PSExporterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGL2PSExporterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExporterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExporterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGL2PSExporterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BestRootOff", BestRootOff);
 	Nan::SetPrototypeMethod(tpl, "bestRootOff", BestRootOff);
 
@@ -261,6 +262,8 @@ void VtkGL2PSExporterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Write3DPropsAsRasterImageOn", Write3DPropsAsRasterImageOn);
 	Nan::SetPrototypeMethod(tpl, "write3DPropsAsRasterImageOn", Write3DPropsAsRasterImageOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGL2PSExporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -537,6 +540,7 @@ void VtkGL2PSExporterWrap::GetRasterExclusions(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetRasterExclusions();
+		VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -731,6 +735,7 @@ void VtkGL2PSExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkGL2PSExporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -794,7 +799,7 @@ void VtkGL2PSExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGL2PSExporter * r;
@@ -806,6 +811,7 @@ void VtkGL2PSExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGL2PSExporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1037,7 +1043,7 @@ void VtkGL2PSExporterWrap::SetRasterExclusions(const Nan::FunctionCallbackInfo<v
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

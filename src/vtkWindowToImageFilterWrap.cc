@@ -29,26 +29,27 @@ VtkWindowToImageFilterWrap::~VtkWindowToImageFilterWrap()
 
 void VtkWindowToImageFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWindowToImageFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWindowToImageFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WindowToImageFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWindowToImageFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WindowToImageFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWindowToImageFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWindowToImageFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWindowToImageFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWindowToImageFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "FixBoundaryOff", FixBoundaryOff);
 	Nan::SetPrototypeMethod(tpl, "fixBoundaryOff", FixBoundaryOff);
 
@@ -130,6 +131,8 @@ void VtkWindowToImageFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShouldRerenderOn", ShouldRerenderOn);
 	Nan::SetPrototypeMethod(tpl, "shouldRerenderOn", ShouldRerenderOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWindowToImageFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -204,6 +207,7 @@ void VtkWindowToImageFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInput();
+		VtkWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,6 +286,7 @@ void VtkWindowToImageFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetOutput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -354,6 +359,7 @@ void VtkWindowToImageFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkWindowToImageFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -393,7 +399,7 @@ void VtkWindowToImageFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWindowToImageFilter * r;
@@ -405,6 +411,7 @@ void VtkWindowToImageFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWindowToImageFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -423,7 +430,7 @@ void VtkWindowToImageFilterWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

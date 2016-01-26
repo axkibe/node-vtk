@@ -29,26 +29,27 @@ VtkRectilinearGridReaderWrap::~VtkRectilinearGridReaderWrap()
 
 void VtkRectilinearGridReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRectilinearGridReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRectilinearGridReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("RectilinearGridReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRectilinearGridReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("RectilinearGridReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRectilinearGridReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRectilinearGridReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRectilinearGridReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRectilinearGridReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,6 +71,8 @@ void VtkRectilinearGridReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRectilinearGridReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -124,6 +127,7 @@ void VtkRectilinearGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
+			VtkRectilinearGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -142,6 +146,7 @@ void VtkRectilinearGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetOutput();
+		VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,6 +191,7 @@ void VtkRectilinearGridReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkRectilinearGridReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +207,7 @@ void VtkRectilinearGridReaderWrap::ReadMetaData(const Nan::FunctionCallbackInfo<
 {
 	VtkRectilinearGridReaderWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridReaderWrap>(info.Holder());
 	vtkRectilinearGridReader *native = (vtkRectilinearGridReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		int r;
@@ -223,7 +229,7 @@ void VtkRectilinearGridReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkRectilinearGridReaderWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridReaderWrap>(info.Holder());
 	vtkRectilinearGridReader *native = (vtkRectilinearGridReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRectilinearGridReader * r;
@@ -235,6 +241,7 @@ void VtkRectilinearGridReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRectilinearGridReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -253,7 +260,7 @@ void VtkRectilinearGridReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkRectilinearGridReaderWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridReaderWrap>(info.Holder());
 	vtkRectilinearGridReader *native = (vtkRectilinearGridReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRectilinearGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRectilinearGridWrap *a0 = ObjectWrap::Unwrap<VtkRectilinearGridWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

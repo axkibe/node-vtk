@@ -29,26 +29,27 @@ VtkPolyDataPointPlacerWrap::~VtkPolyDataPointPlacerWrap()
 
 void VtkPolyDataPointPlacerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointPlacerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataPointPlacerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataPointPlacer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataPointPlacer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataPointPlacer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataPointPlacer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataPointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataPointPlacerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataPointPlacerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointPlacerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataPointPlacerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddProp", AddProp);
 	Nan::SetPrototypeMethod(tpl, "addProp", AddProp);
 
@@ -79,6 +80,8 @@ void VtkPolyDataPointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataPointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -108,7 +111,7 @@ void VtkPolyDataPointPlacerWrap::AddProp(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPolyDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointPlacerWrap>(info.Holder());
 	vtkPolyDataPointPlacer *native = (vtkPolyDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -163,6 +166,7 @@ void VtkPolyDataPointPlacerWrap::GetPropPicker(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetPropPicker();
+		VtkPropPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +182,7 @@ void VtkPolyDataPointPlacerWrap::HasProp(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPolyDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointPlacerWrap>(info.Holder());
 	vtkPolyDataPointPlacer *native = (vtkPolyDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		int r;
@@ -229,6 +233,7 @@ void VtkPolyDataPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +261,7 @@ void VtkPolyDataPointPlacerWrap::RemoveViewProp(const Nan::FunctionCallbackInfo<
 {
 	VtkPolyDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointPlacerWrap>(info.Holder());
 	vtkPolyDataPointPlacer *native = (vtkPolyDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -276,7 +281,7 @@ void VtkPolyDataPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPolyDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointPlacerWrap>(info.Holder());
 	vtkPolyDataPointPlacer *native = (vtkPolyDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataPointPlacer * r;
@@ -288,6 +293,7 @@ void VtkPolyDataPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataPointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -28,26 +28,27 @@ VtkViewDependentErrorMetricWrap::~VtkViewDependentErrorMetricWrap()
 
 void VtkViewDependentErrorMetricWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGenericSubdivisionErrorMetricWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericSubdivisionErrorMetricWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkViewDependentErrorMetricWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkViewDependentErrorMetric").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ViewDependentErrorMetric").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkViewDependentErrorMetric").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ViewDependentErrorMetric").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkViewDependentErrorMetricWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkViewDependentErrorMetricWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkViewDependentErrorMetricWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGenericSubdivisionErrorMetricWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGenericSubdivisionErrorMetricWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkViewDependentErrorMetricWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkViewDependentErrorMetricWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
 	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkViewDependentErrorMetricWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,6 +139,7 @@ void VtkViewDependentErrorMetricWrap::GetViewport(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetViewport();
+		VtkViewportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,6 +184,7 @@ void VtkViewDependentErrorMetricWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkViewDependentErrorMetricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +200,7 @@ void VtkViewDependentErrorMetricWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkViewDependentErrorMetricWrap *wrapper = ObjectWrap::Unwrap<VtkViewDependentErrorMetricWrap>(info.Holder());
 	vtkViewDependentErrorMetric *native = (vtkViewDependentErrorMetric *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkViewDependentErrorMetric * r;
@@ -207,6 +212,7 @@ void VtkViewDependentErrorMetricWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkViewDependentErrorMetricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,7 +250,7 @@ void VtkViewDependentErrorMetricWrap::SetViewport(const Nan::FunctionCallbackInf
 {
 	VtkViewDependentErrorMetricWrap *wrapper = ObjectWrap::Unwrap<VtkViewDependentErrorMetricWrap>(info.Holder());
 	vtkViewDependentErrorMetric *native = (vtkViewDependentErrorMetric *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

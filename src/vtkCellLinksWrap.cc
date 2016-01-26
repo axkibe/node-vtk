@@ -28,26 +28,27 @@ VtkCellLinksWrap::~VtkCellLinksWrap()
 
 void VtkCellLinksWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellLinksWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellLinks").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellLinks").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellLinks").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellLinks").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellLinksWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellLinksWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellLinksWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellLinksWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildLinks", BuildLinks);
 	Nan::SetPrototypeMethod(tpl, "buildLinks", BuildLinks);
 
@@ -72,6 +73,8 @@ void VtkCellLinksWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellLinksWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -101,10 +104,10 @@ void VtkCellLinksWrap::BuildLinks(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCellLinksWrap *wrapper = ObjectWrap::Unwrap<VtkCellLinksWrap>(info.Holder());
 	vtkCellLinks *native = (vtkCellLinks *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCellArrayWrap *a1 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -135,7 +138,7 @@ void VtkCellLinksWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkCellLinksWrap *wrapper = ObjectWrap::Unwrap<VtkCellLinksWrap>(info.Holder());
 	vtkCellLinks *native = (vtkCellLinks *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellLinksWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellLinksWrap *a0 = ObjectWrap::Unwrap<VtkCellLinksWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -198,6 +201,7 @@ void VtkCellLinksWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellLinksWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +229,7 @@ void VtkCellLinksWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkCellLinksWrap *wrapper = ObjectWrap::Unwrap<VtkCellLinksWrap>(info.Holder());
 	vtkCellLinks *native = (vtkCellLinks *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCellLinks * r;
@@ -237,6 +241,7 @@ void VtkCellLinksWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCellLinksWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

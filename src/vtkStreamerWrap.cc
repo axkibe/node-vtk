@@ -30,26 +30,27 @@ VtkStreamerWrap::~VtkStreamerWrap()
 
 void VtkStreamerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkStreamerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkStreamer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Streamer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkStreamer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Streamer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkStreamerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkStreamerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkStreamerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkStreamerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -194,6 +195,8 @@ void VtkStreamerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "VorticityOn", VorticityOn);
 	Nan::SetPrototypeMethod(tpl, "vorticityOn", VorticityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkStreamerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -356,6 +359,7 @@ void VtkStreamerWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetIntegrator();
+		VtkInitialValueProblemSolverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -462,6 +466,7 @@ void VtkStreamerWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetSource();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -576,6 +581,7 @@ void VtkStreamerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
+		VtkStreamerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -615,7 +621,7 @@ void VtkStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkStreamer * r;
@@ -627,6 +633,7 @@ void VtkStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkStreamerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -738,7 +745,7 @@ void VtkStreamerWrap::SetIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInitialValueProblemSolverWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInitialValueProblemSolverWrap *a0 = ObjectWrap::Unwrap<VtkInitialValueProblemSolverWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -834,7 +841,7 @@ void VtkStreamerWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -854,7 +861,7 @@ void VtkStreamerWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

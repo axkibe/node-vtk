@@ -32,26 +32,27 @@ VtkBalloonRepresentationWrap::~VtkBalloonRepresentationWrap()
 
 void VtkBalloonRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBalloonRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBalloonRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BalloonRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBalloonRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BalloonRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBalloonRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBalloonRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBalloonRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBalloonRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -154,6 +155,8 @@ void VtkBalloonRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTextProperty", SetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "setTextProperty", SetTextProperty);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBalloonRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -231,6 +234,7 @@ void VtkBalloonRepresentationWrap::GetBalloonImage(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetBalloonImage();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,6 +299,7 @@ void VtkBalloonRepresentationWrap::GetFrameProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetFrameProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,6 +322,7 @@ void VtkBalloonRepresentationWrap::GetImageProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetImageProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,6 +387,7 @@ void VtkBalloonRepresentationWrap::GetTextProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -425,6 +432,7 @@ void VtkBalloonRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkBalloonRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -440,7 +448,7 @@ void VtkBalloonRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionC
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -460,7 +468,7 @@ void VtkBalloonRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -482,7 +490,7 @@ void VtkBalloonRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBalloonRepresentation * r;
@@ -494,6 +502,7 @@ void VtkBalloonRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBalloonRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -512,7 +521,7 @@ void VtkBalloonRepresentationWrap::SetBalloonImage(const Nan::FunctionCallbackIn
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -667,7 +676,7 @@ void VtkBalloonRepresentationWrap::SetFrameProperty(const Nan::FunctionCallbackI
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -687,7 +696,7 @@ void VtkBalloonRepresentationWrap::SetImageProperty(const Nan::FunctionCallbackI
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -772,7 +781,7 @@ void VtkBalloonRepresentationWrap::SetTextProperty(const Nan::FunctionCallbackIn
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

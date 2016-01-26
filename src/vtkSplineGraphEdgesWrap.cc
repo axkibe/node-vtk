@@ -28,26 +28,27 @@ VtkSplineGraphEdgesWrap::~VtkSplineGraphEdgesWrap()
 
 void VtkSplineGraphEdgesWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSplineGraphEdgesWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSplineGraphEdges").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SplineGraphEdges").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSplineGraphEdges").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SplineGraphEdges").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSplineGraphEdgesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSplineGraphEdgesWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSplineGraphEdgesWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSplineGraphEdgesWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkSplineGraphEdgesWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSplineType", SetSplineType);
 	Nan::SetPrototypeMethod(tpl, "setSplineType", SetSplineType);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSplineGraphEdgesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,6 +125,7 @@ void VtkSplineGraphEdgesWrap::GetSpline(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetSpline();
+		VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,6 +184,7 @@ void VtkSplineGraphEdgesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkSplineGraphEdgesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +200,7 @@ void VtkSplineGraphEdgesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSplineGraphEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkSplineGraphEdgesWrap>(info.Holder());
 	vtkSplineGraphEdges *native = (vtkSplineGraphEdges *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSplineGraphEdges * r;
@@ -207,6 +212,7 @@ void VtkSplineGraphEdgesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSplineGraphEdgesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -225,7 +231,7 @@ void VtkSplineGraphEdgesWrap::SetSpline(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSplineGraphEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkSplineGraphEdgesWrap>(info.Holder());
 	vtkSplineGraphEdges *native = (vtkSplineGraphEdges *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

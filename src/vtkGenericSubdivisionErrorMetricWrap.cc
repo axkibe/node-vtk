@@ -28,26 +28,27 @@ VtkGenericSubdivisionErrorMetricWrap::~VtkGenericSubdivisionErrorMetricWrap()
 
 void VtkGenericSubdivisionErrorMetricWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGenericSubdivisionErrorMetricWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGenericSubdivisionErrorMetric").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GenericSubdivisionErrorMetric").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGenericSubdivisionErrorMetric").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GenericSubdivisionErrorMetric").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGenericSubdivisionErrorMetricWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGenericSubdivisionErrorMetricWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGenericSubdivisionErrorMetricWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGenericSubdivisionErrorMetricWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +73,8 @@ void VtkGenericSubdivisionErrorMetricWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetGenericCell", SetGenericCell);
 	Nan::SetPrototypeMethod(tpl, "setGenericCell", SetGenericCell);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGenericSubdivisionErrorMetricWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -122,6 +125,7 @@ void VtkGenericSubdivisionErrorMetricWrap::GetDataSet(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetDataSet();
+		VtkGenericDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -144,6 +148,7 @@ void VtkGenericSubdivisionErrorMetricWrap::GetGenericCell(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetGenericCell();
+		VtkGenericAdaptorCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -188,6 +193,7 @@ void VtkGenericSubdivisionErrorMetricWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkGenericSubdivisionErrorMetricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +209,7 @@ void VtkGenericSubdivisionErrorMetricWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkGenericSubdivisionErrorMetricWrap *wrapper = ObjectWrap::Unwrap<VtkGenericSubdivisionErrorMetricWrap>(info.Holder());
 	vtkGenericSubdivisionErrorMetric *native = (vtkGenericSubdivisionErrorMetric *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGenericSubdivisionErrorMetric * r;
@@ -215,6 +221,7 @@ void VtkGenericSubdivisionErrorMetricWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGenericSubdivisionErrorMetricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -233,7 +240,7 @@ void VtkGenericSubdivisionErrorMetricWrap::SetDataSet(const Nan::FunctionCallbac
 {
 	VtkGenericSubdivisionErrorMetricWrap *wrapper = ObjectWrap::Unwrap<VtkGenericSubdivisionErrorMetricWrap>(info.Holder());
 	vtkGenericSubdivisionErrorMetric *native = (vtkGenericSubdivisionErrorMetric *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericDataSetWrap *a0 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -253,7 +260,7 @@ void VtkGenericSubdivisionErrorMetricWrap::SetGenericCell(const Nan::FunctionCal
 {
 	VtkGenericSubdivisionErrorMetricWrap *wrapper = ObjectWrap::Unwrap<VtkGenericSubdivisionErrorMetricWrap>(info.Holder());
 	vtkGenericSubdivisionErrorMetric *native = (vtkGenericSubdivisionErrorMetric *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAdaptorCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAdaptorCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

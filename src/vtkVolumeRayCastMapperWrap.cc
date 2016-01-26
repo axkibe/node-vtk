@@ -33,26 +33,27 @@ VtkVolumeRayCastMapperWrap::~VtkVolumeRayCastMapperWrap()
 
 void VtkVolumeRayCastMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVolumeRayCastMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VolumeRayCastMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVolumeRayCastMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VolumeRayCastMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVolumeRayCastMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVolumeRayCastMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVolumeRayCastMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVolumeRayCastMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutoAdjustSampleDistancesOff", AutoAdjustSampleDistancesOff);
 	Nan::SetPrototypeMethod(tpl, "autoAdjustSampleDistancesOff", AutoAdjustSampleDistancesOff);
 
@@ -170,6 +171,8 @@ void VtkVolumeRayCastMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVolumeRayCastFunction", SetVolumeRayCastFunction);
 	Nan::SetPrototypeMethod(tpl, "setVolumeRayCastFunction", SetVolumeRayCastFunction);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVolumeRayCastMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -286,6 +289,7 @@ void VtkVolumeRayCastMapperWrap::GetGradientEstimator(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetGradientEstimator();
+		VtkEncodedGradientEstimatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -308,6 +312,7 @@ void VtkVolumeRayCastMapperWrap::GetGradientShader(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetGradientShader();
+		VtkEncodedGradientShaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -526,6 +531,7 @@ void VtkVolumeRayCastMapperWrap::GetVolumeRayCastFunction(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetVolumeRayCastFunction();
+		VtkVolumeRayCastFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -594,6 +600,7 @@ void VtkVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -609,7 +616,7 @@ void VtkVolumeRayCastMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCal
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -629,10 +636,10 @@ void VtkVolumeRayCastMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -654,7 +661,7 @@ void VtkVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVolumeRayCastMapper * r;
@@ -666,6 +673,7 @@ void VtkVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -703,7 +711,7 @@ void VtkVolumeRayCastMapperWrap::SetGradientEstimator(const Nan::FunctionCallbac
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEncodedGradientEstimatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEncodedGradientEstimatorWrap *a0 = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -837,7 +845,7 @@ void VtkVolumeRayCastMapperWrap::SetVolumeRayCastFunction(const Nan::FunctionCal
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeRayCastFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeRayCastFunctionWrap *a0 = ObjectWrap::Unwrap<VtkVolumeRayCastFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

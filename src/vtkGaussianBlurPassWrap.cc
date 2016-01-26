@@ -28,26 +28,27 @@ VtkGaussianBlurPassWrap::~VtkGaussianBlurPassWrap()
 
 void VtkGaussianBlurPassWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageProcessingPassWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageProcessingPassWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGaussianBlurPassWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGaussianBlurPass").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GaussianBlurPass").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGaussianBlurPass").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GaussianBlurPass").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGaussianBlurPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGaussianBlurPassWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGaussianBlurPassWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageProcessingPassWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageProcessingPassWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGaussianBlurPassWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,6 +64,8 @@ void VtkGaussianBlurPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGaussianBlurPassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkGaussianBlurPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkGaussianBlurPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -150,7 +154,7 @@ void VtkGaussianBlurPassWrap::ReleaseGraphicsResources(const Nan::FunctionCallba
 {
 	VtkGaussianBlurPassWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianBlurPassWrap>(info.Holder());
 	vtkGaussianBlurPass *native = (vtkGaussianBlurPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -170,7 +174,7 @@ void VtkGaussianBlurPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGaussianBlurPassWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianBlurPassWrap>(info.Holder());
 	vtkGaussianBlurPass *native = (vtkGaussianBlurPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGaussianBlurPass * r;
@@ -182,6 +186,7 @@ void VtkGaussianBlurPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGaussianBlurPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

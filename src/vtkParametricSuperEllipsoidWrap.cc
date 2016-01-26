@@ -27,26 +27,27 @@ VtkParametricSuperEllipsoidWrap::~VtkParametricSuperEllipsoidWrap()
 
 void VtkParametricSuperEllipsoidWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkParametricFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParametricFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkParametricSuperEllipsoidWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkParametricSuperEllipsoid").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ParametricSuperEllipsoid").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkParametricSuperEllipsoid").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ParametricSuperEllipsoid").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkParametricSuperEllipsoidWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkParametricSuperEllipsoidWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkParametricSuperEllipsoidWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkParametricFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkParametricFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkParametricSuperEllipsoidWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -92,6 +93,8 @@ void VtkParametricSuperEllipsoidWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetZRadius", SetZRadius);
 	Nan::SetPrototypeMethod(tpl, "setZRadius", SetZRadius);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkParametricSuperEllipsoidWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -248,6 +251,7 @@ void VtkParametricSuperEllipsoidWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkParametricSuperEllipsoidWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -263,7 +267,7 @@ void VtkParametricSuperEllipsoidWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkParametricSuperEllipsoidWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSuperEllipsoidWrap>(info.Holder());
 	vtkParametricSuperEllipsoid *native = (vtkParametricSuperEllipsoid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkParametricSuperEllipsoid * r;
@@ -275,6 +279,7 @@ void VtkParametricSuperEllipsoidWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkParametricSuperEllipsoidWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

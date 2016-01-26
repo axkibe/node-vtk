@@ -28,26 +28,27 @@ VtkSplineWidget2Wrap::~VtkSplineWidget2Wrap()
 
 void VtkSplineWidget2Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSplineWidget2Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSplineWidget2").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SplineWidget2").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSplineWidget2").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SplineWidget2").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSplineWidget2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSplineWidget2Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSplineWidget2Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSplineWidget2Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -66,6 +67,8 @@ void VtkSplineWidget2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSplineWidget2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -150,6 +153,7 @@ void VtkSplineWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkSplineWidget2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +169,7 @@ void VtkSplineWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSplineWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkSplineWidget2Wrap>(info.Holder());
 	vtkSplineWidget2 *native = (vtkSplineWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSplineWidget2 * r;
@@ -177,6 +181,7 @@ void VtkSplineWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSplineWidget2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -195,7 +200,7 @@ void VtkSplineWidget2Wrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSplineWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkSplineWidget2Wrap>(info.Holder());
 	vtkSplineWidget2 *native = (vtkSplineWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkSplineRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -27,26 +27,27 @@ VtkTransformTextureCoordsWrap::~VtkTransformTextureCoordsWrap()
 
 void VtkTransformTextureCoordsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransformTextureCoordsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransformTextureCoords").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TransformTextureCoords").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransformTextureCoords").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TransformTextureCoords").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransformTextureCoordsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransformTextureCoordsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransformTextureCoordsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransformTextureCoordsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddPosition", AddPosition);
 	Nan::SetPrototypeMethod(tpl, "addPosition", AddPosition);
 
@@ -107,6 +108,8 @@ void VtkTransformTextureCoordsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
 	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransformTextureCoordsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -320,6 +323,7 @@ void VtkTransformTextureCoordsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransformTextureCoordsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -335,7 +339,7 @@ void VtkTransformTextureCoordsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransformTextureCoords * r;
@@ -347,6 +351,7 @@ void VtkTransformTextureCoordsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransformTextureCoordsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

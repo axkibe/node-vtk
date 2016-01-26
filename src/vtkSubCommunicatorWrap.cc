@@ -28,26 +28,27 @@ VtkSubCommunicatorWrap::~VtkSubCommunicatorWrap()
 
 void VtkSubCommunicatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCommunicatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCommunicatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSubCommunicatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSubCommunicator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SubCommunicator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSubCommunicator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SubCommunicator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSubCommunicatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSubCommunicatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSubCommunicatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCommunicatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCommunicatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSubCommunicatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkSubCommunicatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetGroup", SetGroup);
 	Nan::SetPrototypeMethod(tpl, "setGroup", SetGroup);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSubCommunicatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkSubCommunicatorWrap::GetGroup(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetGroup();
+		VtkProcessGroupWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkSubCommunicatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkSubCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkSubCommunicatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSubCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkSubCommunicatorWrap>(info.Holder());
 	vtkSubCommunicator *native = (vtkSubCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSubCommunicator * r;
@@ -187,6 +192,7 @@ void VtkSubCommunicatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSubCommunicatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkSubCommunicatorWrap::SetGroup(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSubCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkSubCommunicatorWrap>(info.Holder());
 	vtkSubCommunicator *native = (vtkSubCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProcessGroupWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProcessGroupWrap *a0 = ObjectWrap::Unwrap<VtkProcessGroupWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

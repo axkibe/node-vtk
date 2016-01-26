@@ -29,26 +29,27 @@ VtkTessellatorFilterWrap::~VtkTessellatorFilterWrap()
 
 void VtkTessellatorFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkUnstructuredGridAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTessellatorFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTessellatorFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TessellatorFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTessellatorFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TessellatorFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTessellatorFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTessellatorFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTessellatorFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkUnstructuredGridAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkUnstructuredGridAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTessellatorFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetChordError", GetChordError);
 	Nan::SetPrototypeMethod(tpl, "getChordError", GetChordError);
 
@@ -115,6 +116,8 @@ void VtkTessellatorFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTessellator", SetTessellator);
 	Nan::SetPrototypeMethod(tpl, "setTessellator", SetTessellator);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTessellatorFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -249,6 +252,7 @@ void VtkTessellatorFilterWrap::GetSubdivider(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetSubdivider();
+		VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -271,6 +275,7 @@ void VtkTessellatorFilterWrap::GetTessellator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTessellator();
+		VtkStreamingTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -339,6 +344,7 @@ void VtkTessellatorFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkTessellatorFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,7 +372,7 @@ void VtkTessellatorFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTessellatorFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTessellatorFilterWrap>(info.Holder());
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTessellatorFilter * r;
@@ -378,6 +384,7 @@ void VtkTessellatorFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTessellatorFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -495,7 +502,7 @@ void VtkTessellatorFilterWrap::SetSubdivider(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTessellatorFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTessellatorFilterWrap>(info.Holder());
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetEdgeSubdivisionCriterionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetEdgeSubdivisionCriterionWrap *a0 = ObjectWrap::Unwrap<VtkDataSetEdgeSubdivisionCriterionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -515,7 +522,7 @@ void VtkTessellatorFilterWrap::SetTessellator(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTessellatorFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTessellatorFilterWrap>(info.Holder());
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStreamingTessellatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStreamingTessellatorWrap *a0 = ObjectWrap::Unwrap<VtkStreamingTessellatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

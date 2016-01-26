@@ -30,26 +30,27 @@ VtkBoundedPlanePointPlacerWrap::~VtkBoundedPlanePointPlacerWrap()
 
 void VtkBoundedPlanePointPlacerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPointPlacerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBoundedPlanePointPlacerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBoundedPlanePointPlacer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BoundedPlanePointPlacer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBoundedPlanePointPlacer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BoundedPlanePointPlacer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBoundedPlanePointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBoundedPlanePointPlacerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBoundedPlanePointPlacerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPointPlacerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointPlacerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBoundedPlanePointPlacerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddBoundingPlane", AddBoundingPlane);
 	Nan::SetPrototypeMethod(tpl, "addBoundingPlane", AddBoundingPlane);
 
@@ -113,6 +114,8 @@ void VtkBoundedPlanePointPlacerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl
 	Nan::SetPrototypeMethod(tpl, "SetProjectionPosition", SetProjectionPosition);
 	Nan::SetPrototypeMethod(tpl, "setProjectionPosition", SetProjectionPosition);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBoundedPlanePointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -142,7 +145,7 @@ void VtkBoundedPlanePointPlacerWrap::AddBoundingPlane(const Nan::FunctionCallbac
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -169,6 +172,7 @@ void VtkBoundedPlanePointPlacerWrap::GetBoundingPlanes(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetBoundingPlanes();
+		VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,6 +209,7 @@ void VtkBoundedPlanePointPlacerWrap::GetObliquePlane(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetObliquePlane();
+		VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -305,6 +310,7 @@ void VtkBoundedPlanePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
+		VtkBoundedPlanePointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,7 +338,7 @@ void VtkBoundedPlanePointPlacerWrap::RemoveBoundingPlane(const Nan::FunctionCall
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -352,7 +358,7 @@ void VtkBoundedPlanePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInf
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBoundedPlanePointPlacer * r;
@@ -364,6 +370,7 @@ void VtkBoundedPlanePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBoundedPlanePointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -382,7 +389,7 @@ void VtkBoundedPlanePointPlacerWrap::SetBoundingPlanes(const Nan::FunctionCallba
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -402,7 +409,7 @@ void VtkBoundedPlanePointPlacerWrap::SetObliquePlane(const Nan::FunctionCallback
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

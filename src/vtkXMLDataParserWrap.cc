@@ -29,26 +29,27 @@ VtkXMLDataParserWrap::~VtkXMLDataParserWrap()
 
 void VtkXMLDataParserWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLParserWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLParserWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLDataParserWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLDataParser").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLDataParser").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLDataParser").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLDataParser").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLDataParserWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLDataParserWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLDataParserWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLParserWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLParserWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLDataParserWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CharacterDataHandler", CharacterDataHandler);
 	Nan::SetPrototypeMethod(tpl, "characterDataHandler", CharacterDataHandler);
 
@@ -94,6 +95,8 @@ void VtkXMLDataParserWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCompressor", SetCompressor);
 	Nan::SetPrototypeMethod(tpl, "setCompressor", SetCompressor);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLDataParserWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -224,6 +227,7 @@ void VtkXMLDataParserWrap::GetCompressor(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetCompressor();
+		VtkDataCompressorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,6 +250,7 @@ void VtkXMLDataParserWrap::GetRootElement(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetRootElement();
+		VtkXMLDataElementWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,6 +295,7 @@ void VtkXMLDataParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLDataParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +325,7 @@ void VtkXMLDataParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXMLDataParserWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataParserWrap>(info.Holder());
 	vtkXMLDataParser *native = (vtkXMLDataParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLDataParser * r;
@@ -331,6 +337,7 @@ void VtkXMLDataParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLDataParserWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -387,7 +394,7 @@ void VtkXMLDataParserWrap::SetCompressor(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXMLDataParserWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataParserWrap>(info.Holder());
 	vtkXMLDataParser *native = (vtkXMLDataParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataCompressorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataCompressorWrap *a0 = ObjectWrap::Unwrap<VtkDataCompressorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

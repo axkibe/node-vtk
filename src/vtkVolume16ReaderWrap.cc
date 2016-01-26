@@ -29,26 +29,27 @@ VtkVolume16ReaderWrap::~VtkVolume16ReaderWrap()
 
 void VtkVolume16ReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkVolumeReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVolume16ReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVolume16Reader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Volume16Reader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVolume16Reader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Volume16Reader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVolume16ReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVolume16ReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVolume16ReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkVolumeReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVolume16ReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -106,6 +107,8 @@ void VtkVolume16ReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SwapBytesOn", SwapBytesOn);
 	Nan::SetPrototypeMethod(tpl, "swapBytesOn", SwapBytesOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVolume16ReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -202,6 +205,7 @@ void VtkVolume16ReaderWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->GetImage(
 			info[0]->Int32Value()
 		);
+			VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -241,6 +245,7 @@ void VtkVolume16ReaderWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetTransform();
+		VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,6 +290,7 @@ void VtkVolume16ReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkVolume16ReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -300,7 +306,7 @@ void VtkVolume16ReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVolume16Reader * r;
@@ -312,6 +318,7 @@ void VtkVolume16ReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVolume16ReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -434,7 +441,7 @@ void VtkVolume16ReaderWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

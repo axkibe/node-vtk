@@ -27,26 +27,27 @@ VtkPolyDataPointSamplerWrap::~VtkPolyDataPointSamplerWrap()
 
 void VtkPolyDataPointSamplerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataPointSamplerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataPointSampler").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataPointSampler").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataPointSampler").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataPointSampler").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataPointSamplerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataPointSamplerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataPointSamplerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataPointSamplerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GenerateEdgePointsOff", GenerateEdgePointsOff);
 	Nan::SetPrototypeMethod(tpl, "generateEdgePointsOff", GenerateEdgePointsOff);
 
@@ -119,6 +120,8 @@ void VtkPolyDataPointSamplerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetGenerateVertices", SetGenerateVertices);
 	Nan::SetPrototypeMethod(tpl, "setGenerateVertices", SetGenerateVertices);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataPointSamplerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -385,6 +388,7 @@ void VtkPolyDataPointSamplerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataPointSamplerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,7 +404,7 @@ void VtkPolyDataPointSamplerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataPointSampler * r;
@@ -412,6 +416,7 @@ void VtkPolyDataPointSamplerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataPointSamplerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

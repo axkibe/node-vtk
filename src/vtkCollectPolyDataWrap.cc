@@ -29,26 +29,27 @@ VtkCollectPolyDataWrap::~VtkCollectPolyDataWrap()
 
 void VtkCollectPolyDataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCollectPolyDataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCollectPolyData").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CollectPolyData").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCollectPolyData").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CollectPolyData").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCollectPolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCollectPolyDataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCollectPolyDataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCollectPolyDataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -85,6 +86,8 @@ void VtkCollectPolyDataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSocketController", SetSocketController);
 	Nan::SetPrototypeMethod(tpl, "setSocketController", SetSocketController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCollectPolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -135,6 +138,7 @@ void VtkCollectPolyDataWrap::GetController(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -171,6 +175,7 @@ void VtkCollectPolyDataWrap::GetSocketController(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetSocketController();
+		VtkSocketControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,6 +220,7 @@ void VtkCollectPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkCollectPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -254,7 +260,7 @@ void VtkCollectPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCollectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCollectPolyDataWrap>(info.Holder());
 	vtkCollectPolyData *native = (vtkCollectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCollectPolyData * r;
@@ -266,6 +272,7 @@ void VtkCollectPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCollectPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -284,7 +291,7 @@ void VtkCollectPolyDataWrap::SetController(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCollectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCollectPolyDataWrap>(info.Holder());
 	vtkCollectPolyData *native = (vtkCollectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -323,7 +330,7 @@ void VtkCollectPolyDataWrap::SetSocketController(const Nan::FunctionCallbackInfo
 {
 	VtkCollectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCollectPolyDataWrap>(info.Holder());
 	vtkCollectPolyData *native = (vtkCollectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketControllerWrap *a0 = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

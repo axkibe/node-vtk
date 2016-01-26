@@ -28,26 +28,27 @@ VtkModelMetadataWrap::~VtkModelMetadataWrap()
 
 void VtkModelMetadataWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkModelMetadataWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkModelMetadata").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ModelMetadata").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkModelMetadata").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ModelMetadata").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkModelMetadataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkModelMetadataWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkModelMetadataWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkModelMetadataWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddInformationLine", AddInformationLine);
 	Nan::SetPrototypeMethod(tpl, "addInformationLine", AddInformationLine);
 
@@ -246,6 +247,8 @@ void VtkModelMetadataWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Unpack", Unpack);
 	Nan::SetPrototypeMethod(tpl, "unpack", Unpack);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkModelMetadataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -449,6 +452,7 @@ void VtkModelMetadataWrap::ExtractGlobalMetadata(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->ExtractGlobalMetadata();
+		VtkModelMetadataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -464,10 +468,10 @@ void VtkModelMetadataWrap::ExtractModelMetadata(const Nan::FunctionCallbackInfo<
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataSetWrap *a1 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[1]->ToObject());
 			vtkModelMetadata * r;
@@ -480,6 +484,7 @@ void VtkModelMetadataWrap::ExtractModelMetadata(const Nan::FunctionCallbackInfo<
 				(vtkIdTypeArray *) a0->native.GetPointer(),
 				(vtkDataSet *) a1->native.GetPointer()
 			);
+				VtkModelMetadataWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -1030,7 +1035,7 @@ void VtkModelMetadataWrap::HasMetadata(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		int r;
@@ -1074,7 +1079,7 @@ void VtkModelMetadataWrap::MergeGlobalInformation(const Nan::FunctionCallbackInf
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkModelMetadataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkModelMetadataWrap *a0 = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info[0]->ToObject());
 		int r;
@@ -1096,7 +1101,7 @@ void VtkModelMetadataWrap::MergeModelMetadata(const Nan::FunctionCallbackInfo<v8
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkModelMetadataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkModelMetadataWrap *a0 = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info[0]->ToObject());
 		int r;
@@ -1125,6 +1130,7 @@ void VtkModelMetadataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkModelMetadataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1140,7 +1146,7 @@ void VtkModelMetadataWrap::Pack(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1184,7 +1190,7 @@ void VtkModelMetadataWrap::RemoveMetadata(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1260,7 +1266,7 @@ void VtkModelMetadataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkModelMetadata * r;
@@ -1272,6 +1278,7 @@ void VtkModelMetadataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkModelMetadataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1405,7 +1412,7 @@ void VtkModelMetadataWrap::Unpack(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())

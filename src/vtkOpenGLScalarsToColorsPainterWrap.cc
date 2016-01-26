@@ -29,26 +29,27 @@ VtkOpenGLScalarsToColorsPainterWrap::~VtkOpenGLScalarsToColorsPainterWrap()
 
 void VtkOpenGLScalarsToColorsPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkScalarsToColorsPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkScalarsToColorsPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkOpenGLScalarsToColorsPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkOpenGLScalarsToColorsPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("OpenGLScalarsToColorsPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkOpenGLScalarsToColorsPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("OpenGLScalarsToColorsPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkOpenGLScalarsToColorsPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkOpenGLScalarsToColorsPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkOpenGLScalarsToColorsPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkScalarsToColorsPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkScalarsToColorsPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkOpenGLScalarsToColorsPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -67,6 +68,8 @@ void VtkOpenGLScalarsToColorsPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkOpenGLScalarsToColorsPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -110,7 +113,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::GetPremultiplyColorsWithAlpha(const Na
 {
 	VtkOpenGLScalarsToColorsPainterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLScalarsToColorsPainterWrap>(info.Holder());
 	vtkOpenGLScalarsToColorsPainter *native = (vtkOpenGLScalarsToColorsPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkActorWrap *a0 = ObjectWrap::Unwrap<VtkActorWrap>(info[0]->ToObject());
 		int r;
@@ -161,6 +164,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkOpenGLScalarsToColorsPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +180,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::ReleaseGraphicsResources(const Nan::Fu
 {
 	VtkOpenGLScalarsToColorsPainterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLScalarsToColorsPainterWrap>(info.Holder());
 	vtkOpenGLScalarsToColorsPainter *native = (vtkOpenGLScalarsToColorsPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -196,7 +200,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkOpenGLScalarsToColorsPainterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLScalarsToColorsPainterWrap>(info.Holder());
 	vtkOpenGLScalarsToColorsPainter *native = (vtkOpenGLScalarsToColorsPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkOpenGLScalarsToColorsPainter * r;
@@ -208,6 +212,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkOpenGLScalarsToColorsPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

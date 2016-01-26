@@ -29,26 +29,27 @@ VtkShadowMapBakerPassWrap::~VtkShadowMapBakerPassWrap()
 
 void VtkShadowMapBakerPassWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkRenderPassWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkShadowMapBakerPassWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkShadowMapBakerPass").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ShadowMapBakerPass").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkShadowMapBakerPass").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ShadowMapBakerPass").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkShadowMapBakerPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkShadowMapBakerPassWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkShadowMapBakerPassWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkRenderPassWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkRenderPassWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkShadowMapBakerPassWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -83,6 +84,8 @@ void VtkShadowMapBakerPassWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetUpToDate", SetUpToDate);
 	Nan::SetPrototypeMethod(tpl, "setUpToDate", SetUpToDate);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkShadowMapBakerPassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -133,6 +136,7 @@ void VtkShadowMapBakerPassWrap::GetCompositeZPass(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetCompositeZPass();
+		VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -155,6 +159,7 @@ void VtkShadowMapBakerPassWrap::GetOpaquePass(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetOpaquePass();
+		VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,6 +204,7 @@ void VtkShadowMapBakerPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkShadowMapBakerPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,6 +227,7 @@ void VtkShadowMapBakerPassWrap::OCCLUDER(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->OCCLUDER();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,6 +250,7 @@ void VtkShadowMapBakerPassWrap::RECEIVER(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->RECEIVER();
+		VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +266,7 @@ void VtkShadowMapBakerPassWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 {
 	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
 	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -278,7 +286,7 @@ void VtkShadowMapBakerPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
 	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkShadowMapBakerPass * r;
@@ -290,6 +298,7 @@ void VtkShadowMapBakerPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkShadowMapBakerPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -308,7 +317,7 @@ void VtkShadowMapBakerPassWrap::SetCompositeZPass(const Nan::FunctionCallbackInf
 {
 	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
 	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -328,7 +337,7 @@ void VtkShadowMapBakerPassWrap::SetOpaquePass(const Nan::FunctionCallbackInfo<v8
 {
 	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
 	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

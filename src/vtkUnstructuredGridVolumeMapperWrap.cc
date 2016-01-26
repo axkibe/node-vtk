@@ -32,26 +32,27 @@ VtkUnstructuredGridVolumeMapperWrap::~VtkUnstructuredGridVolumeMapperWrap()
 
 void VtkUnstructuredGridVolumeMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractVolumeMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractVolumeMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkUnstructuredGridVolumeMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkUnstructuredGridVolumeMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("UnstructuredGridVolumeMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkUnstructuredGridVolumeMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("UnstructuredGridVolumeMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkUnstructuredGridVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkUnstructuredGridVolumeMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkUnstructuredGridVolumeMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractVolumeMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractVolumeMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkUnstructuredGridVolumeMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBlendMode", GetBlendMode);
 	Nan::SetPrototypeMethod(tpl, "getBlendMode", GetBlendMode);
 
@@ -88,6 +89,8 @@ void VtkUnstructuredGridVolumeMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkUnstructuredGridVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -152,6 +155,7 @@ void VtkUnstructuredGridVolumeMapperWrap::GetInput(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetInput();
+		VtkUnstructuredGridBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,6 +200,7 @@ void VtkUnstructuredGridVolumeMapperWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
+		VtkUnstructuredGridVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +216,7 @@ void VtkUnstructuredGridVolumeMapperWrap::ReleaseGraphicsResources(const Nan::Fu
 {
 	VtkUnstructuredGridVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeMapper *native = (vtkUnstructuredGridVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -231,10 +236,10 @@ void VtkUnstructuredGridVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo
 {
 	VtkUnstructuredGridVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeMapper *native = (vtkUnstructuredGridVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -256,7 +261,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallba
 {
 	VtkUnstructuredGridVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeMapper *native = (vtkUnstructuredGridVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkUnstructuredGridVolumeMapper * r;
@@ -268,6 +273,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkUnstructuredGridVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -329,7 +335,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SetInputData(const Nan::FunctionCallba
 {
 	VtkUnstructuredGridVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeMapper *native = (vtkUnstructuredGridVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

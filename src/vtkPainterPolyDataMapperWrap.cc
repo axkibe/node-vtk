@@ -31,26 +31,27 @@ VtkPainterPolyDataMapperWrap::~VtkPainterPolyDataMapperWrap()
 
 void VtkPainterPolyDataMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolyDataMapperWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataMapperWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPainterPolyDataMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPainterPolyDataMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PainterPolyDataMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPainterPolyDataMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PainterPolyDataMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPainterPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPainterPolyDataMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPainterPolyDataMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolyDataMapperWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolyDataMapperWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPainterPolyDataMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -93,6 +94,8 @@ void VtkPainterPolyDataMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSelectionPainter", SetSelectionPainter);
 	Nan::SetPrototypeMethod(tpl, "setSelectionPainter", SetSelectionPainter);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPainterPolyDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -143,6 +146,7 @@ void VtkPainterPolyDataMapperWrap::GetPainter(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetPainter();
+		VtkPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,6 +169,7 @@ void VtkPainterPolyDataMapperWrap::GetSelectionPainter(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetSelectionPainter();
+		VtkPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,6 +279,7 @@ void VtkPainterPolyDataMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkPainterPolyDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -289,7 +295,7 @@ void VtkPainterPolyDataMapperWrap::ReleaseGraphicsResources(const Nan::FunctionC
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -341,10 +347,10 @@ void VtkPainterPolyDataMapperWrap::RenderPiece(const Nan::FunctionCallbackInfo<v
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -366,7 +372,7 @@ void VtkPainterPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPainterPolyDataMapper * r;
@@ -378,6 +384,7 @@ void VtkPainterPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPainterPolyDataMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -396,7 +403,7 @@ void VtkPainterPolyDataMapperWrap::SetPainter(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPainterWrap *a0 = ObjectWrap::Unwrap<VtkPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -416,7 +423,7 @@ void VtkPainterPolyDataMapperWrap::SetSelectionPainter(const Nan::FunctionCallba
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPainterWrap *a0 = ObjectWrap::Unwrap<VtkPainterWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

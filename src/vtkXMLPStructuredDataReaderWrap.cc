@@ -29,26 +29,27 @@ VtkXMLPStructuredDataReaderWrap::~VtkXMLPStructuredDataReaderWrap()
 
 void VtkXMLPStructuredDataReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkXMLPDataReaderWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLPDataReaderWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkXMLPStructuredDataReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkXMLPStructuredDataReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("XMLPStructuredDataReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkXMLPStructuredDataReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("XMLPStructuredDataReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkXMLPStructuredDataReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkXMLPStructuredDataReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkXMLPStructuredDataReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkXMLPDataReaderWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkXMLPDataReaderWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkXMLPStructuredDataReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CopyOutputInformation", CopyOutputInformation);
 	Nan::SetPrototypeMethod(tpl, "copyOutputInformation", CopyOutputInformation);
 
@@ -67,6 +68,8 @@ void VtkXMLPStructuredDataReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkXMLPStructuredDataReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -96,7 +99,7 @@ void VtkXMLPStructuredDataReaderWrap::CopyOutputInformation(const Nan::FunctionC
 {
 	VtkXMLPStructuredDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLPStructuredDataReaderWrap>(info.Holder());
 	vtkXMLPStructuredDataReader *native = (vtkXMLPStructuredDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -141,6 +144,7 @@ void VtkXMLPStructuredDataReaderWrap::GetExtentTranslator(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetExtentTranslator();
+		VtkExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,6 +189,7 @@ void VtkXMLPStructuredDataReaderWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkXMLPStructuredDataReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +205,7 @@ void VtkXMLPStructuredDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkXMLPStructuredDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLPStructuredDataReaderWrap>(info.Holder());
 	vtkXMLPStructuredDataReader *native = (vtkXMLPStructuredDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkXMLPStructuredDataReader * r;
@@ -212,6 +217,7 @@ void VtkXMLPStructuredDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkXMLPStructuredDataReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

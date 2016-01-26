@@ -29,26 +29,27 @@ VtkThinPlateSplineTransformWrap::~VtkThinPlateSplineTransformWrap()
 
 void VtkThinPlateSplineTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWarpTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWarpTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkThinPlateSplineTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkThinPlateSplineTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ThinPlateSplineTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkThinPlateSplineTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ThinPlateSplineTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkThinPlateSplineTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkThinPlateSplineTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkThinPlateSplineTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWarpTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWarpTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkThinPlateSplineTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBasis", GetBasis);
 	Nan::SetPrototypeMethod(tpl, "getBasis", GetBasis);
 
@@ -97,6 +98,8 @@ void VtkThinPlateSplineTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tp
 	Nan::SetPrototypeMethod(tpl, "SetTargetLandmarks", SetTargetLandmarks);
 	Nan::SetPrototypeMethod(tpl, "setTargetLandmarks", SetTargetLandmarks);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkThinPlateSplineTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -189,6 +192,7 @@ void VtkThinPlateSplineTransformWrap::GetSourceLandmarks(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetSourceLandmarks();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,6 +215,7 @@ void VtkThinPlateSplineTransformWrap::GetTargetLandmarks(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetTargetLandmarks();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,6 +260,7 @@ void VtkThinPlateSplineTransformWrap::MakeTransform(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -277,6 +283,7 @@ void VtkThinPlateSplineTransformWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
+		VtkThinPlateSplineTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +299,7 @@ void VtkThinPlateSplineTransformWrap::SafeDownCast(const Nan::FunctionCallbackIn
 {
 	VtkThinPlateSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkThinPlateSplineTransformWrap>(info.Holder());
 	vtkThinPlateSplineTransform *native = (vtkThinPlateSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkThinPlateSplineTransform * r;
@@ -304,6 +311,7 @@ void VtkThinPlateSplineTransformWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkThinPlateSplineTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -384,7 +392,7 @@ void VtkThinPlateSplineTransformWrap::SetSourceLandmarks(const Nan::FunctionCall
 {
 	VtkThinPlateSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkThinPlateSplineTransformWrap>(info.Holder());
 	vtkThinPlateSplineTransform *native = (vtkThinPlateSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -404,7 +412,7 @@ void VtkThinPlateSplineTransformWrap::SetTargetLandmarks(const Nan::FunctionCall
 {
 	VtkThinPlateSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkThinPlateSplineTransformWrap>(info.Holder());
 	vtkThinPlateSplineTransform *native = (vtkThinPlateSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

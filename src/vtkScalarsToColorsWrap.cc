@@ -30,26 +30,27 @@ VtkScalarsToColorsWrap::~VtkScalarsToColorsWrap()
 
 void VtkScalarsToColorsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkScalarsToColorsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkScalarsToColors").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ScalarsToColors").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkScalarsToColors").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ScalarsToColors").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkScalarsToColorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkScalarsToColorsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkScalarsToColorsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkScalarsToColorsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Build", Build);
 	Nan::SetPrototypeMethod(tpl, "build", Build);
 
@@ -146,6 +147,8 @@ void VtkScalarsToColorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UsingLogScale", UsingLogScale);
 	Nan::SetPrototypeMethod(tpl, "usingLogScale", UsingLogScale);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkScalarsToColorsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -187,7 +190,7 @@ void VtkScalarsToColorsWrap::ConvertUnsignedCharToRGBA(const Nan::FunctionCallba
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -205,6 +208,7 @@ void VtkScalarsToColorsWrap::ConvertUnsignedCharToRGBA(const Nan::FunctionCallba
 					info[1]->Int32Value(),
 					info[2]->Int32Value()
 				);
+					VtkUnsignedCharArrayWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -225,7 +229,7 @@ void VtkScalarsToColorsWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -266,6 +270,7 @@ void VtkScalarsToColorsWrap::GetAnnotatedValues(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetAnnotatedValues();
+		VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,6 +293,7 @@ void VtkScalarsToColorsWrap::GetAnnotations(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAnnotations();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -475,7 +481,7 @@ void VtkScalarsToColorsWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -493,6 +499,7 @@ void VtkScalarsToColorsWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Valu
 					info[1]->Int32Value(),
 					info[2]->Int32Value()
 				);
+					VtkUnsignedCharArrayWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -520,6 +527,7 @@ void VtkScalarsToColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -547,7 +555,7 @@ void VtkScalarsToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkScalarsToColors * r;
@@ -559,6 +567,7 @@ void VtkScalarsToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkScalarsToColorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -596,10 +605,10 @@ void VtkScalarsToColorsWrap::SetAnnotations(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkStringArrayWrap *a1 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[1]->ToObject());
 			if(info.Length() != 2)

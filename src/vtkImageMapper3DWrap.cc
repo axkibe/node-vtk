@@ -34,26 +34,27 @@ VtkImageMapper3DWrap::~VtkImageMapper3DWrap()
 
 void VtkImageMapper3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractMapper3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractMapper3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImageMapper3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImageMapper3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImageMapper3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImageMapper3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImageMapper3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImageMapper3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImageMapper3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImageMapper3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractMapper3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractMapper3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImageMapper3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BackgroundOff", BackgroundOff);
 	Nan::SetPrototypeMethod(tpl, "backgroundOff", BackgroundOff);
 
@@ -147,6 +148,8 @@ void VtkImageMapper3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SliceFacesCameraOn", SliceFacesCameraOn);
 	Nan::SetPrototypeMethod(tpl, "sliceFacesCameraOn", SliceFacesCameraOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImageMapper3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -273,6 +276,7 @@ void VtkImageMapper3DWrap::GetDataObjectInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetDataObjectInput();
+		VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,6 +299,7 @@ void VtkImageMapper3DWrap::GetDataSetInput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetDataSetInput();
+		VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,6 +322,7 @@ void VtkImageMapper3DWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInput();
+		VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -409,6 +415,7 @@ void VtkImageMapper3DWrap::GetSlicePlane(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetSlicePlane();
+		VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,6 +460,7 @@ void VtkImageMapper3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkImageMapper3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -468,7 +476,7 @@ void VtkImageMapper3DWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackI
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -488,10 +496,10 @@ void VtkImageMapper3DWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageSliceWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageSliceWrap *a1 = ObjectWrap::Unwrap<VtkImageSliceWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -513,7 +521,7 @@ void VtkImageMapper3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImageMapper3D * r;
@@ -525,6 +533,7 @@ void VtkImageMapper3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImageMapper3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -581,7 +590,7 @@ void VtkImageMapper3DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

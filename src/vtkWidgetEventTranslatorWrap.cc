@@ -27,26 +27,27 @@ VtkWidgetEventTranslatorWrap::~VtkWidgetEventTranslatorWrap()
 
 void VtkWidgetEventTranslatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkWidgetEventTranslatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkWidgetEventTranslator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("WidgetEventTranslator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkWidgetEventTranslator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("WidgetEventTranslator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkWidgetEventTranslatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkWidgetEventTranslatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkWidgetEventTranslatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkWidgetEventTranslatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ClearEvents", ClearEvents);
 	Nan::SetPrototypeMethod(tpl, "clearEvents", ClearEvents);
 
@@ -71,6 +72,8 @@ void VtkWidgetEventTranslatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTranslation", SetTranslation);
 	Nan::SetPrototypeMethod(tpl, "setTranslation", SetTranslation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkWidgetEventTranslatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -177,6 +180,7 @@ void VtkWidgetEventTranslatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkWidgetEventTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,7 +211,7 @@ void VtkWidgetEventTranslatorWrap::RemoveTranslation(const Nan::FunctionCallback
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	else if(info.Length() > 0 && info[0]->IsObject())
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEventWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEventWrap *a0 = ObjectWrap::Unwrap<VtkEventWrap>(info[0]->ToObject());
 		int r;
@@ -229,7 +233,7 @@ void VtkWidgetEventTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkWidgetEventTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetEventTranslatorWrap>(info.Holder());
 	vtkWidgetEventTranslator *native = (vtkWidgetEventTranslator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkWidgetEventTranslator * r;
@@ -241,6 +245,7 @@ void VtkWidgetEventTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkWidgetEventTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

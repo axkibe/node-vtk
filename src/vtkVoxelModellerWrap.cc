@@ -27,26 +27,27 @@ VtkVoxelModellerWrap::~VtkVoxelModellerWrap()
 
 void VtkVoxelModellerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVoxelModellerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVoxelModeller").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VoxelModeller").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVoxelModeller").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VoxelModeller").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVoxelModellerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVoxelModellerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVoxelModellerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVoxelModellerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBackgroundValue", GetBackgroundValue);
 	Nan::SetPrototypeMethod(tpl, "getBackgroundValue", GetBackgroundValue);
 
@@ -128,6 +129,8 @@ void VtkVoxelModellerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 	Nan::SetPrototypeMethod(tpl, "setScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVoxelModellerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -284,6 +287,7 @@ void VtkVoxelModellerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkVoxelModellerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,7 +303,7 @@ void VtkVoxelModellerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVoxelModeller * r;
@@ -311,6 +315,7 @@ void VtkVoxelModellerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVoxelModellerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

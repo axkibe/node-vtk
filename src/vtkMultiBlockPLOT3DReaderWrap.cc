@@ -27,26 +27,27 @@ VtkMultiBlockPLOT3DReaderWrap::~VtkMultiBlockPLOT3DReaderWrap()
 
 void VtkMultiBlockPLOT3DReaderWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkMultiBlockDataSetAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMultiBlockPLOT3DReaderWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMultiBlockPLOT3DReader").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MultiBlockPLOT3DReader").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMultiBlockPLOT3DReader").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MultiBlockPLOT3DReader").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMultiBlockPLOT3DReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMultiBlockPLOT3DReaderWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMultiBlockPLOT3DReaderWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkMultiBlockDataSetAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMultiBlockPLOT3DReaderWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddFunction", AddFunction);
 	Nan::SetPrototypeMethod(tpl, "addFunction", AddFunction);
 
@@ -233,6 +234,8 @@ void VtkMultiBlockPLOT3DReaderWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "TwoDimensionalGeometryOn", TwoDimensionalGeometryOn);
 	Nan::SetPrototypeMethod(tpl, "twoDimensionalGeometryOn", TwoDimensionalGeometryOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMultiBlockPLOT3DReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -778,6 +781,7 @@ void VtkMultiBlockPLOT3DReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkMultiBlockPLOT3DReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -824,7 +828,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMultiBlockPLOT3DReader * r;
@@ -836,6 +840,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMultiBlockPLOT3DReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

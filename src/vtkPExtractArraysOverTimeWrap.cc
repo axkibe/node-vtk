@@ -28,26 +28,27 @@ VtkPExtractArraysOverTimeWrap::~VtkPExtractArraysOverTimeWrap()
 
 void VtkPExtractArraysOverTimeWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExtractArraysOverTimeWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractArraysOverTimeWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPExtractArraysOverTimeWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPExtractArraysOverTime").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PExtractArraysOverTime").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPExtractArraysOverTime").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PExtractArraysOverTime").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPExtractArraysOverTimeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPExtractArraysOverTimeWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPExtractArraysOverTimeWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtractArraysOverTimeWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractArraysOverTimeWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPExtractArraysOverTimeWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkPExtractArraysOverTimeWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPExtractArraysOverTimeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkPExtractArraysOverTimeWrap::GetController(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkPExtractArraysOverTimeWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkPExtractArraysOverTimeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkPExtractArraysOverTimeWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkPExtractArraysOverTimeWrap *wrapper = ObjectWrap::Unwrap<VtkPExtractArraysOverTimeWrap>(info.Holder());
 	vtkPExtractArraysOverTime *native = (vtkPExtractArraysOverTime *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPExtractArraysOverTime * r;
@@ -187,6 +192,7 @@ void VtkPExtractArraysOverTimeWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPExtractArraysOverTimeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkPExtractArraysOverTimeWrap::SetController(const Nan::FunctionCallbackInf
 {
 	VtkPExtractArraysOverTimeWrap *wrapper = ObjectWrap::Unwrap<VtkPExtractArraysOverTimeWrap>(info.Holder());
 	vtkPExtractArraysOverTime *native = (vtkPExtractArraysOverTime *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

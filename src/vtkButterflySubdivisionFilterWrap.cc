@@ -27,26 +27,27 @@ VtkButterflySubdivisionFilterWrap::~VtkButterflySubdivisionFilterWrap()
 
 void VtkButterflySubdivisionFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkInterpolatingSubdivisionFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInterpolatingSubdivisionFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkButterflySubdivisionFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkButterflySubdivisionFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ButterflySubdivisionFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkButterflySubdivisionFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ButterflySubdivisionFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkButterflySubdivisionFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkButterflySubdivisionFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkButterflySubdivisionFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkInterpolatingSubdivisionFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkInterpolatingSubdivisionFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkButterflySubdivisionFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkButterflySubdivisionFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkButterflySubdivisionFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkButterflySubdivisionFilterWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
+		VtkButterflySubdivisionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkButterflySubdivisionFilterWrap::SafeDownCast(const Nan::FunctionCallback
 {
 	VtkButterflySubdivisionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkButterflySubdivisionFilterWrap>(info.Holder());
 	vtkButterflySubdivisionFilter *native = (vtkButterflySubdivisionFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkButterflySubdivisionFilter * r;
@@ -158,6 +162,7 @@ void VtkButterflySubdivisionFilterWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkButterflySubdivisionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

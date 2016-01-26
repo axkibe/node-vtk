@@ -28,26 +28,27 @@ VtkSocketCollectionWrap::~VtkSocketCollectionWrap()
 
 void VtkSocketCollectionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCollectionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSocketCollectionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSocketCollection").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SocketCollection").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSocketCollection").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SocketCollection").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSocketCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSocketCollectionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSocketCollectionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCollectionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCollectionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSocketCollectionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddItem", AddItem);
 	Nan::SetPrototypeMethod(tpl, "addItem", AddItem);
 
@@ -75,6 +76,8 @@ void VtkSocketCollectionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSocketCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -104,7 +107,7 @@ void VtkSocketCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSocketCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCollectionWrap>(info.Holder());
 	vtkSocketCollection *native = (vtkSocketCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketWrap *a0 = ObjectWrap::Unwrap<VtkSocketWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -145,6 +148,7 @@ void VtkSocketCollectionWrap::GetLastSelectedSocket(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLastSelectedSocket();
+		VtkSocketWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,6 +193,7 @@ void VtkSocketCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
+		VtkSocketCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +221,7 @@ void VtkSocketCollectionWrap::RemoveItem(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSocketCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCollectionWrap>(info.Holder());
 	vtkSocketCollection *native = (vtkSocketCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -250,7 +255,7 @@ void VtkSocketCollectionWrap::ReplaceItem(const Nan::FunctionCallbackInfo<v8::Va
 	vtkSocketCollection *native = (vtkSocketCollection *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkObjectWrap *a1 = ObjectWrap::Unwrap<VtkObjectWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -272,7 +277,7 @@ void VtkSocketCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSocketCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCollectionWrap>(info.Holder());
 	vtkSocketCollection *native = (vtkSocketCollection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSocketCollection * r;
@@ -284,6 +289,7 @@ void VtkSocketCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSocketCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

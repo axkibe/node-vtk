@@ -27,26 +27,27 @@ VtkGeoSphereTransformWrap::~VtkGeoSphereTransformWrap()
 
 void VtkGeoSphereTransformWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractTransformWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkGeoSphereTransformWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkGeoSphereTransform").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("GeoSphereTransform").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkGeoSphereTransform").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("GeoSphereTransform").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkGeoSphereTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkGeoSphereTransformWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkGeoSphereTransformWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractTransformWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractTransformWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkGeoSphereTransformWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetBaseAltitude", GetBaseAltitude);
 	Nan::SetPrototypeMethod(tpl, "getBaseAltitude", GetBaseAltitude);
 
@@ -77,6 +78,8 @@ void VtkGeoSphereTransformWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ToRectangularOn", ToRectangularOn);
 	Nan::SetPrototypeMethod(tpl, "toRectangularOn", ToRectangularOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkGeoSphereTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -175,6 +178,7 @@ void VtkGeoSphereTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->MakeTransform();
+		VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,6 +201,7 @@ void VtkGeoSphereTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkGeoSphereTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +217,7 @@ void VtkGeoSphereTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGeoSphereTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSphereTransformWrap>(info.Holder());
 	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkGeoSphereTransform * r;
@@ -224,6 +229,7 @@ void VtkGeoSphereTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkGeoSphereTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

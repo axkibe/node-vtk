@@ -30,26 +30,27 @@ VtkDiscretizableColorTransferFunctionWrap::~VtkDiscretizableColorTransferFunctio
 
 void VtkDiscretizableColorTransferFunctionWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkColorTransferFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkColorTransferFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkDiscretizableColorTransferFunctionWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkDiscretizableColorTransferFunction").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("DiscretizableColorTransferFunction").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkDiscretizableColorTransferFunction").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("DiscretizableColorTransferFunction").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkDiscretizableColorTransferFunctionWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkDiscretizableColorTransferFunctionWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkDiscretizableColorTransferFunctionWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkColorTransferFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkColorTransferFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkDiscretizableColorTransferFunctionWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Build", Build);
 	Nan::SetPrototypeMethod(tpl, "build", Build);
 
@@ -113,6 +114,8 @@ void VtkDiscretizableColorTransferFunctionWrap::InitTpl(v8::Local<v8::FunctionTe
 	Nan::SetPrototypeMethod(tpl, "UsingLogScale", UsingLogScale);
 	Nan::SetPrototypeMethod(tpl, "usingLogScale", UsingLogScale);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkDiscretizableColorTransferFunctionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -258,6 +261,7 @@ void VtkDiscretizableColorTransferFunctionWrap::GetScalarOpacityFunction(const N
 		return;
 	}
 	r = native->GetScalarOpacityFunction();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,7 +327,7 @@ void VtkDiscretizableColorTransferFunctionWrap::MapScalars(const Nan::FunctionCa
 {
 	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
 	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -341,6 +345,7 @@ void VtkDiscretizableColorTransferFunctionWrap::MapScalars(const Nan::FunctionCa
 					info[1]->Int32Value(),
 					info[2]->Int32Value()
 				);
+					VtkUnsignedCharArrayWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -368,6 +373,7 @@ void VtkDiscretizableColorTransferFunctionWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
+		VtkDiscretizableColorTransferFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -383,7 +389,7 @@ void VtkDiscretizableColorTransferFunctionWrap::SafeDownCast(const Nan::Function
 {
 	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
 	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkDiscretizableColorTransferFunction * r;
@@ -395,6 +401,7 @@ void VtkDiscretizableColorTransferFunctionWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkDiscretizableColorTransferFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -478,7 +485,7 @@ void VtkDiscretizableColorTransferFunctionWrap::SetScalarOpacityFunction(const N
 {
 	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
 	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

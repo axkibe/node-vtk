@@ -27,26 +27,27 @@ VtkZLibDataCompressorWrap::~VtkZLibDataCompressorWrap()
 
 void VtkZLibDataCompressorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataCompressorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataCompressorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkZLibDataCompressorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkZLibDataCompressor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ZLibDataCompressor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkZLibDataCompressor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ZLibDataCompressor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkZLibDataCompressorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkZLibDataCompressorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkZLibDataCompressorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataCompressorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataCompressorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkZLibDataCompressorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkZLibDataCompressorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCompressionLevel", SetCompressionLevel);
 	Nan::SetPrototypeMethod(tpl, "setCompressionLevel", SetCompressionLevel);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkZLibDataCompressorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -185,6 +188,7 @@ void VtkZLibDataCompressorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkZLibDataCompressorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +204,7 @@ void VtkZLibDataCompressorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkZLibDataCompressorWrap *wrapper = ObjectWrap::Unwrap<VtkZLibDataCompressorWrap>(info.Holder());
 	vtkZLibDataCompressor *native = (vtkZLibDataCompressor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkZLibDataCompressor * r;
@@ -212,6 +216,7 @@ void VtkZLibDataCompressorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkZLibDataCompressorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

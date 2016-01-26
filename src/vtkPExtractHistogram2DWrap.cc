@@ -28,26 +28,27 @@ VtkPExtractHistogram2DWrap::~VtkPExtractHistogram2DWrap()
 
 void VtkPExtractHistogram2DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkExtractHistogram2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractHistogram2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPExtractHistogram2DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PExtractHistogram2D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPExtractHistogram2D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PExtractHistogram2D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPExtractHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPExtractHistogram2DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPExtractHistogram2DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkExtractHistogram2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkExtractHistogram2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPExtractHistogram2DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +67,8 @@ void VtkPExtractHistogram2DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPExtractHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,6 +119,7 @@ void VtkPExtractHistogram2DWrap::GetController(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,6 +164,7 @@ void VtkPExtractHistogram2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
+		VtkPExtractHistogram2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +180,7 @@ void VtkPExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPExtractHistogram2DWrap>(info.Holder());
 	vtkPExtractHistogram2D *native = (vtkPExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPExtractHistogram2D * r;
@@ -187,6 +192,7 @@ void VtkPExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPExtractHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +211,7 @@ void VtkPExtractHistogram2DWrap::SetController(const Nan::FunctionCallbackInfo<v
 {
 	VtkPExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPExtractHistogram2DWrap>(info.Holder());
 	vtkPExtractHistogram2D *native = (vtkPExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

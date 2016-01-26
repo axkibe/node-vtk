@@ -28,26 +28,27 @@ VtkTransmitImageDataPieceWrap::~VtkTransmitImageDataPieceWrap()
 
 void VtkTransmitImageDataPieceWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTransmitImageDataPieceWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTransmitImageDataPiece").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TransmitImageDataPiece").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTransmitImageDataPiece").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TransmitImageDataPiece").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTransmitImageDataPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTransmitImageDataPieceWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTransmitImageDataPieceWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTransmitImageDataPieceWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateGhostCellsOff", CreateGhostCellsOff);
 	Nan::SetPrototypeMethod(tpl, "createGhostCellsOff", CreateGhostCellsOff);
 
@@ -78,6 +79,8 @@ void VtkTransmitImageDataPieceWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetCreateGhostCells", SetCreateGhostCells);
 	Nan::SetPrototypeMethod(tpl, "setCreateGhostCells", SetCreateGhostCells);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTransmitImageDataPieceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -152,6 +155,7 @@ void VtkTransmitImageDataPieceWrap::GetController(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,6 +214,7 @@ void VtkTransmitImageDataPieceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkTransmitImageDataPieceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +230,7 @@ void VtkTransmitImageDataPieceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkTransmitImageDataPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitImageDataPieceWrap>(info.Holder());
 	vtkTransmitImageDataPiece *native = (vtkTransmitImageDataPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTransmitImageDataPiece * r;
@@ -237,6 +242,7 @@ void VtkTransmitImageDataPieceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTransmitImageDataPieceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -255,7 +261,7 @@ void VtkTransmitImageDataPieceWrap::SetController(const Nan::FunctionCallbackInf
 {
 	VtkTransmitImageDataPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitImageDataPieceWrap>(info.Holder());
 	vtkTransmitImageDataPiece *native = (vtkTransmitImageDataPiece *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

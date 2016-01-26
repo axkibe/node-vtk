@@ -34,26 +34,27 @@ VtkCompassRepresentationWrap::~VtkCompassRepresentationWrap()
 
 void VtkCompassRepresentationWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContinuousValueWidgetRepresentationWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContinuousValueWidgetRepresentationWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCompassRepresentationWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCompassRepresentation").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CompassRepresentation").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCompassRepresentation").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CompassRepresentation").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCompassRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCompassRepresentationWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCompassRepresentationWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContinuousValueWidgetRepresentationWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContinuousValueWidgetRepresentationWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCompassRepresentationWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
@@ -135,6 +136,8 @@ void VtkCompassRepresentationWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UpdateTilt", UpdateTilt);
 	Nan::SetPrototypeMethod(tpl, "updateTilt", UpdateTilt);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCompassRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -229,7 +232,7 @@ void VtkCompassRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -298,6 +301,7 @@ void VtkCompassRepresentationWrap::GetLabelProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLabelProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -320,6 +324,7 @@ void VtkCompassRepresentationWrap::GetPoint1Coordinate(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetPoint1Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -342,6 +347,7 @@ void VtkCompassRepresentationWrap::GetPoint2Coordinate(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetPoint2Coordinate();
+		VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -364,6 +370,7 @@ void VtkCompassRepresentationWrap::GetRingProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetRingProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -386,6 +393,7 @@ void VtkCompassRepresentationWrap::GetSelectedProperty(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetSelectedProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -463,6 +471,7 @@ void VtkCompassRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkCompassRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -478,7 +487,7 @@ void VtkCompassRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionC
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -498,7 +507,7 @@ void VtkCompassRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCallb
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -520,7 +529,7 @@ void VtkCompassRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -542,7 +551,7 @@ void VtkCompassRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCompassRepresentation * r;
@@ -554,6 +563,7 @@ void VtkCompassRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCompassRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -610,7 +620,7 @@ void VtkCompassRepresentationWrap::SetRenderer(const Nan::FunctionCallbackInfo<v
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

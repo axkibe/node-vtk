@@ -33,26 +33,27 @@ VtkAnnotatedCubeActorWrap::~VtkAnnotatedCubeActorWrap()
 
 void VtkAnnotatedCubeActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkProp3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAnnotatedCubeActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAnnotatedCubeActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AnnotatedCubeActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAnnotatedCubeActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AnnotatedCubeActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAnnotatedCubeActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAnnotatedCubeActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAnnotatedCubeActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkProp3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkProp3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAnnotatedCubeActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetActors", GetActors);
 	Nan::SetPrototypeMethod(tpl, "getActors", GetActors);
 
@@ -188,6 +189,8 @@ void VtkAnnotatedCubeActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAnnotatedCubeActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -217,7 +220,7 @@ void VtkAnnotatedCubeActorWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -244,6 +247,7 @@ void VtkAnnotatedCubeActorWrap::GetAssembly(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAssembly();
+		VtkAssemblyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,6 +284,7 @@ void VtkAnnotatedCubeActorWrap::GetCubeProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetCubeProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,6 +349,7 @@ void VtkAnnotatedCubeActorWrap::GetTextEdgesProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetTextEdgesProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,6 +400,7 @@ void VtkAnnotatedCubeActorWrap::GetXMinusFaceProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetXMinusFaceProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -430,6 +437,7 @@ void VtkAnnotatedCubeActorWrap::GetXPlusFaceProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetXPlusFaceProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -480,6 +488,7 @@ void VtkAnnotatedCubeActorWrap::GetYMinusFaceProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetYMinusFaceProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -516,6 +525,7 @@ void VtkAnnotatedCubeActorWrap::GetYPlusFaceProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetYPlusFaceProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -566,6 +576,7 @@ void VtkAnnotatedCubeActorWrap::GetZMinusFaceProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetZMinusFaceProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -602,6 +613,7 @@ void VtkAnnotatedCubeActorWrap::GetZPlusFaceProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetZPlusFaceProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -674,6 +686,7 @@ void VtkAnnotatedCubeActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
+		VtkAnnotatedCubeActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -689,7 +702,7 @@ void VtkAnnotatedCubeActorWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -709,7 +722,7 @@ void VtkAnnotatedCubeActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallback
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -731,7 +744,7 @@ void VtkAnnotatedCubeActorWrap::RenderTranslucentPolygonalGeometry(const Nan::Fu
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -753,7 +766,7 @@ void VtkAnnotatedCubeActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAnnotatedCubeActor * r;
@@ -765,6 +778,7 @@ void VtkAnnotatedCubeActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAnnotatedCubeActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1036,7 +1050,7 @@ void VtkAnnotatedCubeActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

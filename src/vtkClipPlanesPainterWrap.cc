@@ -28,26 +28,27 @@ VtkClipPlanesPainterWrap::~VtkClipPlanesPainterWrap()
 
 void VtkClipPlanesPainterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPainterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkClipPlanesPainterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkClipPlanesPainter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ClipPlanesPainter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkClipPlanesPainter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ClipPlanesPainter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkClipPlanesPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkClipPlanesPainterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkClipPlanesPainterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPainterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPainterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkClipPlanesPainterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CLIPPING_PLANES", CLIPPING_PLANES);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
@@ -62,6 +63,8 @@ void VtkClipPlanesPainterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkClipPlanesPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -98,6 +101,7 @@ void VtkClipPlanesPainterWrap::CLIPPING_PLANES(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->CLIPPING_PLANES();
+		VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -156,6 +160,7 @@ void VtkClipPlanesPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkClipPlanesPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -171,7 +176,7 @@ void VtkClipPlanesPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkClipPlanesPainterWrap *wrapper = ObjectWrap::Unwrap<VtkClipPlanesPainterWrap>(info.Holder());
 	vtkClipPlanesPainter *native = (vtkClipPlanesPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkClipPlanesPainter * r;
@@ -183,6 +188,7 @@ void VtkClipPlanesPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkClipPlanesPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

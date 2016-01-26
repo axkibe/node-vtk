@@ -29,26 +29,27 @@ VtkObjectFactoryWrap::~VtkObjectFactoryWrap()
 
 void VtkObjectFactoryWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkObjectFactoryWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkObjectFactory").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ObjectFactory").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkObjectFactory").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ObjectFactory").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkObjectFactoryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkObjectFactoryWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkObjectFactoryWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkObjectFactoryWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ConstructInstance", ConstructInstance);
 	Nan::SetPrototypeMethod(tpl, "constructInstance", ConstructInstance);
 
@@ -127,6 +128,8 @@ void VtkObjectFactoryWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UnRegisterFactory", UnRegisterFactory);
 	Nan::SetPrototypeMethod(tpl, "unRegisterFactory", UnRegisterFactory);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkObjectFactoryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -179,7 +182,7 @@ void VtkObjectFactoryWrap::CreateAllInstance(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCollectionWrap *a1 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -213,6 +216,7 @@ void VtkObjectFactoryWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->CreateInstance(
 			*a0
 		);
+			VtkObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -414,7 +418,7 @@ void VtkObjectFactoryWrap::GetOverrideInformation(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkOverrideInformationCollectionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkOverrideInformationCollectionWrap *a1 = ObjectWrap::Unwrap<VtkOverrideInformationCollectionWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -443,6 +447,7 @@ void VtkObjectFactoryWrap::GetRegisteredFactories(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetRegisteredFactories();
+		VtkObjectFactoryCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -561,6 +566,7 @@ void VtkObjectFactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkObjectFactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -588,7 +594,7 @@ void VtkObjectFactoryWrap::RegisterFactory(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectFactoryWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectFactoryWrap *a0 = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -608,7 +614,7 @@ void VtkObjectFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkObjectFactory * r;
@@ -620,6 +626,7 @@ void VtkObjectFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkObjectFactoryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -718,7 +725,7 @@ void VtkObjectFactoryWrap::UnRegisterFactory(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectFactoryWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectFactoryWrap *a0 = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

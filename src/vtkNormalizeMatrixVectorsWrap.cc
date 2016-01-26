@@ -27,26 +27,27 @@ VtkNormalizeMatrixVectorsWrap::~VtkNormalizeMatrixVectorsWrap()
 
 void VtkNormalizeMatrixVectorsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkArrayDataAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkArrayDataAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkNormalizeMatrixVectorsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkNormalizeMatrixVectors").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("NormalizeMatrixVectors").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkNormalizeMatrixVectors").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("NormalizeMatrixVectors").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkNormalizeMatrixVectorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkNormalizeMatrixVectorsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkNormalizeMatrixVectorsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkArrayDataAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkArrayDataAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkNormalizeMatrixVectorsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +72,8 @@ void VtkNormalizeMatrixVectorsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetVectorDimension", SetVectorDimension);
 	Nan::SetPrototypeMethod(tpl, "setVectorDimension", SetVectorDimension);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkNormalizeMatrixVectorsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -171,6 +174,7 @@ void VtkNormalizeMatrixVectorsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkNormalizeMatrixVectorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +190,7 @@ void VtkNormalizeMatrixVectorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkNormalizeMatrixVectorsWrap *wrapper = ObjectWrap::Unwrap<VtkNormalizeMatrixVectorsWrap>(info.Holder());
 	vtkNormalizeMatrixVectors *native = (vtkNormalizeMatrixVectors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkNormalizeMatrixVectors * r;
@@ -198,6 +202,7 @@ void VtkNormalizeMatrixVectorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkNormalizeMatrixVectorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -31,26 +31,27 @@ VtkMNIObjectWriterWrap::~VtkMNIObjectWriterWrap()
 
 void VtkMNIObjectWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMNIObjectWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMNIObjectWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MNIObjectWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMNIObjectWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MNIObjectWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMNIObjectWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMNIObjectWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMNIObjectWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMNIObjectWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -114,6 +115,8 @@ void VtkMNIObjectWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetProperty", SetProperty);
 	Nan::SetPrototypeMethod(tpl, "setProperty", SetProperty);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMNIObjectWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -252,6 +255,7 @@ void VtkMNIObjectWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
+			VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -270,6 +274,7 @@ void VtkMNIObjectWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,6 +297,7 @@ void VtkMNIObjectWriterWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,6 +320,7 @@ void VtkMNIObjectWriterWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetMapper();
+		VtkMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -336,6 +343,7 @@ void VtkMNIObjectWriterWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetProperty();
+		VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,6 +388,7 @@ void VtkMNIObjectWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
+		VtkMNIObjectWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,7 +404,7 @@ void VtkMNIObjectWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMNIObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNIObjectWriterWrap>(info.Holder());
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMNIObjectWriter * r;
@@ -407,6 +416,7 @@ void VtkMNIObjectWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMNIObjectWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -488,7 +498,7 @@ void VtkMNIObjectWriterWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMNIObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNIObjectWriterWrap>(info.Holder());
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLookupTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLookupTableWrap *a0 = ObjectWrap::Unwrap<VtkLookupTableWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -508,7 +518,7 @@ void VtkMNIObjectWriterWrap::SetMapper(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMNIObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNIObjectWriterWrap>(info.Holder());
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMapperWrap *a0 = ObjectWrap::Unwrap<VtkMapperWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -528,7 +538,7 @@ void VtkMNIObjectWriterWrap::SetProperty(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMNIObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNIObjectWriterWrap>(info.Holder());
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

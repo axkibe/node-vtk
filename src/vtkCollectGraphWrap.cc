@@ -29,26 +29,27 @@ VtkCollectGraphWrap::~VtkCollectGraphWrap()
 
 void VtkCollectGraphWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkGraphAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCollectGraphWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCollectGraph").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CollectGraph").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCollectGraph").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CollectGraph").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCollectGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCollectGraphWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCollectGraphWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkGraphAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkGraphAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCollectGraphWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -91,6 +92,8 @@ void VtkCollectGraphWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetSocketController", SetSocketController);
 	Nan::SetPrototypeMethod(tpl, "setSocketController", SetSocketController);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCollectGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -141,6 +144,7 @@ void VtkCollectGraphWrap::GetController(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetController();
+		VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,6 +195,7 @@ void VtkCollectGraphWrap::GetSocketController(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetSocketController();
+		VtkSocketControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,6 +240,7 @@ void VtkCollectGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkCollectGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,7 +280,7 @@ void VtkCollectGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCollectGraphWrap *wrapper = ObjectWrap::Unwrap<VtkCollectGraphWrap>(info.Holder());
 	vtkCollectGraph *native = (vtkCollectGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCollectGraph * r;
@@ -286,6 +292,7 @@ void VtkCollectGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCollectGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,7 +311,7 @@ void VtkCollectGraphWrap::SetController(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCollectGraphWrap *wrapper = ObjectWrap::Unwrap<VtkCollectGraphWrap>(info.Holder());
 	vtkCollectGraph *native = (vtkCollectGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -362,7 +369,7 @@ void VtkCollectGraphWrap::SetSocketController(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCollectGraphWrap *wrapper = ObjectWrap::Unwrap<VtkCollectGraphWrap>(info.Holder());
 	vtkCollectGraph *native = (vtkCollectGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketControllerWrap *a0 = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

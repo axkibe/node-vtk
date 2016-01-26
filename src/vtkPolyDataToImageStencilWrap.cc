@@ -28,26 +28,27 @@ VtkPolyDataToImageStencilWrap::~VtkPolyDataToImageStencilWrap()
 
 void VtkPolyDataToImageStencilWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImageStencilSourceWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageStencilSourceWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkPolyDataToImageStencilWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkPolyDataToImageStencil").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("PolyDataToImageStencil").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkPolyDataToImageStencil").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("PolyDataToImageStencil").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkPolyDataToImageStencilWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkPolyDataToImageStencilWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkPolyDataToImageStencilWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImageStencilSourceWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImageStencilSourceWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkPolyDataToImageStencilWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -78,6 +79,8 @@ void VtkPolyDataToImageStencilWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkPolyDataToImageStencilWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -128,6 +131,7 @@ void VtkPolyDataToImageStencilWrap::GetInput(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetInput();
+		VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,6 +218,7 @@ void VtkPolyDataToImageStencilWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkPolyDataToImageStencilWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,7 +234,7 @@ void VtkPolyDataToImageStencilWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkPolyDataToImageStencilWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataToImageStencilWrap>(info.Holder());
 	vtkPolyDataToImageStencil *native = (vtkPolyDataToImageStencil *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkPolyDataToImageStencil * r;
@@ -241,6 +246,7 @@ void VtkPolyDataToImageStencilWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkPolyDataToImageStencilWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -259,7 +265,7 @@ void VtkPolyDataToImageStencilWrap::SetInputData(const Nan::FunctionCallbackInfo
 {
 	VtkPolyDataToImageStencilWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataToImageStencilWrap>(info.Holder());
 	vtkPolyDataToImageStencil *native = (vtkPolyDataToImageStencil *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

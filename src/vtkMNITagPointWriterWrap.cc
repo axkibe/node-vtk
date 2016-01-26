@@ -31,26 +31,27 @@ VtkMNITagPointWriterWrap::~VtkMNITagPointWriterWrap()
 
 void VtkMNITagPointWriterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkWriterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkMNITagPointWriterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkMNITagPointWriter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("MNITagPointWriter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkMNITagPointWriter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("MNITagPointWriter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkMNITagPointWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkMNITagPointWriterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkMNITagPointWriterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkWriterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkWriterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkMNITagPointWriterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -114,6 +115,8 @@ void VtkMNITagPointWriterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkMNITagPointWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -220,6 +223,7 @@ void VtkMNITagPointWriterWrap::GetLabelText(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLabelText();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,6 +246,7 @@ void VtkMNITagPointWriterWrap::GetPatientIds(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetPatientIds();
+		VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -268,6 +273,7 @@ void VtkMNITagPointWriterWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetPoints(
 			info[0]->Int32Value()
 		);
+			VtkPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -286,6 +292,7 @@ void VtkMNITagPointWriterWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetPoints();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -308,6 +315,7 @@ void VtkMNITagPointWriterWrap::GetStructureIds(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetStructureIds();
+		VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -330,6 +338,7 @@ void VtkMNITagPointWriterWrap::GetWeights(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetWeights();
+		VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -374,6 +383,7 @@ void VtkMNITagPointWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
+		VtkMNITagPointWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -389,7 +399,7 @@ void VtkMNITagPointWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkMNITagPointWriter * r;
@@ -401,6 +411,7 @@ void VtkMNITagPointWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkMNITagPointWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -459,7 +470,7 @@ void VtkMNITagPointWriterWrap::SetLabelText(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -479,7 +490,7 @@ void VtkMNITagPointWriterWrap::SetPatientIds(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIntArrayWrap *a0 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -499,7 +510,7 @@ void VtkMNITagPointWriterWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -514,7 +525,7 @@ void VtkMNITagPointWriterWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -536,7 +547,7 @@ void VtkMNITagPointWriterWrap::SetStructureIds(const Nan::FunctionCallbackInfo<v
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIntArrayWrap *a0 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -556,7 +567,7 @@ void VtkMNITagPointWriterWrap::SetWeights(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

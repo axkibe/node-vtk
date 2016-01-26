@@ -34,26 +34,27 @@ VtkHierarchicalGraphPipelineWrap::~VtkHierarchicalGraphPipelineWrap()
 
 void VtkHierarchicalGraphPipelineWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkHierarchicalGraphPipelineWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkHierarchicalGraphPipeline").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("HierarchicalGraphPipeline").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkHierarchicalGraphPipeline").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("HierarchicalGraphPipeline").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkHierarchicalGraphPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkHierarchicalGraphPipelineWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkHierarchicalGraphPipelineWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkHierarchicalGraphPipelineWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "ApplyViewTheme", ApplyViewTheme);
 	Nan::SetPrototypeMethod(tpl, "applyViewTheme", ApplyViewTheme);
 
@@ -138,6 +139,8 @@ void VtkHierarchicalGraphPipelineWrap::InitTpl(v8::Local<v8::FunctionTemplate> t
 	Nan::SetPrototypeMethod(tpl, "VisibilityOn", VisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "visibilityOn", VisibilityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkHierarchicalGraphPipelineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -167,7 +170,7 @@ void VtkHierarchicalGraphPipelineWrap::ApplyViewTheme(const Nan::FunctionCallbac
 {
 	VtkHierarchicalGraphPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphPipelineWrap>(info.Holder());
 	vtkHierarchicalGraphPipeline *native = (vtkHierarchicalGraphPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -211,10 +214,10 @@ void VtkHierarchicalGraphPipelineWrap::ConvertSelection(const Nan::FunctionCallb
 {
 	VtkHierarchicalGraphPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphPipelineWrap>(info.Holder());
 	vtkHierarchicalGraphPipeline *native = (vtkHierarchicalGraphPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkSelectionWrap *a1 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[1]->ToObject());
 			vtkSelection * r;
@@ -227,6 +230,7 @@ void VtkHierarchicalGraphPipelineWrap::ConvertSelection(const Nan::FunctionCallb
 				(vtkDataRepresentation *) a0->native.GetPointer(),
 				(vtkSelection *) a1->native.GetPointer()
 			);
+				VtkSelectionWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -253,6 +257,7 @@ void VtkHierarchicalGraphPipelineWrap::GetActor(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetActor();
+		VtkActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -331,6 +336,7 @@ void VtkHierarchicalGraphPipelineWrap::GetLabelActor(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetLabelActor();
+		VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -367,6 +373,7 @@ void VtkHierarchicalGraphPipelineWrap::GetLabelTextProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -449,6 +456,7 @@ void VtkHierarchicalGraphPipelineWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
+		VtkHierarchicalGraphPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -464,13 +472,13 @@ void VtkHierarchicalGraphPipelineWrap::PrepareInputConnections(const Nan::Functi
 {
 	VtkHierarchicalGraphPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphPipelineWrap>(info.Holder());
 	vtkHierarchicalGraphPipeline *native = (vtkHierarchicalGraphPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkAlgorithmOutputWrap *a2 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -494,7 +502,7 @@ void VtkHierarchicalGraphPipelineWrap::RegisterProgress(const Nan::FunctionCallb
 {
 	VtkHierarchicalGraphPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphPipelineWrap>(info.Holder());
 	vtkHierarchicalGraphPipeline *native = (vtkHierarchicalGraphPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderViewWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderViewWrap *a0 = ObjectWrap::Unwrap<VtkRenderViewWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -514,7 +522,7 @@ void VtkHierarchicalGraphPipelineWrap::SafeDownCast(const Nan::FunctionCallbackI
 {
 	VtkHierarchicalGraphPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphPipelineWrap>(info.Holder());
 	vtkHierarchicalGraphPipeline *native = (vtkHierarchicalGraphPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkHierarchicalGraphPipeline * r;
@@ -526,6 +534,7 @@ void VtkHierarchicalGraphPipelineWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkHierarchicalGraphPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -623,7 +632,7 @@ void VtkHierarchicalGraphPipelineWrap::SetLabelTextProperty(const Nan::FunctionC
 {
 	VtkHierarchicalGraphPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphPipelineWrap>(info.Holder());
 	vtkHierarchicalGraphPipeline *native = (vtkHierarchicalGraphPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

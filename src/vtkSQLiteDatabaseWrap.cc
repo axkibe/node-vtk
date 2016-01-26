@@ -29,26 +29,27 @@ VtkSQLiteDatabaseWrap::~VtkSQLiteDatabaseWrap()
 
 void VtkSQLiteDatabaseWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkSQLDatabaseWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSQLDatabaseWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkSQLiteDatabaseWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkSQLiteDatabase").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("SQLiteDatabase").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkSQLiteDatabase").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("SQLiteDatabase").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkSQLiteDatabaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkSQLiteDatabaseWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkSQLiteDatabaseWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkSQLDatabaseWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkSQLDatabaseWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkSQLiteDatabaseWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Close", Close);
 	Nan::SetPrototypeMethod(tpl, "close", Close);
 
@@ -85,6 +86,8 @@ void VtkSQLiteDatabaseWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetDatabaseFileName", SetDatabaseFileName);
 	Nan::SetPrototypeMethod(tpl, "setDatabaseFileName", SetDatabaseFileName);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkSQLiteDatabaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -189,6 +192,7 @@ void VtkSQLiteDatabaseWrap::GetQueryInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetQueryInstance();
+		VtkSQLQueryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,6 +220,7 @@ void VtkSQLiteDatabaseWrap::GetRecord(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetRecord(
 			*a0
 		);
+			VtkStringArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -241,6 +246,7 @@ void VtkSQLiteDatabaseWrap::GetTables(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTables();
+		VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,6 +291,7 @@ void VtkSQLiteDatabaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkSQLiteDatabaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -300,7 +307,7 @@ void VtkSQLiteDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSQLiteDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLiteDatabaseWrap>(info.Holder());
 	vtkSQLiteDatabase *native = (vtkSQLiteDatabase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkSQLiteDatabase * r;
@@ -312,6 +319,7 @@ void VtkSQLiteDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkSQLiteDatabaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

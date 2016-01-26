@@ -29,26 +29,27 @@ VtkCategoryLegendWrap::~VtkCategoryLegendWrap()
 
 void VtkCategoryLegendWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkChartLegendWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartLegendWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCategoryLegendWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCategoryLegend").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CategoryLegend").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCategoryLegend").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CategoryLegend").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCategoryLegendWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCategoryLegendWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCategoryLegendWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkChartLegendWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkChartLegendWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCategoryLegendWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,6 +74,8 @@ void VtkCategoryLegendWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetValues", SetValues);
 	Nan::SetPrototypeMethod(tpl, "setValues", SetValues);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCategoryLegendWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -123,6 +126,7 @@ void VtkCategoryLegendWrap::GetScalarsToColors(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetScalarsToColors();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -145,6 +149,7 @@ void VtkCategoryLegendWrap::GetValues(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetValues();
+		VtkVariantArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,6 +194,7 @@ void VtkCategoryLegendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkCategoryLegendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,7 +210,7 @@ void VtkCategoryLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCategoryLegendWrap *wrapper = ObjectWrap::Unwrap<VtkCategoryLegendWrap>(info.Holder());
 	vtkCategoryLegend *native = (vtkCategoryLegend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCategoryLegend * r;
@@ -216,6 +222,7 @@ void VtkCategoryLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCategoryLegendWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +241,7 @@ void VtkCategoryLegendWrap::SetScalarsToColors(const Nan::FunctionCallbackInfo<v
 {
 	VtkCategoryLegendWrap *wrapper = ObjectWrap::Unwrap<VtkCategoryLegendWrap>(info.Holder());
 	vtkCategoryLegend *native = (vtkCategoryLegend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -254,7 +261,7 @@ void VtkCategoryLegendWrap::SetValues(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCategoryLegendWrap *wrapper = ObjectWrap::Unwrap<VtkCategoryLegendWrap>(info.Holder());
 	vtkCategoryLegend *native = (vtkCategoryLegend *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVariantArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVariantArrayWrap *a0 = ObjectWrap::Unwrap<VtkVariantArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

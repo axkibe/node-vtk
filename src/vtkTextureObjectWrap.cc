@@ -28,26 +28,27 @@ VtkTextureObjectWrap::~VtkTextureObjectWrap()
 
 void VtkTextureObjectWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkTextureObjectWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkTextureObject").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("TextureObject").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkTextureObject").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("TextureObject").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkTextureObjectWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkTextureObjectWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkTextureObjectWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkTextureObjectWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "Bind", Bind);
 	Nan::SetPrototypeMethod(tpl, "bind", Bind);
 
@@ -153,6 +154,8 @@ void VtkTextureObjectWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UnBind", UnBind);
 	Nan::SetPrototypeMethod(tpl, "unBind", UnBind);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkTextureObjectWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -287,6 +290,7 @@ void VtkTextureObjectWrap::Download(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->Download();
+		VtkPixelBufferObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -365,6 +369,7 @@ void VtkTextureObjectWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetContext();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -549,6 +554,7 @@ void VtkTextureObjectWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
+		VtkTextureObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -564,7 +570,7 @@ void VtkTextureObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
 	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkTextureObject * r;
@@ -576,6 +582,7 @@ void VtkTextureObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkTextureObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -644,7 +651,7 @@ void VtkTextureObjectWrap::SetContext(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
 	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

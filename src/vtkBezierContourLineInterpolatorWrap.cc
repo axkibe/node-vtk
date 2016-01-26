@@ -30,26 +30,27 @@ VtkBezierContourLineInterpolatorWrap::~VtkBezierContourLineInterpolatorWrap()
 
 void VtkBezierContourLineInterpolatorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkContourLineInterpolatorWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourLineInterpolatorWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBezierContourLineInterpolatorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBezierContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BezierContourLineInterpolator").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBezierContourLineInterpolator").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BezierContourLineInterpolator").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBezierContourLineInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBezierContourLineInterpolatorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBezierContourLineInterpolatorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkContourLineInterpolatorWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContourLineInterpolatorWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBezierContourLineInterpolatorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -92,6 +93,8 @@ void VtkBezierContourLineInterpolatorWrap::InitTpl(v8::Local<v8::FunctionTemplat
 	Nan::SetPrototypeMethod(tpl, "SetMaximumCurveLineSegments", SetMaximumCurveLineSegments);
 	Nan::SetPrototypeMethod(tpl, "setMaximumCurveLineSegments", SetMaximumCurveLineSegments);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBezierContourLineInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -221,10 +224,10 @@ void VtkBezierContourLineInterpolatorWrap::GetSpan(const Nan::FunctionCallbackIn
 	vtkBezierContourLineInterpolator *native = (vtkBezierContourLineInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIntArrayWrap *a1 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject())
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkContourRepresentationWrap *a2 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[2]->ToObject());
 				if(info.Length() != 3)
@@ -248,10 +251,10 @@ void VtkBezierContourLineInterpolatorWrap::InterpolateLine(const Nan::FunctionCa
 {
 	VtkBezierContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkBezierContourLineInterpolatorWrap>(info.Holder());
 	vtkBezierContourLineInterpolator *native = (vtkBezierContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject())
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkContourRepresentationWrap *a1 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -312,6 +315,7 @@ void VtkBezierContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
+		VtkBezierContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -327,7 +331,7 @@ void VtkBezierContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallb
 {
 	VtkBezierContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkBezierContourLineInterpolatorWrap>(info.Holder());
 	vtkBezierContourLineInterpolator *native = (vtkBezierContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBezierContourLineInterpolator * r;
@@ -339,6 +343,7 @@ void VtkBezierContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBezierContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

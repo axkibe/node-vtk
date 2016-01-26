@@ -28,26 +28,27 @@ VtkLineWidget2Wrap::~VtkLineWidget2Wrap()
 
 void VtkLineWidget2Wrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAbstractWidgetWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLineWidget2Wrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLineWidget2").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LineWidget2").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLineWidget2").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LineWidget2").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLineWidget2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLineWidget2Wrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLineWidget2Wrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAbstractWidgetWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAbstractWidgetWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLineWidget2Wrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
 	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
 
@@ -75,6 +76,8 @@ void VtkLineWidget2Wrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLineWidget2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -137,6 +140,7 @@ void VtkLineWidget2Wrap::GetLineRepresentation(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetLineRepresentation();
+		VtkLineRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,6 +185,7 @@ void VtkLineWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
+		VtkLineWidget2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +201,7 @@ void VtkLineWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLineWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkLineWidget2Wrap>(info.Holder());
 	vtkLineWidget2 *native = (vtkLineWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLineWidget2 * r;
@@ -208,6 +213,7 @@ void VtkLineWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLineWidget2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +270,7 @@ void VtkLineWidget2Wrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkLineWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkLineWidget2Wrap>(info.Holder());
 	vtkLineWidget2 *native = (vtkLineWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLineRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLineRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

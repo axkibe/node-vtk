@@ -27,26 +27,27 @@ VtkRenderbufferWrap::~VtkRenderbufferWrap()
 
 void VtkRenderbufferWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkRenderbufferWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkRenderbuffer").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("Renderbuffer").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkRenderbuffer").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("Renderbuffer").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkRenderbufferWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkRenderbufferWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkRenderbufferWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkRenderbufferWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +66,8 @@ void VtkRenderbufferWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetContext", SetContext);
 	Nan::SetPrototypeMethod(tpl, "setContext", SetContext);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkRenderbufferWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -115,6 +118,7 @@ void VtkRenderbufferWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetContext();
+		VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -159,6 +163,7 @@ void VtkRenderbufferWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkRenderbufferWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -174,7 +179,7 @@ void VtkRenderbufferWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRenderbufferWrap *wrapper = ObjectWrap::Unwrap<VtkRenderbufferWrap>(info.Holder());
 	vtkRenderbuffer *native = (vtkRenderbuffer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkRenderbuffer * r;
@@ -186,6 +191,7 @@ void VtkRenderbufferWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkRenderbufferWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +210,7 @@ void VtkRenderbufferWrap::SetContext(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkRenderbufferWrap *wrapper = ObjectWrap::Unwrap<VtkRenderbufferWrap>(info.Holder());
 	vtkRenderbuffer *native = (vtkRenderbuffer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

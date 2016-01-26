@@ -30,26 +30,27 @@ VtkCellPickerWrap::~VtkCellPickerWrap()
 
 void VtkCellPickerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPickerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPickerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkCellPickerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkCellPicker").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("CellPicker").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkCellPicker").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("CellPicker").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkCellPickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkCellPickerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkCellPickerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPickerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPickerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkCellPickerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddLocator", AddLocator);
 	Nan::SetPrototypeMethod(tpl, "addLocator", AddLocator);
 
@@ -125,6 +126,8 @@ void VtkCellPickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseVolumeGradientOpacityOn", UseVolumeGradientOpacityOn);
 	Nan::SetPrototypeMethod(tpl, "useVolumeGradientOpacityOn", UseVolumeGradientOpacityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkCellPickerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -154,7 +157,7 @@ void VtkCellPickerWrap::AddLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractCellLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractCellLocatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -251,6 +254,7 @@ void VtkCellPickerWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetTexture();
+		VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,6 +327,7 @@ void VtkCellPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
+		VtkCellPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,7 +349,7 @@ void VtkCellPickerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() > 3 && info[3]->IsObject())
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkRendererWrap *a3 = ObjectWrap::Unwrap<VtkRendererWrap>(info[3]->ToObject());
 					int r;
@@ -432,7 +437,7 @@ void VtkCellPickerWrap::RemoveLocator(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractCellLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractCellLocatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -452,7 +457,7 @@ void VtkCellPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkCellPicker * r;
@@ -464,6 +469,7 @@ void VtkCellPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkCellPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

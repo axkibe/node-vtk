@@ -27,26 +27,27 @@ VtkVolumePickerWrap::~VtkVolumePickerWrap()
 
 void VtkVolumePickerWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkCellPickerWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellPickerWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkVolumePickerWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkVolumePicker").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("VolumePicker").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkVolumePicker").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("VolumePicker").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkVolumePickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkVolumePickerWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkVolumePickerWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkCellPickerWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkCellPickerWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkVolumePickerWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -74,6 +75,8 @@ void VtkVolumePickerWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetPickCroppingPlanes", SetPickCroppingPlanes);
 	Nan::SetPrototypeMethod(tpl, "setPickCroppingPlanes", SetPickCroppingPlanes);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkVolumePickerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -174,6 +177,7 @@ void VtkVolumePickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
+		VtkVolumePickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +217,7 @@ void VtkVolumePickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkVolumePickerWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePickerWrap>(info.Holder());
 	vtkVolumePicker *native = (vtkVolumePicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkVolumePicker * r;
@@ -225,6 +229,7 @@ void VtkVolumePickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkVolumePickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

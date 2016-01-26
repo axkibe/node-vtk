@@ -27,26 +27,27 @@ VtkBackgroundColorMonitorWrap::~VtkBackgroundColorMonitorWrap()
 
 void VtkBackgroundColorMonitorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBackgroundColorMonitorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBackgroundColorMonitor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BackgroundColorMonitor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBackgroundColorMonitor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BackgroundColorMonitor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBackgroundColorMonitorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBackgroundColorMonitorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBackgroundColorMonitorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBackgroundColorMonitorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +63,8 @@ void VtkBackgroundColorMonitorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBackgroundColorMonitorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -134,6 +137,7 @@ void VtkBackgroundColorMonitorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
+		VtkBackgroundColorMonitorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -149,7 +153,7 @@ void VtkBackgroundColorMonitorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 {
 	VtkBackgroundColorMonitorWrap *wrapper = ObjectWrap::Unwrap<VtkBackgroundColorMonitorWrap>(info.Holder());
 	vtkBackgroundColorMonitor *native = (vtkBackgroundColorMonitor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBackgroundColorMonitor * r;
@@ -161,6 +165,7 @@ void VtkBackgroundColorMonitorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBackgroundColorMonitorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -179,7 +184,7 @@ void VtkBackgroundColorMonitorWrap::Update(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBackgroundColorMonitorWrap *wrapper = ObjectWrap::Unwrap<VtkBackgroundColorMonitorWrap>(info.Holder());
 	vtkBackgroundColorMonitor *native = (vtkBackgroundColorMonitor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

@@ -30,26 +30,27 @@ VtkBSPCutsWrap::~VtkBSPCutsWrap()
 
 void VtkBSPCutsWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkDataObjectWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkBSPCutsWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkBSPCuts").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("BSPCuts").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkBSPCuts").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("BSPCuts").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkBSPCutsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkBSPCutsWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkBSPCutsWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkDataObjectWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkDataObjectWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkBSPCutsWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "CreateCuts", CreateCuts);
 	Nan::SetPrototypeMethod(tpl, "createCuts", CreateCuts);
 
@@ -92,6 +93,8 @@ void VtkBSPCutsWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkBSPCutsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -121,7 +124,7 @@ void VtkBSPCutsWrap::CreateCuts(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -141,7 +144,7 @@ void VtkBSPCutsWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -161,7 +164,7 @@ void VtkBSPCutsWrap::Equals(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBSPCutsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBSPCutsWrap *a0 = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -201,7 +204,7 @@ void VtkBSPCutsWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -216,6 +219,7 @@ void VtkBSPCutsWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
+				VtkBSPCutsWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -236,6 +240,7 @@ void VtkBSPCutsWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
+			VtkBSPCutsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,6 +266,7 @@ void VtkBSPCutsWrap::GetKdNodeTree(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetKdNodeTree();
+		VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -331,6 +337,7 @@ void VtkBSPCutsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
+		VtkBSPCutsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -370,7 +377,7 @@ void VtkBSPCutsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkBSPCuts * r;
@@ -382,6 +389,7 @@ void VtkBSPCutsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkBSPCutsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -400,7 +408,7 @@ void VtkBSPCutsWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

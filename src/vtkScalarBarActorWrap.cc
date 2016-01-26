@@ -33,26 +33,27 @@ VtkScalarBarActorWrap::~VtkScalarBarActorWrap()
 
 void VtkScalarBarActorWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkActor2DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkScalarBarActorWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkScalarBarActor").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ScalarBarActor").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkScalarBarActor").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ScalarBarActor").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkScalarBarActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkScalarBarActorWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkScalarBarActorWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkActor2DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkActor2DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkScalarBarActorWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "DrawAnnotationsOff", DrawAnnotationsOff);
 	Nan::SetPrototypeMethod(tpl, "drawAnnotationsOff", DrawAnnotationsOff);
 
@@ -362,6 +363,8 @@ void VtkScalarBarActorWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "UseOpacityOn", UseOpacityOn);
 	Nan::SetPrototypeMethod(tpl, "useOpacityOn", UseOpacityOn);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkScalarBarActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -594,6 +597,7 @@ void VtkScalarBarActorWrap::GetBackgroundProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetBackgroundProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -784,6 +788,7 @@ void VtkScalarBarActorWrap::GetFrameProperty(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetFrameProperty();
+		VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -820,6 +825,7 @@ void VtkScalarBarActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLabelTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -842,6 +848,7 @@ void VtkScalarBarActorWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLookupTable();
+		VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1088,6 +1095,7 @@ void VtkScalarBarActorWrap::GetTextureActor(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetTextureActor();
+		VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1180,6 +1188,7 @@ void VtkScalarBarActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetTitleTextProperty();
+		VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1266,6 +1275,7 @@ void VtkScalarBarActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkScalarBarActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1281,7 +1291,7 @@ void VtkScalarBarActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1301,7 +1311,7 @@ void VtkScalarBarActorWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1323,7 +1333,7 @@ void VtkScalarBarActorWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1345,7 +1355,7 @@ void VtkScalarBarActorWrap::RenderTranslucentPolygonalGeometry(const Nan::Functi
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		int r;
@@ -1367,7 +1377,7 @@ void VtkScalarBarActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkScalarBarActor * r;
@@ -1379,6 +1389,7 @@ void VtkScalarBarActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkScalarBarActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1435,7 +1446,7 @@ void VtkScalarBarActorWrap::SetBackgroundProperty(const Nan::FunctionCallbackInf
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1627,7 +1638,7 @@ void VtkScalarBarActorWrap::SetFrameProperty(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1667,7 +1678,7 @@ void VtkScalarBarActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1687,7 +1698,7 @@ void VtkScalarBarActorWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1966,7 +1977,7 @@ void VtkScalarBarActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -2024,7 +2035,7 @@ void VtkScalarBarActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

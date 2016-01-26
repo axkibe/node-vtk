@@ -28,26 +28,27 @@ VtkFixedSizeHandleRepresentation3DWrap::~VtkFixedSizeHandleRepresentation3DWrap(
 
 void VtkFixedSizeHandleRepresentation3DWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkPolygonalHandleRepresentation3DWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolygonalHandleRepresentation3DWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkFixedSizeHandleRepresentation3DWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkFixedSizeHandleRepresentation3D").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("FixedSizeHandleRepresentation3D").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkFixedSizeHandleRepresentation3D").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("FixedSizeHandleRepresentation3D").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkFixedSizeHandleRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkFixedSizeHandleRepresentation3DWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkFixedSizeHandleRepresentation3DWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkPolygonalHandleRepresentation3DWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPolygonalHandleRepresentation3DWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkFixedSizeHandleRepresentation3DWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -75,6 +76,8 @@ void VtkFixedSizeHandleRepresentation3DWrap::InitTpl(v8::Local<v8::FunctionTempl
 	Nan::SetPrototypeMethod(tpl, "SetHandleSizeToleranceInPixels", SetHandleSizeToleranceInPixels);
 	Nan::SetPrototypeMethod(tpl, "setHandleSizeToleranceInPixels", SetHandleSizeToleranceInPixels);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkFixedSizeHandleRepresentation3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -153,6 +156,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::GetSphereSource(const Nan::Function
 		return;
 	}
 	r = native->GetSphereSource();
+		VtkSphereSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,6 +201,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
+		VtkFixedSizeHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +217,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCal
 {
 	VtkFixedSizeHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkFixedSizeHandleRepresentation3DWrap>(info.Holder());
 	vtkFixedSizeHandleRepresentation3D *native = (vtkFixedSizeHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkFixedSizeHandleRepresentation3D * r;
@@ -224,6 +229,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkFixedSizeHandleRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

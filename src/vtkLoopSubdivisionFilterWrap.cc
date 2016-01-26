@@ -27,26 +27,27 @@ VtkLoopSubdivisionFilterWrap::~VtkLoopSubdivisionFilterWrap()
 
 void VtkLoopSubdivisionFilterWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkApproximatingSubdivisionFilterWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkApproximatingSubdivisionFilterWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkLoopSubdivisionFilterWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkLoopSubdivisionFilter").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("LoopSubdivisionFilter").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkLoopSubdivisionFilter").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("LoopSubdivisionFilter").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkLoopSubdivisionFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkLoopSubdivisionFilterWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkLoopSubdivisionFilterWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkApproximatingSubdivisionFilterWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkApproximatingSubdivisionFilterWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkLoopSubdivisionFilterWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,6 +60,8 @@ void VtkLoopSubdivisionFilterWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkLoopSubdivisionFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -131,6 +134,7 @@ void VtkLoopSubdivisionFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkLoopSubdivisionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -146,7 +150,7 @@ void VtkLoopSubdivisionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkLoopSubdivisionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLoopSubdivisionFilterWrap>(info.Holder());
 	vtkLoopSubdivisionFilter *native = (vtkLoopSubdivisionFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkLoopSubdivisionFilter * r;
@@ -158,6 +162,7 @@ void VtkLoopSubdivisionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkLoopSubdivisionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

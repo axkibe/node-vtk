@@ -28,26 +28,27 @@ VtkImplicitSelectionLoopWrap::~VtkImplicitSelectionLoopWrap()
 
 void VtkImplicitSelectionLoopWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkImplicitFunctionWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkImplicitSelectionLoopWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkImplicitSelectionLoop").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("ImplicitSelectionLoop").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkImplicitSelectionLoop").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("ImplicitSelectionLoop").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkImplicitSelectionLoopWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkImplicitSelectionLoopWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkImplicitSelectionLoopWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkImplicitFunctionWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkImplicitFunctionWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkImplicitSelectionLoopWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AutomaticNormalGenerationOff", AutomaticNormalGenerationOff);
 	Nan::SetPrototypeMethod(tpl, "automaticNormalGenerationOff", AutomaticNormalGenerationOff);
 
@@ -84,6 +85,8 @@ void VtkImplicitSelectionLoopWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "SetNormal", SetNormal);
 	Nan::SetPrototypeMethod(tpl, "setNormal", SetNormal);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkImplicitSelectionLoopWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -201,6 +204,7 @@ void VtkImplicitSelectionLoopWrap::GetLoop(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLoop();
+		VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,6 +249,7 @@ void VtkImplicitSelectionLoopWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
+		VtkImplicitSelectionLoopWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +265,7 @@ void VtkImplicitSelectionLoopWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 {
 	VtkImplicitSelectionLoopWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSelectionLoopWrap>(info.Holder());
 	vtkImplicitSelectionLoop *native = (vtkImplicitSelectionLoop *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkImplicitSelectionLoop * r;
@@ -272,6 +277,7 @@ void VtkImplicitSelectionLoopWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkImplicitSelectionLoopWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -309,7 +315,7 @@ void VtkImplicitSelectionLoopWrap::SetLoop(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImplicitSelectionLoopWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSelectionLoopWrap>(info.Holder());
 	vtkImplicitSelectionLoop *native = (vtkImplicitSelectionLoop *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

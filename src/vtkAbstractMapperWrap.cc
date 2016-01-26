@@ -31,26 +31,27 @@ VtkAbstractMapperWrap::~VtkAbstractMapperWrap()
 
 void VtkAbstractMapperWrap::Init(v8::Local<v8::Object> exports)
 {
-	if (!constructor.IsEmpty()) return;
-	Nan::HandleScope scope;
-
-	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
-	VtkAlgorithmWrap::Init( exports );
-	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
-
-	tpl->SetClassName(Nan::New("VtkAbstractMapperWrap").ToLocalChecked());
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-	InitTpl(tpl);
-
-	constructor.Reset( tpl->GetFunction() );
-	ptpl.Reset( tpl );
-
-	exports->Set(Nan::New("vtkAbstractMapper").ToLocalChecked(),tpl->GetFunction());
-	exports->Set(Nan::New("AbstractMapper").ToLocalChecked(),tpl->GetFunction());
+	Nan::SetAccessor(exports, Nan::New("vtkAbstractMapper").ToLocalChecked(), ConstructorGetter);
+	Nan::SetAccessor(exports, Nan::New("AbstractMapper").ToLocalChecked(), ConstructorGetter);
 }
 
-void VtkAbstractMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
+void VtkAbstractMapperWrap::ConstructorGetter(
+	v8::Local<v8::String> property,
+	const Nan::PropertyCallbackInfo<v8::Value>& info)
 {
+	InitPtpl();
+	info.GetReturnValue().Set(Nan::New(ptpl)->GetFunction());
+}
+
+void VtkAbstractMapperWrap::InitPtpl()
+{
+	if (!ptpl.IsEmpty()) return;
+	v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
+	VtkAlgorithmWrap::InitPtpl( );
+	tpl->Inherit(Nan::New<FunctionTemplate>(VtkAlgorithmWrap::ptpl));
+	tpl->SetClassName(Nan::New("VtkAbstractMapperWrap").ToLocalChecked());
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
 	Nan::SetPrototypeMethod(tpl, "AddClippingPlane", AddClippingPlane);
 	Nan::SetPrototypeMethod(tpl, "addClippingPlane", AddClippingPlane);
 
@@ -87,6 +88,8 @@ void VtkAbstractMapperWrap::InitTpl(v8::Local<v8::FunctionTemplate> tpl)
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	constructor.Reset( tpl->GetFunction() );
+	ptpl.Reset( tpl );
 }
 
 void VtkAbstractMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -116,7 +119,7 @@ void VtkAbstractMapperWrap::AddClippingPlane(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
 	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -157,6 +160,7 @@ void VtkAbstractMapperWrap::GetClippingPlanes(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetClippingPlanes();
+		VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,6 +219,7 @@ void VtkAbstractMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
+		VtkAbstractMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +235,7 @@ void VtkAbstractMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
 	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -262,7 +267,7 @@ void VtkAbstractMapperWrap::RemoveClippingPlane(const Nan::FunctionCallbackInfo<
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
 	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -282,7 +287,7 @@ void VtkAbstractMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
 	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
 		vtkAbstractMapper * r;
@@ -294,6 +299,7 @@ void VtkAbstractMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
+			VtkAbstractMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +318,7 @@ void VtkAbstractMapperWrap::SetClippingPlanes(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
 	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -332,7 +338,7 @@ void VtkAbstractMapperWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
 	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject())
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
