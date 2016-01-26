@@ -1,15 +1,11 @@
-// makies a cone
+// makes a cone
 'use strict';
 var vtk, source, mapper, actor, renderer, renderWindow, renderWindowInteractor;
 
-vtk = require('./vtk');
+vtk = require('vtk');
 
 source = new vtk.ConeSource();
 source.setResolution( 10 );
-
-console.log( 'source instanceof vtk.ConeSource: ', source instanceof vtk.ConeSource );
-console.log( 'source instanceof vtk.Object: ', source instanceof vtk.Object );
-console.log( 'source instanceof vtk.CubeSource: ', source instanceof vtk.CubeSource );
 
 mapper = new vtk.PolyDataMapper();
 
