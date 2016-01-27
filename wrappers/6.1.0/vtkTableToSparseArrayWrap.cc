@@ -104,7 +104,7 @@ void VtkTableToSparseArrayWrap::AddCoordinateColumn(const Nan::FunctionCallbackI
 {
 	VtkTableToSparseArrayWrap *wrapper = ObjectWrap::Unwrap<VtkTableToSparseArrayWrap>(info.Holder());
 	vtkTableToSparseArray *native = (vtkTableToSparseArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -176,7 +176,7 @@ void VtkTableToSparseArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTableToSparseArrayWrap *wrapper = ObjectWrap::Unwrap<VtkTableToSparseArrayWrap>(info.Holder());
 	vtkTableToSparseArray *native = (vtkTableToSparseArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -252,7 +252,7 @@ void VtkTableToSparseArrayWrap::SetValueColumn(const Nan::FunctionCallbackInfo<v
 {
 	VtkTableToSparseArrayWrap *wrapper = ObjectWrap::Unwrap<VtkTableToSparseArrayWrap>(info.Holder());
 	vtkTableToSparseArray *native = (vtkTableToSparseArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

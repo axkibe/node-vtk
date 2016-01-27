@@ -117,7 +117,7 @@ void VtkSMPTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSMPTransformWrap *wrapper = ObjectWrap::Unwrap<VtkSMPTransformWrap>(info.Holder());
 	vtkSMPTransform *native = (vtkSMPTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -133,7 +133,7 @@ void VtkPYoungsMaterialInterfaceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkPYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkPYoungsMaterialInterface *native = (vtkPYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

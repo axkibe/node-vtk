@@ -280,7 +280,7 @@ void VtkContext2DWrap::ComputeStringBounds(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkContext2DWrap *wrapper = ObjectWrap::Unwrap<VtkContext2DWrap>(info.Holder());
 	vtkContext2D *native = (vtkContext2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[1]))
@@ -348,10 +348,10 @@ void VtkContext2DWrap::DrawMathTextString(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPoints2DWrap *a0 = ObjectWrap::Unwrap<VtkPoints2DWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() != 3)
@@ -508,7 +508,7 @@ void VtkContext2DWrap::DrawString(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPoints2DWrap *a0 = ObjectWrap::Unwrap<VtkPoints2DWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -533,7 +533,7 @@ void VtkContext2DWrap::DrawStringRect(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPoints2DWrap *a0 = ObjectWrap::Unwrap<VtkPoints2DWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -661,7 +661,7 @@ void VtkContext2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContext2DWrap *wrapper = ObjectWrap::Unwrap<VtkContext2DWrap>(info.Holder());
 	vtkContext2D *native = (vtkContext2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

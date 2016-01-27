@@ -123,10 +123,10 @@ void VtkTableToGraphWrap::AddLinkEdge(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -148,10 +148,10 @@ void VtkTableToGraphWrap::AddLinkVertex(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -262,7 +262,7 @@ void VtkTableToGraphWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

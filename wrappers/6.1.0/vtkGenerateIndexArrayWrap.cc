@@ -183,7 +183,7 @@ void VtkGenerateIndexArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGenerateIndexArrayWrap *wrapper = ObjectWrap::Unwrap<VtkGenerateIndexArrayWrap>(info.Holder());
 	vtkGenerateIndexArray *native = (vtkGenerateIndexArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -259,7 +259,7 @@ void VtkGenerateIndexArrayWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenerateIndexArrayWrap *wrapper = ObjectWrap::Unwrap<VtkGenerateIndexArrayWrap>(info.Holder());
 	vtkGenerateIndexArray *native = (vtkGenerateIndexArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -317,7 +317,7 @@ void VtkGenerateIndexArrayWrap::SetReferenceArrayName(const Nan::FunctionCallbac
 {
 	VtkGenerateIndexArrayWrap *wrapper = ObjectWrap::Unwrap<VtkGenerateIndexArrayWrap>(info.Holder());
 	vtkGenerateIndexArray *native = (vtkGenerateIndexArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

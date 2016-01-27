@@ -395,7 +395,7 @@ void VtkUnstructuredGridGeometryFilterWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -683,7 +683,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetOriginalCellIdsName(const Nan::Fu
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -703,7 +703,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetOriginalPointIdsName(const Nan::F
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

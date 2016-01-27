@@ -103,7 +103,7 @@ void VtkTableToTreeFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTableToTreeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTableToTreeFilterWrap>(info.Holder());
 	vtkTableToTreeFilter *native = (vtkTableToTreeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

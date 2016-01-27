@@ -299,7 +299,7 @@ void VtkPointSetToLabelHierarchyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -375,7 +375,7 @@ void VtkPointSetToLabelHierarchyWrap::SetBoundedSizeArrayName(const Nan::Functio
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -395,7 +395,7 @@ void VtkPointSetToLabelHierarchyWrap::SetIconIndexArrayName(const Nan::FunctionC
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -415,7 +415,7 @@ void VtkPointSetToLabelHierarchyWrap::SetLabelArrayName(const Nan::FunctionCallb
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -454,7 +454,7 @@ void VtkPointSetToLabelHierarchyWrap::SetOrientationArrayName(const Nan::Functio
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -474,7 +474,7 @@ void VtkPointSetToLabelHierarchyWrap::SetPriorityArrayName(const Nan::FunctionCa
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -494,7 +494,7 @@ void VtkPointSetToLabelHierarchyWrap::SetSizeArrayName(const Nan::FunctionCallba
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

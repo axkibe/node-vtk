@@ -154,7 +154,7 @@ void VtkImplicitPlaneWidget2Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImplicitPlaneWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidget2Wrap>(info.Holder());
 	vtkImplicitPlaneWidget2 *native = (vtkImplicitPlaneWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

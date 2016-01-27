@@ -462,7 +462,7 @@ void VtkParametricSplineWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

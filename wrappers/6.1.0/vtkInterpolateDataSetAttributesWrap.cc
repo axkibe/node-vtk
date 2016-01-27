@@ -184,7 +184,7 @@ void VtkInterpolateDataSetAttributesWrap::IsA(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInterpolateDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkInterpolateDataSetAttributesWrap>(info.Holder());
 	vtkInterpolateDataSetAttributes *native = (vtkInterpolateDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -188,7 +188,7 @@ void VtkInteractorEventRecorderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -343,7 +343,7 @@ void VtkInteractorEventRecorderWrap::SetFileName(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -363,7 +363,7 @@ void VtkInteractorEventRecorderWrap::SetInputString(const Nan::FunctionCallbackI
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

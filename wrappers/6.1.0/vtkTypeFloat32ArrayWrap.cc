@@ -103,7 +103,7 @@ void VtkTypeFloat32ArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkTypeFloat32ArrayWrap *wrapper = ObjectWrap::Unwrap<VtkTypeFloat32ArrayWrap>(info.Holder());
 	vtkTypeFloat32Array *native = (vtkTypeFloat32Array *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

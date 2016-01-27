@@ -112,7 +112,7 @@ void VtkOpenGLGlyph3DMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkOpenGLGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLGlyph3DMapperWrap>(info.Holder());
 	vtkOpenGLGlyph3DMapper *native = (vtkOpenGLGlyph3DMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

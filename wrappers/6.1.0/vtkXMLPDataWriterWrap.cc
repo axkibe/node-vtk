@@ -209,7 +209,7 @@ void VtkXMLPDataWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkXMLPDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLPDataWriterWrap>(info.Holder());
 	vtkXMLPDataWriter *native = (vtkXMLPDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

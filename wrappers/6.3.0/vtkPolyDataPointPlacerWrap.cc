@@ -202,7 +202,7 @@ void VtkPolyDataPointPlacerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPolyDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointPlacerWrap>(info.Holder());
 	vtkPolyDataPointPlacer *native = (vtkPolyDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

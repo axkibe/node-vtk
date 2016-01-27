@@ -691,7 +691,7 @@ void VtkModelMetadataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -936,7 +936,7 @@ void VtkModelMetadataWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

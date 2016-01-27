@@ -631,7 +631,7 @@ void VtkImplicitModellerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

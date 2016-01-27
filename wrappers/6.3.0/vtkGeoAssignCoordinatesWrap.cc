@@ -223,7 +223,7 @@ void VtkGeoAssignCoordinatesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -318,7 +318,7 @@ void VtkGeoAssignCoordinatesWrap::SetLatitudeArrayName(const Nan::FunctionCallba
 {
 	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -338,7 +338,7 @@ void VtkGeoAssignCoordinatesWrap::SetLongitudeArrayName(const Nan::FunctionCallb
 {
 	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

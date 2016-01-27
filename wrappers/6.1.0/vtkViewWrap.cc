@@ -321,7 +321,7 @@ void VtkViewWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -369,7 +369,7 @@ void VtkViewWrap::RegisterProgress(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

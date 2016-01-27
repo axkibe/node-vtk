@@ -269,7 +269,7 @@ void VtkAngularPeriodicFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAngularPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAngularPeriodicFilterWrap>(info.Holder());
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -391,7 +391,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationArrayName(const Nan::FunctionCallb
 {
 	VtkAngularPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAngularPeriodicFilterWrap>(info.Holder());
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

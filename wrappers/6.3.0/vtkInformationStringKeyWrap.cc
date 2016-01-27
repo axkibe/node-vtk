@@ -138,7 +138,7 @@ void VtkInformationStringKeyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkInformationStringKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info.Holder());
 	vtkInformationStringKey *native = (vtkInformationStringKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -160,10 +160,10 @@ void VtkInformationStringKeyWrap::MakeKey(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInformationStringKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info.Holder());
 	vtkInformationStringKey *native = (vtkInformationStringKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			vtkInformationStringKey * r;
@@ -253,7 +253,7 @@ void VtkInformationStringKeyWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

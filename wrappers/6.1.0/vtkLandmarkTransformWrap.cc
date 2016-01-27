@@ -227,7 +227,7 @@ void VtkLandmarkTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkLandmarkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLandmarkTransformWrap>(info.Holder());
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -207,7 +207,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::IsA(const Nan::FunctionCallbac
 {
 	VtkCellLocatorInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCellLocatorInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkCellLocatorInterpolatedVelocityField *native = (vtkCellLocatorInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

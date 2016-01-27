@@ -129,7 +129,7 @@ void VtkMergeFieldsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMergeFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFieldsWrap>(info.Holder());
 	vtkMergeFields *native = (vtkMergeFields *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -153,7 +153,7 @@ void VtkMergeFieldsWrap::Merge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkMergeFields *native = (vtkMergeFields *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -252,10 +252,10 @@ void VtkMergeFieldsWrap::SetOutputField(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMergeFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFieldsWrap>(info.Holder());
 	vtkMergeFields *native = (vtkMergeFields *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

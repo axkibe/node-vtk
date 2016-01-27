@@ -406,7 +406,7 @@ void VtkSimple3DCirclesStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

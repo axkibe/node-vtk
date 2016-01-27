@@ -278,7 +278,7 @@ void Vtk3DWidgetWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	Vtk3DWidgetWrap *wrapper = ObjectWrap::Unwrap<Vtk3DWidgetWrap>(info.Holder());
 	vtk3DWidget *native = (vtk3DWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -111,7 +111,7 @@ void VtkInformationStringVectorKeyWrap::Append(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -173,7 +173,7 @@ void VtkInformationStringVectorKeyWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkInformationStringVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info.Holder());
 	vtkInformationStringVectorKey *native = (vtkInformationStringVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -217,10 +217,10 @@ void VtkInformationStringVectorKeyWrap::MakeKey(const Nan::FunctionCallbackInfo<
 {
 	VtkInformationStringVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info.Holder());
 	vtkInformationStringVectorKey *native = (vtkInformationStringVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -314,7 +314,7 @@ void VtkInformationStringVectorKeyWrap::Set(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())

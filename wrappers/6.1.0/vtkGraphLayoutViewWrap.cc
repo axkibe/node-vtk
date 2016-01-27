@@ -301,7 +301,7 @@ void VtkGraphLayoutViewWrap::AddIconType(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -799,7 +799,7 @@ void VtkGraphLayoutViewWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -913,7 +913,7 @@ void VtkGraphLayoutViewWrap::SetEdgeColorArrayName(const Nan::FunctionCallbackIn
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -933,7 +933,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLabelArrayName(const Nan::FunctionCallbackIn
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -972,7 +972,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLayoutStrategy(const Nan::FunctionCallbackIn
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1029,7 +1029,7 @@ void VtkGraphLayoutViewWrap::SetEnabledEdgesArrayName(const Nan::FunctionCallbac
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1049,7 +1049,7 @@ void VtkGraphLayoutViewWrap::SetEnabledVerticesArrayName(const Nan::FunctionCall
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1107,7 +1107,7 @@ void VtkGraphLayoutViewWrap::SetIconArrayName(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1127,7 +1127,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1304,7 +1304,7 @@ void VtkGraphLayoutViewWrap::SetScalingArrayName(const Nan::FunctionCallbackInfo
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1324,7 +1324,7 @@ void VtkGraphLayoutViewWrap::SetVertexColorArrayName(const Nan::FunctionCallback
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1344,7 +1344,7 @@ void VtkGraphLayoutViewWrap::SetVertexLabelArrayName(const Nan::FunctionCallback
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

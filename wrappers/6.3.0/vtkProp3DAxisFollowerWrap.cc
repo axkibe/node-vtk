@@ -409,7 +409,7 @@ void VtkProp3DAxisFollowerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkProp3DAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DAxisFollowerWrap>(info.Holder());
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -191,7 +191,7 @@ void VtkImageSeparableConvolutionWrap::IsA(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageSeparableConvolutionWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeparableConvolutionWrap>(info.Holder());
 	vtkImageSeparableConvolution *native = (vtkImageSeparableConvolution *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

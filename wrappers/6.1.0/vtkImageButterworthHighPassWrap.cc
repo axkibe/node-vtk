@@ -186,7 +186,7 @@ void VtkImageButterworthHighPassWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageButterworthHighPassWrap *wrapper = ObjectWrap::Unwrap<VtkImageButterworthHighPassWrap>(info.Holder());
 	vtkImageButterworthHighPass *native = (vtkImageButterworthHighPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

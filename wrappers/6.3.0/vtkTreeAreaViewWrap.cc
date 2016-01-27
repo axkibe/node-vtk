@@ -498,7 +498,7 @@ void VtkTreeAreaViewWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -574,7 +574,7 @@ void VtkTreeAreaViewWrap::SetAreaColorArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -594,7 +594,7 @@ void VtkTreeAreaViewWrap::SetAreaHoverArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -614,7 +614,7 @@ void VtkTreeAreaViewWrap::SetAreaLabelArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -653,7 +653,7 @@ void VtkTreeAreaViewWrap::SetAreaSizeArrayName(const Nan::FunctionCallbackInfo<v
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -692,7 +692,7 @@ void VtkTreeAreaViewWrap::SetEdgeColorArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -724,7 +724,7 @@ void VtkTreeAreaViewWrap::SetEdgeLabelArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -825,7 +825,7 @@ void VtkTreeAreaViewWrap::SetLabelPriorityArrayName(const Nan::FunctionCallbackI
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
 	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

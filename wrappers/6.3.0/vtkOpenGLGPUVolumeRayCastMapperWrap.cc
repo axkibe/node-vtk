@@ -115,7 +115,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8
 {
 	VtkOpenGLGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkOpenGLGPUVolumeRayCastMapper *native = (vtkOpenGLGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -187,7 +187,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::PrintError(const Nan::FunctionCallback
 {
 	VtkOpenGLGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkOpenGLGPUVolumeRayCastMapper *native = (vtkOpenGLGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

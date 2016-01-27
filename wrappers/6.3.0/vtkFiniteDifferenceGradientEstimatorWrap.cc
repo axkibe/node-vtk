@@ -123,7 +123,7 @@ void VtkFiniteDifferenceGradientEstimatorWrap::IsA(const Nan::FunctionCallbackIn
 {
 	VtkFiniteDifferenceGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkFiniteDifferenceGradientEstimatorWrap>(info.Holder());
 	vtkFiniteDifferenceGradientEstimator *native = (vtkFiniteDifferenceGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -103,7 +103,7 @@ void VtkExtractSelectedThresholdsWrap::IsA(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkExtractSelectedThresholdsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedThresholdsWrap>(info.Holder());
 	vtkExtractSelectedThresholds *native = (vtkExtractSelectedThresholds *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

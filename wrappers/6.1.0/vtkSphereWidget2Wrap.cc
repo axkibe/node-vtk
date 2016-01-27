@@ -174,7 +174,7 @@ void VtkSphereWidget2Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSphereWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkSphereWidget2Wrap>(info.Holder());
 	vtkSphereWidget2 *native = (vtkSphereWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

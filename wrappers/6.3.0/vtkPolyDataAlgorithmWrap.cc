@@ -282,7 +282,7 @@ void VtkPolyDataAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataAlgorithmWrap>(info.Holder());
 	vtkPolyDataAlgorithm *native = (vtkPolyDataAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

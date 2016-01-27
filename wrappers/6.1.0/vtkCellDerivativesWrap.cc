@@ -195,7 +195,7 @@ void VtkCellDerivativesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCellDerivativesWrap *wrapper = ObjectWrap::Unwrap<VtkCellDerivativesWrap>(info.Holder());
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

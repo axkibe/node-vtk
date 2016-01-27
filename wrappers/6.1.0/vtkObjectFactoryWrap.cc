@@ -157,7 +157,7 @@ void VtkObjectFactoryWrap::ConstructInstance(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -177,7 +177,7 @@ void VtkObjectFactoryWrap::CreateAllInstance(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[1]))
@@ -202,7 +202,7 @@ void VtkObjectFactoryWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkObject * r;
@@ -233,7 +233,7 @@ void VtkObjectFactoryWrap::Disable(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -323,10 +323,10 @@ void VtkObjectFactoryWrap::GetEnableFlag(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -413,7 +413,7 @@ void VtkObjectFactoryWrap::GetOverrideInformation(const Nan::FunctionCallbackInf
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkOverrideInformationCollectionWrap::ptpl))->HasInstance(info[1]))
@@ -475,10 +475,10 @@ void VtkObjectFactoryWrap::HasOverride(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -513,7 +513,7 @@ void VtkObjectFactoryWrap::HasOverrideAny(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -535,7 +535,7 @@ void VtkObjectFactoryWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -645,10 +645,10 @@ void VtkObjectFactoryWrap::SetAllEnableFlags(const Nan::FunctionCallbackInfo<v8:
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() != 3)
@@ -684,10 +684,10 @@ void VtkObjectFactoryWrap::SetEnableFlag(const Nan::FunctionCallbackInfo<v8::Val
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() != 3)

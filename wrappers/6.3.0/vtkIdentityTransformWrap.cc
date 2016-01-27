@@ -136,7 +136,7 @@ void VtkIdentityTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkIdentityTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIdentityTransformWrap>(info.Holder());
 	vtkIdentityTransform *native = (vtkIdentityTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

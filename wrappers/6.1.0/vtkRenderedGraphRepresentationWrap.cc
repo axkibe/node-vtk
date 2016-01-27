@@ -418,7 +418,7 @@ void VtkRenderedGraphRepresentationWrap::AddEdgeIconType(const Nan::FunctionCall
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -442,7 +442,7 @@ void VtkRenderedGraphRepresentationWrap::AddVertexIconType(const Nan::FunctionCa
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1200,7 +1200,7 @@ void VtkRenderedGraphRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1300,7 +1300,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeColorArrayName(const Nan::Functi
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1320,7 +1320,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeHoverArrayName(const Nan::Functi
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1359,7 +1359,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeIconArrayName(const Nan::Functio
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1379,7 +1379,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeIconPriorityArrayName(const Nan:
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1399,7 +1399,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLabelArrayName(const Nan::Functi
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1419,7 +1419,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLabelPriorityArrayName(const Nan
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1459,7 +1459,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLayoutStrategy(const Nan::Functi
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1535,7 +1535,7 @@ void VtkRenderedGraphRepresentationWrap::SetEnabledEdgesArrayName(const Nan::Fun
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1555,7 +1555,7 @@ void VtkRenderedGraphRepresentationWrap::SetEnabledVerticesArrayName(const Nan::
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1594,7 +1594,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategy(const Nan::FunctionCa
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1627,13 +1627,13 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToAssignCoordinates(co
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() != 3)
@@ -1801,7 +1801,7 @@ void VtkRenderedGraphRepresentationWrap::SetScalingArrayName(const Nan::Function
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1821,7 +1821,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexColorArrayName(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1860,7 +1860,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexHoverArrayName(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1899,7 +1899,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconArrayName(const Nan::Funct
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1919,7 +1919,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconPriorityArrayName(const Na
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2006,7 +2006,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexLabelArrayName(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2026,7 +2026,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexLabelPriorityArrayName(const N
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

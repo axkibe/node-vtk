@@ -273,7 +273,7 @@ void VtkMatrix3x3Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

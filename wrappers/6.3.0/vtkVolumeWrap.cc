@@ -308,7 +308,7 @@ void VtkVolumeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeWrap>(info.Holder());
 	vtkVolume *native = (vtkVolume *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

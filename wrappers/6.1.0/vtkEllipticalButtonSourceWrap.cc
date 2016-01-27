@@ -501,7 +501,7 @@ void VtkEllipticalButtonSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkEllipticalButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkEllipticalButtonSourceWrap>(info.Holder());
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

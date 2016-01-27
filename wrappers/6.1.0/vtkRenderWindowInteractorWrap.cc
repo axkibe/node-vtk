@@ -1186,7 +1186,7 @@ void VtkRenderWindowInteractorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1580,7 +1580,7 @@ void VtkRenderWindowInteractorWrap::SetEventInformation(const Nan::FunctionCallb
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsString())
+					if(info.Length() > 4 && info[4]->IsInt32())
 					{
 						char a4 = info[4]->Int32Value();
 						if( a4 < -127 || a4 > 128 )
@@ -1590,7 +1590,7 @@ void VtkRenderWindowInteractorWrap::SetEventInformation(const Nan::FunctionCallb
 						}
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() > 6 && info[6]->IsInt32())
+							if(info.Length() > 6 && info[6]->IsString())
 							{
 								Nan::Utf8String a6(info[6]);
 								if(info.Length() != 7)
@@ -1630,7 +1630,7 @@ void VtkRenderWindowInteractorWrap::SetEventInformationFlipY(const Nan::Function
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsString())
+					if(info.Length() > 4 && info[4]->IsInt32())
 					{
 						char a4 = info[4]->Int32Value();
 						if( a4 < -127 || a4 > 128 )
@@ -1640,7 +1640,7 @@ void VtkRenderWindowInteractorWrap::SetEventInformationFlipY(const Nan::Function
 						}
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() > 6 && info[6]->IsInt32())
+							if(info.Length() > 6 && info[6]->IsString())
 							{
 								Nan::Utf8String a6(info[6]);
 								if(info.Length() != 7)
@@ -1761,7 +1761,7 @@ void VtkRenderWindowInteractorWrap::SetKeyCode(const Nan::FunctionCallbackInfo<v
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		char a0 = info[0]->Int32Value();
 		if( a0 < -127 || a0 > 128 )
@@ -1790,7 +1790,7 @@ void VtkRenderWindowInteractorWrap::SetKeyEventInformation(const Nan::FunctionCa
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsString())
+			if(info.Length() > 2 && info[2]->IsInt32())
 			{
 				char a2 = info[2]->Int32Value();
 				if( a2 < -127 || a2 > 128 )
@@ -1800,7 +1800,7 @@ void VtkRenderWindowInteractorWrap::SetKeyEventInformation(const Nan::FunctionCa
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsInt32())
+					if(info.Length() > 4 && info[4]->IsString())
 					{
 						Nan::Utf8String a4(info[4]);
 						if(info.Length() != 5)
@@ -1828,7 +1828,7 @@ void VtkRenderWindowInteractorWrap::SetKeySym(const Nan::FunctionCallbackInfo<v8
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
 	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

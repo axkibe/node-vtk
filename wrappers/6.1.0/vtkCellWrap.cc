@@ -366,7 +366,7 @@ void VtkCellWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
 	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

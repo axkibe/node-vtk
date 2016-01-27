@@ -967,7 +967,7 @@ void VtkDataObjectToDataSetFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1043,7 +1043,7 @@ void VtkDataObjectToDataSetFilterWrap::SetCellConnectivityComponent(const Nan::F
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1085,7 +1085,7 @@ void VtkDataObjectToDataSetFilterWrap::SetCellTypeComponent(const Nan::FunctionC
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1252,7 +1252,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDimensionsComponent(const Nan::Functio
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1294,7 +1294,7 @@ void VtkDataObjectToDataSetFilterWrap::SetLinesComponent(const Nan::FunctionCall
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1363,7 +1363,7 @@ void VtkDataObjectToDataSetFilterWrap::SetOriginComponent(const Nan::FunctionCal
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1407,7 +1407,7 @@ void VtkDataObjectToDataSetFilterWrap::SetPointComponent(const Nan::FunctionCall
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -1456,7 +1456,7 @@ void VtkDataObjectToDataSetFilterWrap::SetPolysComponent(const Nan::FunctionCall
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1525,7 +1525,7 @@ void VtkDataObjectToDataSetFilterWrap::SetSpacingComponent(const Nan::FunctionCa
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1567,7 +1567,7 @@ void VtkDataObjectToDataSetFilterWrap::SetStripsComponent(const Nan::FunctionCal
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1609,7 +1609,7 @@ void VtkDataObjectToDataSetFilterWrap::SetVertsComponent(const Nan::FunctionCall
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

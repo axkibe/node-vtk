@@ -173,7 +173,7 @@ void VtkNetCDFPOPReaderWrap::GetVariableArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkNetCDFPOPReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFPOPReaderWrap>(info.Holder());
 	vtkNetCDFPOPReader *native = (vtkNetCDFPOPReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -195,7 +195,7 @@ void VtkNetCDFPOPReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkNetCDFPOPReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFPOPReaderWrap>(info.Holder());
 	vtkNetCDFPOPReader *native = (vtkNetCDFPOPReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -271,7 +271,7 @@ void VtkNetCDFPOPReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkNetCDFPOPReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFPOPReaderWrap>(info.Holder());
 	vtkNetCDFPOPReader *native = (vtkNetCDFPOPReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -318,7 +318,7 @@ void VtkNetCDFPOPReaderWrap::SetVariableArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkNetCDFPOPReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFPOPReaderWrap>(info.Holder());
 	vtkNetCDFPOPReader *native = (vtkNetCDFPOPReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

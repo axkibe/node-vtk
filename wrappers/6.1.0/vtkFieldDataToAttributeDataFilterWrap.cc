@@ -278,7 +278,7 @@ void VtkFieldDataToAttributeDataFilterWrap::GetFieldArray(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -868,7 +868,7 @@ void VtkFieldDataToAttributeDataFilterWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1020,7 +1020,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetNormalComponent(const Nan::Functi
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -1114,7 +1114,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetScalarComponent(const Nan::Functi
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -1165,7 +1165,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetTCoordComponent(const Nan::Functi
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -1216,7 +1216,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetTensorComponent(const Nan::Functi
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -1267,7 +1267,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetVectorComponent(const Nan::Functi
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())

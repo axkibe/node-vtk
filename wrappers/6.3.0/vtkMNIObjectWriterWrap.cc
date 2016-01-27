@@ -357,7 +357,7 @@ void VtkMNIObjectWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMNIObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNIObjectWriterWrap>(info.Holder());
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -433,7 +433,7 @@ void VtkMNIObjectWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMNIObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNIObjectWriterWrap>(info.Holder());
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -254,7 +254,7 @@ void VtkProp3DFollowerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkProp3DFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DFollowerWrap>(info.Holder());
 	vtkProp3DFollower *native = (vtkProp3DFollower *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -714,7 +714,7 @@ void VtkRenderedTreeAreaRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -790,7 +790,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaColorArrayName(const Nan::Fun
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -810,7 +810,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaHoverArrayName(const Nan::Fun
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -830,7 +830,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelArrayName(const Nan::Fun
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -870,7 +870,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelPriorityArrayName(const 
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -930,7 +930,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaSizeArrayName(const Nan::Func
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1002,7 +1002,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeColorArrayName(const Nan
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1059,7 +1059,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeLabelArrayName(const Nan
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1125,7 +1125,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphHoverArrayName(const Nan::Fu
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

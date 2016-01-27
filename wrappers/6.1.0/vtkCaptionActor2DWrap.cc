@@ -593,7 +593,7 @@ void VtkCaptionActor2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -844,7 +844,7 @@ void VtkCaptionActor2DWrap::SetCaption(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

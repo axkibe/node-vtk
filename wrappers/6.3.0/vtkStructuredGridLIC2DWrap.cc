@@ -278,7 +278,7 @@ void VtkStructuredGridLIC2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkStructuredGridLIC2DWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridLIC2DWrap>(info.Holder());
 	vtkStructuredGridLIC2D *native = (vtkStructuredGridLIC2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

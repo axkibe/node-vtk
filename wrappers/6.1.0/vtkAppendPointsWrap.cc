@@ -143,7 +143,7 @@ void VtkAppendPointsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAppendPointsWrap *wrapper = ObjectWrap::Unwrap<VtkAppendPointsWrap>(info.Holder());
 	vtkAppendPoints *native = (vtkAppendPoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -219,7 +219,7 @@ void VtkAppendPointsWrap::SetInputIdArrayName(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAppendPointsWrap *wrapper = ObjectWrap::Unwrap<VtkAppendPointsWrap>(info.Holder());
 	vtkAppendPoints *native = (vtkAppendPoints *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

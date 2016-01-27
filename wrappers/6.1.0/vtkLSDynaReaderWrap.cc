@@ -308,7 +308,7 @@ void VtkLSDynaReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -411,7 +411,7 @@ void VtkLSDynaReaderWrap::GetBeamArrayStatus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -474,7 +474,7 @@ void VtkLSDynaReaderWrap::GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -646,7 +646,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInBeamArray(const Nan::FunctionCa
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -684,7 +684,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInCellArray(const Nan::FunctionCa
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -723,7 +723,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInParticleArray(const Nan::Functi
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -759,7 +759,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInPointArray(const Nan::FunctionC
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -795,7 +795,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInRigidBodyArray(const Nan::Funct
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -831,7 +831,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInRoadSurfaceArray(const Nan::Fun
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -867,7 +867,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInShellArray(const Nan::FunctionC
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -903,7 +903,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInSolidArray(const Nan::FunctionC
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -939,7 +939,7 @@ void VtkLSDynaReaderWrap::GetNumberOfComponentsInThickShellArray(const Nan::Func
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1108,7 +1108,7 @@ void VtkLSDynaReaderWrap::GetPartArrayStatus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1165,7 +1165,7 @@ void VtkLSDynaReaderWrap::GetParticleArrayStatus(const Nan::FunctionCallbackInfo
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1222,7 +1222,7 @@ void VtkLSDynaReaderWrap::GetPointArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1293,7 +1293,7 @@ void VtkLSDynaReaderWrap::GetRigidBodyArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1350,7 +1350,7 @@ void VtkLSDynaReaderWrap::GetRoadSurfaceArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1407,7 +1407,7 @@ void VtkLSDynaReaderWrap::GetShellArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1464,7 +1464,7 @@ void VtkLSDynaReaderWrap::GetSolidArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1521,7 +1521,7 @@ void VtkLSDynaReaderWrap::GetThickShellArrayStatus(const Nan::FunctionCallbackIn
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1571,7 +1571,7 @@ void VtkLSDynaReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1685,7 +1685,7 @@ void VtkLSDynaReaderWrap::SetBeamArrayStatus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1727,7 +1727,7 @@ void VtkLSDynaReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -1770,7 +1770,7 @@ void VtkLSDynaReaderWrap::SetDatabaseDirectory(const Nan::FunctionCallbackInfo<v
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1828,7 +1828,7 @@ void VtkLSDynaReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1848,7 +1848,7 @@ void VtkLSDynaReaderWrap::SetInputDeck(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1868,7 +1868,7 @@ void VtkLSDynaReaderWrap::SetPartArrayStatus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1908,7 +1908,7 @@ void VtkLSDynaReaderWrap::SetParticleArrayStatus(const Nan::FunctionCallbackInfo
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1948,7 +1948,7 @@ void VtkLSDynaReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2007,7 +2007,7 @@ void VtkLSDynaReaderWrap::SetRigidBodyArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2047,7 +2047,7 @@ void VtkLSDynaReaderWrap::SetRoadSurfaceArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2087,7 +2087,7 @@ void VtkLSDynaReaderWrap::SetShellArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2127,7 +2127,7 @@ void VtkLSDynaReaderWrap::SetSolidArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -2167,7 +2167,7 @@ void VtkLSDynaReaderWrap::SetThickShellArrayStatus(const Nan::FunctionCallbackIn
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

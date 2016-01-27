@@ -180,7 +180,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkVolumeRayCastCompositeFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastCompositeFunctionWrap>(info.Holder());
 	vtkVolumeRayCastCompositeFunction *native = (vtkVolumeRayCastCompositeFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

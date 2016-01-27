@@ -123,7 +123,7 @@ void VtkChacoGraphReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkChacoGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoGraphReaderWrap>(info.Holder());
 	vtkChacoGraphReader *native = (vtkChacoGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkChacoGraphReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkChacoGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoGraphReaderWrap>(info.Holder());
 	vtkChacoGraphReader *native = (vtkChacoGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

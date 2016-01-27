@@ -306,7 +306,7 @@ void VtkExtractHistogram2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkExtractHistogram2DWrap>(info.Holder());
 	vtkExtractHistogram2D *native = (vtkExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -182,7 +182,7 @@ void VtkArrayDataWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkArrayDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWriterWrap>(info.Holder());
 	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -277,7 +277,7 @@ void VtkArrayDataWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkArrayDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWriterWrap>(info.Holder());
 	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

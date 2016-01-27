@@ -554,7 +554,7 @@ void VtkGlyphSource2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -299,7 +299,7 @@ void VtkProp3DButtonRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkProp3DButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DButtonRepresentationWrap>(info.Holder());
 	vtkProp3DButtonRepresentation *native = (vtkProp3DButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

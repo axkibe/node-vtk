@@ -141,7 +141,7 @@ void VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::IsA(const Nan::Functi
 {
 	VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastCompositeGOShadeHelper *native = (vtkFixedPointVolumeRayCastCompositeGOShadeHelper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

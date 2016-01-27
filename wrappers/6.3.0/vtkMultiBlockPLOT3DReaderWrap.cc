@@ -334,7 +334,7 @@ void VtkMultiBlockPLOT3DReaderWrap::CanReadBinaryFile(const Nan::FunctionCallbac
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -741,7 +741,7 @@ void VtkMultiBlockPLOT3DReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -992,7 +992,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1031,7 +1031,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetFunctionFileName(const Nan::FunctionCallb
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1127,7 +1127,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetQFileName(const Nan::FunctionCallbackInfo
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1223,7 +1223,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetXYZFileName(const Nan::FunctionCallbackIn
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

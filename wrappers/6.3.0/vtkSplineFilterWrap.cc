@@ -509,7 +509,7 @@ void VtkSplineFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSplineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSplineFilterWrap>(info.Holder());
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

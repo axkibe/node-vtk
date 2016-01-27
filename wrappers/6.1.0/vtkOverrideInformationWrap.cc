@@ -189,7 +189,7 @@ void VtkOverrideInformationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkOverrideInformationWrap *wrapper = ObjectWrap::Unwrap<VtkOverrideInformationWrap>(info.Holder());
 	vtkOverrideInformation *native = (vtkOverrideInformation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -265,7 +265,7 @@ void VtkOverrideInformationWrap::SetClassOverrideName(const Nan::FunctionCallbac
 {
 	VtkOverrideInformationWrap *wrapper = ObjectWrap::Unwrap<VtkOverrideInformationWrap>(info.Holder());
 	vtkOverrideInformation *native = (vtkOverrideInformation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -285,7 +285,7 @@ void VtkOverrideInformationWrap::SetClassOverrideWithName(const Nan::FunctionCal
 {
 	VtkOverrideInformationWrap *wrapper = ObjectWrap::Unwrap<VtkOverrideInformationWrap>(info.Holder());
 	vtkOverrideInformation *native = (vtkOverrideInformation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -305,7 +305,7 @@ void VtkOverrideInformationWrap::SetDescription(const Nan::FunctionCallbackInfo<
 {
 	VtkOverrideInformationWrap *wrapper = ObjectWrap::Unwrap<VtkOverrideInformationWrap>(info.Holder());
 	vtkOverrideInformation *native = (vtkOverrideInformation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

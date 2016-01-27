@@ -123,7 +123,7 @@ void VtkMergeColumnsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMergeColumnsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeColumnsWrap>(info.Holder());
 	vtkMergeColumns *native = (vtkMergeColumns *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkMergeColumnsWrap::SetMergedColumnName(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeColumnsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeColumnsWrap>(info.Holder());
 	vtkMergeColumns *native = (vtkMergeColumns *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

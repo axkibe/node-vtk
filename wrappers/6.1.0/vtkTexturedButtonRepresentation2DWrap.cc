@@ -377,7 +377,7 @@ void VtkTexturedButtonRepresentation2DWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkTexturedButtonRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentation2DWrap>(info.Holder());
 	vtkTexturedButtonRepresentation2D *native = (vtkTexturedButtonRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

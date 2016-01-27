@@ -863,7 +863,7 @@ void VtkDataObjectWrap::GetAssociationTypeFromString(const Nan::FunctionCallback
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1143,7 +1143,7 @@ void VtkDataObjectWrap::GetNamedFieldInformation(const Nan::FunctionCallbackInfo
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				vtkInformation * r;
@@ -1214,7 +1214,7 @@ void VtkDataObjectWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataObjectWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWrap>(info.Holder());
 	vtkDataObject *native = (vtkDataObject *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1357,7 +1357,7 @@ void VtkDataObjectWrap::RemoveNamedFieldInformation(const Nan::FunctionCallbackI
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() != 3)
@@ -1463,7 +1463,7 @@ void VtkDataObjectWrap::SetActiveAttribute(const Nan::FunctionCallbackInfo<v8::V
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() > 3 && info[3]->IsInt32())
@@ -1509,7 +1509,7 @@ void VtkDataObjectWrap::SetActiveAttributeInfo(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsInt32())
+				if(info.Length() > 3 && info[3]->IsString())
 				{
 					Nan::Utf8String a3(info[3]);
 					if(info.Length() > 4 && info[4]->IsInt32())

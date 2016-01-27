@@ -106,7 +106,7 @@ void VtkStructuredGridGeometryFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8
 {
 	VtkStructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridGeometryFilterWrap>(info.Holder());
 	vtkStructuredGridGeometryFilter *native = (vtkStructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -106,7 +106,7 @@ void VtkVertexDegreeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVertexDegreeWrap *wrapper = ObjectWrap::Unwrap<VtkVertexDegreeWrap>(info.Holder());
 	vtkVertexDegree *native = (vtkVertexDegree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -182,7 +182,7 @@ void VtkVertexDegreeWrap::SetOutputArrayName(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkVertexDegreeWrap *wrapper = ObjectWrap::Unwrap<VtkVertexDegreeWrap>(info.Holder());
 	vtkVertexDegree *native = (vtkVertexDegree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

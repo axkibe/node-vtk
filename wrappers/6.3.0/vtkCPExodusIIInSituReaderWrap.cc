@@ -167,7 +167,7 @@ void VtkCPExodusIIInSituReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCPExodusIIInSituReaderWrap *wrapper = ObjectWrap::Unwrap<VtkCPExodusIIInSituReaderWrap>(info.Holder());
 	vtkCPExodusIIInSituReader *native = (vtkCPExodusIIInSituReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -262,7 +262,7 @@ void VtkCPExodusIIInSituReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<
 {
 	VtkCPExodusIIInSituReaderWrap *wrapper = ObjectWrap::Unwrap<VtkCPExodusIIInSituReaderWrap>(info.Holder());
 	vtkCPExodusIIInSituReader *native = (vtkCPExodusIIInSituReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

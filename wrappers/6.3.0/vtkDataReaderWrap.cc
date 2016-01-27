@@ -931,7 +931,7 @@ void VtkDataReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1023,7 +1023,7 @@ void VtkDataReaderWrap::IsFileValid(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1082,7 +1082,7 @@ void VtkDataReaderWrap::Read(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1272,7 +1272,7 @@ void VtkDataReaderWrap::ReadArray(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1588,7 +1588,7 @@ void VtkDataReaderWrap::SetBinaryInputString(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1612,7 +1612,7 @@ void VtkDataReaderWrap::SetFieldDataName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1632,7 +1632,7 @@ void VtkDataReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1672,7 +1672,7 @@ void VtkDataReaderWrap::SetInputString(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1705,7 +1705,7 @@ void VtkDataReaderWrap::SetLookupTableName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1725,7 +1725,7 @@ void VtkDataReaderWrap::SetNormalsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1897,7 +1897,7 @@ void VtkDataReaderWrap::SetScalarsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1917,7 +1917,7 @@ void VtkDataReaderWrap::SetTCoordsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1937,7 +1937,7 @@ void VtkDataReaderWrap::SetTensorsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1957,7 +1957,7 @@ void VtkDataReaderWrap::SetVectorsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

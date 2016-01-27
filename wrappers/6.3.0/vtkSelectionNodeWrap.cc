@@ -609,7 +609,7 @@ void VtkSelectionNodeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -861,7 +861,7 @@ void VtkSelectionNodeWrap::SetQueryString(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

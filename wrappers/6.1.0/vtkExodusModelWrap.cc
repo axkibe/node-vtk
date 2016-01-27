@@ -133,10 +133,10 @@ void VtkExodusModelWrap::AddUGridElementVariable(const Nan::FunctionCallbackInfo
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -164,10 +164,10 @@ void VtkExodusModelWrap::AddUGridNodeVariable(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -290,7 +290,7 @@ void VtkExodusModelWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -377,7 +377,7 @@ void VtkExodusModelWrap::RemoveUGridElementVariable(const Nan::FunctionCallbackI
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -399,7 +399,7 @@ void VtkExodusModelWrap::RemoveUGridNodeVariable(const Nan::FunctionCallbackInfo
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

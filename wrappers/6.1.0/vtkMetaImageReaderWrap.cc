@@ -158,7 +158,7 @@ void VtkMetaImageReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMetaImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMetaImageReaderWrap>(info.Holder());
 	vtkMetaImageReader *native = (vtkMetaImageReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -502,7 +502,7 @@ void VtkMetaImageReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMetaImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMetaImageReaderWrap>(info.Holder());
 	vtkMetaImageReader *native = (vtkMetaImageReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

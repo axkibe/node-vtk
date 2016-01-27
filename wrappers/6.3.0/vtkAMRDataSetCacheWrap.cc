@@ -140,7 +140,7 @@ void VtkAMRDataSetCacheWrap::GetAMRBlockCellData(const Nan::FunctionCallbackInfo
 	vtkAMRDataSetCache *native = (vtkAMRDataSetCache *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			vtkDataArray * r;
@@ -175,7 +175,7 @@ void VtkAMRDataSetCacheWrap::GetAMRBlockPointData(const Nan::FunctionCallbackInf
 	vtkAMRDataSetCache *native = (vtkAMRDataSetCache *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			vtkDataArray * r;
@@ -294,7 +294,7 @@ void VtkAMRDataSetCacheWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAMRDataSetCacheWrap *wrapper = ObjectWrap::Unwrap<VtkAMRDataSetCacheWrap>(info.Holder());
 	vtkAMRDataSetCache *native = (vtkAMRDataSetCache *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

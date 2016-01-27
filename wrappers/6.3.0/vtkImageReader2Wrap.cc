@@ -240,7 +240,7 @@ void VtkImageReader2Wrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info.Holder());
 	vtkImageReader2 *native = (vtkImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -552,7 +552,7 @@ void VtkImageReader2Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info.Holder());
 	vtkImageReader2 *native = (vtkImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -970,7 +970,7 @@ void VtkImageReader2Wrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info.Holder());
 	vtkImageReader2 *native = (vtkImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1048,7 +1048,7 @@ void VtkImageReader2Wrap::SetFilePattern(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info.Holder());
 	vtkImageReader2 *native = (vtkImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1068,7 +1068,7 @@ void VtkImageReader2Wrap::SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info.Holder());
 	vtkImageReader2 *native = (vtkImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

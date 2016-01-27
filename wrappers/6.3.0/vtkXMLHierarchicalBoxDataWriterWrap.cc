@@ -120,7 +120,7 @@ void VtkXMLHierarchicalBoxDataWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXMLHierarchicalBoxDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLHierarchicalBoxDataWriterWrap>(info.Holder());
 	vtkXMLHierarchicalBoxDataWriter *native = (vtkXMLHierarchicalBoxDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -123,7 +123,7 @@ void VtkTulipReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTulipReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTulipReaderWrap>(info.Holder());
 	vtkTulipReader *native = (vtkTulipReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkTulipReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTulipReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTulipReaderWrap>(info.Holder());
 	vtkTulipReader *native = (vtkTulipReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

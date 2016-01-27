@@ -142,7 +142,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::IsA(const Nan::FunctionCallback
 {
 	VtkXMLHierarchicalBoxDataFileConverterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLHierarchicalBoxDataFileConverterWrap>(info.Holder());
 	vtkXMLHierarchicalBoxDataFileConverter *native = (vtkXMLHierarchicalBoxDataFileConverter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -218,7 +218,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::SetInputFileName(const Nan::Fun
 {
 	VtkXMLHierarchicalBoxDataFileConverterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLHierarchicalBoxDataFileConverterWrap>(info.Holder());
 	vtkXMLHierarchicalBoxDataFileConverter *native = (vtkXMLHierarchicalBoxDataFileConverter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -238,7 +238,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::SetOutputFileName(const Nan::Fu
 {
 	VtkXMLHierarchicalBoxDataFileConverterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLHierarchicalBoxDataFileConverterWrap>(info.Holder());
 	vtkXMLHierarchicalBoxDataFileConverter *native = (vtkXMLHierarchicalBoxDataFileConverter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

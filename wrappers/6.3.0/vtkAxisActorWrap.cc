@@ -1658,7 +1658,7 @@ void VtkAxisActorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2559,7 +2559,7 @@ void VtkAxisActorWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3018,7 +3018,7 @@ void VtkAxisActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

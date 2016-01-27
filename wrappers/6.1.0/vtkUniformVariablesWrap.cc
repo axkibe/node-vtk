@@ -163,7 +163,7 @@ void VtkUniformVariablesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkUniformVariablesWrap *wrapper = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info.Holder());
 	vtkUniformVariables *native = (vtkUniformVariables *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -252,7 +252,7 @@ void VtkUniformVariablesWrap::RemoveUniform(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkUniformVariablesWrap *wrapper = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info.Holder());
 	vtkUniformVariables *native = (vtkUniformVariables *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -303,7 +303,7 @@ void VtkUniformVariablesWrap::Send(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkUniformVariablesWrap *wrapper = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info.Holder());
 	vtkUniformVariables *native = (vtkUniformVariables *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

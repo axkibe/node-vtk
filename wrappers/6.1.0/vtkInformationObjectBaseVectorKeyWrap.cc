@@ -209,7 +209,7 @@ void VtkInformationObjectBaseVectorKeyWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkInformationObjectBaseVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationObjectBaseVectorKeyWrap>(info.Holder());
 	vtkInformationObjectBaseVectorKey *native = (vtkInformationObjectBaseVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

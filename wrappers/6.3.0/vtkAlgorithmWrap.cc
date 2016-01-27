@@ -1340,7 +1340,7 @@ void VtkAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1677,10 +1677,10 @@ void VtkAlgorithmWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsInt32())
+				if(info.Length() > 3 && info[3]->IsString())
 				{
 					Nan::Utf8String a3(info[3]);
-					if(info.Length() > 4 && info[4]->IsInt32())
+					if(info.Length() > 4 && info[4]->IsString())
 					{
 						Nan::Utf8String a4(info[4]);
 						if(info.Length() != 5)
@@ -1700,7 +1700,7 @@ void VtkAlgorithmWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8
 				}
 				else if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsInt32())
+					if(info.Length() > 4 && info[4]->IsString())
 					{
 						Nan::Utf8String a4(info[4]);
 						if(info.Length() != 5)
@@ -1857,7 +1857,7 @@ void VtkAlgorithmWrap::SetProgressText(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

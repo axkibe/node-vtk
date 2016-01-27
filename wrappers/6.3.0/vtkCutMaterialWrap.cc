@@ -166,7 +166,7 @@ void VtkCutMaterialWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
 	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -242,7 +242,7 @@ void VtkCutMaterialWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
 	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -281,7 +281,7 @@ void VtkCutMaterialWrap::SetMaterialArrayName(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
 	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

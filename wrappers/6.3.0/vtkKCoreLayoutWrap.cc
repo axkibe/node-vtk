@@ -256,7 +256,7 @@ void VtkKCoreLayoutWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -356,7 +356,7 @@ void VtkKCoreLayoutWrap::SetCartesianCoordsXArrayName(const Nan::FunctionCallbac
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -376,7 +376,7 @@ void VtkKCoreLayoutWrap::SetCartesianCoordsYArrayName(const Nan::FunctionCallbac
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -416,7 +416,7 @@ void VtkKCoreLayoutWrap::SetKCoreLabelArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -436,7 +436,7 @@ void VtkKCoreLayoutWrap::SetPolarCoordsAngleArrayName(const Nan::FunctionCallbac
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -456,7 +456,7 @@ void VtkKCoreLayoutWrap::SetPolarCoordsRadiusArrayName(const Nan::FunctionCallba
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

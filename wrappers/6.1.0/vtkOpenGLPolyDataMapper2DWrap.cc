@@ -108,7 +108,7 @@ void VtkOpenGLPolyDataMapper2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOpenGLPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPolyDataMapper2DWrap>(info.Holder());
 	vtkOpenGLPolyDataMapper2D *native = (vtkOpenGLPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

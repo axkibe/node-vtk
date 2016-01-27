@@ -107,7 +107,7 @@ void VtkCylindricalTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCylindricalTransformWrap *wrapper = ObjectWrap::Unwrap<VtkCylindricalTransformWrap>(info.Holder());
 	vtkCylindricalTransform *native = (vtkCylindricalTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

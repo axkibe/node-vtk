@@ -208,13 +208,13 @@ void VtkSQLDatabaseSchemaWrap::AddColumnToIndex(const Nan::FunctionCallbackInfo<
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				int r;
@@ -262,17 +262,17 @@ void VtkSQLDatabaseSchemaWrap::AddColumnToTable(const Nan::FunctionCallbackInfo<
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsInt32())
+					if(info.Length() > 4 && info[4]->IsString())
 					{
 						Nan::Utf8String a4(info[4]);
 						int r;
@@ -299,12 +299,12 @@ void VtkSQLDatabaseSchemaWrap::AddColumnToTable(const Nan::FunctionCallbackInfo<
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() > 4 && info[4]->IsInt32())
+					if(info.Length() > 4 && info[4]->IsString())
 					{
 						Nan::Utf8String a4(info[4]);
 						int r;
@@ -334,12 +334,12 @@ void VtkSQLDatabaseSchemaWrap::AddIndexToTable(const Nan::FunctionCallbackInfo<v
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				int r;
@@ -362,7 +362,7 @@ void VtkSQLDatabaseSchemaWrap::AddIndexToTable(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				int r;
@@ -388,13 +388,13 @@ void VtkSQLDatabaseSchemaWrap::AddOptionToTable(const Nan::FunctionCallbackInfo<
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				int r;
@@ -415,10 +415,10 @@ void VtkSQLDatabaseSchemaWrap::AddOptionToTable(const Nan::FunctionCallbackInfo<
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				int r;
@@ -444,13 +444,13 @@ void VtkSQLDatabaseSchemaWrap::AddPreamble(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				int r;
@@ -476,7 +476,7 @@ void VtkSQLDatabaseSchemaWrap::AddTable(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -498,7 +498,7 @@ void VtkSQLDatabaseSchemaWrap::AddTableMultipleArguments(const Nan::FunctionCall
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -520,18 +520,18 @@ void VtkSQLDatabaseSchemaWrap::AddTriggerToTable(const Nan::FunctionCallbackInfo
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() > 3 && info[3]->IsInt32())
+				if(info.Length() > 3 && info[3]->IsString())
 				{
 					Nan::Utf8String a3(info[3]);
-					if(info.Length() > 4 && info[4]->IsInt32())
+					if(info.Length() > 4 && info[4]->IsString())
 					{
 						Nan::Utf8String a4(info[4]);
 						int r;
@@ -558,13 +558,13 @@ void VtkSQLDatabaseSchemaWrap::AddTriggerToTable(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() > 3 && info[3]->IsInt32())
+				if(info.Length() > 3 && info[3]->IsString())
 				{
 					Nan::Utf8String a3(info[3]);
-					if(info.Length() > 4 && info[4]->IsInt32())
+					if(info.Length() > 4 && info[4]->IsString())
 					{
 						Nan::Utf8String a4(info[4]);
 						int r;
@@ -633,10 +633,10 @@ void VtkSQLDatabaseSchemaWrap::GetColumnHandleFromName(const Nan::FunctionCallba
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -764,10 +764,10 @@ void VtkSQLDatabaseSchemaWrap::GetIndexHandleFromName(const Nan::FunctionCallbac
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -1084,7 +1084,7 @@ void VtkSQLDatabaseSchemaWrap::GetPreambleHandleFromName(const Nan::FunctionCall
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1127,7 +1127,7 @@ void VtkSQLDatabaseSchemaWrap::GetTableHandleFromName(const Nan::FunctionCallbac
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1220,10 +1220,10 @@ void VtkSQLDatabaseSchemaWrap::GetTriggerHandleFromName(const Nan::FunctionCallb
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -1297,7 +1297,7 @@ void VtkSQLDatabaseSchemaWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1385,7 +1385,7 @@ void VtkSQLDatabaseSchemaWrap::SetName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSQLDatabaseSchemaWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseSchemaWrap>(info.Holder());
 	vtkSQLDatabaseSchema *native = (vtkSQLDatabaseSchema *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

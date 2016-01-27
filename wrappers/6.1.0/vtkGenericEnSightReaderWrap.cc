@@ -244,7 +244,7 @@ void VtkGenericEnSightReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -350,7 +350,7 @@ void VtkGenericEnSightReaderWrap::GetCellArrayStatus(const Nan::FunctionCallback
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -802,7 +802,7 @@ void VtkGenericEnSightReaderWrap::GetPointArrayStatus(const Nan::FunctionCallbac
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -928,7 +928,7 @@ void VtkGenericEnSightReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1095,7 +1095,7 @@ void VtkGenericEnSightReaderWrap::SetCaseFileName(const Nan::FunctionCallbackInf
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1115,7 +1115,7 @@ void VtkGenericEnSightReaderWrap::SetCellArrayStatus(const Nan::FunctionCallback
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1139,7 +1139,7 @@ void VtkGenericEnSightReaderWrap::SetFilePath(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1178,7 +1178,7 @@ void VtkGenericEnSightReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbac
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

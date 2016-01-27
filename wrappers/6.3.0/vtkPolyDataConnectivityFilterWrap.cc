@@ -559,7 +559,7 @@ void VtkPolyDataConnectivityFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPolyDataConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataConnectivityFilterWrap>(info.Holder());
 	vtkPolyDataConnectivityFilter *native = (vtkPolyDataConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

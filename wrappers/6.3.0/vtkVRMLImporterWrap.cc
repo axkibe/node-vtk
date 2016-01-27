@@ -146,7 +146,7 @@ void VtkVRMLImporterWrap::GetVRMLDEFObject(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkVRMLImporterWrap *wrapper = ObjectWrap::Unwrap<VtkVRMLImporterWrap>(info.Holder());
 	vtkVRMLImporter *native = (vtkVRMLImporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkObject * r;
@@ -177,7 +177,7 @@ void VtkVRMLImporterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVRMLImporterWrap *wrapper = ObjectWrap::Unwrap<VtkVRMLImporterWrap>(info.Holder());
 	vtkVRMLImporter *native = (vtkVRMLImporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -253,7 +253,7 @@ void VtkVRMLImporterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkVRMLImporterWrap *wrapper = ObjectWrap::Unwrap<VtkVRMLImporterWrap>(info.Holder());
 	vtkVRMLImporter *native = (vtkVRMLImporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

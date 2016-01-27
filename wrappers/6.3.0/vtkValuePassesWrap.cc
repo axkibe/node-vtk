@@ -112,7 +112,7 @@ void VtkValuePassesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkValuePassesWrap *wrapper = ObjectWrap::Unwrap<VtkValuePassesWrap>(info.Holder());
 	vtkValuePasses *native = (vtkValuePasses *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -190,7 +190,7 @@ void VtkValuePassesWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<
 	vtkValuePasses *native = (vtkValuePasses *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

@@ -123,7 +123,7 @@ void VtkGeoFileTerrainSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGeoFileTerrainSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoFileTerrainSourceWrap>(info.Holder());
 	vtkGeoFileTerrainSource *native = (vtkGeoFileTerrainSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkGeoFileTerrainSourceWrap::SetPath(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGeoFileTerrainSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoFileTerrainSourceWrap>(info.Holder());
 	vtkGeoFileTerrainSource *native = (vtkGeoFileTerrainSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

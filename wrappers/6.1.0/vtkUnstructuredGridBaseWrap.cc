@@ -221,7 +221,7 @@ void VtkUnstructuredGridBaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkUnstructuredGridBaseWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBaseWrap>(info.Holder());
 	vtkUnstructuredGridBase *native = (vtkUnstructuredGridBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -257,7 +257,7 @@ void VtkUnstructuredGridBaseWrap::IsTypeOf(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkUnstructuredGridBaseWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBaseWrap>(info.Holder());
 	vtkUnstructuredGridBase *native = (vtkUnstructuredGridBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

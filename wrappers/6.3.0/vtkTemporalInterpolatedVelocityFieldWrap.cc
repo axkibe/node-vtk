@@ -156,7 +156,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::IsA(const Nan::FunctionCallbackIn
 {
 	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkTemporalInterpolatedVelocityField *native = (vtkTemporalInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -232,7 +232,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::SelectVectors(const Nan::Function
 {
 	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkTemporalInterpolatedVelocityField *native = (vtkTemporalInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

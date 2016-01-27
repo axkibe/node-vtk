@@ -103,7 +103,7 @@ void VtkProgrammableDataObjectSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8
 {
 	VtkProgrammableDataObjectSourceWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableDataObjectSourceWrap>(info.Holder());
 	vtkProgrammableDataObjectSource *native = (vtkProgrammableDataObjectSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

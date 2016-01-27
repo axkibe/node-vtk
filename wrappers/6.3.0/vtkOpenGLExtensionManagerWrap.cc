@@ -149,7 +149,7 @@ void VtkOpenGLExtensionManagerWrap::ExtensionSupported(const Nan::FunctionCallba
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -372,7 +372,7 @@ void VtkOpenGLExtensionManagerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -394,7 +394,7 @@ void VtkOpenGLExtensionManagerWrap::LoadAsARBExtension(const Nan::FunctionCallba
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -414,7 +414,7 @@ void VtkOpenGLExtensionManagerWrap::LoadCorePromotedExtension(const Nan::Functio
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -434,7 +434,7 @@ void VtkOpenGLExtensionManagerWrap::LoadExtension(const Nan::FunctionCallbackInf
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -454,7 +454,7 @@ void VtkOpenGLExtensionManagerWrap::LoadSupportedExtension(const Nan::FunctionCa
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

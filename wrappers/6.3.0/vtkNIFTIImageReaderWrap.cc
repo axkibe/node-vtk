@@ -136,7 +136,7 @@ void VtkNIFTIImageReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkNIFTIImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageReaderWrap>(info.Holder());
 	vtkNIFTIImageReader *native = (vtkNIFTIImageReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -339,7 +339,7 @@ void VtkNIFTIImageReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkNIFTIImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageReaderWrap>(info.Holder());
 	vtkNIFTIImageReader *native = (vtkNIFTIImageReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

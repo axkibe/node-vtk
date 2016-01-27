@@ -239,7 +239,7 @@ void VtkAbstractInterpolatedVelocityFieldWrap::IsA(const Nan::FunctionCallbackIn
 {
 	VtkAbstractInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkAbstractInterpolatedVelocityField *native = (vtkAbstractInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -317,7 +317,7 @@ void VtkAbstractInterpolatedVelocityFieldWrap::SelectVectors(const Nan::Function
 	vtkAbstractInterpolatedVelocityField *native = (vtkAbstractInterpolatedVelocityField *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

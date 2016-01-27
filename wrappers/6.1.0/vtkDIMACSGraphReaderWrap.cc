@@ -163,7 +163,7 @@ void VtkDIMACSGraphReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkDIMACSGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDIMACSGraphReaderWrap>(info.Holder());
 	vtkDIMACSGraphReader *native = (vtkDIMACSGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -239,7 +239,7 @@ void VtkDIMACSGraphReaderWrap::SetEdgeAttributeArrayName(const Nan::FunctionCall
 {
 	VtkDIMACSGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDIMACSGraphReaderWrap>(info.Holder());
 	vtkDIMACSGraphReader *native = (vtkDIMACSGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -259,7 +259,7 @@ void VtkDIMACSGraphReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDIMACSGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDIMACSGraphReaderWrap>(info.Holder());
 	vtkDIMACSGraphReader *native = (vtkDIMACSGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -279,7 +279,7 @@ void VtkDIMACSGraphReaderWrap::SetVertexAttributeArrayName(const Nan::FunctionCa
 {
 	VtkDIMACSGraphReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDIMACSGraphReaderWrap>(info.Holder());
 	vtkDIMACSGraphReader *native = (vtkDIMACSGraphReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

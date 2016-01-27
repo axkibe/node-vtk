@@ -133,7 +133,7 @@ void VtkDataObjectTypesWrap::GetTypeIdFromClassName(const Nan::FunctionCallbackI
 {
 	VtkDataObjectTypesWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTypesWrap>(info.Holder());
 	vtkDataObjectTypes *native = (vtkDataObjectTypes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -155,7 +155,7 @@ void VtkDataObjectTypesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkDataObjectTypesWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTypesWrap>(info.Holder());
 	vtkDataObjectTypes *native = (vtkDataObjectTypes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -177,7 +177,7 @@ void VtkDataObjectTypesWrap::NewDataObject(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataObjectTypesWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTypesWrap>(info.Holder());
 	vtkDataObjectTypes *native = (vtkDataObjectTypes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataObject * r;

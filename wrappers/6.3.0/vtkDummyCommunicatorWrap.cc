@@ -103,7 +103,7 @@ void VtkDummyCommunicatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkDummyCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkDummyCommunicatorWrap>(info.Holder());
 	vtkDummyCommunicator *native = (vtkDummyCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -349,7 +349,7 @@ void VtkSampleFunctionWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -541,7 +541,7 @@ void VtkSampleFunctionWrap::SetNormalArrayName(const Nan::FunctionCallbackInfo<v
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -727,7 +727,7 @@ void VtkSampleFunctionWrap::SetScalarArrayName(const Nan::FunctionCallbackInfo<v
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

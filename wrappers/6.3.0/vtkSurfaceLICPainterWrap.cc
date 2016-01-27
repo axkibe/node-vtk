@@ -811,7 +811,7 @@ void VtkSurfaceLICPainterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1190,7 +1190,7 @@ void VtkSurfaceLICPainterWrap::SetInputArrayToProcess(const Nan::FunctionCallbac
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -1595,7 +1595,7 @@ void VtkSurfaceLICPainterWrap::WriteTimerLog(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

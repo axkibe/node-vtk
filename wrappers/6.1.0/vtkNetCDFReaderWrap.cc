@@ -292,7 +292,7 @@ void VtkNetCDFReaderWrap::GetVariableArrayStatus(const Nan::FunctionCallbackInfo
 {
 	VtkNetCDFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFReaderWrap>(info.Holder());
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -337,7 +337,7 @@ void VtkNetCDFReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkNetCDFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFReaderWrap>(info.Holder());
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -437,7 +437,7 @@ void VtkNetCDFReaderWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkNetCDFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFReaderWrap>(info.Holder());
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -457,7 +457,7 @@ void VtkNetCDFReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkNetCDFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFReaderWrap>(info.Holder());
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -496,7 +496,7 @@ void VtkNetCDFReaderWrap::SetVariableArrayStatus(const Nan::FunctionCallbackInfo
 {
 	VtkNetCDFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFReaderWrap>(info.Holder());
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

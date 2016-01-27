@@ -324,7 +324,7 @@ void VtkApplyColorsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -448,7 +448,7 @@ void VtkApplyColorsWrap::SetCellColorOutputArrayName(const Nan::FunctionCallback
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -580,7 +580,7 @@ void VtkApplyColorsWrap::SetPointColorOutputArrayName(const Nan::FunctionCallbac
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

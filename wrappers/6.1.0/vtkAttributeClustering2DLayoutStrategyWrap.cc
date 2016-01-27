@@ -360,7 +360,7 @@ void VtkAttributeClustering2DLayoutStrategyWrap::IsA(const Nan::FunctionCallback
 {
 	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
 	vtkAttributeClustering2DLayoutStrategy *native = (vtkAttributeClustering2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -538,7 +538,7 @@ void VtkAttributeClustering2DLayoutStrategyWrap::SetVertexAttribute(const Nan::F
 {
 	VtkAttributeClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeClustering2DLayoutStrategyWrap>(info.Holder());
 	vtkAttributeClustering2DLayoutStrategy *native = (vtkAttributeClustering2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

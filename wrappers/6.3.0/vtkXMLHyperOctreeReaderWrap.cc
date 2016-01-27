@@ -153,7 +153,7 @@ void VtkXMLHyperOctreeReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkXMLHyperOctreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLHyperOctreeReaderWrap>(info.Holder());
 	vtkXMLHyperOctreeReader *native = (vtkXMLHyperOctreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

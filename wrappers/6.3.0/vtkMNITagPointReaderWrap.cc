@@ -129,7 +129,7 @@ void VtkMNITagPointReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMNITagPointReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointReaderWrap>(info.Holder());
 	vtkMNITagPointReader *native = (vtkMNITagPointReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -373,7 +373,7 @@ void VtkMNITagPointReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMNITagPointReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointReaderWrap>(info.Holder());
 	vtkMNITagPointReader *native = (vtkMNITagPointReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -449,7 +449,7 @@ void VtkMNITagPointReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMNITagPointReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointReaderWrap>(info.Holder());
 	vtkMNITagPointReader *native = (vtkMNITagPointReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

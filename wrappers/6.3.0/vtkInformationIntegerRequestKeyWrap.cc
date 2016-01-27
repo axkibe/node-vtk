@@ -143,7 +143,7 @@ void VtkInformationIntegerRequestKeyWrap::IsA(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInformationIntegerRequestKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIntegerRequestKeyWrap>(info.Holder());
 	vtkInformationIntegerRequestKey *native = (vtkInformationIntegerRequestKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -165,10 +165,10 @@ void VtkInformationIntegerRequestKeyWrap::MakeKey(const Nan::FunctionCallbackInf
 {
 	VtkInformationIntegerRequestKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIntegerRequestKeyWrap>(info.Holder());
 	vtkInformationIntegerRequestKey *native = (vtkInformationIntegerRequestKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			vtkInformationIntegerRequestKey * r;

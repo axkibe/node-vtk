@@ -101,7 +101,7 @@ void VtkXYZMolReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkXYZMolReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXYZMolReaderWrap>(info.Holder());
 	vtkXYZMolReader *native = (vtkXYZMolReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -165,7 +165,7 @@ void VtkXYZMolReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXYZMolReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXYZMolReaderWrap>(info.Holder());
 	vtkXYZMolReader *native = (vtkXYZMolReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

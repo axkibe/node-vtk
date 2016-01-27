@@ -163,7 +163,7 @@ void VtkOBJImporterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOBJImporterWrap *wrapper = ObjectWrap::Unwrap<VtkOBJImporterWrap>(info.Holder());
 	vtkOBJImporter *native = (vtkOBJImporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -239,7 +239,7 @@ void VtkOBJImporterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkOBJImporterWrap *wrapper = ObjectWrap::Unwrap<VtkOBJImporterWrap>(info.Holder());
 	vtkOBJImporter *native = (vtkOBJImporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -259,7 +259,7 @@ void VtkOBJImporterWrap::SetFileNameMTL(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOBJImporterWrap *wrapper = ObjectWrap::Unwrap<VtkOBJImporterWrap>(info.Holder());
 	vtkOBJImporter *native = (vtkOBJImporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -279,7 +279,7 @@ void VtkOBJImporterWrap::SetTexturePath(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOBJImporterWrap *wrapper = ObjectWrap::Unwrap<VtkOBJImporterWrap>(info.Holder());
 	vtkOBJImporter *native = (vtkOBJImporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

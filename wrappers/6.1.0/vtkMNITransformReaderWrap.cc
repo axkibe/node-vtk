@@ -117,7 +117,7 @@ void VtkMNITransformReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMNITransformReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformReaderWrap>(info.Holder());
 	vtkMNITransformReader *native = (vtkMNITransformReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -276,7 +276,7 @@ void VtkMNITransformReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkMNITransformReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformReaderWrap>(info.Holder());
 	vtkMNITransformReader *native = (vtkMNITransformReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -352,7 +352,7 @@ void VtkMNITransformReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMNITransformReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformReaderWrap>(info.Holder());
 	vtkMNITransformReader *native = (vtkMNITransformReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

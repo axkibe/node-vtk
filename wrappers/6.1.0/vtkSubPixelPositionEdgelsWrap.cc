@@ -179,7 +179,7 @@ void VtkSubPixelPositionEdgelsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSubPixelPositionEdgelsWrap *wrapper = ObjectWrap::Unwrap<VtkSubPixelPositionEdgelsWrap>(info.Holder());
 	vtkSubPixelPositionEdgels *native = (vtkSubPixelPositionEdgels *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

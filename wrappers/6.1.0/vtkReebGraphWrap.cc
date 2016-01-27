@@ -115,7 +115,7 @@ void VtkReebGraphWrap::Build(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -215,7 +215,7 @@ void VtkReebGraphWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkReebGraphWrap *wrapper = ObjectWrap::Unwrap<VtkReebGraphWrap>(info.Holder());
 	vtkReebGraph *native = (vtkReebGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -215,7 +215,7 @@ void VtkVolumeTextureMapper3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkVolumeTextureMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper3DWrap>(info.Holder());
 	vtkVolumeTextureMapper3D *native = (vtkVolumeTextureMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

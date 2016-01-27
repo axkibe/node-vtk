@@ -231,7 +231,7 @@ void VtkUGFacetReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkUGFacetReaderWrap *wrapper = ObjectWrap::Unwrap<VtkUGFacetReaderWrap>(info.Holder());
 	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -331,7 +331,7 @@ void VtkUGFacetReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkUGFacetReaderWrap *wrapper = ObjectWrap::Unwrap<VtkUGFacetReaderWrap>(info.Holder());
 	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

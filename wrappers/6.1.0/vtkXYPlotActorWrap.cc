@@ -752,7 +752,7 @@ void VtkXYPlotActorWrap::AddDataSetInput(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -790,7 +790,7 @@ void VtkXYPlotActorWrap::AddDataSetInputConnection(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -1988,7 +1988,7 @@ void VtkXYPlotActorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2314,7 +2314,7 @@ void VtkXYPlotActorWrap::RemoveDataSetInput(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -2352,7 +2352,7 @@ void VtkXYPlotActorWrap::RemoveDataSetInputConnection(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -3152,7 +3152,7 @@ void VtkXYPlotActorWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3571,7 +3571,7 @@ void VtkXYPlotActorWrap::SetPlotLabel(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -3849,7 +3849,7 @@ void VtkXYPlotActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -4122,7 +4122,7 @@ void VtkXYPlotActorWrap::SetXLabelFormat(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -4165,7 +4165,7 @@ void VtkXYPlotActorWrap::SetXTitle(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -4298,7 +4298,7 @@ void VtkXYPlotActorWrap::SetYLabelFormat(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -4341,7 +4341,7 @@ void VtkXYPlotActorWrap::SetYTitle(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

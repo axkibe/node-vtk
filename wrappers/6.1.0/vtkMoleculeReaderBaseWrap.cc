@@ -180,7 +180,7 @@ void VtkMoleculeReaderBaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkMoleculeReaderBaseWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeReaderBaseWrap>(info.Holder());
 	vtkMoleculeReaderBase *native = (vtkMoleculeReaderBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -275,7 +275,7 @@ void VtkMoleculeReaderBaseWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMoleculeReaderBaseWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeReaderBaseWrap>(info.Holder());
 	vtkMoleculeReaderBase *native = (vtkMoleculeReaderBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

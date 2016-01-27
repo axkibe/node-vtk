@@ -481,7 +481,7 @@ void VtkSectorSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSectorSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSectorSourceWrap>(info.Holder());
 	vtkSectorSource *native = (vtkSectorSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -146,7 +146,7 @@ void VtkMetaImageWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMetaImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMetaImageWriterWrap>(info.Holder());
 	vtkMetaImageWriter *native = (vtkMetaImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -222,7 +222,7 @@ void VtkMetaImageWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMetaImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMetaImageWriterWrap>(info.Holder());
 	vtkMetaImageWriter *native = (vtkMetaImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -242,7 +242,7 @@ void VtkMetaImageWriterWrap::SetRAWFileName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMetaImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMetaImageWriterWrap>(info.Holder());
 	vtkMetaImageWriter *native = (vtkMetaImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

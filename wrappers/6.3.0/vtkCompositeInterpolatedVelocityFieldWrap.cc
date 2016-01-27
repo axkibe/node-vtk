@@ -170,7 +170,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::IsA(const Nan::FunctionCallbackI
 {
 	VtkCompositeInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkCompositeInterpolatedVelocityField *native = (vtkCompositeInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

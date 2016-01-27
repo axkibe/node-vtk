@@ -507,7 +507,7 @@ void VtkRandomGraphSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -583,7 +583,7 @@ void VtkRandomGraphSourceWrap::SetEdgePedigreeIdArrayName(const Nan::FunctionCal
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -622,7 +622,7 @@ void VtkRandomGraphSourceWrap::SetEdgeWeightArrayName(const Nan::FunctionCallbac
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -699,7 +699,7 @@ void VtkRandomGraphSourceWrap::SetVertexPedigreeIdArrayName(const Nan::FunctionC
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

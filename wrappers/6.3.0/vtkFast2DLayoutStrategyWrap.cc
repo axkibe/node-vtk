@@ -340,7 +340,7 @@ void VtkFast2DLayoutStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkFast2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFast2DLayoutStrategyWrap>(info.Holder());
 	vtkFast2DLayoutStrategy *native = (vtkFast2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

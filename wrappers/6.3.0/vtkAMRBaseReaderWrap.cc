@@ -202,7 +202,7 @@ void VtkAMRBaseReaderWrap::GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -389,7 +389,7 @@ void VtkAMRBaseReaderWrap::GetPointArrayStatus(const Nan::FunctionCallbackInfo<v
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -446,7 +446,7 @@ void VtkAMRBaseReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -522,7 +522,7 @@ void VtkAMRBaseReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -585,7 +585,7 @@ void VtkAMRBaseReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -624,7 +624,7 @@ void VtkAMRBaseReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

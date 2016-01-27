@@ -165,7 +165,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkImageDataLIC2DExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataLIC2DExtentTranslatorWrap>(info.Holder());
 	vtkImageDataLIC2DExtentTranslator *native = (vtkImageDataLIC2DExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

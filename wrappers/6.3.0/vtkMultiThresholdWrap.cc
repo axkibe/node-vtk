@@ -116,7 +116,7 @@ void VtkMultiThresholdWrap::AddBandpassIntervalSet(const Nan::FunctionCallbackIn
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsInt32())
+				if(info.Length() > 3 && info[3]->IsString())
 				{
 					Nan::Utf8String a3(info[3]);
 					if(info.Length() > 4 && info[4]->IsInt32())
@@ -156,7 +156,7 @@ void VtkMultiThresholdWrap::AddHighpassIntervalSet(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() > 3 && info[3]->IsInt32())
@@ -200,7 +200,7 @@ void VtkMultiThresholdWrap::AddIntervalSet(const Nan::FunctionCallbackInfo<v8::V
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsInt32())
+						if(info.Length() > 5 && info[5]->IsString())
 						{
 							Nan::Utf8String a5(info[5]);
 							if(info.Length() > 6 && info[6]->IsInt32())
@@ -271,7 +271,7 @@ void VtkMultiThresholdWrap::AddLowpassIntervalSet(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() > 3 && info[3]->IsInt32())
@@ -311,7 +311,7 @@ void VtkMultiThresholdWrap::AddNotchIntervalSet(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsInt32())
+				if(info.Length() > 3 && info[3]->IsString())
 				{
 					Nan::Utf8String a3(info[3]);
 					if(info.Length() > 4 && info[4]->IsInt32())
@@ -361,7 +361,7 @@ void VtkMultiThresholdWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkMultiThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkMultiThresholdWrap>(info.Holder());
 	vtkMultiThreshold *native = (vtkMultiThreshold *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

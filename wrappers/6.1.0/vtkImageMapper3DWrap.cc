@@ -429,7 +429,7 @@ void VtkImageMapper3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

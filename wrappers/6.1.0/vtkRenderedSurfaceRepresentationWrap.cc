@@ -147,7 +147,7 @@ void VtkRenderedSurfaceRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v
 {
 	VtkRenderedSurfaceRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedSurfaceRepresentationWrap>(info.Holder());
 	vtkRenderedSurfaceRepresentation *native = (vtkRenderedSurfaceRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -223,7 +223,7 @@ void VtkRenderedSurfaceRepresentationWrap::SetCellColorArrayName(const Nan::Func
 {
 	VtkRenderedSurfaceRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedSurfaceRepresentationWrap>(info.Holder());
 	vtkRenderedSurfaceRepresentation *native = (vtkRenderedSurfaceRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

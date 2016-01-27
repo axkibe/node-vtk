@@ -417,7 +417,7 @@ void VtkYoungsMaterialInterfaceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -624,19 +624,19 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialArrays(const Nan::FunctionCallba
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() > 3 && info[3]->IsInt32())
+				if(info.Length() > 3 && info[3]->IsString())
 				{
 					Nan::Utf8String a3(info[3]);
-					if(info.Length() > 4 && info[4]->IsInt32())
+					if(info.Length() > 4 && info[4]->IsString())
 					{
 						Nan::Utf8String a4(info[4]);
-						if(info.Length() > 5 && info[5]->IsInt32())
+						if(info.Length() > 5 && info[5]->IsString())
 						{
 							Nan::Utf8String a5(info[5]);
 							if(info.Length() != 6)
@@ -678,10 +678,10 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialNormalArray(const Nan::FunctionC
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -698,7 +698,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialNormalArray(const Nan::FunctionC
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -720,10 +720,10 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialOrderingArray(const Nan::Functio
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -740,7 +740,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialOrderingArray(const Nan::Functio
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -764,7 +764,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialVolumeFractionArray(const Nan::F
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

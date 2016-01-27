@@ -107,7 +107,7 @@ void VtkFreeTypeLabelRenderStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFreeTypeLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFreeTypeLabelRenderStrategyWrap>(info.Holder());
 	vtkFreeTypeLabelRenderStrategy *native = (vtkFreeTypeLabelRenderStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

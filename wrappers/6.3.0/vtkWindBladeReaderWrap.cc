@@ -286,7 +286,7 @@ void VtkWindBladeReaderWrap::GetPointArrayStatus(const Nan::FunctionCallbackInfo
 {
 	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
 	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -308,7 +308,7 @@ void VtkWindBladeReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
 	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -384,7 +384,7 @@ void VtkWindBladeReaderWrap::SetFilename(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
 	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -404,7 +404,7 @@ void VtkWindBladeReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo
 {
 	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
 	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

@@ -318,7 +318,7 @@ void VtkImageSincInterpolatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

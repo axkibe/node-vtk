@@ -172,7 +172,7 @@ void VtkDelimitedTextWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDelimitedTextWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextWriterWrap>(info.Holder());
 	vtkDelimitedTextWriter *native = (vtkDelimitedTextWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -262,7 +262,7 @@ void VtkDelimitedTextWriterWrap::SetFieldDelimiter(const Nan::FunctionCallbackIn
 {
 	VtkDelimitedTextWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextWriterWrap>(info.Holder());
 	vtkDelimitedTextWriter *native = (vtkDelimitedTextWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -282,7 +282,7 @@ void VtkDelimitedTextWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDelimitedTextWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextWriterWrap>(info.Holder());
 	vtkDelimitedTextWriter *native = (vtkDelimitedTextWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -302,7 +302,7 @@ void VtkDelimitedTextWriterWrap::SetStringDelimiter(const Nan::FunctionCallbackI
 {
 	VtkDelimitedTextWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextWriterWrap>(info.Holder());
 	vtkDelimitedTextWriter *native = (vtkDelimitedTextWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

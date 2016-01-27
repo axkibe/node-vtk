@@ -522,7 +522,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::IsA(const Nan::FunctionCall
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -725,7 +725,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetLabelText(const Nan::Fun
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

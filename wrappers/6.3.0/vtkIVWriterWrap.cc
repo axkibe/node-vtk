@@ -173,7 +173,7 @@ void VtkIVWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkIVWriterWrap *wrapper = ObjectWrap::Unwrap<VtkIVWriterWrap>(info.Holder());
 	vtkIVWriter *native = (vtkIVWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -249,7 +249,7 @@ void VtkIVWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkIVWriterWrap *wrapper = ObjectWrap::Unwrap<VtkIVWriterWrap>(info.Holder());
 	vtkIVWriter *native = (vtkIVWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

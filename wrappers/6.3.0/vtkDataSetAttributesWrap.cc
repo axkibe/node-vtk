@@ -829,7 +829,7 @@ void VtkDataSetAttributesWrap::GetGlobalIds(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataArray * r;
@@ -897,7 +897,7 @@ void VtkDataSetAttributesWrap::GetNormals(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataArray * r;
@@ -944,7 +944,7 @@ void VtkDataSetAttributesWrap::GetPedigreeIds(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkAbstractArray * r;
@@ -991,7 +991,7 @@ void VtkDataSetAttributesWrap::GetScalars(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataArray * r;
@@ -1038,7 +1038,7 @@ void VtkDataSetAttributesWrap::GetTCoords(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataArray * r;
@@ -1085,7 +1085,7 @@ void VtkDataSetAttributesWrap::GetTensors(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataArray * r;
@@ -1132,7 +1132,7 @@ void VtkDataSetAttributesWrap::GetVectors(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataArray * r;
@@ -1205,7 +1205,7 @@ void VtkDataSetAttributesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1291,7 +1291,7 @@ void VtkDataSetAttributesWrap::RemoveArray(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1354,7 +1354,7 @@ void VtkDataSetAttributesWrap::SetActiveAttribute(const Nan::FunctionCallbackInf
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1398,7 +1398,7 @@ void VtkDataSetAttributesWrap::SetActiveGlobalIds(const Nan::FunctionCallbackInf
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1420,7 +1420,7 @@ void VtkDataSetAttributesWrap::SetActiveNormals(const Nan::FunctionCallbackInfo<
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1442,7 +1442,7 @@ void VtkDataSetAttributesWrap::SetActivePedigreeIds(const Nan::FunctionCallbackI
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1464,7 +1464,7 @@ void VtkDataSetAttributesWrap::SetActiveScalars(const Nan::FunctionCallbackInfo<
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1486,7 +1486,7 @@ void VtkDataSetAttributesWrap::SetActiveTCoords(const Nan::FunctionCallbackInfo<
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1508,7 +1508,7 @@ void VtkDataSetAttributesWrap::SetActiveTensors(const Nan::FunctionCallbackInfo<
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1530,7 +1530,7 @@ void VtkDataSetAttributesWrap::SetActiveVectors(const Nan::FunctionCallbackInfo<
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

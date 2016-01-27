@@ -245,7 +245,7 @@ void VtkPolyVertexWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyVertexWrap *wrapper = ObjectWrap::Unwrap<VtkPolyVertexWrap>(info.Holder());
 	vtkPolyVertex *native = (vtkPolyVertex *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

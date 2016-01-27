@@ -278,7 +278,7 @@ void VtkImageImportWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageImportWrap *wrapper = ObjectWrap::Unwrap<VtkImageImportWrap>(info.Holder());
 	vtkImageImport *native = (vtkImageImport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -581,7 +581,7 @@ void VtkImageImportWrap::SetScalarArrayName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageImportWrap *wrapper = ObjectWrap::Unwrap<VtkImageImportWrap>(info.Holder());
 	vtkImageImport *native = (vtkImageImport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

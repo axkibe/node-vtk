@@ -120,7 +120,7 @@ void VtkUnsignedCharArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkUnsignedCharArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info.Holder());
 	vtkUnsignedCharArray *native = (vtkUnsignedCharArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

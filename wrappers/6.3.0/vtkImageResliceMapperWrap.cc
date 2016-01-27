@@ -485,7 +485,7 @@ void VtkImageResliceMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

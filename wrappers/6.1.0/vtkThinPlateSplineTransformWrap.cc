@@ -229,7 +229,7 @@ void VtkThinPlateSplineTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkThinPlateSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkThinPlateSplineTransformWrap>(info.Holder());
 	vtkThinPlateSplineTransform *native = (vtkThinPlateSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -338,7 +338,7 @@ void VtkNIFTIImageWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkNIFTIImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageWriterWrap>(info.Holder());
 	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -438,7 +438,7 @@ void VtkNIFTIImageWriterWrap::SetDescription(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkNIFTIImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageWriterWrap>(info.Holder());
 	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

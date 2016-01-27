@@ -153,7 +153,7 @@ void VtkGraphToPolyDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkGraphToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToPolyDataWrap>(info.Holder());
 	vtkGraphToPolyData *native = (vtkGraphToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

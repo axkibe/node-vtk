@@ -582,7 +582,7 @@ void VtkGenericGlyph3DFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -706,7 +706,7 @@ void VtkGenericGlyph3DFilterWrap::SelectInputNormals(const Nan::FunctionCallback
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -726,7 +726,7 @@ void VtkGenericGlyph3DFilterWrap::SelectInputScalars(const Nan::FunctionCallback
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -746,7 +746,7 @@ void VtkGenericGlyph3DFilterWrap::SelectInputVectors(const Nan::FunctionCallback
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -933,7 +933,7 @@ void VtkGenericGlyph3DFilterWrap::SetPointIdsName(const Nan::FunctionCallbackInf
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

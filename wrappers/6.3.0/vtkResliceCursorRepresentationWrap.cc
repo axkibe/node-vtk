@@ -689,7 +689,7 @@ void VtkResliceCursorRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
 	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -949,7 +949,7 @@ void VtkResliceCursorRepresentationWrap::SetThicknessLabelFormat(const Nan::Func
 {
 	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
 	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

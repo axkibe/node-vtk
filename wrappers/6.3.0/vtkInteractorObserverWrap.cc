@@ -334,7 +334,7 @@ void VtkInteractorObserverWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -604,7 +604,7 @@ void VtkInteractorObserverWrap::SetKeyPressActivationValue(const Nan::FunctionCa
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		char a0 = info[0]->Int32Value();
 		if( a0 < -127 || a0 > 128 )

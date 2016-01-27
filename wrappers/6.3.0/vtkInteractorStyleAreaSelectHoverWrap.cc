@@ -189,7 +189,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -343,7 +343,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetLabelField(const Nan::FunctionCal
 {
 	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

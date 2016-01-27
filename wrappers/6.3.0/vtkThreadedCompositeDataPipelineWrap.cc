@@ -103,7 +103,7 @@ void VtkThreadedCompositeDataPipelineWrap::IsA(const Nan::FunctionCallbackInfo<v
 {
 	VtkThreadedCompositeDataPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedCompositeDataPipelineWrap>(info.Holder());
 	vtkThreadedCompositeDataPipeline *native = (vtkThreadedCompositeDataPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

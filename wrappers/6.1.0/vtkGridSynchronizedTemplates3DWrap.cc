@@ -434,7 +434,7 @@ void VtkGridSynchronizedTemplates3DWrap::IsA(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

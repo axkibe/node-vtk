@@ -252,7 +252,7 @@ void VtkLabelHierarchyIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkLabelHierarchyIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyIteratorWrap>(info.Holder());
 	vtkLabelHierarchyIterator *native = (vtkLabelHierarchyIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

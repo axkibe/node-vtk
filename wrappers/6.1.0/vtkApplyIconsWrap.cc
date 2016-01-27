@@ -239,7 +239,7 @@ void VtkApplyIconsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -353,7 +353,7 @@ void VtkApplyIconsWrap::SetIconOutputArrayName(const Nan::FunctionCallbackInfo<v
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -373,7 +373,7 @@ void VtkApplyIconsWrap::SetIconType(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

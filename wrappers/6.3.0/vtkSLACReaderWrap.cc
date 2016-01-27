@@ -181,7 +181,7 @@ void VtkSLACReaderWrap::AddModeFileName(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -201,7 +201,7 @@ void VtkSLACReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -374,7 +374,7 @@ void VtkSLACReaderWrap::GetVariableArrayStatus(const Nan::FunctionCallbackInfo<v
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -442,7 +442,7 @@ void VtkSLACReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -695,7 +695,7 @@ void VtkSLACReaderWrap::SetMeshFileName(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -795,7 +795,7 @@ void VtkSLACReaderWrap::SetVariableArrayStatus(const Nan::FunctionCallbackInfo<v
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

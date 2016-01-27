@@ -212,7 +212,7 @@ void VtkSocketCommunicatorWrap::ConnectTo(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSocketCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCommunicatorWrap>(info.Holder());
 	vtkSocketCommunicator *native = (vtkSocketCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -401,7 +401,7 @@ void VtkSocketCommunicatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkSocketCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCommunicatorWrap>(info.Holder());
 	vtkSocketCommunicator *native = (vtkSocketCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -423,7 +423,7 @@ void VtkSocketCommunicatorWrap::LogToFile(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSocketCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCommunicatorWrap>(info.Holder());
 	vtkSocketCommunicator *native = (vtkSocketCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

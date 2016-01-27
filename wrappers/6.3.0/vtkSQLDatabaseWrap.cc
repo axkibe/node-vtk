@@ -129,7 +129,7 @@ void VtkSQLDatabaseWrap::CreateFromURL(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
 	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkSQLDatabase * r;
@@ -248,7 +248,7 @@ void VtkSQLDatabaseWrap::GetRecord(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
 	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkStringArray * r;
@@ -302,7 +302,7 @@ void VtkSQLDatabaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
 	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

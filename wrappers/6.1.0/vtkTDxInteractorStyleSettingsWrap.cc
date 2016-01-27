@@ -182,7 +182,7 @@ void VtkTDxInteractorStyleSettingsWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTDxInteractorStyleSettingsWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleSettingsWrap>(info.Holder());
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

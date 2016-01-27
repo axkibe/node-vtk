@@ -156,7 +156,7 @@ void VtkTreeMapLayoutWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTreeMapLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapLayoutWrap>(info.Holder());
 	vtkTreeMapLayout *native = (vtkTreeMapLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -252,7 +252,7 @@ void VtkTreeMapLayoutWrap::SetRectanglesFieldName(const Nan::FunctionCallbackInf
 {
 	VtkTreeMapLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapLayoutWrap>(info.Holder());
 	vtkTreeMapLayout *native = (vtkTreeMapLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -272,7 +272,7 @@ void VtkTreeMapLayoutWrap::SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTreeMapLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapLayoutWrap>(info.Holder());
 	vtkTreeMapLayout *native = (vtkTreeMapLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

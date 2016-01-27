@@ -549,7 +549,7 @@ void VtkGaussianSplatterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

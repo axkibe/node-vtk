@@ -153,7 +153,7 @@ void VtkNonOverlappingAMRAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkNonOverlappingAMRAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkNonOverlappingAMRAlgorithmWrap>(info.Holder());
 	vtkNonOverlappingAMRAlgorithm *native = (vtkNonOverlappingAMRAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

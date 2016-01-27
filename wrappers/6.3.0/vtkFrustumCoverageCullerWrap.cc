@@ -223,7 +223,7 @@ void VtkFrustumCoverageCullerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkFrustumCoverageCullerWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumCoverageCullerWrap>(info.Holder());
 	vtkFrustumCoverageCuller *native = (vtkFrustumCoverageCuller *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

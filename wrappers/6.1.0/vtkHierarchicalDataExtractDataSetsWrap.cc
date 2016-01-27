@@ -103,7 +103,7 @@ void VtkHierarchicalDataExtractDataSetsWrap::IsA(const Nan::FunctionCallbackInfo
 {
 	VtkHierarchicalDataExtractDataSetsWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalDataExtractDataSetsWrap>(info.Holder());
 	vtkHierarchicalDataExtractDataSets *native = (vtkHierarchicalDataExtractDataSets *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -176,7 +176,7 @@ void VtkConvertSelectionWrap::AddArrayName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkConvertSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkConvertSelectionWrap>(info.Holder());
 	vtkConvertSelection *native = (vtkConvertSelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -494,7 +494,7 @@ void VtkConvertSelectionWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkConvertSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkConvertSelectionWrap>(info.Holder());
 	vtkConvertSelection *native = (vtkConvertSelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -594,7 +594,7 @@ void VtkConvertSelectionWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkConvertSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkConvertSelectionWrap>(info.Holder());
 	vtkConvertSelection *native = (vtkConvertSelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -875,7 +875,7 @@ void VtkConvertSelectionWrap::ToValueSelection(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				vtkSelection * r;

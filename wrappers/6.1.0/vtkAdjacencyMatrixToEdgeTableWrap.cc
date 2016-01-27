@@ -143,7 +143,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAdjacencyMatrixToEdgeTableWrap *wrapper = ObjectWrap::Unwrap<VtkAdjacencyMatrixToEdgeTableWrap>(info.Holder());
 	vtkAdjacencyMatrixToEdgeTable *native = (vtkAdjacencyMatrixToEdgeTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -238,7 +238,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::SetValueArrayName(const Nan::FunctionCal
 {
 	VtkAdjacencyMatrixToEdgeTableWrap *wrapper = ObjectWrap::Unwrap<VtkAdjacencyMatrixToEdgeTableWrap>(info.Holder());
 	vtkAdjacencyMatrixToEdgeTable *native = (vtkAdjacencyMatrixToEdgeTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

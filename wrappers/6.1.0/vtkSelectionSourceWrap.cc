@@ -374,7 +374,7 @@ void VtkSelectionSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkSelectionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionSourceWrap>(info.Holder());
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -529,7 +529,7 @@ void VtkSelectionSourceWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSelectionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionSourceWrap>(info.Holder());
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -682,7 +682,7 @@ void VtkSelectionSourceWrap::SetQueryString(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSelectionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionSourceWrap>(info.Holder());
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

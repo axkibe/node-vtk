@@ -200,7 +200,7 @@ void VtkDistanceRepresentation2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDistanceRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation2DWrap>(info.Holder());
 	vtkDistanceRepresentation2D *native = (vtkDistanceRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

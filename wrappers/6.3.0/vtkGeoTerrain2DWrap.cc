@@ -170,7 +170,7 @@ void VtkGeoTerrain2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoTerrain2DWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrain2DWrap>(info.Holder());
 	vtkGeoTerrain2D *native = (vtkGeoTerrain2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

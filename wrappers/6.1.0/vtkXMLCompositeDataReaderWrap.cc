@@ -153,7 +153,7 @@ void VtkXMLCompositeDataReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXMLCompositeDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLCompositeDataReaderWrap>(info.Holder());
 	vtkXMLCompositeDataReader *native = (vtkXMLCompositeDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

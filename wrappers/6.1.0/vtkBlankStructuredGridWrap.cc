@@ -237,7 +237,7 @@ void VtkBlankStructuredGridWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkBlankStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkBlankStructuredGridWrap>(info.Holder());
 	vtkBlankStructuredGrid *native = (vtkBlankStructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -332,7 +332,7 @@ void VtkBlankStructuredGridWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBlankStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkBlankStructuredGridWrap>(info.Holder());
 	vtkBlankStructuredGrid *native = (vtkBlankStructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

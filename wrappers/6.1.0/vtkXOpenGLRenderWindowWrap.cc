@@ -260,7 +260,7 @@ void VtkXOpenGLRenderWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -450,7 +450,7 @@ void VtkXOpenGLRenderWindowWrap::SetNextWindowInfo(const Nan::FunctionCallbackIn
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -489,7 +489,7 @@ void VtkXOpenGLRenderWindowWrap::SetParentInfo(const Nan::FunctionCallbackInfo<v
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -574,7 +574,7 @@ void VtkXOpenGLRenderWindowWrap::SetWindowInfo(const Nan::FunctionCallbackInfo<v
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -594,7 +594,7 @@ void VtkXOpenGLRenderWindowWrap::SetWindowName(const Nan::FunctionCallbackInfo<v
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -123,7 +123,7 @@ void VtkGeoFileImageSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGeoFileImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoFileImageSourceWrap>(info.Holder());
 	vtkGeoFileImageSource *native = (vtkGeoFileImageSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkGeoFileImageSourceWrap::SetPath(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGeoFileImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoFileImageSourceWrap>(info.Holder());
 	vtkGeoFileImageSource *native = (vtkGeoFileImageSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

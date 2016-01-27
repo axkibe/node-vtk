@@ -261,7 +261,7 @@ void VtkXMLTreeReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -409,7 +409,7 @@ void VtkXMLTreeReaderWrap::SetEdgePedigreeIdArrayName(const Nan::FunctionCallbac
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -429,7 +429,7 @@ void VtkXMLTreeReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -449,7 +449,7 @@ void VtkXMLTreeReaderWrap::SetVertexPedigreeIdArrayName(const Nan::FunctionCallb
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -469,7 +469,7 @@ void VtkXMLTreeReaderWrap::SetXMLString(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

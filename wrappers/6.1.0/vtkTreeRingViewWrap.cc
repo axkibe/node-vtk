@@ -172,7 +172,7 @@ void VtkTreeRingViewWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTreeRingViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeRingViewWrap>(info.Holder());
 	vtkTreeRingView *native = (vtkTreeRingView *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

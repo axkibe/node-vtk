@@ -200,7 +200,7 @@ void VtkIconGlyphFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

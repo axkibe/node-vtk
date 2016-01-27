@@ -211,7 +211,7 @@ void VtkLabeledTreeMapDataMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -464,7 +464,7 @@ void VtkLabeledTreeMapDataMapperWrap::SetRectanglesArrayName(const Nan::Function
 {
 	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

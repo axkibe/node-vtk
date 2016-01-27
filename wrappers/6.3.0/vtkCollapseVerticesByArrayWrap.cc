@@ -131,7 +131,7 @@ void VtkCollapseVerticesByArrayWrap::AddAggregateEdgeArray(const Nan::FunctionCa
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -291,7 +291,7 @@ void VtkCollapseVerticesByArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -367,7 +367,7 @@ void VtkCollapseVerticesByArrayWrap::SetEdgesCollapsedArray(const Nan::FunctionC
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -387,7 +387,7 @@ void VtkCollapseVerticesByArrayWrap::SetVertexArray(const Nan::FunctionCallbackI
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -407,7 +407,7 @@ void VtkCollapseVerticesByArrayWrap::SetVerticesCollapsedArray(const Nan::Functi
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

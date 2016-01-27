@@ -103,7 +103,7 @@ void VtkOverlayPassWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOverlayPassWrap *wrapper = ObjectWrap::Unwrap<VtkOverlayPassWrap>(info.Holder());
 	vtkOverlayPass *native = (vtkOverlayPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

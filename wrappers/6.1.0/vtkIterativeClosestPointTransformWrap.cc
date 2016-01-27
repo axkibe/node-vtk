@@ -485,7 +485,7 @@ void VtkIterativeClosestPointTransformWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

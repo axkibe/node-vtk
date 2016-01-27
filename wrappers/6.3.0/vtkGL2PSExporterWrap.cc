@@ -700,7 +700,7 @@ void VtkGL2PSExporterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1003,7 +1003,7 @@ void VtkGL2PSExporterWrap::SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1212,7 +1212,7 @@ void VtkGL2PSExporterWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

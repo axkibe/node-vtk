@@ -103,7 +103,7 @@ void VtkVolumetricPassWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkVolumetricPassWrap *wrapper = ObjectWrap::Unwrap<VtkVolumetricPassWrap>(info.Holder());
 	vtkVolumetricPass *native = (vtkVolumetricPass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

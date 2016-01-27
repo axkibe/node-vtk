@@ -263,7 +263,7 @@ void VtkImageShrink3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

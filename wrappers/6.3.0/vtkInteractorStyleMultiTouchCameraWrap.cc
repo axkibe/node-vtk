@@ -147,7 +147,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::IsA(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleMultiTouchCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleMultiTouchCameraWrap>(info.Holder());
 	vtkInteractorStyleMultiTouchCamera *native = (vtkInteractorStyleMultiTouchCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

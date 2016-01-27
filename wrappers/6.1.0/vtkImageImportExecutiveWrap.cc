@@ -103,7 +103,7 @@ void VtkImageImportExecutiveWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageImportExecutiveWrap *wrapper = ObjectWrap::Unwrap<VtkImageImportExecutiveWrap>(info.Holder());
 	vtkImageImportExecutive *native = (vtkImageImportExecutive *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

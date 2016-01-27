@@ -270,7 +270,7 @@ void VtkMedicalImageReader2Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -346,7 +346,7 @@ void VtkMedicalImageReader2Wrap::SetDate(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -366,7 +366,7 @@ void VtkMedicalImageReader2Wrap::SetImageNumber(const Nan::FunctionCallbackInfo<
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -386,7 +386,7 @@ void VtkMedicalImageReader2Wrap::SetModality(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -406,7 +406,7 @@ void VtkMedicalImageReader2Wrap::SetPatientID(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -426,7 +426,7 @@ void VtkMedicalImageReader2Wrap::SetPatientName(const Nan::FunctionCallbackInfo<
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -446,7 +446,7 @@ void VtkMedicalImageReader2Wrap::SetSeries(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -466,7 +466,7 @@ void VtkMedicalImageReader2Wrap::SetStudy(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMedicalImageReader2Wrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImageReader2Wrap>(info.Holder());
 	vtkMedicalImageReader2 *native = (vtkMedicalImageReader2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

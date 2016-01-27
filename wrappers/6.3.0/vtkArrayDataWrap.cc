@@ -165,7 +165,7 @@ void VtkArrayDataWrap::GetArrayByName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkArrayDataWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWrap>(info.Holder());
 	vtkArrayData *native = (vtkArrayData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkArray * r;
@@ -279,7 +279,7 @@ void VtkArrayDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkArrayDataWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWrap>(info.Holder());
 	vtkArrayData *native = (vtkArrayData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

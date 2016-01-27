@@ -153,7 +153,7 @@ void VtkInformationExecutivePortVectorKeyWrap::IsA(const Nan::FunctionCallbackIn
 {
 	VtkInformationExecutivePortVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationExecutivePortVectorKeyWrap>(info.Holder());
 	vtkInformationExecutivePortVectorKey *native = (vtkInformationExecutivePortVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -197,10 +197,10 @@ void VtkInformationExecutivePortVectorKeyWrap::MakeKey(const Nan::FunctionCallba
 {
 	VtkInformationExecutivePortVectorKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationExecutivePortVectorKeyWrap>(info.Holder());
 	vtkInformationExecutivePortVectorKey *native = (vtkInformationExecutivePortVectorKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			vtkInformationExecutivePortVectorKey * r;

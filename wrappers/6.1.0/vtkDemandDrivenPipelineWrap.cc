@@ -188,7 +188,7 @@ void VtkDemandDrivenPipelineWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkDemandDrivenPipelineWrap>(info.Holder());
 	vtkDemandDrivenPipeline *native = (vtkDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -210,7 +210,7 @@ void VtkDemandDrivenPipelineWrap::NewDataObject(const Nan::FunctionCallbackInfo<
 {
 	VtkDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkDemandDrivenPipelineWrap>(info.Holder());
 	vtkDemandDrivenPipeline *native = (vtkDemandDrivenPipeline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataObject * r;

@@ -362,7 +362,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
 	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

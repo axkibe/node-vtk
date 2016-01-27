@@ -92,7 +92,7 @@ void VtkNrrdReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkNrrdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNrrdReaderWrap>(info.Holder());
 	vtkNrrdReader *native = (vtkNrrdReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -128,7 +128,7 @@ void VtkNrrdReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkNrrdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNrrdReaderWrap>(info.Holder());
 	vtkNrrdReader *native = (vtkNrrdReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

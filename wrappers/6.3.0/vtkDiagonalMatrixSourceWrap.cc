@@ -223,7 +223,7 @@ void VtkDiagonalMatrixSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDiagonalMatrixSourceWrap *wrapper = ObjectWrap::Unwrap<VtkDiagonalMatrixSourceWrap>(info.Holder());
 	vtkDiagonalMatrixSource *native = (vtkDiagonalMatrixSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -318,7 +318,7 @@ void VtkDiagonalMatrixSourceWrap::SetColumnLabel(const Nan::FunctionCallbackInfo
 {
 	VtkDiagonalMatrixSourceWrap *wrapper = ObjectWrap::Unwrap<VtkDiagonalMatrixSourceWrap>(info.Holder());
 	vtkDiagonalMatrixSource *native = (vtkDiagonalMatrixSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -357,7 +357,7 @@ void VtkDiagonalMatrixSourceWrap::SetRowLabel(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDiagonalMatrixSourceWrap *wrapper = ObjectWrap::Unwrap<VtkDiagonalMatrixSourceWrap>(info.Holder());
 	vtkDiagonalMatrixSource *native = (vtkDiagonalMatrixSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

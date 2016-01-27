@@ -157,7 +157,7 @@ void VtkAnnotationLayersAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAnnotationLayersAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersAlgorithmWrap>(info.Holder());
 	vtkAnnotationLayersAlgorithm *native = (vtkAnnotationLayersAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

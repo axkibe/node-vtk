@@ -166,7 +166,7 @@ void VtkJSONImageWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkJSONImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJSONImageWriterWrap>(info.Holder());
 	vtkJSONImageWriter *native = (vtkJSONImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -242,7 +242,7 @@ void VtkJSONImageWriterWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkJSONImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJSONImageWriterWrap>(info.Holder());
 	vtkJSONImageWriter *native = (vtkJSONImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -262,7 +262,7 @@ void VtkJSONImageWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkJSONImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJSONImageWriterWrap>(info.Holder());
 	vtkJSONImageWriter *native = (vtkJSONImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

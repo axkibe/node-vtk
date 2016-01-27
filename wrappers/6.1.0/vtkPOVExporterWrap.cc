@@ -123,7 +123,7 @@ void VtkPOVExporterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPOVExporterWrap *wrapper = ObjectWrap::Unwrap<VtkPOVExporterWrap>(info.Holder());
 	vtkPOVExporter *native = (vtkPOVExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkPOVExporterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPOVExporterWrap *wrapper = ObjectWrap::Unwrap<VtkPOVExporterWrap>(info.Holder());
 	vtkPOVExporter *native = (vtkPOVExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -831,7 +831,7 @@ void VtkExodusIIReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1061,7 +1061,7 @@ void VtkExodusIIReaderWrap::GetAssemblyArrayID(const Nan::FunctionCallbackInfo<v
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1104,7 +1104,7 @@ void VtkExodusIIReaderWrap::GetAssemblyArrayStatus(const Nan::FunctionCallbackIn
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1217,7 +1217,7 @@ void VtkExodusIIReaderWrap::GetEdgeBlockArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1260,7 +1260,7 @@ void VtkExodusIIReaderWrap::GetEdgeMapArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1303,7 +1303,7 @@ void VtkExodusIIReaderWrap::GetEdgeResultArrayStatus(const Nan::FunctionCallback
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1346,7 +1346,7 @@ void VtkExodusIIReaderWrap::GetEdgeSetArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1389,7 +1389,7 @@ void VtkExodusIIReaderWrap::GetEdgeSetResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1432,7 +1432,7 @@ void VtkExodusIIReaderWrap::GetElementBlockArrayStatus(const Nan::FunctionCallba
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1475,7 +1475,7 @@ void VtkExodusIIReaderWrap::GetElementMapArrayStatus(const Nan::FunctionCallback
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1518,7 +1518,7 @@ void VtkExodusIIReaderWrap::GetElementResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1561,7 +1561,7 @@ void VtkExodusIIReaderWrap::GetElementSetArrayStatus(const Nan::FunctionCallback
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1604,7 +1604,7 @@ void VtkExodusIIReaderWrap::GetElementSetResultArrayStatus(const Nan::FunctionCa
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1684,7 +1684,7 @@ void VtkExodusIIReaderWrap::GetFaceBlockArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1727,7 +1727,7 @@ void VtkExodusIIReaderWrap::GetFaceMapArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1770,7 +1770,7 @@ void VtkExodusIIReaderWrap::GetFaceResultArrayStatus(const Nan::FunctionCallback
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1813,7 +1813,7 @@ void VtkExodusIIReaderWrap::GetFaceSetArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1856,7 +1856,7 @@ void VtkExodusIIReaderWrap::GetFaceSetResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2235,7 +2235,7 @@ void VtkExodusIIReaderWrap::GetGlobalResultArrayStatus(const Nan::FunctionCallba
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2292,7 +2292,7 @@ void VtkExodusIIReaderWrap::GetHierarchyArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2384,7 +2384,7 @@ void VtkExodusIIReaderWrap::GetMaterialArrayID(const Nan::FunctionCallbackInfo<v
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2427,7 +2427,7 @@ void VtkExodusIIReaderWrap::GetMaterialArrayStatus(const Nan::FunctionCallbackIn
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2498,7 +2498,7 @@ void VtkExodusIIReaderWrap::GetNodeMapArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2541,7 +2541,7 @@ void VtkExodusIIReaderWrap::GetNodeSetArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -2584,7 +2584,7 @@ void VtkExodusIIReaderWrap::GetNodeSetResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -3173,7 +3173,7 @@ void VtkExodusIIReaderWrap::GetObjectArrayIndex(const Nan::FunctionCallbackInfo<
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -3224,7 +3224,7 @@ void VtkExodusIIReaderWrap::GetObjectArrayStatus(const Nan::FunctionCallbackInfo
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -3267,7 +3267,7 @@ void VtkExodusIIReaderWrap::GetObjectAttributeIndex(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				int r;
@@ -3326,7 +3326,7 @@ void VtkExodusIIReaderWrap::GetObjectAttributeStatus(const Nan::FunctionCallback
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				int r;
@@ -3409,7 +3409,7 @@ void VtkExodusIIReaderWrap::GetObjectIndex(const Nan::FunctionCallbackInfo<v8::V
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -3475,7 +3475,7 @@ void VtkExodusIIReaderWrap::GetObjectStatus(const Nan::FunctionCallbackInfo<v8::
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -3514,7 +3514,7 @@ void VtkExodusIIReaderWrap::GetObjectTypeFromName(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -3571,7 +3571,7 @@ void VtkExodusIIReaderWrap::GetPartArrayID(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -3614,7 +3614,7 @@ void VtkExodusIIReaderWrap::GetPartArrayStatus(const Nan::FunctionCallbackInfo<v
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -3748,7 +3748,7 @@ void VtkExodusIIReaderWrap::GetPointResultArrayStatus(const Nan::FunctionCallbac
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -3828,7 +3828,7 @@ void VtkExodusIIReaderWrap::GetSideSetArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -3871,7 +3871,7 @@ void VtkExodusIIReaderWrap::GetSideSetResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -3923,10 +3923,10 @@ void VtkExodusIIReaderWrap::GetTimeSeriesData(const Nan::FunctionCallbackInfo<v8
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[3]))
@@ -3985,10 +3985,10 @@ void VtkExodusIIReaderWrap::GetVariableID(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -4050,7 +4050,7 @@ void VtkExodusIIReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -4072,10 +4072,10 @@ void VtkExodusIIReaderWrap::IsValidVariable(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -4274,7 +4274,7 @@ void VtkExodusIIReaderWrap::SetAssemblyArrayStatus(const Nan::FunctionCallbackIn
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4352,7 +4352,7 @@ void VtkExodusIIReaderWrap::SetEdgeBlockArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4376,7 +4376,7 @@ void VtkExodusIIReaderWrap::SetEdgeMapArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4400,7 +4400,7 @@ void VtkExodusIIReaderWrap::SetEdgeResultArrayStatus(const Nan::FunctionCallback
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4424,7 +4424,7 @@ void VtkExodusIIReaderWrap::SetEdgeSetArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4448,7 +4448,7 @@ void VtkExodusIIReaderWrap::SetEdgeSetResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4472,7 +4472,7 @@ void VtkExodusIIReaderWrap::SetElementBlockArrayStatus(const Nan::FunctionCallba
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4496,7 +4496,7 @@ void VtkExodusIIReaderWrap::SetElementMapArrayStatus(const Nan::FunctionCallback
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4520,7 +4520,7 @@ void VtkExodusIIReaderWrap::SetElementResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4544,7 +4544,7 @@ void VtkExodusIIReaderWrap::SetElementSetArrayStatus(const Nan::FunctionCallback
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4568,7 +4568,7 @@ void VtkExodusIIReaderWrap::SetElementSetResultArrayStatus(const Nan::FunctionCa
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4611,7 +4611,7 @@ void VtkExodusIIReaderWrap::SetFaceBlockArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4635,7 +4635,7 @@ void VtkExodusIIReaderWrap::SetFaceMapArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4659,7 +4659,7 @@ void VtkExodusIIReaderWrap::SetFaceResultArrayStatus(const Nan::FunctionCallback
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4683,7 +4683,7 @@ void VtkExodusIIReaderWrap::SetFaceSetArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4707,7 +4707,7 @@ void VtkExodusIIReaderWrap::SetFaceSetResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4731,7 +4731,7 @@ void VtkExodusIIReaderWrap::SetFastPathIdType(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -4751,7 +4751,7 @@ void VtkExodusIIReaderWrap::SetFastPathObjectType(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -4790,7 +4790,7 @@ void VtkExodusIIReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -4924,7 +4924,7 @@ void VtkExodusIIReaderWrap::SetGlobalResultArrayStatus(const Nan::FunctionCallba
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -4967,7 +4967,7 @@ void VtkExodusIIReaderWrap::SetHierarchyArrayStatus(const Nan::FunctionCallbackI
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5007,7 +5007,7 @@ void VtkExodusIIReaderWrap::SetMaterialArrayStatus(const Nan::FunctionCallbackIn
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5085,7 +5085,7 @@ void VtkExodusIIReaderWrap::SetNodeMapArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5109,7 +5109,7 @@ void VtkExodusIIReaderWrap::SetNodeSetArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5133,7 +5133,7 @@ void VtkExodusIIReaderWrap::SetNodeSetResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5159,7 +5159,7 @@ void VtkExodusIIReaderWrap::SetObjectArrayStatus(const Nan::FunctionCallbackInfo
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -5206,7 +5206,7 @@ void VtkExodusIIReaderWrap::SetObjectAttributeStatus(const Nan::FunctionCallback
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() > 3 && info[3]->IsInt32())
@@ -5254,7 +5254,7 @@ void VtkExodusIIReaderWrap::SetObjectStatus(const Nan::FunctionCallbackInfo<v8::
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -5316,7 +5316,7 @@ void VtkExodusIIReaderWrap::SetPartArrayStatus(const Nan::FunctionCallbackInfo<v
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5356,7 +5356,7 @@ void VtkExodusIIReaderWrap::SetPointResultArrayStatus(const Nan::FunctionCallbac
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5380,7 +5380,7 @@ void VtkExodusIIReaderWrap::SetSideSetArrayStatus(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5404,7 +5404,7 @@ void VtkExodusIIReaderWrap::SetSideSetResultArrayStatus(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -5470,7 +5470,7 @@ void VtkExodusIIReaderWrap::SetXMLFileName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

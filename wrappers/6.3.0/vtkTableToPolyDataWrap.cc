@@ -523,7 +523,7 @@ void VtkTableToPolyDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -623,7 +623,7 @@ void VtkTableToPolyDataWrap::SetXColumn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -681,7 +681,7 @@ void VtkTableToPolyDataWrap::SetYColumn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -739,7 +739,7 @@ void VtkTableToPolyDataWrap::SetZColumn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

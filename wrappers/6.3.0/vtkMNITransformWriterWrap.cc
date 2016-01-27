@@ -250,7 +250,7 @@ void VtkMNITransformWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkMNITransformWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformWriterWrap>(info.Holder());
 	vtkMNITransformWriter *native = (vtkMNITransformWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -326,7 +326,7 @@ void VtkMNITransformWriterWrap::SetComments(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMNITransformWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformWriterWrap>(info.Holder());
 	vtkMNITransformWriter *native = (vtkMNITransformWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -346,7 +346,7 @@ void VtkMNITransformWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMNITransformWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITransformWriterWrap>(info.Holder());
 	vtkMNITransformWriter *native = (vtkMNITransformWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

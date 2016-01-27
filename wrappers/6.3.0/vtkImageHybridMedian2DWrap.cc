@@ -103,7 +103,7 @@ void VtkImageHybridMedian2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageHybridMedian2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageHybridMedian2DWrap>(info.Holder());
 	vtkImageHybridMedian2D *native = (vtkImageHybridMedian2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

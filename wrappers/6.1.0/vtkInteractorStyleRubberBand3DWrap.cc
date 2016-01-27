@@ -153,7 +153,7 @@ void VtkInteractorStyleRubberBand3DWrap::IsA(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInteractorStyleRubberBand3DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand3DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand3D *native = (vtkInteractorStyleRubberBand3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

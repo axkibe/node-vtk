@@ -389,7 +389,7 @@ void VtkTemporalFractalWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

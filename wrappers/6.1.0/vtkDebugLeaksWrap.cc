@@ -103,7 +103,7 @@ void VtkDebugLeaksWrap::ConstructClass(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDebugLeaksWrap *wrapper = ObjectWrap::Unwrap<VtkDebugLeaksWrap>(info.Holder());
 	vtkDebugLeaks *native = (vtkDebugLeaks *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -123,7 +123,7 @@ void VtkDebugLeaksWrap::DestructClass(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDebugLeaksWrap *wrapper = ObjectWrap::Unwrap<VtkDebugLeaksWrap>(info.Holder());
 	vtkDebugLeaks *native = (vtkDebugLeaks *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -171,7 +171,7 @@ void VtkDebugLeaksWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDebugLeaksWrap *wrapper = ObjectWrap::Unwrap<VtkDebugLeaksWrap>(info.Holder());
 	vtkDebugLeaks *native = (vtkDebugLeaks *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

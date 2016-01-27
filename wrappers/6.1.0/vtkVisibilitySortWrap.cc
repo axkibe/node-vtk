@@ -340,7 +340,7 @@ void VtkVisibilitySortWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

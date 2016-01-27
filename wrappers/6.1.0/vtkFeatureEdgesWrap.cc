@@ -424,7 +424,7 @@ void VtkFeatureEdgesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

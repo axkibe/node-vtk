@@ -429,7 +429,7 @@ void VtkBiDimensionalRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -573,7 +573,7 @@ void VtkBiDimensionalRepresentationWrap::SetLabelFormat(const Nan::FunctionCallb
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

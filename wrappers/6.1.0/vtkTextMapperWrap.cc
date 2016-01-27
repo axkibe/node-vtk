@@ -179,7 +179,7 @@ void VtkTextMapperWrap::GetNumberOfLines(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkTextMapperWrap>(info.Holder());
 	vtkTextMapper *native = (vtkTextMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -274,7 +274,7 @@ void VtkTextMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkTextMapperWrap>(info.Holder());
 	vtkTextMapper *native = (vtkTextMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -449,7 +449,7 @@ void VtkTextMapperWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkTextMapperWrap>(info.Holder());
 	vtkTextMapper *native = (vtkTextMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

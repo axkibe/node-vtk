@@ -704,7 +704,7 @@ void VtkNIFTIImageHeaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -780,7 +780,7 @@ void VtkNIFTIImageHeaderWrap::SetAuxFile(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -838,7 +838,7 @@ void VtkNIFTIImageHeaderWrap::SetDescrip(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -896,7 +896,7 @@ void VtkNIFTIImageHeaderWrap::SetIntentName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

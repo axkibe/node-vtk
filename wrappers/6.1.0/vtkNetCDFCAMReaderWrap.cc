@@ -128,7 +128,7 @@ void VtkNetCDFCAMReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkNetCDFCAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCAMReaderWrap>(info.Holder());
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -248,7 +248,7 @@ void VtkNetCDFCAMReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkNetCDFCAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCAMReaderWrap>(info.Holder());
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -343,7 +343,7 @@ void VtkNetCDFCAMReaderWrap::SetConnectivityFileName(const Nan::FunctionCallback
 {
 	VtkNetCDFCAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCAMReaderWrap>(info.Holder());
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -363,7 +363,7 @@ void VtkNetCDFCAMReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkNetCDFCAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCAMReaderWrap>(info.Holder());
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

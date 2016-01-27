@@ -183,7 +183,7 @@ void VtkPainterPolyDataMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -207,7 +207,7 @@ void VtkPainterPolyDataMapperWrap::MapDataArrayToMultiTextureAttribute(const Nan
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -237,10 +237,10 @@ void VtkPainterPolyDataMapperWrap::MapDataArrayToVertexAttribute(const Nan::Func
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -325,7 +325,7 @@ void VtkPainterPolyDataMapperWrap::RemoveVertexAttributeMapping(const Nan::Funct
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

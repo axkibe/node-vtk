@@ -233,7 +233,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::IsA(const Nan::FunctionCallbackInf
 {
 	VtkHardwareSelectionPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectionPolyDataPainterWrap>(info.Holder());
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -309,7 +309,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetCellIdArrayName(const Nan::Func
 {
 	VtkHardwareSelectionPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectionPolyDataPainterWrap>(info.Holder());
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -329,7 +329,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetCompositeIdArrayName(const Nan:
 {
 	VtkHardwareSelectionPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectionPolyDataPainterWrap>(info.Holder());
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -368,7 +368,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetPointIdArrayName(const Nan::Fun
 {
 	VtkHardwareSelectionPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectionPolyDataPainterWrap>(info.Holder());
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -388,7 +388,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetProcessIdArrayName(const Nan::F
 {
 	VtkHardwareSelectionPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectionPolyDataPainterWrap>(info.Holder());
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

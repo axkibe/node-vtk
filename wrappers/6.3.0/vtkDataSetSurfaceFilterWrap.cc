@@ -296,7 +296,7 @@ void VtkDataSetSurfaceFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -439,7 +439,7 @@ void VtkDataSetSurfaceFilterWrap::SetOriginalCellIdsName(const Nan::FunctionCall
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -459,7 +459,7 @@ void VtkDataSetSurfaceFilterWrap::SetOriginalPointIdsName(const Nan::FunctionCal
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

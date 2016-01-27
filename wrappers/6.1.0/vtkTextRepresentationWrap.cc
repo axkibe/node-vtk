@@ -246,7 +246,7 @@ void VtkTextRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTextRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTextRepresentationWrap>(info.Holder());
 	vtkTextRepresentation *native = (vtkTextRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -431,7 +431,7 @@ void VtkTextRepresentationWrap::SetText(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTextRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTextRepresentationWrap>(info.Holder());
 	vtkTextRepresentation *native = (vtkTextRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

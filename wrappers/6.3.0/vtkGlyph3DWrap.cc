@@ -606,7 +606,7 @@ void VtkGlyph3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGlyph3DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DWrap>(info.Holder());
 	vtkGlyph3D *native = (vtkGlyph3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -916,7 +916,7 @@ void VtkGlyph3DWrap::SetPointIdsName(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGlyph3DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DWrap>(info.Holder());
 	vtkGlyph3D *native = (vtkGlyph3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

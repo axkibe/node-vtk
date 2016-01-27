@@ -163,7 +163,7 @@ void VtkTreeDifferenceFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTreeDifferenceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTreeDifferenceFilterWrap>(info.Holder());
 	vtkTreeDifferenceFilter *native = (vtkTreeDifferenceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -239,7 +239,7 @@ void VtkTreeDifferenceFilterWrap::SetComparisonArrayName(const Nan::FunctionCall
 {
 	VtkTreeDifferenceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTreeDifferenceFilterWrap>(info.Holder());
 	vtkTreeDifferenceFilter *native = (vtkTreeDifferenceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -259,7 +259,7 @@ void VtkTreeDifferenceFilterWrap::SetIdArrayName(const Nan::FunctionCallbackInfo
 {
 	VtkTreeDifferenceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTreeDifferenceFilterWrap>(info.Holder());
 	vtkTreeDifferenceFilter *native = (vtkTreeDifferenceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -279,7 +279,7 @@ void VtkTreeDifferenceFilterWrap::SetOutputArrayName(const Nan::FunctionCallback
 {
 	VtkTreeDifferenceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTreeDifferenceFilterWrap>(info.Holder());
 	vtkTreeDifferenceFilter *native = (vtkTreeDifferenceFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

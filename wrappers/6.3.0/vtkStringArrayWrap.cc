@@ -314,7 +314,7 @@ void VtkStringArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkStringArrayWrap>(info.Holder());
 	vtkStringArray *native = (vtkStringArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -350,7 +350,7 @@ void VtkStringArrayWrap::LookupValue(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkStringArrayWrap>(info.Holder());
 	vtkStringArray *native = (vtkStringArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))

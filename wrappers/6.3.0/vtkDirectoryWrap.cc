@@ -107,7 +107,7 @@ void VtkDirectoryWrap::DeleteDirectory(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDirectoryWrap *wrapper = ObjectWrap::Unwrap<VtkDirectoryWrap>(info.Holder());
 	vtkDirectory *native = (vtkDirectory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -129,7 +129,7 @@ void VtkDirectoryWrap::FileIsDirectory(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDirectoryWrap *wrapper = ObjectWrap::Unwrap<VtkDirectoryWrap>(info.Holder());
 	vtkDirectory *native = (vtkDirectory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -188,7 +188,7 @@ void VtkDirectoryWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDirectoryWrap *wrapper = ObjectWrap::Unwrap<VtkDirectoryWrap>(info.Holder());
 	vtkDirectory *native = (vtkDirectory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -210,7 +210,7 @@ void VtkDirectoryWrap::MakeDirectory(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDirectoryWrap *wrapper = ObjectWrap::Unwrap<VtkDirectoryWrap>(info.Holder());
 	vtkDirectory *native = (vtkDirectory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -255,7 +255,7 @@ void VtkDirectoryWrap::Open(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDirectoryWrap *wrapper = ObjectWrap::Unwrap<VtkDirectoryWrap>(info.Holder());
 	vtkDirectory *native = (vtkDirectory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -277,10 +277,10 @@ void VtkDirectoryWrap::Rename(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDirectoryWrap *wrapper = ObjectWrap::Unwrap<VtkDirectoryWrap>(info.Holder());
 	vtkDirectory *native = (vtkDirectory *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;

@@ -118,7 +118,7 @@ void VtkInteractorStyleRubberBandPickWrap::IsA(const Nan::FunctionCallbackInfo<v
 {
 	VtkInteractorStyleRubberBandPickWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandPickWrap>(info.Holder());
 	vtkInteractorStyleRubberBandPick *native = (vtkInteractorStyleRubberBandPick *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

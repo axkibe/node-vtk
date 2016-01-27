@@ -123,7 +123,7 @@ void VtkContextItemWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContextItemWrap *wrapper = ObjectWrap::Unwrap<VtkContextItemWrap>(info.Holder());
 	vtkContextItem *native = (vtkContextItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

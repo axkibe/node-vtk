@@ -153,7 +153,7 @@ void VtkXMLReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -220,7 +220,7 @@ void VtkXMLReaderWrap::GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -402,7 +402,7 @@ void VtkXMLReaderWrap::GetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -484,7 +484,7 @@ void VtkXMLReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -560,7 +560,7 @@ void VtkXMLReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -584,7 +584,7 @@ void VtkXMLReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -604,7 +604,7 @@ void VtkXMLReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

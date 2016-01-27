@@ -327,7 +327,7 @@ void VtkGeoProjectionWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoProjectionWrap *wrapper = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info.Holder());
 	vtkGeoProjection *native = (vtkGeoProjection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -372,7 +372,7 @@ void VtkGeoProjectionWrap::RemoveOptionalParameter(const Nan::FunctionCallbackIn
 {
 	VtkGeoProjectionWrap *wrapper = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info.Holder());
 	vtkGeoProjection *native = (vtkGeoProjection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -442,7 +442,7 @@ void VtkGeoProjectionWrap::SetName(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGeoProjectionWrap *wrapper = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info.Holder());
 	vtkGeoProjection *native = (vtkGeoProjection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -462,10 +462,10 @@ void VtkGeoProjectionWrap::SetOptionalParameter(const Nan::FunctionCallbackInfo<
 {
 	VtkGeoProjectionWrap *wrapper = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info.Holder());
 	vtkGeoProjection *native = (vtkGeoProjection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

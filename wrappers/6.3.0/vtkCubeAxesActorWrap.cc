@@ -2182,7 +2182,7 @@ void VtkCubeAxesActorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -3403,7 +3403,7 @@ void VtkCubeAxesActorWrap::SetXLabelFormat(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3423,7 +3423,7 @@ void VtkCubeAxesActorWrap::SetXTitle(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3443,7 +3443,7 @@ void VtkCubeAxesActorWrap::SetXUnits(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3642,7 +3642,7 @@ void VtkCubeAxesActorWrap::SetYLabelFormat(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3662,7 +3662,7 @@ void VtkCubeAxesActorWrap::SetYTitle(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3682,7 +3682,7 @@ void VtkCubeAxesActorWrap::SetYUnits(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3881,7 +3881,7 @@ void VtkCubeAxesActorWrap::SetZLabelFormat(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3901,7 +3901,7 @@ void VtkCubeAxesActorWrap::SetZTitle(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -3921,7 +3921,7 @@ void VtkCubeAxesActorWrap::SetZUnits(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
 	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

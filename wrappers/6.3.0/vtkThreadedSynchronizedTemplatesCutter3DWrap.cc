@@ -192,7 +192,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::IsA(const Nan::FunctionCallba
 {
 	VtkThreadedSynchronizedTemplatesCutter3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplatesCutter3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplatesCutter3D *native = (vtkThreadedSynchronizedTemplatesCutter3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

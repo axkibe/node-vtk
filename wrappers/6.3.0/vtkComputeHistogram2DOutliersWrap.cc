@@ -160,7 +160,7 @@ void VtkComputeHistogram2DOutliersWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkComputeHistogram2DOutliersWrap *wrapper = ObjectWrap::Unwrap<VtkComputeHistogram2DOutliersWrap>(info.Holder());
 	vtkComputeHistogram2DOutliers *native = (vtkComputeHistogram2DOutliers *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -227,7 +227,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::IsA(const Nan::FunctionCallbackInfo
 {
 	VtkDataSetEdgeSubdivisionCriterionWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetEdgeSubdivisionCriterionWrap>(info.Holder());
 	vtkDataSetEdgeSubdivisionCriterion *native = (vtkDataSetEdgeSubdivisionCriterion *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -312,7 +312,7 @@ void VtkOpenFOAMReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -527,7 +527,7 @@ void VtkOpenFOAMReaderWrap::GetCellArrayStatus(const Nan::FunctionCallbackInfo<v
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -626,7 +626,7 @@ void VtkOpenFOAMReaderWrap::GetLagrangianArrayStatus(const Nan::FunctionCallback
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -739,7 +739,7 @@ void VtkOpenFOAMReaderWrap::GetPatchArrayStatus(const Nan::FunctionCallbackInfo<
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -782,7 +782,7 @@ void VtkOpenFOAMReaderWrap::GetPointArrayStatus(const Nan::FunctionCallbackInfo<
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -855,7 +855,7 @@ void VtkOpenFOAMReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1041,7 +1041,7 @@ void VtkOpenFOAMReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1103,7 +1103,7 @@ void VtkOpenFOAMReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1123,7 +1123,7 @@ void VtkOpenFOAMReaderWrap::SetLagrangianArrayStatus(const Nan::FunctionCallback
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1186,7 +1186,7 @@ void VtkOpenFOAMReaderWrap::SetPatchArrayStatus(const Nan::FunctionCallbackInfo<
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1210,7 +1210,7 @@ void VtkOpenFOAMReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

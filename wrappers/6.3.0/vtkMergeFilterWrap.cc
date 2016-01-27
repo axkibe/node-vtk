@@ -148,7 +148,7 @@ void VtkMergeFilterWrap::AddField(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[1]))
@@ -325,7 +325,7 @@ void VtkMergeFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMergeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeFilterWrap>(info.Holder());
 	vtkMergeFilter *native = (vtkMergeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

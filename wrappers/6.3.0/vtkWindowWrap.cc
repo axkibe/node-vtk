@@ -398,7 +398,7 @@ void VtkWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkWindowWrap *wrapper = ObjectWrap::Unwrap<VtkWindowWrap>(info.Holder());
 	vtkWindow *native = (vtkWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -641,7 +641,7 @@ void VtkWindowWrap::SetParentInfo(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkWindowWrap *wrapper = ObjectWrap::Unwrap<VtkWindowWrap>(info.Holder());
 	vtkWindow *native = (vtkWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -770,7 +770,7 @@ void VtkWindowWrap::SetWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkWindowWrap *wrapper = ObjectWrap::Unwrap<VtkWindowWrap>(info.Holder());
 	vtkWindow *native = (vtkWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -790,7 +790,7 @@ void VtkWindowWrap::SetWindowName(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkWindowWrap *wrapper = ObjectWrap::Unwrap<VtkWindowWrap>(info.Holder());
 	vtkWindow *native = (vtkWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

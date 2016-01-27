@@ -289,7 +289,7 @@ void VtkRTAnalyticSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkRTAnalyticSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRTAnalyticSourceWrap>(info.Holder());
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

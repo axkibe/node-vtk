@@ -641,7 +641,7 @@ void VtkSliderRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentationWrap>(info.Holder());
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -755,7 +755,7 @@ void VtkSliderRepresentationWrap::SetLabelFormat(const Nan::FunctionCallbackInfo
 {
 	VtkSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentationWrap>(info.Holder());
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -908,7 +908,7 @@ void VtkSliderRepresentationWrap::SetTitleText(const Nan::FunctionCallbackInfo<v
 {
 	VtkSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentationWrap>(info.Holder());
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

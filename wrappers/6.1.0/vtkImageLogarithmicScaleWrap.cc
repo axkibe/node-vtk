@@ -123,7 +123,7 @@ void VtkImageLogarithmicScaleWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageLogarithmicScaleWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogarithmicScaleWrap>(info.Holder());
 	vtkImageLogarithmicScale *native = (vtkImageLogarithmicScale *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

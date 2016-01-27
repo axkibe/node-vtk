@@ -655,7 +655,7 @@ void VtkAnnotatedCubeActorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -890,7 +890,7 @@ void VtkAnnotatedCubeActorWrap::SetXMinusFaceText(const Nan::FunctionCallbackInf
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -910,7 +910,7 @@ void VtkAnnotatedCubeActorWrap::SetXPlusFaceText(const Nan::FunctionCallbackInfo
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -949,7 +949,7 @@ void VtkAnnotatedCubeActorWrap::SetYMinusFaceText(const Nan::FunctionCallbackInf
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -969,7 +969,7 @@ void VtkAnnotatedCubeActorWrap::SetYPlusFaceText(const Nan::FunctionCallbackInfo
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1008,7 +1008,7 @@ void VtkAnnotatedCubeActorWrap::SetZMinusFaceText(const Nan::FunctionCallbackInf
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1028,7 +1028,7 @@ void VtkAnnotatedCubeActorWrap::SetZPlusFaceText(const Nan::FunctionCallbackInfo
 {
 	VtkAnnotatedCubeActorWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotatedCubeActorWrap>(info.Holder());
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

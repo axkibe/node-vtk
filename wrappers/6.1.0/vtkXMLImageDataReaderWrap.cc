@@ -181,7 +181,7 @@ void VtkXMLImageDataReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkXMLImageDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLImageDataReaderWrap>(info.Holder());
 	vtkXMLImageDataReader *native = (vtkXMLImageDataReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

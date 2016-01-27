@@ -136,7 +136,7 @@ void VtkGeoAlignedImageRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v
 {
 	VtkGeoAlignedImageRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageRepresentationWrap>(info.Holder());
 	vtkGeoAlignedImageRepresentation *native = (vtkGeoAlignedImageRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -212,7 +212,7 @@ void VtkGeoAlignedImageRepresentationWrap::SaveDatabase(const Nan::FunctionCallb
 {
 	VtkGeoAlignedImageRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageRepresentationWrap>(info.Holder());
 	vtkGeoAlignedImageRepresentation *native = (vtkGeoAlignedImageRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -103,7 +103,7 @@ void VtkOpenGLClipPlanesPainterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkOpenGLClipPlanesPainterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLClipPlanesPainterWrap>(info.Holder());
 	vtkOpenGLClipPlanesPainter *native = (vtkOpenGLClipPlanesPainter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -174,7 +174,7 @@ void VtkInteractorStyleTrackballCameraWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -118,7 +118,7 @@ void VtkOutputWindowWrap::DisplayDebugText(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info.Holder());
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -138,7 +138,7 @@ void VtkOutputWindowWrap::DisplayErrorText(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info.Holder());
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -158,7 +158,7 @@ void VtkOutputWindowWrap::DisplayGenericWarningText(const Nan::FunctionCallbackI
 {
 	VtkOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info.Holder());
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -178,7 +178,7 @@ void VtkOutputWindowWrap::DisplayText(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info.Holder());
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -198,7 +198,7 @@ void VtkOutputWindowWrap::DisplayWarningText(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info.Holder());
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -255,7 +255,7 @@ void VtkOutputWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info.Holder());
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

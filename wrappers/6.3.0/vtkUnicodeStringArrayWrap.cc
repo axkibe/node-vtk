@@ -239,7 +239,7 @@ void VtkUnicodeStringArrayWrap::InsertNextUTF8Value(const Nan::FunctionCallbackI
 {
 	VtkUnicodeStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnicodeStringArrayWrap>(info.Holder());
 	vtkUnicodeStringArray *native = (vtkUnicodeStringArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -289,7 +289,7 @@ void VtkUnicodeStringArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkUnicodeStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnicodeStringArrayWrap>(info.Holder());
 	vtkUnicodeStringArray *native = (vtkUnicodeStringArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

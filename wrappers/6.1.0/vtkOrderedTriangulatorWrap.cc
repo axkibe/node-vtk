@@ -306,7 +306,7 @@ void VtkOrderedTriangulatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

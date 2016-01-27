@@ -181,7 +181,7 @@ void VtkTecplotReaderWrap::GetDataArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTecplotReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTecplotReaderWrap>(info.Holder());
 	vtkTecplotReader *native = (vtkTecplotReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -294,7 +294,7 @@ void VtkTecplotReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTecplotReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTecplotReaderWrap>(info.Holder());
 	vtkTecplotReader *native = (vtkTecplotReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -316,7 +316,7 @@ void VtkTecplotReaderWrap::IsDataAttributeCellBased(const Nan::FunctionCallbackI
 {
 	VtkTecplotReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTecplotReaderWrap>(info.Holder());
 	vtkTecplotReader *native = (vtkTecplotReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -406,7 +406,7 @@ void VtkTecplotReaderWrap::SetDataArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTecplotReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTecplotReaderWrap>(info.Holder());
 	vtkTecplotReader *native = (vtkTecplotReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -430,7 +430,7 @@ void VtkTecplotReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTecplotReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTecplotReaderWrap>(info.Holder());
 	vtkTecplotReader *native = (vtkTecplotReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

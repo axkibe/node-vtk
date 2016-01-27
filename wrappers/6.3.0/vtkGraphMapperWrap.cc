@@ -218,7 +218,7 @@ void VtkGraphMapperWrap::AddIconType(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -616,7 +616,7 @@ void VtkGraphMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -761,7 +761,7 @@ void VtkGraphMapperWrap::SetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -819,7 +819,7 @@ void VtkGraphMapperWrap::SetEnabledEdgesArrayName(const Nan::FunctionCallbackInf
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -839,7 +839,7 @@ void VtkGraphMapperWrap::SetEnabledVerticesArrayName(const Nan::FunctionCallback
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -878,7 +878,7 @@ void VtkGraphMapperWrap::SetIconArrayName(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -938,7 +938,7 @@ void VtkGraphMapperWrap::SetScalingArrayName(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -958,7 +958,7 @@ void VtkGraphMapperWrap::SetVertexColorArrayName(const Nan::FunctionCallbackInfo
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

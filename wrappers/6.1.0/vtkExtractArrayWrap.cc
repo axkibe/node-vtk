@@ -103,7 +103,7 @@ void VtkExtractArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkExtractArrayWrap>(info.Holder());
 	vtkExtractArray *native = (vtkExtractArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

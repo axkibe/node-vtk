@@ -148,7 +148,7 @@ void VtkButtonWidgetWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkButtonWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkButtonWidgetWrap>(info.Holder());
 	vtkButtonWidget *native = (vtkButtonWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

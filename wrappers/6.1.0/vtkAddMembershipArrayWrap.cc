@@ -227,7 +227,7 @@ void VtkAddMembershipArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkAddMembershipArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAddMembershipArrayWrap>(info.Holder());
 	vtkAddMembershipArray *native = (vtkAddMembershipArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -322,7 +322,7 @@ void VtkAddMembershipArrayWrap::SetInputArrayName(const Nan::FunctionCallbackInf
 {
 	VtkAddMembershipArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAddMembershipArrayWrap>(info.Holder());
 	vtkAddMembershipArray *native = (vtkAddMembershipArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -362,7 +362,7 @@ void VtkAddMembershipArrayWrap::SetOutputArrayName(const Nan::FunctionCallbackIn
 {
 	VtkAddMembershipArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAddMembershipArrayWrap>(info.Holder());
 	vtkAddMembershipArray *native = (vtkAddMembershipArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

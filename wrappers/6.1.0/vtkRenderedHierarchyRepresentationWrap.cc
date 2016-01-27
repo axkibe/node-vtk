@@ -359,7 +359,7 @@ void VtkRenderedHierarchyRepresentationWrap::IsA(const Nan::FunctionCallbackInfo
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -467,7 +467,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeColorArrayName(const Na
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -524,7 +524,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeLabelArrayName(const Na
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

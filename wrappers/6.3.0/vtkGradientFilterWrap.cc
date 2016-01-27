@@ -316,7 +316,7 @@ void VtkGradientFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -451,7 +451,7 @@ void VtkGradientFilterWrap::SetInputScalars(const Nan::FunctionCallbackInfo<v8::
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -486,7 +486,7 @@ void VtkGradientFilterWrap::SetQCriterionArrayName(const Nan::FunctionCallbackIn
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -506,7 +506,7 @@ void VtkGradientFilterWrap::SetResultArrayName(const Nan::FunctionCallbackInfo<v
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -526,7 +526,7 @@ void VtkGradientFilterWrap::SetVorticityArrayName(const Nan::FunctionCallbackInf
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

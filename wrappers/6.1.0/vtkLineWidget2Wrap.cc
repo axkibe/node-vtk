@@ -154,7 +154,7 @@ void VtkLineWidget2Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLineWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkLineWidget2Wrap>(info.Holder());
 	vtkLineWidget2 *native = (vtkLineWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

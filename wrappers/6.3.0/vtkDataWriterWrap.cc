@@ -466,7 +466,7 @@ void VtkDataWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -556,7 +556,7 @@ void VtkDataWriterWrap::SetEdgeFlagsName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -576,7 +576,7 @@ void VtkDataWriterWrap::SetFieldDataName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -596,7 +596,7 @@ void VtkDataWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -659,7 +659,7 @@ void VtkDataWriterWrap::SetGlobalIdsName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -679,7 +679,7 @@ void VtkDataWriterWrap::SetHeader(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -699,7 +699,7 @@ void VtkDataWriterWrap::SetLookupTableName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -719,7 +719,7 @@ void VtkDataWriterWrap::SetNormalsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -739,7 +739,7 @@ void VtkDataWriterWrap::SetPedigreeIdsName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -759,7 +759,7 @@ void VtkDataWriterWrap::SetScalarsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -779,7 +779,7 @@ void VtkDataWriterWrap::SetTCoordsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -799,7 +799,7 @@ void VtkDataWriterWrap::SetTensorsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -819,7 +819,7 @@ void VtkDataWriterWrap::SetVectorsName(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataWriterWrap>(info.Holder());
 	vtkDataWriter *native = (vtkDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

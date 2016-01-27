@@ -340,7 +340,7 @@ void VtkClustering2DLayoutStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkClustering2DLayoutStrategyWrap>(info.Holder());
 	vtkClustering2DLayoutStrategy *native = (vtkClustering2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

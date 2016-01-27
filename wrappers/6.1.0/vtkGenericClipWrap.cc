@@ -466,7 +466,7 @@ void VtkGenericClipWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericClipWrap *wrapper = ObjectWrap::Unwrap<VtkGenericClipWrap>(info.Holder());
 	vtkGenericClip *native = (vtkGenericClip *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -542,7 +542,7 @@ void VtkGenericClipWrap::SelectInputScalars(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGenericClipWrap *wrapper = ObjectWrap::Unwrap<VtkGenericClipWrap>(info.Holder());
 	vtkGenericClip *native = (vtkGenericClip *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

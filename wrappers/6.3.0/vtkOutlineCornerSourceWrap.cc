@@ -177,7 +177,7 @@ void VtkOutlineCornerSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkOutlineCornerSourceWrap *wrapper = ObjectWrap::Unwrap<VtkOutlineCornerSourceWrap>(info.Holder());
 	vtkOutlineCornerSource *native = (vtkOutlineCornerSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

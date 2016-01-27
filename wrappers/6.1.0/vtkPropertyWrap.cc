@@ -327,7 +327,7 @@ void VtkPropertyWrap::AddShaderVariable(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -1038,7 +1038,7 @@ void VtkPropertyWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkTexture * r;
@@ -1092,7 +1092,7 @@ void VtkPropertyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1218,7 +1218,7 @@ void VtkPropertyWrap::RemoveTexture(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1760,7 +1760,7 @@ void VtkPropertyWrap::SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
 	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[1]))

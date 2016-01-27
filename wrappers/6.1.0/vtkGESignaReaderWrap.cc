@@ -98,7 +98,7 @@ void VtkGESignaReaderWrap::CanReadFile(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGESignaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGESignaReaderWrap>(info.Holder());
 	vtkGESignaReader *native = (vtkGESignaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -162,7 +162,7 @@ void VtkGESignaReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGESignaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGESignaReaderWrap>(info.Holder());
 	vtkGESignaReader *native = (vtkGESignaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

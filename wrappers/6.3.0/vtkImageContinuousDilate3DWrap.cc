@@ -106,7 +106,7 @@ void VtkImageContinuousDilate3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageContinuousDilate3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageContinuousDilate3DWrap>(info.Holder());
 	vtkImageContinuousDilate3D *native = (vtkImageContinuousDilate3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

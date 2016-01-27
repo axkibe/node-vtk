@@ -398,7 +398,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-26 11:21:02.663264017 +0100
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-27 09:58:24.222437756 +0100
 @@ -0,0 +1,1428 @@
 +/*=========================================================================
 +
@@ -928,7 +928,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      return "IsInt32";
 +
 +    case VTK_PARSE_CHAR :
-+      if(!vtkWrap_IsPointer(vinfo)) return "IsString";
++      if(vtkWrap_IsPointer(vinfo)) return "IsString";
 +      else return "IsInt32";
 +
 +    default :

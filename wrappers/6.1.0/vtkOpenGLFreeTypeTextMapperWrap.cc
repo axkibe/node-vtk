@@ -115,7 +115,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkOpenGLFreeTypeTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLFreeTypeTextMapperWrap>(info.Holder());
 	vtkOpenGLFreeTypeTextMapper *native = (vtkOpenGLFreeTypeTextMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -236,7 +236,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::SetInput(const Nan::FunctionCallbackInfo<v
 {
 	VtkOpenGLFreeTypeTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLFreeTypeTextMapperWrap>(info.Holder());
 	vtkOpenGLFreeTypeTextMapper *native = (vtkOpenGLFreeTypeTextMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

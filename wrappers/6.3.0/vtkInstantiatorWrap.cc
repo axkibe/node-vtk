@@ -91,7 +91,7 @@ void VtkInstantiatorWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkInstantiatorWrap *wrapper = ObjectWrap::Unwrap<VtkInstantiatorWrap>(info.Holder());
 	vtkInstantiator *native = (vtkInstantiator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkObject * r;
@@ -136,7 +136,7 @@ void VtkInstantiatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInstantiatorWrap *wrapper = ObjectWrap::Unwrap<VtkInstantiatorWrap>(info.Holder());
 	vtkInstantiator *native = (vtkInstantiator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

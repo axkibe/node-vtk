@@ -407,7 +407,7 @@ void VtkTextPropertyWrap::GetFontFamilyFromString(const Nan::FunctionCallbackInf
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -723,7 +723,7 @@ void VtkTextPropertyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -934,7 +934,7 @@ void VtkTextPropertyWrap::SetFontFamilyAsString(const Nan::FunctionCallbackInfo<
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -990,7 +990,7 @@ void VtkTextPropertyWrap::SetFontFile(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

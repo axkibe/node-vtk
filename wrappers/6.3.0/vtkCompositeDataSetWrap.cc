@@ -314,7 +314,7 @@ void VtkCompositeDataSetWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCompositeDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataSetWrap>(info.Holder());
 	vtkCompositeDataSet *native = (vtkCompositeDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -123,7 +123,7 @@ void VtkPlot3DMetaReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPlot3DMetaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DMetaReaderWrap>(info.Holder());
 	vtkPlot3DMetaReader *native = (vtkPlot3DMetaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkPlot3DMetaReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPlot3DMetaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPlot3DMetaReaderWrap>(info.Holder());
 	vtkPlot3DMetaReader *native = (vtkPlot3DMetaReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

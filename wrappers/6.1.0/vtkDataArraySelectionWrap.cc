@@ -139,7 +139,7 @@ void VtkDataArraySelectionWrap::AddArray(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -161,7 +161,7 @@ void VtkDataArraySelectionWrap::ArrayExists(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -183,7 +183,7 @@ void VtkDataArraySelectionWrap::ArrayIsEnabled(const Nan::FunctionCallbackInfo<v
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -237,7 +237,7 @@ void VtkDataArraySelectionWrap::DisableArray(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -269,7 +269,7 @@ void VtkDataArraySelectionWrap::EnableArray(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -289,7 +289,7 @@ void VtkDataArraySelectionWrap::GetArrayIndex(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -332,7 +332,7 @@ void VtkDataArraySelectionWrap::GetArraySetting(const Nan::FunctionCallbackInfo<
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -382,7 +382,7 @@ void VtkDataArraySelectionWrap::GetEnabledArrayIndex(const Nan::FunctionCallback
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -432,7 +432,7 @@ void VtkDataArraySelectionWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -508,7 +508,7 @@ void VtkDataArraySelectionWrap::RemoveArrayByName(const Nan::FunctionCallbackInf
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

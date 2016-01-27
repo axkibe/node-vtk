@@ -186,7 +186,7 @@ void VtkAreaLayoutWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
 	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -262,7 +262,7 @@ void VtkAreaLayoutWrap::SetAreaArrayName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
 	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -302,7 +302,7 @@ void VtkAreaLayoutWrap::SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
 	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

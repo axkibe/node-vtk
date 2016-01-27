@@ -283,7 +283,7 @@ void VtkRIBExporterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -397,7 +397,7 @@ void VtkRIBExporterWrap::SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -463,7 +463,7 @@ void VtkRIBExporterWrap::SetTexturePrefix(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

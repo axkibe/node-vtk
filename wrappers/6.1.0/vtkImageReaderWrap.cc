@@ -156,7 +156,7 @@ void VtkImageReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkImageReaderWrap>(info.Holder());
 	vtkImageReader *native = (vtkImageReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -271,7 +271,7 @@ void VtkImageReaderWrap::SetScalarArrayName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkImageReaderWrap>(info.Holder());
 	vtkImageReader *native = (vtkImageReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

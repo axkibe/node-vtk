@@ -576,7 +576,7 @@ void VtkCurveRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

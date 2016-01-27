@@ -140,7 +140,7 @@ void VtkInformationDataObjectMetaDataKeyWrap::IsA(const Nan::FunctionCallbackInf
 {
 	VtkInformationDataObjectMetaDataKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationDataObjectMetaDataKeyWrap>(info.Holder());
 	vtkInformationDataObjectMetaDataKey *native = (vtkInformationDataObjectMetaDataKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -162,10 +162,10 @@ void VtkInformationDataObjectMetaDataKeyWrap::MakeKey(const Nan::FunctionCallbac
 {
 	VtkInformationDataObjectMetaDataKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationDataObjectMetaDataKeyWrap>(info.Holder());
 	vtkInformationDataObjectMetaDataKey *native = (vtkInformationDataObjectMetaDataKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			vtkInformationDataObjectMetaDataKey * r;

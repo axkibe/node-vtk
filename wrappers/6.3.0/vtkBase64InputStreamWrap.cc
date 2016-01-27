@@ -121,7 +121,7 @@ void VtkBase64InputStreamWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkBase64InputStreamWrap *wrapper = ObjectWrap::Unwrap<VtkBase64InputStreamWrap>(info.Holder());
 	vtkBase64InputStream *native = (vtkBase64InputStream *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

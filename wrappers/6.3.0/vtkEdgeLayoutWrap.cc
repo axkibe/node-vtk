@@ -133,7 +133,7 @@ void VtkEdgeLayoutWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkEdgeLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeLayoutWrap>(info.Holder());
 	vtkEdgeLayout *native = (vtkEdgeLayout *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

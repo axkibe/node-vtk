@@ -338,7 +338,7 @@ void VtkProbeFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProbeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProbeFilterWrap>(info.Holder());
 	vtkProbeFilter *native = (vtkProbeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -621,7 +621,7 @@ void VtkProbeFilterWrap::SetValidPointMaskArrayName(const Nan::FunctionCallbackI
 {
 	VtkProbeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProbeFilterWrap>(info.Holder());
 	vtkProbeFilter *native = (vtkProbeFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

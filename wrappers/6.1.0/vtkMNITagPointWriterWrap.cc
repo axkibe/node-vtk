@@ -352,7 +352,7 @@ void VtkMNITagPointWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -428,7 +428,7 @@ void VtkMNITagPointWriterWrap::SetComments(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -448,7 +448,7 @@ void VtkMNITagPointWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMNITagPointWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNITagPointWriterWrap>(info.Holder());
 	vtkMNITagPointWriter *native = (vtkMNITagPointWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

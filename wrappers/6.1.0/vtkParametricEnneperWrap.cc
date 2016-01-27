@@ -120,7 +120,7 @@ void VtkParametricEnneperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkParametricEnneperWrap *wrapper = ObjectWrap::Unwrap<VtkParametricEnneperWrap>(info.Holder());
 	vtkParametricEnneper *native = (vtkParametricEnneper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

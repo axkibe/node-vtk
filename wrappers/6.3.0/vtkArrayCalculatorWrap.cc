@@ -227,7 +227,7 @@ void VtkArrayCalculatorWrap::AddCoordinateScalarVariable(const Nan::FunctionCall
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -251,7 +251,7 @@ void VtkArrayCalculatorWrap::AddCoordinateVectorVariable(const Nan::FunctionCall
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -283,7 +283,7 @@ void VtkArrayCalculatorWrap::AddScalarArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -307,10 +307,10 @@ void VtkArrayCalculatorWrap::AddScalarVariable(const Nan::FunctionCallbackInfo<v
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -336,7 +336,7 @@ void VtkArrayCalculatorWrap::AddVectorArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -368,10 +368,10 @@ void VtkArrayCalculatorWrap::AddVectorVariable(const Nan::FunctionCallbackInfo<v
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -688,7 +688,7 @@ void VtkArrayCalculatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -994,7 +994,7 @@ void VtkArrayCalculatorWrap::SetFunction(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1052,7 +1052,7 @@ void VtkArrayCalculatorWrap::SetResultArrayName(const Nan::FunctionCallbackInfo<
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

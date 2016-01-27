@@ -418,7 +418,7 @@ void VtkTemporalStreamTracerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -563,7 +563,7 @@ void VtkTemporalStreamTracerWrap::SetParticleFileName(const Nan::FunctionCallbac
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

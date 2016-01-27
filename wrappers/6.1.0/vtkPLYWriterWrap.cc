@@ -432,7 +432,7 @@ void VtkPLYWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -508,7 +508,7 @@ void VtkPLYWriterWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -669,7 +669,7 @@ void VtkPLYWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

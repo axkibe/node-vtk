@@ -176,7 +176,7 @@ void VtkFLUENTReaderWrap::GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFLUENTReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFLUENTReaderWrap>(info.Holder());
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -282,7 +282,7 @@ void VtkFLUENTReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFLUENTReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFLUENTReaderWrap>(info.Holder());
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -358,7 +358,7 @@ void VtkFLUENTReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFLUENTReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFLUENTReaderWrap>(info.Holder());
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -425,7 +425,7 @@ void VtkFLUENTReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkFLUENTReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFLUENTReaderWrap>(info.Holder());
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

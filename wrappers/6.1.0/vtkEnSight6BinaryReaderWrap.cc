@@ -103,7 +103,7 @@ void VtkEnSight6BinaryReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkEnSight6BinaryReaderWrap *wrapper = ObjectWrap::Unwrap<VtkEnSight6BinaryReaderWrap>(info.Holder());
 	vtkEnSight6BinaryReader *native = (vtkEnSight6BinaryReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

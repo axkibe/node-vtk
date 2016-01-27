@@ -107,7 +107,7 @@ void VtkXMLFileOutputWindowWrap::DisplayDebugText(const Nan::FunctionCallbackInf
 {
 	VtkXMLFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXMLFileOutputWindowWrap>(info.Holder());
 	vtkXMLFileOutputWindow *native = (vtkXMLFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -127,7 +127,7 @@ void VtkXMLFileOutputWindowWrap::DisplayErrorText(const Nan::FunctionCallbackInf
 {
 	VtkXMLFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXMLFileOutputWindowWrap>(info.Holder());
 	vtkXMLFileOutputWindow *native = (vtkXMLFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -147,7 +147,7 @@ void VtkXMLFileOutputWindowWrap::DisplayGenericWarningText(const Nan::FunctionCa
 {
 	VtkXMLFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXMLFileOutputWindowWrap>(info.Holder());
 	vtkXMLFileOutputWindow *native = (vtkXMLFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -167,7 +167,7 @@ void VtkXMLFileOutputWindowWrap::DisplayTag(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXMLFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXMLFileOutputWindowWrap>(info.Holder());
 	vtkXMLFileOutputWindow *native = (vtkXMLFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -187,7 +187,7 @@ void VtkXMLFileOutputWindowWrap::DisplayText(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXMLFileOutputWindowWrap>(info.Holder());
 	vtkXMLFileOutputWindow *native = (vtkXMLFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -207,7 +207,7 @@ void VtkXMLFileOutputWindowWrap::DisplayWarningText(const Nan::FunctionCallbackI
 {
 	VtkXMLFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXMLFileOutputWindowWrap>(info.Holder());
 	vtkXMLFileOutputWindow *native = (vtkXMLFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -241,7 +241,7 @@ void VtkXMLFileOutputWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkXMLFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXMLFileOutputWindowWrap>(info.Holder());
 	vtkXMLFileOutputWindow *native = (vtkXMLFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

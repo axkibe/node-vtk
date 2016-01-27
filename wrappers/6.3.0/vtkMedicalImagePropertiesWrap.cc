@@ -376,10 +376,10 @@ void VtkMedicalImagePropertiesWrap::AddUserDefinedValue(const Nan::FunctionCallb
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -556,10 +556,10 @@ void VtkMedicalImagePropertiesWrap::GetDateAsLocale(const Nan::FunctionCallbackI
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -1210,7 +1210,7 @@ void VtkMedicalImagePropertiesWrap::GetUserDefinedValue(const Nan::FunctionCallb
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		char const * r;
@@ -1296,7 +1296,7 @@ void VtkMedicalImagePropertiesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1419,7 +1419,7 @@ void VtkMedicalImagePropertiesWrap::SetAcquisitionDate(const Nan::FunctionCallba
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1439,7 +1439,7 @@ void VtkMedicalImagePropertiesWrap::SetAcquisitionTime(const Nan::FunctionCallba
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1459,7 +1459,7 @@ void VtkMedicalImagePropertiesWrap::SetConvolutionKernel(const Nan::FunctionCall
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1518,7 +1518,7 @@ void VtkMedicalImagePropertiesWrap::SetEchoTime(const Nan::FunctionCallbackInfo<
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1538,7 +1538,7 @@ void VtkMedicalImagePropertiesWrap::SetEchoTrainLength(const Nan::FunctionCallba
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1558,7 +1558,7 @@ void VtkMedicalImagePropertiesWrap::SetExposure(const Nan::FunctionCallbackInfo<
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1578,7 +1578,7 @@ void VtkMedicalImagePropertiesWrap::SetExposureTime(const Nan::FunctionCallbackI
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1598,7 +1598,7 @@ void VtkMedicalImagePropertiesWrap::SetGantryTilt(const Nan::FunctionCallbackInf
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1618,7 +1618,7 @@ void VtkMedicalImagePropertiesWrap::SetImageDate(const Nan::FunctionCallbackInfo
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1638,7 +1638,7 @@ void VtkMedicalImagePropertiesWrap::SetImageNumber(const Nan::FunctionCallbackIn
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1658,7 +1658,7 @@ void VtkMedicalImagePropertiesWrap::SetImageTime(const Nan::FunctionCallbackInfo
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1682,7 +1682,7 @@ void VtkMedicalImagePropertiesWrap::SetInstanceUIDFromSliceID(const Nan::Functio
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() != 3)
@@ -1706,7 +1706,7 @@ void VtkMedicalImagePropertiesWrap::SetInstitutionName(const Nan::FunctionCallba
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1726,7 +1726,7 @@ void VtkMedicalImagePropertiesWrap::SetKVP(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1746,7 +1746,7 @@ void VtkMedicalImagePropertiesWrap::SetManufacturer(const Nan::FunctionCallbackI
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1766,7 +1766,7 @@ void VtkMedicalImagePropertiesWrap::SetManufacturerModelName(const Nan::Function
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1786,7 +1786,7 @@ void VtkMedicalImagePropertiesWrap::SetModality(const Nan::FunctionCallbackInfo<
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1808,7 +1808,7 @@ void VtkMedicalImagePropertiesWrap::SetNthWindowLevelPresetComment(const Nan::Fu
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -1853,7 +1853,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientAge(const Nan::FunctionCallbackInf
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1873,7 +1873,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientBirthDate(const Nan::FunctionCallb
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1893,7 +1893,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientID(const Nan::FunctionCallbackInfo
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1913,7 +1913,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientName(const Nan::FunctionCallbackIn
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1933,7 +1933,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientSex(const Nan::FunctionCallbackInf
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1953,7 +1953,7 @@ void VtkMedicalImagePropertiesWrap::SetRepetitionTime(const Nan::FunctionCallbac
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1973,7 +1973,7 @@ void VtkMedicalImagePropertiesWrap::SetSeriesDescription(const Nan::FunctionCall
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1993,7 +1993,7 @@ void VtkMedicalImagePropertiesWrap::SetSeriesNumber(const Nan::FunctionCallbackI
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2013,7 +2013,7 @@ void VtkMedicalImagePropertiesWrap::SetSliceThickness(const Nan::FunctionCallbac
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2033,7 +2033,7 @@ void VtkMedicalImagePropertiesWrap::SetStationName(const Nan::FunctionCallbackIn
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2053,7 +2053,7 @@ void VtkMedicalImagePropertiesWrap::SetStudyDate(const Nan::FunctionCallbackInfo
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2073,7 +2073,7 @@ void VtkMedicalImagePropertiesWrap::SetStudyDescription(const Nan::FunctionCallb
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2093,7 +2093,7 @@ void VtkMedicalImagePropertiesWrap::SetStudyID(const Nan::FunctionCallbackInfo<v
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2113,7 +2113,7 @@ void VtkMedicalImagePropertiesWrap::SetStudyTime(const Nan::FunctionCallbackInfo
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -2133,7 +2133,7 @@ void VtkMedicalImagePropertiesWrap::SetXRayTubeCurrent(const Nan::FunctionCallba
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

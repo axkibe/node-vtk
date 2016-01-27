@@ -455,7 +455,7 @@ void VtkCornerAnnotationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -791,7 +791,7 @@ void VtkCornerAnnotationWrap::SetText(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

@@ -123,7 +123,7 @@ void VtkGroupLeafVerticesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGroupLeafVerticesWrap *wrapper = ObjectWrap::Unwrap<VtkGroupLeafVerticesWrap>(info.Holder());
 	vtkGroupLeafVertices *native = (vtkGroupLeafVertices *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkGroupLeafVerticesWrap::SetGroupDomain(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGroupLeafVerticesWrap *wrapper = ObjectWrap::Unwrap<VtkGroupLeafVerticesWrap>(info.Holder());
 	vtkGroupLeafVertices *native = (vtkGroupLeafVertices *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

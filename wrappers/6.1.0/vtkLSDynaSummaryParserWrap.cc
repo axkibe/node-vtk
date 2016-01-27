@@ -103,7 +103,7 @@ void VtkLSDynaSummaryParserWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkLSDynaSummaryParserWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaSummaryParserWrap>(info.Holder());
 	vtkLSDynaSummaryParser *native = (vtkLSDynaSummaryParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

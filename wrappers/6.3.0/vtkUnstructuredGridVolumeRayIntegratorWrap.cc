@@ -132,7 +132,7 @@ void VtkUnstructuredGridVolumeRayIntegratorWrap::IsA(const Nan::FunctionCallback
 {
 	VtkUnstructuredGridVolumeRayIntegratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayIntegratorWrap>(info.Holder());
 	vtkUnstructuredGridVolumeRayIntegrator *native = (vtkUnstructuredGridVolumeRayIntegrator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

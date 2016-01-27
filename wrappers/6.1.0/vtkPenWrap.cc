@@ -151,7 +151,7 @@ void VtkPenWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPenWrap *wrapper = ObjectWrap::Unwrap<VtkPenWrap>(info.Holder());
 	vtkPen *native = (vtkPen *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

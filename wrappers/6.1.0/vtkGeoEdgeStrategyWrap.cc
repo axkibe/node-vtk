@@ -166,7 +166,7 @@ void VtkGeoEdgeStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkGeoEdgeStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkGeoEdgeStrategyWrap>(info.Holder());
 	vtkGeoEdgeStrategy *native = (vtkGeoEdgeStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

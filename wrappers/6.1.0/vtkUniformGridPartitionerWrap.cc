@@ -143,7 +143,7 @@ void VtkUniformGridPartitionerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkUniformGridPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridPartitionerWrap>(info.Holder());
 	vtkUniformGridPartitioner *native = (vtkUniformGridPartitioner *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

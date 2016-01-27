@@ -368,7 +368,7 @@ void VtkLabelPlacerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

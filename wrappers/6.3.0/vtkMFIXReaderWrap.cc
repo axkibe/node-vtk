@@ -179,7 +179,7 @@ void VtkMFIXReaderWrap::GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMFIXReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMFIXReaderWrap>(info.Holder());
 	vtkMFIXReader *native = (vtkMFIXReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -313,7 +313,7 @@ void VtkMFIXReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMFIXReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMFIXReaderWrap>(info.Holder());
 	vtkMFIXReader *native = (vtkMFIXReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -389,7 +389,7 @@ void VtkMFIXReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMFIXReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMFIXReaderWrap>(info.Holder());
 	vtkMFIXReader *native = (vtkMFIXReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -413,7 +413,7 @@ void VtkMFIXReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkMFIXReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMFIXReaderWrap>(info.Holder());
 	vtkMFIXReader *native = (vtkMFIXReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

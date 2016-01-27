@@ -122,7 +122,7 @@ void VtkPolyLineWidgetWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkPolyLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPolyLineWidgetWrap>(info.Holder());
 	vtkPolyLineWidget *native = (vtkPolyLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

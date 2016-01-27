@@ -373,7 +373,7 @@ void VtkAmoebaMinimizerWrap::GetParameterScale(const Nan::FunctionCallbackInfo<v
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		double r;
@@ -423,7 +423,7 @@ void VtkAmoebaMinimizerWrap::GetParameterValue(const Nan::FunctionCallbackInfo<v
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		double r;
@@ -485,7 +485,7 @@ void VtkAmoebaMinimizerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -663,7 +663,7 @@ void VtkAmoebaMinimizerWrap::SetParameterScale(const Nan::FunctionCallbackInfo<v
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -722,7 +722,7 @@ void VtkAmoebaMinimizerWrap::SetParameterValue(const Nan::FunctionCallbackInfo<v
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())

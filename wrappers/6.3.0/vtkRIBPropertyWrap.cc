@@ -143,10 +143,10 @@ void VtkRIBPropertyWrap::AddDisplacementShaderParameter(const Nan::FunctionCallb
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -168,10 +168,10 @@ void VtkRIBPropertyWrap::AddParameter(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -193,10 +193,10 @@ void VtkRIBPropertyWrap::AddSurfaceShaderParameter(const Nan::FunctionCallbackIn
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -218,10 +218,10 @@ void VtkRIBPropertyWrap::AddVariable(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -341,7 +341,7 @@ void VtkRIBPropertyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -417,7 +417,7 @@ void VtkRIBPropertyWrap::SetDisplacementShader(const Nan::FunctionCallbackInfo<v
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -437,10 +437,10 @@ void VtkRIBPropertyWrap::SetDisplacementShaderParameter(const Nan::FunctionCallb
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -462,10 +462,10 @@ void VtkRIBPropertyWrap::SetParameter(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -487,7 +487,7 @@ void VtkRIBPropertyWrap::SetSurfaceShader(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -507,10 +507,10 @@ void VtkRIBPropertyWrap::SetSurfaceShaderParameter(const Nan::FunctionCallbackIn
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -532,10 +532,10 @@ void VtkRIBPropertyWrap::SetVariable(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
 	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

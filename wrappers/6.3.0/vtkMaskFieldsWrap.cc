@@ -143,10 +143,10 @@ void VtkMaskFieldsWrap::CopyAttributeOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -184,10 +184,10 @@ void VtkMaskFieldsWrap::CopyAttributeOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -249,10 +249,10 @@ void VtkMaskFieldsWrap::CopyFieldOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -269,7 +269,7 @@ void VtkMaskFieldsWrap::CopyFieldOff(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -291,10 +291,10 @@ void VtkMaskFieldsWrap::CopyFieldOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -311,7 +311,7 @@ void VtkMaskFieldsWrap::CopyFieldOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -371,7 +371,7 @@ void VtkMaskFieldsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

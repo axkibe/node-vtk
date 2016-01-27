@@ -159,7 +159,7 @@ void VtkTransposeTableWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
 	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -235,7 +235,7 @@ void VtkTransposeTableWrap::SetIdColumnName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
 	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -314,7 +314,7 @@ void VtkAVSucdReaderWrap::GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -511,7 +511,7 @@ void VtkAVSucdReaderWrap::GetPointArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -533,7 +533,7 @@ void VtkAVSucdReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -671,7 +671,7 @@ void VtkAVSucdReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -695,7 +695,7 @@ void VtkAVSucdReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -715,7 +715,7 @@ void VtkAVSucdReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())

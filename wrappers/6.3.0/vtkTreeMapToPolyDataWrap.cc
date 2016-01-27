@@ -159,7 +159,7 @@ void VtkTreeMapToPolyDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTreeMapToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapToPolyDataWrap>(info.Holder());
 	vtkTreeMapToPolyData *native = (vtkTreeMapToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -235,7 +235,7 @@ void VtkTreeMapToPolyDataWrap::SetLevelArrayName(const Nan::FunctionCallbackInfo
 {
 	VtkTreeMapToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapToPolyDataWrap>(info.Holder());
 	vtkTreeMapToPolyData *native = (vtkTreeMapToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -274,7 +274,7 @@ void VtkTreeMapToPolyDataWrap::SetRectanglesArrayName(const Nan::FunctionCallbac
 {
 	VtkTreeMapToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapToPolyDataWrap>(info.Holder());
 	vtkTreeMapToPolyData *native = (vtkTreeMapToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -233,7 +233,7 @@ void VtkFieldDataWrap::CopyFieldOff(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -253,7 +253,7 @@ void VtkFieldDataWrap::CopyFieldOn(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -313,7 +313,7 @@ void VtkFieldDataWrap::GetAbstractArray(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkAbstractArray * r;
@@ -367,7 +367,7 @@ void VtkFieldDataWrap::GetArray(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkDataArray * r;
@@ -509,7 +509,7 @@ void VtkFieldDataWrap::HasArray(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -543,7 +543,7 @@ void VtkFieldDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -608,7 +608,7 @@ void VtkFieldDataWrap::RemoveArray(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

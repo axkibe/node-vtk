@@ -166,7 +166,7 @@ void VtkAssignCoordinatesLayoutStrategyWrap::IsA(const Nan::FunctionCallbackInfo
 {
 	VtkAssignCoordinatesLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAssignCoordinatesLayoutStrategyWrap>(info.Holder());
 	vtkAssignCoordinatesLayoutStrategy *native = (vtkAssignCoordinatesLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -254,7 +254,7 @@ void VtkAssignCoordinatesLayoutStrategyWrap::SetXCoordArrayName(const Nan::Funct
 {
 	VtkAssignCoordinatesLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAssignCoordinatesLayoutStrategyWrap>(info.Holder());
 	vtkAssignCoordinatesLayoutStrategy *native = (vtkAssignCoordinatesLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -274,7 +274,7 @@ void VtkAssignCoordinatesLayoutStrategyWrap::SetYCoordArrayName(const Nan::Funct
 {
 	VtkAssignCoordinatesLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAssignCoordinatesLayoutStrategyWrap>(info.Holder());
 	vtkAssignCoordinatesLayoutStrategy *native = (vtkAssignCoordinatesLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -294,7 +294,7 @@ void VtkAssignCoordinatesLayoutStrategyWrap::SetZCoordArrayName(const Nan::Funct
 {
 	VtkAssignCoordinatesLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAssignCoordinatesLayoutStrategyWrap>(info.Holder());
 	vtkAssignCoordinatesLayoutStrategy *native = (vtkAssignCoordinatesLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

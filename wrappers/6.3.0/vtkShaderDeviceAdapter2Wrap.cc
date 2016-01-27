@@ -105,7 +105,7 @@ void VtkShaderDeviceAdapter2Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkShaderDeviceAdapter2Wrap *wrapper = ObjectWrap::Unwrap<VtkShaderDeviceAdapter2Wrap>(info.Holder());
 	vtkShaderDeviceAdapter2 *native = (vtkShaderDeviceAdapter2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -191,7 +191,7 @@ void VtkCellTypesWrap::GetTypeIdFromClassName(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
 	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -213,7 +213,7 @@ void VtkCellTypesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
 	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -893,7 +893,7 @@ void VtkCubeAxesActor2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
 	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1330,7 +1330,7 @@ void VtkCubeAxesActor2DWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
 	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1504,7 +1504,7 @@ void VtkCubeAxesActor2DWrap::SetXLabel(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
 	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1562,7 +1562,7 @@ void VtkCubeAxesActor2DWrap::SetYLabel(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
 	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1620,7 +1620,7 @@ void VtkCubeAxesActor2DWrap::SetZLabel(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
 	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

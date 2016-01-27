@@ -143,7 +143,7 @@ void VtkJavaScriptDataWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkJavaScriptDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJavaScriptDataWriterWrap>(info.Holder());
 	vtkJavaScriptDataWriter *native = (vtkJavaScriptDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -219,7 +219,7 @@ void VtkJavaScriptDataWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8
 {
 	VtkJavaScriptDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJavaScriptDataWriterWrap>(info.Holder());
 	vtkJavaScriptDataWriter *native = (vtkJavaScriptDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -239,7 +239,7 @@ void VtkJavaScriptDataWriterWrap::SetVariableName(const Nan::FunctionCallbackInf
 {
 	VtkJavaScriptDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJavaScriptDataWriterWrap>(info.Holder());
 	vtkJavaScriptDataWriter *native = (vtkJavaScriptDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

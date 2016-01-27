@@ -123,7 +123,7 @@ void VtkFastNumericConversionWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkFastNumericConversionWrap *wrapper = ObjectWrap::Unwrap<VtkFastNumericConversionWrap>(info.Holder());
 	vtkFastNumericConversion *native = (vtkFastNumericConversion *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

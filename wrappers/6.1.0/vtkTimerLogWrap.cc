@@ -181,7 +181,7 @@ void VtkTimerLogWrap::DumpLog(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -201,7 +201,7 @@ void VtkTimerLogWrap::FormatAndMarkEvent(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -382,7 +382,7 @@ void VtkTimerLogWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -428,7 +428,7 @@ void VtkTimerLogWrap::MarkEndEvent(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -448,7 +448,7 @@ void VtkTimerLogWrap::MarkEvent(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -468,7 +468,7 @@ void VtkTimerLogWrap::MarkStartEvent(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

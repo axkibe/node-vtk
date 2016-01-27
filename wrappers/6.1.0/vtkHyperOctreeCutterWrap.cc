@@ -382,7 +382,7 @@ void VtkHyperOctreeCutterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkHyperOctreeCutterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeCutterWrap>(info.Holder());
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

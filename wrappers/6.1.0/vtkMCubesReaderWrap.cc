@@ -387,7 +387,7 @@ void VtkMCubesReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -530,7 +530,7 @@ void VtkMCubesReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -588,7 +588,7 @@ void VtkMCubesReaderWrap::SetLimitsFileName(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

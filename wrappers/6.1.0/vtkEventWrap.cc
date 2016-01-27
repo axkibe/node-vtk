@@ -198,7 +198,7 @@ void VtkEventWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkEventWrap *wrapper = ObjectWrap::Unwrap<VtkEventWrap>(info.Holder());
 	vtkEvent *native = (vtkEvent *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -274,7 +274,7 @@ void VtkEventWrap::SetKeyCode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkEventWrap *wrapper = ObjectWrap::Unwrap<VtkEventWrap>(info.Holder());
 	vtkEvent *native = (vtkEvent *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		char a0 = info[0]->Int32Value();
 		if( a0 < -127 || a0 > 128 )
@@ -299,7 +299,7 @@ void VtkEventWrap::SetKeySym(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkEventWrap *wrapper = ObjectWrap::Unwrap<VtkEventWrap>(info.Holder());
 	vtkEvent *native = (vtkEvent *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

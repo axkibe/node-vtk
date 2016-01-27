@@ -326,7 +326,7 @@ void VtkGeoTreeNodeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
 	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

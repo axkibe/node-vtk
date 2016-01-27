@@ -711,7 +711,7 @@ void VtkLeaderActor2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLeaderActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkLeaderActor2DWrap>(info.Holder());
 	vtkLeaderActor2D *native = (vtkLeaderActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1052,7 +1052,7 @@ void VtkLeaderActor2DWrap::SetLabel(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkLeaderActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkLeaderActor2DWrap>(info.Holder());
 	vtkLeaderActor2D *native = (vtkLeaderActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1091,7 +1091,7 @@ void VtkLeaderActor2DWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLeaderActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkLeaderActor2DWrap>(info.Holder());
 	vtkLeaderActor2D *native = (vtkLeaderActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

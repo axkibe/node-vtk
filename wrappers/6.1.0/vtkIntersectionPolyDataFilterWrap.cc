@@ -155,7 +155,7 @@ void VtkIntersectionPolyDataFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkIntersectionPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIntersectionPolyDataFilterWrap>(info.Holder());
 	vtkIntersectionPolyDataFilter *native = (vtkIntersectionPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

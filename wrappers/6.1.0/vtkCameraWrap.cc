@@ -918,7 +918,7 @@ void VtkCameraWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

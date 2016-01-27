@@ -188,7 +188,7 @@ void VtkMINCImageAttributesWrap::AddDimension(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -208,7 +208,7 @@ void VtkMINCImageAttributesWrap::GetAttributeNames(const Nan::FunctionCallbackIn
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkStringArray * r;
@@ -239,10 +239,10 @@ void VtkMINCImageAttributesWrap::GetAttributeValueAsArray(const Nan::FunctionCal
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			vtkDataArray * r;
@@ -275,10 +275,10 @@ void VtkMINCImageAttributesWrap::GetAttributeValueAsDouble(const Nan::FunctionCa
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			double r;
@@ -302,10 +302,10 @@ void VtkMINCImageAttributesWrap::GetAttributeValueAsInt(const Nan::FunctionCallb
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -329,10 +329,10 @@ void VtkMINCImageAttributesWrap::GetAttributeValueAsString(const Nan::FunctionCa
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			char const * r;
@@ -541,10 +541,10 @@ void VtkMINCImageAttributesWrap::HasAttribute(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			int r;
@@ -568,7 +568,7 @@ void VtkMINCImageAttributesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -668,10 +668,10 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsArray(const Nan::FunctionCal
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
@@ -698,10 +698,10 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsDouble(const Nan::FunctionCa
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsNumber())
@@ -727,10 +727,10 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsInt(const Nan::FunctionCallb
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -756,13 +756,13 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsString(const Nan::FunctionCa
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() != 3)
@@ -845,7 +845,7 @@ void VtkMINCImageAttributesWrap::SetName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -923,10 +923,10 @@ void VtkMINCImageAttributesWrap::ValidateAttribute(const Nan::FunctionCallbackIn
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))

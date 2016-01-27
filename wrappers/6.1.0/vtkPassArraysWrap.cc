@@ -145,7 +145,7 @@ void VtkPassArraysWrap::AddArray(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -167,7 +167,7 @@ void VtkPassArraysWrap::AddCellDataArray(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -187,7 +187,7 @@ void VtkPassArraysWrap::AddFieldDataArray(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -226,7 +226,7 @@ void VtkPassArraysWrap::AddPointDataArray(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -320,7 +320,7 @@ void VtkPassArraysWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -367,7 +367,7 @@ void VtkPassArraysWrap::RemoveArray(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -413,7 +413,7 @@ void VtkPassArraysWrap::RemoveCellDataArray(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -433,7 +433,7 @@ void VtkPassArraysWrap::RemoveFieldDataArray(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -453,7 +453,7 @@ void VtkPassArraysWrap::RemovePointDataArray(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

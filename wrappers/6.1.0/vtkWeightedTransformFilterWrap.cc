@@ -290,7 +290,7 @@ void VtkWeightedTransformFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -385,7 +385,7 @@ void VtkWeightedTransformFilterWrap::SetCellDataTransformIndexArray(const Nan::F
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -405,7 +405,7 @@ void VtkWeightedTransformFilterWrap::SetCellDataWeightArray(const Nan::FunctionC
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -468,7 +468,7 @@ void VtkWeightedTransformFilterWrap::SetTransformIndexArray(const Nan::FunctionC
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -488,7 +488,7 @@ void VtkWeightedTransformFilterWrap::SetWeightArray(const Nan::FunctionCallbackI
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

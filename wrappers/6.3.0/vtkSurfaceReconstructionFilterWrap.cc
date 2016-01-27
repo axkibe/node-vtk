@@ -143,7 +143,7 @@ void VtkSurfaceReconstructionFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSurfaceReconstructionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceReconstructionFilterWrap>(info.Holder());
 	vtkSurfaceReconstructionFilter *native = (vtkSurfaceReconstructionFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

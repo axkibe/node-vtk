@@ -276,7 +276,7 @@ void VtkModelMetadataWrap::AddInformationLine(const Nan::FunctionCallbackInfo<v8
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -296,16 +296,16 @@ void VtkModelMetadataWrap::AddQARecord(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() > 3 && info[3]->IsInt32())
+				if(info.Length() > 3 && info[3]->IsString())
 				{
 					Nan::Utf8String a3(info[3]);
 					if(info.Length() != 4)
@@ -331,10 +331,10 @@ void VtkModelMetadataWrap::AddUGridElementVariable(const Nan::FunctionCallbackIn
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -362,10 +362,10 @@ void VtkModelMetadataWrap::AddUGridNodeVariable(const Nan::FunctionCallbackInfo<
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
@@ -417,7 +417,7 @@ void VtkModelMetadataWrap::ElementVariableIsDefinedInBlock(const Nan::FunctionCa
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -502,7 +502,7 @@ void VtkModelMetadataWrap::FindOriginalElementVariableName(const Nan::FunctionCa
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -528,7 +528,7 @@ void VtkModelMetadataWrap::FindOriginalNodeVariableName(const Nan::FunctionCallb
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1055,7 +1055,7 @@ void VtkModelMetadataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1208,7 +1208,7 @@ void VtkModelMetadataWrap::RemoveUGridElementVariable(const Nan::FunctionCallbac
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1230,7 +1230,7 @@ void VtkModelMetadataWrap::RemoveUGridNodeVariable(const Nan::FunctionCallbackIn
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1390,7 +1390,7 @@ void VtkModelMetadataWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -186,7 +186,7 @@ void VtkPeriodicFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicFilterWrap>(info.Holder());
 	vtkPeriodicFilter *native = (vtkPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

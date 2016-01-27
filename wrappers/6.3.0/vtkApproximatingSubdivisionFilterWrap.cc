@@ -123,7 +123,7 @@ void VtkApproximatingSubdivisionFilterWrap::IsA(const Nan::FunctionCallbackInfo<
 {
 	VtkApproximatingSubdivisionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkApproximatingSubdivisionFilterWrap>(info.Holder());
 	vtkApproximatingSubdivisionFilter *native = (vtkApproximatingSubdivisionFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

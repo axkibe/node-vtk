@@ -92,7 +92,7 @@ void VtkClientSocketWrap::ConnectToServer(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkClientSocketWrap *wrapper = ObjectWrap::Unwrap<VtkClientSocketWrap>(info.Holder());
 	vtkClientSocket *native = (vtkClientSocket *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -132,7 +132,7 @@ void VtkClientSocketWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkClientSocketWrap *wrapper = ObjectWrap::Unwrap<VtkClientSocketWrap>(info.Holder());
 	vtkClientSocket *native = (vtkClientSocket *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

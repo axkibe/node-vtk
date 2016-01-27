@@ -143,7 +143,7 @@ void VtkLinearTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info.Holder());
 	vtkLinearTransform *native = (vtkLinearTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -132,7 +132,7 @@ void VtkGenericRenderWindowInteractorWrap::IsA(const Nan::FunctionCallbackInfo<v
 {
 	VtkGenericRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericRenderWindowInteractorWrap>(info.Holder());
 	vtkGenericRenderWindowInteractor *native = (vtkGenericRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

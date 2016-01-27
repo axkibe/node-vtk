@@ -346,7 +346,7 @@ void VtkRectilinearWipeRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v
 {
 	VtkRectilinearWipeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearWipeRepresentationWrap>(info.Holder());
 	vtkRectilinearWipeRepresentation *native = (vtkRectilinearWipeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

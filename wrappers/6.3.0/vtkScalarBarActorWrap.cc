@@ -1245,7 +1245,7 @@ void VtkScalarBarActorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -1484,7 +1484,7 @@ void VtkScalarBarActorWrap::SetComponentTitle(const Nan::FunctionCallbackInfo<v8
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1657,7 +1657,7 @@ void VtkScalarBarActorWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1774,7 +1774,7 @@ void VtkScalarBarActorWrap::SetNanAnnotation(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1937,7 +1937,7 @@ void VtkScalarBarActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

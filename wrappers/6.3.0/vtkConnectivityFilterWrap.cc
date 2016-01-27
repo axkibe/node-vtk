@@ -385,7 +385,7 @@ void VtkConnectivityFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -109,7 +109,7 @@ void VtkSplitFieldWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSplitFieldWrap *wrapper = ObjectWrap::Unwrap<VtkSplitFieldWrap>(info.Holder());
 	vtkSplitField *native = (vtkSplitField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -185,10 +185,10 @@ void VtkSplitFieldWrap::SetInputField(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSplitFieldWrap *wrapper = ObjectWrap::Unwrap<VtkSplitFieldWrap>(info.Holder());
 	vtkSplitField *native = (vtkSplitField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -241,7 +241,7 @@ void VtkSplitFieldWrap::Split(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkSplitField *native = (vtkSplitField *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)

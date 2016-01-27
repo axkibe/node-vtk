@@ -333,7 +333,7 @@ void VtkResliceCursorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

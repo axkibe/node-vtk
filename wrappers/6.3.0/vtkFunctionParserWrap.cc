@@ -273,7 +273,7 @@ void VtkFunctionParserWrap::GetScalarVariableValue(const Nan::FunctionCallbackIn
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		double r;
@@ -342,7 +342,7 @@ void VtkFunctionParserWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -506,7 +506,7 @@ void VtkFunctionParserWrap::SetFunction(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -564,7 +564,7 @@ void VtkFunctionParserWrap::SetScalarVariableValue(const Nan::FunctionCallbackIn
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -604,7 +604,7 @@ void VtkFunctionParserWrap::SetVectorVariableValue(const Nan::FunctionCallbackIn
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())

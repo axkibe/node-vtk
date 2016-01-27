@@ -447,7 +447,7 @@ void VtkImageHistogramWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

@@ -398,7 +398,7 @@ void VtkBarChartActorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -641,7 +641,7 @@ void VtkBarChartActorWrap::SetBarLabel(const Nan::FunctionCallbackInfo<v8::Value
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -741,7 +741,7 @@ void VtkBarChartActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -800,7 +800,7 @@ void VtkBarChartActorWrap::SetYTitle(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -153,7 +153,7 @@ void VtkSQLDatabaseTableSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSQLDatabaseTableSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseTableSourceWrap>(info.Holder());
 	vtkSQLDatabaseTableSource *native = (vtkSQLDatabaseTableSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -229,7 +229,7 @@ void VtkSQLDatabaseTableSourceWrap::SetPedigreeIdArrayName(const Nan::FunctionCa
 {
 	VtkSQLDatabaseTableSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseTableSourceWrap>(info.Holder());
 	vtkSQLDatabaseTableSource *native = (vtkSQLDatabaseTableSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

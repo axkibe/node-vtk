@@ -242,7 +242,7 @@ void VtkXMLDataElementWrap::FindNestedElement(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkXMLDataElement * r;
@@ -273,7 +273,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithName(const Nan::FunctionCallbac
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkXMLDataElement * r;
@@ -304,13 +304,13 @@ void VtkXMLDataElementWrap::FindNestedElementWithNameAndAttribute(const Nan::Fun
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() > 2 && info[2]->IsInt32())
+			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
 				vtkXMLDataElement * r;
@@ -345,10 +345,10 @@ void VtkXMLDataElementWrap::FindNestedElementWithNameAndId(const Nan::FunctionCa
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			vtkXMLDataElement * r;
@@ -381,7 +381,7 @@ void VtkXMLDataElementWrap::GetAttribute(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		char const * r;
@@ -661,7 +661,7 @@ void VtkXMLDataElementWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -705,7 +705,7 @@ void VtkXMLDataElementWrap::LookupElement(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkXMLDataElement * r;
@@ -736,7 +736,7 @@ void VtkXMLDataElementWrap::LookupElementWithName(const Nan::FunctionCallbackInf
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		vtkXMLDataElement * r;
@@ -790,7 +790,7 @@ void VtkXMLDataElementWrap::PrintXML(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -834,7 +834,7 @@ void VtkXMLDataElementWrap::RemoveAttribute(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -905,10 +905,10 @@ void VtkXMLDataElementWrap::SetAttribute(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
@@ -949,7 +949,7 @@ void VtkXMLDataElementWrap::SetCharacterData(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -992,7 +992,7 @@ void VtkXMLDataElementWrap::SetDoubleAttribute(const Nan::FunctionCallbackInfo<v
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())
@@ -1016,7 +1016,7 @@ void VtkXMLDataElementWrap::SetId(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -1036,7 +1036,7 @@ void VtkXMLDataElementWrap::SetIntAttribute(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -1060,7 +1060,7 @@ void VtkXMLDataElementWrap::SetName(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

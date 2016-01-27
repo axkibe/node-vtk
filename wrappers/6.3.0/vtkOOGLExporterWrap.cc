@@ -123,7 +123,7 @@ void VtkOOGLExporterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOOGLExporterWrap *wrapper = ObjectWrap::Unwrap<VtkOOGLExporterWrap>(info.Holder());
 	vtkOOGLExporter *native = (vtkOOGLExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -199,7 +199,7 @@ void VtkOOGLExporterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkOOGLExporterWrap *wrapper = ObjectWrap::Unwrap<VtkOOGLExporterWrap>(info.Holder());
 	vtkOOGLExporter *native = (vtkOOGLExporter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

@@ -289,7 +289,7 @@ void VtkMINCImageWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMINCImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageWriterWrap>(info.Holder());
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
@@ -385,7 +385,7 @@ void VtkMINCImageWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMINCImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageWriterWrap>(info.Holder());
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)
@@ -405,7 +405,7 @@ void VtkMINCImageWriterWrap::SetHistoryAddition(const Nan::FunctionCallbackInfo<
 {
 	VtkMINCImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageWriterWrap>(info.Holder());
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() != 1)

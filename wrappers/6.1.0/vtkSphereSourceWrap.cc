@@ -530,7 +530,7 @@ void VtkSphereSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSphereSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSphereSourceWrap>(info.Holder());
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

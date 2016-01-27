@@ -129,7 +129,7 @@ void VtkPCellDataToPointDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPCellDataToPointDataWrap *wrapper = ObjectWrap::Unwrap<VtkPCellDataToPointDataWrap>(info.Holder());
 	vtkPCellDataToPointData *native = (vtkPCellDataToPointData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;

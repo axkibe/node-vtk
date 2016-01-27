@@ -261,7 +261,7 @@ void VtkImageQuantizeRGBToIndexWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageQuantizeRGBToIndexWrap *wrapper = ObjectWrap::Unwrap<VtkImageQuantizeRGBToIndexWrap>(info.Holder());
 	vtkImageQuantizeRGBToIndex *native = (vtkImageQuantizeRGBToIndex *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
 		int r;
