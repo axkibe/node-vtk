@@ -95,7 +95,6 @@ void VtkImageDataToUniformGridWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -199,7 +198,7 @@ void VtkImageDataToUniformGridWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkImageDataToUniformGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataToUniformGridWrap *w = new VtkImageDataToUniformGridWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -251,7 +250,7 @@ void VtkImageDataToUniformGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 			Nan::New<v8::FunctionTemplate>(VtkImageDataToUniformGridWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataToUniformGridWrap *w = new VtkImageDataToUniformGridWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

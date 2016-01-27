@@ -249,7 +249,6 @@ void VtkImplicitPlaneWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -369,7 +368,7 @@ void VtkImplicitPlaneWidgetWrap::GetEdgesProperty(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -392,7 +391,7 @@ void VtkImplicitPlaneWidgetWrap::GetNormalProperty(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -471,7 +470,7 @@ void VtkImplicitPlaneWidgetWrap::GetOutlineProperty(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -542,7 +541,7 @@ void VtkImplicitPlaneWidgetWrap::GetPlaneProperty(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -585,7 +584,7 @@ void VtkImplicitPlaneWidgetWrap::GetPolyDataAlgorithm(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataAlgorithmWrap *w = new VtkPolyDataAlgorithmWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -622,7 +621,7 @@ void VtkImplicitPlaneWidgetWrap::GetSelectedNormalProperty(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -645,7 +644,7 @@ void VtkImplicitPlaneWidgetWrap::GetSelectedOutlineProperty(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -668,7 +667,7 @@ void VtkImplicitPlaneWidgetWrap::GetSelectedPlaneProperty(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -727,7 +726,7 @@ void VtkImplicitPlaneWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkImplicitPlaneWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitPlaneWidgetWrap *w = new VtkImplicitPlaneWidgetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -943,7 +942,7 @@ void VtkImplicitPlaneWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 			Nan::New<v8::FunctionTemplate>(VtkImplicitPlaneWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitPlaneWidgetWrap *w = new VtkImplicitPlaneWidgetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

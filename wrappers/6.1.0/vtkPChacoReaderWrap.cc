@@ -84,7 +84,6 @@ void VtkPChacoReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -124,7 +123,7 @@ void VtkPChacoReaderWrap::GetController(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -169,7 +168,7 @@ void VtkPChacoReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::New<v8::FunctionTemplate>(VtkPChacoReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPChacoReaderWrap *w = new VtkPChacoReaderWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -197,7 +196,7 @@ void VtkPChacoReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 			Nan::New<v8::FunctionTemplate>(VtkPChacoReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPChacoReaderWrap *w = new VtkPChacoReaderWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -143,7 +143,6 @@ void VtkImageStackWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -214,7 +213,7 @@ void VtkImageStackWrap::GetActiveImage(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkImageSliceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSliceWrap *w = new VtkImageSliceWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -278,7 +277,7 @@ void VtkImageStackWrap::GetImages(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::New<v8::FunctionTemplate>(VtkImageSliceCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageSliceCollectionWrap *w = new VtkImageSliceCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -301,7 +300,7 @@ void VtkImageStackWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::New<v8::FunctionTemplate>(VtkImageMapper3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageMapper3DWrap *w = new VtkImageMapper3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -324,7 +323,7 @@ void VtkImageStackWrap::GetNextPath(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -361,7 +360,7 @@ void VtkImageStackWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkImagePropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImagePropertyWrap *w = new VtkImagePropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -454,7 +453,7 @@ void VtkImageStackWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkImageStackWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageStackWrap *w = new VtkImageStackWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -588,7 +587,7 @@ void VtkImageStackWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 			Nan::New<v8::FunctionTemplate>(VtkImageStackWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageStackWrap *w = new VtkImageStackWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

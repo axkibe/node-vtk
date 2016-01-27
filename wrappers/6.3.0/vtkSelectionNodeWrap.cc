@@ -168,7 +168,6 @@ void VtkSelectionNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -194,7 +193,7 @@ void VtkSelectionNodeWrap::COMPONENT_NUMBER(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -217,7 +216,7 @@ void VtkSelectionNodeWrap::COMPOSITE_INDEX(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -240,7 +239,7 @@ void VtkSelectionNodeWrap::CONTAINING_CELLS(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -263,7 +262,7 @@ void VtkSelectionNodeWrap::CONTENT_TYPE(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -348,7 +347,7 @@ void VtkSelectionNodeWrap::EPSILON(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleKeyWrap *w = new VtkInformationDoubleKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -371,7 +370,7 @@ void VtkSelectionNodeWrap::FIELD_TYPE(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -436,7 +435,7 @@ void VtkSelectionNodeWrap::GetProperties(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationWrap *w = new VtkInformationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -473,7 +472,7 @@ void VtkSelectionNodeWrap::GetSelectionData(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkDataSetAttributesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetAttributesWrap *w = new VtkDataSetAttributesWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -496,7 +495,7 @@ void VtkSelectionNodeWrap::GetSelectionList(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -519,7 +518,7 @@ void VtkSelectionNodeWrap::HIERARCHICAL_INDEX(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -542,7 +541,7 @@ void VtkSelectionNodeWrap::HIERARCHICAL_LEVEL(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -565,7 +564,7 @@ void VtkSelectionNodeWrap::INDEXED_VERTICES(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -588,7 +587,7 @@ void VtkSelectionNodeWrap::INVERSE(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -645,7 +644,7 @@ void VtkSelectionNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkSelectionNodeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectionNodeWrap *w = new VtkSelectionNodeWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -668,7 +667,7 @@ void VtkSelectionNodeWrap::PIXEL_COUNT(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -691,7 +690,7 @@ void VtkSelectionNodeWrap::PROCESS_ID(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -714,7 +713,7 @@ void VtkSelectionNodeWrap::PROP(const Nan::FunctionCallbackInfo<v8::Value>& info
 		Nan::New<v8::FunctionTemplate>(VtkInformationObjectBaseKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationObjectBaseKeyWrap *w = new VtkInformationObjectBaseKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -737,7 +736,7 @@ void VtkSelectionNodeWrap::PROP_ID(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -760,7 +759,7 @@ void VtkSelectionNodeWrap::SOURCE(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::New<v8::FunctionTemplate>(VtkInformationObjectBaseKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationObjectBaseKeyWrap *w = new VtkInformationObjectBaseKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -783,7 +782,7 @@ void VtkSelectionNodeWrap::SOURCE_ID(const Nan::FunctionCallbackInfo<v8::Value>&
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -811,7 +810,7 @@ void VtkSelectionNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 			Nan::New<v8::FunctionTemplate>(VtkSelectionNodeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSelectionNodeWrap *w = new VtkSelectionNodeWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

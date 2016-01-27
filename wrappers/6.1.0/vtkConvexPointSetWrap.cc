@@ -110,7 +110,6 @@ void VtkConvexPointSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -168,7 +167,7 @@ void VtkConvexPointSetWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& 
 			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellWrap *w = new VtkCellWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -198,7 +197,7 @@ void VtkConvexPointSetWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& 
 			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellWrap *w = new VtkCellWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -314,7 +313,7 @@ void VtkConvexPointSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkConvexPointSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkConvexPointSetWrap *w = new VtkConvexPointSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -356,7 +355,7 @@ void VtkConvexPointSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkConvexPointSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkConvexPointSetWrap *w = new VtkConvexPointSetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

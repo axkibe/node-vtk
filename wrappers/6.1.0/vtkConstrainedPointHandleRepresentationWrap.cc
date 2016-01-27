@@ -195,7 +195,6 @@ void VtkConstrainedPointHandleRepresentationWrap::New(const Nan::FunctionCallbac
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -282,7 +281,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetActiveCursorShape(const Nan
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -305,7 +304,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetActiveProperty(const Nan::F
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -348,7 +347,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetBoundingPlanes(const Nan::F
 		Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -385,7 +384,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetCursorShape(const Nan::Func
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -408,7 +407,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetObliquePlane(const Nan::Fun
 		Nan::New<v8::FunctionTemplate>(VtkPlaneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneWrap *w = new VtkPlaneWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -487,7 +486,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetProperty(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -510,7 +509,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetSelectedProperty(const Nan:
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -588,7 +587,7 @@ void VtkConstrainedPointHandleRepresentationWrap::NewInstance(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkConstrainedPointHandleRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkConstrainedPointHandleRepresentationWrap *w = new VtkConstrainedPointHandleRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -734,7 +733,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SafeDownCast(const Nan::Functi
 			Nan::New<v8::FunctionTemplate>(VtkConstrainedPointHandleRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkConstrainedPointHandleRepresentationWrap *w = new VtkConstrainedPointHandleRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

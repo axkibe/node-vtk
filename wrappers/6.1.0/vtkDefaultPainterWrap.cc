@@ -136,7 +136,6 @@ void VtkDefaultPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -176,7 +175,7 @@ void VtkDefaultPainterWrap::GetClipPlanesPainter(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkClipPlanesPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClipPlanesPainterWrap *w = new VtkClipPlanesPainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -199,7 +198,7 @@ void VtkDefaultPainterWrap::GetCoincidentTopologyResolutionPainter(const Nan::Fu
 		Nan::New<v8::FunctionTemplate>(VtkCoincidentTopologyResolutionPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoincidentTopologyResolutionPainterWrap *w = new VtkCoincidentTopologyResolutionPainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -222,7 +221,7 @@ void VtkDefaultPainterWrap::GetCompositePainter(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkCompositePainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositePainterWrap *w = new VtkCompositePainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -245,7 +244,7 @@ void VtkDefaultPainterWrap::GetDelegatePainter(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPainterWrap *w = new VtkPainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -268,7 +267,7 @@ void VtkDefaultPainterWrap::GetDisplayListPainter(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkDisplayListPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDisplayListPainterWrap *w = new VtkDisplayListPainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -291,7 +290,7 @@ void VtkDefaultPainterWrap::GetLightingPainter(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkLightingPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightingPainterWrap *w = new VtkLightingPainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -314,7 +313,7 @@ void VtkDefaultPainterWrap::GetRepresentationPainter(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkRepresentationPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRepresentationPainterWrap *w = new VtkRepresentationPainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -337,7 +336,7 @@ void VtkDefaultPainterWrap::GetScalarsToColorsPainter(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsPainterWrap *w = new VtkScalarsToColorsPainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -382,7 +381,7 @@ void VtkDefaultPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkDefaultPainterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDefaultPainterWrap *w = new VtkDefaultPainterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -430,7 +429,7 @@ void VtkDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkDefaultPainterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDefaultPainterWrap *w = new VtkDefaultPainterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

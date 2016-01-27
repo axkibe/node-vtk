@@ -83,7 +83,6 @@ void VtkBase64InputStreamWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -157,7 +156,7 @@ void VtkBase64InputStreamWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkBase64InputStreamWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBase64InputStreamWrap *w = new VtkBase64InputStreamWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -185,7 +184,7 @@ void VtkBase64InputStreamWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 			Nan::New<v8::FunctionTemplate>(VtkBase64InputStreamWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBase64InputStreamWrap *w = new VtkBase64InputStreamWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

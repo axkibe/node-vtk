@@ -125,7 +125,6 @@ void VtkImageDifferenceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -255,7 +254,7 @@ void VtkImageDifferenceWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -328,7 +327,7 @@ void VtkImageDifferenceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkImageDifferenceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDifferenceWrap *w = new VtkImageDifferenceWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -356,7 +355,7 @@ void VtkImageDifferenceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 			Nan::New<v8::FunctionTemplate>(VtkImageDifferenceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDifferenceWrap *w = new VtkImageDifferenceWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

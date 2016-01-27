@@ -118,7 +118,6 @@ void VtkWindBladeReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -168,7 +167,7 @@ void VtkWindBladeReaderWrap::GetBladeOutput(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -205,7 +204,7 @@ void VtkWindBladeReaderWrap::GetFieldOutput(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkStructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridWrap *w = new VtkStructuredGridWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -242,7 +241,7 @@ void VtkWindBladeReaderWrap::GetGroundOutput(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkStructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridWrap *w = new VtkStructuredGridWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -344,7 +343,7 @@ void VtkWindBladeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkWindBladeReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindBladeReaderWrap *w = new VtkWindBladeReaderWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -372,7 +371,7 @@ void VtkWindBladeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 			Nan::New<v8::FunctionTemplate>(VtkWindBladeReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkWindBladeReaderWrap *w = new VtkWindBladeReaderWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

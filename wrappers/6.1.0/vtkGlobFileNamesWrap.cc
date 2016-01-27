@@ -110,7 +110,6 @@ void VtkGlobFileNamesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -186,7 +185,7 @@ void VtkGlobFileNamesWrap::GetFileNames(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -280,7 +279,7 @@ void VtkGlobFileNamesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkGlobFileNamesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGlobFileNamesWrap *w = new VtkGlobFileNamesWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -344,7 +343,7 @@ void VtkGlobFileNamesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 			Nan::New<v8::FunctionTemplate>(VtkGlobFileNamesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGlobFileNamesWrap *w = new VtkGlobFileNamesWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

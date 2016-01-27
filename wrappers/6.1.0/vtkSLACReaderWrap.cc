@@ -169,7 +169,6 @@ void VtkSLACReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -251,7 +250,7 @@ void VtkSLACReaderWrap::GetFrequencyScales(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkDoubleArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDoubleArrayWrap *w = new VtkDoubleArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -302,7 +301,7 @@ void VtkSLACReaderWrap::GetPhaseShifts(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkDoubleArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDoubleArrayWrap *w = new VtkDoubleArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -410,7 +409,7 @@ void VtkSLACReaderWrap::IS_EXTERNAL_SURFACE(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -433,7 +432,7 @@ void VtkSLACReaderWrap::IS_INTERNAL_VOLUME(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -478,7 +477,7 @@ void VtkSLACReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkSLACReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSLACReaderWrap *w = new VtkSLACReaderWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -501,7 +500,7 @@ void VtkSLACReaderWrap::POINTS(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkInformationObjectBaseKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationObjectBaseKeyWrap *w = new VtkInformationObjectBaseKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -524,7 +523,7 @@ void VtkSLACReaderWrap::POINT_DATA(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkInformationObjectBaseKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationObjectBaseKeyWrap *w = new VtkInformationObjectBaseKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -660,7 +659,7 @@ void VtkSLACReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 			Nan::New<v8::FunctionTemplate>(VtkSLACReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSLACReaderWrap *w = new VtkSLACReaderWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

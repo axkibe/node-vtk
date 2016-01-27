@@ -86,7 +86,6 @@ void VtkTreeIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -126,7 +125,7 @@ void VtkTreeIteratorWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::New<v8::FunctionTemplate>(VtkTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeWrap *w = new VtkTreeWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -171,7 +170,7 @@ void VtkTreeIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::New<v8::FunctionTemplate>(VtkTreeIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeIteratorWrap *w = new VtkTreeIteratorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -211,7 +210,7 @@ void VtkTreeIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 			Nan::New<v8::FunctionTemplate>(VtkTreeIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTreeIteratorWrap *w = new VtkTreeIteratorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

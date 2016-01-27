@@ -124,7 +124,6 @@ void VtkExtentTranslatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -242,7 +241,7 @@ void VtkExtentTranslatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkExtentTranslatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtentTranslatorWrap *w = new VtkExtentTranslatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -298,7 +297,7 @@ void VtkExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 			Nan::New<v8::FunctionTemplate>(VtkExtentTranslatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtentTranslatorWrap *w = new VtkExtentTranslatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -507,7 +506,7 @@ void VtkExtentTranslatorWrap::UPDATE_SPLIT_MODE(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerRequestKeyWrap *w = new VtkInformationIntegerRequestKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }

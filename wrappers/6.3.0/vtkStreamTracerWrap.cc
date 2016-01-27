@@ -201,7 +201,6 @@ void VtkStreamTracerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -311,7 +310,7 @@ void VtkStreamTracerWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -418,7 +417,7 @@ void VtkStreamTracerWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -477,7 +476,7 @@ void VtkStreamTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::New<v8::FunctionTemplate>(VtkStreamTracerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStreamTracerWrap *w = new VtkStreamTracerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -505,7 +504,7 @@ void VtkStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 			Nan::New<v8::FunctionTemplate>(VtkStreamTracerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStreamTracerWrap *w = new VtkStreamTracerWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

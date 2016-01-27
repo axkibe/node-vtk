@@ -107,7 +107,6 @@ void VtkAnnotationLinkWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -153,7 +152,7 @@ void VtkAnnotationLinkWrap::GetAnnotationLayers(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLayersWrap *w = new VtkAnnotationLayersWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -190,7 +189,7 @@ void VtkAnnotationLinkWrap::GetCurrentSelection(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectionWrap *w = new VtkSelectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -217,7 +216,7 @@ void VtkAnnotationLinkWrap::GetDomainMap(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTableWrap *w = new VtkTableWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -279,7 +278,7 @@ void VtkAnnotationLinkWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkAnnotationLinkWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLinkWrap *w = new VtkAnnotationLinkWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -339,7 +338,7 @@ void VtkAnnotationLinkWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkAnnotationLinkWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAnnotationLinkWrap *w = new VtkAnnotationLinkWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

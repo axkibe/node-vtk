@@ -141,7 +141,6 @@ void VtkCameraRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -231,7 +230,7 @@ void VtkCameraRepresentationWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraWrap *w = new VtkCameraWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -268,7 +267,7 @@ void VtkCameraRepresentationWrap::GetInterpolator(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkCameraInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraInterpolatorWrap *w = new VtkCameraInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -333,7 +332,7 @@ void VtkCameraRepresentationWrap::GetProperty(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -404,7 +403,7 @@ void VtkCameraRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkCameraRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraRepresentationWrap *w = new VtkCameraRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -518,7 +517,7 @@ void VtkCameraRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkCameraRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCameraRepresentationWrap *w = new VtkCameraRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -121,7 +121,6 @@ void VtkDSPFilterDefinitionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -348,7 +347,7 @@ void VtkDSPFilterDefinitionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkDSPFilterDefinitionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDSPFilterDefinitionWrap *w = new VtkDSPFilterDefinitionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -433,7 +432,7 @@ void VtkDSPFilterDefinitionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 			Nan::New<v8::FunctionTemplate>(VtkDSPFilterDefinitionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDSPFilterDefinitionWrap *w = new VtkDSPFilterDefinitionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

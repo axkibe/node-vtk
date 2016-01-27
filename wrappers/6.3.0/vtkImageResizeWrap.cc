@@ -156,7 +156,6 @@ void VtkImageResizeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -286,7 +285,7 @@ void VtkImageResizeWrap::GetInterpolator(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkAbstractImageInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractImageInterpolatorWrap *w = new VtkAbstractImageInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -411,7 +410,7 @@ void VtkImageResizeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		Nan::New<v8::FunctionTemplate>(VtkImageResizeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageResizeWrap *w = new VtkImageResizeWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -439,7 +438,7 @@ void VtkImageResizeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 			Nan::New<v8::FunctionTemplate>(VtkImageResizeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageResizeWrap *w = new VtkImageResizeWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

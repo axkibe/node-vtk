@@ -122,7 +122,6 @@ void Vtk3DWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -204,7 +203,7 @@ void Vtk3DWidgetWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -269,7 +268,7 @@ void Vtk3DWidgetWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info
 		Nan::New<v8::FunctionTemplate>(VtkProp3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProp3DWrap *w = new VtkProp3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -314,7 +313,7 @@ void Vtk3DWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::New<v8::FunctionTemplate>(Vtk3DWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	Vtk3DWidgetWrap *w = new Vtk3DWidgetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -386,7 +385,7 @@ void Vtk3DWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 			Nan::New<v8::FunctionTemplate>(Vtk3DWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		Vtk3DWidgetWrap *w = new Vtk3DWidgetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

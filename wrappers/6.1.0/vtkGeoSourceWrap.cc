@@ -97,7 +97,6 @@ void VtkGeoSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -142,7 +141,7 @@ void VtkGeoSourceWrap::GetRequestedNodes(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCollectionWrap *w = new VtkCollectionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -168,7 +167,7 @@ void VtkGeoSourceWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -232,7 +231,7 @@ void VtkGeoSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkGeoSourceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGeoSourceWrap *w = new VtkGeoSourceWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -280,7 +279,7 @@ void VtkGeoSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 			Nan::New<v8::FunctionTemplate>(VtkGeoSourceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGeoSourceWrap *w = new VtkGeoSourceWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

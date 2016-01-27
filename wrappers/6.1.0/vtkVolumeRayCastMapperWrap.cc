@@ -188,7 +188,6 @@ void VtkVolumeRayCastMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -294,7 +293,7 @@ void VtkVolumeRayCastMapperWrap::GetGradientEstimator(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkEncodedGradientEstimatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEncodedGradientEstimatorWrap *w = new VtkEncodedGradientEstimatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -317,7 +316,7 @@ void VtkVolumeRayCastMapperWrap::GetGradientShader(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkEncodedGradientShaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkEncodedGradientShaderWrap *w = new VtkEncodedGradientShaderWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -536,7 +535,7 @@ void VtkVolumeRayCastMapperWrap::GetVolumeRayCastFunction(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeRayCastFunctionWrap *w = new VtkVolumeRayCastFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -605,7 +604,7 @@ void VtkVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeRayCastMapperWrap *w = new VtkVolumeRayCastMapperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -678,7 +677,7 @@ void VtkVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 			Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeRayCastMapperWrap *w = new VtkVolumeRayCastMapperWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

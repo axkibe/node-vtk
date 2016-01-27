@@ -106,7 +106,6 @@ void VtkScalarBarWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -172,7 +171,7 @@ void VtkScalarBarWidgetWrap::GetScalarBarActor(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkScalarBarActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarActorWrap *w = new VtkScalarBarActorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -195,7 +194,7 @@ void VtkScalarBarWidgetWrap::GetScalarBarRepresentation(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkScalarBarRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarRepresentationWrap *w = new VtkScalarBarRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -240,7 +239,7 @@ void VtkScalarBarWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkScalarBarWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarBarWidgetWrap *w = new VtkScalarBarWidgetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -292,7 +291,7 @@ void VtkScalarBarWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 			Nan::New<v8::FunctionTemplate>(VtkScalarBarWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkScalarBarWidgetWrap *w = new VtkScalarBarWidgetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -85,7 +85,6 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::New(const Nan::FunctionCallba
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -184,7 +183,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::NewInstance(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridPartialPreIntegrationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridPartialPreIntegrationWrap *w = new VtkUnstructuredGridPartialPreIntegrationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -212,7 +211,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::SafeDownCast(const Nan::Funct
 			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridPartialPreIntegrationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridPartialPreIntegrationWrap *w = new VtkUnstructuredGridPartialPreIntegrationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

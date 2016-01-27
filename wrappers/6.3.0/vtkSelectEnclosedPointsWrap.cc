@@ -134,7 +134,6 @@ void VtkSelectEnclosedPointsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -243,7 +242,7 @@ void VtkSelectEnclosedPointsWrap::GetSurface(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -262,7 +261,7 @@ void VtkSelectEnclosedPointsWrap::GetSurface(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -422,7 +421,7 @@ void VtkSelectEnclosedPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkSelectEnclosedPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectEnclosedPointsWrap *w = new VtkSelectEnclosedPointsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -450,7 +449,7 @@ void VtkSelectEnclosedPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkSelectEnclosedPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSelectEnclosedPointsWrap *w = new VtkSelectEnclosedPointsWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

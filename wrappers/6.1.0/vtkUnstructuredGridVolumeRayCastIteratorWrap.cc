@@ -82,7 +82,6 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::New(const Nan::FunctionCallba
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -167,7 +166,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::NewInstance(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayCastIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeRayCastIteratorWrap *w = new VtkUnstructuredGridVolumeRayCastIteratorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -195,7 +194,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::SafeDownCast(const Nan::Funct
 			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayCastIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridVolumeRayCastIteratorWrap *w = new VtkUnstructuredGridVolumeRayCastIteratorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

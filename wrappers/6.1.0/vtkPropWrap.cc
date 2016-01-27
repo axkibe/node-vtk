@@ -221,7 +221,6 @@ void VtkPropWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -412,7 +411,7 @@ void VtkPropWrap::GetConsumer(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			Nan::New<v8::FunctionTemplate>(VtkObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkObjectWrap *w = new VtkObjectWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -481,7 +480,7 @@ void VtkPropWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkMatrix4x4Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -504,7 +503,7 @@ void VtkPropWrap::GetNextPath(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -569,7 +568,7 @@ void VtkPropWrap::GetPropertyKeys(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationWrap *w = new VtkInformationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -710,7 +709,7 @@ void VtkPropWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkPropWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropWrap *w = new VtkPropWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -934,7 +933,7 @@ void VtkPropWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			Nan::New<v8::FunctionTemplate>(VtkPropWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPropWrap *w = new VtkPropWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

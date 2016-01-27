@@ -119,7 +119,6 @@ void VtkPlotBarWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -185,7 +184,7 @@ void VtkPlotBarWrap::GetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkColorSeriesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorSeriesWrap *w = new VtkColorSeriesWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -208,7 +207,7 @@ void VtkPlotBarWrap::GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -231,7 +230,7 @@ void VtkPlotBarWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -290,7 +289,7 @@ void VtkPlotBarWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		Nan::New<v8::FunctionTemplate>(VtkPlotBarWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlotBarWrap *w = new VtkPlotBarWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -318,7 +317,7 @@ void VtkPlotBarWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 			Nan::New<v8::FunctionTemplate>(VtkPlotBarWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotBarWrap *w = new VtkPlotBarWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

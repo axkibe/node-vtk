@@ -77,7 +77,6 @@ void VtkButterflySubdivisionFilterWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -139,7 +138,7 @@ void VtkButterflySubdivisionFilterWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkButterflySubdivisionFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkButterflySubdivisionFilterWrap *w = new VtkButterflySubdivisionFilterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -167,7 +166,7 @@ void VtkButterflySubdivisionFilterWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkButterflySubdivisionFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkButterflySubdivisionFilterWrap *w = new VtkButterflySubdivisionFilterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

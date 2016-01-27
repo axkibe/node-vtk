@@ -84,7 +84,6 @@ void VtkLightCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -144,7 +143,7 @@ void VtkLightCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkLightWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightWrap *w = new VtkLightWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -189,7 +188,7 @@ void VtkLightCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkLightCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLightCollectionWrap *w = new VtkLightCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -217,7 +216,7 @@ void VtkLightCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 			Nan::New<v8::FunctionTemplate>(VtkLightCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLightCollectionWrap *w = new VtkLightCollectionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

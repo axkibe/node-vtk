@@ -170,7 +170,6 @@ void VtkClipDataSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -270,7 +269,7 @@ void VtkClipDataSetWrap::GetClipFunction(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -293,7 +292,7 @@ void VtkClipDataSetWrap::GetClippedOutput(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -358,7 +357,7 @@ void VtkClipDataSetWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -525,7 +524,7 @@ void VtkClipDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		Nan::New<v8::FunctionTemplate>(VtkClipDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClipDataSetWrap *w = new VtkClipDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -553,7 +552,7 @@ void VtkClipDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 			Nan::New<v8::FunctionTemplate>(VtkClipDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkClipDataSetWrap *w = new VtkClipDataSetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

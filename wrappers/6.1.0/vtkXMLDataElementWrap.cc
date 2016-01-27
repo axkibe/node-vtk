@@ -190,7 +190,6 @@ void VtkXMLDataElementWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -261,7 +260,7 @@ void VtkXMLDataElementWrap::FindNestedElement(const Nan::FunctionCallbackInfo<v8
 			Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -292,7 +291,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithName(const Nan::FunctionCallbac
 			Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -331,7 +330,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithNameAndAttribute(const Nan::Fun
 					Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;
@@ -368,7 +367,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithNameAndId(const Nan::FunctionCa
 				Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -575,7 +574,7 @@ void VtkXMLDataElementWrap::GetNestedElement(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -629,7 +628,7 @@ void VtkXMLDataElementWrap::GetParent(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -652,7 +651,7 @@ void VtkXMLDataElementWrap::GetRoot(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -724,7 +723,7 @@ void VtkXMLDataElementWrap::LookupElement(const Nan::FunctionCallbackInfo<v8::Va
 			Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -755,7 +754,7 @@ void VtkXMLDataElementWrap::LookupElementWithName(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -781,7 +780,7 @@ void VtkXMLDataElementWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -893,7 +892,7 @@ void VtkXMLDataElementWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

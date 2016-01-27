@@ -97,7 +97,6 @@ void VtkComputeHistogram2DOutliersWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -137,7 +136,7 @@ void VtkComputeHistogram2DOutliersWrap::GetOutputTable(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTableWrap *w = new VtkTableWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -196,7 +195,7 @@ void VtkComputeHistogram2DOutliersWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkComputeHistogram2DOutliersWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkComputeHistogram2DOutliersWrap *w = new VtkComputeHistogram2DOutliersWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -224,7 +223,7 @@ void VtkComputeHistogram2DOutliersWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkComputeHistogram2DOutliersWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkComputeHistogram2DOutliersWrap *w = new VtkComputeHistogram2DOutliersWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

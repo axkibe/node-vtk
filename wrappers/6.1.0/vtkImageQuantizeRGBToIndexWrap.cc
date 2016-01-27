@@ -114,7 +114,6 @@ void VtkImageQuantizeRGBToIndexWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -210,7 +209,7 @@ void VtkImageQuantizeRGBToIndexWrap::GetLookupTable(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkLookupTableWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLookupTableWrap *w = new VtkLookupTableWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -297,7 +296,7 @@ void VtkImageQuantizeRGBToIndexWrap::NewInstance(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkImageQuantizeRGBToIndexWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageQuantizeRGBToIndexWrap *w = new VtkImageQuantizeRGBToIndexWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -325,7 +324,7 @@ void VtkImageQuantizeRGBToIndexWrap::SafeDownCast(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkImageQuantizeRGBToIndexWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageQuantizeRGBToIndexWrap *w = new VtkImageQuantizeRGBToIndexWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

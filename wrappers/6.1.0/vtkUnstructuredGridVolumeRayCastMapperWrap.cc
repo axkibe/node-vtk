@@ -145,7 +145,6 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::New(const Nan::FunctionCallback
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -330,7 +329,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::GetRayCastFunction(const Nan::F
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayCastFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeRayCastFunctionWrap *w = new VtkUnstructuredGridVolumeRayCastFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -353,7 +352,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::GetRayIntegrator(const Nan::Fun
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeRayIntegratorWrap *w = new VtkUnstructuredGridVolumeRayIntegratorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -422,7 +421,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::NewInstance(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayCastMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeRayCastMapperWrap *w = new VtkUnstructuredGridVolumeRayCastMapperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -495,7 +494,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SafeDownCast(const Nan::Functio
 			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayCastMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridVolumeRayCastMapperWrap *w = new VtkUnstructuredGridVolumeRayCastMapperWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -87,7 +87,6 @@ void VtkMapperCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -147,7 +146,7 @@ void VtkMapperCollectionWrap::GetLastItem(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMapperWrap *w = new VtkMapperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -170,7 +169,7 @@ void VtkMapperCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMapperWrap *w = new VtkMapperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -215,7 +214,7 @@ void VtkMapperCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkMapperCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMapperCollectionWrap *w = new VtkMapperCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -243,7 +242,7 @@ void VtkMapperCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 			Nan::New<v8::FunctionTemplate>(VtkMapperCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMapperCollectionWrap *w = new VtkMapperCollectionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

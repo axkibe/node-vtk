@@ -101,7 +101,6 @@ void VtkResliceCursorPickerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -183,7 +182,7 @@ void VtkResliceCursorPickerWrap::GetResliceCursorAlgorithm(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkResliceCursorPolyDataAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorPolyDataAlgorithmWrap *w = new VtkResliceCursorPolyDataAlgorithmWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -228,7 +227,7 @@ void VtkResliceCursorPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkResliceCursorPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorPickerWrap *w = new VtkResliceCursorPickerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -290,7 +289,7 @@ void VtkResliceCursorPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 			Nan::New<v8::FunctionTemplate>(VtkResliceCursorPickerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkResliceCursorPickerWrap *w = new VtkResliceCursorPickerWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

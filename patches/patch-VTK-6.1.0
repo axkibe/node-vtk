@@ -398,8 +398,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-27 09:58:24.222437756 +0100
-@@ -0,0 +1,1428 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-27 13:56:22.092940207 +0100
+@@ -0,0 +1,1427 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -900,7 +900,6 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  fprintf(f, "\t}\n");
 +  fprintf(f, "\telse\n");
 +  fprintf(f, "\t{\n");
-+  fprintf(f, "\t\tNan::Utf8String s(info[0]);\n");
 +  fprintf(f, "\t\tif(info[0]->ToObject() != vtkNodeJsNoWrap )\n");
 +  fprintf(f, "\t\t\tNan::ThrowError(\"Parameter Error\");\n");
 +  fprintf(f, "\t}\n");
@@ -1171,7 +1170,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +        toupper(*rinfo->Class),
 +        rinfo->Class + 1
 +        );
-+      fprintf(f, "\t%sw->native.TakeReference(r);\n", indent );
++      fprintf(f, "\t%sw->native = r;\n", indent );
 +      fprintf(f, "\t%sw->Wrap(wo);\n", indent);
 +      fprintf(f, "\t%sinfo.GetReturnValue().Set(wo);\n", indent);
 +      break;

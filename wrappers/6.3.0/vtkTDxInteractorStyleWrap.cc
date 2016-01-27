@@ -89,7 +89,6 @@ void VtkTDxInteractorStyleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -129,7 +128,7 @@ void VtkTDxInteractorStyleWrap::GetSettings(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleSettingsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTDxInteractorStyleSettingsWrap *w = new VtkTDxInteractorStyleSettingsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -174,7 +173,7 @@ void VtkTDxInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTDxInteractorStyleWrap *w = new VtkTDxInteractorStyleWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -240,7 +239,7 @@ void VtkTDxInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkTDxInteractorStyleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTDxInteractorStyleWrap *w = new VtkTDxInteractorStyleWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

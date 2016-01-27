@@ -149,7 +149,6 @@ void VtkGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -263,7 +262,7 @@ void VtkGraphWrap::GetAttributesAsFieldData(const Nan::FunctionCallbackInfo<v8::
 			Nan::New<v8::FunctionTemplate>(VtkFieldDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFieldDataWrap *w = new VtkFieldDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -311,7 +310,7 @@ void VtkGraphWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkGraphWrap *w = new VtkGraphWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -332,7 +331,7 @@ void VtkGraphWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphWrap *w = new VtkGraphWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -372,7 +371,7 @@ void VtkGraphWrap::GetDistributedGraphHelper(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkDistributedGraphHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistributedGraphHelperWrap *w = new VtkDistributedGraphHelperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -395,7 +394,7 @@ void VtkGraphWrap::GetEdgeData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkDataSetAttributesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetAttributesWrap *w = new VtkDataSetAttributesWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -463,7 +462,7 @@ void VtkGraphWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointsWrap *w = new VtkPointsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -486,7 +485,7 @@ void VtkGraphWrap::GetVertexData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		Nan::New<v8::FunctionTemplate>(VtkDataSetAttributesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetAttributesWrap *w = new VtkDataSetAttributesWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -563,7 +562,7 @@ void VtkGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphWrap *w = new VtkGraphWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -591,7 +590,7 @@ void VtkGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 			Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphWrap *w = new VtkGraphWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

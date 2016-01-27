@@ -89,7 +89,6 @@ void VtkOpenGLHardwareSupportWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -129,7 +128,7 @@ void VtkOpenGLHardwareSupportWrap::GetExtensionManager(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkOpenGLExtensionManagerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLExtensionManagerWrap *w = new VtkOpenGLExtensionManagerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -202,7 +201,7 @@ void VtkOpenGLHardwareSupportWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkOpenGLHardwareSupportWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOpenGLHardwareSupportWrap *w = new VtkOpenGLHardwareSupportWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -230,7 +229,7 @@ void VtkOpenGLHardwareSupportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 			Nan::New<v8::FunctionTemplate>(VtkOpenGLHardwareSupportWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOpenGLHardwareSupportWrap *w = new VtkOpenGLHardwareSupportWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

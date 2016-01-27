@@ -135,7 +135,6 @@ void VtkTexturedButtonRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -222,7 +221,7 @@ void VtkTexturedButtonRepresentation2DWrap::GetBalloon(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkBalloonRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBalloonRepresentationWrap *w = new VtkBalloonRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -249,7 +248,7 @@ void VtkTexturedButtonRepresentation2DWrap::GetButtonTexture(const Nan::Function
 			Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataWrap *w = new VtkImageDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -289,7 +288,7 @@ void VtkTexturedButtonRepresentation2DWrap::GetHoveringProperty(const Nan::Funct
 		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -312,7 +311,7 @@ void VtkTexturedButtonRepresentation2DWrap::GetProperty(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -335,7 +334,7 @@ void VtkTexturedButtonRepresentation2DWrap::GetSelectingProperty(const Nan::Func
 		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -413,7 +412,7 @@ void VtkTexturedButtonRepresentation2DWrap::NewInstance(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkTexturedButtonRepresentation2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTexturedButtonRepresentation2DWrap *w = new VtkTexturedButtonRepresentation2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -483,7 +482,7 @@ void VtkTexturedButtonRepresentation2DWrap::SafeDownCast(const Nan::FunctionCall
 			Nan::New<v8::FunctionTemplate>(VtkTexturedButtonRepresentation2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTexturedButtonRepresentation2DWrap *w = new VtkTexturedButtonRepresentation2DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

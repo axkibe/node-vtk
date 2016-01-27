@@ -89,7 +89,6 @@ void VtkHierarchicalBoxDataSetWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -137,7 +136,7 @@ void VtkHierarchicalBoxDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::
 				Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkHierarchicalBoxDataSetWrap *w = new VtkHierarchicalBoxDataSetWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -158,7 +157,7 @@ void VtkHierarchicalBoxDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::
 			Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalBoxDataSetWrap *w = new VtkHierarchicalBoxDataSetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -220,7 +219,7 @@ void VtkHierarchicalBoxDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHierarchicalBoxDataSetWrap *w = new VtkHierarchicalBoxDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -243,7 +242,7 @@ void VtkHierarchicalBoxDataSetWrap::NewIterator(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataIteratorWrap *w = new VtkCompositeDataIteratorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -271,7 +270,7 @@ void VtkHierarchicalBoxDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 			Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalBoxDataSetWrap *w = new VtkHierarchicalBoxDataSetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

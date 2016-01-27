@@ -148,7 +148,6 @@ void VtkInteractorObserverWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -212,7 +211,7 @@ void VtkInteractorObserverWrap::GetCurrentRenderer(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -235,7 +234,7 @@ void VtkInteractorObserverWrap::GetDefaultRenderer(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkRendererWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRendererWrap *w = new VtkRendererWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -272,7 +271,7 @@ void VtkInteractorObserverWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkRenderWindowInteractorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -394,7 +393,7 @@ void VtkInteractorObserverWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkInteractorObserverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorObserverWrap *w = new VtkInteractorObserverWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -494,7 +493,7 @@ void VtkInteractorObserverWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkInteractorObserverWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorObserverWrap *w = new VtkInteractorObserverWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

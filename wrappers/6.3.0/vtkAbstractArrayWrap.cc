@@ -170,7 +170,6 @@ void VtkAbstractArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -260,7 +259,7 @@ void VtkAbstractArrayWrap::CreateArray(const Nan::FunctionCallbackInfo<v8::Value
 			Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -286,7 +285,7 @@ void VtkAbstractArrayWrap::DISCRETE_VALUES(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkInformationVariantVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationVariantVectorKeyWrap *w = new VtkInformationVariantVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -309,7 +308,7 @@ void VtkAbstractArrayWrap::DISCRETE_VALUE_SAMPLE_PARAMETERS(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleVectorKeyWrap *w = new VtkInformationDoubleVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -364,7 +363,7 @@ void VtkAbstractArrayWrap::GUI_HIDE(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -485,7 +484,7 @@ void VtkAbstractArrayWrap::GetInformation(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationWrap *w = new VtkInformationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -699,7 +698,7 @@ void VtkAbstractArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -722,7 +721,7 @@ void VtkAbstractArrayWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkArrayIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkArrayIteratorWrap *w = new VtkArrayIteratorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -745,7 +744,7 @@ void VtkAbstractArrayWrap::PER_COMPONENT(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkInformationInformationVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationInformationVectorKeyWrap *w = new VtkInformationInformationVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -785,7 +784,7 @@ void VtkAbstractArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 			Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

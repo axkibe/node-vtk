@@ -112,7 +112,6 @@ void VtkXMLDataParserWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -232,7 +231,7 @@ void VtkXMLDataParserWrap::GetCompressor(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkDataCompressorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataCompressorWrap *w = new VtkDataCompressorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -255,7 +254,7 @@ void VtkXMLDataParserWrap::GetRootElement(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkXMLDataElementWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLDataElementWrap *w = new VtkXMLDataElementWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -300,7 +299,7 @@ void VtkXMLDataParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkXMLDataParserWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkXMLDataParserWrap *w = new VtkXMLDataParserWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -342,7 +341,7 @@ void VtkXMLDataParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 			Nan::New<v8::FunctionTemplate>(VtkXMLDataParserWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkXMLDataParserWrap *w = new VtkXMLDataParserWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

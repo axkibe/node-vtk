@@ -328,7 +328,6 @@ void VtkAxisActor2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -556,7 +555,7 @@ void VtkAxisActor2DWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -719,7 +718,7 @@ void VtkAxisActor2DWrap::GetPoint1Coordinate(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkCoordinateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoordinateWrap *w = new VtkCoordinateWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -742,7 +741,7 @@ void VtkAxisActor2DWrap::GetPoint2Coordinate(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkCoordinateWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCoordinateWrap *w = new VtkCoordinateWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -961,7 +960,7 @@ void VtkAxisActor2DWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1058,7 +1057,7 @@ void VtkAxisActor2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1196,7 +1195,7 @@ void VtkAxisActor2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 			Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

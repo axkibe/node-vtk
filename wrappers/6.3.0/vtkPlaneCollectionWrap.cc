@@ -87,7 +87,6 @@ void VtkPlaneCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -151,7 +150,7 @@ void VtkPlaneCollectionWrap::GetItem(const Nan::FunctionCallbackInfo<v8::Value>&
 			Nan::New<v8::FunctionTemplate>(VtkPlaneWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlaneWrap *w = new VtkPlaneWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -177,7 +176,7 @@ void VtkPlaneCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkPlaneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneWrap *w = new VtkPlaneWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -222,7 +221,7 @@ void VtkPlaneCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -250,7 +249,7 @@ void VtkPlaneCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 			Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

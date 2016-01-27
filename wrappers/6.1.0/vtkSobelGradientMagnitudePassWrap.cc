@@ -81,7 +81,6 @@ void VtkSobelGradientMagnitudePassWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -143,7 +142,7 @@ void VtkSobelGradientMagnitudePassWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkSobelGradientMagnitudePassWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSobelGradientMagnitudePassWrap *w = new VtkSobelGradientMagnitudePassWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -191,7 +190,7 @@ void VtkSobelGradientMagnitudePassWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkSobelGradientMagnitudePassWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSobelGradientMagnitudePassWrap *w = new VtkSobelGradientMagnitudePassWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

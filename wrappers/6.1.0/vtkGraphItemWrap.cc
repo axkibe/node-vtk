@@ -98,7 +98,6 @@ void VtkGraphItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -138,7 +137,7 @@ void VtkGraphItemWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info
 		Nan::New<v8::FunctionTemplate>(VtkGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphWrap *w = new VtkGraphWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -161,7 +160,7 @@ void VtkGraphItemWrap::GetLayout(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		Nan::New<v8::FunctionTemplate>(VtkIncrementalForceLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalForceLayoutWrap *w = new VtkIncrementalForceLayoutWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -206,7 +205,7 @@ void VtkGraphItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkGraphItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGraphItemWrap *w = new VtkGraphItemWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -234,7 +233,7 @@ void VtkGraphItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 			Nan::New<v8::FunctionTemplate>(VtkGraphItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGraphItemWrap *w = new VtkGraphItemWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

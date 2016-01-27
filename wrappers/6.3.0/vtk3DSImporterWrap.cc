@@ -95,7 +95,6 @@ void Vtk3DSImporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -209,7 +208,7 @@ void Vtk3DSImporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		Nan::New<v8::FunctionTemplate>(Vtk3DSImporterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	Vtk3DSImporterWrap *w = new Vtk3DSImporterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -237,7 +236,7 @@ void Vtk3DSImporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 			Nan::New<v8::FunctionTemplate>(Vtk3DSImporterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		Vtk3DSImporterWrap *w = new Vtk3DSImporterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

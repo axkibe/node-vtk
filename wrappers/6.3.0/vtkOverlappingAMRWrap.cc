@@ -108,7 +108,6 @@ void VtkOverlappingAMRWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -158,7 +157,7 @@ void VtkOverlappingAMRWrap::GetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkAMRInformationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRInformationWrap *w = new VtkAMRInformationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -203,7 +202,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 				Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -224,7 +223,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 			Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -308,7 +307,7 @@ void VtkOverlappingAMRWrap::NUMBER_OF_BLANKED_POINTS(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkInformationIdTypeKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIdTypeKeyWrap *w = new VtkInformationIdTypeKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -331,7 +330,7 @@ void VtkOverlappingAMRWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -354,7 +353,7 @@ void VtkOverlappingAMRWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkCompositeDataIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeDataIteratorWrap *w = new VtkCompositeDataIteratorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -382,7 +381,7 @@ void VtkOverlappingAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

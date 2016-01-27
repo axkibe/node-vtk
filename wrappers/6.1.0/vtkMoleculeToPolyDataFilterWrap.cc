@@ -81,7 +81,6 @@ void VtkMoleculeToPolyDataFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -121,7 +120,7 @@ void VtkMoleculeToPolyDataFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkMoleculeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMoleculeWrap *w = new VtkMoleculeWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -166,7 +165,7 @@ void VtkMoleculeToPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkMoleculeToPolyDataFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMoleculeToPolyDataFilterWrap *w = new VtkMoleculeToPolyDataFilterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -194,7 +193,7 @@ void VtkMoleculeToPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 			Nan::New<v8::FunctionTemplate>(VtkMoleculeToPolyDataFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMoleculeToPolyDataFilterWrap *w = new VtkMoleculeToPolyDataFilterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

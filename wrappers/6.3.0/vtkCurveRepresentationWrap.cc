@@ -204,7 +204,6 @@ void VtkCurveRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -323,7 +322,7 @@ void VtkCurveRepresentationWrap::GetHandlePositions(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkDoubleArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDoubleArrayWrap *w = new VtkDoubleArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -346,7 +345,7 @@ void VtkCurveRepresentationWrap::GetHandleProperty(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -369,7 +368,7 @@ void VtkCurveRepresentationWrap::GetLineProperty(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -496,7 +495,7 @@ void VtkCurveRepresentationWrap::GetSelectedHandleProperty(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -519,7 +518,7 @@ void VtkCurveRepresentationWrap::GetSelectedLineProperty(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -626,7 +625,7 @@ void VtkCurveRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkCurveRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCurveRepresentationWrap *w = new VtkCurveRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -764,7 +763,7 @@ void VtkCurveRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 			Nan::New<v8::FunctionTemplate>(VtkCurveRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCurveRepresentationWrap *w = new VtkCurveRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

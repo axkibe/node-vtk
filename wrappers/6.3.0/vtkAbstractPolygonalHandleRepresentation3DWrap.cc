@@ -187,7 +187,6 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::New(const Nan::FunctionCall
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -308,7 +307,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetHandle(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -359,7 +358,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetLabelTextActor(const Nan
 		Nan::New<v8::FunctionTemplate>(VtkFollowerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFollowerWrap *w = new VtkFollowerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -396,7 +395,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetProperty(const Nan::Func
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -419,7 +418,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetSelectedProperty(const N
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -456,7 +455,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetTransform(const Nan::Fun
 		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -582,7 +581,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::NewInstance(const Nan::Func
 		Nan::New<v8::FunctionTemplate>(VtkAbstractPolygonalHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractPolygonalHandleRepresentation3DWrap *w = new VtkAbstractPolygonalHandleRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -674,7 +673,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::Fun
 			Nan::New<v8::FunctionTemplate>(VtkAbstractPolygonalHandleRepresentation3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractPolygonalHandleRepresentation3DWrap *w = new VtkAbstractPolygonalHandleRepresentation3DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

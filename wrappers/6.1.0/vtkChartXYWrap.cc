@@ -138,7 +138,6 @@ void VtkChartXYWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -168,7 +167,7 @@ void VtkChartXYWrap::AddPlot(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			Nan::New<v8::FunctionTemplate>(VtkPlotWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPlotWrap *w = new VtkPlotWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -282,7 +281,7 @@ void VtkChartXYWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			Nan::New<v8::FunctionTemplate>(VtkAxisWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxisWrap *w = new VtkAxisWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -336,7 +335,7 @@ void VtkChartXYWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		Nan::New<v8::FunctionTemplate>(VtkChartLegendWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartLegendWrap *w = new VtkChartLegendWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -381,7 +380,7 @@ void VtkChartXYWrap::GetTooltip(const Nan::FunctionCallbackInfo<v8::Value>& info
 		Nan::New<v8::FunctionTemplate>(VtkTooltipItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTooltipItemWrap *w = new VtkTooltipItemWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -426,7 +425,7 @@ void VtkChartXYWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		Nan::New<v8::FunctionTemplate>(VtkChartXYWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartXYWrap *w = new VtkChartXYWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -466,7 +465,7 @@ void VtkChartXYWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 			Nan::New<v8::FunctionTemplate>(VtkChartXYWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkChartXYWrap *w = new VtkChartXYWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

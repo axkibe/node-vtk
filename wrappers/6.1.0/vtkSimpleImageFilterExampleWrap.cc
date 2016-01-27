@@ -77,7 +77,6 @@ void VtkSimpleImageFilterExampleWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -139,7 +138,7 @@ void VtkSimpleImageFilterExampleWrap::NewInstance(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkSimpleImageFilterExampleWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSimpleImageFilterExampleWrap *w = new VtkSimpleImageFilterExampleWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -167,7 +166,7 @@ void VtkSimpleImageFilterExampleWrap::SafeDownCast(const Nan::FunctionCallbackIn
 			Nan::New<v8::FunctionTemplate>(VtkSimpleImageFilterExampleWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSimpleImageFilterExampleWrap *w = new VtkSimpleImageFilterExampleWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

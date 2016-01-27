@@ -90,7 +90,6 @@ void VtkImplicitFunctionToImageStencilWrap::New(const Nan::FunctionCallbackInfo<
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -130,7 +129,7 @@ void VtkImplicitFunctionToImageStencilWrap::GetInput(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -189,7 +188,7 @@ void VtkImplicitFunctionToImageStencilWrap::NewInstance(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionToImageStencilWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionToImageStencilWrap *w = new VtkImplicitFunctionToImageStencilWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -217,7 +216,7 @@ void VtkImplicitFunctionToImageStencilWrap::SafeDownCast(const Nan::FunctionCall
 			Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionToImageStencilWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitFunctionToImageStencilWrap *w = new VtkImplicitFunctionToImageStencilWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

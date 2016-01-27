@@ -85,7 +85,6 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::New(const Nan::FunctionCallbackInfo
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -129,7 +128,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallba
 			Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalBoxDataSetWrap *w = new VtkHierarchicalBoxDataSetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -148,7 +147,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHierarchicalBoxDataSetWrap *w = new VtkHierarchicalBoxDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -193,7 +192,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::NewInstance(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHierarchicalBoxDataSetAlgorithmWrap *w = new VtkHierarchicalBoxDataSetAlgorithmWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -221,7 +220,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCal
 			Nan::New<v8::FunctionTemplate>(VtkHierarchicalBoxDataSetAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalBoxDataSetAlgorithmWrap *w = new VtkHierarchicalBoxDataSetAlgorithmWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

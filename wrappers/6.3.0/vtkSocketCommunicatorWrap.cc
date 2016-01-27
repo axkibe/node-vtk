@@ -150,7 +150,6 @@ void VtkSocketCommunicatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -350,7 +349,7 @@ void VtkSocketCommunicatorWrap::GetSocket(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkClientSocketWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClientSocketWrap *w = new VtkClientSocketWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -474,7 +473,7 @@ void VtkSocketCommunicatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkSocketCommunicatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSocketCommunicatorWrap *w = new VtkSocketCommunicatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -526,7 +525,7 @@ void VtkSocketCommunicatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkSocketCommunicatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSocketCommunicatorWrap *w = new VtkSocketCommunicatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

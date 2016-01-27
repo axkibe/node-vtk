@@ -105,7 +105,6 @@ void VtkSTLWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -205,7 +204,7 @@ void VtkSTLWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 			Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataWrap *w = new VtkPolyDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -224,7 +223,7 @@ void VtkSTLWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -269,7 +268,7 @@ void VtkSTLWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkSTLWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSTLWriterWrap *w = new VtkSTLWriterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -297,7 +296,7 @@ void VtkSTLWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 			Nan::New<v8::FunctionTemplate>(VtkSTLWriterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSTLWriterWrap *w = new VtkSTLWriterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

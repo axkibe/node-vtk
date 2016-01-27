@@ -108,7 +108,6 @@ void VtkImplicitTextureCoordsWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -186,7 +185,7 @@ void VtkImplicitTextureCoordsWrap::GetRFunction(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -209,7 +208,7 @@ void VtkImplicitTextureCoordsWrap::GetSFunction(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -232,7 +231,7 @@ void VtkImplicitTextureCoordsWrap::GetTFunction(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -277,7 +276,7 @@ void VtkImplicitTextureCoordsWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkImplicitTextureCoordsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitTextureCoordsWrap *w = new VtkImplicitTextureCoordsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -305,7 +304,7 @@ void VtkImplicitTextureCoordsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 			Nan::New<v8::FunctionTemplate>(VtkImplicitTextureCoordsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImplicitTextureCoordsWrap *w = new VtkImplicitTextureCoordsWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -191,7 +191,6 @@ void VtkParticleTracerBaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -355,7 +354,7 @@ void VtkParticleTracerBaseWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -406,7 +405,7 @@ void VtkParticleTracerBaseWrap::GetParticleWriter(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkAbstractParticleWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractParticleWriterWrap *w = new VtkAbstractParticleWriterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -559,7 +558,7 @@ void VtkParticleTracerBaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkParticleTracerBaseWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParticleTracerBaseWrap *w = new VtkParticleTracerBaseWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -611,7 +610,7 @@ void VtkParticleTracerBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkParticleTracerBaseWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParticleTracerBaseWrap *w = new VtkParticleTracerBaseWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

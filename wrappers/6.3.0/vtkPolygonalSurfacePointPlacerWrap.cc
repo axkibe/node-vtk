@@ -113,7 +113,6 @@ void VtkPolygonalSurfacePointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8:
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -159,7 +158,7 @@ void VtkPolygonalSurfacePointPlacerWrap::GetCellPicker(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkCellPickerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellPickerWrap *w = new VtkCellPickerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -210,7 +209,7 @@ void VtkPolygonalSurfacePointPlacerWrap::GetPolys(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataCollectionWrap *w = new VtkPolyDataCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -269,7 +268,7 @@ void VtkPolygonalSurfacePointPlacerWrap::NewInstance(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkPolygonalSurfacePointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolygonalSurfacePointPlacerWrap *w = new VtkPolygonalSurfacePointPlacerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -329,7 +328,7 @@ void VtkPolygonalSurfacePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbac
 			Nan::New<v8::FunctionTemplate>(VtkPolygonalSurfacePointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolygonalSurfacePointPlacerWrap *w = new VtkPolygonalSurfacePointPlacerWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

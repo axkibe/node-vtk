@@ -84,7 +84,6 @@ void VtkClipConvexPolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -124,7 +123,7 @@ void VtkClipConvexPolyDataWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -169,7 +168,7 @@ void VtkClipConvexPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkClipConvexPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkClipConvexPolyDataWrap *w = new VtkClipConvexPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -197,7 +196,7 @@ void VtkClipConvexPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkClipConvexPolyDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkClipConvexPolyDataWrap *w = new VtkClipConvexPolyDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

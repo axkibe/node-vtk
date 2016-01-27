@@ -123,7 +123,6 @@ void VtkPairwiseExtractHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -192,7 +191,7 @@ void VtkPairwiseExtractHistogram2DWrap::GetHistogramFilter(const Nan::FunctionCa
 			Nan::New<v8::FunctionTemplate>(VtkExtractHistogram2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractHistogram2DWrap *w = new VtkExtractHistogram2DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -250,7 +249,7 @@ void VtkPairwiseExtractHistogram2DWrap::GetOutputHistogramImage(const Nan::Funct
 			Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataWrap *w = new VtkImageDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -312,7 +311,7 @@ void VtkPairwiseExtractHistogram2DWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkPairwiseExtractHistogram2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPairwiseExtractHistogram2DWrap *w = new VtkPairwiseExtractHistogram2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -340,7 +339,7 @@ void VtkPairwiseExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkPairwiseExtractHistogram2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPairwiseExtractHistogram2DWrap *w = new VtkPairwiseExtractHistogram2DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

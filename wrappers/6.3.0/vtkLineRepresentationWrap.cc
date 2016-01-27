@@ -211,7 +211,6 @@ void VtkLineRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -364,7 +363,7 @@ void VtkLineRepresentationWrap::GetDistanceAnnotationProperty(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -401,7 +400,7 @@ void VtkLineRepresentationWrap::GetEndPoint2Property(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -424,7 +423,7 @@ void VtkLineRepresentationWrap::GetEndPointProperty(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -475,7 +474,7 @@ void VtkLineRepresentationWrap::GetLineHandleRepresentation(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkPointHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointHandleRepresentation3DWrap *w = new VtkPointHandleRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -498,7 +497,7 @@ void VtkLineRepresentationWrap::GetLineProperty(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -521,7 +520,7 @@ void VtkLineRepresentationWrap::GetPoint1Representation(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkPointHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointHandleRepresentation3DWrap *w = new VtkPointHandleRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -544,7 +543,7 @@ void VtkLineRepresentationWrap::GetPoint2Representation(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkPointHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointHandleRepresentation3DWrap *w = new VtkPointHandleRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -615,7 +614,7 @@ void VtkLineRepresentationWrap::GetSelectedEndPoint2Property(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -638,7 +637,7 @@ void VtkLineRepresentationWrap::GetSelectedEndPointProperty(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -661,7 +660,7 @@ void VtkLineRepresentationWrap::GetSelectedLineProperty(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropertyWrap *w = new VtkPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -684,7 +683,7 @@ void VtkLineRepresentationWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkFollowerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFollowerWrap *w = new VtkFollowerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -797,7 +796,7 @@ void VtkLineRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkLineRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLineRepresentationWrap *w = new VtkLineRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -889,7 +888,7 @@ void VtkLineRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkLineRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLineRepresentationWrap *w = new VtkLineRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

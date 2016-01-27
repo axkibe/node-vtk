@@ -166,7 +166,6 @@ void VtkPerspectiveTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -369,7 +368,7 @@ void VtkPerspectiveTransformWrap::GetConcatenatedTransform(const Nan::FunctionCa
 			Nan::New<v8::FunctionTemplate>(VtkHomogeneousTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHomogeneousTransformWrap *w = new VtkHomogeneousTransformWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -395,7 +394,7 @@ void VtkPerspectiveTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkHomogeneousTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHomogeneousTransformWrap *w = new VtkHomogeneousTransformWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -492,7 +491,7 @@ void VtkPerspectiveTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -515,7 +514,7 @@ void VtkPerspectiveTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkPerspectiveTransformWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPerspectiveTransformWrap *w = new VtkPerspectiveTransformWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -749,7 +748,7 @@ void VtkPerspectiveTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkPerspectiveTransformWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPerspectiveTransformWrap *w = new VtkPerspectiveTransformWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

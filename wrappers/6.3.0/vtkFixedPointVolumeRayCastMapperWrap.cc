@@ -217,7 +217,6 @@ void VtkFixedPointVolumeRayCastMapperWrap::New(const Nan::FunctionCallbackInfo<v
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -360,7 +359,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeGOHelper(const Nan::Funct
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeGOHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastCompositeGOHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeGOHelperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -383,7 +382,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeGOShadeHelper(const Nan::
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -406,7 +405,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeHelper(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastCompositeHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeHelperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -429,7 +428,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeShadeHelper(const Nan::Fu
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastCompositeShadeHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeShadeHelperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -452,7 +451,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCurrentScalars(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkDataArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArrayWrap *w = new VtkDataArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -587,7 +586,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetMIPHelper(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastMIPHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastMIPHelperWrap *w = new VtkFixedPointVolumeRayCastMIPHelperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -624,7 +623,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetPreviousScalars(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkDataArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArrayWrap *w = new VtkDataArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -647,7 +646,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetRayCastImage(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointRayCastImageWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointRayCastImageWrap *w = new VtkFixedPointRayCastImageWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -670,7 +669,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetRenderWindow(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -707,7 +706,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetVolume(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkVolumeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeWrap *w = new VtkVolumeWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -820,7 +819,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastMapperWrap *w = new VtkFixedPointVolumeRayCastMapperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -959,7 +958,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallb
 			Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFixedPointVolumeRayCastMapperWrap *w = new VtkFixedPointVolumeRayCastMapperWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

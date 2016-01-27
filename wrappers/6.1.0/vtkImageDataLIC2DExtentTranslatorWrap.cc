@@ -93,7 +93,6 @@ void VtkImageDataLIC2DExtentTranslatorWrap::New(const Nan::FunctionCallbackInfo<
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -119,7 +118,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::GetAlgorithm(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkImageDataLIC2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataLIC2DWrap *w = new VtkImageDataLIC2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -156,7 +155,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::GetInputExtentTranslator(const Nan::
 		Nan::New<v8::FunctionTemplate>(VtkExtentTranslatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtentTranslatorWrap *w = new VtkExtentTranslatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -201,7 +200,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::NewInstance(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkImageDataLIC2DExtentTranslatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataLIC2DExtentTranslatorWrap *w = new VtkImageDataLIC2DExtentTranslatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -229,7 +228,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCall
 			Nan::New<v8::FunctionTemplate>(VtkImageDataLIC2DExtentTranslatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageDataLIC2DExtentTranslatorWrap *w = new VtkImageDataLIC2DExtentTranslatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

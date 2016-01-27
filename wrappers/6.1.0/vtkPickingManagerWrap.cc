@@ -111,7 +111,6 @@ void VtkPickingManagerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -208,7 +207,7 @@ void VtkPickingManagerWrap::GetAssemblyPath(const Nan::FunctionCallbackInfo<v8::
 								Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 							v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 							VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
-							w->native.TakeReference(r);
+							w->native = r;
 							w->Wrap(wo);
 							info.GetReturnValue().Set(wo);
 							return;
@@ -253,7 +252,7 @@ void VtkPickingManagerWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkRenderWindowInteractorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -334,7 +333,7 @@ void VtkPickingManagerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkPickingManagerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPickingManagerWrap *w = new VtkPickingManagerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -407,7 +406,7 @@ void VtkPickingManagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkPickingManagerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPickingManagerWrap *w = new VtkPickingManagerWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

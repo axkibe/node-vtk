@@ -141,7 +141,6 @@ void VtkTransformInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -289,7 +288,7 @@ void VtkTransformInterpolatorWrap::GetPositionInterpolator(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -312,7 +311,7 @@ void VtkTransformInterpolatorWrap::GetRotationInterpolator(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkQuaternionInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkQuaternionInterpolatorWrap *w = new VtkQuaternionInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -335,7 +334,7 @@ void VtkTransformInterpolatorWrap::GetScaleInterpolator(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -416,7 +415,7 @@ void VtkTransformInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkTransformInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTransformInterpolatorWrap *w = new VtkTransformInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -463,7 +462,7 @@ void VtkTransformInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 			Nan::New<v8::FunctionTemplate>(VtkTransformInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTransformInterpolatorWrap *w = new VtkTransformInterpolatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

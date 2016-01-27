@@ -93,7 +93,6 @@ void VtkAxesTransformWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -145,7 +144,7 @@ void VtkAxesTransformWidgetWrap::GetLineRepresentation(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkAxesTransformRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxesTransformRepresentationWrap *w = new VtkAxesTransformRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -190,7 +189,7 @@ void VtkAxesTransformWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkAxesTransformWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxesTransformWidgetWrap *w = new VtkAxesTransformWidgetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -218,7 +217,7 @@ void VtkAxesTransformWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 			Nan::New<v8::FunctionTemplate>(VtkAxesTransformWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAxesTransformWidgetWrap *w = new VtkAxesTransformWidgetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

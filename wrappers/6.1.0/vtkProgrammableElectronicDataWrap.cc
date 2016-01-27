@@ -94,7 +94,6 @@ void VtkProgrammableElectronicDataWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -154,7 +153,7 @@ void VtkProgrammableElectronicDataWrap::GetElectronDensity(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageDataWrap *w = new VtkImageDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -213,7 +212,7 @@ void VtkProgrammableElectronicDataWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkProgrammableElectronicDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProgrammableElectronicDataWrap *w = new VtkProgrammableElectronicDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -241,7 +240,7 @@ void VtkProgrammableElectronicDataWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkProgrammableElectronicDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProgrammableElectronicDataWrap *w = new VtkProgrammableElectronicDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -102,7 +102,6 @@ void VtkDistanceRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -140,7 +139,7 @@ void VtkDistanceRepresentation2DWrap::GetAxis(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkAxisActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAxisActor2DWrap *w = new VtkAxisActor2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -163,7 +162,7 @@ void VtkDistanceRepresentation2DWrap::GetAxisProperty(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -236,7 +235,7 @@ void VtkDistanceRepresentation2DWrap::NewInstance(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkDistanceRepresentation2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDistanceRepresentation2DWrap *w = new VtkDistanceRepresentation2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -328,7 +327,7 @@ void VtkDistanceRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackIn
 			Nan::New<v8::FunctionTemplate>(VtkDistanceRepresentation2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDistanceRepresentation2DWrap *w = new VtkDistanceRepresentation2DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

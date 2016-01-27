@@ -103,7 +103,6 @@ void VtkPointSetAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -180,7 +179,7 @@ void VtkPointSetAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -207,7 +206,7 @@ void VtkPointSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkPointSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointSetWrap *w = new VtkPointSetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -226,7 +225,7 @@ void VtkPointSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkPointSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointSetWrap *w = new VtkPointSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -249,7 +248,7 @@ void VtkPointSetAlgorithmWrap::GetPolyDataOutput(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -272,7 +271,7 @@ void VtkPointSetAlgorithmWrap::GetStructuredGridOutput(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkStructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredGridWrap *w = new VtkStructuredGridWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -295,7 +294,7 @@ void VtkPointSetAlgorithmWrap::GetUnstructuredGridOutput(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridWrap *w = new VtkUnstructuredGridWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -340,7 +339,7 @@ void VtkPointSetAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointSetAlgorithmWrap *w = new VtkPointSetAlgorithmWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -368,7 +367,7 @@ void VtkPointSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 			Nan::New<v8::FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointSetAlgorithmWrap *w = new VtkPointSetAlgorithmWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

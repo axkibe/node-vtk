@@ -189,7 +189,6 @@ void VtkScatterPlotMatrixWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -239,7 +238,7 @@ void VtkScatterPlotMatrixWrap::GetAnnotationLink(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkAnnotationLinkWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLinkWrap *w = new VtkAnnotationLinkWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -308,7 +307,7 @@ void VtkScatterPlotMatrixWrap::GetAxisLabelProperties(const Nan::FunctionCallbac
 			Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -348,7 +347,7 @@ void VtkScatterPlotMatrixWrap::GetIndexedLabels(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -371,7 +370,7 @@ void VtkScatterPlotMatrixWrap::GetMainChart(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkChartWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkChartWrap *w = new VtkChartWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -461,7 +460,7 @@ void VtkScatterPlotMatrixWrap::GetTitleProperties(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -484,7 +483,7 @@ void VtkScatterPlotMatrixWrap::GetTooltip(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkTooltipItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTooltipItemWrap *w = new VtkTooltipItemWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -549,7 +548,7 @@ void VtkScatterPlotMatrixWrap::GetVisibleColumns(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -594,7 +593,7 @@ void VtkScatterPlotMatrixWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkScatterPlotMatrixWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScatterPlotMatrixWrap *w = new VtkScatterPlotMatrixWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -622,7 +621,7 @@ void VtkScatterPlotMatrixWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 			Nan::New<v8::FunctionTemplate>(VtkScatterPlotMatrixWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkScatterPlotMatrixWrap *w = new VtkScatterPlotMatrixWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

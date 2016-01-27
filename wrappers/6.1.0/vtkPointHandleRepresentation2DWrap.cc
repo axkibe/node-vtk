@@ -129,7 +129,6 @@ void VtkPointHandleRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<v8:
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -250,7 +249,7 @@ void VtkPointHandleRepresentation2DWrap::GetCursorShape(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataWrap *w = new VtkPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -273,7 +272,7 @@ void VtkPointHandleRepresentation2DWrap::GetProperty(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -296,7 +295,7 @@ void VtkPointHandleRepresentation2DWrap::GetSelectedProperty(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -360,7 +359,7 @@ void VtkPointHandleRepresentation2DWrap::NewInstance(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkPointHandleRepresentation2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointHandleRepresentation2DWrap *w = new VtkPointHandleRepresentation2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -430,7 +429,7 @@ void VtkPointHandleRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbac
 			Nan::New<v8::FunctionTemplate>(VtkPointHandleRepresentation2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointHandleRepresentation2DWrap *w = new VtkPointHandleRepresentation2DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -94,7 +94,6 @@ void VtkModifiedBSPTreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -202,7 +201,7 @@ void VtkModifiedBSPTreeWrap::GetLeafNodeCellInformation(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkIdListCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdListCollectionWrap *w = new VtkIdListCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -247,7 +246,7 @@ void VtkModifiedBSPTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkModifiedBSPTreeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkModifiedBSPTreeWrap *w = new VtkModifiedBSPTreeWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -275,7 +274,7 @@ void VtkModifiedBSPTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 			Nan::New<v8::FunctionTemplate>(VtkModifiedBSPTreeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkModifiedBSPTreeWrap *w = new VtkModifiedBSPTreeWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

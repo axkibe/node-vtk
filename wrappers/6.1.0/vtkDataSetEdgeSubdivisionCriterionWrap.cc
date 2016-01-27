@@ -106,7 +106,6 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::New(const Nan::FunctionCallbackInfo
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -146,7 +145,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::GetCell(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCellWrap *w = new VtkCellWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -218,7 +217,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::GetMesh(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -263,7 +262,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::NewInstance(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkDataSetEdgeSubdivisionCriterionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetEdgeSubdivisionCriterionWrap *w = new VtkDataSetEdgeSubdivisionCriterionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -303,7 +302,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::SafeDownCast(const Nan::FunctionCal
 			Nan::New<v8::FunctionTemplate>(VtkDataSetEdgeSubdivisionCriterionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataSetEdgeSubdivisionCriterionWrap *w = new VtkDataSetEdgeSubdivisionCriterionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

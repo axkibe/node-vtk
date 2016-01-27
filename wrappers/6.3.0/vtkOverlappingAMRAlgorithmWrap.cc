@@ -81,7 +81,6 @@ void VtkOverlappingAMRAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -125,7 +124,7 @@ void VtkOverlappingAMRAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -144,7 +143,7 @@ void VtkOverlappingAMRAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -189,7 +188,7 @@ void VtkOverlappingAMRAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOverlappingAMRAlgorithmWrap *w = new VtkOverlappingAMRAlgorithmWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -217,7 +216,7 @@ void VtkOverlappingAMRAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOverlappingAMRAlgorithmWrap *w = new VtkOverlappingAMRAlgorithmWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

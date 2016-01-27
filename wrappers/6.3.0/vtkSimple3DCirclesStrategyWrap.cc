@@ -165,7 +165,6 @@ void VtkSimple3DCirclesStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -295,7 +294,7 @@ void VtkSimple3DCirclesStrategyWrap::GetHierarchicalLayers(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkIntArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIntArrayWrap *w = new VtkIntArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -318,7 +317,7 @@ void VtkSimple3DCirclesStrategyWrap::GetHierarchicalOrder(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -341,7 +340,7 @@ void VtkSimple3DCirclesStrategyWrap::GetMarkedStartVertices(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -454,7 +453,7 @@ void VtkSimple3DCirclesStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkSimple3DCirclesStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSimple3DCirclesStrategyWrap *w = new VtkSimple3DCirclesStrategyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -482,7 +481,7 @@ void VtkSimple3DCirclesStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkSimple3DCirclesStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSimple3DCirclesStrategyWrap *w = new VtkSimple3DCirclesStrategyWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

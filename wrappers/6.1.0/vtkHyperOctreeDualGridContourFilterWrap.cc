@@ -102,7 +102,6 @@ void VtkHyperOctreeDualGridContourFilterWrap::New(const Nan::FunctionCallbackInf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -181,7 +180,7 @@ void VtkHyperOctreeDualGridContourFilterWrap::GetLocator(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -261,7 +260,7 @@ void VtkHyperOctreeDualGridContourFilterWrap::NewInstance(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeDualGridContourFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeDualGridContourFilterWrap *w = new VtkHyperOctreeDualGridContourFilterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -289,7 +288,7 @@ void VtkHyperOctreeDualGridContourFilterWrap::SafeDownCast(const Nan::FunctionCa
 			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeDualGridContourFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeDualGridContourFilterWrap *w = new VtkHyperOctreeDualGridContourFilterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

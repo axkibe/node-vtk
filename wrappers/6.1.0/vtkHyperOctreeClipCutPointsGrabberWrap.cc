@@ -91,7 +91,6 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::New(const Nan::FunctionCallbackInfo
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -131,7 +130,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::GetPolygon(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkPolygonWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolygonWrap *w = new VtkPolygonWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -154,7 +153,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::GetTriangulator(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkOrderedTriangulatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOrderedTriangulatorWrap *w = new VtkOrderedTriangulatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -211,7 +210,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::NewInstance(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkHyperOctreeClipCutPointsGrabberWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHyperOctreeClipCutPointsGrabberWrap *w = new VtkHyperOctreeClipCutPointsGrabberWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -239,7 +238,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::SafeDownCast(const Nan::FunctionCal
 			Nan::New<v8::FunctionTemplate>(VtkHyperOctreeClipCutPointsGrabberWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHyperOctreeClipCutPointsGrabberWrap *w = new VtkHyperOctreeClipCutPointsGrabberWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

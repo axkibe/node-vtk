@@ -81,7 +81,6 @@ void VtkDatabaseToTableReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -121,7 +120,7 @@ void VtkDatabaseToTableReaderWrap::GetDatabase(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkSQLDatabaseWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSQLDatabaseWrap *w = new VtkSQLDatabaseWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -166,7 +165,7 @@ void VtkDatabaseToTableReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkDatabaseToTableReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDatabaseToTableReaderWrap *w = new VtkDatabaseToTableReaderWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -194,7 +193,7 @@ void VtkDatabaseToTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 			Nan::New<v8::FunctionTemplate>(VtkDatabaseToTableReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDatabaseToTableReaderWrap *w = new VtkDatabaseToTableReaderWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -84,7 +84,6 @@ void VtkImageReader2CollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -144,7 +143,7 @@ void VtkImageReader2CollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkImageReader2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageReader2Wrap *w = new VtkImageReader2Wrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -189,7 +188,7 @@ void VtkImageReader2CollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkImageReader2CollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageReader2CollectionWrap *w = new VtkImageReader2CollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -217,7 +216,7 @@ void VtkImageReader2CollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 			Nan::New<v8::FunctionTemplate>(VtkImageReader2CollectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageReader2CollectionWrap *w = new VtkImageReader2CollectionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

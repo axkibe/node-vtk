@@ -82,7 +82,6 @@ void VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::New(const Nan::Functi
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -177,7 +176,7 @@ void VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::NewInstance(const Nan
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -205,7 +204,7 @@ void VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::SafeDownCast(const Na
 			Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

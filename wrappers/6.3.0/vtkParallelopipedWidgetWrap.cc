@@ -105,7 +105,6 @@ void VtkParallelopipedWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -195,7 +194,7 @@ void VtkParallelopipedWidgetWrap::GetParallelopipedRepresentation(const Nan::Fun
 		Nan::New<v8::FunctionTemplate>(VtkParallelopipedRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParallelopipedRepresentationWrap *w = new VtkParallelopipedRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -240,7 +239,7 @@ void VtkParallelopipedWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkParallelopipedWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkParallelopipedWidgetWrap *w = new VtkParallelopipedWidgetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -268,7 +267,7 @@ void VtkParallelopipedWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkParallelopipedWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkParallelopipedWidgetWrap *w = new VtkParallelopipedWidgetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -136,7 +136,6 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::New(const Nan::FunctionCallbac
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -252,7 +251,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetCurrentScalars(const Nan::F
 		Nan::New<v8::FunctionTemplate>(VtkDataArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataArrayWrap *w = new VtkDataArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -339,7 +338,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::NewInstance(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastSpaceLeapingImageFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *w = new VtkVolumeRayCastSpaceLeapingImageFilterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -367,7 +366,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SafeDownCast(const Nan::Functi
 			Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastSpaceLeapingImageFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeRayCastSpaceLeapingImageFilterWrap *w = new VtkVolumeRayCastSpaceLeapingImageFilterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

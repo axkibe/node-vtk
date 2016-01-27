@@ -128,7 +128,6 @@ void VtkInteractorStyleTreeMapHoverWrap::New(const Nan::FunctionCallbackInfo<v8:
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -196,7 +195,7 @@ void VtkInteractorStyleTreeMapHoverWrap::GetLayout(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkTreeMapLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeMapLayoutWrap *w = new VtkTreeMapLayoutWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -233,7 +232,7 @@ void VtkInteractorStyleTreeMapHoverWrap::GetTreeMapToPolyData(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkTreeMapToPolyDataWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTreeMapToPolyDataWrap *w = new VtkTreeMapToPolyDataWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -290,7 +289,7 @@ void VtkInteractorStyleTreeMapHoverWrap::NewInstance(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTreeMapHoverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleTreeMapHoverWrap *w = new VtkInteractorStyleTreeMapHoverWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -342,7 +341,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SafeDownCast(const Nan::FunctionCallbac
 			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleTreeMapHoverWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleTreeMapHoverWrap *w = new VtkInteractorStyleTreeMapHoverWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

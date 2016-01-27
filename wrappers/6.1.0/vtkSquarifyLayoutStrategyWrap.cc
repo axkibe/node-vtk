@@ -82,7 +82,6 @@ void VtkSquarifyLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -174,7 +173,7 @@ void VtkSquarifyLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkSquarifyLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSquarifyLayoutStrategyWrap *w = new VtkSquarifyLayoutStrategyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -202,7 +201,7 @@ void VtkSquarifyLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 			Nan::New<v8::FunctionTemplate>(VtkSquarifyLayoutStrategyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkSquarifyLayoutStrategyWrap *w = new VtkSquarifyLayoutStrategyWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -89,7 +89,6 @@ void VtkImageBSplineInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -193,7 +192,7 @@ void VtkImageBSplineInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkImageBSplineInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageBSplineInterpolatorWrap *w = new VtkImageBSplineInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -221,7 +220,7 @@ void VtkImageBSplineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 			Nan::New<v8::FunctionTemplate>(VtkImageBSplineInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageBSplineInterpolatorWrap *w = new VtkImageBSplineInterpolatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

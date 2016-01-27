@@ -92,7 +92,6 @@ void VtkStructuredVisibilityConstraintWrap::New(const Nan::FunctionCallbackInfo<
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -164,7 +163,7 @@ void VtkStructuredVisibilityConstraintWrap::GetVisibilityById(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -209,7 +208,7 @@ void VtkStructuredVisibilityConstraintWrap::NewInstance(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkStructuredVisibilityConstraintWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStructuredVisibilityConstraintWrap *w = new VtkStructuredVisibilityConstraintWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -237,7 +236,7 @@ void VtkStructuredVisibilityConstraintWrap::SafeDownCast(const Nan::FunctionCall
 			Nan::New<v8::FunctionTemplate>(VtkStructuredVisibilityConstraintWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStructuredVisibilityConstraintWrap *w = new VtkStructuredVisibilityConstraintWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -77,7 +77,6 @@ void VtkExtractUserDefinedPieceWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -139,7 +138,7 @@ void VtkExtractUserDefinedPieceWrap::NewInstance(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkExtractUserDefinedPieceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractUserDefinedPieceWrap *w = new VtkExtractUserDefinedPieceWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -167,7 +166,7 @@ void VtkExtractUserDefinedPieceWrap::SafeDownCast(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkExtractUserDefinedPieceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractUserDefinedPieceWrap *w = new VtkExtractUserDefinedPieceWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

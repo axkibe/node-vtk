@@ -102,7 +102,6 @@ void VtkExtractVectorComponentsWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -180,7 +179,7 @@ void VtkExtractVectorComponentsWrap::GetVxComponent(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -203,7 +202,7 @@ void VtkExtractVectorComponentsWrap::GetVyComponent(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -226,7 +225,7 @@ void VtkExtractVectorComponentsWrap::GetVzComponent(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -271,7 +270,7 @@ void VtkExtractVectorComponentsWrap::NewInstance(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkExtractVectorComponentsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractVectorComponentsWrap *w = new VtkExtractVectorComponentsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -299,7 +298,7 @@ void VtkExtractVectorComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkExtractVectorComponentsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtractVectorComponentsWrap *w = new VtkExtractVectorComponentsWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

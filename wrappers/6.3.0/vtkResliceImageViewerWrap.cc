@@ -160,7 +160,6 @@ void VtkResliceImageViewerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -200,7 +199,7 @@ void VtkResliceImageViewerWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkRenderWindowInteractorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRenderWindowInteractorWrap *w = new VtkRenderWindowInteractorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -223,7 +222,7 @@ void VtkResliceImageViewerWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -246,7 +245,7 @@ void VtkResliceImageViewerWrap::GetMeasurements(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkResliceImageViewerMeasurementsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceImageViewerMeasurementsWrap *w = new VtkResliceImageViewerMeasurementsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -269,7 +268,7 @@ void VtkResliceImageViewerWrap::GetPointPlacer(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkBoundedPlanePointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBoundedPlanePointPlacerWrap *w = new VtkBoundedPlanePointPlacerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -292,7 +291,7 @@ void VtkResliceImageViewerWrap::GetResliceCursor(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkResliceCursorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorWrap *w = new VtkResliceCursorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -315,7 +314,7 @@ void VtkResliceImageViewerWrap::GetResliceCursorWidget(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkResliceCursorWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorWidgetWrap *w = new VtkResliceCursorWidgetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -421,7 +420,7 @@ void VtkResliceImageViewerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkResliceImageViewerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceImageViewerWrap *w = new VtkResliceImageViewerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -473,7 +472,7 @@ void VtkResliceImageViewerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkResliceImageViewerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkResliceImageViewerWrap *w = new VtkResliceImageViewerWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -93,7 +93,6 @@ void VtkPiecewiseFunctionAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -174,7 +173,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo
 			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -193,7 +192,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -220,7 +219,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataObjectWrap *w = new VtkDataObjectWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -239,7 +238,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataObjectWrap *w = new VtkDataObjectWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -284,7 +283,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionAlgorithmWrap *w = new VtkPiecewiseFunctionAlgorithmWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -312,7 +311,7 @@ void VtkPiecewiseFunctionAlgorithmWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionAlgorithmWrap *w = new VtkPiecewiseFunctionAlgorithmWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

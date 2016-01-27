@@ -115,7 +115,6 @@ void VtkResliceCursorLineRepresentationWrap::New(const Nan::FunctionCallbackInfo
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -196,7 +195,7 @@ void VtkResliceCursorLineRepresentationWrap::GetResliceCursor(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkResliceCursorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorWrap *w = new VtkResliceCursorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -219,7 +218,7 @@ void VtkResliceCursorLineRepresentationWrap::GetResliceCursorActor(const Nan::Fu
 		Nan::New<v8::FunctionTemplate>(VtkResliceCursorActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorActorWrap *w = new VtkResliceCursorActorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -297,7 +296,7 @@ void VtkResliceCursorLineRepresentationWrap::NewInstance(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkResliceCursorLineRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkResliceCursorLineRepresentationWrap *w = new VtkResliceCursorLineRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -411,7 +410,7 @@ void VtkResliceCursorLineRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 			Nan::New<v8::FunctionTemplate>(VtkResliceCursorLineRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkResliceCursorLineRepresentationWrap *w = new VtkResliceCursorLineRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -123,7 +123,6 @@ void VtkMedicalImageReader2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -191,7 +190,7 @@ void VtkMedicalImageReader2Wrap::GetMedicalImageProperties(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkMedicalImagePropertiesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMedicalImagePropertiesWrap *w = new VtkMedicalImagePropertiesWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -306,7 +305,7 @@ void VtkMedicalImageReader2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkMedicalImageReader2Wrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMedicalImageReader2Wrap *w = new VtkMedicalImageReader2Wrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -334,7 +333,7 @@ void VtkMedicalImageReader2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 			Nan::New<v8::FunctionTemplate>(VtkMedicalImageReader2Wrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMedicalImageReader2Wrap *w = new VtkMedicalImageReader2Wrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

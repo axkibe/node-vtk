@@ -164,7 +164,6 @@ void VtkConvertSelectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -236,7 +235,7 @@ void VtkConvertSelectionWrap::GetArrayNames(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -485,7 +484,7 @@ void VtkConvertSelectionWrap::GetSelectionExtractor(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkExtractSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkExtractSelectionWrap *w = new VtkExtractSelectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -554,7 +553,7 @@ void VtkConvertSelectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkConvertSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkConvertSelectionWrap *w = new VtkConvertSelectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -582,7 +581,7 @@ void VtkConvertSelectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 			Nan::New<v8::FunctionTemplate>(VtkConvertSelectionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkConvertSelectionWrap *w = new VtkConvertSelectionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -735,7 +734,7 @@ void VtkConvertSelectionWrap::ToGlobalIdSelection(const Nan::FunctionCallbackInf
 				Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkSelectionWrap *w = new VtkSelectionWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -771,7 +770,7 @@ void VtkConvertSelectionWrap::ToIndexSelection(const Nan::FunctionCallbackInfo<v
 				Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkSelectionWrap *w = new VtkSelectionWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -807,7 +806,7 @@ void VtkConvertSelectionWrap::ToPedigreeIdSelection(const Nan::FunctionCallbackI
 				Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkSelectionWrap *w = new VtkSelectionWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -853,7 +852,7 @@ void VtkConvertSelectionWrap::ToSelectionType(const Nan::FunctionCallbackInfo<v8
 							Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 						v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 						VtkSelectionWrap *w = new VtkSelectionWrap();
-						w->native.TakeReference(r);
+						w->native = r;
 						w->Wrap(wo);
 						info.GetReturnValue().Set(wo);
 						return;
@@ -896,7 +895,7 @@ void VtkConvertSelectionWrap::ToValueSelection(const Nan::FunctionCallbackInfo<v
 					Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkSelectionWrap *w = new VtkSelectionWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;
@@ -922,7 +921,7 @@ void VtkConvertSelectionWrap::ToValueSelection(const Nan::FunctionCallbackInfo<v
 					Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkSelectionWrap *w = new VtkSelectionWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;

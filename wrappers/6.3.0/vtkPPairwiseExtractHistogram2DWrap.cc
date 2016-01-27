@@ -84,7 +84,6 @@ void VtkPPairwiseExtractHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8:
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -124,7 +123,7 @@ void VtkPPairwiseExtractHistogram2DWrap::GetController(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkMultiProcessControllerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiProcessControllerWrap *w = new VtkMultiProcessControllerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -169,7 +168,7 @@ void VtkPPairwiseExtractHistogram2DWrap::NewInstance(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkPPairwiseExtractHistogram2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPPairwiseExtractHistogram2DWrap *w = new VtkPPairwiseExtractHistogram2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -197,7 +196,7 @@ void VtkPPairwiseExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbac
 			Nan::New<v8::FunctionTemplate>(VtkPPairwiseExtractHistogram2DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPPairwiseExtractHistogram2DWrap *w = new VtkPPairwiseExtractHistogram2DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

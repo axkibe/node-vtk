@@ -156,7 +156,6 @@ void VtkHierarchicalGraphPipelineWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -235,7 +234,7 @@ void VtkHierarchicalGraphPipelineWrap::ConvertSelection(const Nan::FunctionCallb
 				Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkSelectionWrap *w = new VtkSelectionWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -262,7 +261,7 @@ void VtkHierarchicalGraphPipelineWrap::GetActor(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActorWrap *w = new VtkActorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -341,7 +340,7 @@ void VtkHierarchicalGraphPipelineWrap::GetLabelActor(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActor2DWrap *w = new VtkActor2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -378,7 +377,7 @@ void VtkHierarchicalGraphPipelineWrap::GetLabelTextProperty(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkTextPropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTextPropertyWrap *w = new VtkTextPropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -461,7 +460,7 @@ void VtkHierarchicalGraphPipelineWrap::NewInstance(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkHierarchicalGraphPipelineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHierarchicalGraphPipelineWrap *w = new VtkHierarchicalGraphPipelineWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -539,7 +538,7 @@ void VtkHierarchicalGraphPipelineWrap::SafeDownCast(const Nan::FunctionCallbackI
 			Nan::New<v8::FunctionTemplate>(VtkHierarchicalGraphPipelineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalGraphPipelineWrap *w = new VtkHierarchicalGraphPipelineWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

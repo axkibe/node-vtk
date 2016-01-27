@@ -210,7 +210,6 @@ void VtkVolumePropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -455,7 +454,7 @@ void VtkVolumePropertyWrap::GetGradientOpacity(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -474,7 +473,7 @@ void VtkVolumePropertyWrap::GetGradientOpacity(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -501,7 +500,7 @@ void VtkVolumePropertyWrap::GetGrayTransferFunction(const Nan::FunctionCallbackI
 			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -520,7 +519,7 @@ void VtkVolumePropertyWrap::GetGrayTransferFunction(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -645,7 +644,7 @@ void VtkVolumePropertyWrap::GetRGBTransferFunction(const Nan::FunctionCallbackIn
 			Nan::New<v8::FunctionTemplate>(VtkColorTransferFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkColorTransferFunctionWrap *w = new VtkColorTransferFunctionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -664,7 +663,7 @@ void VtkVolumePropertyWrap::GetRGBTransferFunction(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkColorTransferFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkColorTransferFunctionWrap *w = new VtkColorTransferFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -691,7 +690,7 @@ void VtkVolumePropertyWrap::GetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -710,7 +709,7 @@ void VtkVolumePropertyWrap::GetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -849,7 +848,7 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -868,7 +867,7 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -937,7 +936,7 @@ void VtkVolumePropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkVolumePropertyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumePropertyWrap *w = new VtkVolumePropertyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -965,7 +964,7 @@ void VtkVolumePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::New<v8::FunctionTemplate>(VtkVolumePropertyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumePropertyWrap *w = new VtkVolumePropertyWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

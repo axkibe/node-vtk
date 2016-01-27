@@ -111,7 +111,6 @@ void VtkAnnotationLayersWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -191,7 +190,7 @@ void VtkAnnotationLayersWrap::GetCurrentAnnotation(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkAnnotationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationWrap *w = new VtkAnnotationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -214,7 +213,7 @@ void VtkAnnotationLayersWrap::GetCurrentSelection(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSelectionWrap *w = new VtkSelectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -245,7 +244,7 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 				Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAnnotationLayersWrap *w = new VtkAnnotationLayersWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -266,7 +265,7 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 			Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAnnotationLayersWrap *w = new VtkAnnotationLayersWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -326,7 +325,7 @@ void VtkAnnotationLayersWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLayersWrap *w = new VtkAnnotationLayersWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -374,7 +373,7 @@ void VtkAnnotationLayersWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 			Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAnnotationLayersWrap *w = new VtkAnnotationLayersWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

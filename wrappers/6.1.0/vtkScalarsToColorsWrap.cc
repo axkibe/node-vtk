@@ -164,7 +164,6 @@ void VtkScalarsToColorsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -213,7 +212,7 @@ void VtkScalarsToColorsWrap::ConvertUnsignedCharToRGBA(const Nan::FunctionCallba
 					Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;
@@ -275,7 +274,7 @@ void VtkScalarsToColorsWrap::GetAnnotatedValues(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -298,7 +297,7 @@ void VtkScalarsToColorsWrap::GetAnnotations(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -504,7 +503,7 @@ void VtkScalarsToColorsWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Valu
 					Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;
@@ -532,7 +531,7 @@ void VtkScalarsToColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -572,7 +571,7 @@ void VtkScalarsToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 			Nan::New<v8::FunctionTemplate>(VtkScalarsToColorsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkScalarsToColorsWrap *w = new VtkScalarsToColorsWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -109,7 +109,6 @@ void VtkControlPointsItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -175,7 +174,7 @@ void VtkControlPointsItemWrap::GetSelectedPointBrush(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkBrushWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBrushWrap *w = new VtkBrushWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -198,7 +197,7 @@ void VtkControlPointsItemWrap::GetSelectedPointPen(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkPenWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPenWrap *w = new VtkPenWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -243,7 +242,7 @@ void VtkControlPointsItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		Nan::New<v8::FunctionTemplate>(VtkControlPointsItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkControlPointsItemWrap *w = new VtkControlPointsItemWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -295,7 +294,7 @@ void VtkControlPointsItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 			Nan::New<v8::FunctionTemplate>(VtkControlPointsItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkControlPointsItemWrap *w = new VtkControlPointsItemWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

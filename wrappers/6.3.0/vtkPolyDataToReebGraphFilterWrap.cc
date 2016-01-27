@@ -87,7 +87,6 @@ void VtkPolyDataToReebGraphFilterWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -141,7 +140,7 @@ void VtkPolyDataToReebGraphFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkReebGraphWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkReebGraphWrap *w = new VtkReebGraphWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -186,7 +185,7 @@ void VtkPolyDataToReebGraphFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkPolyDataToReebGraphFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPolyDataToReebGraphFilterWrap *w = new VtkPolyDataToReebGraphFilterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -214,7 +213,7 @@ void VtkPolyDataToReebGraphFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 			Nan::New<v8::FunctionTemplate>(VtkPolyDataToReebGraphFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPolyDataToReebGraphFilterWrap *w = new VtkPolyDataToReebGraphFilterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -118,7 +118,6 @@ void VtkGenericInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackInf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -276,7 +275,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::GetLastCell(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkGenericAdaptorCellWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericAdaptorCellWrap *w = new VtkGenericAdaptorCellWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -299,7 +298,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::GetLastDataSet(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkGenericDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericDataSetWrap *w = new VtkGenericDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -358,7 +357,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkGenericInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericInterpolatedVelocityFieldWrap *w = new VtkGenericInterpolatedVelocityFieldWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -386,7 +385,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCa
 			Nan::New<v8::FunctionTemplate>(VtkGenericInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericInterpolatedVelocityFieldWrap *w = new VtkGenericInterpolatedVelocityFieldWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

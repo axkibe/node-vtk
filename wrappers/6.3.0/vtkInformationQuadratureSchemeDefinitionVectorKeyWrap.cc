@@ -113,7 +113,6 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::New(const Nan::Funct
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -217,7 +216,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::Get(const Nan::Funct
 				Nan::New<v8::FunctionTemplate>(VtkQuadratureSchemeDefinitionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkQuadratureSchemeDefinitionWrap *w = new VtkQuadratureSchemeDefinitionWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -302,7 +301,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::NewInstance(const Na
 		Nan::New<v8::FunctionTemplate>(VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationQuadratureSchemeDefinitionVectorKeyWrap *w = new VtkInformationQuadratureSchemeDefinitionVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -381,7 +380,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::SafeDownCast(const N
 			Nan::New<v8::FunctionTemplate>(VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationQuadratureSchemeDefinitionVectorKeyWrap *w = new VtkInformationQuadratureSchemeDefinitionVectorKeyWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

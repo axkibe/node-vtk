@@ -90,7 +90,6 @@ void VtkKMeansDistanceFunctorCalculatorWrap::New(const Nan::FunctionCallbackInfo
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -144,7 +143,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::GetFunctionParser(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkFunctionParserWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFunctionParserWrap *w = new VtkFunctionParserWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -189,7 +188,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::NewInstance(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkKMeansDistanceFunctorCalculatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkKMeansDistanceFunctorCalculatorWrap *w = new VtkKMeansDistanceFunctorCalculatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -217,7 +216,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::SafeDownCast(const Nan::FunctionCal
 			Nan::New<v8::FunctionTemplate>(VtkKMeansDistanceFunctorCalculatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkKMeansDistanceFunctorCalculatorWrap *w = new VtkKMeansDistanceFunctorCalculatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

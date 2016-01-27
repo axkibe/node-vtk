@@ -87,7 +87,6 @@ void VtkCompositeInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackI
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -147,7 +146,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::GetLastDataSet(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataSetWrap *w = new VtkDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -206,7 +205,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkCompositeInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeInterpolatedVelocityFieldWrap *w = new VtkCompositeInterpolatedVelocityFieldWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -234,7 +233,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::Function
 			Nan::New<v8::FunctionTemplate>(VtkCompositeInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeInterpolatedVelocityFieldWrap *w = new VtkCompositeInterpolatedVelocityFieldWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

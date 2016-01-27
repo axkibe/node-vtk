@@ -175,7 +175,6 @@ void VtkTemporalStreamTracerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -315,7 +314,7 @@ void VtkTemporalStreamTracerWrap::GetParticleWriter(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkAbstractParticleWriterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractParticleWriterWrap *w = new VtkAbstractParticleWriterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -454,7 +453,7 @@ void VtkTemporalStreamTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		Nan::New<v8::FunctionTemplate>(VtkTemporalStreamTracerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTemporalStreamTracerWrap *w = new VtkTemporalStreamTracerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -494,7 +493,7 @@ void VtkTemporalStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkTemporalStreamTracerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkTemporalStreamTracerWrap *w = new VtkTemporalStreamTracerWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

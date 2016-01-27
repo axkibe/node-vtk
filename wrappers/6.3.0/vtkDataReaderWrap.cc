@@ -352,7 +352,6 @@ void VtkDataReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -509,7 +508,7 @@ void VtkDataReaderWrap::GetInputArray(const Nan::FunctionCallbackInfo<v8::Value>
 		Nan::New<v8::FunctionTemplate>(VtkCharArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCharArrayWrap *w = new VtkCharArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1059,7 +1058,7 @@ void VtkDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::New<v8::FunctionTemplate>(VtkDataReaderWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataReaderWrap *w = new VtkDataReaderWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1297,7 +1296,7 @@ void VtkDataReaderWrap::ReadArray(const Nan::FunctionCallbackInfo<v8::Value>& in
 					Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;
@@ -1576,7 +1575,7 @@ void VtkDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 			Nan::New<v8::FunctionTemplate>(VtkDataReaderWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataReaderWrap *w = new VtkDataReaderWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

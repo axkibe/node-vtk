@@ -86,7 +86,6 @@ void VtkInitialValueProblemSolverWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -126,7 +125,7 @@ void VtkInitialValueProblemSolverWrap::GetFunctionSet(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkFunctionSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFunctionSetWrap *w = new VtkFunctionSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -185,7 +184,7 @@ void VtkInitialValueProblemSolverWrap::NewInstance(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -213,7 +212,7 @@ void VtkInitialValueProblemSolverWrap::SafeDownCast(const Nan::FunctionCallbackI
 			Nan::New<v8::FunctionTemplate>(VtkInitialValueProblemSolverWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInitialValueProblemSolverWrap *w = new VtkInitialValueProblemSolverWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

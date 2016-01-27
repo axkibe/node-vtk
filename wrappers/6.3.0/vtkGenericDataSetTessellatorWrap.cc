@@ -111,7 +111,6 @@ void VtkGenericDataSetTessellatorWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -177,7 +176,7 @@ void VtkGenericDataSetTessellatorWrap::GetLocator(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkIncrementalPointLocatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkIncrementalPointLocatorWrap *w = new VtkIncrementalPointLocatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -284,7 +283,7 @@ void VtkGenericDataSetTessellatorWrap::NewInstance(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkGenericDataSetTessellatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericDataSetTessellatorWrap *w = new VtkGenericDataSetTessellatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -312,7 +311,7 @@ void VtkGenericDataSetTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackI
 			Nan::New<v8::FunctionTemplate>(VtkGenericDataSetTessellatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkGenericDataSetTessellatorWrap *w = new VtkGenericDataSetTessellatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -6,8 +6,8 @@ This is a wrapper around VTK providing bindings to Node.js.
 This module does not bring VTK itself but wraps around the version installed
 on your system.
 
-Installation:
-=============
+Installation
+============
 
 If all goes well simply this should do it:
 ```
@@ -15,18 +15,19 @@ npm install vtk
 ```
 
 It will build the wrapper classes matching the VTK installed on your system.
-This might take a little while.
+Currently 6.1.0, 6.2.0 and 6.3.0 are supported.
 
+Building the wrappers might take a little while.
 
 You might need to install following packages for example on Debian:
 ```
 sudo apt-get install vtk6-dev qtbase5-dev
 ```
 
-Usage:
-======
+Usage
+=====
 
-For example drawing a cone
+For example drawing a cone:
 
 ```
 // makes a cone
@@ -37,19 +38,25 @@ vtk = require('vtk');
 
 source = new vtk.ConeSource();
 source.setResolution( 10 );
+
 mapper = new vtk.PolyDataMapper();
 mapper.setInputConnection( source.getOutputPort() );
+
 actor = new vtk.Actor();
 actor.setMapper( mapper );
+
 renderer = new vtk.Renderer();
 renderer.addActor( actor );
 renderer.setBackground( 0.3, 0.2, 0.1 );
 renderer.resetCamera();
+
 renderWindow = new vtk.RenderWindow();
 renderWindow.addRenderer( renderer );
+
 renderWindowInteractor = new vtk.RenderWindowInteractor();
 renderWindowInteractor.setRenderWindow( renderWindow );
 renderWindowInteractor.setInteractorStyle( new vtk.InteractorStyleTrackballCamera() );
+
 renderWindow.render();
 renderWindowInteractor.start();
 ```

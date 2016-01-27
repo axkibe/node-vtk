@@ -84,7 +84,6 @@ void VtkProjectedAAHexahedraMapperWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -124,7 +123,7 @@ void VtkProjectedAAHexahedraMapperWrap::GetVisibilitySort(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkVisibilitySortWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVisibilitySortWrap *w = new VtkVisibilitySortWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -169,7 +168,7 @@ void VtkProjectedAAHexahedraMapperWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkProjectedAAHexahedraMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProjectedAAHexahedraMapperWrap *w = new VtkProjectedAAHexahedraMapperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -197,7 +196,7 @@ void VtkProjectedAAHexahedraMapperWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkProjectedAAHexahedraMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkProjectedAAHexahedraMapperWrap *w = new VtkProjectedAAHexahedraMapperWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

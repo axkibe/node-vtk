@@ -84,7 +84,6 @@ void VtkCompositeTransferFunctionItemWrap::New(const Nan::FunctionCallbackInfo<v
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -124,7 +123,7 @@ void VtkCompositeTransferFunctionItemWrap::GetOpacityFunction(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -169,7 +168,7 @@ void VtkCompositeTransferFunctionItemWrap::NewInstance(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkCompositeTransferFunctionItemWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCompositeTransferFunctionItemWrap *w = new VtkCompositeTransferFunctionItemWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -197,7 +196,7 @@ void VtkCompositeTransferFunctionItemWrap::SafeDownCast(const Nan::FunctionCallb
 			Nan::New<v8::FunctionTemplate>(VtkCompositeTransferFunctionItemWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCompositeTransferFunctionItemWrap *w = new VtkCompositeTransferFunctionItemWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

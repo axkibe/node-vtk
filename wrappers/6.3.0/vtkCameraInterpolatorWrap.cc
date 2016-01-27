@@ -156,7 +156,6 @@ void VtkCameraInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -220,7 +219,7 @@ void VtkCameraInterpolatorWrap::GetClippingRangeInterpolator(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -243,7 +242,7 @@ void VtkCameraInterpolatorWrap::GetFocalPointInterpolator(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -350,7 +349,7 @@ void VtkCameraInterpolatorWrap::GetParallelScaleInterpolator(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -373,7 +372,7 @@ void VtkCameraInterpolatorWrap::GetPositionInterpolator(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -396,7 +395,7 @@ void VtkCameraInterpolatorWrap::GetViewAngleInterpolator(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -419,7 +418,7 @@ void VtkCameraInterpolatorWrap::GetViewUpInterpolator(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkTupleInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkTupleInterpolatorWrap *w = new VtkTupleInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -500,7 +499,7 @@ void VtkCameraInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkCameraInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCameraInterpolatorWrap *w = new VtkCameraInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -547,7 +546,7 @@ void VtkCameraInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkCameraInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCameraInterpolatorWrap *w = new VtkCameraInterpolatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -101,7 +101,6 @@ void VtkBiQuadraticQuadraticWedgeWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -173,7 +172,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::GetEdge(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellWrap *w = new VtkCellWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -203,7 +202,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::GetFace(const Nan::FunctionCallbackInfo<v
 			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellWrap *w = new VtkCellWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -279,7 +278,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::NewInstance(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkBiQuadraticQuadraticWedgeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBiQuadraticQuadraticWedgeWrap *w = new VtkBiQuadraticQuadraticWedgeWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -307,7 +306,7 @@ void VtkBiQuadraticQuadraticWedgeWrap::SafeDownCast(const Nan::FunctionCallbackI
 			Nan::New<v8::FunctionTemplate>(VtkBiQuadraticQuadraticWedgeWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBiQuadraticQuadraticWedgeWrap *w = new VtkBiQuadraticQuadraticWedgeWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

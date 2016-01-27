@@ -76,7 +76,6 @@ void VtkMeanValueCoordinatesInterpolatorWrap::New(const Nan::FunctionCallbackInf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -138,7 +137,7 @@ void VtkMeanValueCoordinatesInterpolatorWrap::NewInstance(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkMeanValueCoordinatesInterpolatorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMeanValueCoordinatesInterpolatorWrap *w = new VtkMeanValueCoordinatesInterpolatorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -166,7 +165,7 @@ void VtkMeanValueCoordinatesInterpolatorWrap::SafeDownCast(const Nan::FunctionCa
 			Nan::New<v8::FunctionTemplate>(VtkMeanValueCoordinatesInterpolatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMeanValueCoordinatesInterpolatorWrap *w = new VtkMeanValueCoordinatesInterpolatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

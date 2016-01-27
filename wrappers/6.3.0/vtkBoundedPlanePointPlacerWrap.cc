@@ -131,7 +131,6 @@ void VtkBoundedPlanePointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -177,7 +176,7 @@ void VtkBoundedPlanePointPlacerWrap::GetBoundingPlanes(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkPlaneCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneCollectionWrap *w = new VtkPlaneCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -214,7 +213,7 @@ void VtkBoundedPlanePointPlacerWrap::GetObliquePlane(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkPlaneWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPlaneWrap *w = new VtkPlaneWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -315,7 +314,7 @@ void VtkBoundedPlanePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkBoundedPlanePointPlacerWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBoundedPlanePointPlacerWrap *w = new VtkBoundedPlanePointPlacerWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -375,7 +374,7 @@ void VtkBoundedPlanePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkBoundedPlanePointPlacerWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBoundedPlanePointPlacerWrap *w = new VtkBoundedPlanePointPlacerWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

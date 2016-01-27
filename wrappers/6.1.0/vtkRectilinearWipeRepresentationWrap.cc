@@ -134,7 +134,6 @@ void VtkRectilinearWipeRepresentationWrap::New(const Nan::FunctionCallbackInfo<v
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -235,7 +234,7 @@ void VtkRectilinearWipeRepresentationWrap::GetImageActor(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkImageActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageActorWrap *w = new VtkImageActorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -258,7 +257,7 @@ void VtkRectilinearWipeRepresentationWrap::GetProperty(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkProperty2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkProperty2DWrap *w = new VtkProperty2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -281,7 +280,7 @@ void VtkRectilinearWipeRepresentationWrap::GetRectilinearWipe(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkImageRectilinearWipeWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageRectilinearWipeWrap *w = new VtkImageRectilinearWipeWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -382,7 +381,7 @@ void VtkRectilinearWipeRepresentationWrap::NewInstance(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkRectilinearWipeRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearWipeRepresentationWrap *w = new VtkRectilinearWipeRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -496,7 +495,7 @@ void VtkRectilinearWipeRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 			Nan::New<v8::FunctionTemplate>(VtkRectilinearWipeRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectilinearWipeRepresentationWrap *w = new VtkRectilinearWipeRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

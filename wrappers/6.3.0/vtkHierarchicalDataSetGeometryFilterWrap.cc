@@ -77,7 +77,6 @@ void VtkHierarchicalDataSetGeometryFilterWrap::New(const Nan::FunctionCallbackIn
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -139,7 +138,7 @@ void VtkHierarchicalDataSetGeometryFilterWrap::NewInstance(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkHierarchicalDataSetGeometryFilterWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkHierarchicalDataSetGeometryFilterWrap *w = new VtkHierarchicalDataSetGeometryFilterWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -167,7 +166,7 @@ void VtkHierarchicalDataSetGeometryFilterWrap::SafeDownCast(const Nan::FunctionC
 			Nan::New<v8::FunctionTemplate>(VtkHierarchicalDataSetGeometryFilterWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkHierarchicalDataSetGeometryFilterWrap *w = new VtkHierarchicalDataSetGeometryFilterWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

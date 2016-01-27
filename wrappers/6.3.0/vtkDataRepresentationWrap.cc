@@ -144,7 +144,6 @@ void VtkDataRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -224,7 +223,7 @@ void VtkDataRepresentationWrap::ConvertSelection(const Nan::FunctionCallbackInfo
 				Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkSelectionWrap *w = new VtkSelectionWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -251,7 +250,7 @@ void VtkDataRepresentationWrap::GetAnnotationLink(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkAnnotationLinkWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLinkWrap *w = new VtkAnnotationLinkWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -295,7 +294,7 @@ void VtkDataRepresentationWrap::GetInputConnection(const Nan::FunctionCallbackIn
 				Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -329,7 +328,7 @@ void VtkDataRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Funct
 				Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -350,7 +349,7 @@ void VtkDataRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Funct
 			Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -369,7 +368,7 @@ void VtkDataRepresentationWrap::GetInternalAnnotationOutputPort(const Nan::Funct
 		Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -399,7 +398,7 @@ void VtkDataRepresentationWrap::GetInternalOutputPort(const Nan::FunctionCallbac
 				Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -420,7 +419,7 @@ void VtkDataRepresentationWrap::GetInternalOutputPort(const Nan::FunctionCallbac
 			Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -439,7 +438,7 @@ void VtkDataRepresentationWrap::GetInternalOutputPort(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -469,7 +468,7 @@ void VtkDataRepresentationWrap::GetInternalSelectionOutputPort(const Nan::Functi
 				Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -490,7 +489,7 @@ void VtkDataRepresentationWrap::GetInternalSelectionOutputPort(const Nan::Functi
 			Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -509,7 +508,7 @@ void VtkDataRepresentationWrap::GetInternalSelectionOutputPort(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkAlgorithmOutputWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAlgorithmOutputWrap *w = new VtkAlgorithmOutputWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -546,7 +545,7 @@ void VtkDataRepresentationWrap::GetSelectionArrayNames(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStringArrayWrap *w = new VtkStringArrayWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -605,7 +604,7 @@ void VtkDataRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		Nan::New<v8::FunctionTemplate>(VtkDataRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDataRepresentationWrap *w = new VtkDataRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -633,7 +632,7 @@ void VtkDataRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 			Nan::New<v8::FunctionTemplate>(VtkDataRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDataRepresentationWrap *w = new VtkDataRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -101,7 +101,6 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::New(const Nan::FunctionCallba
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -141,7 +140,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::GetCutFunction(const Nan::Fun
 		Nan::New<v8::FunctionTemplate>(VtkImplicitFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImplicitFunctionWrap *w = new VtkImplicitFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -228,7 +227,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::NewInstance(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkThreadedSynchronizedTemplatesCutter3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkThreadedSynchronizedTemplatesCutter3DWrap *w = new VtkThreadedSynchronizedTemplatesCutter3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -256,7 +255,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::SafeDownCast(const Nan::Funct
 			Nan::New<v8::FunctionTemplate>(VtkThreadedSynchronizedTemplatesCutter3DWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkThreadedSynchronizedTemplatesCutter3DWrap *w = new VtkThreadedSynchronizedTemplatesCutter3DWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

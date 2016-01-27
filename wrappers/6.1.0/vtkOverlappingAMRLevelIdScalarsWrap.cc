@@ -77,7 +77,6 @@ void VtkOverlappingAMRLevelIdScalarsWrap::New(const Nan::FunctionCallbackInfo<v8
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -139,7 +138,7 @@ void VtkOverlappingAMRLevelIdScalarsWrap::NewInstance(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRLevelIdScalarsWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOverlappingAMRLevelIdScalarsWrap *w = new VtkOverlappingAMRLevelIdScalarsWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -167,7 +166,7 @@ void VtkOverlappingAMRLevelIdScalarsWrap::SafeDownCast(const Nan::FunctionCallba
 			Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRLevelIdScalarsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkOverlappingAMRLevelIdScalarsWrap *w = new VtkOverlappingAMRLevelIdScalarsWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

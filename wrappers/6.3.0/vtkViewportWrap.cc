@@ -201,7 +201,6 @@ void VtkViewportWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -303,7 +302,7 @@ void VtkViewportWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::New<v8::FunctionTemplate>(VtkActor2DCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkActor2DCollectionWrap *w = new VtkActor2DCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -368,7 +367,7 @@ void VtkViewportWrap::GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::New<v8::FunctionTemplate>(VtkPropCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -503,7 +502,7 @@ void VtkViewportWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkWindowWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkWindowWrap *w = new VtkWindowWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -526,7 +525,7 @@ void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::New<v8::FunctionTemplate>(VtkPropCollectionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPropCollectionWrap *w = new VtkPropCollectionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -642,7 +641,7 @@ void VtkViewportWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		Nan::New<v8::FunctionTemplate>(VtkViewportWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkViewportWrap *w = new VtkViewportWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -678,7 +677,7 @@ void VtkViewportWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 						Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 					v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 					VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
-					w->native.TakeReference(r);
+					w->native = r;
 					w->Wrap(wo);
 					info.GetReturnValue().Set(wo);
 					return;
@@ -701,7 +700,7 @@ void VtkViewportWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 			VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
-			w->native.TakeReference(r);
+			w->native = r;
 			w->Wrap(wo);
 			info.GetReturnValue().Set(wo);
 			return;
@@ -739,7 +738,7 @@ void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& i
 					Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;
@@ -771,7 +770,7 @@ void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& i
 							Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
 						v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 						VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
-						w->native.TakeReference(r);
+						w->native = r;
 						w->Wrap(wo);
 						info.GetReturnValue().Set(wo);
 						return;
@@ -858,7 +857,7 @@ void VtkViewportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 			Nan::New<v8::FunctionTemplate>(VtkViewportWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkViewportWrap *w = new VtkViewportWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

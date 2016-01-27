@@ -85,7 +85,6 @@ void VtkAnnotationLayersAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -129,7 +128,7 @@ void VtkAnnotationLayersAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo
 			Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAnnotationLayersWrap *w = new VtkAnnotationLayersWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -148,7 +147,7 @@ void VtkAnnotationLayersAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo
 		Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLayersWrap *w = new VtkAnnotationLayersWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -193,7 +192,7 @@ void VtkAnnotationLayersAlgorithmWrap::NewInstance(const Nan::FunctionCallbackIn
 		Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAnnotationLayersAlgorithmWrap *w = new VtkAnnotationLayersAlgorithmWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -221,7 +220,7 @@ void VtkAnnotationLayersAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackI
 			Nan::New<v8::FunctionTemplate>(VtkAnnotationLayersAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAnnotationLayersAlgorithmWrap *w = new VtkAnnotationLayersAlgorithmWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

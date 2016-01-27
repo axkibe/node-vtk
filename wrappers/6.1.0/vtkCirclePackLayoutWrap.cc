@@ -93,7 +93,6 @@ void VtkCirclePackLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -147,7 +146,7 @@ void VtkCirclePackLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<
 		Nan::New<v8::FunctionTemplate>(VtkCirclePackLayoutStrategyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCirclePackLayoutStrategyWrap *w = new VtkCirclePackLayoutStrategyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -192,7 +191,7 @@ void VtkCirclePackLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::New<v8::FunctionTemplate>(VtkCirclePackLayoutWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCirclePackLayoutWrap *w = new VtkCirclePackLayoutWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -220,7 +219,7 @@ void VtkCirclePackLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 			Nan::New<v8::FunctionTemplate>(VtkCirclePackLayoutWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCirclePackLayoutWrap *w = new VtkCirclePackLayoutWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

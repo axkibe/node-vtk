@@ -231,7 +231,6 @@ void VtkStreamingDemandDrivenPipelineWrap::New(const Nan::FunctionCallbackInfo<v
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -257,7 +256,7 @@ void VtkStreamingDemandDrivenPipelineWrap::BOUNDS(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleVectorKeyWrap *w = new VtkInformationDoubleVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -280,7 +279,7 @@ void VtkStreamingDemandDrivenPipelineWrap::COMBINED_UPDATE_EXTENT(const Nan::Fun
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerVectorKeyWrap *w = new VtkInformationIntegerVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -303,7 +302,7 @@ void VtkStreamingDemandDrivenPipelineWrap::CONTINUE_EXECUTING(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -354,7 +353,7 @@ void VtkStreamingDemandDrivenPipelineWrap::EXACT_EXTENT(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -377,7 +376,7 @@ void VtkStreamingDemandDrivenPipelineWrap::EXTENT_TRANSLATOR(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkInformationObjectBaseKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationObjectBaseKeyWrap *w = new VtkInformationObjectBaseKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -400,7 +399,7 @@ void VtkStreamingDemandDrivenPipelineWrap::FAST_PATH_FOR_TEMPORAL_DATA(const Nan
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -423,7 +422,7 @@ void VtkStreamingDemandDrivenPipelineWrap::FAST_PATH_ID_TYPE(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkInformationStringKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationStringKeyWrap *w = new VtkInformationStringKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -446,7 +445,7 @@ void VtkStreamingDemandDrivenPipelineWrap::FAST_PATH_OBJECT_ID(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkInformationIdTypeKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIdTypeKeyWrap *w = new VtkInformationIdTypeKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -469,7 +468,7 @@ void VtkStreamingDemandDrivenPipelineWrap::FAST_PATH_OBJECT_TYPE(const Nan::Func
 		Nan::New<v8::FunctionTemplate>(VtkInformationStringKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationStringKeyWrap *w = new VtkInformationStringKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -511,7 +510,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetExtentTranslator(const Nan::Functi
 			Nan::New<v8::FunctionTemplate>(VtkExtentTranslatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtentTranslatorWrap *w = new VtkExtentTranslatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -534,7 +533,7 @@ void VtkStreamingDemandDrivenPipelineWrap::GetExtentTranslator(const Nan::Functi
 			Nan::New<v8::FunctionTemplate>(VtkExtentTranslatorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkExtentTranslatorWrap *w = new VtkExtentTranslatorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -727,7 +726,7 @@ void VtkStreamingDemandDrivenPipelineWrap::MAXIMUM_NUMBER_OF_PIECES(const Nan::F
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -750,7 +749,7 @@ void VtkStreamingDemandDrivenPipelineWrap::NewInstance(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkStreamingDemandDrivenPipelineWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkStreamingDemandDrivenPipelineWrap *w = new VtkStreamingDemandDrivenPipelineWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -773,7 +772,7 @@ void VtkStreamingDemandDrivenPipelineWrap::ORIGINAL_NUMBER_OF_CELLS(const Nan::F
 		Nan::New<v8::FunctionTemplate>(VtkInformationUnsignedLongKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationUnsignedLongKeyWrap *w = new VtkInformationUnsignedLongKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -796,7 +795,7 @@ void VtkStreamingDemandDrivenPipelineWrap::PIECE_BOUNDING_BOX(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleVectorKeyWrap *w = new VtkInformationDoubleVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -819,7 +818,7 @@ void VtkStreamingDemandDrivenPipelineWrap::PIECE_NORMAL(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleVectorKeyWrap *w = new VtkInformationDoubleVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -842,7 +841,7 @@ void VtkStreamingDemandDrivenPipelineWrap::PRIORITY(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleKeyWrap *w = new VtkInformationDoubleKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -907,7 +906,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REMOVE_ATTRIBUTE_INFORMATION(const Na
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -930,7 +929,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_MANAGE_INFORMATION(const Nan:
 		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -953,7 +952,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_RESOLUTION_PROPAGATE(const Na
 		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -976,7 +975,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_TIME_DEPENDENT_INFORMATION(co
 		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -999,7 +998,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_UPDATE_EXTENT(const Nan::Func
 		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1022,7 +1021,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_UPDATE_EXTENT_INFORMATION(con
 		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1045,7 +1044,7 @@ void VtkStreamingDemandDrivenPipelineWrap::REQUEST_UPDATE_TIME(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkInformationRequestKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationRequestKeyWrap *w = new VtkInformationRequestKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1073,7 +1072,7 @@ void VtkStreamingDemandDrivenPipelineWrap::SafeDownCast(const Nan::FunctionCallb
 			Nan::New<v8::FunctionTemplate>(VtkStreamingDemandDrivenPipelineWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkStreamingDemandDrivenPipelineWrap *w = new VtkStreamingDemandDrivenPipelineWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -1502,7 +1501,7 @@ void VtkStreamingDemandDrivenPipelineWrap::TIME_DEPENDENT_INFORMATION(const Nan:
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1525,7 +1524,7 @@ void VtkStreamingDemandDrivenPipelineWrap::TIME_LABEL_ANNOTATION(const Nan::Func
 		Nan::New<v8::FunctionTemplate>(VtkInformationStringKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationStringKeyWrap *w = new VtkInformationStringKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1548,7 +1547,7 @@ void VtkStreamingDemandDrivenPipelineWrap::TIME_RANGE(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleVectorKeyWrap *w = new VtkInformationDoubleVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1571,7 +1570,7 @@ void VtkStreamingDemandDrivenPipelineWrap::TIME_STEPS(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleVectorKeyWrap *w = new VtkInformationDoubleVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1594,7 +1593,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UNRESTRICTED_UPDATE_EXTENT(const Nan:
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1617,7 +1616,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_AMR_LEVEL(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1640,7 +1639,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_EXTENT(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerVectorKeyWrap *w = new VtkInformationIntegerVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1663,7 +1662,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_EXTENT_INITIALIZED(const Nan::
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1686,7 +1685,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_EXTENT_TRANSLATED(const Nan::F
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1709,7 +1708,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_NUMBER_OF_GHOST_LEVELS(const N
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1732,7 +1731,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_NUMBER_OF_PIECES(const Nan::Fu
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1755,7 +1754,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_PIECE_NUMBER(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerKeyWrap *w = new VtkInformationIntegerKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1778,7 +1777,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_RESOLUTION(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleKeyWrap *w = new VtkInformationDoubleKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1801,7 +1800,7 @@ void VtkStreamingDemandDrivenPipelineWrap::UPDATE_TIME_STEP(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleKeyWrap *w = new VtkInformationDoubleKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1887,7 +1886,7 @@ void VtkStreamingDemandDrivenPipelineWrap::WHOLE_BOUNDING_BOX(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkInformationDoubleVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationDoubleVectorKeyWrap *w = new VtkInformationDoubleVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -1910,7 +1909,7 @@ void VtkStreamingDemandDrivenPipelineWrap::WHOLE_EXTENT(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkInformationIntegerVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationIntegerVectorKeyWrap *w = new VtkInformationIntegerVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }

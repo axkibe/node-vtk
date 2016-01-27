@@ -153,7 +153,6 @@ void VtkImageCroppingRegionsWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -235,7 +234,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetVolumeMapper(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkVolumeMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeMapperWrap *w = new VtkVolumeMapperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -316,7 +315,7 @@ void VtkImageCroppingRegionsWidgetWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkImageCroppingRegionsWidgetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageCroppingRegionsWidgetWrap *w = new VtkImageCroppingRegionsWidgetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -380,7 +379,7 @@ void VtkImageCroppingRegionsWidgetWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkImageCroppingRegionsWidgetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkImageCroppingRegionsWidgetWrap *w = new VtkImageCroppingRegionsWidgetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

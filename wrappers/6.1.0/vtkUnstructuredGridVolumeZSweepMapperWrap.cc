@@ -131,7 +131,6 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::New(const Nan::FunctionCallbackI
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -293,7 +292,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::GetRayIntegrator(const Nan::Func
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeRayIntegratorWrap *w = new VtkUnstructuredGridVolumeRayIntegratorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -362,7 +361,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::NewInstance(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeZSweepMapperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkUnstructuredGridVolumeZSweepMapperWrap *w = new VtkUnstructuredGridVolumeZSweepMapperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -415,7 +414,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::SafeDownCast(const Nan::Function
 			Nan::New<v8::FunctionTemplate>(VtkUnstructuredGridVolumeZSweepMapperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnstructuredGridVolumeZSweepMapperWrap *w = new VtkUnstructuredGridVolumeZSweepMapperWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

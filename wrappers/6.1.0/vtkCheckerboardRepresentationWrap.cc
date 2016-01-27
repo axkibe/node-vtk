@@ -155,7 +155,6 @@ void VtkCheckerboardRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -213,7 +212,7 @@ void VtkCheckerboardRepresentationWrap::GetBottomRepresentation(const Nan::Funct
 		Nan::New<v8::FunctionTemplate>(VtkSliderRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSliderRepresentation3DWrap *w = new VtkSliderRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -236,7 +235,7 @@ void VtkCheckerboardRepresentationWrap::GetCheckerboard(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkImageCheckerboardWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageCheckerboardWrap *w = new VtkImageCheckerboardWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -315,7 +314,7 @@ void VtkCheckerboardRepresentationWrap::GetImageActor(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkImageActorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkImageActorWrap *w = new VtkImageActorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -338,7 +337,7 @@ void VtkCheckerboardRepresentationWrap::GetLeftRepresentation(const Nan::Functio
 		Nan::New<v8::FunctionTemplate>(VtkSliderRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSliderRepresentation3DWrap *w = new VtkSliderRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -361,7 +360,7 @@ void VtkCheckerboardRepresentationWrap::GetRightRepresentation(const Nan::Functi
 		Nan::New<v8::FunctionTemplate>(VtkSliderRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSliderRepresentation3DWrap *w = new VtkSliderRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -384,7 +383,7 @@ void VtkCheckerboardRepresentationWrap::GetTopRepresentation(const Nan::Function
 		Nan::New<v8::FunctionTemplate>(VtkSliderRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkSliderRepresentation3DWrap *w = new VtkSliderRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -443,7 +442,7 @@ void VtkCheckerboardRepresentationWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkCheckerboardRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCheckerboardRepresentationWrap *w = new VtkCheckerboardRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -557,7 +556,7 @@ void VtkCheckerboardRepresentationWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkCheckerboardRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCheckerboardRepresentationWrap *w = new VtkCheckerboardRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

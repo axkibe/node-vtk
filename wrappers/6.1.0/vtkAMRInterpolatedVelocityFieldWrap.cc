@@ -84,7 +84,6 @@ void VtkAMRInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackInfo<v8
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -110,7 +109,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::GetAmrDataSet(const Nan::FunctionCallb
 		Nan::New<v8::FunctionTemplate>(VtkOverlappingAMRWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkOverlappingAMRWrap *w = new VtkOverlappingAMRWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -169,7 +168,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCallbac
 		Nan::New<v8::FunctionTemplate>(VtkAMRInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAMRInterpolatedVelocityFieldWrap *w = new VtkAMRInterpolatedVelocityFieldWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -197,7 +196,7 @@ void VtkAMRInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCallba
 			Nan::New<v8::FunctionTemplate>(VtkAMRInterpolatedVelocityFieldWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAMRInterpolatedVelocityFieldWrap *w = new VtkAMRInterpolatedVelocityFieldWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

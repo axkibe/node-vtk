@@ -95,7 +95,6 @@ void VtkInteractorStyleMultiTouchCameraWrap::New(const Nan::FunctionCallbackInfo
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -183,7 +182,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::NewInstance(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkInteractorStyleMultiTouchCameraWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInteractorStyleMultiTouchCameraWrap *w = new VtkInteractorStyleMultiTouchCameraWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -247,7 +246,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::SafeDownCast(const Nan::FunctionCal
 			Nan::New<v8::FunctionTemplate>(VtkInteractorStyleMultiTouchCameraWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInteractorStyleMultiTouchCameraWrap *w = new VtkInteractorStyleMultiTouchCameraWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

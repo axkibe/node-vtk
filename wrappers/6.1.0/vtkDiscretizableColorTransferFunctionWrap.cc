@@ -131,7 +131,6 @@ void VtkDiscretizableColorTransferFunctionWrap::New(const Nan::FunctionCallbackI
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -266,7 +265,7 @@ void VtkDiscretizableColorTransferFunctionWrap::GetScalarOpacityFunction(const N
 		Nan::New<v8::FunctionTemplate>(VtkPiecewiseFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPiecewiseFunctionWrap *w = new VtkPiecewiseFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -350,7 +349,7 @@ void VtkDiscretizableColorTransferFunctionWrap::MapScalars(const Nan::FunctionCa
 					Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;
@@ -378,7 +377,7 @@ void VtkDiscretizableColorTransferFunctionWrap::NewInstance(const Nan::FunctionC
 		Nan::New<v8::FunctionTemplate>(VtkDiscretizableColorTransferFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkDiscretizableColorTransferFunctionWrap *w = new VtkDiscretizableColorTransferFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -406,7 +405,7 @@ void VtkDiscretizableColorTransferFunctionWrap::SafeDownCast(const Nan::Function
 			Nan::New<v8::FunctionTemplate>(VtkDiscretizableColorTransferFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkDiscretizableColorTransferFunctionWrap *w = new VtkDiscretizableColorTransferFunctionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

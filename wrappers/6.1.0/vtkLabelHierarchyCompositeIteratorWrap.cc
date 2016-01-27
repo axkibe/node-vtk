@@ -101,7 +101,6 @@ void VtkLabelHierarchyCompositeIteratorWrap::New(const Nan::FunctionCallbackInfo
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -238,7 +237,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::GetHierarchy(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelHierarchyWrap *w = new VtkLabelHierarchyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -283,7 +282,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::NewInstance(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyCompositeIteratorWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkLabelHierarchyCompositeIteratorWrap *w = new VtkLabelHierarchyCompositeIteratorWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -323,7 +322,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::SafeDownCast(const Nan::FunctionCal
 			Nan::New<v8::FunctionTemplate>(VtkLabelHierarchyCompositeIteratorWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkLabelHierarchyCompositeIteratorWrap *w = new VtkLabelHierarchyCompositeIteratorWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

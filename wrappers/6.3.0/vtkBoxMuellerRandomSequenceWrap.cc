@@ -90,7 +90,6 @@ void VtkBoxMuellerRandomSequenceWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -130,7 +129,7 @@ void VtkBoxMuellerRandomSequenceWrap::GetUniformSequence(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkRandomSequenceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRandomSequenceWrap *w = new VtkRandomSequenceWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -189,7 +188,7 @@ void VtkBoxMuellerRandomSequenceWrap::NewInstance(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkBoxMuellerRandomSequenceWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkBoxMuellerRandomSequenceWrap *w = new VtkBoxMuellerRandomSequenceWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -229,7 +228,7 @@ void VtkBoxMuellerRandomSequenceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 			Nan::New<v8::FunctionTemplate>(VtkBoxMuellerRandomSequenceWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkBoxMuellerRandomSequenceWrap *w = new VtkBoxMuellerRandomSequenceWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

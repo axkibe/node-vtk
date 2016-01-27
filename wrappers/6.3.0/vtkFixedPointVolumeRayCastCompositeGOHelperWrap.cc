@@ -82,7 +82,6 @@ void VtkFixedPointVolumeRayCastCompositeGOHelperWrap::New(const Nan::FunctionCal
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -177,7 +176,7 @@ void VtkFixedPointVolumeRayCastCompositeGOHelperWrap::NewInstance(const Nan::Fun
 		Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeGOHelperWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkFixedPointVolumeRayCastCompositeGOHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeGOHelperWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -205,7 +204,7 @@ void VtkFixedPointVolumeRayCastCompositeGOHelperWrap::SafeDownCast(const Nan::Fu
 			Nan::New<v8::FunctionTemplate>(VtkFixedPointVolumeRayCastCompositeGOHelperWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkFixedPointVolumeRayCastCompositeGOHelperWrap *w = new VtkFixedPointVolumeRayCastCompositeGOHelperWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

@@ -101,7 +101,6 @@ void VtkAbstractGridConnectivityWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -176,7 +175,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedCellGhostArray(const Nan::Functi
 			Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -206,7 +205,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedGridCellData(const Nan::Function
 			Nan::New<v8::FunctionTemplate>(VtkCellDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCellDataWrap *w = new VtkCellDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -236,7 +235,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedGridPointData(const Nan::Functio
 			Nan::New<v8::FunctionTemplate>(VtkPointDataWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointDataWrap *w = new VtkPointDataWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -266,7 +265,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedPointGhostArray(const Nan::Funct
 			Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -296,7 +295,7 @@ void VtkAbstractGridConnectivityWrap::GetGhostedPoints(const Nan::FunctionCallba
 			Nan::New<v8::FunctionTemplate>(VtkPointsWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkPointsWrap *w = new VtkPointsWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -344,7 +343,7 @@ void VtkAbstractGridConnectivityWrap::NewInstance(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractGridConnectivityWrap *w = new VtkAbstractGridConnectivityWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -372,7 +371,7 @@ void VtkAbstractGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallbackIn
 			Nan::New<v8::FunctionTemplate>(VtkAbstractGridConnectivityWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkAbstractGridConnectivityWrap *w = new VtkAbstractGridConnectivityWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

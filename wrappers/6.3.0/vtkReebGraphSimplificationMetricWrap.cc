@@ -88,7 +88,6 @@ void VtkReebGraphSimplificationMetricWrap::New(const Nan::FunctionCallbackInfo<v
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -178,7 +177,7 @@ void VtkReebGraphSimplificationMetricWrap::NewInstance(const Nan::FunctionCallba
 		Nan::New<v8::FunctionTemplate>(VtkReebGraphSimplificationMetricWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkReebGraphSimplificationMetricWrap *w = new VtkReebGraphSimplificationMetricWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -206,7 +205,7 @@ void VtkReebGraphSimplificationMetricWrap::SafeDownCast(const Nan::FunctionCallb
 			Nan::New<v8::FunctionTemplate>(VtkReebGraphSimplificationMetricWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkReebGraphSimplificationMetricWrap *w = new VtkReebGraphSimplificationMetricWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

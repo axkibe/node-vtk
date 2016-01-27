@@ -87,7 +87,6 @@ void VtkInformationVariantVectorKeyWrap::New(const Nan::FunctionCallbackInfo<v8:
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -183,7 +182,7 @@ void VtkInformationVariantVectorKeyWrap::MakeKey(const Nan::FunctionCallbackInfo
 					Nan::New<v8::FunctionTemplate>(VtkInformationVariantVectorKeyWrap::ptpl)->GetFunction();
 				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 				VtkInformationVariantVectorKeyWrap *w = new VtkInformationVariantVectorKeyWrap();
-				w->native.TakeReference(r);
+				w->native = r;
 				w->Wrap(wo);
 				info.GetReturnValue().Set(wo);
 				return;
@@ -211,7 +210,7 @@ void VtkInformationVariantVectorKeyWrap::NewInstance(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkInformationVariantVectorKeyWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkInformationVariantVectorKeyWrap *w = new VtkInformationVariantVectorKeyWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -239,7 +238,7 @@ void VtkInformationVariantVectorKeyWrap::SafeDownCast(const Nan::FunctionCallbac
 			Nan::New<v8::FunctionTemplate>(VtkInformationVariantVectorKeyWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkInformationVariantVectorKeyWrap *w = new VtkInformationVariantVectorKeyWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

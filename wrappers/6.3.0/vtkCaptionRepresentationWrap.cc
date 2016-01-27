@@ -127,7 +127,6 @@ void VtkCaptionRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -185,7 +184,7 @@ void VtkCaptionRepresentationWrap::GetAnchorRepresentation(const Nan::FunctionCa
 		Nan::New<v8::FunctionTemplate>(VtkPointHandleRepresentation3DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkPointHandleRepresentation3DWrap *w = new VtkPointHandleRepresentation3DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -208,7 +207,7 @@ void VtkCaptionRepresentationWrap::GetCaptionActor2D(const Nan::FunctionCallback
 		Nan::New<v8::FunctionTemplate>(VtkCaptionActor2DWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCaptionActor2DWrap *w = new VtkCaptionActor2DWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -323,7 +322,7 @@ void VtkCaptionRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		Nan::New<v8::FunctionTemplate>(VtkCaptionRepresentationWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkCaptionRepresentationWrap *w = new VtkCaptionRepresentationWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -437,7 +436,7 @@ void VtkCaptionRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 			Nan::New<v8::FunctionTemplate>(VtkCaptionRepresentationWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkCaptionRepresentationWrap *w = new VtkCaptionRepresentationWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

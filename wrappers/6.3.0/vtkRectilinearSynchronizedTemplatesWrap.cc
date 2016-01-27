@@ -146,7 +146,6 @@ void VtkRectilinearSynchronizedTemplatesWrap::New(const Nan::FunctionCallbackInf
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -436,7 +435,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::NewInstance(const Nan::FunctionCal
 		Nan::New<v8::FunctionTemplate>(VtkRectilinearSynchronizedTemplatesWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkRectilinearSynchronizedTemplatesWrap *w = new VtkRectilinearSynchronizedTemplatesWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -464,7 +463,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SafeDownCast(const Nan::FunctionCa
 			Nan::New<v8::FunctionTemplate>(VtkRectilinearSynchronizedTemplatesWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkRectilinearSynchronizedTemplatesWrap *w = new VtkRectilinearSynchronizedTemplatesWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

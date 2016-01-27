@@ -83,7 +83,6 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::New(const Nan::FunctionCallbackInfo
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -159,7 +158,7 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::NewInstance(const Nan::FunctionCall
 		Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastIsosurfaceFunctionWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkVolumeRayCastIsosurfaceFunctionWrap *w = new VtkVolumeRayCastIsosurfaceFunctionWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -187,7 +186,7 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::SafeDownCast(const Nan::FunctionCal
 			Nan::New<v8::FunctionTemplate>(VtkVolumeRayCastIsosurfaceFunctionWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkVolumeRayCastIsosurfaceFunctionWrap *w = new VtkVolumeRayCastIsosurfaceFunctionWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;

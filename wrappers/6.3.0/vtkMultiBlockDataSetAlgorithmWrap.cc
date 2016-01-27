@@ -85,7 +85,6 @@ void VtkMultiBlockDataSetAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::
 	}
 	else
 	{
-		Nan::Utf8String s(info[0]);
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
 			Nan::ThrowError("Parameter Error");
 	}
@@ -129,7 +128,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 			Nan::New<v8::FunctionTemplate>(VtkMultiBlockDataSetWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMultiBlockDataSetWrap *w = new VtkMultiBlockDataSetWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
@@ -148,7 +147,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInf
 		Nan::New<v8::FunctionTemplate>(VtkMultiBlockDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiBlockDataSetWrap *w = new VtkMultiBlockDataSetWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -193,7 +192,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::NewInstance(const Nan::FunctionCallbackI
 		Nan::New<v8::FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkMultiBlockDataSetAlgorithmWrap *w = new VtkMultiBlockDataSetAlgorithmWrap();
-	w->native.TakeReference(r);
+	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
 }
@@ -221,7 +220,7 @@ void VtkMultiBlockDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCallback
 			Nan::New<v8::FunctionTemplate>(VtkMultiBlockDataSetAlgorithmWrap::ptpl)->GetFunction();
 		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 		VtkMultiBlockDataSetAlgorithmWrap *w = new VtkMultiBlockDataSetAlgorithmWrap();
-		w->native.TakeReference(r);
+		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
