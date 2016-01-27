@@ -1,6 +1,6 @@
-diff -urBN VTK-6.3.0-org/CMake/vtkModuleMacros.cmake VTK-6.3.0/CMake/vtkModuleMacros.cmake
---- VTK-6.3.0-org/CMake/vtkModuleMacros.cmake	2015-09-01 23:41:26.000000000 +0200
-+++ VTK-6.3.0/CMake/vtkModuleMacros.cmake	2016-01-26 15:33:44.052936327 +0100
+diff -urBN VTK-6.2.0-org/CMake/vtkModuleMacros.cmake VTK-6.2.0/CMake/vtkModuleMacros.cmake
+--- VTK-6.2.0-org/CMake/vtkModuleMacros.cmake	2016-01-27 13:18:50.195682896 +0100
++++ VTK-6.2.0/CMake/vtkModuleMacros.cmake	2016-01-27 13:23:57.861290268 +0100
 @@ -293,7 +293,7 @@
        DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
        COMPONENT Development)
@@ -10,7 +10,7 @@ diff -urBN VTK-6.3.0-org/CMake/vtkModuleMacros.cmake VTK-6.3.0/CMake/vtkModuleMa
          install(FILES ${${vtk-module}_WRAP_HIERARCHY_FILE}
            DESTINATION ${VTK_INSTALL_PACKAGE_DIR}/Modules
            COMPONENT Development)
-@@ -591,7 +591,7 @@
+@@ -590,7 +590,7 @@
    # TODO: Re-order things so we do not need to duplicate this condition.
    if(NOT ${vtk-module}_EXCLUDE_FROM_WRAPPING AND
        NOT ${vtk-module}_EXCLUDE_FROM_WRAP_HIERARCHY AND
@@ -19,9 +19,9 @@ diff -urBN VTK-6.3.0-org/CMake/vtkModuleMacros.cmake VTK-6.3.0/CMake/vtkModuleMa
      set(_hierarchy ${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}Hierarchy.stamp.txt)
    else()
      set(_hierarchy "")
-diff -urBN VTK-6.3.0-org/CMake/vtkNodeJsWrapping.cmake VTK-6.3.0/CMake/vtkNodeJsWrapping.cmake
---- VTK-6.3.0-org/CMake/vtkNodeJsWrapping.cmake	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/CMake/vtkNodeJsWrapping.cmake	2016-01-26 15:32:05.211006282 +0100
+diff -urBN VTK-6.2.0-org/CMake/vtkNodeJsWrapping.cmake VTK-6.2.0/CMake/vtkNodeJsWrapping.cmake
+--- VTK-6.2.0-org/CMake/vtkNodeJsWrapping.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.2.0/CMake/vtkNodeJsWrapping.cmake	2016-01-27 13:23:57.861290268 +0100
 @@ -0,0 +1,32 @@
 +include(vtkWrapNodeJs)
 +
@@ -55,9 +55,9 @@ diff -urBN VTK-6.3.0-org/CMake/vtkNodeJsWrapping.cmake VTK-6.3.0/CMake/vtkNodeJs
 +
 +endfunction()
 +
-diff -urBN VTK-6.3.0-org/CMake/vtkWrapNodeJs.cmake VTK-6.3.0/CMake/vtkWrapNodeJs.cmake
---- VTK-6.3.0-org/CMake/vtkWrapNodeJs.cmake	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/CMake/vtkWrapNodeJs.cmake	2016-01-26 15:32:05.211006282 +0100
+diff -urBN VTK-6.2.0-org/CMake/vtkWrapNodeJs.cmake VTK-6.2.0/CMake/vtkWrapNodeJs.cmake
+--- VTK-6.2.0-org/CMake/vtkWrapNodeJs.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.2.0/CMake/vtkWrapNodeJs.cmake	2016-01-27 13:23:57.861290268 +0100
 @@ -0,0 +1,146 @@
 +#
 +# CMake implementation of the Wrap NodeJs command.
@@ -205,9 +205,9 @@ diff -urBN VTK-6.3.0-org/CMake/vtkWrapNodeJs.cmake VTK-6.3.0/CMake/vtkWrapNodeJs
 +
 +endmacro()
 +
-diff -urBN VTK-6.3.0-org/CMake/vtkWrapping.cmake VTK-6.3.0/CMake/vtkWrapping.cmake
---- VTK-6.3.0-org/CMake/vtkWrapping.cmake	2015-09-01 23:41:26.000000000 +0200
-+++ VTK-6.3.0/CMake/vtkWrapping.cmake	2016-01-26 15:38:31.758911792 +0100
+diff -urBN VTK-6.2.0-org/CMake/vtkWrapping.cmake VTK-6.2.0/CMake/vtkWrapping.cmake
+--- VTK-6.2.0-org/CMake/vtkWrapping.cmake	2016-01-27 13:18:50.199682813 +0100
++++ VTK-6.2.0/CMake/vtkWrapping.cmake	2016-01-27 13:23:57.861290268 +0100
 @@ -6,6 +6,9 @@
  if(VTK_WRAP_PYTHON)
  #  include(vtkPythonWrapping)
@@ -237,9 +237,9 @@ diff -urBN VTK-6.3.0-org/CMake/vtkWrapping.cmake VTK-6.3.0/CMake/vtkWrapping.cma
        if(VTK_WRAP_TCL AND NOT ${module_name}_EXCLUDE_FROM_TCL_WRAPPING)
          set_property(GLOBAL APPEND PROPERTY VTK_TCL_WRAPPED ${module_name})
          vtk_add_tcl_wrapping(${module_name} "${module_srcs}" "${module_hdrs}")
-diff -urBN VTK-6.3.0-org/CMake/vtkWrapPython.cmake VTK-6.3.0/CMake/vtkWrapPython.cmake
---- VTK-6.3.0-org/CMake/vtkWrapPython.cmake	2015-09-01 23:41:26.000000000 +0200
-+++ VTK-6.3.0/CMake/vtkWrapPython.cmake	2016-01-26 15:32:05.211006282 +0100
+diff -urBN VTK-6.2.0-org/CMake/vtkWrapPython.cmake VTK-6.2.0/CMake/vtkWrapPython.cmake
+--- VTK-6.2.0-org/CMake/vtkWrapPython.cmake	2016-01-27 13:18:50.199682813 +0100
++++ VTK-6.2.0/CMake/vtkWrapPython.cmake	2016-01-27 13:23:57.865290185 +0100
 @@ -113,6 +113,11 @@
            "${quote}@${_args_file}${quote}"
            "-o" "${quote}${CMAKE_CURRENT_BINARY_DIR}/${TMP_FILENAME}Python.cxx${quote}"
@@ -252,10 +252,10 @@ diff -urBN VTK-6.3.0-org/CMake/vtkWrapPython.cmake VTK-6.3.0/CMake/vtkWrapPython
          COMMENT "Python Wrapping - generating ${TMP_FILENAME}Python.cxx"
            ${verbatim}
          )
-diff -urBN VTK-6.3.0-org/CMakeLists.txt VTK-6.3.0/CMakeLists.txt
---- VTK-6.3.0-org/CMakeLists.txt	2015-09-01 23:41:26.000000000 +0200
-+++ VTK-6.3.0/CMakeLists.txt	2016-01-26 15:32:05.211006282 +0100
-@@ -445,6 +445,9 @@
+diff -urBN VTK-6.2.0-org/CMakeLists.txt VTK-6.2.0/CMakeLists.txt
+--- VTK-6.2.0-org/CMakeLists.txt	2016-01-27 13:18:49.995687051 +0100
++++ VTK-6.2.0/CMakeLists.txt	2016-01-27 13:23:57.865290185 +0100
+@@ -426,6 +426,9 @@
  # FIXME: The test should be moved and rewritten.
  include(VTKParallelCMakeTests)
  
@@ -265,7 +265,7 @@ diff -urBN VTK-6.3.0-org/CMakeLists.txt VTK-6.3.0/CMakeLists.txt
  # Add the option for build the Python wrapping to VTK.
  option(VTK_WRAP_PYTHON "Should VTK Python wrapping be built?" OFF)
  set(VTK_PYTHON_VERSION 2 CACHE STRING
-@@ -485,6 +488,19 @@
+@@ -467,6 +470,19 @@
      FORCE)
  endif()
  
@@ -285,7 +285,7 @@ diff -urBN VTK-6.3.0-org/CMakeLists.txt VTK-6.3.0/CMakeLists.txt
  if(VTK_WRAP_JAVA)
    set(VTK_WRAP_JAVA3_INIT_DIR "${VTK_SOURCE_DIR}/Wrapping/Java")
    # Wrapping executables.
-@@ -519,7 +535,7 @@
+@@ -501,7 +517,7 @@
      FORCE)
  endif()
  
@@ -294,20 +294,9 @@ diff -urBN VTK-6.3.0-org/CMakeLists.txt VTK-6.3.0/CMakeLists.txt
    set(VTK_WRAP_HIERARCHY_EXE vtkWrapHierarchy)
  endif()
  
-diff -urBN VTK-6.3.0-org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx VTK-6.3.0/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx
---- VTK-6.3.0-org/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx	2015-09-01 23:41:26.000000000 +0200
-+++ VTK-6.3.0/Rendering/OpenGL/vtkXOpenGLRenderWindow.cxx	2016-01-26 15:32:21.982655041 +0100
-@@ -27,6 +27,7 @@
- // Define GLX_GLXEXT_LEGACY to prevent glx.h from including the glxext.h
- // provided by the system.
- //#define GLX_GLXEXT_LEGACY
-+#define GLX_GLXEXT_LEGACY
- 
- // New Workaround:
- // The GLX_GLXEXT_LEGACY definition was added to work around system glxext.h
-diff -urBN VTK-6.3.0-org/Wrapping/NodeJs/CMakeLists.txt VTK-6.3.0/Wrapping/NodeJs/CMakeLists.txt
---- VTK-6.3.0-org/Wrapping/NodeJs/CMakeLists.txt	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/Wrapping/NodeJs/CMakeLists.txt	2016-01-26 15:32:05.215006198 +0100
+diff -urBN VTK-6.2.0-org/Wrapping/NodeJs/CMakeLists.txt VTK-6.2.0/Wrapping/NodeJs/CMakeLists.txt
+--- VTK-6.2.0-org/Wrapping/NodeJs/CMakeLists.txt	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.2.0/Wrapping/NodeJs/CMakeLists.txt	2016-01-27 13:23:57.865290185 +0100
 @@ -0,0 +1,33 @@
 +# This is where we actually wrap the modules that have requested it.
 +include(vtkNodeJsWrapping)
@@ -342,9 +331,9 @@ diff -urBN VTK-6.3.0-org/Wrapping/NodeJs/CMakeLists.txt VTK-6.3.0/Wrapping/NodeJ
 +  COPY_ONLY
 +)
 +
-diff -urBN VTK-6.3.0-org/Wrapping/NodeJs/init.cc.in VTK-6.3.0/Wrapping/NodeJs/init.cc.in
---- VTK-6.3.0-org/Wrapping/NodeJs/init.cc.in	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/Wrapping/NodeJs/init.cc.in	2016-01-26 15:32:05.215006198 +0100
+diff -urBN VTK-6.2.0-org/Wrapping/NodeJs/init.cc.in VTK-6.2.0/Wrapping/NodeJs/init.cc.in
+--- VTK-6.2.0-org/Wrapping/NodeJs/init.cc.in	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.2.0/Wrapping/NodeJs/init.cc.in	2016-01-27 13:23:57.865290185 +0100
 @@ -0,0 +1,19 @@
 +#include <nan.h>
 +
@@ -365,9 +354,9 @@ diff -urBN VTK-6.3.0-org/Wrapping/NodeJs/init.cc.in VTK-6.3.0/Wrapping/NodeJs/in
 +
 +NODE_MODULE( addon, init )
 +
-diff -urBN VTK-6.3.0-org/Wrapping/NodeJs/module.cmake VTK-6.3.0/Wrapping/NodeJs/module.cmake
---- VTK-6.3.0-org/Wrapping/NodeJs/module.cmake	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/Wrapping/NodeJs/module.cmake	2016-01-26 15:32:05.215006198 +0100
+diff -urBN VTK-6.2.0-org/Wrapping/NodeJs/module.cmake VTK-6.2.0/Wrapping/NodeJs/module.cmake
+--- VTK-6.2.0-org/Wrapping/NodeJs/module.cmake	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.2.0/Wrapping/NodeJs/module.cmake	2016-01-27 13:23:57.865290185 +0100
 @@ -0,0 +1,9 @@
 +vtk_module(vtkWrappingNodeJs
 +  DEPENDS
@@ -378,10 +367,10 @@ diff -urBN VTK-6.3.0-org/Wrapping/NodeJs/module.cmake VTK-6.3.0/Wrapping/NodeJs/
 +  EXCLUDE_FROM_ALL
 +  EXCLUDE_FROM_WRAPPING
 +  )
-diff -urBN VTK-6.3.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.3.0/Wrapping/Tools/CMakeLists.txt
---- VTK-6.3.0-org/Wrapping/Tools/CMakeLists.txt	2015-09-01 23:41:26.000000000 +0200
-+++ VTK-6.3.0/Wrapping/Tools/CMakeLists.txt	2016-01-26 15:32:05.215006198 +0100
-@@ -88,6 +88,13 @@
+diff -urBN VTK-6.2.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.2.0/Wrapping/Tools/CMakeLists.txt
+--- VTK-6.2.0-org/Wrapping/Tools/CMakeLists.txt	2016-01-27 13:18:50.935667523 +0100
++++ VTK-6.2.0/Wrapping/Tools/CMakeLists.txt	2016-01-27 13:23:57.865290185 +0100
+@@ -87,6 +87,13 @@
    add_executable(vtkWrapPythonInit vtkWrapPythonInit.c)
    vtk_compile_tools_target(vtkWrapPython)
    vtk_compile_tools_target(vtkWrapPythonInit)
@@ -395,9 +384,9 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.3.0/Wrapping/Tools/
  
    add_executable(vtkParseJava vtkParseJava.c)
    target_link_libraries(vtkParseJava vtkWrappingTools)
-diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJs.c
---- VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-27 14:42:32.323526659 +0100
+diff -urBN VTK-6.2.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.2.0/Wrapping/Tools/vtkWrapNodeJs.c
+--- VTK-6.2.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.2.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-27 14:42:26.287651591 +0100
 @@ -0,0 +1,1427 @@
 +/*=========================================================================
 +
@@ -1826,9 +1815,9 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +
 +
 +// vim:set ts=2 sw=2 expandtab:
-diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJsInit.c
---- VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJsInit.c	2016-01-26 15:32:05.215006198 +0100
+diff -urBN VTK-6.2.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.2.0/Wrapping/Tools/vtkWrapNodeJsInit.c
+--- VTK-6.2.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.2.0/Wrapping/Tools/vtkWrapNodeJsInit.c	2016-01-27 13:23:57.869290102 +0100
 @@ -0,0 +1,146 @@
 +#include <stdio.h>
 +#include <stdlib.h>
@@ -1976,9 +1965,9 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.3.0/Wrapping/T
 +
 +// vim:set ts=2 sw=2 expandtab:
 +
-diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJsSupport.c
---- VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-26 15:32:05.215006198 +0100
+diff -urBN VTK-6.2.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-6.2.0/Wrapping/Tools/vtkWrapNodeJsSupport.c
+--- VTK-6.2.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
++++ VTK-6.2.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-27 13:23:57.869290102 +0100
 @@ -0,0 +1,47 @@
 +
 +/* used for development for a minimal vtk lib wrapper */
