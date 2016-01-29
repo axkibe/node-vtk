@@ -59,9 +59,6 @@ void VtkEdgeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
-	Nan::SetPrototypeMethod(tpl, "Layout", Layout);
-	Nan::SetPrototypeMethod(tpl, "layout", Layout);
-
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -162,18 +159,6 @@ void VtkEdgeLayoutStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkEdgeLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkEdgeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeLayoutStrategyWrap>(info.Holder());
-	vtkEdgeLayoutStrategy *native = (vtkEdgeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Layout();
 }
 
 void VtkEdgeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

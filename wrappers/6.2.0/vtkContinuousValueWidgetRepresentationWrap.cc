@@ -62,6 +62,9 @@ void VtkContinuousValueWidgetRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "PlaceWidget", PlaceWidget);
+	Nan::SetPrototypeMethod(tpl, "placeWidget", PlaceWidget);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -179,6 +182,43 @@ void VtkContinuousValueWidgetRepresentationWrap::NewInstance(const Nan::Function
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkContinuousValueWidgetRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContinuousValueWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContinuousValueWidgetRepresentationWrap>(info.Holder());
+	vtkContinuousValueWidgetRepresentation *native = (vtkContinuousValueWidgetRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkContinuousValueWidgetRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

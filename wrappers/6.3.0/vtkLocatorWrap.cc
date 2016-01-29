@@ -9,7 +9,6 @@
 #include "vtkObjectWrap.h"
 #include "vtkLocatorWrap.h"
 #include "vtkDataSetWrap.h"
-#include "vtkPolyDataWrap.h"
 
 using namespace v8;
 
@@ -53,15 +52,6 @@ void VtkLocatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "AutomaticOn", AutomaticOn);
 	Nan::SetPrototypeMethod(tpl, "automaticOn", AutomaticOn);
-
-	Nan::SetPrototypeMethod(tpl, "BuildLocator", BuildLocator);
-	Nan::SetPrototypeMethod(tpl, "buildLocator", BuildLocator);
-
-	Nan::SetPrototypeMethod(tpl, "FreeSearchStructure", FreeSearchStructure);
-	Nan::SetPrototypeMethod(tpl, "freeSearchStructure", FreeSearchStructure);
-
-	Nan::SetPrototypeMethod(tpl, "GenerateRepresentation", GenerateRepresentation);
-	Nan::SetPrototypeMethod(tpl, "generateRepresentation", GenerateRepresentation);
 
 	Nan::SetPrototypeMethod(tpl, "GetAutomatic", GetAutomatic);
 	Nan::SetPrototypeMethod(tpl, "getAutomatic", GetAutomatic);
@@ -170,54 +160,6 @@ void VtkLocatorWrap::AutomaticOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	native->AutomaticOn();
-}
-
-void VtkLocatorWrap::BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkLocatorWrap>(info.Holder());
-	vtkLocator *native = (vtkLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->BuildLocator();
-}
-
-void VtkLocatorWrap::FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkLocatorWrap>(info.Holder());
-	vtkLocator *native = (vtkLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->FreeSearchStructure();
-}
-
-void VtkLocatorWrap::GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkLocatorWrap>(info.Holder());
-	vtkLocator *native = (vtkLocator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->GenerateRepresentation(
-				info[0]->Int32Value(),
-				(vtkPolyData *) a1->native.GetPointer()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkLocatorWrap::GetAutomatic(const Nan::FunctionCallbackInfo<v8::Value>& info)

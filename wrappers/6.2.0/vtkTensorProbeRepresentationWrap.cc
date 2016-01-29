@@ -66,6 +66,9 @@ void VtkTensorProbeRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "Move", Move);
+	Nan::SetPrototypeMethod(tpl, "move", Move);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -192,6 +195,45 @@ void VtkTensorProbeRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::V
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkTensorProbeRepresentationWrap::Move(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
+	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Move(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTensorProbeRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
@@ -292,7 +334,37 @@ void VtkTensorProbeRepresentationWrap::SetProbePosition(const Nan::FunctionCallb
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
 	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetProbePosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

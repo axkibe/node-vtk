@@ -9,7 +9,6 @@ include(${VTK_USE_FILE})
 
 file(GLOB WRAPPERS_ROOT "wrappers" )
 file(GLOB VTK_SUPPORTED RELATIVE ${WRAPPERS_ROOT} "wrappers/*" )
-message( STATUS "SUP: ${VTK_SUPPORTED}" )
 
 if(NOT ";${VTK_SUPPORTED};" MATCHES ";${VTK_VERSION};")
 	message( FATAL_ERROR "VTK version \"${VTK_VERSION}\" not supported by node-vtk :(" )

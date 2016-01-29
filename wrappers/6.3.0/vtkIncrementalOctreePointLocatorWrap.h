@@ -32,6 +32,9 @@ class VtkIncrementalOctreePointLocatorWrap : public VtkIncrementalPointLocatorWr
 		static void BuildCubicOctreeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildCubicOctreeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindClosestNPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindPointsWithinRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindPointsWithinSquaredRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBuildCubicOctree(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +44,7 @@ class VtkIncrementalOctreePointLocatorWrap : public VtkIncrementalPointLocatorWr
 		static void GetMaxPointsPerLeafMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxPointsPerLeafMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InitPointInsertion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

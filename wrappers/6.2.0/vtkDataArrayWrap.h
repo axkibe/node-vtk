@@ -41,9 +41,11 @@ class VtkDataArrayWrap : public VtkAbstractArrayWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataTypeMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataTypeMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataTypeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetElementComponentSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxNorm(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTuples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsertNextTuple1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsertNextTuple2(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,8 +56,6 @@ class VtkDataArrayWrap : public VtkAbstractArrayWrap
 		static void IsNumeric(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void L2_NORM_RANGE(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void RemoveFirstTuple(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void RemoveLastTuple(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

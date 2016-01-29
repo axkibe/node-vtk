@@ -58,6 +58,9 @@ void VtkBalloonRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ComputeInteractionState", ComputeInteractionState);
 	Nan::SetPrototypeMethod(tpl, "computeInteractionState", ComputeInteractionState);
 
+	Nan::SetPrototypeMethod(tpl, "EndWidgetInteraction", EndWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "endWidgetInteraction", EndWidgetInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "GetBalloonImage", GetBalloonImage);
 	Nan::SetPrototypeMethod(tpl, "getBalloonImage", GetBalloonImage);
 
@@ -154,6 +157,9 @@ void VtkBalloonRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextProperty", SetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "setTextProperty", SetTextProperty);
 
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
 	ptpl.Reset( tpl );
 }
 
@@ -220,6 +226,43 @@ void VtkBalloonRepresentationWrap::ComputeInteractionState(const Nan::FunctionCa
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBalloonRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
+	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->EndWidgetInteraction(
+			b0
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -717,7 +760,37 @@ void VtkBalloonRepresentationWrap::SetImageSize(const Nan::FunctionCallbackInfo<
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetImageSize(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -740,7 +813,37 @@ void VtkBalloonRepresentationWrap::SetOffset(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOffset(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -792,6 +895,43 @@ void VtkBalloonRepresentationWrap::SetTextProperty(const Nan::FunctionCallbackIn
 		}
 		native->SetTextProperty(
 			(vtkTextProperty *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBalloonRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
+	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
 		);
 		return;
 	}

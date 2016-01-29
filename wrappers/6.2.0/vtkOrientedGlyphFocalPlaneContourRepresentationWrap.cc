@@ -15,6 +15,7 @@
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "vtkMatrix4x4Wrap.h"
 
 using namespace v8;
 
@@ -71,6 +72,9 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetContourPlaneDirectionCosines", GetContourPlaneDirectionCosines);
+	Nan::SetPrototypeMethod(tpl, "getContourPlaneDirectionCosines", GetContourPlaneDirectionCosines);
+
 	Nan::SetPrototypeMethod(tpl, "GetContourRepresentationAsPolyData", GetContourRepresentationAsPolyData);
 	Nan::SetPrototypeMethod(tpl, "getContourRepresentationAsPolyData", GetContourRepresentationAsPolyData);
 
@@ -115,6 +119,12 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -264,6 +274,54 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetClassName(const Nan
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetContourPlaneDirectionCosines(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
+	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		vtkMatrix4x4 * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetContourPlaneDirectionCosines(
+			b0
+		);
+			VtkMatrix4x4Wrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkMatrix4x4Wrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkMatrix4x4Wrap *w = new VtkMatrix4x4Wrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetContourRepresentationAsPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -588,6 +646,80 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SetRenderer(const Nan:
 		}
 		native->SetRenderer(
 			(vtkRenderer *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
+	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
+	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

@@ -95,6 +95,9 @@ void VtkCenteredSliderRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "PlaceWidget", PlaceWidget);
+	Nan::SetPrototypeMethod(tpl, "placeWidget", PlaceWidget);
+
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
@@ -109,6 +112,12 @@ void VtkCenteredSliderRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetTitleText", SetTitleText);
 	Nan::SetPrototypeMethod(tpl, "setTitleText", SetTitleText);
+
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -430,6 +439,43 @@ void VtkCenteredSliderRepresentationWrap::NewInstance(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkCenteredSliderRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCenteredSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCenteredSliderRepresentationWrap>(info.Holder());
+	vtkCenteredSliderRepresentation *native = (vtkCenteredSliderRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCenteredSliderRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCenteredSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCenteredSliderRepresentationWrap>(info.Holder());
@@ -539,6 +585,80 @@ void VtkCenteredSliderRepresentationWrap::SetTitleText(const Nan::FunctionCallba
 		}
 		native->SetTitleText(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCenteredSliderRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCenteredSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCenteredSliderRepresentationWrap>(info.Holder());
+	vtkCenteredSliderRepresentation *native = (vtkCenteredSliderRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCenteredSliderRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCenteredSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCenteredSliderRepresentationWrap>(info.Holder());
+	vtkCenteredSliderRepresentation *native = (vtkCenteredSliderRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

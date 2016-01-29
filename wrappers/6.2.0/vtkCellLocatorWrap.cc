@@ -9,6 +9,7 @@
 #include "vtkAbstractCellLocatorWrap.h"
 #include "vtkCellLocatorWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkPointsWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkPolyDataWrap.h"
 
@@ -58,6 +59,9 @@ void VtkCellLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BuildLocatorInternal", BuildLocatorInternal);
 	Nan::SetPrototypeMethod(tpl, "buildLocatorInternal", BuildLocatorInternal);
 
+	Nan::SetPrototypeMethod(tpl, "FindCellsAlongLine", FindCellsAlongLine);
+	Nan::SetPrototypeMethod(tpl, "findCellsAlongLine", FindCellsAlongLine);
+
 	Nan::SetPrototypeMethod(tpl, "ForceBuildLocator", ForceBuildLocator);
 	Nan::SetPrototypeMethod(tpl, "forceBuildLocator", ForceBuildLocator);
 
@@ -78,6 +82,9 @@ void VtkCellLocatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfCellsPerBucket", GetNumberOfCellsPerBucket);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfCellsPerBucket", GetNumberOfCellsPerBucket);
+
+	Nan::SetPrototypeMethod(tpl, "IntersectWithLine", IntersectWithLine);
+	Nan::SetPrototypeMethod(tpl, "intersectWithLine", IntersectWithLine);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -154,6 +161,73 @@ void VtkCellLocatorWrap::BuildLocatorInternal(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	native->BuildLocatorInternal();
+}
+
+void VtkCellLocatorWrap::FindCellsAlongLine(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkCellLocatorWrap>(info.Holder());
+	vtkCellLocator *native = (vtkCellLocator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkIdListWrap *a3 = ObjectWrap::Unwrap<VtkIdListWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->FindCellsAlongLine(
+						b0,
+						b1,
+						info[2]->NumberValue(),
+						(vtkIdList *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCellLocatorWrap::ForceBuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -274,6 +348,76 @@ void VtkCellLocatorWrap::GetNumberOfCellsPerBucket(const Nan::FunctionCallbackIn
 	}
 	r = native->GetNumberOfCellsPerBucket();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCellLocatorWrap::IntersectWithLine(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkCellLocatorWrap>(info.Holder());
+	vtkCellLocator *native = (vtkCellLocator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkIdListWrap *a3 = ObjectWrap::Unwrap<VtkIdListWrap>(info[3]->ToObject());
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->IntersectWithLine(
+						b0,
+						b1,
+						(vtkPoints *) a2->native.GetPointer(),
+						(vtkIdList *) a3->native.GetPointer()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCellLocatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

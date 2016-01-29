@@ -33,6 +33,7 @@ class VtkImageEllipsoidSourceWrap : public VtkImageAlgorithmWrap
 		static void GetInValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -9,7 +9,6 @@
 #include "vtkContextItemWrap.h"
 #include "vtkChartWrap.h"
 #include "vtkObjectWrap.h"
-#include "vtkContext2DWrap.h"
 #include "vtkPlotWrap.h"
 #include "vtkAxisWrap.h"
 #include "vtkAnnotationLinkWrap.h"
@@ -107,9 +106,6 @@ void VtkChartWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
-	Nan::SetPrototypeMethod(tpl, "paint", Paint);
 
 	Nan::SetPrototypeMethod(tpl, "RecalculateBounds", RecalculateBounds);
 	Nan::SetPrototypeMethod(tpl, "recalculateBounds", RecalculateBounds);
@@ -551,28 +547,6 @@ void VtkChartWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkChartWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
-	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
-		bool r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->Paint(
-			(vtkContext2D *) a0->native.GetPointer()
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkChartWrap::RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
@@ -797,7 +771,37 @@ void VtkChartWrap::SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGeometry(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -858,7 +862,37 @@ void VtkChartWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -881,7 +915,37 @@ void VtkChartWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

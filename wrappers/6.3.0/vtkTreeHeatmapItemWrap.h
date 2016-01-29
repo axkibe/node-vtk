@@ -29,12 +29,15 @@ class VtkTreeHeatmapItemWrap : public VtkContextItemWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColumnTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDendrogram(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeatmap(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPrunedTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

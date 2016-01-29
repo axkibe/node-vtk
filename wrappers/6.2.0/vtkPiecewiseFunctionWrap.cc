@@ -55,6 +55,9 @@ void VtkPiecewiseFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AddSegment", AddSegment);
 	Nan::SetPrototypeMethod(tpl, "addSegment", AddSegment);
 
+	Nan::SetPrototypeMethod(tpl, "AdjustRange", AdjustRange);
+	Nan::SetPrototypeMethod(tpl, "adjustRange", AdjustRange);
+
 	Nan::SetPrototypeMethod(tpl, "AllowDuplicateScalarsOff", AllowDuplicateScalarsOff);
 	Nan::SetPrototypeMethod(tpl, "allowDuplicateScalarsOff", AllowDuplicateScalarsOff);
 
@@ -88,6 +91,9 @@ void VtkPiecewiseFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFirstNonZeroValue", GetFirstNonZeroValue);
 	Nan::SetPrototypeMethod(tpl, "getFirstNonZeroValue", GetFirstNonZeroValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetNodeValue", GetNodeValue);
+	Nan::SetPrototypeMethod(tpl, "getNodeValue", GetNodeValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
 	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
@@ -120,6 +126,9 @@ void VtkPiecewiseFunctionWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetClamping", SetClamping);
 	Nan::SetPrototypeMethod(tpl, "setClamping", SetClamping);
+
+	Nan::SetPrototypeMethod(tpl, "SetNodeValue", SetNodeValue);
+	Nan::SetPrototypeMethod(tpl, "setNodeValue", SetNodeValue);
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
@@ -225,6 +234,45 @@ void VtkPiecewiseFunctionWrap::AddSegment(const Nan::FunctionCallbackInfo<v8::Va
 				}
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPiecewiseFunctionWrap::AdjustRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
+	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->AdjustRange(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -420,6 +468,49 @@ void VtkPiecewiseFunctionWrap::GetFirstNonZeroValue(const Nan::FunctionCallbackI
 	}
 	r = native->GetFirstNonZeroValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPiecewiseFunctionWrap::GetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
+	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNodeValue(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPiecewiseFunctionWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -626,6 +717,49 @@ void VtkPiecewiseFunctionWrap::SetClamping(const Nan::FunctionCallbackInfo<v8::V
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPiecewiseFunctionWrap::SetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
+	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetNodeValue(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

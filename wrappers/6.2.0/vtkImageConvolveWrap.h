@@ -30,9 +30,21 @@ class VtkImageConvolveWrap : public VtkThreadedImageAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKernel3x3(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKernel3x3x3(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKernel5x5(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKernel7x7(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetKernel3x3(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetKernel3x3x3(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetKernel5x5(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetKernel7x7(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

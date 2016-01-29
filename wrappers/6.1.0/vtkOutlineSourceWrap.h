@@ -42,6 +42,7 @@ class VtkOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetBoxType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBoxTypeToAxisAligned(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBoxTypeToOriented(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCorners(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

@@ -62,6 +62,9 @@ void VtkGeoInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLockHeading", GetLockHeading);
 	Nan::SetPrototypeMethod(tpl, "getLockHeading", GetLockHeading);
 
+	Nan::SetPrototypeMethod(tpl, "GetRayIntersection", GetRayIntersection);
+	Nan::SetPrototypeMethod(tpl, "getRayIntersection", GetRayIntersection);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -227,6 +230,87 @@ void VtkGeoInteractorStyleWrap::GetLockHeading(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetLockHeading();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGeoInteractorStyleWrap::GetRayIntersection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
+	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->GetRayIntersection(
+					b0,
+					b1,
+					b2
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGeoInteractorStyleWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

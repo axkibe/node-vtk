@@ -36,6 +36,7 @@ class VtkAbstractInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 		static void GetCaching(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLastDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastLocalCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalizeVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVectorsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVectorsType(const Nan::FunctionCallbackInfo<v8::Value>& info);

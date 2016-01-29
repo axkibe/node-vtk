@@ -86,6 +86,9 @@ void VtkDataArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataTypeMin", GetDataTypeMin);
 	Nan::SetPrototypeMethod(tpl, "getDataTypeMin", GetDataTypeMin);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeRange", GetDataTypeRange);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeRange", GetDataTypeRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetElementComponentSize", GetElementComponentSize);
 	Nan::SetPrototypeMethod(tpl, "getElementComponentSize", GetElementComponentSize);
 
@@ -94,6 +97,9 @@ void VtkDataArrayWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMaxNorm", GetMaxNorm);
 	Nan::SetPrototypeMethod(tpl, "getMaxNorm", GetMaxNorm);
+
+	Nan::SetPrototypeMethod(tpl, "GetRange", GetRange);
+	Nan::SetPrototypeMethod(tpl, "getRange", GetRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetTuples", GetTuples);
 	Nan::SetPrototypeMethod(tpl, "getTuples", GetTuples);
@@ -123,12 +129,6 @@ void VtkDataArrayWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveFirstTuple", RemoveFirstTuple);
-	Nan::SetPrototypeMethod(tpl, "removeFirstTuple", RemoveFirstTuple);
-
-	Nan::SetPrototypeMethod(tpl, "RemoveLastTuple", RemoveLastTuple);
-	Nan::SetPrototypeMethod(tpl, "removeLastTuple", RemoveLastTuple);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -441,6 +441,76 @@ void VtkDataArrayWrap::GetDataTypeMin(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDataArrayWrap::GetDataTypeRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayWrap>(info.Holder());
+	vtkDataArray *native = (vtkDataArray *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetDataTypeRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetDataTypeRange(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkDataArrayWrap::GetElementComponentSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayWrap>(info.Holder());
@@ -490,6 +560,56 @@ void VtkDataArrayWrap::GetMaxNorm(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	r = native->GetMaxNorm();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDataArrayWrap::GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayWrap>(info.Holder());
+	vtkDataArray *native = (vtkDataArray *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetRange(
+				b0,
+				info[1]->Int32Value()
+			);
+			return;
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkDataArrayWrap::GetTuples(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -748,30 +868,6 @@ void VtkDataArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkDataArrayWrap::RemoveFirstTuple(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayWrap>(info.Holder());
-	vtkDataArray *native = (vtkDataArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->RemoveFirstTuple();
-}
-
-void VtkDataArrayWrap::RemoveLastTuple(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayWrap>(info.Holder());
-	vtkDataArray *native = (vtkDataArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->RemoveLastTuple();
 }
 
 void VtkDataArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

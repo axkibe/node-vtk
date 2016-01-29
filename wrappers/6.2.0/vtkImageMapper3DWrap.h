@@ -45,11 +45,10 @@ class VtkImageMapper3DWrap : public VtkAbstractMapper3DWrap
 		static void GetSliceAtFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceFacesCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSlicePlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSlicePlaneInDataCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStreaming(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -40,7 +40,6 @@ class VtkInformationKeyWrap : public VtkObjectBaseWrap
 		static void Remove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Report(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -52,11 +52,17 @@ void VtkPlotFunctionalBagWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CreateDefaultLookupTable", CreateDefaultLookupTable);
 	Nan::SetPrototypeMethod(tpl, "createDefaultLookupTable", CreateDefaultLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
+
+	Nan::SetPrototypeMethod(tpl, "GetUnscaledInputBounds", GetUnscaledInputBounds);
+	Nan::SetPrototypeMethod(tpl, "getUnscaledInputBounds", GetUnscaledInputBounds);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -117,6 +123,43 @@ void VtkPlotFunctionalBagWrap::CreateDefaultLookupTable(const Nan::FunctionCallb
 	native->CreateDefaultLookupTable();
 }
 
+void VtkPlotFunctionalBagWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
+	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPlotFunctionalBagWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
@@ -152,6 +195,43 @@ void VtkPlotFunctionalBagWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotFunctionalBagWrap::GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
+	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetUnscaledInputBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotFunctionalBagWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

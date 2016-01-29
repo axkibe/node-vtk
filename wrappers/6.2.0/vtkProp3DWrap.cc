@@ -58,6 +58,9 @@ void VtkProp3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ComputeMatrix", ComputeMatrix);
 	Nan::SetPrototypeMethod(tpl, "computeMatrix", ComputeMatrix);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +72,9 @@ void VtkProp3DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMatrix", GetMatrix);
 	Nan::SetPrototypeMethod(tpl, "getMatrix", GetMatrix);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
+	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
 
 	Nan::SetPrototypeMethod(tpl, "GetUserMatrix", GetUserMatrix);
 	Nan::SetPrototypeMethod(tpl, "getUserMatrix", GetUserMatrix);
@@ -156,7 +162,37 @@ void VtkProp3DWrap::AddOrientation(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->AddOrientation(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -183,7 +219,37 @@ void VtkProp3DWrap::AddPosition(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->AddPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -216,6 +282,43 @@ void VtkProp3DWrap::ComputeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	native->ComputeMatrix();
+}
+
+void VtkProp3DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkProp3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -264,6 +367,7 @@ void VtkProp3DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
@@ -274,6 +378,35 @@ void VtkProp3DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		native->GetMatrix(
 			(vtkMatrix4x4 *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[16];
+		if( a0->Length() < 16 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 16; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetMatrix(
+			b0
 		);
 		return;
 	}
@@ -294,6 +427,43 @@ void VtkProp3DWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkProp3DWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
+	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetOrientation(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkProp3DWrap::GetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -542,7 +712,37 @@ void VtkProp3DWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrientation(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -569,7 +769,37 @@ void VtkProp3DWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrigin(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -596,7 +826,37 @@ void VtkProp3DWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -623,7 +883,37 @@ void VtkProp3DWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DWrap>(info.Holder());
 	vtkProp3D *native = (vtkProp3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScale(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

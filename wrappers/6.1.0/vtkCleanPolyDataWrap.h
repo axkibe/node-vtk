@@ -53,6 +53,8 @@ class VtkCleanPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void GetToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void OperateOnBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void OperateOnPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PieceInvariantOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PieceInvariantOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PointMergingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

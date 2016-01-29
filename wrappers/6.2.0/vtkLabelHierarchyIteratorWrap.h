@@ -33,9 +33,12 @@ class VtkLabelHierarchyIteratorWrap : public VtkObjectWrap
 		static void BoxAllNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BoxNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAllBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBoundedSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHierarchy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsAtEnd(const Nan::FunctionCallbackInfo<v8::Value>& info);

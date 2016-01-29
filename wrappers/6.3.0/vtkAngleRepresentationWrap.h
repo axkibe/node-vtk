@@ -32,8 +32,8 @@ class VtkAngleRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void ArcVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ArcVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CenterWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArcVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCenterRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,6 +59,8 @@ class VtkAngleRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetRay1Visibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRay2Visibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -70,6 +70,9 @@ void VtkImplicitPlaneRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DrawPlaneOn", DrawPlaneOn);
 	Nan::SetPrototypeMethod(tpl, "drawPlaneOn", DrawPlaneOn);
 
+	Nan::SetPrototypeMethod(tpl, "EndWidgetInteraction", EndWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "endWidgetInteraction", EndWidgetInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "GetActors", GetActors);
 	Nan::SetPrototypeMethod(tpl, "getActors", GetActors);
 
@@ -100,6 +103,9 @@ void VtkImplicitPlaneRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLockNormalToCamera", GetLockNormalToCamera);
 	Nan::SetPrototypeMethod(tpl, "getLockNormalToCamera", GetLockNormalToCamera);
 
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormalProperty", GetNormalProperty);
 	Nan::SetPrototypeMethod(tpl, "getNormalProperty", GetNormalProperty);
 
@@ -111,6 +117,9 @@ void VtkImplicitPlaneRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNormalToZAxis", GetNormalToZAxis);
 	Nan::SetPrototypeMethod(tpl, "getNormalToZAxis", GetNormalToZAxis);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
 
 	Nan::SetPrototypeMethod(tpl, "GetOutlineProperty", GetOutlineProperty);
 	Nan::SetPrototypeMethod(tpl, "getOutlineProperty", GetOutlineProperty);
@@ -196,6 +205,9 @@ void VtkImplicitPlaneRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "OutsideBoundsOn", OutsideBoundsOn);
 	Nan::SetPrototypeMethod(tpl, "outsideBoundsOn", OutsideBoundsOn);
 
+	Nan::SetPrototypeMethod(tpl, "PlaceWidget", PlaceWidget);
+	Nan::SetPrototypeMethod(tpl, "placeWidget", PlaceWidget);
+
 	Nan::SetPrototypeMethod(tpl, "PushPlane", PushPlane);
 	Nan::SetPrototypeMethod(tpl, "pushPlane", PushPlane);
 
@@ -265,6 +277,9 @@ void VtkImplicitPlaneRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTubing", SetTubing);
 	Nan::SetPrototypeMethod(tpl, "setTubing", SetTubing);
 
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "TubingOff", TubingOff);
 	Nan::SetPrototypeMethod(tpl, "tubingOff", TubingOff);
 
@@ -273,6 +288,9 @@ void VtkImplicitPlaneRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "UpdatePlacement", UpdatePlacement);
 	Nan::SetPrototypeMethod(tpl, "updatePlacement", UpdatePlacement);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -389,6 +407,43 @@ void VtkImplicitPlaneRepresentationWrap::DrawPlaneOn(const Nan::FunctionCallback
 		return;
 	}
 	native->DrawPlaneOn();
+}
+
+void VtkImplicitPlaneRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
+	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->EndWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImplicitPlaneRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -546,6 +601,43 @@ void VtkImplicitPlaneRepresentationWrap::GetLockNormalToCamera(const Nan::Functi
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImplicitPlaneRepresentationWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
+	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetNormal(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImplicitPlaneRepresentationWrap::GetNormalProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
@@ -609,6 +701,43 @@ void VtkImplicitPlaneRepresentationWrap::GetNormalToZAxis(const Nan::FunctionCal
 	}
 	r = native->GetNormalToZAxis();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImplicitPlaneRepresentationWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
+	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetOrigin(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImplicitPlaneRepresentationWrap::GetOutlineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1062,6 +1191,43 @@ void VtkImplicitPlaneRepresentationWrap::OutsideBoundsOn(const Nan::FunctionCall
 	native->OutsideBoundsOn();
 }
 
+void VtkImplicitPlaneRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
+	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImplicitPlaneRepresentationWrap::PushPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
@@ -1242,6 +1408,7 @@ void VtkImplicitPlaneRepresentationWrap::SetEdgeColor(const Nan::FunctionCallbac
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLookupTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLookupTableWrap *a0 = ObjectWrap::Unwrap<VtkLookupTableWrap>(info[0]->ToObject());
@@ -1252,6 +1419,35 @@ void VtkImplicitPlaneRepresentationWrap::SetEdgeColor(const Nan::FunctionCallbac
 		}
 		native->SetEdgeColor(
 			(vtkLookupTable *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeColor(
+			b0
 		);
 		return;
 	}
@@ -1320,7 +1516,37 @@ void VtkImplicitPlaneRepresentationWrap::SetNormal(const Nan::FunctionCallbackIn
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNormal(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1416,7 +1642,37 @@ void VtkImplicitPlaneRepresentationWrap::SetOrigin(const Nan::FunctionCallbackIn
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
 	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrigin(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1534,6 +1790,43 @@ void VtkImplicitPlaneRepresentationWrap::SetTubing(const Nan::FunctionCallbackIn
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkImplicitPlaneRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
+	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImplicitPlaneRepresentationWrap::TubingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
@@ -1568,5 +1861,42 @@ void VtkImplicitPlaneRepresentationWrap::UpdatePlacement(const Nan::FunctionCall
 		return;
 	}
 	native->UpdatePlacement();
+}
+
+void VtkImplicitPlaneRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitPlaneRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info.Holder());
+	vtkImplicitPlaneRepresentation *native = (vtkImplicitPlaneRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

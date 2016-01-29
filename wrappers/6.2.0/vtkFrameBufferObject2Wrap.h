@@ -31,6 +31,11 @@ class VtkFrameBufferObject2Wrap : public VtkObjectWrap
 
 		static void DeactivateDrawBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeactivateReadBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Download(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DownloadColor1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DownloadColor3(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DownloadColor4(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DownloadDepth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);

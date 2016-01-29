@@ -54,6 +54,9 @@ void VtkControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeselectAllPoints", DeselectAllPoints);
 	Nan::SetPrototypeMethod(tpl, "deselectAllPoints", DeselectAllPoints);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -173,6 +176,43 @@ void VtkControlPointsItemWrap::DeselectAllPoints(const Nan::FunctionCallbackInfo
 		return;
 	}
 	native->DeselectAllPoints();
+}
+
+void VtkControlPointsItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkControlPointsItemWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -624,7 +664,37 @@ void VtkControlPointsItemWrap::SetUserBounds(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
 	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUserBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -655,7 +725,37 @@ void VtkControlPointsItemWrap::SetValidBounds(const Nan::FunctionCallbackInfo<v8
 {
 	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
 	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetValidBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

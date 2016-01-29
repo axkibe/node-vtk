@@ -32,6 +32,7 @@ class VtkPlanesIntersectionWrap : public VtkPlanesWrap
 		static void Convert3DCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumRegionVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntersectsRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PolygonIntersectsBBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRegionVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

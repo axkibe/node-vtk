@@ -9,6 +9,8 @@
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkCenterOfMassWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkPointsWrap.h"
+#include "vtkDataArrayWrap.h"
 
 using namespace v8;
 
@@ -46,6 +48,9 @@ void VtkCenterOfMassWrap::InitPtpl()
 	tpl->Inherit(Nan::New<FunctionTemplate>(VtkPointSetAlgorithmWrap::ptpl));
 	tpl->SetClassName(Nan::New("VtkCenterOfMassWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+	Nan::SetPrototypeMethod(tpl, "ComputeCenterOfMass", ComputeCenterOfMass);
+	Nan::SetPrototypeMethod(tpl, "computeCenterOfMass", ComputeCenterOfMass);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -95,6 +100,53 @@ void VtkCenterOfMassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkCenterOfMassWrap::ComputeCenterOfMass(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCenterOfMassWrap *wrapper = ObjectWrap::Unwrap<VtkCenterOfMassWrap>(info.Holder());
+	vtkCenterOfMass *native = (vtkCenterOfMass *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->ComputeCenterOfMass(
+					(vtkPoints *) a0->native.GetPointer(),
+					(vtkDataArray *) a1->native.GetPointer(),
+					b2
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCenterOfMassWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -205,7 +257,37 @@ void VtkCenterOfMassWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkCenterOfMassWrap *wrapper = ObjectWrap::Unwrap<VtkCenterOfMassWrap>(info.Holder());
 	vtkCenterOfMass *native = (vtkCenterOfMass *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCenter(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

@@ -46,8 +46,17 @@ void VtkStructuredExtentWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkStructuredExtentWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "Clamp", Clamp);
+	Nan::SetPrototypeMethod(tpl, "clamp", Clamp);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetDimensions", GetDimensions);
+	Nan::SetPrototypeMethod(tpl, "getDimensions", GetDimensions);
+
+	Nan::SetPrototypeMethod(tpl, "Grow", Grow);
+	Nan::SetPrototypeMethod(tpl, "grow", Grow);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -57,6 +66,15 @@ void VtkStructuredExtentWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "Smaller", Smaller);
+	Nan::SetPrototypeMethod(tpl, "smaller", Smaller);
+
+	Nan::SetPrototypeMethod(tpl, "StrictlySmaller", StrictlySmaller);
+	Nan::SetPrototypeMethod(tpl, "strictlySmaller", StrictlySmaller);
+
+	Nan::SetPrototypeMethod(tpl, "Transform", Transform);
+	Nan::SetPrototypeMethod(tpl, "transform", Transform);
 
 	ptpl.Reset( tpl );
 }
@@ -87,6 +105,64 @@ void VtkStructuredExtentWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkStructuredExtentWrap::Clamp(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredExtentWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredExtentWrap>(info.Holder());
+	vtkStructuredExtent *native = (vtkStructuredExtent *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Clamp(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStructuredExtentWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStructuredExtentWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredExtentWrap>(info.Holder());
@@ -99,6 +175,105 @@ void VtkStructuredExtentWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkStructuredExtentWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredExtentWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredExtentWrap>(info.Holder());
+	vtkStructuredExtent *native = (vtkStructuredExtent *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetDimensions(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredExtentWrap::Grow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredExtentWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredExtentWrap>(info.Holder());
+	vtkStructuredExtent *native = (vtkStructuredExtent *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Grow(
+				b0,
+				info[1]->Int32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkStructuredExtentWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -173,6 +348,184 @@ void VtkStructuredExtentWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredExtentWrap::Smaller(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredExtentWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredExtentWrap>(info.Holder());
+	vtkStructuredExtent *native = (vtkStructuredExtent *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Smaller(
+				b0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredExtentWrap::StrictlySmaller(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredExtentWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredExtentWrap>(info.Holder());
+	vtkStructuredExtent *native = (vtkStructuredExtent *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->StrictlySmaller(
+				b0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredExtentWrap::Transform(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredExtentWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredExtentWrap>(info.Holder());
+	vtkStructuredExtent *native = (vtkStructuredExtent *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Transform(
+				b0,
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

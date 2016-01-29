@@ -46,6 +46,9 @@ void VtkQuaternionInterpolatorWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkQuaternionInterpolatorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "AddQuaternion", AddQuaternion);
+	Nan::SetPrototypeMethod(tpl, "addQuaternion", AddQuaternion);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +72,9 @@ void VtkQuaternionInterpolatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolateQuaternion", InterpolateQuaternion);
+	Nan::SetPrototypeMethod(tpl, "interpolateQuaternion", InterpolateQuaternion);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -118,6 +124,47 @@ void VtkQuaternionInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkQuaternionInterpolatorWrap::AddQuaternion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuaternionInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkQuaternionInterpolatorWrap>(info.Holder());
+	vtkQuaternionInterpolator *native = (vtkQuaternionInterpolator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddQuaternion(
+				info[0]->NumberValue(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkQuaternionInterpolatorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -228,6 +275,47 @@ void VtkQuaternionInterpolatorWrap::Initialize(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	native->Initialize();
+}
+
+void VtkQuaternionInterpolatorWrap::InterpolateQuaternion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuaternionInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkQuaternionInterpolatorWrap>(info.Holder());
+	vtkQuaternionInterpolator *native = (vtkQuaternionInterpolator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateQuaternion(
+				info[0]->NumberValue(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkQuaternionInterpolatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

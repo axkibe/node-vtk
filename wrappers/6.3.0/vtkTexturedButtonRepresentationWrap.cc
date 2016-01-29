@@ -103,6 +103,9 @@ void VtkTexturedButtonRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "PlaceWidget", PlaceWidget);
+	Nan::SetPrototypeMethod(tpl, "placeWidget", PlaceWidget);
+
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
@@ -479,6 +482,97 @@ void VtkTexturedButtonRepresentationWrap::NewInstance(const Nan::FunctionCallbac
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTexturedButtonRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
+	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->PlaceWidget(
+					info[0]->NumberValue(),
+					b1,
+					b2
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTexturedButtonRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)

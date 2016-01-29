@@ -36,14 +36,12 @@ class VtkObjectFactoryWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassOverrideName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassOverrideWithName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnableFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLibraryPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfOverrides(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOverrideDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOverrideInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRegisteredFactories(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetVTKSourceVersion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasOverride(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasOverrideAny(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

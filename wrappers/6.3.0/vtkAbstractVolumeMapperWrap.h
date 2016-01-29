@@ -32,6 +32,7 @@ class VtkAbstractVolumeMapperWrap : public VtkAbstractMapper3DWrap
 		static void GetArrayAccessMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,7 +41,6 @@ class VtkAbstractVolumeMapperWrap : public VtkAbstractMapper3DWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SelectScalarArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -362,7 +362,37 @@ void VtkHyperOctreeFractalSourceWrap::SetOriginCX(const Nan::FunctionCallbackInf
 {
 	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
 	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOriginCX(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -393,7 +423,37 @@ void VtkHyperOctreeFractalSourceWrap::SetProjectionAxes(const Nan::FunctionCallb
 {
 	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
 	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetProjectionAxes(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -420,7 +480,37 @@ void VtkHyperOctreeFractalSourceWrap::SetSizeCX(const Nan::FunctionCallbackInfo<
 {
 	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
 	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSizeCX(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

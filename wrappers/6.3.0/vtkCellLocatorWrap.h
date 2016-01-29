@@ -32,6 +32,7 @@ class VtkCellLocatorWrap : public VtkAbstractCellLocatorWrap
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildLocatorIfNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildLocatorInternal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindCellsAlongLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ForceBuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);

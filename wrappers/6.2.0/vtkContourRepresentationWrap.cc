@@ -11,8 +11,6 @@
 #include "vtkObjectWrap.h"
 #include "vtkPointPlacerWrap.h"
 #include "vtkContourLineInterpolatorWrap.h"
-#include "vtkWindowWrap.h"
-#include "vtkViewportWrap.h"
 #include "vtkPolyDataWrap.h"
 
 using namespace v8;
@@ -55,6 +53,9 @@ void VtkContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ActivateNode", ActivateNode);
 	Nan::SetPrototypeMethod(tpl, "activateNode", ActivateNode);
 
+	Nan::SetPrototypeMethod(tpl, "AddIntermediatePointWorldPosition", AddIntermediatePointWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "addIntermediatePointWorldPosition", AddIntermediatePointWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "AddNodeAtDisplayPosition", AddNodeAtDisplayPosition);
 	Nan::SetPrototypeMethod(tpl, "addNodeAtDisplayPosition", AddNodeAtDisplayPosition);
 
@@ -63,9 +64,6 @@ void VtkContourRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "AddNodeOnContour", AddNodeOnContour);
 	Nan::SetPrototypeMethod(tpl, "addNodeOnContour", AddNodeOnContour);
-
-	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
-	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
 	Nan::SetPrototypeMethod(tpl, "ClearAllNodes", ClearAllNodes);
 	Nan::SetPrototypeMethod(tpl, "clearAllNodes", ClearAllNodes);
@@ -76,9 +74,6 @@ void VtkContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ClosedLoopOn", ClosedLoopOn);
 	Nan::SetPrototypeMethod(tpl, "closedLoopOn", ClosedLoopOn);
 
-	Nan::SetPrototypeMethod(tpl, "ComputeInteractionState", ComputeInteractionState);
-	Nan::SetPrototypeMethod(tpl, "computeInteractionState", ComputeInteractionState);
-
 	Nan::SetPrototypeMethod(tpl, "DeleteActiveNode", DeleteActiveNode);
 	Nan::SetPrototypeMethod(tpl, "deleteActiveNode", DeleteActiveNode);
 
@@ -88,17 +83,23 @@ void VtkContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeleteNthNode", DeleteNthNode);
 	Nan::SetPrototypeMethod(tpl, "deleteNthNode", DeleteNthNode);
 
+	Nan::SetPrototypeMethod(tpl, "GetActiveNodeDisplayPosition", GetActiveNodeDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getActiveNodeDisplayPosition", GetActiveNodeDisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetActiveNodeSelected", GetActiveNodeSelected);
 	Nan::SetPrototypeMethod(tpl, "getActiveNodeSelected", GetActiveNodeSelected);
+
+	Nan::SetPrototypeMethod(tpl, "GetActiveNodeWorldOrientation", GetActiveNodeWorldOrientation);
+	Nan::SetPrototypeMethod(tpl, "getActiveNodeWorldOrientation", GetActiveNodeWorldOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "GetActiveNodeWorldPosition", GetActiveNodeWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getActiveNodeWorldPosition", GetActiveNodeWorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetClosedLoop", GetClosedLoop);
 	Nan::SetPrototypeMethod(tpl, "getClosedLoop", GetClosedLoop);
-
-	Nan::SetPrototypeMethod(tpl, "GetContourRepresentationAsPolyData", GetContourRepresentationAsPolyData);
-	Nan::SetPrototypeMethod(tpl, "getContourRepresentationAsPolyData", GetContourRepresentationAsPolyData);
 
 	Nan::SetPrototypeMethod(tpl, "GetCurrentOperation", GetCurrentOperation);
 	Nan::SetPrototypeMethod(tpl, "getCurrentOperation", GetCurrentOperation);
@@ -109,14 +110,29 @@ void VtkContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCurrentOperationMinValue", GetCurrentOperationMinValue);
 	Nan::SetPrototypeMethod(tpl, "getCurrentOperationMinValue", GetCurrentOperationMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetIntermediatePointWorldPosition", GetIntermediatePointWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getIntermediatePointWorldPosition", GetIntermediatePointWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetLineInterpolator", GetLineInterpolator);
 	Nan::SetPrototypeMethod(tpl, "getLineInterpolator", GetLineInterpolator);
 
 	Nan::SetPrototypeMethod(tpl, "GetNodePolyData", GetNodePolyData);
 	Nan::SetPrototypeMethod(tpl, "getNodePolyData", GetNodePolyData);
 
+	Nan::SetPrototypeMethod(tpl, "GetNthNodeDisplayPosition", GetNthNodeDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getNthNodeDisplayPosition", GetNthNodeDisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetNthNodeSelected", GetNthNodeSelected);
 	Nan::SetPrototypeMethod(tpl, "getNthNodeSelected", GetNthNodeSelected);
+
+	Nan::SetPrototypeMethod(tpl, "GetNthNodeSlope", GetNthNodeSlope);
+	Nan::SetPrototypeMethod(tpl, "getNthNodeSlope", GetNthNodeSlope);
+
+	Nan::SetPrototypeMethod(tpl, "GetNthNodeWorldOrientation", GetNthNodeWorldOrientation);
+	Nan::SetPrototypeMethod(tpl, "getNthNodeWorldOrientation", GetNthNodeWorldOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "GetNthNodeWorldPosition", GetNthNodeWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getNthNodeWorldPosition", GetNthNodeWorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfIntermediatePoints", GetNumberOfIntermediatePoints);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfIntermediatePoints", GetNumberOfIntermediatePoints);
@@ -148,32 +164,20 @@ void VtkContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetWorldToleranceMinValue", GetWorldToleranceMinValue);
 	Nan::SetPrototypeMethod(tpl, "getWorldToleranceMinValue", GetWorldToleranceMinValue);
 
-	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
-	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
-	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
-	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
-
-	Nan::SetPrototypeMethod(tpl, "RenderOpaqueGeometry", RenderOpaqueGeometry);
-	Nan::SetPrototypeMethod(tpl, "renderOpaqueGeometry", RenderOpaqueGeometry);
-
-	Nan::SetPrototypeMethod(tpl, "RenderOverlay", RenderOverlay);
-	Nan::SetPrototypeMethod(tpl, "renderOverlay", RenderOverlay);
-
-	Nan::SetPrototypeMethod(tpl, "RenderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
-	Nan::SetPrototypeMethod(tpl, "renderTranslucentPolygonalGeometry", RenderTranslucentPolygonalGeometry);
-
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "SetActiveNodeToDisplayPosition", SetActiveNodeToDisplayPosition);
 	Nan::SetPrototypeMethod(tpl, "setActiveNodeToDisplayPosition", SetActiveNodeToDisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetActiveNodeToWorldPosition", SetActiveNodeToWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setActiveNodeToWorldPosition", SetActiveNodeToWorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetClosedLoop", SetClosedLoop);
 	Nan::SetPrototypeMethod(tpl, "setClosedLoop", SetClosedLoop);
@@ -201,6 +205,9 @@ void VtkContourRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetNthNodeSelected", SetNthNodeSelected);
 	Nan::SetPrototypeMethod(tpl, "setNthNodeSelected", SetNthNodeSelected);
+
+	Nan::SetPrototypeMethod(tpl, "SetNthNodeWorldPosition", SetNthNodeWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setNthNodeWorldPosition", SetNthNodeWorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetPixelTolerance", SetPixelTolerance);
 	Nan::SetPrototypeMethod(tpl, "setPixelTolerance", SetPixelTolerance);
@@ -258,7 +265,70 @@ void VtkContourRepresentationWrap::ActivateNode(const Nan::FunctionCallbackInfo<
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ActivateNode(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ActivateNode(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -279,11 +349,117 @@ void VtkContourRepresentationWrap::ActivateNode(const Nan::FunctionCallbackInfo<
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkContourRepresentationWrap::AddIntermediatePointWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->AddIntermediatePointWorldPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkContourRepresentationWrap::AddNodeAtDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->AddNodeAtDisplayPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->AddNodeAtDisplayPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -308,7 +484,71 @@ void VtkContourRepresentationWrap::AddNodeAtWorldPosition(const Nan::FunctionCal
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->AddNodeAtWorldPosition(
+				b0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->AddNodeAtWorldPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -358,18 +598,6 @@ void VtkContourRepresentationWrap::AddNodeOnContour(const Nan::FunctionCallbackI
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkContourRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
-	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->BuildRepresentation();
-}
-
 void VtkContourRepresentationWrap::ClearAllNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
@@ -404,35 +632,6 @@ void VtkContourRepresentationWrap::ClosedLoopOn(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	native->ClosedLoopOn();
-}
-
-void VtkContourRepresentationWrap::ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
-	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				int r;
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				r = native->ComputeInteractionState(
-					info[0]->Int32Value(),
-					info[1]->Int32Value(),
-					info[2]->Int32Value()
-				);
-				info.GetReturnValue().Set(Nan::New(r));
-				return;
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkContourRepresentationWrap::DeleteActiveNode(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -484,6 +683,45 @@ void VtkContourRepresentationWrap::DeleteNthNode(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkContourRepresentationWrap::GetActiveNodeDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetActiveNodeDisplayPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkContourRepresentationWrap::GetActiveNodeSelected(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
@@ -496,6 +734,84 @@ void VtkContourRepresentationWrap::GetActiveNodeSelected(const Nan::FunctionCall
 	}
 	r = native->GetActiveNodeSelected();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContourRepresentationWrap::GetActiveNodeWorldOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetActiveNodeWorldOrientation(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContourRepresentationWrap::GetActiveNodeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetActiveNodeWorldPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkContourRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -524,29 +840,6 @@ void VtkContourRepresentationWrap::GetClosedLoop(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetClosedLoop();
 	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkContourRepresentationWrap::GetContourRepresentationAsPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
-	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	vtkPolyData * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetContourRepresentationAsPolyData();
-		VtkPolyDataWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkPolyDataWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkPolyDataWrap *w = new VtkPolyDataWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
 }
 
 void VtkContourRepresentationWrap::GetCurrentOperation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -589,6 +882,53 @@ void VtkContourRepresentationWrap::GetCurrentOperationMinValue(const Nan::Functi
 	}
 	r = native->GetCurrentOperationMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContourRepresentationWrap::GetIntermediatePointWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->GetIntermediatePointWorldPosition(
+					info[0]->Int32Value(),
+					info[1]->Int32Value(),
+					b2
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkContourRepresentationWrap::GetLineInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -634,6 +974,49 @@ void VtkContourRepresentationWrap::GetNodePolyData(const Nan::FunctionCallbackIn
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkContourRepresentationWrap::GetNthNodeDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNthNodeDisplayPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkContourRepresentationWrap::GetNthNodeSelected(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
@@ -651,6 +1034,135 @@ void VtkContourRepresentationWrap::GetNthNodeSelected(const Nan::FunctionCallbac
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContourRepresentationWrap::GetNthNodeSlope(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNthNodeSlope(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContourRepresentationWrap::GetNthNodeWorldOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNthNodeWorldOrientation(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContourRepresentationWrap::GetNthNodeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNthNodeWorldPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -811,20 +1323,6 @@ void VtkContourRepresentationWrap::GetWorldToleranceMinValue(const Nan::Function
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkContourRepresentationWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
-	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->HasTranslucentPolygonalGeometry();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkContourRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
@@ -870,92 +1368,6 @@ void VtkContourRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkContourRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
-	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->ReleaseGraphicsResources(
-			(vtkWindow *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkContourRepresentationWrap::RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
-	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		int r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->RenderOpaqueGeometry(
-			(vtkViewport *) a0->native.GetPointer()
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkContourRepresentationWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
-	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		int r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->RenderOverlay(
-			(vtkViewport *) a0->native.GetPointer()
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkContourRepresentationWrap::RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
-	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		int r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->RenderTranslucentPolygonalGeometry(
-			(vtkViewport *) a0->native.GetPointer()
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkContourRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
@@ -991,7 +1403,70 @@ void VtkContourRepresentationWrap::SetActiveNodeToDisplayPosition(const Nan::Fun
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SetActiveNodeToDisplayPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SetActiveNodeToDisplayPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -1008,6 +1483,77 @@ void VtkContourRepresentationWrap::SetActiveNodeToDisplayPosition(const Nan::Fun
 			info.GetReturnValue().Set(Nan::New(r));
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContourRepresentationWrap::SetActiveNodeToWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetActiveNodeToWorldPosition(
+				b0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SetActiveNodeToWorldPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -1122,9 +1668,74 @@ void VtkContourRepresentationWrap::SetNthNodeDisplayPosition(const Nan::Function
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetNthNodeDisplayPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetNthNodeDisplayPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
@@ -1164,6 +1775,82 @@ void VtkContourRepresentationWrap::SetNthNodeSelected(const Nan::FunctionCallbac
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContourRepresentationWrap::SetNthNodeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[9];
+				if( a2->Length() < 9 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 9; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->SetNthNodeWorldPosition(
+					info[0]->Int32Value(),
+					b1,
+					b2
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetNthNodeWorldPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -35,6 +35,7 @@ class VtkPlaybackRepresentationWrap : public VtkBorderRepresentationWrap
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void JumpToBeginning(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -42,6 +42,7 @@ class VtkImageViewer2Wrap : public VtkObjectWrap
 		static void GetSliceMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSliceRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

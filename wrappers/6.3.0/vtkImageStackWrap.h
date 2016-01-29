@@ -33,6 +33,7 @@ class VtkImageStackWrap : public VtkImageSliceWrap
 		static void BuildPaths(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveLayer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImages(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -59,6 +59,9 @@ void VtkColorTransferFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AddRGBSegment", AddRGBSegment);
 	Nan::SetPrototypeMethod(tpl, "addRGBSegment", AddRGBSegment);
 
+	Nan::SetPrototypeMethod(tpl, "AdjustRange", AdjustRange);
+	Nan::SetPrototypeMethod(tpl, "adjustRange", AdjustRange);
+
 	Nan::SetPrototypeMethod(tpl, "AllowDuplicateScalarsOff", AllowDuplicateScalarsOff);
 	Nan::SetPrototypeMethod(tpl, "allowDuplicateScalarsOff", AllowDuplicateScalarsOff);
 
@@ -92,6 +95,9 @@ void VtkColorTransferFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColor", GetColor);
+	Nan::SetPrototypeMethod(tpl, "getColor", GetColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetColorSpace", GetColorSpace);
 	Nan::SetPrototypeMethod(tpl, "getColorSpace", GetColorSpace);
 
@@ -106,6 +112,9 @@ void VtkColorTransferFunctionWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetHSVWrap", GetHSVWrap);
 	Nan::SetPrototypeMethod(tpl, "getHSVWrap", GetHSVWrap);
+
+	Nan::SetPrototypeMethod(tpl, "GetNodeValue", GetNodeValue);
+	Nan::SetPrototypeMethod(tpl, "getNodeValue", GetNodeValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetRedValue", GetRedValue);
 	Nan::SetPrototypeMethod(tpl, "getRedValue", GetRedValue);
@@ -175,6 +184,9 @@ void VtkColorTransferFunctionWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetNanColor", SetNanColor);
 	Nan::SetPrototypeMethod(tpl, "setNanColor", SetNanColor);
+
+	Nan::SetPrototypeMethod(tpl, "SetNodeValue", SetNodeValue);
+	Nan::SetPrototypeMethod(tpl, "setNodeValue", SetNodeValue);
 
 	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
 	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
@@ -439,6 +451,45 @@ void VtkColorTransferFunctionWrap::AddRGBSegment(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkColorTransferFunctionWrap::AdjustRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
+	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->AdjustRange(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkColorTransferFunctionWrap::AllowDuplicateScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
@@ -598,6 +649,47 @@ void VtkColorTransferFunctionWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkColorTransferFunctionWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
+	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetColor(
+				info[0]->NumberValue(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkColorTransferFunctionWrap::GetColorSpace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
@@ -673,6 +765,49 @@ void VtkColorTransferFunctionWrap::GetHSVWrap(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetHSVWrap();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkColorTransferFunctionWrap::GetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
+	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNodeValue(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkColorTransferFunctionWrap::GetRedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -889,7 +1024,37 @@ void VtkColorTransferFunctionWrap::SetAboveRangeColor(const Nan::FunctionCallbac
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAboveRangeColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -935,7 +1100,37 @@ void VtkColorTransferFunctionWrap::SetBelowRangeColor(const Nan::FunctionCallbac
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBelowRangeColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1067,7 +1262,37 @@ void VtkColorTransferFunctionWrap::SetNanColor(const Nan::FunctionCallbackInfo<v
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNanColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1085,6 +1310,49 @@ void VtkColorTransferFunctionWrap::SetNanColor(const Nan::FunctionCallbackInfo<v
 				);
 				return;
 			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkColorTransferFunctionWrap::SetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
+	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetNodeValue(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");

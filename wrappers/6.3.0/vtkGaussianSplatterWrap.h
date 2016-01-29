@@ -57,6 +57,7 @@ class VtkGaussianSplatterWrap : public VtkImageAlgorithmWrap
 		static void NormalWarpingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NormalWarpingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SamplePoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScalarWarpingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScalarWarpingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAccumulationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);

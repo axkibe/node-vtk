@@ -58,6 +58,9 @@ void VtkTextActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAlignmentPoint", GetAlignmentPoint);
 	Nan::SetPrototypeMethod(tpl, "getAlignmentPoint", GetAlignmentPoint);
 
+	Nan::SetPrototypeMethod(tpl, "GetBoundingBox", GetBoundingBox);
+	Nan::SetPrototypeMethod(tpl, "getBoundingBox", GetBoundingBox);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -66,6 +69,9 @@ void VtkTextActorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetScaledTextProperty", GetScaledTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getScaledTextProperty", GetScaledTextProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetTextProperty", GetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getTextProperty", GetTextProperty);
@@ -214,6 +220,48 @@ void VtkTextActorWrap::GetAlignmentPoint(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTextActorWrap::GetBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
+	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetBoundingBox(
+				(vtkViewport *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTextActorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
@@ -263,6 +311,48 @@ void VtkTextActorWrap::GetScaledTextProperty(const Nan::FunctionCallbackInfo<v8:
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTextActorWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
+	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSize(
+				(vtkViewport *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTextActorWrap::GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -637,7 +727,37 @@ void VtkTextActorWrap::SetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMinimumSize(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

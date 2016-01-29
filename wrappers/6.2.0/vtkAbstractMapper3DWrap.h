@@ -29,7 +29,10 @@ class VtkAbstractMapper3DWrap : public VtkAbstractMapperWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetClippingPlaneInDataCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

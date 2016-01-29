@@ -30,6 +30,7 @@ class VtkPolyDataPointPlacerWrap : public VtkPointPlacerWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPropPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,8 @@ class VtkPolyDataPointPlacerWrap : public VtkPointPlacerWrap
 		static void RemoveAllProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveViewProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

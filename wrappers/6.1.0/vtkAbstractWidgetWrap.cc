@@ -49,9 +49,6 @@ void VtkAbstractWidgetWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAbstractWidgetWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "CreateDefaultRepresentation", CreateDefaultRepresentation);
-	Nan::SetPrototypeMethod(tpl, "createDefaultRepresentation", CreateDefaultRepresentation);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -138,18 +135,6 @@ void VtkAbstractWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkAbstractWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
-	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->CreateDefaultRepresentation();
 }
 
 void VtkAbstractWidgetWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

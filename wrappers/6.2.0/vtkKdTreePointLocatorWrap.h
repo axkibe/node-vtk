@@ -30,6 +30,8 @@ class VtkKdTreePointLocatorWrap : public VtkAbstractPointLocatorWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindClosestNPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindPointsWithinRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);

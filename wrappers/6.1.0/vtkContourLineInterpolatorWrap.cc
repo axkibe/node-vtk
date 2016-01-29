@@ -8,9 +8,8 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkContourLineInterpolatorWrap.h"
-#include "vtkRendererWrap.h"
-#include "vtkContourRepresentationWrap.h"
 #include "vtkIntArrayWrap.h"
+#include "vtkContourRepresentationWrap.h"
 
 using namespace v8;
 
@@ -54,9 +53,6 @@ void VtkContourLineInterpolatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSpan", GetSpan);
 	Nan::SetPrototypeMethod(tpl, "getSpan", GetSpan);
-
-	Nan::SetPrototypeMethod(tpl, "InterpolateLine", InterpolateLine);
-	Nan::SetPrototypeMethod(tpl, "interpolateLine", InterpolateLine);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -132,41 +128,6 @@ void VtkContourLineInterpolatorWrap::GetSpan(const Nan::FunctionCallbackInfo<v8:
 					(vtkContourRepresentation *) a2->native.GetPointer()
 				);
 				return;
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkContourLineInterpolatorWrap::InterpolateLine(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkContourLineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkContourLineInterpolatorWrap>(info.Holder());
-	vtkContourLineInterpolator *native = (vtkContourLineInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkContourRepresentationWrap *a1 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					int r;
-					if(info.Length() != 4)
-					{
-						Nan::ThrowError("Too many parameters.");
-						return;
-					}
-					r = native->InterpolateLine(
-						(vtkRenderer *) a0->native.GetPointer(),
-						(vtkContourRepresentation *) a1->native.GetPointer(),
-						info[2]->Int32Value(),
-						info[3]->Int32Value()
-					);
-					info.GetReturnValue().Set(Nan::New(r));
-					return;
-				}
 			}
 		}
 	}

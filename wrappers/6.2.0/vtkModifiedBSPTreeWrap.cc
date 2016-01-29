@@ -10,6 +10,8 @@
 #include "vtkModifiedBSPTreeWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "vtkPointsWrap.h"
+#include "vtkIdListWrap.h"
 #include "vtkIdListCollectionWrap.h"
 
 using namespace v8;
@@ -66,6 +68,9 @@ void VtkModifiedBSPTreeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetLeafNodeCellInformation", GetLeafNodeCellInformation);
 	Nan::SetPrototypeMethod(tpl, "getLeafNodeCellInformation", GetLeafNodeCellInformation);
+
+	Nan::SetPrototypeMethod(tpl, "IntersectWithLine", IntersectWithLine);
+	Nan::SetPrototypeMethod(tpl, "intersectWithLine", IntersectWithLine);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -208,6 +213,102 @@ void VtkModifiedBSPTreeWrap::GetLeafNodeCellInformation(const Nan::FunctionCallb
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkModifiedBSPTreeWrap::IntersectWithLine(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkModifiedBSPTreeWrap *wrapper = ObjectWrap::Unwrap<VtkModifiedBSPTreeWrap>(info.Holder());
+	vtkModifiedBSPTree *native = (vtkModifiedBSPTree *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkPointsWrap *a3 = ObjectWrap::Unwrap<VtkPointsWrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[4]))
+					{
+						VtkIdListWrap *a4 = ObjectWrap::Unwrap<VtkIdListWrap>(info[4]->ToObject());
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->IntersectWithLine(
+							b0,
+							b1,
+							info[2]->NumberValue(),
+							(vtkPoints *) a3->native.GetPointer(),
+							(vtkIdList *) a4->native.GetPointer()
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkIdListWrap *a3 = ObjectWrap::Unwrap<VtkIdListWrap>(info[3]->ToObject());
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->IntersectWithLine(
+						b0,
+						b1,
+						(vtkPoints *) a2->native.GetPointer(),
+						(vtkIdList *) a3->native.GetPointer()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkModifiedBSPTreeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

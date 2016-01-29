@@ -56,6 +56,9 @@ void VtkGeoSphereTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetToRectangular", GetToRectangular);
 	Nan::SetPrototypeMethod(tpl, "getToRectangular", GetToRectangular);
 
+	Nan::SetPrototypeMethod(tpl, "InternalTransformPoint", InternalTransformPoint);
+	Nan::SetPrototypeMethod(tpl, "internalTransformPoint", InternalTransformPoint);
+
 	Nan::SetPrototypeMethod(tpl, "Inverse", Inverse);
 	Nan::SetPrototypeMethod(tpl, "inverse", Inverse);
 
@@ -152,6 +155,64 @@ void VtkGeoSphereTransformWrap::GetToRectangular(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetToRectangular();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGeoSphereTransformWrap::InternalTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoSphereTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSphereTransformWrap>(info.Holder());
+	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InternalTransformPoint(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGeoSphereTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info)

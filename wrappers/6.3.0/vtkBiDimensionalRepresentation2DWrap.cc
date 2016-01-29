@@ -60,6 +60,9 @@ void VtkBiDimensionalRepresentation2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetLabelPosition", GetLabelPosition);
+	Nan::SetPrototypeMethod(tpl, "getLabelPosition", GetLabelPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetLabelText", GetLabelText);
 	Nan::SetPrototypeMethod(tpl, "getLabelText", GetLabelText);
 
@@ -72,6 +75,9 @@ void VtkBiDimensionalRepresentation2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTextProperty", GetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getTextProperty", GetTextProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetWorldLabelPosition", GetWorldLabelPosition);
+	Nan::SetPrototypeMethod(tpl, "getWorldLabelPosition", GetWorldLabelPosition);
+
 	Nan::SetPrototypeMethod(tpl, "Highlight", Highlight);
 	Nan::SetPrototypeMethod(tpl, "highlight", Highlight);
 
@@ -81,6 +87,12 @@ void VtkBiDimensionalRepresentation2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Point2WidgetInteraction", Point2WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "point2WidgetInteraction", Point2WidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "Point3WidgetInteraction", Point3WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "point3WidgetInteraction", Point3WidgetInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
@@ -89,6 +101,15 @@ void VtkBiDimensionalRepresentation2DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "StartWidgetDefinition", StartWidgetDefinition);
+	Nan::SetPrototypeMethod(tpl, "startWidgetDefinition", StartWidgetDefinition);
+
+	Nan::SetPrototypeMethod(tpl, "StartWidgetManipulation", StartWidgetManipulation);
+	Nan::SetPrototypeMethod(tpl, "startWidgetManipulation", StartWidgetManipulation);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -174,6 +195,43 @@ void VtkBiDimensionalRepresentation2DWrap::GetClassName(const Nan::FunctionCallb
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkBiDimensionalRepresentation2DWrap::GetLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
+	vtkBiDimensionalRepresentation2D *native = (vtkBiDimensionalRepresentation2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetLabelPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkBiDimensionalRepresentation2DWrap::GetLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
@@ -257,6 +315,43 @@ void VtkBiDimensionalRepresentation2DWrap::GetTextProperty(const Nan::FunctionCa
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkBiDimensionalRepresentation2DWrap::GetWorldLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
+	vtkBiDimensionalRepresentation2D *native = (vtkBiDimensionalRepresentation2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetWorldLabelPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkBiDimensionalRepresentation2DWrap::Highlight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
@@ -319,6 +414,80 @@ void VtkBiDimensionalRepresentation2DWrap::NewInstance(const Nan::FunctionCallba
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkBiDimensionalRepresentation2DWrap::Point2WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
+	vtkBiDimensionalRepresentation2D *native = (vtkBiDimensionalRepresentation2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Point2WidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentation2DWrap::Point3WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
+	vtkBiDimensionalRepresentation2D *native = (vtkBiDimensionalRepresentation2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Point3WidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkBiDimensionalRepresentation2DWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -389,6 +558,117 @@ void VtkBiDimensionalRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallb
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentation2DWrap::StartWidgetDefinition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
+	vtkBiDimensionalRepresentation2D *native = (vtkBiDimensionalRepresentation2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetDefinition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentation2DWrap::StartWidgetManipulation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
+	vtkBiDimensionalRepresentation2D *native = (vtkBiDimensionalRepresentation2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetManipulation(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentation2DWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentation2DWrap>(info.Holder());
+	vtkBiDimensionalRepresentation2D *native = (vtkBiDimensionalRepresentation2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -29,6 +29,7 @@ class VtkPlotHistogram2DWrap : public VtkPlotWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputImageData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);

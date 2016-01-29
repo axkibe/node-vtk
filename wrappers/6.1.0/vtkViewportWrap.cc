@@ -11,7 +11,6 @@
 #include "vtkPropWrap.h"
 #include "vtkPropCollectionWrap.h"
 #include "vtkActor2DCollectionWrap.h"
-#include "vtkWindowWrap.h"
 #include "vtkAssemblyPathWrap.h"
 
 using namespace v8;
@@ -105,12 +104,6 @@ void VtkViewportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPickY2", GetPickY2);
 	Nan::SetPrototypeMethod(tpl, "getPickY2", GetPickY2);
 
-	Nan::SetPrototypeMethod(tpl, "GetPickedZ", GetPickedZ);
-	Nan::SetPrototypeMethod(tpl, "getPickedZ", GetPickedZ);
-
-	Nan::SetPrototypeMethod(tpl, "GetVTKWindow", GetVTKWindow);
-	Nan::SetPrototypeMethod(tpl, "getVTKWindow", GetVTKWindow);
-
 	Nan::SetPrototypeMethod(tpl, "GetViewProps", GetViewProps);
 	Nan::SetPrototypeMethod(tpl, "getViewProps", GetViewProps);
 
@@ -131,9 +124,6 @@ void VtkViewportWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "PickProp", PickProp);
-	Nan::SetPrototypeMethod(tpl, "pickProp", PickProp);
 
 	Nan::SetPrototypeMethod(tpl, "PickPropFrom", PickPropFrom);
 	Nan::SetPrototypeMethod(tpl, "pickPropFrom", PickPropFrom);
@@ -493,43 +483,6 @@ void VtkViewportWrap::GetPickY2(const Nan::FunctionCallbackInfo<v8::Value>& info
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkViewportWrap::GetPickedZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
-	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetPickedZ();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkViewportWrap::GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
-	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	vtkWindow * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetVTKWindow();
-		VtkWindowWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkWindowWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkWindowWrap *w = new VtkWindowWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
 void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
@@ -669,40 +622,6 @@ void VtkViewportWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkViewportWrap::PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
-	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() > 1 && info[1]->IsNumber())
-		{
-			vtkAssemblyPath * r;
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			r = native->PickProp(
-				info[0]->NumberValue(),
-				info[1]->NumberValue()
-			);
-				VtkAssemblyPathWrap::InitPtpl();
-			v8::Local<v8::Value> argv[1] =
-				{ Nan::New(vtkNodeJsNoWrap) };
-			v8::Local<v8::Function> cons =
-				Nan::New<v8::FunctionTemplate>(VtkAssemblyPathWrap::ptpl)->GetFunction();
-			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-			VtkAssemblyPathWrap *w = new VtkAssemblyPathWrap();
-			w->native = r;
-			w->Wrap(wo);
-			info.GetReturnValue().Set(wo);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
@@ -829,7 +748,37 @@ void VtkViewportWrap::SetAspect(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAspect(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -852,7 +801,37 @@ void VtkViewportWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackground(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -879,7 +858,37 @@ void VtkViewportWrap::SetBackground2(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackground2(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -906,7 +915,37 @@ void VtkViewportWrap::SetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDisplayPoint(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -952,7 +991,37 @@ void VtkViewportWrap::SetPixelAspect(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPixelAspect(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -975,7 +1044,37 @@ void VtkViewportWrap::SetViewPoint(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetViewPoint(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1002,7 +1101,37 @@ void VtkViewportWrap::SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetViewport(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1033,7 +1162,37 @@ void VtkViewportWrap::SetWorldPoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWorldPoint(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

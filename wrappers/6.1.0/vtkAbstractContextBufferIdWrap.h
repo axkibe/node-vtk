@@ -29,17 +29,14 @@ class VtkAbstractContextBufferIdWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void Allocate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsAllocated(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

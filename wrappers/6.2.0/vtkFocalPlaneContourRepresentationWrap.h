@@ -30,6 +30,10 @@ class VtkFocalPlaneContourRepresentationWrap : public VtkContourRepresentationWr
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIntermediatePointDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIntermediatePointWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNthNodeDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNthNodeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

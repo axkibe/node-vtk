@@ -49,6 +49,7 @@ class VtkPainterWrap : public VtkObjectWrap
 		static void SetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void UpdateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

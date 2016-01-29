@@ -29,8 +29,6 @@ class VtkAbstractGridConnectivityWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void ComputeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void CreateGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGhostedCellGhostArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGhostedGridCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);

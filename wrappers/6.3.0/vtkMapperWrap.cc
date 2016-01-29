@@ -10,8 +10,6 @@
 #include "vtkMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractMapperWrap.h"
-#include "vtkRendererWrap.h"
-#include "vtkActorWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkScalarsToColorsWrap.h"
 #include "vtkDataSetWrap.h"
@@ -75,6 +73,9 @@ void VtkMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetArrayName", GetArrayName);
 	Nan::SetPrototypeMethod(tpl, "getArrayName", GetArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -174,9 +175,6 @@ void VtkMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -463,6 +461,43 @@ void VtkMapperWrap::GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	r = native->GetArrayName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1005,31 +1040,6 @@ void VtkMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8:
 			(vtkWindow *) a0->native.GetPointer()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
-	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Render(
-				(vtkRenderer *) a0->native.GetPointer(),
-				(vtkActor *) a1->native.GetPointer()
-			);
-			return;
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -1581,7 +1591,37 @@ void VtkMapperWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScalarRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

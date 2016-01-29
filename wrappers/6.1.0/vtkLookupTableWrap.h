@@ -30,10 +30,13 @@ class VtkLookupTableWrap : public VtkScalarsToColorsWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void Allocate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ApplyLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Build(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ForceBuild(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLogRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRamp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);

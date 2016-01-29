@@ -74,6 +74,9 @@ void VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SelectProbe", SelectProbe);
+	Nan::SetPrototypeMethod(tpl, "selectProbe", SelectProbe);
+
 	ptpl.Reset( tpl );
 }
 
@@ -262,6 +265,45 @@ void VtkEllipsoidTensorProbeRepresentationWrap::SafeDownCast(const Nan::Function
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkEllipsoidTensorProbeRepresentationWrap::SelectProbe(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEllipsoidTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkEllipsoidTensorProbeRepresentationWrap>(info.Holder());
+	vtkEllipsoidTensorProbeRepresentation *native = (vtkEllipsoidTensorProbeRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SelectProbe(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

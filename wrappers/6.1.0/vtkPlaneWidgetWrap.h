@@ -29,13 +29,18 @@ class VtkPlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalToXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalToYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalToZAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaneProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyDataAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);

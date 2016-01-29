@@ -47,6 +47,7 @@ class VtkImageEuclideanDistanceWrap : public VtkImageDecomposeFilterWrap
 		static void SetConsiderAnisotropy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInitialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

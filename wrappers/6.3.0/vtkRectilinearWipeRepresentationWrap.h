@@ -50,6 +50,8 @@ class VtkRectilinearWipeRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetImageActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRectilinearWipe(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

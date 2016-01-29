@@ -53,9 +53,6 @@ void VtkRowQueryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CaseSensitiveFieldNamesOn", CaseSensitiveFieldNamesOn);
 	Nan::SetPrototypeMethod(tpl, "caseSensitiveFieldNamesOn", CaseSensitiveFieldNamesOn);
 
-	Nan::SetPrototypeMethod(tpl, "Execute", Execute);
-	Nan::SetPrototypeMethod(tpl, "execute", Execute);
-
 	Nan::SetPrototypeMethod(tpl, "GetCaseSensitiveFieldNames", GetCaseSensitiveFieldNames);
 	Nan::SetPrototypeMethod(tpl, "getCaseSensitiveFieldNames", GetCaseSensitiveFieldNames);
 
@@ -65,26 +62,8 @@ void VtkRowQueryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFieldIndex", GetFieldIndex);
 	Nan::SetPrototypeMethod(tpl, "getFieldIndex", GetFieldIndex);
 
-	Nan::SetPrototypeMethod(tpl, "GetFieldName", GetFieldName);
-	Nan::SetPrototypeMethod(tpl, "getFieldName", GetFieldName);
-
-	Nan::SetPrototypeMethod(tpl, "GetFieldType", GetFieldType);
-	Nan::SetPrototypeMethod(tpl, "getFieldType", GetFieldType);
-
-	Nan::SetPrototypeMethod(tpl, "GetLastErrorText", GetLastErrorText);
-	Nan::SetPrototypeMethod(tpl, "getLastErrorText", GetLastErrorText);
-
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfFields", GetNumberOfFields);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfFields", GetNumberOfFields);
-
-	Nan::SetPrototypeMethod(tpl, "HasError", HasError);
-	Nan::SetPrototypeMethod(tpl, "hasError", HasError);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "IsActive", IsActive);
-	Nan::SetPrototypeMethod(tpl, "isActive", IsActive);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -150,20 +129,6 @@ void VtkRowQueryWrap::CaseSensitiveFieldNamesOn(const Nan::FunctionCallbackInfo<
 	native->CaseSensitiveFieldNamesOn();
 }
 
-void VtkRowQueryWrap::Execute(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
-	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->Execute();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkRowQueryWrap::GetCaseSensitiveFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
@@ -214,90 +179,6 @@ void VtkRowQueryWrap::GetFieldIndex(const Nan::FunctionCallbackInfo<v8::Value>& 
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkRowQueryWrap::GetFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
-	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		char const * r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->GetFieldName(
-			info[0]->Int32Value()
-		);
-		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRowQueryWrap::GetFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
-	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		int r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->GetFieldType(
-			info[0]->Int32Value()
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRowQueryWrap::GetLastErrorText(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
-	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	char const * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLastErrorText();
-	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkRowQueryWrap::GetNumberOfFields(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
-	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNumberOfFields();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRowQueryWrap::HasError(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
-	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->HasError();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkRowQueryWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
@@ -318,20 +199,6 @@ void VtkRowQueryWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRowQueryWrap::IsActive(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
-	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsActive();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRowQueryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -376,14 +243,7 @@ void VtkRowQueryWrap::NextRow(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->NextRow();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRowQueryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

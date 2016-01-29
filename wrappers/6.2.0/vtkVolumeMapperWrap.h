@@ -43,7 +43,6 @@ class VtkVolumeMapperWrap : public VtkAbstractVolumeMapperWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBlendMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBlendModeToAdditive(const Nan::FunctionCallbackInfo<v8::Value>& info);

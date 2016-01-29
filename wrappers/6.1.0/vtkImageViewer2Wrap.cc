@@ -93,6 +93,9 @@ void VtkImageViewer2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSliceOrientation", GetSliceOrientation);
 	Nan::SetPrototypeMethod(tpl, "getSliceOrientation", GetSliceOrientation);
 
+	Nan::SetPrototypeMethod(tpl, "GetSliceRange", GetSliceRange);
+	Nan::SetPrototypeMethod(tpl, "getSliceRange", GetSliceRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetWindowLevel", GetWindowLevel);
 	Nan::SetPrototypeMethod(tpl, "getWindowLevel", GetWindowLevel);
 
@@ -421,6 +424,43 @@ void VtkImageViewer2Wrap::GetSliceOrientation(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageViewer2Wrap::GetSliceRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
+	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetSliceRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImageViewer2Wrap::GetWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
@@ -671,7 +711,37 @@ void VtkImageViewer2Wrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
 	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -734,7 +804,37 @@ void VtkImageViewer2Wrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkImageViewer2Wrap *wrapper = ObjectWrap::Unwrap<VtkImageViewer2Wrap>(info.Holder());
 	vtkImageViewer2 *native = (vtkImageViewer2 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSize(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

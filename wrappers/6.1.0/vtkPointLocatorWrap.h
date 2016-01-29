@@ -30,7 +30,9 @@ class VtkPointLocatorWrap : public VtkIncrementalPointLocatorWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindClosestNPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FindDistributedPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindPointsWithinRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +40,8 @@ class VtkPointLocatorWrap : public VtkIncrementalPointLocatorWrap
 		static void GetNumberOfPointsPerBucketMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPointsPerBucketMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InitPointInsertion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

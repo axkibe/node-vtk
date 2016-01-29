@@ -8,7 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkAbstractContextBufferIdWrap.h"
-#include "vtkRenderWindowWrap.h"
 
 using namespace v8;
 
@@ -47,14 +46,8 @@ void VtkAbstractContextBufferIdWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAbstractContextBufferIdWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "Allocate", Allocate);
-	Nan::SetPrototypeMethod(tpl, "allocate", Allocate);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
-
-	Nan::SetPrototypeMethod(tpl, "GetContext", GetContext);
-	Nan::SetPrototypeMethod(tpl, "getContext", GetContext);
 
 	Nan::SetPrototypeMethod(tpl, "GetHeight", GetHeight);
 	Nan::SetPrototypeMethod(tpl, "getHeight", GetHeight);
@@ -65,12 +58,6 @@ void VtkAbstractContextBufferIdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
-	Nan::SetPrototypeMethod(tpl, "IsAllocated", IsAllocated);
-	Nan::SetPrototypeMethod(tpl, "isAllocated", IsAllocated);
-
-	Nan::SetPrototypeMethod(tpl, "IsSupported", IsSupported);
-	Nan::SetPrototypeMethod(tpl, "isSupported", IsSupported);
-
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -80,14 +67,8 @@ void VtkAbstractContextBufferIdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	Nan::SetPrototypeMethod(tpl, "SetContext", SetContext);
-	Nan::SetPrototypeMethod(tpl, "setContext", SetContext);
-
 	Nan::SetPrototypeMethod(tpl, "SetHeight", SetHeight);
 	Nan::SetPrototypeMethod(tpl, "setHeight", SetHeight);
-
-	Nan::SetPrototypeMethod(tpl, "SetValues", SetValues);
-	Nan::SetPrototypeMethod(tpl, "setValues", SetValues);
 
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
@@ -121,18 +102,6 @@ void VtkAbstractContextBufferIdWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(info.This());
 }
 
-void VtkAbstractContextBufferIdWrap::Allocate(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
-	vtkAbstractContextBufferId *native = (vtkAbstractContextBufferId *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Allocate();
-}
-
 void VtkAbstractContextBufferIdWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
@@ -145,29 +114,6 @@ void VtkAbstractContextBufferIdWrap::GetClassName(const Nan::FunctionCallbackInf
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkAbstractContextBufferIdWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
-	vtkAbstractContextBufferId *native = (vtkAbstractContextBufferId *)wrapper->native.GetPointer();
-	vtkRenderWindow * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetContext();
-		VtkRenderWindowWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkRenderWindowWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkRenderWindowWrap *w = new VtkRenderWindowWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
 }
 
 void VtkAbstractContextBufferIdWrap::GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -218,34 +164,6 @@ void VtkAbstractContextBufferIdWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractContextBufferIdWrap::IsAllocated(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
-	vtkAbstractContextBufferId *native = (vtkAbstractContextBufferId *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsAllocated();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkAbstractContextBufferIdWrap::IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
-	vtkAbstractContextBufferId *native = (vtkAbstractContextBufferId *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsSupported();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAbstractContextBufferIdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -314,26 +232,6 @@ void VtkAbstractContextBufferIdWrap::SafeDownCast(const Nan::FunctionCallbackInf
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkAbstractContextBufferIdWrap::SetContext(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
-	vtkAbstractContextBufferId *native = (vtkAbstractContextBufferId *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetContext(
-			(vtkRenderWindow *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkAbstractContextBufferIdWrap::SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
@@ -349,29 +247,6 @@ void VtkAbstractContextBufferIdWrap::SetHeight(const Nan::FunctionCallbackInfo<v
 			info[0]->Int32Value()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractContextBufferIdWrap::SetValues(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
-	vtkAbstractContextBufferId *native = (vtkAbstractContextBufferId *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->SetValues(
-				info[0]->Int32Value(),
-				info[1]->Int32Value()
-			);
-			return;
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

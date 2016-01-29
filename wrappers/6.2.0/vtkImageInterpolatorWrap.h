@@ -29,6 +29,7 @@ class VtkImageInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ComputeSupportSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);

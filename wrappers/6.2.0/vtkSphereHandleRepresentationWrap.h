@@ -45,19 +45,24 @@ class VtkSphereHandleRepresentationWrap : public VtkHandleRepresentationWrap
 		static void Highlight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHandleSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHotSpotSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSphereRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslationModeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslationModeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

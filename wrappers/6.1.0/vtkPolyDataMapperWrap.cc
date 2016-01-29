@@ -51,6 +51,9 @@ void VtkPolyDataMapperWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkPolyDataMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -89,9 +92,6 @@ void VtkPolyDataMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "Render", Render);
 	Nan::SetPrototypeMethod(tpl, "render", Render);
-
-	Nan::SetPrototypeMethod(tpl, "RenderPiece", RenderPiece);
-	Nan::SetPrototypeMethod(tpl, "renderPiece", RenderPiece);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -144,6 +144,43 @@ void VtkPolyDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkPolyDataMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
+	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPolyDataMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -397,31 +434,6 @@ void VtkPolyDataMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 			native->Render(
-				(vtkRenderer *) a0->native.GetPointer(),
-				(vtkActor *) a1->native.GetPointer()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataMapperWrap::RenderPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapperWrap>(info.Holder());
-	vtkPolyDataMapper *native = (vtkPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->RenderPiece(
 				(vtkRenderer *) a0->native.GetPointer(),
 				(vtkActor *) a1->native.GetPointer()
 			);

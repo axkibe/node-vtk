@@ -31,6 +31,7 @@ class VtkAbstractCellLocatorWrap : public VtkLocatorWrap
 
 		static void CacheCellBoundsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CacheCellBoundsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindCellsAlongLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCacheCellBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLazyEvaluation(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,7 @@ class VtkAbstractCellLocatorWrap : public VtkLocatorWrap
 		static void GetNumberOfCellsPerNodeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRetainCellLists(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseExistingSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IntersectWithLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LazyEvaluationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LazyEvaluationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

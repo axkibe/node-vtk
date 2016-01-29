@@ -31,6 +31,7 @@ class VtkSeedRepresentationWrap : public VtkWidgetRepresentationWrap
 
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CreateHandle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveHandle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);

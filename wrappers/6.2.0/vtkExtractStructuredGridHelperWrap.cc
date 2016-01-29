@@ -8,6 +8,9 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkExtractStructuredGridHelperWrap.h"
+#include "vtkPointDataWrap.h"
+#include "vtkPointsWrap.h"
+#include "vtkCellDataWrap.h"
 
 using namespace v8;
 
@@ -46,6 +49,15 @@ void VtkExtractStructuredGridHelperWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkExtractStructuredGridHelperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeBeginAndEnd", ComputeBeginAndEnd);
+	Nan::SetPrototypeMethod(tpl, "computeBeginAndEnd", ComputeBeginAndEnd);
+
+	Nan::SetPrototypeMethod(tpl, "CopyCellData", CopyCellData);
+	Nan::SetPrototypeMethod(tpl, "copyCellData", CopyCellData);
+
+	Nan::SetPrototypeMethod(tpl, "CopyPointsAndPointData", CopyPointsAndPointData);
+	Nan::SetPrototypeMethod(tpl, "copyPointsAndPointData", CopyPointsAndPointData);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -61,8 +73,17 @@ void VtkExtractStructuredGridHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMappedIndexFromExtentValue", GetMappedIndexFromExtentValue);
 	Nan::SetPrototypeMethod(tpl, "getMappedIndexFromExtentValue", GetMappedIndexFromExtentValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetPartitionedOutputExtent", GetPartitionedOutputExtent);
+	Nan::SetPrototypeMethod(tpl, "getPartitionedOutputExtent", GetPartitionedOutputExtent);
+
+	Nan::SetPrototypeMethod(tpl, "GetPartitionedVOI", GetPartitionedVOI);
+	Nan::SetPrototypeMethod(tpl, "getPartitionedVOI", GetPartitionedVOI);
+
 	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
 	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
+
+	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
+	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -103,6 +124,294 @@ void VtkExtractStructuredGridHelperWrap::New(const Nan::FunctionCallbackInfo<v8:
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
+	vtkExtractStructuredGridHelper *native = (vtkExtractStructuredGridHelper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				int b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					int b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsInt32() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->Int32Value();
+					}
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ComputeBeginAndEnd(
+						b0,
+						b1,
+						b2,
+						b3
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractStructuredGridHelperWrap::CopyCellData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
+	vtkExtractStructuredGridHelper *native = (vtkExtractStructuredGridHelper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkCellDataWrap *a2 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkCellDataWrap *a3 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						int b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsInt32() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->Int32Value();
+						}
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->CopyCellData(
+							b0,
+							b1,
+							(vtkCellData *) a2->native.GetPointer(),
+							(vtkCellData *) a3->native.GetPointer(),
+							b4
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractStructuredGridHelperWrap::CopyPointsAndPointData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
+	vtkExtractStructuredGridHelper *native = (vtkExtractStructuredGridHelper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkPointDataWrap *a2 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkPointsWrap *a3 = ObjectWrap::Unwrap<VtkPointsWrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[4]))
+					{
+						VtkPointDataWrap *a4 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[4]->ToObject());
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[5]))
+						{
+							VtkPointsWrap *a5 = ObjectWrap::Unwrap<VtkPointsWrap>(info[5]->ToObject());
+							if(info.Length() > 6 && info[6]->IsArray())
+							{
+								v8::Local<v8::Array>a6( v8::Local<v8::Array>::Cast( info[6]->ToObject() ) );
+								int b6[3];
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								for( i = 0; i < 3; i++ )
+								{
+									if( !a6->Get(i)->IsInt32() )
+									{
+										Nan::ThrowError("Array contents invalid.");
+										return;
+									}
+									b6[i] = a6->Get(i)->Int32Value();
+								}
+								if(info.Length() != 7)
+								{
+									Nan::ThrowError("Too many parameters.");
+									return;
+								}
+								native->CopyPointsAndPointData(
+									b0,
+									b1,
+									(vtkPointData *) a2->native.GetPointer(),
+									(vtkPoints *) a3->native.GetPointer(),
+									(vtkPointData *) a4->native.GetPointer(),
+									(vtkPoints *) a5->native.GetPointer(),
+									b6
+								);
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkExtractStructuredGridHelperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -219,6 +528,235 @@ void VtkExtractStructuredGridHelperWrap::GetMappedIndexFromExtentValue(const Nan
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
+	vtkExtractStructuredGridHelper *native = (vtkExtractStructuredGridHelper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				int b2[6];
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 6; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					int b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsInt32() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->Int32Value();
+					}
+					if(info.Length() > 4 && info[4]->IsBoolean())
+					{
+						if(info.Length() > 5 && info[5]->IsArray())
+						{
+							v8::Local<v8::Array>a5( v8::Local<v8::Array>::Cast( info[5]->ToObject() ) );
+							int b5[6];
+							if( a5->Length() < 6 )
+							{
+								Nan::ThrowError("Array too short.");
+								return;
+							}
+
+							for( i = 0; i < 6; i++ )
+							{
+								if( !a5->Get(i)->IsInt32() )
+								{
+									Nan::ThrowError("Array contents invalid.");
+									return;
+								}
+								b5[i] = a5->Get(i)->Int32Value();
+							}
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							native->GetPartitionedOutputExtent(
+								b0,
+								b1,
+								b2,
+								b3,
+								info[4]->BooleanValue(),
+								b5
+							);
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
+	vtkExtractStructuredGridHelper *native = (vtkExtractStructuredGridHelper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				int b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() > 3 && info[3]->IsBoolean())
+				{
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						int b4[6];
+						if( a4->Length() < 6 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 6; i++ )
+						{
+							if( !a4->Get(i)->IsInt32() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->Int32Value();
+						}
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->GetPartitionedVOI(
+							b0,
+							b1,
+							b2,
+							info[3]->BooleanValue(),
+							b4
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkExtractStructuredGridHelperWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
@@ -236,6 +774,89 @@ void VtkExtractStructuredGridHelperWrap::GetSize(const Nan::FunctionCallbackInfo
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
+	vtkExtractStructuredGridHelper *native = (vtkExtractStructuredGridHelper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				int b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() > 3 && info[3]->IsBoolean())
+				{
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->Initialize(
+						b0,
+						b1,
+						b2,
+						info[3]->BooleanValue()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

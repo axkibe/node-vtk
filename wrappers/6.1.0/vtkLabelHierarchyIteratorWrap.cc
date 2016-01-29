@@ -61,6 +61,9 @@ void VtkLabelHierarchyIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAllBounds", GetAllBounds);
 	Nan::SetPrototypeMethod(tpl, "getAllBounds", GetAllBounds);
 
+	Nan::SetPrototypeMethod(tpl, "GetBoundedSize", GetBoundedSize);
+	Nan::SetPrototypeMethod(tpl, "getBoundedSize", GetBoundedSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +72,12 @@ void VtkLabelHierarchyIteratorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
 	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint", GetPoint);
+	Nan::SetPrototypeMethod(tpl, "getPoint", GetPoint);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetType", GetType);
 	Nan::SetPrototypeMethod(tpl, "getType", GetType);
@@ -188,6 +197,43 @@ void VtkLabelHierarchyIteratorWrap::GetAllBounds(const Nan::FunctionCallbackInfo
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkLabelHierarchyIteratorWrap::GetBoundedSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelHierarchyIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyIteratorWrap>(info.Holder());
+	vtkLabelHierarchyIterator *native = (vtkLabelHierarchyIterator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBoundedSize(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkLabelHierarchyIteratorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLabelHierarchyIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyIteratorWrap>(info.Holder());
@@ -237,6 +283,80 @@ void VtkLabelHierarchyIteratorWrap::GetOrientation(const Nan::FunctionCallbackIn
 	}
 	r = native->GetOrientation();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelHierarchyIteratorWrap::GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelHierarchyIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyIteratorWrap>(info.Holder());
+	vtkLabelHierarchyIterator *native = (vtkLabelHierarchyIterator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelHierarchyIteratorWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelHierarchyIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyIteratorWrap>(info.Holder());
+	vtkLabelHierarchyIterator *native = (vtkLabelHierarchyIterator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetSize(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkLabelHierarchyIteratorWrap::GetType(const Nan::FunctionCallbackInfo<v8::Value>& info)

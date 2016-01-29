@@ -82,9 +82,6 @@ void VtkAMRBaseParticlesReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetParticleDataArraySelection", GetParticleDataArraySelection);
 	Nan::SetPrototypeMethod(tpl, "getParticleDataArraySelection", GetParticleDataArraySelection);
 
-	Nan::SetPrototypeMethod(tpl, "GetTotalNumberOfParticles", GetTotalNumberOfParticles);
-	Nan::SetPrototypeMethod(tpl, "getTotalNumberOfParticles", GetTotalNumberOfParticles);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -324,20 +321,6 @@ void VtkAMRBaseParticlesReaderWrap::GetParticleDataArraySelection(const Nan::Fun
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkAMRBaseParticlesReaderWrap::GetTotalNumberOfParticles(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAMRBaseParticlesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseParticlesReaderWrap>(info.Holder());
-	vtkAMRBaseParticlesReader *native = (vtkAMRBaseParticlesReader *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetTotalNumberOfParticles();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAMRBaseParticlesReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

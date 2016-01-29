@@ -8,7 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkRendererDelegateWrap.h"
-#include "vtkRendererWrap.h"
 
 using namespace v8;
 
@@ -58,9 +57,6 @@ void VtkRendererDelegateWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -173,26 +169,6 @@ void VtkRendererDelegateWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkRendererDelegateWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererDelegateWrap *wrapper = ObjectWrap::Unwrap<VtkRendererDelegateWrap>(info.Holder());
-	vtkRendererDelegate *native = (vtkRendererDelegate *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->Render(
-			(vtkRenderer *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRendererDelegateWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

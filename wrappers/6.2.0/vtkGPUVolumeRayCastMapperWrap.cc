@@ -11,9 +11,9 @@
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowWrap.h"
 #include "vtkVolumePropertyWrap.h"
-#include "vtkImageDataWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
+#include "vtkImageDataWrap.h"
 #include "vtkWindowWrap.h"
 
 using namespace v8;
@@ -58,6 +58,9 @@ void VtkGPUVolumeRayCastMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "AutoAdjustSampleDistancesOn", AutoAdjustSampleDistancesOn);
 	Nan::SetPrototypeMethod(tpl, "autoAdjustSampleDistancesOn", AutoAdjustSampleDistancesOn);
+
+	Nan::SetPrototypeMethod(tpl, "CreateCanonicalView", CreateCanonicalView);
+	Nan::SetPrototypeMethod(tpl, "createCanonicalView", CreateCanonicalView);
 
 	Nan::SetPrototypeMethod(tpl, "GPURender", GPURender);
 	Nan::SetPrototypeMethod(tpl, "gPURender", GPURender);
@@ -170,6 +173,83 @@ void VtkGPUVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOn(const Nan::Funct
 		return;
 	}
 	native->AutoAdjustSampleDistancesOn();
+}
+
+void VtkGPUVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkImageDataWrap *a2 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						if(info.Length() > 5 && info[5]->IsArray())
+						{
+							v8::Local<v8::Array>a5( v8::Local<v8::Array>::Cast( info[5]->ToObject() ) );
+							double b5[3];
+							if( a5->Length() < 3 )
+							{
+								Nan::ThrowError("Array too short.");
+								return;
+							}
+
+							for( i = 0; i < 3; i++ )
+							{
+								if( !a5->Get(i)->IsNumber() )
+								{
+									Nan::ThrowError("Array contents invalid.");
+									return;
+								}
+								b5[i] = a5->Get(i)->NumberValue();
+							}
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							native->CreateCanonicalView(
+								(vtkRenderer *) a0->native.GetPointer(),
+								(vtkVolume *) a1->native.GetPointer(),
+								(vtkImageData *) a2->native.GetPointer(),
+								info[3]->Int32Value(),
+								b4,
+								b5
+							);
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGPUVolumeRayCastMapperWrap::GPURender(const Nan::FunctionCallbackInfo<v8::Value>& info)

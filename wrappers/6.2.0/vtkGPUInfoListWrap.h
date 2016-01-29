@@ -35,7 +35,6 @@ class VtkGPUInfoListWrap : public VtkObjectWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsProbed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Probe(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

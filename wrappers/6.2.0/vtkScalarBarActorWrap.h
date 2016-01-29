@@ -74,6 +74,7 @@ class VtkScalarBarActorWrap : public VtkActor2DWrap
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScalarBarRect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextPad(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextPositionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

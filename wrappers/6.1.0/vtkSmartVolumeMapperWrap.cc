@@ -11,6 +11,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
+#include "vtkImageDataWrap.h"
 #include "vtkWindowWrap.h"
 
 using namespace v8;
@@ -49,6 +50,9 @@ void VtkSmartVolumeMapperWrap::InitPtpl()
 	tpl->Inherit(Nan::New<FunctionTemplate>(VtkVolumeMapperWrap::ptpl));
 	tpl->SetClassName(Nan::New("VtkSmartVolumeMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+	Nan::SetPrototypeMethod(tpl, "CreateCanonicalView", CreateCanonicalView);
+	Nan::SetPrototypeMethod(tpl, "createCanonicalView", CreateCanonicalView);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -146,6 +150,88 @@ void VtkSmartVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkSmartVolumeMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
+	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkVolumeWrap *a2 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsInt32())
+					{
+						if(info.Length() > 5 && info[5]->IsArray())
+						{
+							v8::Local<v8::Array>a5( v8::Local<v8::Array>::Cast( info[5]->ToObject() ) );
+							double b5[3];
+							if( a5->Length() < 3 )
+							{
+								Nan::ThrowError("Array too short.");
+								return;
+							}
+
+							for( i = 0; i < 3; i++ )
+							{
+								if( !a5->Get(i)->IsNumber() )
+								{
+									Nan::ThrowError("Array contents invalid.");
+									return;
+								}
+								b5[i] = a5->Get(i)->NumberValue();
+							}
+							if(info.Length() > 6 && info[6]->IsArray())
+							{
+								v8::Local<v8::Array>a6( v8::Local<v8::Array>::Cast( info[6]->ToObject() ) );
+								double b6[3];
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								for( i = 0; i < 3; i++ )
+								{
+									if( !a6->Get(i)->IsNumber() )
+									{
+										Nan::ThrowError("Array contents invalid.");
+										return;
+									}
+									b6[i] = a6->Get(i)->NumberValue();
+								}
+								if(info.Length() != 7)
+								{
+									Nan::ThrowError("Too many parameters.");
+									return;
+								}
+								native->CreateCanonicalView(
+									(vtkRenderer *) a0->native.GetPointer(),
+									(vtkVolume *) a1->native.GetPointer(),
+									(vtkVolume *) a2->native.GetPointer(),
+									(vtkImageData *) a3->native.GetPointer(),
+									info[4]->Int32Value(),
+									b5,
+									b6
+								);
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkSmartVolumeMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

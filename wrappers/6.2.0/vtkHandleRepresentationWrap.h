@@ -31,27 +31,32 @@ class VtkHandleRepresentationWrap : public VtkWidgetRepresentationWrap
 
 		static void ActiveRepresentationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ActiveRepresentationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CheckConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ConstrainedOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ConstrainedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConstrained(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionStateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionStateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointPlacer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetActiveRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetConstrained(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointPlacer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

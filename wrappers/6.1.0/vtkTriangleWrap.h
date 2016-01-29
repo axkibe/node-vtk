@@ -29,7 +29,13 @@ class VtkTriangleWrap : public VtkCellWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void BarycentricCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Circumcircle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeArea(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -37,9 +43,19 @@ class VtkTriangleWrap : public VtkCellWrap
 		static void GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetParametricCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetParametricDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PointInTriangle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ProjectTo2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TriangleArea(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

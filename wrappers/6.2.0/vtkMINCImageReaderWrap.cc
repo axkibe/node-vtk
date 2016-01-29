@@ -55,6 +55,9 @@ void VtkMINCImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataRange", GetDataRange);
+	Nan::SetPrototypeMethod(tpl, "getDataRange", GetDataRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetDescriptiveName", GetDescriptiveName);
 	Nan::SetPrototypeMethod(tpl, "getDescriptiveName", GetDescriptiveName);
 
@@ -169,6 +172,43 @@ void VtkMINCImageReaderWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMINCImageReaderWrap::GetDataRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMINCImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageReaderWrap>(info.Holder());
+	vtkMINCImageReader *native = (vtkMINCImageReader *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetDataRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkMINCImageReaderWrap::GetDescriptiveName(const Nan::FunctionCallbackInfo<v8::Value>& info)

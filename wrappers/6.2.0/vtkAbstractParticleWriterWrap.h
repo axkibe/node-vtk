@@ -29,7 +29,6 @@ class VtkAbstractParticleWriterWrap : public VtkWriterWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void CloseFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCollectiveIO(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);

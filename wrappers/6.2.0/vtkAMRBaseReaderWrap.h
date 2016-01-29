@@ -38,9 +38,7 @@ class VtkAMRBaseReaderWrap : public VtkOverlappingAMRAlgorithmWrap
 		static void GetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnableCaching(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPointArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -53,7 +51,6 @@ class VtkAMRBaseReaderWrap : public VtkOverlappingAMRAlgorithmWrap
 		static void SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnableCaching(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

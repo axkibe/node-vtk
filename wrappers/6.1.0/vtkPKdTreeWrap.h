@@ -34,8 +34,10 @@ class VtkPKdTreeWrap : public VtkKdTreeWrap
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateGlobalDataArrayBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateProcessCellCountData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCellArrayGlobalRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointArrayGlobalRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProcessAssignedToRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProcessCellCountForRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProcessListForRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +52,8 @@ class VtkPKdTreeWrap : public VtkKdTreeWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ViewOrderAllProcessesFromPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ViewOrderAllProcessesInDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

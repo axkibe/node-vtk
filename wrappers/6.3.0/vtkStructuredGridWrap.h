@@ -31,12 +31,15 @@ class VtkStructuredGridWrap : public VtkPointSetWrap
 
 		static void CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCellDims(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasAnyBlankCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasAnyBlankPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);

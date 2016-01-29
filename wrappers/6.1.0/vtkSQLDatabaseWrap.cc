@@ -8,8 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkSQLDatabaseWrap.h"
-#include "vtkSQLQueryWrap.h"
-#include "vtkStringArrayWrap.h"
 #include "vtkSQLDatabaseSchemaWrap.h"
 #include "vtkInformationObjectBaseKeyWrap.h"
 
@@ -50,9 +48,6 @@ void VtkSQLDatabaseWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkSQLDatabaseWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "Close", Close);
-	Nan::SetPrototypeMethod(tpl, "close", Close);
-
 	Nan::SetPrototypeMethod(tpl, "CreateFromURL", CreateFromURL);
 	Nan::SetPrototypeMethod(tpl, "createFromURL", CreateFromURL);
 
@@ -64,38 +59,14 @@ void VtkSQLDatabaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetDatabaseType", GetDatabaseType);
-	Nan::SetPrototypeMethod(tpl, "getDatabaseType", GetDatabaseType);
-
-	Nan::SetPrototypeMethod(tpl, "GetLastErrorText", GetLastErrorText);
-	Nan::SetPrototypeMethod(tpl, "getLastErrorText", GetLastErrorText);
-
-	Nan::SetPrototypeMethod(tpl, "GetQueryInstance", GetQueryInstance);
-	Nan::SetPrototypeMethod(tpl, "getQueryInstance", GetQueryInstance);
-
-	Nan::SetPrototypeMethod(tpl, "GetRecord", GetRecord);
-	Nan::SetPrototypeMethod(tpl, "getRecord", GetRecord);
-
-	Nan::SetPrototypeMethod(tpl, "GetTables", GetTables);
-	Nan::SetPrototypeMethod(tpl, "getTables", GetTables);
-
-	Nan::SetPrototypeMethod(tpl, "HasError", HasError);
-	Nan::SetPrototypeMethod(tpl, "hasError", HasError);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "IsOpen", IsOpen);
-	Nan::SetPrototypeMethod(tpl, "isOpen", IsOpen);
 
 	Nan::SetPrototypeMethod(tpl, "IsSupported", IsSupported);
 	Nan::SetPrototypeMethod(tpl, "isSupported", IsSupported);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "Open", Open);
-	Nan::SetPrototypeMethod(tpl, "open", Open);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -129,18 +100,6 @@ void VtkSQLDatabaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkSQLDatabaseWrap::Close(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Close();
 }
 
 void VtkSQLDatabaseWrap::CreateFromURL(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -237,125 +196,6 @@ void VtkSQLDatabaseWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
-void VtkSQLDatabaseWrap::GetDatabaseType(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	char const * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetDatabaseType();
-	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkSQLDatabaseWrap::GetLastErrorText(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	char const * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLastErrorText();
-	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkSQLDatabaseWrap::GetQueryInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	vtkSQLQuery * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetQueryInstance();
-		VtkSQLQueryWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkSQLQueryWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkSQLQueryWrap *w = new VtkSQLQueryWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkSQLDatabaseWrap::GetRecord(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
-	{
-		Nan::Utf8String a0(info[0]);
-		vtkStringArray * r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->GetRecord(
-			*a0
-		);
-			VtkStringArrayWrap::InitPtpl();
-		v8::Local<v8::Value> argv[1] =
-			{ Nan::New(vtkNodeJsNoWrap) };
-		v8::Local<v8::Function> cons =
-			Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
-		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-		VtkStringArrayWrap *w = new VtkStringArrayWrap();
-		w->native = r;
-		w->Wrap(wo);
-		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkSQLDatabaseWrap::GetTables(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	vtkStringArray * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetTables();
-		VtkStringArrayWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkStringArrayWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkStringArrayWrap *w = new VtkStringArrayWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkSQLDatabaseWrap::HasError(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->HasError();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkSQLDatabaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
@@ -376,20 +216,6 @@ void VtkSQLDatabaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkSQLDatabaseWrap::IsOpen(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsOpen();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSQLDatabaseWrap::IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -434,28 +260,6 @@ void VtkSQLDatabaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkSQLDatabaseWrap::Open(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
-	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
-	{
-		Nan::Utf8String a0(info[0]);
-		bool r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->Open(
-			*a0
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkSQLDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

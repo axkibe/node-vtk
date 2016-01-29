@@ -49,6 +49,9 @@ void VtkTriangleStripWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkTriangleStripWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CellBoundary", CellBoundary);
+	Nan::SetPrototypeMethod(tpl, "cellBoundary", CellBoundary);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellDimension", GetCellDimension);
 	Nan::SetPrototypeMethod(tpl, "getCellDimension", GetCellDimension);
 
@@ -69,6 +72,9 @@ void VtkTriangleStripWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfFaces", GetNumberOfFaces);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfFaces", GetNumberOfFaces);
+
+	Nan::SetPrototypeMethod(tpl, "GetParametricCenter", GetParametricCenter);
+	Nan::SetPrototypeMethod(tpl, "getParametricCenter", GetParametricCenter);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -112,6 +118,54 @@ void VtkTriangleStripWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkTriangleStripWrap::CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTriangleStripWrap *wrapper = ObjectWrap::Unwrap<VtkTriangleStripWrap>(info.Holder());
+	vtkTriangleStrip *native = (vtkTriangleStrip *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->CellBoundary(
+					info[0]->Int32Value(),
+					b1,
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTriangleStripWrap::GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -242,6 +296,45 @@ void VtkTriangleStripWrap::GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetNumberOfFaces();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTriangleStripWrap::GetParametricCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTriangleStripWrap *wrapper = ObjectWrap::Unwrap<VtkTriangleStripWrap>(info.Holder());
+	vtkTriangleStrip *native = (vtkTriangleStrip *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetParametricCenter(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTriangleStripWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

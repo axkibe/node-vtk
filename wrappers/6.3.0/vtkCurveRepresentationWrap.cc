@@ -10,10 +10,7 @@
 #include "vtkCurveRepresentationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPlaneSourceWrap.h"
-#include "vtkPolyDataWrap.h"
 #include "vtkPropertyWrap.h"
-#include "vtkDoubleArrayWrap.h"
-#include "vtkPointsWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
 
@@ -54,9 +51,6 @@ void VtkCurveRepresentationWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkCurveRepresentationWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
-	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
-
 	Nan::SetPrototypeMethod(tpl, "ClosedOff", ClosedOff);
 	Nan::SetPrototypeMethod(tpl, "closedOff", ClosedOff);
 
@@ -66,14 +60,17 @@ void VtkCurveRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ComputeInteractionState", ComputeInteractionState);
 	Nan::SetPrototypeMethod(tpl, "computeInteractionState", ComputeInteractionState);
 
+	Nan::SetPrototypeMethod(tpl, "EndWidgetInteraction", EndWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "endWidgetInteraction", EndWidgetInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetClosed", GetClosed);
 	Nan::SetPrototypeMethod(tpl, "getClosed", GetClosed);
 
-	Nan::SetPrototypeMethod(tpl, "GetHandlePositions", GetHandlePositions);
-	Nan::SetPrototypeMethod(tpl, "getHandlePositions", GetHandlePositions);
+	Nan::SetPrototypeMethod(tpl, "GetHandlePosition", GetHandlePosition);
+	Nan::SetPrototypeMethod(tpl, "getHandlePosition", GetHandlePosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetHandleProperty", GetHandleProperty);
 	Nan::SetPrototypeMethod(tpl, "getHandleProperty", GetHandleProperty);
@@ -83,9 +80,6 @@ void VtkCurveRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfHandles", GetNumberOfHandles);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfHandles", GetNumberOfHandles);
-
-	Nan::SetPrototypeMethod(tpl, "GetPolyData", GetPolyData);
-	Nan::SetPrototypeMethod(tpl, "getPolyData", GetPolyData);
 
 	Nan::SetPrototypeMethod(tpl, "GetProjectToPlane", GetProjectToPlane);
 	Nan::SetPrototypeMethod(tpl, "getProjectToPlane", GetProjectToPlane);
@@ -108,14 +102,8 @@ void VtkCurveRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSelectedLineProperty", GetSelectedLineProperty);
 	Nan::SetPrototypeMethod(tpl, "getSelectedLineProperty", GetSelectedLineProperty);
 
-	Nan::SetPrototypeMethod(tpl, "GetSummedLength", GetSummedLength);
-	Nan::SetPrototypeMethod(tpl, "getSummedLength", GetSummedLength);
-
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
-
-	Nan::SetPrototypeMethod(tpl, "InitializeHandles", InitializeHandles);
-	Nan::SetPrototypeMethod(tpl, "initializeHandles", InitializeHandles);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -159,9 +147,6 @@ void VtkCurveRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLineColor", SetLineColor);
 	Nan::SetPrototypeMethod(tpl, "setLineColor", SetLineColor);
 
-	Nan::SetPrototypeMethod(tpl, "SetNumberOfHandles", SetNumberOfHandles);
-	Nan::SetPrototypeMethod(tpl, "setNumberOfHandles", SetNumberOfHandles);
-
 	Nan::SetPrototypeMethod(tpl, "SetPlaneSource", SetPlaneSource);
 	Nan::SetPrototypeMethod(tpl, "setPlaneSource", SetPlaneSource);
 
@@ -185,6 +170,12 @@ void VtkCurveRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetProjectionPosition", SetProjectionPosition);
 	Nan::SetPrototypeMethod(tpl, "setProjectionPosition", SetProjectionPosition);
+
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -212,18 +203,6 @@ void VtkCurveRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkCurveRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
-	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->BuildRepresentation();
 }
 
 void VtkCurveRepresentationWrap::ClosedOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -279,6 +258,43 @@ void VtkCurveRepresentationWrap::ComputeInteractionState(const Nan::FunctionCall
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkCurveRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
+	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->EndWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCurveRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
@@ -307,27 +323,45 @@ void VtkCurveRepresentationWrap::GetClosed(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkCurveRepresentationWrap::GetHandlePositions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkCurveRepresentationWrap::GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	vtkDoubleArray * r;
-	if(info.Length() != 0)
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		Nan::ThrowError("Too many parameters.");
-		return;
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetHandlePosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
 	}
-	r = native->GetHandlePositions();
-		VtkDoubleArrayWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkDoubleArrayWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkDoubleArrayWrap *w = new VtkDoubleArrayWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCurveRepresentationWrap::GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -388,26 +422,6 @@ void VtkCurveRepresentationWrap::GetNumberOfHandles(const Nan::FunctionCallbackI
 	}
 	r = native->GetNumberOfHandles();
 	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCurveRepresentationWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
-	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->GetPolyData(
-			(vtkPolyData *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCurveRepresentationWrap::GetProjectToPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -526,20 +540,6 @@ void VtkCurveRepresentationWrap::GetSelectedLineProperty(const Nan::FunctionCall
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkCurveRepresentationWrap::GetSummedLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
-	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetSummedLength();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkCurveRepresentationWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
@@ -552,26 +552,6 @@ void VtkCurveRepresentationWrap::HasTranslucentPolygonalGeometry(const Nan::Func
 	}
 	r = native->HasTranslucentPolygonalGeometry();
 	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkCurveRepresentationWrap::InitializeHandles(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
-	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->InitializeHandles(
-			(vtkPoints *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCurveRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -797,9 +777,40 @@ void VtkCurveRepresentationWrap::SetHandlePosition(const Nan::FunctionCallbackIn
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetHandlePosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
@@ -866,25 +877,6 @@ void VtkCurveRepresentationWrap::SetLineColor(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkCurveRepresentationWrap::SetNumberOfHandles(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
-	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetNumberOfHandles(
-			info[0]->Int32Value()
-		);
-		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -1008,6 +1000,80 @@ void VtkCurveRepresentationWrap::SetProjectionPosition(const Nan::FunctionCallba
 		}
 		native->SetProjectionPosition(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCurveRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
+	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCurveRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
+	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

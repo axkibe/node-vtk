@@ -31,6 +31,7 @@ class VtkMINCImageReaderWrap : public VtkImageReader2Wrap
 
 		static void CanReadFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDescriptiveName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDirectionCosines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileExtensions(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -86,6 +86,9 @@ void VtkOutlineSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBoxTypeToOriented", SetBoxTypeToOriented);
 	Nan::SetPrototypeMethod(tpl, "setBoxTypeToOriented", SetBoxTypeToOriented);
 
+	Nan::SetPrototypeMethod(tpl, "SetCorners", SetCorners);
+	Nan::SetPrototypeMethod(tpl, "setCorners", SetCorners);
+
 	Nan::SetPrototypeMethod(tpl, "SetGenerateFaces", SetGenerateFaces);
 	Nan::SetPrototypeMethod(tpl, "setGenerateFaces", SetGenerateFaces);
 
@@ -281,7 +284,37 @@ void VtkOutlineSourceWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkOutlineSourceWrap>(info.Holder());
 	vtkOutlineSource *native = (vtkOutlineSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -357,6 +390,43 @@ void VtkOutlineSourceWrap::SetBoxTypeToOriented(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	native->SetBoxTypeToOriented();
+}
+
+void VtkOutlineSourceWrap::SetCorners(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkOutlineSourceWrap>(info.Holder());
+	vtkOutlineSource *native = (vtkOutlineSource *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[24];
+		if( a0->Length() < 24 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 24; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCorners(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOutlineSourceWrap::SetGenerateFaces(const Nan::FunctionCallbackInfo<v8::Value>& info)

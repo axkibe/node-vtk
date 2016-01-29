@@ -31,12 +31,14 @@ class VtkCaptionRepresentationWrap : public VtkBorderRepresentationWrap
 
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAnchorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAnchorRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCaptionActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontFactorMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,6 +47,7 @@ class VtkCaptionRepresentationWrap : public VtkBorderRepresentationWrap
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAnchorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnchorRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCaptionActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFontFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);

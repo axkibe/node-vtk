@@ -95,6 +95,18 @@ void VtkOctreePointLocatorNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDataBounds", SetDataBounds);
 	Nan::SetPrototypeMethod(tpl, "setDataBounds", SetDataBounds);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaxBounds", SetMaxBounds);
+	Nan::SetPrototypeMethod(tpl, "setMaxBounds", SetMaxBounds);
+
+	Nan::SetPrototypeMethod(tpl, "SetMaxDataBounds", SetMaxDataBounds);
+	Nan::SetPrototypeMethod(tpl, "setMaxDataBounds", SetMaxDataBounds);
+
+	Nan::SetPrototypeMethod(tpl, "SetMinBounds", SetMinBounds);
+	Nan::SetPrototypeMethod(tpl, "setMinBounds", SetMinBounds);
+
+	Nan::SetPrototypeMethod(tpl, "SetMinDataBounds", SetMinDataBounds);
+	Nan::SetPrototypeMethod(tpl, "setMinDataBounds", SetMinDataBounds);
+
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPoints", SetNumberOfPoints);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPoints", SetNumberOfPoints);
 
@@ -448,7 +460,37 @@ void VtkOctreePointLocatorNodeWrap::SetBounds(const Nan::FunctionCallbackInfo<v8
 {
 	VtkOctreePointLocatorNodeWrap *wrapper = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info.Holder());
 	vtkOctreePointLocatorNode *native = (vtkOctreePointLocatorNode *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -518,6 +560,154 @@ void VtkOctreePointLocatorNodeWrap::SetDataBounds(const Nan::FunctionCallbackInf
 				}
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOctreePointLocatorNodeWrap::SetMaxBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOctreePointLocatorNodeWrap *wrapper = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info.Holder());
+	vtkOctreePointLocatorNode *native = (vtkOctreePointLocatorNode *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaxBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOctreePointLocatorNodeWrap::SetMaxDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOctreePointLocatorNodeWrap *wrapper = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info.Holder());
+	vtkOctreePointLocatorNode *native = (vtkOctreePointLocatorNode *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaxDataBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOctreePointLocatorNodeWrap::SetMinBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOctreePointLocatorNodeWrap *wrapper = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info.Holder());
+	vtkOctreePointLocatorNode *native = (vtkOctreePointLocatorNode *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMinBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOctreePointLocatorNodeWrap::SetMinDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOctreePointLocatorNodeWrap *wrapper = ObjectWrap::Unwrap<VtkOctreePointLocatorNodeWrap>(info.Holder());
+	vtkOctreePointLocatorNode *native = (vtkOctreePointLocatorNode *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMinDataBounds(
+			b0
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

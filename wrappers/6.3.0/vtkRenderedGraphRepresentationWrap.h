@@ -38,6 +38,7 @@ class VtkRenderedGraphRepresentationWrap : public VtkRenderedRepresentationWrap
 		static void ColorEdgesByArrayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ColorVerticesByArrayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ColorVerticesByArrayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeSelectedGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EdgeIconVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EdgeIconVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EdgeLabelVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

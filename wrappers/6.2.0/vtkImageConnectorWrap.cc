@@ -8,6 +8,7 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkImageConnectorWrap.h"
+#include "vtkImageDataWrap.h"
 
 using namespace v8;
 
@@ -51,6 +52,9 @@ void VtkImageConnectorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "MarkData", MarkData);
+	Nan::SetPrototypeMethod(tpl, "markData", MarkData);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -122,6 +126,52 @@ void VtkImageConnectorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConnectorWrap::MarkData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConnectorWrap *wrapper = ObjectWrap::Unwrap<VtkImageConnectorWrap>(info.Holder());
+	vtkImageConnector *native = (vtkImageConnector *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				int b2[6];
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 6; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->MarkData(
+					(vtkImageData *) a0->native.GetPointer(),
+					info[1]->Int32Value(),
+					b2
+				);
+				return;
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

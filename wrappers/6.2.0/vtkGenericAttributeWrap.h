@@ -29,19 +29,10 @@ class VtkGenericAttributeWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetCentering(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetComponentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetMaxNorm(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

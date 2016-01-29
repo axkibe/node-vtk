@@ -32,7 +32,6 @@ class VtkProjectedAAHexahedraMapperWrap : public VtkUnstructuredGridVolumeMapper
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVisibilitySort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsRenderSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVisibilitySort(const Nan::FunctionCallbackInfo<v8::Value>& info);

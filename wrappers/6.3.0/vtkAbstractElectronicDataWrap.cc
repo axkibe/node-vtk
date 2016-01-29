@@ -54,9 +54,6 @@ void VtkAbstractElectronicDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetElectronDensity", GetElectronDensity);
-	Nan::SetPrototypeMethod(tpl, "getElectronDensity", GetElectronDensity);
-
 	Nan::SetPrototypeMethod(tpl, "GetHOMO", GetHOMO);
 	Nan::SetPrototypeMethod(tpl, "getHOMO", GetHOMO);
 
@@ -135,29 +132,6 @@ void VtkAbstractElectronicDataWrap::GetClassName(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkAbstractElectronicDataWrap::GetElectronDensity(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractElectronicDataWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractElectronicDataWrap>(info.Holder());
-	vtkAbstractElectronicData *native = (vtkAbstractElectronicData *)wrapper->native.GetPointer();
-	vtkImageData * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetElectronDensity();
-		VtkImageDataWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkImageDataWrap *w = new VtkImageDataWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
 }
 
 void VtkAbstractElectronicDataWrap::GetHOMO(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -55,6 +55,9 @@ void VtkRectilinearGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ComputeBounds", ComputeBounds);
 	Nan::SetPrototypeMethod(tpl, "computeBounds", ComputeBounds);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeStructuredCoordinates", ComputeStructuredCoordinates);
+	Nan::SetPrototypeMethod(tpl, "computeStructuredCoordinates", ComputeStructuredCoordinates);
+
 	Nan::SetPrototypeMethod(tpl, "CopyStructure", CopyStructure);
 	Nan::SetPrototypeMethod(tpl, "copyStructure", CopyStructure);
 
@@ -78,6 +81,9 @@ void VtkRectilinearGridWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMaxCellSize", GetMaxCellSize);
 	Nan::SetPrototypeMethod(tpl, "getMaxCellSize", GetMaxCellSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint", GetPoint);
+	Nan::SetPrototypeMethod(tpl, "getPoint", GetPoint);
 
 	Nan::SetPrototypeMethod(tpl, "GetPoints", GetPoints);
 	Nan::SetPrototypeMethod(tpl, "getPoints", GetPoints);
@@ -160,6 +166,87 @@ void VtkRectilinearGridWrap::ComputeBounds(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	native->ComputeBounds();
+}
+
+void VtkRectilinearGridWrap::ComputeStructuredCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRectilinearGridWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridWrap>(info.Holder());
+	vtkRectilinearGrid *native = (vtkRectilinearGrid *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->ComputeStructuredCoordinates(
+					b0,
+					b1,
+					b2
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRectilinearGridWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -325,6 +412,55 @@ void VtkRectilinearGridWrap::GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetMaxCellSize();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRectilinearGridWrap::GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRectilinearGridWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridWrap>(info.Holder());
+	vtkRectilinearGrid *native = (vtkRectilinearGrid *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->GetPoint(
+						info[0]->Int32Value(),
+						info[1]->Int32Value(),
+						info[2]->Int32Value(),
+						b3
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRectilinearGridWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -508,7 +644,37 @@ void VtkRectilinearGridWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRectilinearGridWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridWrap>(info.Holder());
 	vtkRectilinearGrid *native = (vtkRectilinearGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDimensions(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -535,7 +701,37 @@ void VtkRectilinearGridWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRectilinearGridWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridWrap>(info.Holder());
 	vtkRectilinearGrid *native = (vtkRectilinearGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

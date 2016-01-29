@@ -31,7 +31,6 @@ class VtkAbstractElectronicDataWrap : public VtkDataObjectWrap
 
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetElectronDensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHOMO(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLUMO(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -61,14 +61,8 @@ void VtkSplineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ClosedOn", ClosedOn);
 	Nan::SetPrototypeMethod(tpl, "closedOn", ClosedOn);
 
-	Nan::SetPrototypeMethod(tpl, "Compute", Compute);
-	Nan::SetPrototypeMethod(tpl, "compute", Compute);
-
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
-
-	Nan::SetPrototypeMethod(tpl, "Evaluate", Evaluate);
-	Nan::SetPrototypeMethod(tpl, "evaluate", Evaluate);
 
 	Nan::SetPrototypeMethod(tpl, "GetClampValue", GetClampValue);
 	Nan::SetPrototypeMethod(tpl, "getClampValue", GetClampValue);
@@ -93,6 +87,9 @@ void VtkSplineWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPoints", GetNumberOfPoints);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPoints", GetNumberOfPoints);
+
+	Nan::SetPrototypeMethod(tpl, "GetParametricRange", GetParametricRange);
+	Nan::SetPrototypeMethod(tpl, "getParametricRange", GetParametricRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetRightConstraint", GetRightConstraint);
 	Nan::SetPrototypeMethod(tpl, "getRightConstraint", GetRightConstraint);
@@ -241,18 +238,6 @@ void VtkSplineWrap::ClosedOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	native->ClosedOn();
 }
 
-void VtkSplineWrap::Compute(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSplineWrap>(info.Holder());
-	vtkSpline *native = (vtkSpline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Compute();
-}
-
 void VtkSplineWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSplineWrap>(info.Holder());
@@ -268,27 +253,6 @@ void VtkSplineWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		native->DeepCopy(
 			(vtkSpline *) a0->native.GetPointer()
 		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSplineWrap>(info.Holder());
-	vtkSpline *native = (vtkSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		double r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->Evaluate(
-			info[0]->NumberValue()
-		);
-		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -404,6 +368,43 @@ void VtkSplineWrap::GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetNumberOfPoints();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSplineWrap::GetParametricRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSplineWrap>(info.Holder());
+	vtkSpline *native = (vtkSpline *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetParametricRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkSplineWrap::GetRightConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -649,7 +650,37 @@ void VtkSplineWrap::SetParametricRange(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSplineWrap>(info.Holder());
 	vtkSpline *native = (vtkSpline *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetParametricRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

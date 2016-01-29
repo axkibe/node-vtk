@@ -31,6 +31,7 @@ class VtkColorLegendWrap : public VtkChartLegendWrap
 
 		static void DrawBorderOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawBorderOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDrawBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);

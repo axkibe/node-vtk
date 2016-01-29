@@ -33,14 +33,15 @@ class VtkAbstractTransformWrap : public VtkObjectWrap
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformNormalAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPointsNormalsVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformVectorAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

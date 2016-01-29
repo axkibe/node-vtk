@@ -30,6 +30,7 @@ class VtkRectilinearGridWrap : public VtkDataSetWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void ComputeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeStructuredCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +39,7 @@ class VtkRectilinearGridWrap : public VtkDataSetWrap
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);

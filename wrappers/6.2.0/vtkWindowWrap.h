@@ -41,7 +41,6 @@ class VtkWindowWrap : public VtkObjectWrap
 		static void GetErase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapped(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffScreenRendering(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,19 +49,16 @@ class VtkWindowWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OffScreenRenderingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OffScreenRenderingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDPI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDoubleBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetErase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMapped(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOffScreenRendering(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetParentInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTileScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTileViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindowName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

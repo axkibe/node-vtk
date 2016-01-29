@@ -38,7 +38,6 @@ class VtkHAVSVolumeMapperWrap : public VtkUnstructuredGridVolumeMapperWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKBufferSizeTo2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKBufferSizeTo6(const Nan::FunctionCallbackInfo<v8::Value>& info);

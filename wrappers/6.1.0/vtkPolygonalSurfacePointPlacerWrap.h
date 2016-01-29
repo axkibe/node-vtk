@@ -30,6 +30,7 @@ class VtkPolygonalSurfacePointPlacerWrap : public VtkPolyDataPointPlacerWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistanceOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,6 +45,8 @@ class VtkPolygonalSurfacePointPlacerWrap : public VtkPolyDataPointPlacerWrap
 		static void SetSnapToClosestPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SnapToClosestPointOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SnapToClosestPointOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

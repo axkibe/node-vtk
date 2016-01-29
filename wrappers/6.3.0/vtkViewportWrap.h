@@ -47,8 +47,6 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void GetPickY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickY1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickY2(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetPickedZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetVTKWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GradientBackgroundOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GradientBackgroundOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,7 +54,6 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsInViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void PickProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllViewProps(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -115,6 +115,9 @@ void VtkTextPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetShadow", GetShadow);
 	Nan::SetPrototypeMethod(tpl, "getShadow", GetShadow);
 
+	Nan::SetPrototypeMethod(tpl, "GetShadowColor", GetShadowColor);
+	Nan::SetPrototypeMethod(tpl, "getShadowColor", GetShadowColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetVerticalJustification", GetVerticalJustification);
 	Nan::SetPrototypeMethod(tpl, "getVerticalJustification", GetVerticalJustification);
 
@@ -598,6 +601,43 @@ void VtkTextPropertyWrap::GetShadow(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTextPropertyWrap::GetShadowColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
+	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetShadowColor(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTextPropertyWrap::GetVerticalJustification(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
@@ -758,7 +798,37 @@ void VtkTextPropertyWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackgroundColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -823,7 +893,37 @@ void VtkTextPropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1133,7 +1233,37 @@ void VtkTextPropertyWrap::SetShadowOffset(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTextPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info.Holder());
 	vtkTextProperty *native = (vtkTextProperty *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetShadowOffset(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

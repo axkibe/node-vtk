@@ -56,6 +56,9 @@ void VtkSpiderPlotActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAxisLabel", GetAxisLabel);
 	Nan::SetPrototypeMethod(tpl, "getAxisLabel", GetAxisLabel);
 
+	Nan::SetPrototypeMethod(tpl, "GetAxisRange", GetAxisRange);
+	Nan::SetPrototypeMethod(tpl, "getAxisRange", GetAxisRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -234,6 +237,47 @@ void VtkSpiderPlotActorWrap::GetAxisLabel(const Nan::FunctionCallbackInfo<v8::Va
 		);
 		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSpiderPlotActorWrap::GetAxisRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
+	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetAxisRange(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -736,9 +780,40 @@ void VtkSpiderPlotActorWrap::SetAxisRange(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetAxisRange(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
@@ -923,9 +998,40 @@ void VtkSpiderPlotActorWrap::SetPlotColor(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPlotColor(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{

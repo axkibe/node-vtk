@@ -129,9 +129,40 @@ void VtkHyperOctreeContourFilterWrap::GenerateValues(const Nan::FunctionCallback
 {
 	VtkHyperOctreeContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeContourFilterWrap>(info.Holder());
 	vtkHyperOctreeContourFilter *native = (vtkHyperOctreeContourFilter *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GenerateValues(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{

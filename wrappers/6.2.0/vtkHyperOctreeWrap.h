@@ -45,6 +45,7 @@ class VtkHyperOctreeWrap : public VtkDataSetWrap
 		static void GetPointsOnFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsOnParentEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsOnParentEdge2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointsOnParentFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LEVELS(const Nan::FunctionCallbackInfo<v8::Value>& info);

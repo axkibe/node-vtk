@@ -31,6 +31,7 @@ class VtkCoincidentPointsWrap : public VtkObjectWrap
 
 		static void Clear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCoincidentPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNextCoincidentPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

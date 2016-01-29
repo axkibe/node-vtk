@@ -10,7 +10,6 @@
 #include "vtkUnstructuredGridBaseWrap.h"
 #include "vtkObjectBaseWrap.h"
 #include "vtkDataObjectWrap.h"
-#include "vtkIdTypeArrayWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
 
@@ -60,14 +59,8 @@ void VtkUnstructuredGridBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataObjectType", GetDataObjectType);
 	Nan::SetPrototypeMethod(tpl, "getDataObjectType", GetDataObjectType);
 
-	Nan::SetPrototypeMethod(tpl, "GetIdsOfCellsOfType", GetIdsOfCellsOfType);
-	Nan::SetPrototypeMethod(tpl, "getIdsOfCellsOfType", GetIdsOfCellsOfType);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "IsHomogeneous", IsHomogeneous);
-	Nan::SetPrototypeMethod(tpl, "isHomogeneous", IsHomogeneous);
 
 	Nan::SetPrototypeMethod(tpl, "IsTypeOf", IsTypeOf);
 	Nan::SetPrototypeMethod(tpl, "isTypeOf", IsTypeOf);
@@ -195,30 +188,6 @@ void VtkUnstructuredGridBaseWrap::GetDataObjectType(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkUnstructuredGridBaseWrap::GetIdsOfCellsOfType(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkUnstructuredGridBaseWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBaseWrap>(info.Holder());
-	vtkUnstructuredGridBase *native = (vtkUnstructuredGridBase *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->GetIdsOfCellsOfType(
-				info[0]->Int32Value(),
-				(vtkIdTypeArray *) a1->native.GetPointer()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkUnstructuredGridBaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkUnstructuredGridBaseWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBaseWrap>(info.Holder());
@@ -239,20 +208,6 @@ void VtkUnstructuredGridBaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkUnstructuredGridBaseWrap::IsHomogeneous(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkUnstructuredGridBaseWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBaseWrap>(info.Holder());
-	vtkUnstructuredGridBase *native = (vtkUnstructuredGridBase *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsHomogeneous();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkUnstructuredGridBaseWrap::IsTypeOf(const Nan::FunctionCallbackInfo<v8::Value>& info)

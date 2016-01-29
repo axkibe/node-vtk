@@ -52,9 +52,6 @@ void VtkHyperOctreePointsGrabberWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDimension", GetDimension);
 	Nan::SetPrototypeMethod(tpl, "getDimension", GetDimension);
 
-	Nan::SetPrototypeMethod(tpl, "InitPointInsertion", InitPointInsertion);
-	Nan::SetPrototypeMethod(tpl, "initPointInsertion", InitPointInsertion);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -63,9 +60,6 @@ void VtkHyperOctreePointsGrabberWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "SetDimension", SetDimension);
-	Nan::SetPrototypeMethod(tpl, "setDimension", SetDimension);
 
 	ptpl.Reset( tpl );
 }
@@ -121,18 +115,6 @@ void VtkHyperOctreePointsGrabberWrap::GetDimension(const Nan::FunctionCallbackIn
 	}
 	r = native->GetDimension();
 	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkHyperOctreePointsGrabberWrap::InitPointInsertion(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkHyperOctreePointsGrabberWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info.Holder());
-	vtkHyperOctreePointsGrabber *native = (vtkHyperOctreePointsGrabber *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->InitPointInsertion();
 }
 
 void VtkHyperOctreePointsGrabberWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -206,25 +188,6 @@ void VtkHyperOctreePointsGrabberWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkHyperOctreePointsGrabberWrap::SetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkHyperOctreePointsGrabberWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info.Holder());
-	vtkHyperOctreePointsGrabber *native = (vtkHyperOctreePointsGrabber *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetDimension(
-			info[0]->Int32Value()
-		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

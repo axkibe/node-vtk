@@ -29,6 +29,7 @@ class VtkFocalPlanePointPlacerWrap : public VtkPointPlacerWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -36,6 +37,7 @@ class VtkFocalPlanePointPlacerWrap : public VtkPointPlacerWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

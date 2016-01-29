@@ -36,6 +36,8 @@ class VtkHighestDensityRegionsStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSigma(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSmoothHC1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSmoothHC2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

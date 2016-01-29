@@ -72,6 +72,9 @@ void VtkGeneralTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Identity", Identity);
 	Nan::SetPrototypeMethod(tpl, "identity", Identity);
 
+	Nan::SetPrototypeMethod(tpl, "InternalTransformPoint", InternalTransformPoint);
+	Nan::SetPrototypeMethod(tpl, "internalTransformPoint", InternalTransformPoint);
+
 	Nan::SetPrototypeMethod(tpl, "Inverse", Inverse);
 	Nan::SetPrototypeMethod(tpl, "inverse", Inverse);
 
@@ -175,7 +178,37 @@ void VtkGeneralTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
 	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[16];
+		if( a0->Length() < 16 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 16; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Concatenate(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -296,6 +329,64 @@ void VtkGeneralTransformWrap::Identity(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	native->Identity();
+}
+
+void VtkGeneralTransformWrap::InternalTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
+	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InternalTransformPoint(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGeneralTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -430,9 +521,40 @@ void VtkGeneralTransformWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
 	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RotateWXYZ(
+				info[0]->NumberValue(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
@@ -549,7 +671,37 @@ void VtkGeneralTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
 	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Scale(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -596,7 +748,37 @@ void VtkGeneralTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGeneralTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeneralTransformWrap>(info.Holder());
 	vtkGeneralTransform *native = (vtkGeneralTransform *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Translate(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

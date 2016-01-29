@@ -29,6 +29,8 @@ class VtkParametricTorusWrap : public VtkParametricFunctionWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void Evaluate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EvaluateScalar(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCrossSectionRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);

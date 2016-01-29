@@ -9,6 +9,7 @@
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkImageDataWrap.h"
 
 using namespace v8;
 
@@ -70,6 +71,12 @@ void VtkThreadedImageAlgorithmWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfThreads", SetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfThreads", SetNumberOfThreads);
+
+	Nan::SetPrototypeMethod(tpl, "SplitExtent", SplitExtent);
+	Nan::SetPrototypeMethod(tpl, "splitExtent", SplitExtent);
+
+	Nan::SetPrototypeMethod(tpl, "ThreadedExecute", ThreadedExecute);
+	Nan::SetPrototypeMethod(tpl, "threadedExecute", ThreadedExecute);
 
 	ptpl.Reset( tpl );
 }
@@ -246,6 +253,125 @@ void VtkThreadedImageAlgorithmWrap::SetNumberOfThreads(const Nan::FunctionCallba
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkThreadedImageAlgorithmWrap::SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkThreadedImageAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedImageAlgorithmWrap>(info.Holder());
+	vtkThreadedImageAlgorithm *native = (vtkThreadedImageAlgorithm *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->SplitExtent(
+						b0,
+						b1,
+						info[2]->Int32Value(),
+						info[3]->Int32Value()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkThreadedImageAlgorithmWrap::ThreadedExecute(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkThreadedImageAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedImageAlgorithmWrap>(info.Holder());
+	vtkThreadedImageAlgorithm *native = (vtkThreadedImageAlgorithm *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkImageDataWrap *a1 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				int b2[6];
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 6; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ThreadedExecute(
+						(vtkImageData *) a0->native.GetPointer(),
+						(vtkImageData *) a1->native.GetPointer(),
+						b2,
+						info[3]->Int32Value()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

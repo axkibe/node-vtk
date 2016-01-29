@@ -37,11 +37,16 @@ class VtkTransformWrap : public VtkLinearTransformWrap
 		static void GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverseFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfConcatenatedTransforms(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrientationWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTranspose(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Identity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MultiplyPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Pop(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PostMultiply(const Nan::FunctionCallbackInfo<v8::Value>& info);

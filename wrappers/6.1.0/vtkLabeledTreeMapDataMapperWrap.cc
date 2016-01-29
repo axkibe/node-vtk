@@ -63,8 +63,14 @@ void VtkLabeledTreeMapDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDynamicLevel", GetDynamicLevel);
 	Nan::SetPrototypeMethod(tpl, "getDynamicLevel", GetDynamicLevel);
 
+	Nan::SetPrototypeMethod(tpl, "GetFontSizeRange", GetFontSizeRange);
+	Nan::SetPrototypeMethod(tpl, "getFontSizeRange", GetFontSizeRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetInputTree", GetInputTree);
 	Nan::SetPrototypeMethod(tpl, "getInputTree", GetInputTree);
+
+	Nan::SetPrototypeMethod(tpl, "GetLevelRange", GetLevelRange);
+	Nan::SetPrototypeMethod(tpl, "getLevelRange", GetLevelRange);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -187,6 +193,43 @@ void VtkLabeledTreeMapDataMapperWrap::GetDynamicLevel(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkLabeledTreeMapDataMapperWrap::GetFontSizeRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
+	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetFontSizeRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkLabeledTreeMapDataMapperWrap::GetInputTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
@@ -208,6 +251,43 @@ void VtkLabeledTreeMapDataMapperWrap::GetInputTree(const Nan::FunctionCallbackIn
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkLabeledTreeMapDataMapperWrap::GetLevelRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabeledTreeMapDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledTreeMapDataMapperWrap>(info.Holder());
+	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetLevelRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkLabeledTreeMapDataMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

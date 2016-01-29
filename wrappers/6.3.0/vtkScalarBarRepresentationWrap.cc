@@ -69,6 +69,9 @@ void VtkScalarBarRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetScalarBarActor", GetScalarBarActor);
 	Nan::SetPrototypeMethod(tpl, "getScalarBarActor", GetScalarBarActor);
 
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetVisibility", GetVisibility);
 	Nan::SetPrototypeMethod(tpl, "getVisibility", GetVisibility);
 
@@ -107,6 +110,9 @@ void VtkScalarBarRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetVisibility", SetVisibility);
 	Nan::SetPrototypeMethod(tpl, "setVisibility", SetVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -232,6 +238,43 @@ void VtkScalarBarRepresentationWrap::GetScalarBarActor(const Nan::FunctionCallba
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkScalarBarRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScalarBarRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarRepresentationWrap>(info.Holder());
+	vtkScalarBarRepresentation *native = (vtkScalarBarRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetSize(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkScalarBarRepresentationWrap::GetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -495,6 +538,43 @@ void VtkScalarBarRepresentationWrap::SetVisibility(const Nan::FunctionCallbackIn
 		}
 		native->SetVisibility(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkScalarBarRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScalarBarRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarRepresentationWrap>(info.Holder());
+	vtkScalarBarRepresentation *native = (vtkScalarBarRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

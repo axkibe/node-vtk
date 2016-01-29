@@ -54,6 +54,18 @@ void VtkImageCroppingRegionsWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCroppingRegionFlags", GetCroppingRegionFlags);
 	Nan::SetPrototypeMethod(tpl, "getCroppingRegionFlags", GetCroppingRegionFlags);
 
+	Nan::SetPrototypeMethod(tpl, "GetLine1Color", GetLine1Color);
+	Nan::SetPrototypeMethod(tpl, "getLine1Color", GetLine1Color);
+
+	Nan::SetPrototypeMethod(tpl, "GetLine2Color", GetLine2Color);
+	Nan::SetPrototypeMethod(tpl, "getLine2Color", GetLine2Color);
+
+	Nan::SetPrototypeMethod(tpl, "GetLine3Color", GetLine3Color);
+	Nan::SetPrototypeMethod(tpl, "getLine3Color", GetLine3Color);
+
+	Nan::SetPrototypeMethod(tpl, "GetLine4Color", GetLine4Color);
+	Nan::SetPrototypeMethod(tpl, "getLine4Color", GetLine4Color);
+
 	Nan::SetPrototypeMethod(tpl, "GetSlice", GetSlice);
 	Nan::SetPrototypeMethod(tpl, "getSlice", GetSlice);
 
@@ -86,6 +98,9 @@ void VtkImageCroppingRegionsWidgetWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "OnMouseMove", OnMouseMove);
 	Nan::SetPrototypeMethod(tpl, "onMouseMove", OnMouseMove);
+
+	Nan::SetPrototypeMethod(tpl, "PlaceWidget", PlaceWidget);
+	Nan::SetPrototypeMethod(tpl, "placeWidget", PlaceWidget);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -190,6 +205,154 @@ void VtkImageCroppingRegionsWidgetWrap::GetCroppingRegionFlags(const Nan::Functi
 	}
 	r = native->GetCroppingRegionFlags();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageCroppingRegionsWidgetWrap::GetLine1Color(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
+	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetLine1Color(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageCroppingRegionsWidgetWrap::GetLine2Color(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
+	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetLine2Color(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageCroppingRegionsWidgetWrap::GetLine3Color(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
+	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetLine3Color(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageCroppingRegionsWidgetWrap::GetLine4Color(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
+	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetLine4Color(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageCroppingRegionsWidgetWrap::GetSlice(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -360,6 +523,43 @@ void VtkImageCroppingRegionsWidgetWrap::OnMouseMove(const Nan::FunctionCallbackI
 	native->OnMouseMove();
 }
 
+void VtkImageCroppingRegionsWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
+	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImageCroppingRegionsWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
@@ -433,7 +633,37 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine1Color(const Nan::FunctionCallbac
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLine1Color(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -460,7 +690,37 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine2Color(const Nan::FunctionCallbac
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLine2Color(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -487,7 +747,37 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine3Color(const Nan::FunctionCallbac
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLine3Color(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -514,7 +804,37 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine4Color(const Nan::FunctionCallbac
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLine4Color(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -541,7 +861,37 @@ void VtkImageCroppingRegionsWidgetWrap::SetPlanePositions(const Nan::FunctionCal
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPlanePositions(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

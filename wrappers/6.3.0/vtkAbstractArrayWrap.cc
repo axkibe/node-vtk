@@ -9,7 +9,6 @@
 #include "vtkObjectWrap.h"
 #include "vtkAbstractArrayWrap.h"
 #include "vtkIdListWrap.h"
-#include "vtkArrayIteratorWrap.h"
 #include "vtkVariantArrayWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
@@ -54,9 +53,6 @@ void VtkAbstractArrayWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAbstractArrayWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "ClearLookup", ClearLookup);
-	Nan::SetPrototypeMethod(tpl, "clearLookup", ClearLookup);
-
 	Nan::SetPrototypeMethod(tpl, "CopyComponentNames", CopyComponentNames);
 	Nan::SetPrototypeMethod(tpl, "copyComponentNames", CopyComponentNames);
 
@@ -70,9 +66,6 @@ void VtkAbstractArrayWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "DISCRETE_VALUE_SAMPLE_PARAMETERS", DISCRETE_VALUE_SAMPLE_PARAMETERS);
 
-	Nan::SetPrototypeMethod(tpl, "DataChanged", DataChanged);
-	Nan::SetPrototypeMethod(tpl, "dataChanged", DataChanged);
-
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -84,17 +77,11 @@ void VtkAbstractArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetDataType", GetDataType);
-	Nan::SetPrototypeMethod(tpl, "getDataType", GetDataType);
-
 	Nan::SetPrototypeMethod(tpl, "GetDataTypeAsString", GetDataTypeAsString);
 	Nan::SetPrototypeMethod(tpl, "getDataTypeAsString", GetDataTypeAsString);
 
 	Nan::SetPrototypeMethod(tpl, "GetDataTypeSize", GetDataTypeSize);
 	Nan::SetPrototypeMethod(tpl, "getDataTypeSize", GetDataTypeSize);
-
-	Nan::SetPrototypeMethod(tpl, "GetElementComponentSize", GetElementComponentSize);
-	Nan::SetPrototypeMethod(tpl, "getElementComponentSize", GetElementComponentSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetInformation", GetInformation);
 	Nan::SetPrototypeMethod(tpl, "getInformation", GetInformation);
@@ -126,23 +113,11 @@ void VtkAbstractArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "HasStandardMemoryLayout", HasStandardMemoryLayout);
 	Nan::SetPrototypeMethod(tpl, "hasStandardMemoryLayout", HasStandardMemoryLayout);
 
-	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
-	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
-
-	Nan::SetPrototypeMethod(tpl, "InsertTuples", InsertTuples);
-	Nan::SetPrototypeMethod(tpl, "insertTuples", InsertTuples);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
-	Nan::SetPrototypeMethod(tpl, "IsNumeric", IsNumeric);
-	Nan::SetPrototypeMethod(tpl, "isNumeric", IsNumeric);
-
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "NewIterator", NewIterator);
-	Nan::SetPrototypeMethod(tpl, "newIterator", NewIterator);
 
 	Nan::SetPrototypeMethod(tpl, "PER_COMPONENT", PER_COMPONENT);
 
@@ -157,9 +132,6 @@ void VtkAbstractArrayWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfComponents", SetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfComponents", SetNumberOfComponents);
-
-	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
-	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
 	ptpl.Reset( tpl );
 }
@@ -187,18 +159,6 @@ void VtkAbstractArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkAbstractArrayWrap::ClearLookup(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->ClearLookup();
 }
 
 void VtkAbstractArrayWrap::CopyComponentNames(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -325,18 +285,6 @@ void VtkAbstractArrayWrap::DISCRETE_VALUE_SAMPLE_PARAMETERS(const Nan::FunctionC
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkAbstractArrayWrap::DataChanged(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->DataChanged();
-}
-
 void VtkAbstractArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
@@ -408,20 +356,6 @@ void VtkAbstractArrayWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
-void VtkAbstractArrayWrap::GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetDataType();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkAbstractArrayWrap::GetDataTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
@@ -454,28 +388,7 @@ void VtkAbstractArrayWrap::GetDataTypeSize(const Nan::FunctionCallbackInfo<v8::V
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetDataTypeSize();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkAbstractArrayWrap::GetElementComponentSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetElementComponentSize();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAbstractArrayWrap::GetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -656,48 +569,6 @@ void VtkAbstractArrayWrap::HasStandardMemoryLayout(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkAbstractArrayWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Initialize();
-}
-
-void VtkAbstractArrayWrap::InsertTuples(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[2]))
-			{
-				VtkAbstractArrayWrap *a2 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				native->InsertTuples(
-					(vtkIdList *) a0->native.GetPointer(),
-					(vtkIdList *) a1->native.GetPointer(),
-					(vtkAbstractArray *) a2->native.GetPointer()
-				);
-				return;
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkAbstractArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
@@ -720,20 +591,6 @@ void VtkAbstractArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkAbstractArrayWrap::IsNumeric(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsNumeric();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkAbstractArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
@@ -752,29 +609,6 @@ void VtkAbstractArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::New<v8::FunctionTemplate>(VtkAbstractArrayWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkAbstractArrayWrap *w = new VtkAbstractArrayWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkAbstractArrayWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	vtkArrayIterator * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->NewIterator();
-		VtkArrayIteratorWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkArrayIteratorWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkArrayIteratorWrap *w = new VtkArrayIteratorWrap();
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
@@ -883,17 +717,5 @@ void VtkAbstractArrayWrap::SetNumberOfComponents(const Nan::FunctionCallbackInfo
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractArrayWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
-	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Squeeze();
 }
 

@@ -35,7 +35,6 @@ class VtkResliceCursorRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void DisplayTextOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorMap(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetCursorAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,17 +43,19 @@ class VtkResliceCursorRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetPlaneSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReslice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResliceAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetResliceCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRestrictPlaneToVolume(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowReslicedImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThicknessLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetThicknessLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThicknessLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseImageActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWorldThicknessLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeReslicePlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ManageTextDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);

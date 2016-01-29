@@ -75,9 +75,6 @@ void VtkHAVSVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	Nan::SetPrototypeMethod(tpl, "SetGPUDataStructures", SetGPUDataStructures);
-	Nan::SetPrototypeMethod(tpl, "setGPUDataStructures", SetGPUDataStructures);
-
 	Nan::SetPrototypeMethod(tpl, "SetKBufferSize", SetKBufferSize);
 	Nan::SetPrototypeMethod(tpl, "setKBufferSize", SetKBufferSize);
 
@@ -289,25 +286,6 @@ void VtkHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkHAVSVolumeMapperWrap::SetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
-	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsBoolean())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetGPUDataStructures(
-			info[0]->BooleanValue()
-		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

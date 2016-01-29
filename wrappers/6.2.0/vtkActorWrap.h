@@ -32,6 +32,7 @@ class VtkActorWrap : public VtkProp3DWrap
 		static void ApplyProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackfaceProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);

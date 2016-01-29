@@ -29,20 +29,17 @@ class VtkGenericDataSetWrap : public VtkDataObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void ComputeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellTypes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTessellator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void NewBoundaryIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void NewCellIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void NewPointIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTessellator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

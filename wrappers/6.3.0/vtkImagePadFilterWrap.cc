@@ -53,6 +53,9 @@ void VtkImagePadFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOutputNumberOfScalarComponents", GetOutputNumberOfScalarComponents);
 	Nan::SetPrototypeMethod(tpl, "getOutputNumberOfScalarComponents", GetOutputNumberOfScalarComponents);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutputWholeExtent", GetOutputWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getOutputWholeExtent", GetOutputWholeExtent);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -123,6 +126,43 @@ void VtkImagePadFilterWrap::GetOutputNumberOfScalarComponents(const Nan::Functio
 	}
 	r = native->GetOutputNumberOfScalarComponents();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImagePadFilterWrap::GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePadFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImagePadFilterWrap>(info.Holder());
+	vtkImagePadFilter *native = (vtkImagePadFilter *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetOutputWholeExtent(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImagePadFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -224,7 +264,37 @@ void VtkImagePadFilterWrap::SetOutputWholeExtent(const Nan::FunctionCallbackInfo
 {
 	VtkImagePadFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImagePadFilterWrap>(info.Holder());
 	vtkImagePadFilter *native = (vtkImagePadFilter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputWholeExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

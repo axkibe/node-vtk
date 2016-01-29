@@ -57,20 +57,41 @@ void VtkViewThemeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CreateOceanTheme", CreateOceanTheme);
 	Nan::SetPrototypeMethod(tpl, "createOceanTheme", CreateOceanTheme);
 
+	Nan::SetPrototypeMethod(tpl, "GetCellAlphaRange", GetCellAlphaRange);
+	Nan::SetPrototypeMethod(tpl, "getCellAlphaRange", GetCellAlphaRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetCellHueRange", GetCellHueRange);
+	Nan::SetPrototypeMethod(tpl, "getCellHueRange", GetCellHueRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellLookupTable", GetCellLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getCellLookupTable", GetCellLookupTable);
 
 	Nan::SetPrototypeMethod(tpl, "GetCellOpacity", GetCellOpacity);
 	Nan::SetPrototypeMethod(tpl, "getCellOpacity", GetCellOpacity);
 
+	Nan::SetPrototypeMethod(tpl, "GetCellSaturationRange", GetCellSaturationRange);
+	Nan::SetPrototypeMethod(tpl, "getCellSaturationRange", GetCellSaturationRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellTextProperty", GetCellTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getCellTextProperty", GetCellTextProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetCellValueRange", GetCellValueRange);
+	Nan::SetPrototypeMethod(tpl, "getCellValueRange", GetCellValueRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEdgeLabelColor", GetEdgeLabelColor);
+	Nan::SetPrototypeMethod(tpl, "getEdgeLabelColor", GetEdgeLabelColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetLineWidth", GetLineWidth);
 	Nan::SetPrototypeMethod(tpl, "getLineWidth", GetLineWidth);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointAlphaRange", GetPointAlphaRange);
+	Nan::SetPrototypeMethod(tpl, "getPointAlphaRange", GetPointAlphaRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointHueRange", GetPointHueRange);
+	Nan::SetPrototypeMethod(tpl, "getPointHueRange", GetPointHueRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetPointLookupTable", GetPointLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getPointLookupTable", GetPointLookupTable);
@@ -78,11 +99,17 @@ void VtkViewThemeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPointOpacity", GetPointOpacity);
 	Nan::SetPrototypeMethod(tpl, "getPointOpacity", GetPointOpacity);
 
+	Nan::SetPrototypeMethod(tpl, "GetPointSaturationRange", GetPointSaturationRange);
+	Nan::SetPrototypeMethod(tpl, "getPointSaturationRange", GetPointSaturationRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetPointSize", GetPointSize);
 	Nan::SetPrototypeMethod(tpl, "getPointSize", GetPointSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetPointTextProperty", GetPointTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getPointTextProperty", GetPointTextProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointValueRange", GetPointValueRange);
+	Nan::SetPrototypeMethod(tpl, "getPointValueRange", GetPointValueRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetScaleCellLookupTable", GetScaleCellLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getScaleCellLookupTable", GetScaleCellLookupTable);
@@ -95,6 +122,9 @@ void VtkViewThemeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSelectedPointOpacity", GetSelectedPointOpacity);
 	Nan::SetPrototypeMethod(tpl, "getSelectedPointOpacity", GetSelectedPointOpacity);
+
+	Nan::SetPrototypeMethod(tpl, "GetVertexLabelColor", GetVertexLabelColor);
+	Nan::SetPrototypeMethod(tpl, "getVertexLabelColor", GetVertexLabelColor);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -308,6 +338,80 @@ void VtkViewThemeWrap::CreateOceanTheme(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkViewThemeWrap::GetCellAlphaRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCellAlphaRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewThemeWrap::GetCellHueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCellHueRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkViewThemeWrap::GetCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
@@ -345,6 +449,43 @@ void VtkViewThemeWrap::GetCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkViewThemeWrap::GetCellSaturationRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCellSaturationRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkViewThemeWrap::GetCellTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
@@ -368,6 +509,43 @@ void VtkViewThemeWrap::GetCellTextProperty(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkViewThemeWrap::GetCellValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCellValueRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkViewThemeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
@@ -382,6 +560,43 @@ void VtkViewThemeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkViewThemeWrap::GetEdgeLabelColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetEdgeLabelColor(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkViewThemeWrap::GetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
@@ -394,6 +609,80 @@ void VtkViewThemeWrap::GetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetLineWidth();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkViewThemeWrap::GetPointAlphaRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPointAlphaRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewThemeWrap::GetPointHueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPointHueRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkViewThemeWrap::GetPointLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -433,6 +722,43 @@ void VtkViewThemeWrap::GetPointOpacity(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkViewThemeWrap::GetPointSaturationRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPointSaturationRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkViewThemeWrap::GetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
@@ -468,6 +794,43 @@ void VtkViewThemeWrap::GetPointTextProperty(const Nan::FunctionCallbackInfo<v8::
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkViewThemeWrap::GetPointValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPointValueRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkViewThemeWrap::GetScaleCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -524,6 +887,43 @@ void VtkViewThemeWrap::GetSelectedPointOpacity(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetSelectedPointOpacity();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkViewThemeWrap::GetVertexLabelColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetVertexLabelColor(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkViewThemeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -698,7 +1098,37 @@ void VtkViewThemeWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackgroundColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -725,7 +1155,37 @@ void VtkViewThemeWrap::SetBackgroundColor2(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackgroundColor2(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -752,7 +1212,37 @@ void VtkViewThemeWrap::SetCellAlphaRange(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCellAlphaRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -775,7 +1265,37 @@ void VtkViewThemeWrap::SetCellColor(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCellColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -802,7 +1322,37 @@ void VtkViewThemeWrap::SetCellHueRange(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCellHueRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -864,7 +1414,37 @@ void VtkViewThemeWrap::SetCellSaturationRange(const Nan::FunctionCallbackInfo<v8
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCellSaturationRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -907,7 +1487,37 @@ void VtkViewThemeWrap::SetCellValueRange(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCellValueRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -930,7 +1540,37 @@ void VtkViewThemeWrap::SetEdgeLabelColor(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeLabelColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -976,7 +1616,37 @@ void VtkViewThemeWrap::SetOutlineColor(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutlineColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1003,7 +1673,37 @@ void VtkViewThemeWrap::SetPointAlphaRange(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPointAlphaRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1026,7 +1726,37 @@ void VtkViewThemeWrap::SetPointColor(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPointColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1053,7 +1783,37 @@ void VtkViewThemeWrap::SetPointHueRange(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPointHueRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1115,7 +1875,37 @@ void VtkViewThemeWrap::SetPointSaturationRange(const Nan::FunctionCallbackInfo<v
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPointSaturationRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1177,7 +1967,37 @@ void VtkViewThemeWrap::SetPointValueRange(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPointValueRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1238,7 +2058,37 @@ void VtkViewThemeWrap::SetSelectedCellColor(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSelectedCellColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1284,7 +2134,37 @@ void VtkViewThemeWrap::SetSelectedPointColor(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSelectedPointColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1330,7 +2210,37 @@ void VtkViewThemeWrap::SetVertexLabelColor(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
 	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetVertexLabelColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

@@ -41,6 +41,7 @@ class VtkParallelCoordinatesRepresentationWrap : public VtkRenderedRepresentatio
 		static void GetNumberOfAxisLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPositionNearXCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRangeAtPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseCurves(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXCoordinateOfPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,6 +60,7 @@ class VtkParallelCoordinatesRepresentationWrap : public VtkRenderedRepresentatio
 		static void SetLineOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfAxisLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlotTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRangeAtPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseCurves(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXCoordinateOfPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapAxisPositions(const Nan::FunctionCallbackInfo<v8::Value>& info);

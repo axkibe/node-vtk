@@ -87,6 +87,9 @@ void VtkLabeledDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLabelMode", GetLabelMode);
 	Nan::SetPrototypeMethod(tpl, "getLabelMode", GetLabelMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetLabelPosition", GetLabelPosition);
+	Nan::SetPrototypeMethod(tpl, "getLabelPosition", GetLabelPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetLabelText", GetLabelText);
 	Nan::SetPrototypeMethod(tpl, "getLabelText", GetLabelText);
 
@@ -354,6 +357,47 @@ void VtkLabeledDataMapperWrap::GetLabelMode(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetLabelMode();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabeledDataMapperWrap::GetLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabeledDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info.Holder());
+	vtkLabeledDataMapper *native = (vtkLabeledDataMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetLabelPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkLabeledDataMapperWrap::GetLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info)

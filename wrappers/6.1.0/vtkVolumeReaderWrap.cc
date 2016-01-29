@@ -9,7 +9,6 @@
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkVolumeReaderWrap.h"
 #include "vtkObjectWrap.h"
-#include "vtkImageDataWrap.h"
 
 using namespace v8;
 
@@ -56,9 +55,6 @@ void VtkVolumeReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetFilePrefix", GetFilePrefix);
 	Nan::SetPrototypeMethod(tpl, "getFilePrefix", GetFilePrefix);
-
-	Nan::SetPrototypeMethod(tpl, "GetImage", GetImage);
-	Nan::SetPrototypeMethod(tpl, "getImage", GetImage);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -154,36 +150,6 @@ void VtkVolumeReaderWrap::GetFilePrefix(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
-void VtkVolumeReaderWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
-	vtkVolumeReader *native = (vtkVolumeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		vtkImageData * r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->GetImage(
-			info[0]->Int32Value()
-		);
-			VtkImageDataWrap::InitPtpl();
-		v8::Local<v8::Value> argv[1] =
-			{ Nan::New(vtkNodeJsNoWrap) };
-		v8::Local<v8::Function> cons =
-			Nan::New<v8::FunctionTemplate>(VtkImageDataWrap::ptpl)->GetFunction();
-		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-		VtkImageDataWrap *w = new VtkImageDataWrap();
-		w->native = r;
-		w->Wrap(wo);
-		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkVolumeReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
@@ -264,7 +230,37 @@ void VtkVolumeReaderWrap::SetDataOrigin(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
 	vtkVolumeReader *native = (vtkVolumeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDataOrigin(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -291,7 +287,37 @@ void VtkVolumeReaderWrap::SetDataSpacing(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
 	vtkVolumeReader *native = (vtkVolumeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDataSpacing(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -358,7 +384,37 @@ void VtkVolumeReaderWrap::SetImageRange(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
 	vtkVolumeReader *native = (vtkVolumeReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetImageRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

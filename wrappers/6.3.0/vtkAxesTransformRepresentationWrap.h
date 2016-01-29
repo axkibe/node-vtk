@@ -36,7 +36,9 @@ class VtkAxesTransformRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetInteractionStateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOriginDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOriginRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOriginWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,7 +52,11 @@ class VtkAxesTransformRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOriginDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOriginWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

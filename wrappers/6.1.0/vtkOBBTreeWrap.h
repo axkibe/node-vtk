@@ -30,9 +30,12 @@ class VtkOBBTreeWrap : public VtkAbstractCellLocatorWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InsideOrOutside(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IntersectWithLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

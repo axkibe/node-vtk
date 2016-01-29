@@ -12,8 +12,6 @@
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkStringArrayWrap.h"
-#include "vtkDataObjectCollectionWrap.h"
-#include "vtkMultiBlockDataSetWrap.h"
 
 using namespace v8;
 
@@ -57,9 +55,6 @@ void VtkStatisticsAlgorithmWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "AddColumnPair", AddColumnPair);
 	Nan::SetPrototypeMethod(tpl, "addColumnPair", AddColumnPair);
-
-	Nan::SetPrototypeMethod(tpl, "Aggregate", Aggregate);
-	Nan::SetPrototypeMethod(tpl, "aggregate", Aggregate);
 
 	Nan::SetPrototypeMethod(tpl, "GetAssessNames", GetAssessNames);
 	Nan::SetPrototypeMethod(tpl, "getAssessNames", GetAssessNames);
@@ -193,31 +188,6 @@ void VtkStatisticsAlgorithmWrap::AddColumnPair(const Nan::FunctionCallbackInfo<v
 			native->AddColumnPair(
 				*a0,
 				*a1
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkStatisticsAlgorithmWrap::Aggregate(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
-	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectCollectionWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkDataObjectCollectionWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectCollectionWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Aggregate(
-				(vtkDataObjectCollection *) a0->native.GetPointer(),
-				(vtkMultiBlockDataSet *) a1->native.GetPointer()
 			);
 			return;
 		}

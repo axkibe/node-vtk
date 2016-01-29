@@ -44,10 +44,13 @@ class VtkPointHandleRepresentation2DWrap : public VtkHandleRepresentationWrap
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCursorShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointPlacer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -55,6 +55,15 @@ void VtkLinearTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLinearInverse", GetLinearInverse);
 	Nan::SetPrototypeMethod(tpl, "getLinearInverse", GetLinearInverse);
 
+	Nan::SetPrototypeMethod(tpl, "InternalTransformNormal", InternalTransformNormal);
+	Nan::SetPrototypeMethod(tpl, "internalTransformNormal", InternalTransformNormal);
+
+	Nan::SetPrototypeMethod(tpl, "InternalTransformPoint", InternalTransformPoint);
+	Nan::SetPrototypeMethod(tpl, "internalTransformPoint", InternalTransformPoint);
+
+	Nan::SetPrototypeMethod(tpl, "InternalTransformVector", InternalTransformVector);
+	Nan::SetPrototypeMethod(tpl, "internalTransformVector", InternalTransformVector);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -64,6 +73,9 @@ void VtkLinearTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "TransformNormal", TransformNormal);
+	Nan::SetPrototypeMethod(tpl, "transformNormal", TransformNormal);
+
 	Nan::SetPrototypeMethod(tpl, "TransformNormals", TransformNormals);
 	Nan::SetPrototypeMethod(tpl, "transformNormals", TransformNormals);
 
@@ -72,6 +84,9 @@ void VtkLinearTransformWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "TransformPointsNormalsVectors", TransformPointsNormalsVectors);
 	Nan::SetPrototypeMethod(tpl, "transformPointsNormalsVectors", TransformPointsNormalsVectors);
+
+	Nan::SetPrototypeMethod(tpl, "TransformVector", TransformVector);
+	Nan::SetPrototypeMethod(tpl, "transformVector", TransformVector);
 
 	Nan::SetPrototypeMethod(tpl, "TransformVectors", TransformVectors);
 	Nan::SetPrototypeMethod(tpl, "transformVectors", TransformVectors);
@@ -139,6 +154,180 @@ void VtkLinearTransformWrap::GetLinearInverse(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkLinearTransformWrap::InternalTransformNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info.Holder());
+	vtkLinearTransform *native = (vtkLinearTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InternalTransformNormal(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLinearTransformWrap::InternalTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info.Holder());
+	vtkLinearTransform *native = (vtkLinearTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InternalTransformPoint(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLinearTransformWrap::InternalTransformVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info.Holder());
+	vtkLinearTransform *native = (vtkLinearTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InternalTransformVector(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkLinearTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -213,6 +402,64 @@ void VtkLinearTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLinearTransformWrap::TransformNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info.Holder());
+	vtkLinearTransform *native = (vtkLinearTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->TransformNormal(
+				b0,
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -307,6 +554,64 @@ void VtkLinearTransformWrap::TransformPointsNormalsVectors(const Nan::FunctionCa
 					}
 				}
 			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLinearTransformWrap::TransformVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info.Holder());
+	vtkLinearTransform *native = (vtkLinearTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->TransformVector(
+				b0,
+				b1
+			);
+			return;
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -294,31 +294,41 @@ void VtkAbstractPickerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
 	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
 		{
-			if(info.Length() > 2 && info[2]->IsNumber())
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
 			{
-				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[3]))
-				{
-					VtkRendererWrap *a3 = ObjectWrap::Unwrap<VtkRendererWrap>(info[3]->ToObject());
-					int r;
-					if(info.Length() != 4)
-					{
-						Nan::ThrowError("Too many parameters.");
-						return;
-					}
-					r = native->Pick(
-						info[0]->NumberValue(),
-						info[1]->NumberValue(),
-						info[2]->NumberValue(),
-						(vtkRenderer *) a3->native.GetPointer()
-					);
-					info.GetReturnValue().Set(Nan::New(r));
-					return;
-				}
+				Nan::ThrowError("Array contents invalid.");
+				return;
 			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkRendererWrap *a1 = ObjectWrap::Unwrap<VtkRendererWrap>(info[1]->ToObject());
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Pick(
+				b0,
+				(vtkRenderer *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");

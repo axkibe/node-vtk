@@ -47,9 +47,6 @@ void VtkGenericMovieWriterWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkGenericMovieWriterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "End", End);
-	Nan::SetPrototypeMethod(tpl, "end", End);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,12 +67,6 @@ void VtkGenericMovieWriterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
-
-	Nan::SetPrototypeMethod(tpl, "Start", Start);
-	Nan::SetPrototypeMethod(tpl, "start", Start);
-
-	Nan::SetPrototypeMethod(tpl, "Write", Write);
-	Nan::SetPrototypeMethod(tpl, "write", Write);
 
 	ptpl.Reset( tpl );
 }
@@ -103,18 +94,6 @@ void VtkGenericMovieWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkGenericMovieWriterWrap::End(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericMovieWriterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericMovieWriterWrap>(info.Holder());
-	vtkGenericMovieWriter *native = (vtkGenericMovieWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->End();
 }
 
 void VtkGenericMovieWriterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -253,29 +232,5 @@ void VtkGenericMovieWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkGenericMovieWriterWrap::Start(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericMovieWriterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericMovieWriterWrap>(info.Holder());
-	vtkGenericMovieWriter *native = (vtkGenericMovieWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Start();
-}
-
-void VtkGenericMovieWriterWrap::Write(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericMovieWriterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericMovieWriterWrap>(info.Holder());
-	vtkGenericMovieWriter *native = (vtkGenericMovieWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Write();
 }
 

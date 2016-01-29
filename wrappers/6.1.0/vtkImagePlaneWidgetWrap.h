@@ -31,9 +31,11 @@ class VtkImagePlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 
 		static void DisplayTextOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayTextOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorMap(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentImageValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCursorData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorDataStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayText(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,8 +61,12 @@ class VtkImagePlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 		static void GetMiddleButtonAutoModifier(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMiddleButtonAutoModifierMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMiddleButtonAutoModifierMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaneOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaneProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyDataAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReslice(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -84,7 +90,10 @@ class VtkImagePlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 		static void GetTextureVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseContinuousCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUserControlledLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVector1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVector2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InteractionOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InteractionOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

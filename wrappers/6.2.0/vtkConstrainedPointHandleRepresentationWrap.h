@@ -31,6 +31,7 @@ class VtkConstrainedPointHandleRepresentationWrap : public VtkHandleRepresentati
 
 		static void AddBoundingPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CheckConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveCursorShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActiveProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,7 @@ class VtkConstrainedPointHandleRepresentationWrap : public VtkHandleRepresentati
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetObliquePlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjectionNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjectionNormalMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjectionNormalMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,6 +61,7 @@ class VtkConstrainedPointHandleRepresentationWrap : public VtkHandleRepresentati
 		static void SetActiveCursorShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBoundingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCursorShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetObliquePlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectionNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -69,6 +72,8 @@ class VtkConstrainedPointHandleRepresentationWrap : public VtkHandleRepresentati
 		static void SetProjectionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

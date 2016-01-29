@@ -72,8 +72,14 @@ void VtkAxesTransformRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLabelProperty", GetLabelProperty);
 	Nan::SetPrototypeMethod(tpl, "getLabelProperty", GetLabelProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetOriginDisplayPosition", GetOriginDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getOriginDisplayPosition", GetOriginDisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetOriginRepresentation", GetOriginRepresentation);
 	Nan::SetPrototypeMethod(tpl, "getOriginRepresentation", GetOriginRepresentation);
+
+	Nan::SetPrototypeMethod(tpl, "GetOriginWorldPosition", GetOriginWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getOriginWorldPosition", GetOriginWorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetSelectionRepresentation", GetSelectionRepresentation);
 	Nan::SetPrototypeMethod(tpl, "getSelectionRepresentation", GetSelectionRepresentation);
@@ -114,8 +120,20 @@ void VtkAxesTransformRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLabelScale", SetLabelScale);
 	Nan::SetPrototypeMethod(tpl, "setLabelScale", SetLabelScale);
 
+	Nan::SetPrototypeMethod(tpl, "SetOriginDisplayPosition", SetOriginDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setOriginDisplayPosition", SetOriginDisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetOriginWorldPosition", SetOriginWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setOriginWorldPosition", SetOriginWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
+
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -266,6 +284,43 @@ void VtkAxesTransformRepresentationWrap::GetLabelProperty(const Nan::FunctionCal
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAxesTransformRepresentationWrap::GetOriginDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
+	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetOriginDisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAxesTransformRepresentationWrap::GetOriginRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
@@ -287,6 +342,43 @@ void VtkAxesTransformRepresentationWrap::GetOriginRepresentation(const Nan::Func
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAxesTransformRepresentationWrap::GetOriginWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
+	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetOriginWorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAxesTransformRepresentationWrap::GetSelectionRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -537,7 +629,37 @@ void VtkAxesTransformRepresentationWrap::SetLabelScale(const Nan::FunctionCallba
 {
 	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
 	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLabelScale(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -560,6 +682,80 @@ void VtkAxesTransformRepresentationWrap::SetLabelScale(const Nan::FunctionCallba
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAxesTransformRepresentationWrap::SetOriginDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
+	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOriginDisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxesTransformRepresentationWrap::SetOriginWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
+	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOriginWorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAxesTransformRepresentationWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
@@ -573,6 +769,80 @@ void VtkAxesTransformRepresentationWrap::SetTolerance(const Nan::FunctionCallbac
 		}
 		native->SetTolerance(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxesTransformRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
+	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxesTransformRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
+	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

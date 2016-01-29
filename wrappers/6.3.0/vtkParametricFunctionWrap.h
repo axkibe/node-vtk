@@ -40,7 +40,6 @@ class VtkParametricFunctionWrap : public VtkObjectWrap
 		static void GetDerivativesAvailable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDerivativesAvailableMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDerivativesAvailableMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetJoinU(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetJoinUMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetJoinUMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

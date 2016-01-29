@@ -29,6 +29,7 @@ class VtkImageActorPointPlacerWrap : public VtkPointPlacerWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +39,8 @@ class VtkImageActorPointPlacerWrap : public VtkPointPlacerWrap
 		static void SetImageActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWorldTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateInternalState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void UpdateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

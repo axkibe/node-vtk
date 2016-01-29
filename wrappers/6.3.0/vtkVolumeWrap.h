@@ -29,6 +29,7 @@ class VtkVolumeWrap : public VtkProp3DWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxXBound(const Nan::FunctionCallbackInfo<v8::Value>& info);

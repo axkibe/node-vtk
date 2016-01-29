@@ -73,6 +73,9 @@ void VtkPointWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPolyData", GetPolyData);
 	Nan::SetPrototypeMethod(tpl, "getPolyData", GetPolyData);
 
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetProperty", GetProperty);
 	Nan::SetPrototypeMethod(tpl, "getProperty", GetProperty);
 
@@ -300,6 +303,43 @@ void VtkPointWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>&
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPointWidgetWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPointWidgetWrap>(info.Holder());
+	vtkPointWidget *native = (vtkPointWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPointWidgetWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPointWidgetWrap>(info.Holder());
@@ -475,7 +515,37 @@ void VtkPointWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPointWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPointWidgetWrap>(info.Holder());
 	vtkPointWidget *native = (vtkPointWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -607,7 +677,37 @@ void VtkPointWidgetWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPointWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPointWidgetWrap>(info.Holder());
 	vtkPointWidget *native = (vtkPointWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

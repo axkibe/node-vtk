@@ -35,6 +35,7 @@ class VtkOrientedGlyphFocalPlaneContourRepresentationWrap : public VtkFocalPlane
 		static void GetActiveProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetContourPlaneDirectionCosines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContourRepresentationAsPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +51,8 @@ class VtkOrientedGlyphFocalPlaneContourRepresentationWrap : public VtkFocalPlane
 		static void SetActiveCursorShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCursorShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

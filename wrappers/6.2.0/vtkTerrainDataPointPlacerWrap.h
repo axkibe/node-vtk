@@ -30,6 +30,7 @@ class VtkTerrainDataPointPlacerWrap : public VtkPointPlacerWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeightOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPropPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +39,8 @@ class VtkTerrainDataPointPlacerWrap : public VtkPointPlacerWrap
 		static void RemoveAllProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHeightOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

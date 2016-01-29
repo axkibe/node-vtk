@@ -189,6 +189,7 @@ void VtkSpherePuzzleArrowsWrap::SetPermutation(const Nan::FunctionCallbackInfo<v
 {
 	VtkSpherePuzzleArrowsWrap *wrapper = ObjectWrap::Unwrap<VtkSpherePuzzleArrowsWrap>(info.Holder());
 	vtkSpherePuzzleArrows *native = (vtkSpherePuzzleArrows *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSpherePuzzleWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSpherePuzzleWrap *a0 = ObjectWrap::Unwrap<VtkSpherePuzzleWrap>(info[0]->ToObject());
@@ -199,6 +200,35 @@ void VtkSpherePuzzleArrowsWrap::SetPermutation(const Nan::FunctionCallbackInfo<v
 		}
 		native->SetPermutation(
 			(vtkSpherePuzzle *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[32];
+		if( a0->Length() < 32 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 32; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPermutation(
+			b0
 		);
 		return;
 	}

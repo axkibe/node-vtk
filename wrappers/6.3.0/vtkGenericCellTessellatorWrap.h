@@ -33,14 +33,11 @@ class VtkGenericCellTessellatorWrap : public VtkObjectWrap
 		static void GetErrorMetrics(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMeasurement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitErrorMetrics(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetErrorMetrics(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMeasurement(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Tessellate(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

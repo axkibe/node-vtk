@@ -30,6 +30,7 @@ class VtkImplicitDataSetWrap : public VtkImplicitFunctionWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

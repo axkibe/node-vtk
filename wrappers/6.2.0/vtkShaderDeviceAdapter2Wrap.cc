@@ -55,9 +55,6 @@ void VtkShaderDeviceAdapter2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
-	Nan::SetPrototypeMethod(tpl, "PrepareForRender", PrepareForRender);
-	Nan::SetPrototypeMethod(tpl, "prepareForRender", PrepareForRender);
-
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -146,18 +143,6 @@ void VtkShaderDeviceAdapter2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkShaderDeviceAdapter2Wrap::PrepareForRender(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkShaderDeviceAdapter2Wrap *wrapper = ObjectWrap::Unwrap<VtkShaderDeviceAdapter2Wrap>(info.Holder());
-	vtkShaderDeviceAdapter2 *native = (vtkShaderDeviceAdapter2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->PrepareForRender();
 }
 
 void VtkShaderDeviceAdapter2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

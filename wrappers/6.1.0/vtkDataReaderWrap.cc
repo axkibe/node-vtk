@@ -257,6 +257,9 @@ void VtkDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ReadHeader", ReadHeader);
 	Nan::SetPrototypeMethod(tpl, "readHeader", ReadHeader);
 
+	Nan::SetPrototypeMethod(tpl, "ReadLine", ReadLine);
+	Nan::SetPrototypeMethod(tpl, "readLine", ReadLine);
+
 	Nan::SetPrototypeMethod(tpl, "ReadMetaData", ReadMetaData);
 	Nan::SetPrototypeMethod(tpl, "readMetaData", ReadMetaData);
 
@@ -268,6 +271,9 @@ void VtkDataReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ReadRowData", ReadRowData);
 	Nan::SetPrototypeMethod(tpl, "readRowData", ReadRowData);
+
+	Nan::SetPrototypeMethod(tpl, "ReadString", ReadString);
+	Nan::SetPrototypeMethod(tpl, "readString", ReadString);
 
 	Nan::SetPrototypeMethod(tpl, "ReadVertexData", ReadVertexData);
 	Nan::SetPrototypeMethod(tpl, "readVertexData", ReadVertexData);
@@ -1423,6 +1429,45 @@ void VtkDataReaderWrap::ReadHeader(const Nan::FunctionCallbackInfo<v8::Value>& i
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDataReaderWrap::ReadLine(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
+	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		char b0[256];
+		if( a0->Length() < 256 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 256; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ReadLine(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkDataReaderWrap::ReadMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
@@ -1519,6 +1564,45 @@ void VtkDataReaderWrap::ReadRowData(const Nan::FunctionCallbackInfo<v8::Value>& 
 			info.GetReturnValue().Set(Nan::New(r));
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDataReaderWrap::ReadString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
+	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		char b0[256];
+		if( a0->Length() < 256 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 256; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ReadString(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

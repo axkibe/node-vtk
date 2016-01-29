@@ -30,6 +30,8 @@ class VtkMINCImageAttributesWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindImageRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindValidRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributeNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributeValueAsArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributeValueAsDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);

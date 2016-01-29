@@ -30,17 +30,16 @@ class VtkCellWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLength2(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetParametricCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetParametricDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsExplicitCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,7 +49,6 @@ class VtkCellWrap : public VtkObjectWrap
 		static void RequiresInitialization(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

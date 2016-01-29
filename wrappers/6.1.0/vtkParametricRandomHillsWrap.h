@@ -31,6 +31,8 @@ class VtkParametricRandomHillsWrap : public VtkParametricFunctionWrap
 
 		static void AllowRandomGenerationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AllowRandomGenerationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Evaluate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EvaluateScalar(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateTheHills(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAllowRandomGeneration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAmplitudeScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);

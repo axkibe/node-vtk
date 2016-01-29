@@ -29,15 +29,27 @@ class VtkTetraWrap : public VtkCell3DWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void BarycentricCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Circumsphere(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeVolume(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetParametricCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetParametricDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Insphere(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

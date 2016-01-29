@@ -31,6 +31,7 @@ class VtkBrushWrap : public VtkObjectWrap
 
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColorF(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacityF(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);

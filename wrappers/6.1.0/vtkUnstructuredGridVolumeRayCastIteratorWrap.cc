@@ -49,9 +49,6 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
-	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -104,29 +101,6 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::GetClassName(const Nan::Funct
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkUnstructuredGridVolumeRayCastIteratorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkUnstructuredGridVolumeRayCastIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastIteratorWrap>(info.Holder());
-	vtkUnstructuredGridVolumeRayCastIterator *native = (vtkUnstructuredGridVolumeRayCastIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Initialize(
-				info[0]->Int32Value(),
-				info[1]->Int32Value()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkUnstructuredGridVolumeRayCastIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -209,7 +183,37 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::SetBounds(const Nan::Function
 {
 	VtkUnstructuredGridVolumeRayCastIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastIteratorWrap>(info.Holder());
 	vtkUnstructuredGridVolumeRayCastIterator *native = (vtkUnstructuredGridVolumeRayCastIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

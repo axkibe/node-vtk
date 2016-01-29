@@ -51,6 +51,12 @@ void VtkTreeHeatmapItemWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkTreeHeatmapItemWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +74,9 @@ void VtkTreeHeatmapItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetPrunedTree", GetPrunedTree);
 	Nan::SetPrototypeMethod(tpl, "getPrunedTree", GetPrunedTree);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetTable", GetTable);
 	Nan::SetPrototypeMethod(tpl, "getTable", GetTable);
@@ -141,6 +150,80 @@ void VtkTreeHeatmapItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkTreeHeatmapItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
+	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeHeatmapItemWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
+	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCenter(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTreeHeatmapItemWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -261,6 +344,43 @@ void VtkTreeHeatmapItemWrap::GetPrunedTree(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTreeHeatmapItemWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
+	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetSize(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTreeHeatmapItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>& info)

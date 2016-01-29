@@ -49,6 +49,7 @@ class VtkInteractorStyleImageWrap : public VtkInteractorStyleTrackballCameraWrap
 		static void OnRightButtonUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Pick(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetImageOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractionModeToImage2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractionModeToImage3D(const Nan::FunctionCallbackInfo<v8::Value>& info);

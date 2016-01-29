@@ -57,11 +57,20 @@ void VtkPlotBarWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetBarsCount", GetBarsCount);
 	Nan::SetPrototypeMethod(tpl, "getBarsCount", GetBarsCount);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColor", GetColor);
+	Nan::SetPrototypeMethod(tpl, "getColor", GetColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetColorSeries", GetColorSeries);
 	Nan::SetPrototypeMethod(tpl, "getColorSeries", GetColorSeries);
+
+	Nan::SetPrototypeMethod(tpl, "GetDataBounds", GetDataBounds);
+	Nan::SetPrototypeMethod(tpl, "getDataBounds", GetDataBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetLabels", GetLabels);
 	Nan::SetPrototypeMethod(tpl, "getLabels", GetLabels);
@@ -74,6 +83,9 @@ void VtkPlotBarWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarVisibility", GetScalarVisibility);
 	Nan::SetPrototypeMethod(tpl, "getScalarVisibility", GetScalarVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetUnscaledInputBounds", GetUnscaledInputBounds);
+	Nan::SetPrototypeMethod(tpl, "getUnscaledInputBounds", GetUnscaledInputBounds);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -166,6 +178,56 @@ void VtkPlotBarWrap::GetBarsCount(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPlotBarWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
+	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetBounds(
+				b0,
+				info[1]->BooleanValue()
+			);
+			return;
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPlotBarWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
@@ -178,6 +240,43 @@ void VtkPlotBarWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPlotBarWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
+	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetColor(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotBarWrap::GetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -201,6 +300,43 @@ void VtkPlotBarWrap::GetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotBarWrap::GetDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
+	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetDataBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotBarWrap::GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -275,6 +411,43 @@ void VtkPlotBarWrap::GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetScalarVisibility();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPlotBarWrap::GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
+	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetUnscaledInputBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotBarWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

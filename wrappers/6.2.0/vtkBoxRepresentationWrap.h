@@ -55,6 +55,7 @@ class VtkBoxRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void OutlineCursorWiresOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OutlineFaceWiresOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OutlineFaceWiresOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -64,6 +65,8 @@ class VtkBoxRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetOutlineCursorWires(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutlineFaceWires(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

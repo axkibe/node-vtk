@@ -34,7 +34,6 @@ class VtkSQLQueryWrap : public VtkRowQueryWrap
 		static void ClearParameterBindings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CommitTransaction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EscapeString(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Execute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDatabase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQuery(const Nan::FunctionCallbackInfo<v8::Value>& info);

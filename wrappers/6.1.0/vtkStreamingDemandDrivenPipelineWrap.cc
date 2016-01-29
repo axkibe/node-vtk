@@ -88,8 +88,14 @@ void VtkStreamingDemandDrivenPipelineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfPieces", GetMaximumNumberOfPieces);
 	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfPieces", GetMaximumNumberOfPieces);
 
+	Nan::SetPrototypeMethod(tpl, "GetPieceBoundingBox", GetPieceBoundingBox);
+	Nan::SetPrototypeMethod(tpl, "getPieceBoundingBox", GetPieceBoundingBox);
+
 	Nan::SetPrototypeMethod(tpl, "GetRequestExactExtent", GetRequestExactExtent);
 	Nan::SetPrototypeMethod(tpl, "getRequestExactExtent", GetRequestExactExtent);
+
+	Nan::SetPrototypeMethod(tpl, "GetUpdateExtent", GetUpdateExtent);
+	Nan::SetPrototypeMethod(tpl, "getUpdateExtent", GetUpdateExtent);
 
 	Nan::SetPrototypeMethod(tpl, "GetUpdateGhostLevel", GetUpdateGhostLevel);
 	Nan::SetPrototypeMethod(tpl, "getUpdateGhostLevel", GetUpdateGhostLevel);
@@ -102,6 +108,12 @@ void VtkStreamingDemandDrivenPipelineWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetUpdateResolution", GetUpdateResolution);
 	Nan::SetPrototypeMethod(tpl, "getUpdateResolution", GetUpdateResolution);
+
+	Nan::SetPrototypeMethod(tpl, "GetWholeBoundingBox", GetWholeBoundingBox);
+	Nan::SetPrototypeMethod(tpl, "getWholeBoundingBox", GetWholeBoundingBox);
+
+	Nan::SetPrototypeMethod(tpl, "GetWholeExtent", GetWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getWholeExtent", GetWholeExtent);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -148,6 +160,9 @@ void VtkStreamingDemandDrivenPipelineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfPieces", SetMaximumNumberOfPieces);
 	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfPieces", SetMaximumNumberOfPieces);
 
+	Nan::SetPrototypeMethod(tpl, "SetPieceBoundingBox", SetPieceBoundingBox);
+	Nan::SetPrototypeMethod(tpl, "setPieceBoundingBox", SetPieceBoundingBox);
+
 	Nan::SetPrototypeMethod(tpl, "SetRequestExactExtent", SetRequestExactExtent);
 	Nan::SetPrototypeMethod(tpl, "setRequestExactExtent", SetRequestExactExtent);
 
@@ -171,6 +186,12 @@ void VtkStreamingDemandDrivenPipelineWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetUpdateTimeStep", SetUpdateTimeStep);
 	Nan::SetPrototypeMethod(tpl, "setUpdateTimeStep", SetUpdateTimeStep);
+
+	Nan::SetPrototypeMethod(tpl, "SetWholeBoundingBox", SetWholeBoundingBox);
+	Nan::SetPrototypeMethod(tpl, "setWholeBoundingBox", SetWholeBoundingBox);
+
+	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
 	Nan::SetPrototypeMethod(tpl, "TIME_DEPENDENT_INFORMATION", TIME_DEPENDENT_INFORMATION);
 
@@ -581,6 +602,47 @@ void VtkStreamingDemandDrivenPipelineWrap::GetMaximumNumberOfPieces(const Nan::F
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStreamingDemandDrivenPipelineWrap::GetPieceBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
+	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetPieceBoundingBox(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStreamingDemandDrivenPipelineWrap::GetRequestExactExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
@@ -598,6 +660,48 @@ void VtkStreamingDemandDrivenPipelineWrap::GetRequestExactExtent(const Nan::Func
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStreamingDemandDrivenPipelineWrap::GetUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
+	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetUpdateExtent(
+				(vtkInformation *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -686,6 +790,89 @@ void VtkStreamingDemandDrivenPipelineWrap::GetUpdateResolution(const Nan::Functi
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStreamingDemandDrivenPipelineWrap::GetWholeBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
+	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetWholeBoundingBox(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStreamingDemandDrivenPipelineWrap::GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
+	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetWholeExtent(
+				(vtkInformation *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -1174,6 +1361,49 @@ void VtkStreamingDemandDrivenPipelineWrap::SetMaximumNumberOfPieces(const Nan::F
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStreamingDemandDrivenPipelineWrap::SetPieceBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
+	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetPieceBoundingBox(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStreamingDemandDrivenPipelineWrap::SetRequestExactExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
@@ -1203,10 +1433,43 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateExtent(const Nan::FunctionCa
 {
 	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
 	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUpdateExtent(
+				(vtkInformation *) a0->native.GetPointer(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
@@ -1232,7 +1495,39 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateExtent(const Nan::FunctionCa
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetUpdateExtent(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
@@ -1479,6 +1774,93 @@ void VtkStreamingDemandDrivenPipelineWrap::SetUpdateTimeStep(const Nan::Function
 			r = native->SetUpdateTimeStep(
 				info[0]->Int32Value(),
 				info[1]->NumberValue()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStreamingDemandDrivenPipelineWrap::SetWholeBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
+	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetWholeBoundingBox(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStreamingDemandDrivenPipelineWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamingDemandDrivenPipelineWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingDemandDrivenPipelineWrap>(info.Holder());
+	vtkStreamingDemandDrivenPipeline *native = (vtkStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetWholeExtent(
+				(vtkInformation *) a0->native.GetPointer(),
+				b1
 			);
 			info.GetReturnValue().Set(Nan::New(r));
 			return;

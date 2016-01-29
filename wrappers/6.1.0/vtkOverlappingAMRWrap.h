@@ -32,6 +32,7 @@ class VtkOverlappingAMRWrap : public VtkUniformGridAMRWrap
 		static void Audit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateParentChildInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);

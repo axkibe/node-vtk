@@ -29,6 +29,7 @@ class VtkEmptyCellWrap : public VtkCellWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);

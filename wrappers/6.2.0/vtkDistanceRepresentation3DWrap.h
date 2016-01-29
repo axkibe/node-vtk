@@ -41,6 +41,10 @@ class VtkDistanceRepresentation3DWrap : public VtkDistanceRepresentationWrap
 		static void GetMaximumNumberOfRulerTicks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumNumberOfRulerTicksMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumNumberOfRulerTicksMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +55,10 @@ class VtkDistanceRepresentation3DWrap : public VtkDistanceRepresentationWrap
 		static void SetLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumNumberOfRulerTicks(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

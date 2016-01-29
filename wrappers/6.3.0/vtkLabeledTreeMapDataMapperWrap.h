@@ -33,7 +33,9 @@ class VtkLabeledTreeMapDataMapperWrap : public VtkLabeledDataMapperWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClipTextMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDynamicLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFontSizeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLevelRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);

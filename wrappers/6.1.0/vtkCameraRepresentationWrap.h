@@ -40,6 +40,7 @@ class VtkCameraRepresentationWrap : public VtkBorderRepresentationWrap
 		static void GetNumberOfFramesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFramesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializePath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

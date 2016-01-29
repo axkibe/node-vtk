@@ -39,7 +39,9 @@ class VtkMatrix3x3Wrap : public VtkObjectWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsIdentity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Multiply3x3(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MultiplyPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PointMultiply(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetElement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Transpose(const Nan::FunctionCallbackInfo<v8::Value>& info);

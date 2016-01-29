@@ -30,6 +30,7 @@ class VtkPairwiseExtractHistogram2DWrap : public VtkStatisticsAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void Aggregate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBinWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHistogramFilter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumBinCount(const Nan::FunctionCallbackInfo<v8::Value>& info);

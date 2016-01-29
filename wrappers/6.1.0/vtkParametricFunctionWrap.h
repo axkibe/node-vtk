@@ -36,7 +36,6 @@ class VtkParametricFunctionWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClockwiseOrdering(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDerivativesAvailable(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetJoinU(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetJoinV(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumU(const Nan::FunctionCallbackInfo<v8::Value>& info);

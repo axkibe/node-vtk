@@ -31,6 +31,7 @@ class VtkImageStencilDataWrap : public VtkDataObjectWrap
 
 		static void Add(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AllocateExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Clip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyInformationFromPipeline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyInformationToPipeline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);

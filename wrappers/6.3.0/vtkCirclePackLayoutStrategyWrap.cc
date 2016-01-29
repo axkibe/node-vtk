@@ -8,8 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkCirclePackLayoutStrategyWrap.h"
-#include "vtkTreeWrap.h"
-#include "vtkDataArrayWrap.h"
 
 using namespace v8;
 
@@ -53,9 +51,6 @@ void VtkCirclePackLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "Layout", Layout);
-	Nan::SetPrototypeMethod(tpl, "layout", Layout);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -123,36 +118,6 @@ void VtkCirclePackLayoutStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkCirclePackLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCirclePackLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCirclePackLayoutStrategyWrap>(info.Holder());
-	vtkCirclePackLayoutStrategy *native = (vtkCirclePackLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
-			{
-				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				native->Layout(
-					(vtkTree *) a0->native.GetPointer(),
-					(vtkDataArray *) a1->native.GetPointer(),
-					(vtkDataArray *) a2->native.GetPointer()
-				);
-				return;
-			}
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

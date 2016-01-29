@@ -39,8 +39,8 @@ class VtkRendererWrap : public VtkViewportWrap
 		static void BackingStoreOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CaptureGL2PSSpecialProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Clear(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeVisiblePropBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateLight(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void DeviceRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeviceRenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

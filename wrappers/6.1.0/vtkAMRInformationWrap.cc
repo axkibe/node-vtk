@@ -67,6 +67,9 @@ void VtkAMRInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGridDescription", GetGridDescription);
 	Nan::SetPrototypeMethod(tpl, "getGridDescription", GetGridDescription);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "HasChildrenInformation", HasChildrenInformation);
 	Nan::SetPrototypeMethod(tpl, "hasChildrenInformation", HasChildrenInformation);
 
@@ -222,6 +225,43 @@ void VtkAMRInformationWrap::GetGridDescription(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetGridDescription();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRInformationWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetOrigin(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAMRInformationWrap::HasChildrenInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)

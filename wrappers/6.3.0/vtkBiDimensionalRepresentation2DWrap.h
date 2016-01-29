@@ -32,16 +32,23 @@ class VtkBiDimensionalRepresentation2DWrap : public VtkBiDimensionalRepresentati
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWorldLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Highlight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Point2WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Point3WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetDefinition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetManipulation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

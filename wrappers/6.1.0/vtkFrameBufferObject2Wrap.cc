@@ -9,6 +9,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkFrameBufferObject2Wrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "vtkPixelBufferObjectWrap.h"
 
 using namespace v8;
 
@@ -52,6 +53,21 @@ void VtkFrameBufferObject2Wrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "DeactivateReadBuffer", DeactivateReadBuffer);
 	Nan::SetPrototypeMethod(tpl, "deactivateReadBuffer", DeactivateReadBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "Download", Download);
+	Nan::SetPrototypeMethod(tpl, "download", Download);
+
+	Nan::SetPrototypeMethod(tpl, "DownloadColor1", DownloadColor1);
+	Nan::SetPrototypeMethod(tpl, "downloadColor1", DownloadColor1);
+
+	Nan::SetPrototypeMethod(tpl, "DownloadColor3", DownloadColor3);
+	Nan::SetPrototypeMethod(tpl, "downloadColor3", DownloadColor3);
+
+	Nan::SetPrototypeMethod(tpl, "DownloadColor4", DownloadColor4);
+	Nan::SetPrototypeMethod(tpl, "downloadColor4", DownloadColor4);
+
+	Nan::SetPrototypeMethod(tpl, "DownloadDepth", DownloadDepth);
+	Nan::SetPrototypeMethod(tpl, "downloadDepth", DownloadDepth);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -134,6 +150,300 @@ void VtkFrameBufferObject2Wrap::DeactivateReadBuffer(const Nan::FunctionCallback
 		return;
 	}
 	native->DeactivateReadBuffer();
+}
+
+void VtkFrameBufferObject2Wrap::Download(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsInt32())
+					{
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkPixelBufferObjectWrap::ptpl))->HasInstance(info[5]))
+						{
+							VtkPixelBufferObjectWrap *a5 = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info[5]->ToObject());
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							native->Download(
+								b0,
+								info[1]->Int32Value(),
+								info[2]->Int32Value(),
+								info[3]->Int32Value(),
+								info[4]->Int32Value(),
+								(vtkPixelBufferObject *) a5->native.GetPointer()
+							);
+							return;
+						}
+						vtkPixelBufferObject * r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->Download(
+							b0,
+							info[1]->Int32Value(),
+							info[2]->Int32Value(),
+							info[3]->Int32Value(),
+							info[4]->Int32Value()
+						);
+							VtkPixelBufferObjectWrap::InitPtpl();
+						v8::Local<v8::Value> argv[1] =
+							{ Nan::New(vtkNodeJsNoWrap) };
+						v8::Local<v8::Function> cons =
+							Nan::New<v8::FunctionTemplate>(VtkPixelBufferObjectWrap::ptpl)->GetFunction();
+						v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+						VtkPixelBufferObjectWrap *w = new VtkPixelBufferObjectWrap();
+						w->native = r;
+						w->Wrap(wo);
+						info.GetReturnValue().Set(wo);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::DownloadColor1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				vtkPixelBufferObject * r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->DownloadColor1(
+					b0,
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+					VtkPixelBufferObjectWrap::InitPtpl();
+				v8::Local<v8::Value> argv[1] =
+					{ Nan::New(vtkNodeJsNoWrap) };
+				v8::Local<v8::Function> cons =
+					Nan::New<v8::FunctionTemplate>(VtkPixelBufferObjectWrap::ptpl)->GetFunction();
+				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+				VtkPixelBufferObjectWrap *w = new VtkPixelBufferObjectWrap();
+				w->native = r;
+				w->Wrap(wo);
+				info.GetReturnValue().Set(wo);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::DownloadColor3(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			vtkPixelBufferObject * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->DownloadColor3(
+				b0,
+				info[1]->Int32Value()
+			);
+				VtkPixelBufferObjectWrap::InitPtpl();
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::FunctionTemplate>(VtkPixelBufferObjectWrap::ptpl)->GetFunction();
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+			VtkPixelBufferObjectWrap *w = new VtkPixelBufferObjectWrap();
+			w->native = r;
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::DownloadColor4(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			vtkPixelBufferObject * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->DownloadColor4(
+				b0,
+				info[1]->Int32Value()
+			);
+				VtkPixelBufferObjectWrap::InitPtpl();
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::FunctionTemplate>(VtkPixelBufferObjectWrap::ptpl)->GetFunction();
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+			VtkPixelBufferObjectWrap *w = new VtkPixelBufferObjectWrap();
+			w->native = r;
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::DownloadDepth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			vtkPixelBufferObject * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->DownloadDepth(
+				b0,
+				info[1]->Int32Value()
+			);
+				VtkPixelBufferObjectWrap::InitPtpl();
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::FunctionTemplate>(VtkPixelBufferObjectWrap::ptpl)->GetFunction();
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+			VtkPixelBufferObjectWrap *w = new VtkPixelBufferObjectWrap();
+			w->native = r;
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkFrameBufferObject2Wrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

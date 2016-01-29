@@ -10,7 +10,6 @@
 #include "vtkProjectedAAHexahedraMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkVisibilitySortWrap.h"
-#include "vtkRenderWindowWrap.h"
 
 using namespace v8;
 
@@ -57,9 +56,6 @@ void VtkProjectedAAHexahedraMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "IsRenderSupported", IsRenderSupported);
-	Nan::SetPrototypeMethod(tpl, "isRenderSupported", IsRenderSupported);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -151,28 +147,6 @@ void VtkProjectedAAHexahedraMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::
 		}
 		r = native->IsA(
 			*a0
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkProjectedAAHexahedraMapperWrap::IsRenderSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkProjectedAAHexahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedAAHexahedraMapperWrap>(info.Holder());
-	vtkProjectedAAHexahedraMapper *native = (vtkProjectedAAHexahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		bool r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->IsRenderSupported(
-			(vtkRenderWindow *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

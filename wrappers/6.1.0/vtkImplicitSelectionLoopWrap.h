@@ -32,6 +32,7 @@ class VtkImplicitSelectionLoopWrap : public VtkImplicitFunctionWrap
 		static void AutomaticNormalGenerationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutomaticNormalGenerationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomaticNormalGeneration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLoop(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -45,8 +45,12 @@ class VtkLineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetInteractionStateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineHandleRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint1Representation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint2Representation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepresentationState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -61,6 +65,7 @@ class VtkLineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void InstantiateHandleRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -71,10 +76,16 @@ class VtkLineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetHandleRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentationState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

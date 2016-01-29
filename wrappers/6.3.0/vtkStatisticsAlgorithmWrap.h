@@ -31,7 +31,6 @@ class VtkStatisticsAlgorithmWrap : public VtkTableAlgorithmWrap
 
 		static void AddColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AddColumnPair(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Aggregate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAssessNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAssessOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);

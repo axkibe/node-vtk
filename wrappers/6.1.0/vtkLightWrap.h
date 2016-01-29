@@ -40,6 +40,8 @@ class VtkLightWrap : public VtkObjectWrap
 		static void GetPositional(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwitch(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTransformedFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTransformedPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LightTypeIsCameraLight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LightTypeIsHeadlight(const Nan::FunctionCallbackInfo<v8::Value>& info);

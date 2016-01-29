@@ -47,6 +47,9 @@ void VtkAbstractImageInterpolatorWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAbstractImageInterpolatorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CheckBoundsIJK", CheckBoundsIJK);
+	Nan::SetPrototypeMethod(tpl, "checkBoundsIJK", CheckBoundsIJK);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeNumberOfComponents", ComputeNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "computeNumberOfComponents", ComputeNumberOfComponents);
 
@@ -85,9 +88,6 @@ void VtkAbstractImageInterpolatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "IsSeparable", IsSeparable);
-	Nan::SetPrototypeMethod(tpl, "isSeparable", IsSeparable);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -151,6 +151,45 @@ void VtkAbstractImageInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkAbstractImageInterpolatorWrap::CheckBoundsIJK(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractImageInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info.Holder());
+	vtkAbstractImageInterpolator *native = (vtkAbstractImageInterpolator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CheckBoundsIJK(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAbstractImageInterpolatorWrap::ComputeNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -379,20 +418,6 @@ void VtkAbstractImageInterpolatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractImageInterpolatorWrap::IsSeparable(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractImageInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info.Holder());
-	vtkAbstractImageInterpolator *native = (vtkAbstractImageInterpolator *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsSeparable();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAbstractImageInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

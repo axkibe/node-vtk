@@ -54,6 +54,9 @@ void VtkExtractHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Aggregate", Aggregate);
 	Nan::SetPrototypeMethod(tpl, "aggregate", Aggregate);
 
+	Nan::SetPrototypeMethod(tpl, "GetBinWidth", GetBinWidth);
+	Nan::SetPrototypeMethod(tpl, "getBinWidth", GetBinWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -185,6 +188,43 @@ void VtkExtractHistogram2DWrap::Aggregate(const Nan::FunctionCallbackInfo<v8::Va
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractHistogram2DWrap::GetBinWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkExtractHistogram2DWrap>(info.Holder());
+	vtkExtractHistogram2D *native = (vtkExtractHistogram2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBinWidth(
+			b0
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -385,7 +425,37 @@ void VtkExtractHistogram2DWrap::SetComponentsToProcess(const Nan::FunctionCallba
 {
 	VtkExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkExtractHistogram2DWrap>(info.Holder());
 	vtkExtractHistogram2D *native = (vtkExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetComponentsToProcess(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -408,7 +478,37 @@ void VtkExtractHistogram2DWrap::SetCustomHistogramExtents(const Nan::FunctionCal
 {
 	VtkExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkExtractHistogram2DWrap>(info.Holder());
 	vtkExtractHistogram2D *native = (vtkExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCustomHistogramExtents(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -439,7 +539,37 @@ void VtkExtractHistogram2DWrap::SetNumberOfBins(const Nan::FunctionCallbackInfo<
 {
 	VtkExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkExtractHistogram2DWrap>(info.Holder());
 	vtkExtractHistogram2D *native = (vtkExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfBins(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

@@ -11,6 +11,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkCellWrap.h"
 #include "vtkIdListWrap.h"
+#include "vtkIdTypeArrayWrap.h"
 #include "vtkPointsWrap.h"
 
 using namespace v8;
@@ -50,6 +51,12 @@ void VtkQuadraticPolygonWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkQuadraticPolygonWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CellBoundary", CellBoundary);
+	Nan::SetPrototypeMethod(tpl, "cellBoundary", CellBoundary);
+
+	Nan::SetPrototypeMethod(tpl, "ComputeCentroid", ComputeCentroid);
+	Nan::SetPrototypeMethod(tpl, "computeCentroid", ComputeCentroid);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellDimension", GetCellDimension);
 	Nan::SetPrototypeMethod(tpl, "getCellDimension", GetCellDimension);
 
@@ -73,6 +80,9 @@ void VtkQuadraticPolygonWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetUseMVCInterpolation", GetUseMVCInterpolation);
 	Nan::SetPrototypeMethod(tpl, "getUseMVCInterpolation", GetUseMVCInterpolation);
+
+	Nan::SetPrototypeMethod(tpl, "IntersectConvex2DCells", IntersectConvex2DCells);
+	Nan::SetPrototypeMethod(tpl, "intersectConvex2DCells", IntersectConvex2DCells);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -122,6 +132,101 @@ void VtkQuadraticPolygonWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkQuadraticPolygonWrap::CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuadraticPolygonWrap *wrapper = ObjectWrap::Unwrap<VtkQuadraticPolygonWrap>(info.Holder());
+	vtkQuadraticPolygon *native = (vtkQuadraticPolygon *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->CellBoundary(
+					info[0]->Int32Value(),
+					b1,
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkQuadraticPolygonWrap::ComputeCentroid(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuadraticPolygonWrap *wrapper = ObjectWrap::Unwrap<VtkQuadraticPolygonWrap>(info.Holder());
+	vtkQuadraticPolygon *native = (vtkQuadraticPolygon *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->ComputeCentroid(
+					(vtkIdTypeArray *) a0->native.GetPointer(),
+					(vtkPoints *) a1->native.GetPointer(),
+					b2
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkQuadraticPolygonWrap::GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -266,6 +371,80 @@ void VtkQuadraticPolygonWrap::GetUseMVCInterpolation(const Nan::FunctionCallback
 	}
 	r = native->GetUseMVCInterpolation();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkQuadraticPolygonWrap::IntersectConvex2DCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuadraticPolygonWrap *wrapper = ObjectWrap::Unwrap<VtkQuadraticPolygonWrap>(info.Holder());
+	vtkQuadraticPolygon *native = (vtkQuadraticPolygon *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkCellWrap *a1 = ObjectWrap::Unwrap<VtkCellWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->IntersectConvex2DCells(
+							(vtkCell *) a0->native.GetPointer(),
+							(vtkCell *) a1->native.GetPointer(),
+							info[2]->NumberValue(),
+							b3,
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkQuadraticPolygonWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

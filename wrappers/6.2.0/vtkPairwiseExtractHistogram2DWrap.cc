@@ -54,6 +54,9 @@ void VtkPairwiseExtractHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Aggregate", Aggregate);
 	Nan::SetPrototypeMethod(tpl, "aggregate", Aggregate);
 
+	Nan::SetPrototypeMethod(tpl, "GetBinWidth", GetBinWidth);
+	Nan::SetPrototypeMethod(tpl, "getBinWidth", GetBinWidth);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -152,6 +155,47 @@ void VtkPairwiseExtractHistogram2DWrap::Aggregate(const Nan::FunctionCallbackInf
 			native->Aggregate(
 				(vtkDataObjectCollection *) a0->native.GetPointer(),
 				(vtkMultiBlockDataSet *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPairwiseExtractHistogram2DWrap::GetBinWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
+	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetBinWidth(
+				info[0]->Int32Value(),
+				b1
 			);
 			return;
 		}
@@ -355,9 +399,40 @@ void VtkPairwiseExtractHistogram2DWrap::SetCustomColumnRange(const Nan::Function
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetCustomColumnRange(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
@@ -424,7 +499,37 @@ void VtkPairwiseExtractHistogram2DWrap::SetNumberOfBins(const Nan::FunctionCallb
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfBins(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

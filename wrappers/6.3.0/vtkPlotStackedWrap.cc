@@ -50,14 +50,23 @@ void VtkPlotStackedWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkPlotStackedWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetColor", GetColor);
+	Nan::SetPrototypeMethod(tpl, "getColor", GetColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetColorSeries", GetColorSeries);
 	Nan::SetPrototypeMethod(tpl, "getColorSeries", GetColorSeries);
 
 	Nan::SetPrototypeMethod(tpl, "GetLabels", GetLabels);
 	Nan::SetPrototypeMethod(tpl, "getLabels", GetLabels);
+
+	Nan::SetPrototypeMethod(tpl, "GetUnscaledInputBounds", GetUnscaledInputBounds);
+	Nan::SetPrototypeMethod(tpl, "getUnscaledInputBounds", GetUnscaledInputBounds);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -109,6 +118,43 @@ void VtkPlotStackedWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkPlotStackedWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotStackedWrap *wrapper = ObjectWrap::Unwrap<VtkPlotStackedWrap>(info.Holder());
+	vtkPlotStacked *native = (vtkPlotStacked *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPlotStackedWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotStackedWrap *wrapper = ObjectWrap::Unwrap<VtkPlotStackedWrap>(info.Holder());
@@ -121,6 +167,43 @@ void VtkPlotStackedWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPlotStackedWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotStackedWrap *wrapper = ObjectWrap::Unwrap<VtkPlotStackedWrap>(info.Holder());
+	vtkPlotStacked *native = (vtkPlotStacked *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetColor(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotStackedWrap::GetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -167,6 +250,43 @@ void VtkPlotStackedWrap::GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotStackedWrap::GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotStackedWrap *wrapper = ObjectWrap::Unwrap<VtkPlotStackedWrap>(info.Holder());
+	vtkPlotStacked *native = (vtkPlotStacked *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetUnscaledInputBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotStackedWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

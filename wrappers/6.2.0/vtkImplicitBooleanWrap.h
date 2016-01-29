@@ -31,6 +31,7 @@ class VtkImplicitBooleanWrap : public VtkImplicitFunctionWrap
 
 		static void AddFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOperationType(const Nan::FunctionCallbackInfo<v8::Value>& info);

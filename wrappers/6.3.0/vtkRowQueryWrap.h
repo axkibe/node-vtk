@@ -31,17 +31,10 @@ class VtkRowQueryWrap : public VtkObjectWrap
 
 		static void CaseSensitiveFieldNamesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CaseSensitiveFieldNamesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Execute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCaseSensitiveFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFieldIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetLastErrorText(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfFields(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void HasError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsActive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NextRow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

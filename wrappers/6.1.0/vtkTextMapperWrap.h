@@ -33,6 +33,7 @@ class VtkTextMapperWrap : public VtkMapper2DWrap
 		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLines(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSystemFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);

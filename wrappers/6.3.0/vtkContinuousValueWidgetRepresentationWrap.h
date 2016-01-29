@@ -34,6 +34,7 @@ class VtkContinuousValueWidgetRepresentationWrap : public VtkWidgetRepresentatio
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

@@ -96,10 +96,12 @@ class VtkDataReaderWrap : public VtkAlgorithmWrap
 		static void ReadFromInputStringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadFromInputStringOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadHeader(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ReadLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadRowData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ReadString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadVertexData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBinaryInputString(const Nan::FunctionCallbackInfo<v8::Value>& info);

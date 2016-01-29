@@ -31,6 +31,7 @@ class VtkSphereRepresentationWrap : public VtkWidgetRepresentationWrap
 
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleText(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,6 +57,7 @@ class VtkSphereRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RadialLineOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RadialLineOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -77,6 +79,8 @@ class VtkSphereRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetRepresentationToSurface(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentationToWireframe(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetThetaResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

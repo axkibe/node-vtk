@@ -29,7 +29,6 @@ class VtkAbstractWidgetWrap : public VtkInteractorObserverWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void CreateDefaultRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEventTranslator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetManagesCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -61,6 +61,9 @@ void VtkCubeAxesActor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAxisTitleTextProperty", GetAxisTitleTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getAxisTitleTextProperty", GetAxisTitleTextProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetCamera", GetCamera);
 	Nan::SetPrototypeMethod(tpl, "getCamera", GetCamera);
 
@@ -111,6 +114,9 @@ void VtkCubeAxesActor2DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfLabelsMinValue", GetNumberOfLabelsMinValue);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfLabelsMinValue", GetNumberOfLabelsMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetRanges", GetRanges);
+	Nan::SetPrototypeMethod(tpl, "getRanges", GetRanges);
 
 	Nan::SetPrototypeMethod(tpl, "GetScaling", GetScaling);
 	Nan::SetPrototypeMethod(tpl, "getScaling", GetScaling);
@@ -376,6 +382,43 @@ void VtkCubeAxesActor2DWrap::GetAxisTitleTextProperty(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkCubeAxesActor2DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
+	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCubeAxesActor2DWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
@@ -630,6 +673,43 @@ void VtkCubeAxesActor2DWrap::GetNumberOfLabelsMinValue(const Nan::FunctionCallba
 	}
 	r = native->GetNumberOfLabelsMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCubeAxesActor2DWrap::GetRanges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
+	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetRanges(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCubeAxesActor2DWrap::GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1122,7 +1202,37 @@ void VtkCubeAxesActor2DWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
 	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1372,7 +1482,37 @@ void VtkCubeAxesActor2DWrap::SetRanges(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCubeAxesActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActor2DWrap>(info.Holder());
 	vtkCubeAxesActor2D *native = (vtkCubeAxesActor2D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRanges(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

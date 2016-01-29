@@ -29,8 +29,10 @@ class VtkPlotWrap : public VtkContextItemWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIndexedLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +42,7 @@ class VtkPlotWrap : public VtkContextItemWrap
 		static void GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTooltipNotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTooltipPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);

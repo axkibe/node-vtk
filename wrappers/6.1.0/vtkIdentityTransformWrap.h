@@ -30,6 +30,9 @@ class VtkIdentityTransformWrap : public VtkLinearTransformWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);

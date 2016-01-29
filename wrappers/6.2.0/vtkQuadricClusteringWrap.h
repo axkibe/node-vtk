@@ -42,6 +42,7 @@ class VtkQuadricClusteringWrap : public VtkPolyDataAlgorithmWrap
 		static void GetFeaturePointsAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFeaturePointsAngleMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFeaturePointsAngleMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfXDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfYDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfZDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);

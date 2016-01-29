@@ -42,6 +42,7 @@ class VtkInteractorStyleFlightWrap : public VtkInteractorStyleWrap
 		static void GetMotionStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRestoreUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void JumpTo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnChar(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnKeyDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -60,6 +61,7 @@ class VtkInteractorStyleFlightWrap : public VtkInteractorStyleWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAngleAccelerationFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAngleStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDefaultUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDisableMotion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMotionAccelerationFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMotionStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

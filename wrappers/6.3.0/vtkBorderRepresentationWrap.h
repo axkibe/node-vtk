@@ -47,6 +47,7 @@ class VtkBorderRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetShowVerticalBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowVerticalBorderMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowVerticalBorderMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -75,6 +76,8 @@ class VtkBorderRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetShowHorizontalBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShowVerticalBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

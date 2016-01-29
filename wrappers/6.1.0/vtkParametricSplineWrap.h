@@ -31,6 +31,8 @@ class VtkParametricSplineWrap : public VtkParametricFunctionWrap
 
 		static void ClosedOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClosedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Evaluate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EvaluateScalar(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClosed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);

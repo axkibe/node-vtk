@@ -30,6 +30,7 @@ class VtkGeoViewWrap : public VtkRenderViewWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddDefaultImageRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void BuildLowResEarth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeoInteractorStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);

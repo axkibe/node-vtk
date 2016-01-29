@@ -32,7 +32,13 @@ class VtkAngleRepresentation3DWrap : public VtkAngleRepresentationWrap
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArc(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenterDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenterWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRay1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRay2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,6 +49,13 @@ class VtkAngleRepresentation3DWrap : public VtkAngleRepresentationWrap
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCenterDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCenterWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTextActorScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

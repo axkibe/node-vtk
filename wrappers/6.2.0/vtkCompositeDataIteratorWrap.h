@@ -30,18 +30,12 @@ class VtkCompositeDataIteratorWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetCurrentDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetCurrentMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSkipEmptyNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GoToFirstItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GoToNextItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void HasCurrentMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitReverseTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsDoneWithTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);

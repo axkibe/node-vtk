@@ -10,6 +10,9 @@
 #include "vtkStructuredGridConnectivityWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
+#include "vtkPointDataWrap.h"
+#include "vtkCellDataWrap.h"
+#include "vtkPointsWrap.h"
 
 using namespace v8;
 
@@ -63,6 +66,12 @@ void VtkStructuredGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataDimension", GetDataDimension);
 	Nan::SetPrototypeMethod(tpl, "getDataDimension", GetDataDimension);
 
+	Nan::SetPrototypeMethod(tpl, "GetGhostedGridExtent", GetGhostedGridExtent);
+	Nan::SetPrototypeMethod(tpl, "getGhostedGridExtent", GetGhostedGridExtent);
+
+	Nan::SetPrototypeMethod(tpl, "GetGridExtent", GetGridExtent);
+	Nan::SetPrototypeMethod(tpl, "getGridExtent", GetGridExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfNeighbors", GetNumberOfNeighbors);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfNeighbors", GetNumberOfNeighbors);
 
@@ -72,8 +81,14 @@ void VtkStructuredGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "RegisterGrid", RegisterGrid);
+	Nan::SetPrototypeMethod(tpl, "registerGrid", RegisterGrid);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetGhostedGridExtent", SetGhostedGridExtent);
+	Nan::SetPrototypeMethod(tpl, "setGhostedGridExtent", SetGhostedGridExtent);
 
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
@@ -195,6 +210,88 @@ void VtkStructuredGridConnectivityWrap::GetDataDimension(const Nan::FunctionCall
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkStructuredGridConnectivityWrap::GetGhostedGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
+	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetGhostedGridExtent(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredGridConnectivityWrap::GetGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
+	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetGridExtent(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStructuredGridConnectivityWrap::GetNumberOfNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
@@ -261,6 +358,72 @@ void VtkStructuredGridConnectivityWrap::NewInstance(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkStructuredGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
+	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkUnsignedCharArrayWrap *a2 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkUnsignedCharArrayWrap *a3 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[4]))
+					{
+						VtkPointDataWrap *a4 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[4]->ToObject());
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[5]))
+						{
+							VtkCellDataWrap *a5 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[5]->ToObject());
+							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[6]))
+							{
+								VtkPointsWrap *a6 = ObjectWrap::Unwrap<VtkPointsWrap>(info[6]->ToObject());
+								if(info.Length() != 7)
+								{
+									Nan::ThrowError("Too many parameters.");
+									return;
+								}
+								native->RegisterGrid(
+									info[0]->Int32Value(),
+									b1,
+									(vtkUnsignedCharArray *) a2->native.GetPointer(),
+									(vtkUnsignedCharArray *) a3->native.GetPointer(),
+									(vtkPointData *) a4->native.GetPointer(),
+									(vtkCellData *) a5->native.GetPointer(),
+									(vtkPoints *) a6->native.GetPointer()
+								);
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStructuredGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
@@ -292,11 +455,82 @@ void VtkStructuredGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallback
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStructuredGridConnectivityWrap::SetGhostedGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
+	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetGhostedGridExtent(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStructuredGridConnectivityWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
 	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWholeExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

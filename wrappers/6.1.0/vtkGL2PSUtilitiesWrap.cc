@@ -48,6 +48,9 @@ void VtkGL2PSUtilitiesWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkGL2PSUtilitiesWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "DrawString", DrawString);
+	Nan::SetPrototypeMethod(tpl, "drawString", DrawString);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -99,6 +102,53 @@ void VtkGL2PSUtilitiesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkGL2PSUtilitiesWrap::DrawString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGL2PSUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSUtilitiesWrap>(info.Holder());
+	vtkGL2PSUtilities *native = (vtkGL2PSUtilities *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkTextPropertyWrap *a1 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->DrawString(
+					*a0,
+					(vtkTextProperty *) a1->native.GetPointer(),
+					b2
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGL2PSUtilitiesWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

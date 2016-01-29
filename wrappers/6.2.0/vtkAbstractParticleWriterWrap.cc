@@ -47,9 +47,6 @@ void VtkAbstractParticleWriterWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAbstractParticleWriterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "CloseFile", CloseFile);
-	Nan::SetPrototypeMethod(tpl, "closeFile", CloseFile);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -118,18 +115,6 @@ void VtkAbstractParticleWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkAbstractParticleWriterWrap::CloseFile(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractParticleWriterWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractParticleWriterWrap>(info.Holder());
-	vtkAbstractParticleWriter *native = (vtkAbstractParticleWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->CloseFile();
 }
 
 void VtkAbstractParticleWriterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

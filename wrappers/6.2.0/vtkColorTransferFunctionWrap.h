@@ -33,6 +33,7 @@ class VtkColorTransferFunctionWrap : public VtkScalarsToColorsWrap
 		static void AddHSVSegment(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AddRGBPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AddRGBSegment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AdjustRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AllowDuplicateScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AllowDuplicateScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClampingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,11 +45,13 @@ class VtkColorTransferFunctionWrap : public VtkScalarsToColorsWrap
 		static void GetClampingMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClampingMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorSpace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorSpaceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorSpaceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGreenValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHSVWrap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -72,6 +75,7 @@ class VtkColorTransferFunctionWrap : public VtkScalarsToColorsWrap
 		static void SetColorSpaceToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHSVWrap(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNanColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleToLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleToLog10(const Nan::FunctionCallbackInfo<v8::Value>& info);

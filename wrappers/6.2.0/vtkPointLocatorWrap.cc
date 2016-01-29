@@ -9,8 +9,8 @@
 #include "vtkIncrementalPointLocatorWrap.h"
 #include "vtkPointLocatorWrap.h"
 #include "vtkObjectWrap.h"
-#include "vtkIdListWrap.h"
 #include "vtkPointsWrap.h"
+#include "vtkIdListWrap.h"
 #include "vtkPolyDataWrap.h"
 
 using namespace v8;
@@ -53,8 +53,14 @@ void VtkPointLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BuildLocator", BuildLocator);
 	Nan::SetPrototypeMethod(tpl, "buildLocator", BuildLocator);
 
+	Nan::SetPrototypeMethod(tpl, "FindClosestNPoints", FindClosestNPoints);
+	Nan::SetPrototypeMethod(tpl, "findClosestNPoints", FindClosestNPoints);
+
 	Nan::SetPrototypeMethod(tpl, "FindDistributedPoints", FindDistributedPoints);
 	Nan::SetPrototypeMethod(tpl, "findDistributedPoints", FindDistributedPoints);
+
+	Nan::SetPrototypeMethod(tpl, "FindPointsWithinRadius", FindPointsWithinRadius);
+	Nan::SetPrototypeMethod(tpl, "findPointsWithinRadius", FindPointsWithinRadius);
 
 	Nan::SetPrototypeMethod(tpl, "FreeSearchStructure", FreeSearchStructure);
 	Nan::SetPrototypeMethod(tpl, "freeSearchStructure", FreeSearchStructure);
@@ -76,6 +82,12 @@ void VtkPointLocatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetPoints", GetPoints);
 	Nan::SetPrototypeMethod(tpl, "getPoints", GetPoints);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointsInBucket", GetPointsInBucket);
+	Nan::SetPrototypeMethod(tpl, "getPointsInBucket", GetPointsInBucket);
+
+	Nan::SetPrototypeMethod(tpl, "InitPointInsertion", InitPointInsertion);
+	Nan::SetPrototypeMethod(tpl, "initPointInsertion", InitPointInsertion);
 
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
@@ -136,13 +148,99 @@ void VtkPointLocatorWrap::BuildLocator(const Nan::FunctionCallbackInfo<v8::Value
 	native->BuildLocator();
 }
 
+void VtkPointLocatorWrap::FindClosestNPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
+	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->FindClosestNPoints(
+					info[0]->Int32Value(),
+					b1,
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPointLocatorWrap::FindDistributedPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->FindDistributedPoints(
+						info[0]->Int32Value(),
+						b1,
+						(vtkIdList *) a2->native.GetPointer(),
+						info[3]->Int32Value()
+					);
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
@@ -170,6 +268,52 @@ void VtkPointLocatorWrap::FindDistributedPoints(const Nan::FunctionCallbackInfo<
 						}
 					}
 				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPointLocatorWrap::FindPointsWithinRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
+	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->FindPointsWithinRadius(
+					info[0]->NumberValue(),
+					b1,
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				return;
 			}
 		}
 	}
@@ -291,6 +435,119 @@ void VtkPointLocatorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkPointLocatorWrap::GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
+	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			vtkIdList * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetPointsInBucket(
+				b0,
+				b1
+			);
+				VtkIdListWrap::InitPtpl();
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+			VtkIdListWrap *w = new VtkIdListWrap();
+			w->native = r;
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPointLocatorWrap::InitPointInsertion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
+	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->InitPointInsertion(
+				(vtkPoints *) a0->native.GetPointer(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPointLocatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
@@ -383,7 +640,37 @@ void VtkPointLocatorWrap::SetDivisions(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDivisions(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

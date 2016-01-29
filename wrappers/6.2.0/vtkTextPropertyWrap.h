@@ -52,6 +52,7 @@ class VtkTextPropertyWrap : public VtkObjectWrap
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShadow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetShadowColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVerticalJustification(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVerticalJustificationAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVerticalJustificationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

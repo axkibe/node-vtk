@@ -38,8 +38,6 @@ class VtkVisibilitySortWrap : public VtkObjectWrap
 		static void GetMaxCellsReturnedMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellsReturnedMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModelTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNextCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void InitTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

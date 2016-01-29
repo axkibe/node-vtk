@@ -62,6 +62,9 @@ void VtkImageMandelbrotSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetConstantSize", GetConstantSize);
 	Nan::SetPrototypeMethod(tpl, "getConstantSize", GetConstantSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetSizeCX", GetSizeCX);
+	Nan::SetPrototypeMethod(tpl, "getSizeCX", GetSizeCX);
+
 	Nan::SetPrototypeMethod(tpl, "GetSubsampleRate", GetSubsampleRate);
 	Nan::SetPrototypeMethod(tpl, "getSubsampleRate", GetSubsampleRate);
 
@@ -206,6 +209,43 @@ void VtkImageMandelbrotSourceWrap::GetConstantSize(const Nan::FunctionCallbackIn
 	}
 	r = native->GetConstantSize();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageMandelbrotSourceWrap::GetSizeCX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetSizeCX(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageMandelbrotSourceWrap::GetSubsampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -376,7 +416,37 @@ void VtkImageMandelbrotSourceWrap::SetOriginCX(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOriginCX(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -407,7 +477,37 @@ void VtkImageMandelbrotSourceWrap::SetProjectionAxes(const Nan::FunctionCallback
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetProjectionAxes(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -434,7 +534,37 @@ void VtkImageMandelbrotSourceWrap::SetSampleCX(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSampleCX(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -515,7 +645,37 @@ void VtkImageMandelbrotSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInf
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWholeExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

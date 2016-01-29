@@ -38,6 +38,8 @@ class VtkLineWidgetWrap : public Vtk3DWidgetWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);

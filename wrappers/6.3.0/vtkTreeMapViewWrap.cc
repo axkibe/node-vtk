@@ -51,6 +51,9 @@ void VtkTreeMapViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFontSizeRange", GetFontSizeRange);
+	Nan::SetPrototypeMethod(tpl, "getFontSizeRange", GetFontSizeRange);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -116,6 +119,43 @@ void VtkTreeMapViewWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTreeMapViewWrap::GetFontSizeRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeMapViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapViewWrap>(info.Holder());
+	vtkTreeMapView *native = (vtkTreeMapView *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetFontSizeRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTreeMapViewWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

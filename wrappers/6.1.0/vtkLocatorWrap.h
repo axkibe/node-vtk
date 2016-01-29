@@ -31,9 +31,6 @@ class VtkLocatorWrap : public VtkObjectWrap
 
 		static void AutomaticOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutomaticOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomatic(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);

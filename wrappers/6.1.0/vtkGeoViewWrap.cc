@@ -54,6 +54,9 @@ void VtkGeoViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AddDefaultImageRepresentation", AddDefaultImageRepresentation);
 	Nan::SetPrototypeMethod(tpl, "addDefaultImageRepresentation", AddDefaultImageRepresentation);
 
+	Nan::SetPrototypeMethod(tpl, "BuildLowResEarth", BuildLowResEarth);
+	Nan::SetPrototypeMethod(tpl, "buildLowResEarth", BuildLowResEarth);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -151,6 +154,43 @@ void VtkGeoViewWrap::AddDefaultImageRepresentation(const Nan::FunctionCallbackIn
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoViewWrap::BuildLowResEarth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoViewWrap *wrapper = ObjectWrap::Unwrap<VtkGeoViewWrap>(info.Holder());
+	vtkGeoView *native = (vtkGeoView *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->BuildLowResEarth(
+			b0
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

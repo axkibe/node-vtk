@@ -31,6 +31,7 @@ class VtkImageBSplineCoefficientsWrap : public VtkThreadedImageAlgorithmWrap
 
 		static void BypassOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BypassOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CheckBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Evaluate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBorderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBorderModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -57,6 +58,7 @@ class VtkImageBSplineCoefficientsWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetOutputScalarTypeToDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputScalarTypeToFloat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSplineDegree(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

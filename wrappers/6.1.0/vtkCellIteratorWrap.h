@@ -37,7 +37,6 @@ class VtkCellIteratorWrap : public VtkObjectWrap
 		static void GoToNextCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsDoneWithTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsTypeOf(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

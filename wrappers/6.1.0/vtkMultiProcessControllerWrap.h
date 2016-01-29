@@ -34,9 +34,7 @@ class VtkMultiProcessControllerWrap : public VtkObjectWrap
 		static void AllReduce(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Barrier(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Broadcast(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void CreateOutputWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateSubController(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Finalize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Gather(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GatherV(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBreakFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,7 +47,6 @@ class VtkMultiProcessControllerWrap : public VtkObjectWrap
 		static void GetRMIArgTag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRMITag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void MultipleMethodExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PartitionController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ProcessRMIs(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -65,7 +62,6 @@ class VtkMultiProcessControllerWrap : public VtkObjectWrap
 		static void SetGlobalController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfProcesses(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSingleProcessObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SingleMethodExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriggerBreakRMIs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriggerRMI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriggerRMIOnAllChildren(const Nan::FunctionCallbackInfo<v8::Value>& info);

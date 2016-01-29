@@ -29,6 +29,7 @@ class VtkExtractSelectedFrustumWrap : public VtkExtractSelectionBaseWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CreateFrustum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClipPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContainingCells(const Nan::FunctionCallbackInfo<v8::Value>& info);

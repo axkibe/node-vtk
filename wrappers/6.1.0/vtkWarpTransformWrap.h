@@ -33,12 +33,15 @@ class VtkWarpTransformWrap : public VtkAbstractTransformWrap
 		static void GetInverseFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverseIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverseTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInverseIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInverseTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TemplateTransformInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TemplateTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

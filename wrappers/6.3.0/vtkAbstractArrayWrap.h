@@ -29,21 +29,17 @@ class VtkAbstractArrayWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void ClearLookup(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyComponentNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DISCRETE_VALUES(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DISCRETE_VALUE_SAMPLE_PARAMETERS(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void DataChanged(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GUI_HIDE(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataTypeSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetElementComponentSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,18 +50,13 @@ class VtkAbstractArrayWrap : public VtkObjectWrap
 		static void HasAComponentName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasStandardMemoryLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void InsertTuples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsNumeric(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void NewIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PER_COMPONENT(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Reset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

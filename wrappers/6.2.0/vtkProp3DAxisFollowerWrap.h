@@ -31,6 +31,7 @@ class VtkProp3DAxisFollowerWrap : public VtkProp3DFollowerWrap
 
 		static void AutoCenterOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutoCenterOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AutoScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);

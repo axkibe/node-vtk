@@ -51,6 +51,8 @@ class VtkImageResliceWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetOptimization(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResliceAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetResliceAxesDirectionCosines(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetResliceAxesOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResliceTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSlabMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSlabModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);

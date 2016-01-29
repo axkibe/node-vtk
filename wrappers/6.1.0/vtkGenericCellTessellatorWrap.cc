@@ -8,11 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkGenericCellTessellatorWrap.h"
-#include "vtkGenericAdaptorCellWrap.h"
-#include "vtkGenericAttributeCollectionWrap.h"
-#include "vtkDoubleArrayWrap.h"
-#include "vtkCellArrayWrap.h"
-#include "vtkPointDataWrap.h"
 #include "vtkCollectionWrap.h"
 #include "vtkGenericDataSetWrap.h"
 
@@ -65,9 +60,6 @@ void VtkGenericCellTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "InitErrorMetrics", InitErrorMetrics);
 	Nan::SetPrototypeMethod(tpl, "initErrorMetrics", InitErrorMetrics);
 
-	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
-	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -82,12 +74,6 @@ void VtkGenericCellTessellatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetMeasurement", SetMeasurement);
 	Nan::SetPrototypeMethod(tpl, "setMeasurement", SetMeasurement);
-
-	Nan::SetPrototypeMethod(tpl, "Tessellate", Tessellate);
-	Nan::SetPrototypeMethod(tpl, "tessellate", Tessellate);
-
-	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
-	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
 	ptpl.Reset( tpl );
 }
@@ -181,26 +167,6 @@ void VtkGenericCellTessellatorWrap::InitErrorMetrics(const Nan::FunctionCallback
 			return;
 		}
 		native->InitErrorMetrics(
-			(vtkGenericDataSet *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkGenericCellTessellatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericCellTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellTessellatorWrap>(info.Holder());
-	vtkGenericCellTessellator *native = (vtkGenericCellTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkGenericDataSetWrap *a0 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->Initialize(
 			(vtkGenericDataSet *) a0->native.GetPointer()
 		);
 		return;
@@ -319,86 +285,6 @@ void VtkGenericCellTessellatorWrap::SetMeasurement(const Nan::FunctionCallbackIn
 			info[0]->Int32Value()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkGenericCellTessellatorWrap::Tessellate(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericCellTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellTessellatorWrap>(info.Holder());
-	vtkGenericCellTessellator *native = (vtkGenericCellTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAdaptorCellWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkGenericAdaptorCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkGenericAttributeCollectionWrap *a1 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[2]))
-			{
-				VtkDoubleArrayWrap *a2 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[3]))
-				{
-					VtkCellArrayWrap *a3 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[4]))
-					{
-						VtkPointDataWrap *a4 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[4]->ToObject());
-						if(info.Length() != 5)
-						{
-							Nan::ThrowError("Too many parameters.");
-							return;
-						}
-						native->Tessellate(
-							(vtkGenericAdaptorCell *) a0->native.GetPointer(),
-							(vtkGenericAttributeCollection *) a1->native.GetPointer(),
-							(vtkDoubleArray *) a2->native.GetPointer(),
-							(vtkCellArray *) a3->native.GetPointer(),
-							(vtkPointData *) a4->native.GetPointer()
-						);
-						return;
-					}
-				}
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkGenericCellTessellatorWrap::Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericCellTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellTessellatorWrap>(info.Holder());
-	vtkGenericCellTessellator *native = (vtkGenericCellTessellator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAdaptorCellWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkGenericAdaptorCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericAdaptorCellWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkGenericAttributeCollectionWrap *a1 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[2]))
-			{
-				VtkDoubleArrayWrap *a2 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[3]))
-				{
-					VtkCellArrayWrap *a3 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[3]->ToObject());
-					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[4]))
-					{
-						VtkPointDataWrap *a4 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[4]->ToObject());
-						if(info.Length() != 5)
-						{
-							Nan::ThrowError("Too many parameters.");
-							return;
-						}
-						native->Triangulate(
-							(vtkGenericAdaptorCell *) a0->native.GetPointer(),
-							(vtkGenericAttributeCollection *) a1->native.GetPointer(),
-							(vtkDoubleArray *) a2->native.GetPointer(),
-							(vtkCellArray *) a3->native.GetPointer(),
-							(vtkPointData *) a4->native.GetPointer()
-						);
-						return;
-					}
-				}
-			}
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

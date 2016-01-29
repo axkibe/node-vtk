@@ -37,10 +37,12 @@ class VtkImplicitPlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 		static void GetDiagonalRatioMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDrawPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalToXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalToYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalToZAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOriginTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutlineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutlineTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);

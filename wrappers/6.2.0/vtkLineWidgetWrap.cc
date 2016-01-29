@@ -76,6 +76,12 @@ void VtkLineWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLineProperty", GetLineProperty);
 	Nan::SetPrototypeMethod(tpl, "getLineProperty", GetLineProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint1", GetPoint1);
+	Nan::SetPrototypeMethod(tpl, "getPoint1", GetPoint1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2", GetPoint2);
+	Nan::SetPrototypeMethod(tpl, "getPoint2", GetPoint2);
+
 	Nan::SetPrototypeMethod(tpl, "GetPolyData", GetPolyData);
 	Nan::SetPrototypeMethod(tpl, "getPolyData", GetPolyData);
 
@@ -299,6 +305,80 @@ void VtkLineWidgetWrap::GetLineProperty(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkLineWidgetWrap::GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkLineWidgetWrap>(info.Holder());
+	vtkLineWidget *native = (vtkLineWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint1(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLineWidgetWrap::GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkLineWidgetWrap>(info.Holder());
+	vtkLineWidget *native = (vtkLineWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint2(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkLineWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkLineWidgetWrap>(info.Holder());
@@ -428,7 +508,37 @@ void VtkLineWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkLineWidgetWrap>(info.Holder());
 	vtkLineWidget *native = (vtkLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -608,7 +718,37 @@ void VtkLineWidgetWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkLineWidgetWrap>(info.Holder());
 	vtkLineWidget *native = (vtkLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -635,7 +775,37 @@ void VtkLineWidgetWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkLineWidgetWrap>(info.Holder());
 	vtkLineWidget *native = (vtkLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

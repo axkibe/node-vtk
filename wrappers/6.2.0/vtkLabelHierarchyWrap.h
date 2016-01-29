@@ -34,6 +34,7 @@ class VtkLabelHierarchyWrap : public VtkPointSetWrap
 		static void GetCenterPts(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoincidentPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDiscreteNodeCoordinatesFromWorldPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIconIndices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

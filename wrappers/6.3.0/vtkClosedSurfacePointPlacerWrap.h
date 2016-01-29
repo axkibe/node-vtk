@@ -30,6 +30,7 @@ class VtkClosedSurfacePointPlacerWrap : public VtkPointPlacerWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddBoundingPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoundingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,7 @@ class VtkClosedSurfacePointPlacerWrap : public VtkPointPlacerWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBoundingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

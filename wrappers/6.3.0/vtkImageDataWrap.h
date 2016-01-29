@@ -31,6 +31,7 @@ class VtkImageDataWrap : public VtkDataSetWrap
 
 		static void AllocateScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeStructuredCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyAndCastFrom(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyInformationFromPipeline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyInformationToPipeline(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,9 +41,11 @@ class VtkImageDataWrap : public VtkDataSetWrap
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarComponentAsDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -51,6 +51,9 @@ void VtkChartMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Allocate", Allocate);
 	Nan::SetPrototypeMethod(tpl, "allocate", Allocate);
 
+	Nan::SetPrototypeMethod(tpl, "GetBorders", GetBorders);
+	Nan::SetPrototypeMethod(tpl, "getBorders", GetBorders);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -123,6 +126,43 @@ void VtkChartMatrixWrap::Allocate(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	native->Allocate();
+}
+
+void VtkChartMatrixWrap::GetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkChartMatrixWrap>(info.Holder());
+	vtkChartMatrix *native = (vtkChartMatrix *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBorders(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkChartMatrixWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

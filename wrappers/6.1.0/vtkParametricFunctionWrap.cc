@@ -67,9 +67,6 @@ void VtkParametricFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDerivativesAvailable", GetDerivativesAvailable);
 	Nan::SetPrototypeMethod(tpl, "getDerivativesAvailable", GetDerivativesAvailable);
 
-	Nan::SetPrototypeMethod(tpl, "GetDimension", GetDimension);
-	Nan::SetPrototypeMethod(tpl, "getDimension", GetDimension);
-
 	Nan::SetPrototypeMethod(tpl, "GetJoinU", GetJoinU);
 	Nan::SetPrototypeMethod(tpl, "getJoinU", GetJoinU);
 
@@ -284,20 +281,6 @@ void VtkParametricFunctionWrap::GetDerivativesAvailable(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetDerivativesAvailable();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkParametricFunctionWrap::GetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
-	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetDimension();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

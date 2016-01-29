@@ -32,6 +32,7 @@ class VtkImageResliceMapperWrap : public VtkImageMapper3DWrap
 		static void AutoAdjustImageQualityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutoAdjustImageQualityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdjustImageQuality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageSampleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageSampleFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

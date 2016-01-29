@@ -8,7 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkVisibilitySortWrap.h"
-#include "vtkIdTypeArrayWrap.h"
 #include "vtkMatrix4x4Wrap.h"
 #include "vtkCameraWrap.h"
 #include "vtkDataSetWrap.h"
@@ -76,12 +75,6 @@ void VtkVisibilitySortWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetModelTransform", GetModelTransform);
 	Nan::SetPrototypeMethod(tpl, "getModelTransform", GetModelTransform);
-
-	Nan::SetPrototypeMethod(tpl, "GetNextCells", GetNextCells);
-	Nan::SetPrototypeMethod(tpl, "getNextCells", GetNextCells);
-
-	Nan::SetPrototypeMethod(tpl, "InitTraversal", InitTraversal);
-	Nan::SetPrototypeMethod(tpl, "initTraversal", InitTraversal);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -301,41 +294,6 @@ void VtkVisibilitySortWrap::GetModelTransform(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkVisibilitySortWrap::GetNextCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
-	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	vtkIdTypeArray * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNextCells();
-		VtkIdTypeArrayWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkIdTypeArrayWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkIdTypeArrayWrap *w = new VtkIdTypeArrayWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkVisibilitySortWrap::InitTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
-	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->InitTraversal();
 }
 
 void VtkVisibilitySortWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

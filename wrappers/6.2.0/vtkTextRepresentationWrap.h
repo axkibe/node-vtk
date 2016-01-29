@@ -32,6 +32,7 @@ class VtkTextRepresentationWrap : public VtkBorderRepresentationWrap
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);

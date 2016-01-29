@@ -29,17 +29,16 @@ class VtkCurveRepresentationWrap : public VtkWidgetRepresentationWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClosedOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClosedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClosed(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetHandlePositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfHandles(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjectToPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjectionNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjectionNormalMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,9 +46,7 @@ class VtkCurveRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetProjectionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetSummedLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void InitializeHandles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsClosed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -64,7 +61,6 @@ class VtkCurveRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetNumberOfHandles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlaneSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectToPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectionNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -73,6 +69,8 @@ class VtkCurveRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetProjectionNormalToYAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectionNormalToZAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

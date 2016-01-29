@@ -53,6 +53,12 @@ void VtkMINCImageAttributesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AddDimension", AddDimension);
 	Nan::SetPrototypeMethod(tpl, "addDimension", AddDimension);
 
+	Nan::SetPrototypeMethod(tpl, "FindImageRange", FindImageRange);
+	Nan::SetPrototypeMethod(tpl, "findImageRange", FindImageRange);
+
+	Nan::SetPrototypeMethod(tpl, "FindValidRange", FindValidRange);
+	Nan::SetPrototypeMethod(tpl, "findValidRange", FindValidRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetAttributeNames", GetAttributeNames);
 	Nan::SetPrototypeMethod(tpl, "getAttributeNames", GetAttributeNames);
 
@@ -201,6 +207,80 @@ void VtkMINCImageAttributesWrap::AddDimension(const Nan::FunctionCallbackInfo<v8
 		}
 		native->AddDimension(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMINCImageAttributesWrap::FindImageRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
+	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->FindImageRange(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMINCImageAttributesWrap::FindValidRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
+	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->FindValidRange(
+			b0
 		);
 		return;
 	}

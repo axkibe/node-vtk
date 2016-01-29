@@ -33,6 +33,7 @@ class VtkPolarAxesActorWrap : public VtkActorWrap
 		static void AutoSubdividePolarAxisOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoScaleRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoSubdividePolarAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistanceLODThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);

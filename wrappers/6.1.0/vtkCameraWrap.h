@@ -40,10 +40,13 @@ class VtkCameraWrap : public VtkObjectWrap
 		static void GetCompositeProjectionTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEyeAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEyePlaneNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEyePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEyeSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEyeTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFocalDisk(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFrustumPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeftEye(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModelTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModelViewTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -73,6 +76,7 @@ class VtkCameraWrap : public VtkObjectWrap
 		static void SetClippingRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEyeAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEyePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEyeSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEyeTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFocalDisk(const Nan::FunctionCallbackInfo<v8::Value>& info);

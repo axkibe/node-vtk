@@ -53,6 +53,9 @@ void VtkOpenGLFreeTypeTextMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -112,6 +115,48 @@ void VtkOpenGLFreeTypeTextMapperWrap::GetClassName(const Nan::FunctionCallbackIn
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkOpenGLFreeTypeTextMapperWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLFreeTypeTextMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLFreeTypeTextMapperWrap>(info.Holder());
+	vtkOpenGLFreeTypeTextMapper *native = (vtkOpenGLFreeTypeTextMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSize(
+				(vtkViewport *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOpenGLFreeTypeTextMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

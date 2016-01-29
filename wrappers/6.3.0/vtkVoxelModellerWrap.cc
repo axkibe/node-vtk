@@ -47,6 +47,9 @@ void VtkVoxelModellerWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkVoxelModellerWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeModelBounds", ComputeModelBounds);
+	Nan::SetPrototypeMethod(tpl, "computeModelBounds", ComputeModelBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetBackgroundValue", GetBackgroundValue);
 	Nan::SetPrototypeMethod(tpl, "getBackgroundValue", GetBackgroundValue);
 
@@ -155,6 +158,66 @@ void VtkVoxelModellerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkVoxelModellerWrap::ComputeModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
+	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ComputeModelBounds(
+				b0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkVoxelModellerWrap::GetBackgroundValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -392,7 +455,37 @@ void VtkVoxelModellerWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetModelBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -431,7 +524,37 @@ void VtkVoxelModellerWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSampleDimensions(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

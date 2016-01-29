@@ -71,6 +71,12 @@ void VtkHighestDensityRegionsStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSigma", SetSigma);
 	Nan::SetPrototypeMethod(tpl, "setSigma", SetSigma);
 
+	Nan::SetPrototypeMethod(tpl, "SetSmoothHC1", SetSmoothHC1);
+	Nan::SetPrototypeMethod(tpl, "setSmoothHC1", SetSmoothHC1);
+
+	Nan::SetPrototypeMethod(tpl, "SetSmoothHC2", SetSmoothHC2);
+	Nan::SetPrototypeMethod(tpl, "setSmoothHC2", SetSmoothHC2);
+
 	ptpl.Reset( tpl );
 }
 
@@ -272,6 +278,80 @@ void VtkHighestDensityRegionsStatisticsWrap::SetSigma(const Nan::FunctionCallbac
 		}
 		native->SetSigma(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHighestDensityRegionsStatisticsWrap::SetSmoothHC1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHighestDensityRegionsStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkHighestDensityRegionsStatisticsWrap>(info.Holder());
+	vtkHighestDensityRegionsStatistics *native = (vtkHighestDensityRegionsStatistics *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSmoothHC1(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHighestDensityRegionsStatisticsWrap::SetSmoothHC2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHighestDensityRegionsStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkHighestDensityRegionsStatisticsWrap>(info.Holder());
+	vtkHighestDensityRegionsStatistics *native = (vtkHighestDensityRegionsStatistics *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSmoothHC2(
+			b0
 		);
 		return;
 	}

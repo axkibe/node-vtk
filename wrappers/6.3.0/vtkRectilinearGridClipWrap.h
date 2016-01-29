@@ -33,6 +33,7 @@ class VtkRectilinearGridClipWrap : public VtkRectilinearGridAlgorithmWrap
 		static void ClipDataOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClipData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ResetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);

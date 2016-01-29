@@ -30,6 +30,7 @@ class VtkBrokenLineWidgetWrap : public Vtk3DWidgetWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleSizeFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleSizeFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

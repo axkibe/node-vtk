@@ -29,6 +29,7 @@ class VtkScalarsToColorsItemWrap : public VtkPlotWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskAboveCurve(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyLinePen(const Nan::FunctionCallbackInfo<v8::Value>& info);

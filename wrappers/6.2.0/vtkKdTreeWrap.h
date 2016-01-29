@@ -35,6 +35,8 @@ class VtkKdTreeWrap : public VtkLocatorWrap
 		static void CopyTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateCellLists(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeleteCellLists(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindClosestNPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindPointsWithinRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentationUsingDataBoundsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,7 +57,9 @@ class VtkKdTreeWrap : public VtkLocatorWrap
 		static void GetNumberOfRegionsOrLess(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfRegionsOrMore(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsInRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRegionBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRegionContainingPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRegionDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTiming(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IncludeRegionBoundaryCellsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IncludeRegionBoundaryCellsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -87,6 +91,10 @@ class VtkKdTreeWrap : public VtkLocatorWrap
 		static void SetTiming(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ViewOrderAllRegionsFromPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ViewOrderAllRegionsInDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ViewOrderRegionsFromPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ViewOrderRegionsInDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

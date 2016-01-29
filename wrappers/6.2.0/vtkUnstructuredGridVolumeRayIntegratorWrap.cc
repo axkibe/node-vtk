@@ -8,8 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkUnstructuredGridVolumeRayIntegratorWrap.h"
-#include "vtkVolumeWrap.h"
-#include "vtkDataArrayWrap.h"
 
 using namespace v8;
 
@@ -50,9 +48,6 @@ void VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
-
-	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
-	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -103,31 +98,6 @@ void VtkUnstructuredGridVolumeRayIntegratorWrap::GetClassName(const Nan::Functio
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkUnstructuredGridVolumeRayIntegratorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkUnstructuredGridVolumeRayIntegratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayIntegratorWrap>(info.Holder());
-	vtkUnstructuredGridVolumeRayIntegrator *native = (vtkUnstructuredGridVolumeRayIntegrator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Initialize(
-				(vtkVolume *) a0->native.GetPointer(),
-				(vtkDataArray *) a1->native.GetPointer()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkUnstructuredGridVolumeRayIntegratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

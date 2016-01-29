@@ -64,11 +64,17 @@ void VtkPKdTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CreateProcessCellCountData", CreateProcessCellCountData);
 	Nan::SetPrototypeMethod(tpl, "createProcessCellCountData", CreateProcessCellCountData);
 
+	Nan::SetPrototypeMethod(tpl, "GetCellArrayGlobalRange", GetCellArrayGlobalRange);
+	Nan::SetPrototypeMethod(tpl, "getCellArrayGlobalRange", GetCellArrayGlobalRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetController", GetController);
 	Nan::SetPrototypeMethod(tpl, "getController", GetController);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointArrayGlobalRange", GetPointArrayGlobalRange);
+	Nan::SetPrototypeMethod(tpl, "getPointArrayGlobalRange", GetPointArrayGlobalRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetProcessAssignedToRegion", GetProcessAssignedToRegion);
 	Nan::SetPrototypeMethod(tpl, "getProcessAssignedToRegion", GetProcessAssignedToRegion);
@@ -111,6 +117,12 @@ void VtkPKdTreeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
+
+	Nan::SetPrototypeMethod(tpl, "ViewOrderAllProcessesFromPosition", ViewOrderAllProcessesFromPosition);
+	Nan::SetPrototypeMethod(tpl, "viewOrderAllProcessesFromPosition", ViewOrderAllProcessesFromPosition);
+
+	Nan::SetPrototypeMethod(tpl, "ViewOrderAllProcessesInDirection", ViewOrderAllProcessesInDirection);
+	Nan::SetPrototypeMethod(tpl, "viewOrderAllProcessesInDirection", ViewOrderAllProcessesInDirection);
 
 	ptpl.Reset( tpl );
 }
@@ -209,6 +221,85 @@ void VtkPKdTreeWrap::CreateProcessCellCountData(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPKdTreeWrap::GetCellArrayGlobalRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkPKdTreeWrap>(info.Holder());
+	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetCellArrayGlobalRange(
+				*a0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetCellArrayGlobalRange(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPKdTreeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkPKdTreeWrap>(info.Holder());
@@ -244,6 +335,85 @@ void VtkPKdTreeWrap::GetController(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPKdTreeWrap::GetPointArrayGlobalRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkPKdTreeWrap>(info.Holder());
+	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetPointArrayGlobalRange(
+				*a0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetPointArrayGlobalRange(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPKdTreeWrap::GetProcessAssignedToRegion(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -557,6 +727,94 @@ void VtkPKdTreeWrap::SetController(const Nan::FunctionCallbackInfo<v8::Value>& i
 			(vtkMultiProcessController *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPKdTreeWrap::ViewOrderAllProcessesFromPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkPKdTreeWrap>(info.Holder());
+	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkIntArrayWrap *a1 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[1]->ToObject());
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ViewOrderAllProcessesFromPosition(
+				b0,
+				(vtkIntArray *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPKdTreeWrap::ViewOrderAllProcessesInDirection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkPKdTreeWrap>(info.Holder());
+	vtkPKdTree *native = (vtkPKdTree *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkIntArrayWrap *a1 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[1]->ToObject());
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ViewOrderAllProcessesInDirection(
+				b0,
+				(vtkIntArray *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

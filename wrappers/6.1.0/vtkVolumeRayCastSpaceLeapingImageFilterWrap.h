@@ -31,6 +31,7 @@ class VtkVolumeRayCastSpaceLeapingImageFilterWrap : public VtkThreadedImageAlgor
 
 		static void ComputeGradientOpacityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeGradientOpacityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeInputExtentsForOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeMinMaxOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeMinMaxOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);

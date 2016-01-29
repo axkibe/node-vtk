@@ -33,6 +33,7 @@ class VtkSplineWidgetWrap : public Vtk3DWidgetWrap
 		static void ClosedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClosed(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfHandles(const Nan::FunctionCallbackInfo<v8::Value>& info);

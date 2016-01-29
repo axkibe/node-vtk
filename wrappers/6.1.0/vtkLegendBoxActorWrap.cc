@@ -168,6 +168,9 @@ void VtkLegendBoxActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBox", SetBox);
 	Nan::SetPrototypeMethod(tpl, "setBox", SetBox);
 
+	Nan::SetPrototypeMethod(tpl, "SetEntry", SetEntry);
+	Nan::SetPrototypeMethod(tpl, "setEntry", SetEntry);
+
 	Nan::SetPrototypeMethod(tpl, "SetEntryColor", SetEntryColor);
 	Nan::SetPrototypeMethod(tpl, "setEntryColor", SetEntryColor);
 
@@ -821,7 +824,37 @@ void VtkLegendBoxActorWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackgroundColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -901,13 +934,136 @@ void VtkLegendBoxActorWrap::SetBox(const Nan::FunctionCallbackInfo<v8::Value>& i
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkLegendBoxActorWrap::SetEntry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
+	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkImageDataWrap *a1 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsString())
+			{
+				Nan::Utf8String a2(info[2]);
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetEntry(
+						info[0]->Int32Value(),
+						(vtkImageData *) a1->native.GetPointer(),
+						*a2,
+						b3
+					);
+					return;
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkImageDataWrap *a2 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsString())
+				{
+					Nan::Utf8String a3(info[3]);
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->SetEntry(
+							info[0]->Int32Value(),
+							(vtkPolyData *) a1->native.GetPointer(),
+							(vtkImageData *) a2->native.GetPointer(),
+							*a3,
+							b4
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkLegendBoxActorWrap::SetEntryColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetEntryColor(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{

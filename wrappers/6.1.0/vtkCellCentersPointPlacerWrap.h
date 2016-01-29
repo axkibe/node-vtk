@@ -30,6 +30,7 @@ class VtkCellCentersPointPlacerWrap : public VtkPointPlacerWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellPicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,8 @@ class VtkCellCentersPointPlacerWrap : public VtkPointPlacerWrap
 		static void RemoveViewProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

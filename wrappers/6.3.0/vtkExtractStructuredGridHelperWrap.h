@@ -29,12 +29,18 @@ class VtkExtractStructuredGridHelperWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ComputeBeginAndEnd(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CopyCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CopyPointsAndPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMappedExtentValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMappedExtentValueFromIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMappedIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMappedIndexFromExtentValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPartitionedOutputExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPartitionedVOI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

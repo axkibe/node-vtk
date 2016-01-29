@@ -63,9 +63,6 @@ void VtkSQLQueryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "EscapeString", EscapeString);
 	Nan::SetPrototypeMethod(tpl, "escapeString", EscapeString);
 
-	Nan::SetPrototypeMethod(tpl, "Execute", Execute);
-	Nan::SetPrototypeMethod(tpl, "execute", Execute);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -243,20 +240,6 @@ void VtkSQLQueryWrap::EscapeString(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkSQLQueryWrap::Execute(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
-	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->Execute();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSQLQueryWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

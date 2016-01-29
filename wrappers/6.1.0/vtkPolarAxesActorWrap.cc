@@ -64,6 +64,9 @@ void VtkPolarAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAutoSubdividePolarAxis", GetAutoSubdividePolarAxis);
 	Nan::SetPrototypeMethod(tpl, "getAutoSubdividePolarAxis", GetAutoSubdividePolarAxis);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetCamera", GetCamera);
 	Nan::SetPrototypeMethod(tpl, "getCamera", GetCamera);
 
@@ -386,6 +389,43 @@ void VtkPolarAxesActorWrap::GetAutoSubdividePolarAxis(const Nan::FunctionCallbac
 	}
 	r = native->GetAutoSubdividePolarAxis();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolarAxesActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
+	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPolarAxesActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1240,7 +1280,37 @@ void VtkPolarAxesActorWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1628,7 +1698,37 @@ void VtkPolarAxesActorWrap::SetPole(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPole(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

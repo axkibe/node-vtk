@@ -38,7 +38,9 @@ class VtkMatrix4x4Wrap : public VtkObjectWrap
 		static void Invert(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Multiply4x4(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MultiplyPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PointMultiply(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetElement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Transpose(const Nan::FunctionCallbackInfo<v8::Value>& info);

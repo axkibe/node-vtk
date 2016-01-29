@@ -31,7 +31,9 @@ class VtkImageSincInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 
 		static void AntialiasingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AntialiasingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeSupportSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAntialiasing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBlurFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenormalization(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseWindowParameter(const Nan::FunctionCallbackInfo<v8::Value>& info);

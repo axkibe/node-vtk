@@ -42,13 +42,13 @@ class VtkImageMapperWrap : public VtkMapper2DWrap
 		static void GetZSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void RenderData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderStart(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderToRectangleOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderToRectangleOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCustomDisplayExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderToRectangle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseCustomExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);

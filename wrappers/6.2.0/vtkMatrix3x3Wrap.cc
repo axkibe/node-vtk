@@ -76,8 +76,14 @@ void VtkMatrix3x3Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Multiply3x3", Multiply3x3);
 	Nan::SetPrototypeMethod(tpl, "multiply3x3", Multiply3x3);
 
+	Nan::SetPrototypeMethod(tpl, "MultiplyPoint", MultiplyPoint);
+	Nan::SetPrototypeMethod(tpl, "multiplyPoint", MultiplyPoint);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "PointMultiply", PointMultiply);
+	Nan::SetPrototypeMethod(tpl, "pointMultiply", PointMultiply);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -124,7 +130,58 @@ void VtkMatrix3x3Wrap::Adjoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Adjoint(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[1]))
@@ -149,7 +206,37 @@ void VtkMatrix3x3Wrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->DeepCopy(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -162,6 +249,70 @@ void VtkMatrix3x3Wrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->DeepCopy(
+				b0,
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkMatrix3x3Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->DeepCopy(
+				b0,
+				(vtkMatrix3x3 *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -169,7 +320,39 @@ void VtkMatrix3x3Wrap::Determinant(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Determinant(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		double r;
@@ -237,6 +420,36 @@ void VtkMatrix3x3Wrap::Identity(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Identity(
+			b0
+		);
+		return;
+	}
 	if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
@@ -249,7 +462,58 @@ void VtkMatrix3x3Wrap::Invert(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Invert(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[1]))
@@ -315,7 +579,79 @@ void VtkMatrix3x3Wrap::Multiply3x3(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[9];
+				if( a2->Length() < 9 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 9; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->Multiply3x3(
+					b0,
+					b1,
+					b2
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[1]))
@@ -336,6 +672,115 @@ void VtkMatrix3x3Wrap::Multiply3x3(const Nan::FunctionCallbackInfo<v8::Value>& i
 				);
 				return;
 			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMatrix3x3Wrap::MultiplyPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
+	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->MultiplyPoint(
+					b0,
+					b1,
+					b2
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->MultiplyPoint(
+				b0,
+				b1
+			);
+			return;
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -362,6 +807,85 @@ void VtkMatrix3x3Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkMatrix3x3Wrap::PointMultiply(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
+	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->PointMultiply(
+					b0,
+					b1,
+					b2
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkMatrix3x3Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -426,7 +950,58 @@ void VtkMatrix3x3Wrap::Transpose(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Transpose(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix3x3Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[1]))
@@ -456,6 +1031,36 @@ void VtkMatrix3x3Wrap::Zero(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
 	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Zero(
+			b0
+		);
+		return;
+	}
 	if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");

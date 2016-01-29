@@ -67,6 +67,7 @@ class VtkLegendBoxActorWrap : public VtkActor2DWrap
 		static void SetBackgroundOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEntry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEntryColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEntryIcon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEntryString(const Nan::FunctionCallbackInfo<v8::Value>& info);

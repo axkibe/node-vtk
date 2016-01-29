@@ -10,7 +10,6 @@
 #include "vtkAbstractPointLocatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
-#include "vtkPolyDataWrap.h"
 
 using namespace v8;
 
@@ -49,20 +48,11 @@ void VtkAbstractPointLocatorWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAbstractPointLocatorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "BuildLocator", BuildLocator);
-	Nan::SetPrototypeMethod(tpl, "buildLocator", BuildLocator);
-
 	Nan::SetPrototypeMethod(tpl, "FindClosestNPoints", FindClosestNPoints);
 	Nan::SetPrototypeMethod(tpl, "findClosestNPoints", FindClosestNPoints);
 
 	Nan::SetPrototypeMethod(tpl, "FindPointsWithinRadius", FindPointsWithinRadius);
 	Nan::SetPrototypeMethod(tpl, "findPointsWithinRadius", FindPointsWithinRadius);
-
-	Nan::SetPrototypeMethod(tpl, "FreeSearchStructure", FreeSearchStructure);
-	Nan::SetPrototypeMethod(tpl, "freeSearchStructure", FreeSearchStructure);
-
-	Nan::SetPrototypeMethod(tpl, "GenerateRepresentation", GenerateRepresentation);
-	Nan::SetPrototypeMethod(tpl, "generateRepresentation", GenerateRepresentation);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -102,18 +92,6 @@ void VtkAbstractPointLocatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkAbstractPointLocatorWrap::BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPointLocatorWrap>(info.Holder());
-	vtkAbstractPointLocator *native = (vtkAbstractPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->BuildLocator();
 }
 
 void VtkAbstractPointLocatorWrap::FindClosestNPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -183,42 +161,6 @@ void VtkAbstractPointLocatorWrap::FindPointsWithinRadius(const Nan::FunctionCall
 					}
 				}
 			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractPointLocatorWrap::FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPointLocatorWrap>(info.Holder());
-	vtkAbstractPointLocator *native = (vtkAbstractPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->FreeSearchStructure();
-}
-
-void VtkAbstractPointLocatorWrap::GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPointLocatorWrap>(info.Holder());
-	vtkAbstractPointLocator *native = (vtkAbstractPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->GenerateRepresentation(
-				info[0]->Int32Value(),
-				(vtkPolyData *) a1->native.GetPointer()
-			);
-			return;
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");

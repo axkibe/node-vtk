@@ -30,6 +30,7 @@ class VtkControlPointsItemWrap : public VtkPlotWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void DeselectAllPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetControlPointsIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEndPointsMovable(const Nan::FunctionCallbackInfo<v8::Value>& info);

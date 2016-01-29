@@ -76,6 +76,9 @@ void VtkImageTracerWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetHandleMiddleMouseButton", GetHandleMiddleMouseButton);
 	Nan::SetPrototypeMethod(tpl, "getHandleMiddleMouseButton", GetHandleMiddleMouseButton);
 
+	Nan::SetPrototypeMethod(tpl, "GetHandlePosition", GetHandlePosition);
+	Nan::SetPrototypeMethod(tpl, "getHandlePosition", GetHandlePosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetHandleProperty", GetHandleProperty);
 	Nan::SetPrototypeMethod(tpl, "getHandleProperty", GetHandleProperty);
 
@@ -391,6 +394,47 @@ void VtkImageTracerWidgetWrap::GetHandleMiddleMouseButton(const Nan::FunctionCal
 	}
 	r = native->GetHandleMiddleMouseButton();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageTracerWidgetWrap::GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
+	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetHandlePosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageTracerWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -852,7 +896,37 @@ void VtkImageTracerWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1046,9 +1120,40 @@ void VtkImageTracerWidgetWrap::SetHandlePosition(const Nan::FunctionCallbackInfo
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetHandlePosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{

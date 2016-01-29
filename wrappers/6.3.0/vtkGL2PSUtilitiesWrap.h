@@ -29,6 +29,7 @@ class VtkGL2PSUtilitiesWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void DrawString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextAsPath(const Nan::FunctionCallbackInfo<v8::Value>& info);

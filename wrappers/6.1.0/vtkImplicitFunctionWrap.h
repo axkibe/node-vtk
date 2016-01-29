@@ -30,6 +30,7 @@ class VtkImplicitFunctionWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FunctionGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FunctionValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -35,7 +35,6 @@ class VtkXMLWriterWrap : public VtkAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompressor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetDefaultFileExtension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEncodeAppendedData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeaderType(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -30,6 +30,7 @@ class VtkPlotParallelCoordinatesWrap : public VtkPlotWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void CreateDefaultLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);

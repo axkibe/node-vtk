@@ -47,20 +47,11 @@ void VtkScalarTreeWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkScalarTreeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "BuildTree", BuildTree);
-	Nan::SetPrototypeMethod(tpl, "buildTree", BuildTree);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetDataSet", GetDataSet);
 	Nan::SetPrototypeMethod(tpl, "getDataSet", GetDataSet);
-
-	Nan::SetPrototypeMethod(tpl, "InitTraversal", InitTraversal);
-	Nan::SetPrototypeMethod(tpl, "initTraversal", InitTraversal);
-
-	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
-	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -102,18 +93,6 @@ void VtkScalarTreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
-void VtkScalarTreeWrap::BuildTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkScalarTreeWrap *wrapper = ObjectWrap::Unwrap<VtkScalarTreeWrap>(info.Holder());
-	vtkScalarTree *native = (vtkScalarTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->BuildTree();
-}
-
 void VtkScalarTreeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkScalarTreeWrap *wrapper = ObjectWrap::Unwrap<VtkScalarTreeWrap>(info.Holder());
@@ -149,37 +128,6 @@ void VtkScalarTreeWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkScalarTreeWrap::InitTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkScalarTreeWrap *wrapper = ObjectWrap::Unwrap<VtkScalarTreeWrap>(info.Holder());
-	vtkScalarTree *native = (vtkScalarTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->InitTraversal(
-			info[0]->NumberValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkScalarTreeWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkScalarTreeWrap *wrapper = ObjectWrap::Unwrap<VtkScalarTreeWrap>(info.Holder());
-	vtkScalarTree *native = (vtkScalarTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Initialize();
 }
 
 void VtkScalarTreeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

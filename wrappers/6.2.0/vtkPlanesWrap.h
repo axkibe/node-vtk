@@ -30,6 +30,7 @@ class VtkPlanesWrap : public VtkImplicitFunctionWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,7 @@ class VtkPlanesWrap : public VtkImplicitFunctionWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFrustumPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

@@ -92,11 +92,11 @@ void VtkRendererWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Clear", Clear);
 	Nan::SetPrototypeMethod(tpl, "clear", Clear);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeVisiblePropBounds", ComputeVisiblePropBounds);
+	Nan::SetPrototypeMethod(tpl, "computeVisiblePropBounds", ComputeVisiblePropBounds);
+
 	Nan::SetPrototypeMethod(tpl, "CreateLight", CreateLight);
 	Nan::SetPrototypeMethod(tpl, "createLight", CreateLight);
-
-	Nan::SetPrototypeMethod(tpl, "DeviceRender", DeviceRender);
-	Nan::SetPrototypeMethod(tpl, "deviceRender", DeviceRender);
 
 	Nan::SetPrototypeMethod(tpl, "DeviceRenderTranslucentPolygonalGeometry", DeviceRenderTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "deviceRenderTranslucentPolygonalGeometry", DeviceRenderTranslucentPolygonalGeometry);
@@ -583,6 +583,43 @@ void VtkRendererWrap::Clear(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	native->Clear();
 }
 
+void VtkRendererWrap::ComputeVisiblePropBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ComputeVisiblePropBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkRendererWrap::CreateLight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
@@ -593,18 +630,6 @@ void VtkRendererWrap::CreateLight(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	native->CreateLight();
-}
-
-void VtkRendererWrap::DeviceRender(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
-	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->DeviceRender();
 }
 
 void VtkRendererWrap::DeviceRenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1640,7 +1665,37 @@ void VtkRendererWrap::ResetCamera(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ResetCamera(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1684,7 +1739,37 @@ void VtkRendererWrap::ResetCameraClippingRange(const Nan::FunctionCallbackInfo<v
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ResetCameraClippingRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1798,7 +1883,37 @@ void VtkRendererWrap::SetAmbient(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
 	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAmbient(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

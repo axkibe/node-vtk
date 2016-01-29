@@ -31,6 +31,7 @@ class VtkBalloonRepresentationWrap : public VtkWidgetRepresentationWrap
 
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBalloonImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBalloonLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBalloonText(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -63,6 +64,7 @@ class VtkBalloonRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

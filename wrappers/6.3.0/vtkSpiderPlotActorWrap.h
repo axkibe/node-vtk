@@ -30,6 +30,7 @@ class VtkSpiderPlotActorWrap : public VtkActor2DWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetAxisLabel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIndependentVariables(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIndependentVariablesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

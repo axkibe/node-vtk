@@ -16,6 +16,7 @@
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkWindowWrap.h"
+#include "vtkCameraWrap.h"
 
 using namespace v8;
 
@@ -54,6 +55,9 @@ void VtkAMRVolumeMapperWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAMRVolumeMapperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeResamplerBoundsFrustumMethod", ComputeResamplerBoundsFrustumMethod);
+	Nan::SetPrototypeMethod(tpl, "computeResamplerBoundsFrustumMethod", ComputeResamplerBoundsFrustumMethod);
+
 	Nan::SetPrototypeMethod(tpl, "GetArrayAccessMode", GetArrayAccessMode);
 	Nan::SetPrototypeMethod(tpl, "getArrayAccessMode", GetArrayAccessMode);
 
@@ -65,6 +69,9 @@ void VtkAMRVolumeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetBlendMode", GetBlendMode);
 	Nan::SetPrototypeMethod(tpl, "getBlendMode", GetBlendMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -221,6 +228,76 @@ void VtkAMRVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkAMRVolumeMapperWrap::ComputeResamplerBoundsFrustumMethod(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
+	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkRendererWrap *a1 = ObjectWrap::Unwrap<VtkRendererWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[6];
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 6; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					double b3[6];
+					if( a3->Length() < 6 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 6; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					bool r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeResamplerBoundsFrustumMethod(
+						(vtkCamera *) a0->native.GetPointer(),
+						(vtkRenderer *) a1->native.GetPointer(),
+						b2,
+						b3
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAMRVolumeMapperWrap::GetArrayAccessMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
@@ -275,6 +352,43 @@ void VtkAMRVolumeMapperWrap::GetBlendMode(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetBlendMode();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRVolumeMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
+	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAMRVolumeMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -834,7 +948,37 @@ void VtkAMRVolumeMapperWrap::SetNumberOfSamples(const Nan::FunctionCallbackInfo<
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfSamples(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

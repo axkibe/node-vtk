@@ -30,6 +30,7 @@ class VtkImageAccumulateWrap : public VtkImageAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComponentExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIgnoreZero(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIgnoreZeroMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIgnoreZeroMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

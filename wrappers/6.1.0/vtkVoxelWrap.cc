@@ -50,6 +50,9 @@ void VtkVoxelWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkVoxelWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CellBoundary", CellBoundary);
+	Nan::SetPrototypeMethod(tpl, "cellBoundary", CellBoundary);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellDimension", GetCellDimension);
 	Nan::SetPrototypeMethod(tpl, "getCellDimension", GetCellDimension);
 
@@ -70,6 +73,18 @@ void VtkVoxelWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfFaces", GetNumberOfFaces);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfFaces", GetNumberOfFaces);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolateDerivs", InterpolateDerivs);
+	Nan::SetPrototypeMethod(tpl, "interpolateDerivs", InterpolateDerivs);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolateFunctions", InterpolateFunctions);
+	Nan::SetPrototypeMethod(tpl, "interpolateFunctions", InterpolateFunctions);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolationDerivs", InterpolationDerivs);
+	Nan::SetPrototypeMethod(tpl, "interpolationDerivs", InterpolationDerivs);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolationFunctions", InterpolationFunctions);
+	Nan::SetPrototypeMethod(tpl, "interpolationFunctions", InterpolationFunctions);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -110,6 +125,54 @@ void VtkVoxelWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkVoxelWrap::CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelWrap>(info.Holder());
+	vtkVoxel *native = (vtkVoxel *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->CellBoundary(
+					info[0]->Int32Value(),
+					b1,
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkVoxelWrap::GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -240,6 +303,238 @@ void VtkVoxelWrap::GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetNumberOfFaces();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVoxelWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelWrap>(info.Holder());
+	vtkVoxel *native = (vtkVoxel *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[24];
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 24; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateDerivs(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkVoxelWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelWrap>(info.Holder());
+	vtkVoxel *native = (vtkVoxel *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[8];
+			if( a1->Length() < 8 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 8; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateFunctions(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkVoxelWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelWrap>(info.Holder());
+	vtkVoxel *native = (vtkVoxel *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[24];
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 24; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolationDerivs(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkVoxelWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelWrap>(info.Holder());
+	vtkVoxel *native = (vtkVoxel *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[8];
+			if( a1->Length() < 8 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 8; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolationFunctions(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkVoxelWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

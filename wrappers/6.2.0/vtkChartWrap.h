@@ -47,7 +47,6 @@ class VtkChartWrap : public VtkContextItemWrap
 		static void GetTitleProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemovePlotInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

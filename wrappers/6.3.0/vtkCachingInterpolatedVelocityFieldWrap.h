@@ -34,6 +34,7 @@ class VtkCachingInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 		static void GetCellCacheHit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSetCacheHit(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastLocalCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVectorsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

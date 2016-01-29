@@ -29,6 +29,7 @@ class VtkSphereWidgetWrap : public Vtk3DWidgetWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);

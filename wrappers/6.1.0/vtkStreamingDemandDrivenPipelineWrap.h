@@ -42,11 +42,15 @@ class VtkStreamingDemandDrivenPipelineWrap : public VtkDemandDrivenPipelineWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentTranslator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPieceBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRequestExactExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdateGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdateNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdatePiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdateResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MAXIMUM_NUMBER_OF_PIECES(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -66,6 +70,7 @@ class VtkStreamingDemandDrivenPipelineWrap : public VtkDemandDrivenPipelineWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtentTranslator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPieceBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRequestExactExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpdateExtentToWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -74,6 +79,8 @@ class VtkStreamingDemandDrivenPipelineWrap : public VtkDemandDrivenPipelineWrap
 		static void SetUpdatePiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpdateResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpdateTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWholeBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TIME_DEPENDENT_INFORMATION(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TIME_LABEL_ANNOTATION(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TIME_RANGE(const Nan::FunctionCallbackInfo<v8::Value>& info);

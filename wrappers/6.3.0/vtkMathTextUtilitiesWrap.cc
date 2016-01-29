@@ -8,7 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkMathTextUtilitiesWrap.h"
-#include "vtkPathWrap.h"
 #include "vtkTextPropertyWrap.h"
 
 using namespace v8;
@@ -57,9 +56,6 @@ void VtkMathTextUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInstance", GetInstance);
 	Nan::SetPrototypeMethod(tpl, "getInstance", GetInstance);
 
-	Nan::SetPrototypeMethod(tpl, "GetScaleToPowerOfTwo", GetScaleToPowerOfTwo);
-	Nan::SetPrototypeMethod(tpl, "getScaleToPowerOfTwo", GetScaleToPowerOfTwo);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -74,12 +70,6 @@ void VtkMathTextUtilitiesWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetInstance", SetInstance);
 	Nan::SetPrototypeMethod(tpl, "setInstance", SetInstance);
-
-	Nan::SetPrototypeMethod(tpl, "SetScaleToPowerOfTwo", SetScaleToPowerOfTwo);
-	Nan::SetPrototypeMethod(tpl, "setScaleToPowerOfTwo", SetScaleToPowerOfTwo);
-
-	Nan::SetPrototypeMethod(tpl, "StringToPath", StringToPath);
-	Nan::SetPrototypeMethod(tpl, "stringToPath", StringToPath);
 
 	ptpl.Reset( tpl );
 }
@@ -184,20 +174,6 @@ void VtkMathTextUtilitiesWrap::GetInstance(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkMathTextUtilitiesWrap::GetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkMathTextUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkMathTextUtilitiesWrap>(info.Holder());
-	vtkMathTextUtilities *native = (vtkMathTextUtilities *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetScaleToPowerOfTwo();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMathTextUtilitiesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -306,61 +282,6 @@ void VtkMathTextUtilitiesWrap::SetInstance(const Nan::FunctionCallbackInfo<v8::V
 			(vtkMathTextUtilities *) a0->native.GetPointer()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkMathTextUtilitiesWrap::SetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkMathTextUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkMathTextUtilitiesWrap>(info.Holder());
-	vtkMathTextUtilities *native = (vtkMathTextUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsBoolean())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetScaleToPowerOfTwo(
-			info[0]->BooleanValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkMathTextUtilitiesWrap::StringToPath(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkMathTextUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkMathTextUtilitiesWrap>(info.Holder());
-	vtkMathTextUtilities *native = (vtkMathTextUtilities *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
-	{
-		Nan::Utf8String a0(info[0]);
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPathWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkPathWrap *a1 = ObjectWrap::Unwrap<VtkPathWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[2]))
-			{
-				VtkTextPropertyWrap *a2 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[2]->ToObject());
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					bool r;
-					if(info.Length() != 4)
-					{
-						Nan::ThrowError("Too many parameters.");
-						return;
-					}
-					r = native->StringToPath(
-						*a0,
-						(vtkPath *) a1->native.GetPointer(),
-						(vtkTextProperty *) a2->native.GetPointer(),
-						info[3]->Int32Value()
-					);
-					info.GetReturnValue().Set(Nan::New(r));
-					return;
-				}
-			}
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

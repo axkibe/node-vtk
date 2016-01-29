@@ -32,7 +32,6 @@ class VtkDistanceRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfRulerTicks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfRulerTicksMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -58,6 +57,8 @@ class VtkDistanceRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetRulerDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRulerMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

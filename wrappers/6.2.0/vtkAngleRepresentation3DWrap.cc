@@ -60,8 +60,26 @@ void VtkAngleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetArc", GetArc);
 	Nan::SetPrototypeMethod(tpl, "getArc", GetArc);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenterDisplayPosition", GetCenterDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getCenterDisplayPosition", GetCenterDisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetCenterWorldPosition", GetCenterWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getCenterWorldPosition", GetCenterWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint1DisplayPosition", GetPoint1DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint1DisplayPosition", GetPoint1DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint1WorldPosition", GetPoint1WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint1WorldPosition", GetPoint1WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2DisplayPosition", GetPoint2DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint2DisplayPosition", GetPoint2DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2WorldPosition", GetPoint2WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint2WorldPosition", GetPoint2WorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetRay1", GetRay1);
 	Nan::SetPrototypeMethod(tpl, "getRay1", GetRay1);
@@ -92,6 +110,27 @@ void VtkAngleRepresentation3DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCenterDisplayPosition", SetCenterDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setCenterDisplayPosition", SetCenterDisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetCenterWorldPosition", SetCenterWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setCenterWorldPosition", SetCenterWorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint1DisplayPosition", SetPoint1DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint1DisplayPosition", SetPoint1DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint1WorldPosition", SetPoint1WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint1WorldPosition", SetPoint1WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint2DisplayPosition", SetPoint2DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint2DisplayPosition", SetPoint2DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint2WorldPosition", SetPoint2WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint2WorldPosition", SetPoint2WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetTextActorScale", SetTextActorScale);
+	Nan::SetPrototypeMethod(tpl, "setTextActorScale", SetTextActorScale);
 
 	ptpl.Reset( tpl );
 }
@@ -171,6 +210,80 @@ void VtkAngleRepresentation3DWrap::GetArc(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAngleRepresentation3DWrap::GetCenterDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCenterDisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::GetCenterWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCenterWorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAngleRepresentation3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
@@ -183,6 +296,154 @@ void VtkAngleRepresentation3DWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAngleRepresentation3DWrap::GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint1DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint1WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint2DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::GetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint2WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAngleRepresentation3DWrap::GetRay1(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -403,6 +664,265 @@ void VtkAngleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::SetCenterDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCenterDisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::SetCenterWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCenterWorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::SetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::SetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentation3DWrap::SetTextActorScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation3DWrap>(info.Holder());
+	vtkAngleRepresentation3D *native = (vtkAngleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTextActorScale(
+			b0
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

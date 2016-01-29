@@ -33,6 +33,7 @@ class VtkAffineRepresentation2DWrap : public VtkAffineRepresentationWrap
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayTextOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayTextOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxesWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxesWidthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +52,7 @@ class VtkAffineRepresentation2DWrap : public VtkAffineRepresentationWrap
 		static void GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -63,6 +65,8 @@ class VtkAffineRepresentation2DWrap : public VtkAffineRepresentationWrap
 		static void SetSelectedProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

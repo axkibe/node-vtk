@@ -37,6 +37,8 @@ class VtkThreadedImageAlgorithmWrap : public VtkImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ThreadedExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

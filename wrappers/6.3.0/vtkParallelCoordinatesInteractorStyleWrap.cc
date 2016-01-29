@@ -9,6 +9,7 @@
 #include "vtkInteractorStyleTrackballCameraWrap.h"
 #include "vtkParallelCoordinatesInteractorStyleWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkViewportWrap.h"
 
 using namespace v8;
 
@@ -58,6 +59,15 @@ void VtkParallelCoordinatesInteractorStyleWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetCursorCurrentPosition", GetCursorCurrentPosition);
+	Nan::SetPrototypeMethod(tpl, "getCursorCurrentPosition", GetCursorCurrentPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetCursorLastPosition", GetCursorLastPosition);
+	Nan::SetPrototypeMethod(tpl, "getCursorLastPosition", GetCursorLastPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetCursorStartPosition", GetCursorStartPosition);
+	Nan::SetPrototypeMethod(tpl, "getCursorStartPosition", GetCursorStartPosition);
 
 	Nan::SetPrototypeMethod(tpl, "Inspect", Inspect);
 	Nan::SetPrototypeMethod(tpl, "inspect", Inspect);
@@ -190,6 +200,132 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetClassName(const Nan::Function
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkParallelCoordinatesInteractorStyleWrap::GetCursorCurrentPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
+	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetCursorCurrentPosition(
+				(vtkViewport *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkParallelCoordinatesInteractorStyleWrap::GetCursorLastPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
+	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetCursorLastPosition(
+				(vtkViewport *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkParallelCoordinatesInteractorStyleWrap::GetCursorStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
+	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetCursorStartPosition(
+				(vtkViewport *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkParallelCoordinatesInteractorStyleWrap::Inspect(const Nan::FunctionCallbackInfo<v8::Value>& info)

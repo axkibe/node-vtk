@@ -29,6 +29,7 @@ class VtkHeatmapItemWrap : public VtkContextItemWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);

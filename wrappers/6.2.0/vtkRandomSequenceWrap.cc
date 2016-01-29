@@ -49,17 +49,11 @@ void VtkRandomSequenceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetValue", GetValue);
-	Nan::SetPrototypeMethod(tpl, "getValue", GetValue);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "Next", Next);
-	Nan::SetPrototypeMethod(tpl, "next", Next);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -106,20 +100,6 @@ void VtkRandomSequenceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
-void VtkRandomSequenceWrap::GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRandomSequenceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomSequenceWrap>(info.Holder());
-	vtkRandomSequence *native = (vtkRandomSequence *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetValue();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkRandomSequenceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRandomSequenceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomSequenceWrap>(info.Holder());
@@ -163,18 +143,6 @@ void VtkRandomSequenceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkRandomSequenceWrap::Next(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRandomSequenceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomSequenceWrap>(info.Holder());
-	vtkRandomSequence *native = (vtkRandomSequence *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Next();
 }
 
 void VtkRandomSequenceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

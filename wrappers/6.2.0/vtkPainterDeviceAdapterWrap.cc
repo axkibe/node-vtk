@@ -9,7 +9,6 @@
 #include "vtkObjectWrap.h"
 #include "vtkPainterDeviceAdapterWrap.h"
 #include "vtkDataArrayWrap.h"
-#include "vtkRendererWrap.h"
 
 using namespace v8;
 
@@ -48,62 +47,20 @@ void VtkPainterDeviceAdapterWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkPainterDeviceAdapterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "BeginPrimitive", BeginPrimitive);
-	Nan::SetPrototypeMethod(tpl, "beginPrimitive", BeginPrimitive);
-
-	Nan::SetPrototypeMethod(tpl, "Compatible", Compatible);
-	Nan::SetPrototypeMethod(tpl, "compatible", Compatible);
-
-	Nan::SetPrototypeMethod(tpl, "DisableAttributeArray", DisableAttributeArray);
-	Nan::SetPrototypeMethod(tpl, "disableAttributeArray", DisableAttributeArray);
-
-	Nan::SetPrototypeMethod(tpl, "EnableAttributeArray", EnableAttributeArray);
-	Nan::SetPrototypeMethod(tpl, "enableAttributeArray", EnableAttributeArray);
-
-	Nan::SetPrototypeMethod(tpl, "EndPrimitive", EndPrimitive);
-	Nan::SetPrototypeMethod(tpl, "endPrimitive", EndPrimitive);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
-	Nan::SetPrototypeMethod(tpl, "IsAttributesSupported", IsAttributesSupported);
-	Nan::SetPrototypeMethod(tpl, "isAttributesSupported", IsAttributesSupported);
-
-	Nan::SetPrototypeMethod(tpl, "MakeBlending", MakeBlending);
-	Nan::SetPrototypeMethod(tpl, "makeBlending", MakeBlending);
-
-	Nan::SetPrototypeMethod(tpl, "MakeLighting", MakeLighting);
-	Nan::SetPrototypeMethod(tpl, "makeLighting", MakeLighting);
-
-	Nan::SetPrototypeMethod(tpl, "MakeMultisampling", MakeMultisampling);
-	Nan::SetPrototypeMethod(tpl, "makeMultisampling", MakeMultisampling);
-
-	Nan::SetPrototypeMethod(tpl, "MakeVertexEmphasis", MakeVertexEmphasis);
-	Nan::SetPrototypeMethod(tpl, "makeVertexEmphasis", MakeVertexEmphasis);
-
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "QueryBlending", QueryBlending);
-	Nan::SetPrototypeMethod(tpl, "queryBlending", QueryBlending);
-
-	Nan::SetPrototypeMethod(tpl, "QueryLighting", QueryLighting);
-	Nan::SetPrototypeMethod(tpl, "queryLighting", QueryLighting);
-
-	Nan::SetPrototypeMethod(tpl, "QueryMultisampling", QueryMultisampling);
-	Nan::SetPrototypeMethod(tpl, "queryMultisampling", QueryMultisampling);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "SetAttributePointer", SetAttributePointer);
 	Nan::SetPrototypeMethod(tpl, "setAttributePointer", SetAttributePointer);
-
-	Nan::SetPrototypeMethod(tpl, "Stencil", Stencil);
-	Nan::SetPrototypeMethod(tpl, "stencil", Stencil);
 
 	ptpl.Reset( tpl );
 }
@@ -132,97 +89,6 @@ void VtkPainterDeviceAdapterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkPainterDeviceAdapterWrap::BeginPrimitive(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->BeginPrimitive(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::Compatible(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		int r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->Compatible(
-			(vtkRenderer *) a0->native.GetPointer()
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::DisableAttributeArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->DisableAttributeArray(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::EnableAttributeArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->EnableAttributeArray(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::EndPrimitive(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->EndPrimitive();
 }
 
 void VtkPainterDeviceAdapterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -261,103 +127,6 @@ void VtkPainterDeviceAdapterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkPainterDeviceAdapterWrap::IsAttributesSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		int r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->IsAttributesSupported(
-			info[0]->Int32Value()
-		);
-		info.GetReturnValue().Set(Nan::New(r));
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::MakeBlending(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->MakeBlending(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::MakeLighting(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->MakeLighting(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::MakeMultisampling(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->MakeMultisampling(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::MakeVertexEmphasis(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsBoolean())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->MakeVertexEmphasis(
-			info[0]->BooleanValue()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkPainterDeviceAdapterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
@@ -379,48 +148,6 @@ void VtkPainterDeviceAdapterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkPainterDeviceAdapterWrap::QueryBlending(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->QueryBlending();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkPainterDeviceAdapterWrap::QueryLighting(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->QueryLighting();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkPainterDeviceAdapterWrap::QueryMultisampling(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->QueryMultisampling();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPainterDeviceAdapterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -474,25 +201,6 @@ void VtkPainterDeviceAdapterWrap::SetAttributePointer(const Nan::FunctionCallbac
 			);
 			return;
 		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPainterDeviceAdapterWrap::Stencil(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
-	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->Stencil(
-			info[0]->Int32Value()
-		);
-		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

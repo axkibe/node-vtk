@@ -34,12 +34,20 @@ class VtkDistanceRepresentation2DWrap : public VtkDistanceRepresentationWrap
 		static void GetAxisProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

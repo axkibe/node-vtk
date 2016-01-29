@@ -37,6 +37,7 @@ class VtkGeneralTransformWrap : public VtkAbstractTransformWrap
 		static void GetInverseFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfConcatenatedTransforms(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Identity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);

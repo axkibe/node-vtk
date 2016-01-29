@@ -29,10 +29,12 @@ class VtkAMRVolumeMapperWrap : public VtkVolumeMapperWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ComputeResamplerBoundsFrustumMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayAccessMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBlendMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCropping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCroppingRegionFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);

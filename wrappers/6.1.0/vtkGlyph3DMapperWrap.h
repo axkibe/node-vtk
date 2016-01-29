@@ -31,6 +31,7 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 
 		static void ClampingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClampingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClamping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMasking(const Nan::FunctionCallbackInfo<v8::Value>& info);

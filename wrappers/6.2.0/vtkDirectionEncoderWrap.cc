@@ -49,9 +49,6 @@ void VtkDirectionEncoderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfEncodedDirections", GetNumberOfEncodedDirections);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfEncodedDirections", GetNumberOfEncodedDirections);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -101,20 +98,6 @@ void VtkDirectionEncoderWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkDirectionEncoderWrap::GetNumberOfEncodedDirections(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkDirectionEncoderWrap *wrapper = ObjectWrap::Unwrap<VtkDirectionEncoderWrap>(info.Holder());
-	vtkDirectionEncoder *native = (vtkDirectionEncoder *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNumberOfEncodedDirections();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDirectionEncoderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

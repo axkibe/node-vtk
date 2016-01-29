@@ -14,9 +14,7 @@
 #include "vtkImageActorWrap.h"
 #include "vtkScalarsToColorsWrap.h"
 #include "vtkImageMapToColorsWrap.h"
-#include "vtkResliceCursorWrap.h"
 #include "vtkTextPropertyWrap.h"
-#include "vtkResliceCursorPolyDataAlgorithmWrap.h"
 #include "vtkPlaneSourceWrap.h"
 
 using namespace v8;
@@ -74,9 +72,6 @@ void VtkResliceCursorRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetColorMap", GetColorMap);
 	Nan::SetPrototypeMethod(tpl, "getColorMap", GetColorMap);
 
-	Nan::SetPrototypeMethod(tpl, "GetCursorAlgorithm", GetCursorAlgorithm);
-	Nan::SetPrototypeMethod(tpl, "getCursorAlgorithm", GetCursorAlgorithm);
-
 	Nan::SetPrototypeMethod(tpl, "GetDisplayText", GetDisplayText);
 	Nan::SetPrototypeMethod(tpl, "getDisplayText", GetDisplayText);
 
@@ -101,9 +96,6 @@ void VtkResliceCursorRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetResliceAxes", GetResliceAxes);
 	Nan::SetPrototypeMethod(tpl, "getResliceAxes", GetResliceAxes);
 
-	Nan::SetPrototypeMethod(tpl, "GetResliceCursor", GetResliceCursor);
-	Nan::SetPrototypeMethod(tpl, "getResliceCursor", GetResliceCursor);
-
 	Nan::SetPrototypeMethod(tpl, "GetRestrictPlaneToVolume", GetRestrictPlaneToVolume);
 	Nan::SetPrototypeMethod(tpl, "getRestrictPlaneToVolume", GetRestrictPlaneToVolume);
 
@@ -115,6 +107,9 @@ void VtkResliceCursorRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetThicknessLabelFormat", GetThicknessLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "getThicknessLabelFormat", GetThicknessLabelFormat);
+
+	Nan::SetPrototypeMethod(tpl, "GetThicknessLabelPosition", GetThicknessLabelPosition);
+	Nan::SetPrototypeMethod(tpl, "getThicknessLabelPosition", GetThicknessLabelPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetThicknessLabelText", GetThicknessLabelText);
 	Nan::SetPrototypeMethod(tpl, "getThicknessLabelText", GetThicknessLabelText);
@@ -133,6 +128,12 @@ void VtkResliceCursorRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetWindow", GetWindow);
 	Nan::SetPrototypeMethod(tpl, "getWindow", GetWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GetWindowLevel", GetWindowLevel);
+	Nan::SetPrototypeMethod(tpl, "getWindowLevel", GetWindowLevel);
+
+	Nan::SetPrototypeMethod(tpl, "GetWorldThicknessLabelPosition", GetWorldThicknessLabelPosition);
+	Nan::SetPrototypeMethod(tpl, "getWorldThicknessLabelPosition", GetWorldThicknessLabelPosition);
 
 	Nan::SetPrototypeMethod(tpl, "InitializeReslicePlane", InitializeReslicePlane);
 	Nan::SetPrototypeMethod(tpl, "initializeReslicePlane", InitializeReslicePlane);
@@ -323,29 +324,6 @@ void VtkResliceCursorRepresentationWrap::GetColorMap(const Nan::FunctionCallback
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkResliceCursorRepresentationWrap::GetCursorAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
-	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
-	vtkResliceCursorPolyDataAlgorithm * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetCursorAlgorithm();
-		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkResliceCursorPolyDataAlgorithmWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkResliceCursorPolyDataAlgorithmWrap *w = new VtkResliceCursorPolyDataAlgorithmWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
 void VtkResliceCursorRepresentationWrap::GetDisplayText(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
@@ -503,29 +481,6 @@ void VtkResliceCursorRepresentationWrap::GetResliceAxes(const Nan::FunctionCallb
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkResliceCursorRepresentationWrap::GetResliceCursor(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
-	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
-	vtkResliceCursor * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetResliceCursor();
-		VtkResliceCursorWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkResliceCursorWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkResliceCursorWrap *w = new VtkResliceCursorWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
 void VtkResliceCursorRepresentationWrap::GetRestrictPlaneToVolume(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
@@ -589,6 +544,43 @@ void VtkResliceCursorRepresentationWrap::GetThicknessLabelFormat(const Nan::Func
 	}
 	r = native->GetThicknessLabelFormat();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkResliceCursorRepresentationWrap::GetThicknessLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
+	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetThicknessLabelPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkResliceCursorRepresentationWrap::GetThicknessLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -673,6 +665,80 @@ void VtkResliceCursorRepresentationWrap::GetWindow(const Nan::FunctionCallbackIn
 	}
 	r = native->GetWindow();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkResliceCursorRepresentationWrap::GetWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
+	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetWindowLevel(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkResliceCursorRepresentationWrap::GetWorldThicknessLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info.Holder());
+	vtkResliceCursorRepresentation *native = (vtkResliceCursorRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetWorldThicknessLabelPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkResliceCursorRepresentationWrap::InitializeReslicePlane(const Nan::FunctionCallbackInfo<v8::Value>& info)

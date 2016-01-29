@@ -29,6 +29,8 @@ class VtkInteractorObserverWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ComputeDisplayToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeWorldToDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EnabledOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EnabledOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);

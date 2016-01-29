@@ -29,15 +29,18 @@ class VtkPolyhedronWrap : public VtkCell3DWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetParametricCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsInside(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsPrimaryCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RequiresExplicitFaceRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);

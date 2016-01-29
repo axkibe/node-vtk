@@ -33,8 +33,10 @@ class VtkSplineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void ClosedOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClosedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClosed(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandlePositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -77,6 +79,8 @@ class VtkSplineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetProjectionNormalToZAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

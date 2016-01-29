@@ -64,6 +64,9 @@ void VtkExtentRCBPartitionerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfGhostLayers", GetNumberOfGhostLayers);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfGhostLayers", GetNumberOfGhostLayers);
 
+	Nan::SetPrototypeMethod(tpl, "GetPartitionExtent", GetPartitionExtent);
+	Nan::SetPrototypeMethod(tpl, "getPartitionExtent", GetPartitionExtent);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -197,6 +200,47 @@ void VtkExtentRCBPartitionerWrap::GetNumberOfGhostLayers(const Nan::FunctionCall
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkExtentRCBPartitionerWrap::GetPartitionExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtentRCBPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkExtentRCBPartitionerWrap>(info.Holder());
+	vtkExtentRCBPartitioner *native = (vtkExtentRCBPartitioner *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetPartitionExtent(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkExtentRCBPartitionerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtentRCBPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkExtentRCBPartitionerWrap>(info.Holder());
@@ -308,7 +352,37 @@ void VtkExtentRCBPartitionerWrap::SetGlobalExtent(const Nan::FunctionCallbackInf
 {
 	VtkExtentRCBPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkExtentRCBPartitionerWrap>(info.Holder());
 	vtkExtentRCBPartitioner *native = (vtkExtentRCBPartitioner *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGlobalExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

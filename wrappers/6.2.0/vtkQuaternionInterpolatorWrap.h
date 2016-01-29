@@ -29,6 +29,7 @@ class VtkQuaternionInterpolatorWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddQuaternion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationTypeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -37,6 +38,7 @@ class VtkQuaternionInterpolatorWrap : public VtkObjectWrap
 		static void GetMinimumT(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfQuaternions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InterpolateQuaternion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveQuaternion(const Nan::FunctionCallbackInfo<v8::Value>& info);

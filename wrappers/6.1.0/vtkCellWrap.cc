@@ -51,29 +51,20 @@ void VtkCellWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
-	Nan::SetPrototypeMethod(tpl, "GetCellDimension", GetCellDimension);
-	Nan::SetPrototypeMethod(tpl, "getCellDimension", GetCellDimension);
-
-	Nan::SetPrototypeMethod(tpl, "GetCellType", GetCellType);
-	Nan::SetPrototypeMethod(tpl, "getCellType", GetCellType);
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetEdge", GetEdge);
-	Nan::SetPrototypeMethod(tpl, "getEdge", GetEdge);
-
-	Nan::SetPrototypeMethod(tpl, "GetFace", GetFace);
-	Nan::SetPrototypeMethod(tpl, "getFace", GetFace);
-
 	Nan::SetPrototypeMethod(tpl, "GetLength2", GetLength2);
 	Nan::SetPrototypeMethod(tpl, "getLength2", GetLength2);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfEdges", GetNumberOfEdges);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfEdges", GetNumberOfEdges);
+	Nan::SetPrototypeMethod(tpl, "GetParametricCenter", GetParametricCenter);
+	Nan::SetPrototypeMethod(tpl, "getParametricCenter", GetParametricCenter);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfFaces", GetNumberOfFaces);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfFaces", GetNumberOfFaces);
+	Nan::SetPrototypeMethod(tpl, "GetParametricDistance", GetParametricDistance);
+	Nan::SetPrototypeMethod(tpl, "getParametricDistance", GetParametricDistance);
 
 	Nan::SetPrototypeMethod(tpl, "GetPointIds", GetPointIds);
 	Nan::SetPrototypeMethod(tpl, "getPointIds", GetPointIds);
@@ -83,6 +74,12 @@ void VtkCellWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolateDerivs", InterpolateDerivs);
+	Nan::SetPrototypeMethod(tpl, "interpolateDerivs", InterpolateDerivs);
+
+	Nan::SetPrototypeMethod(tpl, "InterpolateFunctions", InterpolateFunctions);
+	Nan::SetPrototypeMethod(tpl, "interpolateFunctions", InterpolateFunctions);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -110,9 +107,6 @@ void VtkCellWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
-
-	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
-	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
 	ptpl.Reset( tpl );
 }
@@ -162,32 +156,41 @@ void VtkCellWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkCellWrap::GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkCellWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
 	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
 	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetCellDimension();
-	info.GetReturnValue().Set(Nan::New(r));
-}
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
 
-void VtkCellWrap::GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
-	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
 		return;
 	}
-	r = native->GetCellType();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCellWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -204,66 +207,6 @@ void VtkCellWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
-void VtkCellWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
-	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		vtkCell * r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->GetEdge(
-			info[0]->Int32Value()
-		);
-			VtkCellWrap::InitPtpl();
-		v8::Local<v8::Value> argv[1] =
-			{ Nan::New(vtkNodeJsNoWrap) };
-		v8::Local<v8::Function> cons =
-			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
-		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-		VtkCellWrap *w = new VtkCellWrap();
-		w->native = r;
-		w->Wrap(wo);
-		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkCellWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
-	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		vtkCell * r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->GetFace(
-			info[0]->Int32Value()
-		);
-			VtkCellWrap::InitPtpl();
-		v8::Local<v8::Value> argv[1] =
-			{ Nan::New(vtkNodeJsNoWrap) };
-		v8::Local<v8::Function> cons =
-			Nan::New<v8::FunctionTemplate>(VtkCellWrap::ptpl)->GetFunction();
-		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-		VtkCellWrap *w = new VtkCellWrap();
-		w->native = r;
-		w->Wrap(wo);
-		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkCellWrap::GetLength2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
@@ -278,32 +221,82 @@ void VtkCellWrap::GetLength2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkCellWrap::GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkCellWrap::GetParametricCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
 	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
 	{
-		Nan::ThrowError("Too many parameters.");
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetParametricCenter(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->GetNumberOfEdges();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkCellWrap::GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkCellWrap::GetParametricDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
 	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
 	{
-		Nan::ThrowError("Too many parameters.");
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetParametricDistance(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
-	r = native->GetNumberOfFaces();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCellWrap::GetPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -362,6 +355,122 @@ void VtkCellWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	native->Initialize();
+}
+
+void VtkCellWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
+	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateDerivs(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCellWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
+	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateFunctions(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCellWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -526,37 +635,6 @@ void VtkCellWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			(vtkCell *) a0->native.GetPointer()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkCellWrap::Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCellWrap *wrapper = ObjectWrap::Unwrap<VtkCellWrap>(info.Holder());
-	vtkCell *native = (vtkCell *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
-			{
-				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
-				int r;
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				r = native->Triangulate(
-					info[0]->Int32Value(),
-					(vtkIdList *) a1->native.GetPointer(),
-					(vtkPoints *) a2->native.GetPointer()
-				);
-				info.GetReturnValue().Set(Nan::New(r));
-				return;
-			}
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

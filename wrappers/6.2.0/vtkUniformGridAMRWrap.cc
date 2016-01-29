@@ -57,6 +57,9 @@ void VtkUniformGridAMRWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +74,12 @@ void VtkUniformGridAMRWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetGridDescription", GetGridDescription);
 	Nan::SetPrototypeMethod(tpl, "getGridDescription", GetGridDescription);
+
+	Nan::SetPrototypeMethod(tpl, "GetMax", GetMax);
+	Nan::SetPrototypeMethod(tpl, "getMax", GetMax);
+
+	Nan::SetPrototypeMethod(tpl, "GetMin", GetMin);
+	Nan::SetPrototypeMethod(tpl, "getMin", GetMin);
 
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
@@ -159,6 +168,43 @@ void VtkUniformGridAMRWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->DeepCopy(
 			(vtkDataObject *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUniformGridAMRWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
+	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
 		);
 		return;
 	}
@@ -291,6 +337,80 @@ void VtkUniformGridAMRWrap::GetGridDescription(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetGridDescription();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUniformGridAMRWrap::GetMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
+	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetMax(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUniformGridAMRWrap::GetMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridAMRWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRWrap>(info.Holder());
+	vtkUniformGridAMR *native = (vtkUniformGridAMR *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetMin(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkUniformGridAMRWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)

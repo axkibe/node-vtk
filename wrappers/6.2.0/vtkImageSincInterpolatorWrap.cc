@@ -53,8 +53,14 @@ void VtkImageSincInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AntialiasingOn", AntialiasingOn);
 	Nan::SetPrototypeMethod(tpl, "antialiasingOn", AntialiasingOn);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeSupportSize", ComputeSupportSize);
+	Nan::SetPrototypeMethod(tpl, "computeSupportSize", ComputeSupportSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetAntialiasing", GetAntialiasing);
 	Nan::SetPrototypeMethod(tpl, "getAntialiasing", GetAntialiasing);
+
+	Nan::SetPrototypeMethod(tpl, "GetBlurFactors", GetBlurFactors);
+	Nan::SetPrototypeMethod(tpl, "getBlurFactors", GetBlurFactors);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -208,6 +214,64 @@ void VtkImageSincInterpolatorWrap::AntialiasingOn(const Nan::FunctionCallbackInf
 	native->AntialiasingOn();
 }
 
+void VtkImageSincInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
+	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[16];
+		if( a0->Length() < 16 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 16; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ComputeSupportSize(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImageSincInterpolatorWrap::GetAntialiasing(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
@@ -220,6 +284,43 @@ void VtkImageSincInterpolatorWrap::GetAntialiasing(const Nan::FunctionCallbackIn
 	}
 	r = native->GetAntialiasing();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageSincInterpolatorWrap::GetBlurFactors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
+	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBlurFactors(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageSincInterpolatorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -457,7 +558,37 @@ void VtkImageSincInterpolatorWrap::SetBlurFactors(const Nan::FunctionCallbackInf
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBlurFactors(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

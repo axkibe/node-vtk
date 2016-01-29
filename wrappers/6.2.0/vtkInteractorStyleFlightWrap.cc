@@ -86,6 +86,9 @@ void VtkInteractorStyleFlightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "JumpTo", JumpTo);
+	Nan::SetPrototypeMethod(tpl, "jumpTo", JumpTo);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -139,6 +142,9 @@ void VtkInteractorStyleFlightWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetAngleStepSize", SetAngleStepSize);
 	Nan::SetPrototypeMethod(tpl, "setAngleStepSize", SetAngleStepSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetDefaultUpVector", SetDefaultUpVector);
+	Nan::SetPrototypeMethod(tpl, "setDefaultUpVector", SetDefaultUpVector);
 
 	Nan::SetPrototypeMethod(tpl, "SetDisableMotion", SetDisableMotion);
 	Nan::SetPrototypeMethod(tpl, "setDisableMotion", SetDisableMotion);
@@ -363,6 +369,64 @@ void VtkInteractorStyleFlightWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorStyleFlightWrap::JumpTo(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
+	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->JumpTo(
+				b0,
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -621,6 +685,43 @@ void VtkInteractorStyleFlightWrap::SetAngleStepSize(const Nan::FunctionCallbackI
 		}
 		native->SetAngleStepSize(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorStyleFlightWrap::SetDefaultUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
+	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDefaultUpVector(
+			b0
 		);
 		return;
 	}

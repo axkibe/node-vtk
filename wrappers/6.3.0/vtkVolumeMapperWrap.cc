@@ -11,8 +11,6 @@
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkDataSetWrap.h"
-#include "vtkRendererWrap.h"
-#include "vtkVolumeWrap.h"
 #include "vtkWindowWrap.h"
 
 using namespace v8;
@@ -93,9 +91,6 @@ void VtkVolumeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -394,31 +389,6 @@ void VtkVolumeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackIn
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
-	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Render(
-				(vtkRenderer *) a0->native.GetPointer(),
-				(vtkVolume *) a1->native.GetPointer()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
@@ -619,7 +589,37 @@ void VtkVolumeMapperWrap::SetCroppingRegionPlanes(const Nan::FunctionCallbackInf
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCroppingRegionPlanes(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

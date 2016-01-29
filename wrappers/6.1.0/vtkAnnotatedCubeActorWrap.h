@@ -31,6 +31,7 @@ class VtkAnnotatedCubeActorWrap : public VtkProp3DWrap
 
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAssembly(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCubeProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCubeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);

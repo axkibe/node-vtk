@@ -82,9 +82,6 @@ void VtkInformationKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
-	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
-	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
-
 	ptpl.Reset( tpl );
 }
 
@@ -339,31 +336,6 @@ void VtkInformationKeyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkInformationKeyWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
-	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->ShallowCopy(
-				(vtkInformation *) a0->native.GetPointer(),
-				(vtkInformation *) a1->native.GetPointer()
-			);
-			return;
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

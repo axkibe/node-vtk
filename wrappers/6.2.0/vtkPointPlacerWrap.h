@@ -29,6 +29,7 @@ class VtkPointPlacerWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPixelTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPixelToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,9 @@ class VtkPointPlacerWrap : public VtkObjectWrap
 		static void SetPixelTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWorldTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateInternalState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void UpdateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

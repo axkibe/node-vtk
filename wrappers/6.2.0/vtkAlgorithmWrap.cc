@@ -147,6 +147,9 @@ void VtkAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTotalNumberOfInputConnections", GetTotalNumberOfInputConnections);
 	Nan::SetPrototypeMethod(tpl, "getTotalNumberOfInputConnections", GetTotalNumberOfInputConnections);
 
+	Nan::SetPrototypeMethod(tpl, "GetUpdateExtent", GetUpdateExtent);
+	Nan::SetPrototypeMethod(tpl, "getUpdateExtent", GetUpdateExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetUpdateGhostLevel", GetUpdateGhostLevel);
 	Nan::SetPrototypeMethod(tpl, "getUpdateGhostLevel", GetUpdateGhostLevel);
 
@@ -1080,6 +1083,76 @@ void VtkAlgorithmWrap::GetTotalNumberOfInputConnections(const Nan::FunctionCallb
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAlgorithmWrap::GetUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
+	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetUpdateExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetUpdateExtent(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAlgorithmWrap::GetUpdateGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
@@ -1899,9 +1972,69 @@ void VtkAlgorithmWrap::SetUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info.Holder());
 	vtkAlgorithm *native = (vtkAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
 	{
-		if(info.Length() > 1 && info[1]->IsInt32())
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUpdateExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetUpdateExtent(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{

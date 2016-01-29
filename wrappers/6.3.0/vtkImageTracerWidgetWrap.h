@@ -37,6 +37,7 @@ class VtkImageTracerWidgetWrap : public Vtk3DWidgetWrap
 		static void GetGlyphSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleLeftMouseButton(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleMiddleMouseButton(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleRightMouseButton(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageSnapType(const Nan::FunctionCallbackInfo<v8::Value>& info);

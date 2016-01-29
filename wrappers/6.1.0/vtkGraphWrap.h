@@ -37,6 +37,7 @@ class VtkGraphWrap : public VtkDataObjectWrap
 		static void DeepCopyEdgePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Dump(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttributesAsFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);

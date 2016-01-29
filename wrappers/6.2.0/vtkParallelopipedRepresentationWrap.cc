@@ -111,6 +111,9 @@ void VtkParallelopipedRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "PlaceWidget", PlaceWidget);
+	Nan::SetPrototypeMethod(tpl, "placeWidget", PlaceWidget);
+
 	Nan::SetPrototypeMethod(tpl, "PositionHandles", PositionHandles);
 	Nan::SetPrototypeMethod(tpl, "positionHandles", PositionHandles);
 
@@ -568,6 +571,43 @@ void VtkParallelopipedRepresentationWrap::NewInstance(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkParallelopipedRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelopipedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info.Holder());
+	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkParallelopipedRepresentationWrap::PositionHandles(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkParallelopipedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info.Holder());
@@ -820,7 +860,37 @@ void VtkParallelopipedRepresentationWrap::Translate(const Nan::FunctionCallbackI
 {
 	VtkParallelopipedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info.Holder());
 	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Translate(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

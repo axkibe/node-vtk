@@ -76,14 +76,8 @@ void VtkAMRBaseReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfBlocks", GetNumberOfBlocks);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfBlocks", GetNumberOfBlocks);
-
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfCellArrays", GetNumberOfCellArrays);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfCellArrays", GetNumberOfCellArrays);
-
-	Nan::SetPrototypeMethod(tpl, "GetNumberOfLevels", GetNumberOfLevels);
-	Nan::SetPrototypeMethod(tpl, "getNumberOfLevels", GetNumberOfLevels);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPointArrays", GetNumberOfPointArrays);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPointArrays", GetNumberOfPointArrays);
@@ -120,9 +114,6 @@ void VtkAMRBaseReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetEnableCaching", SetEnableCaching);
 	Nan::SetPrototypeMethod(tpl, "setEnableCaching", SetEnableCaching);
-
-	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
-	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
 	Nan::SetPrototypeMethod(tpl, "SetMaxLevel", SetMaxLevel);
 	Nan::SetPrototypeMethod(tpl, "setMaxLevel", SetMaxLevel);
@@ -313,20 +304,6 @@ void VtkAMRBaseReaderWrap::GetFileName(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
-void VtkAMRBaseReaderWrap::GetNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
-	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNumberOfBlocks();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkAMRBaseReaderWrap::GetNumberOfCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
@@ -338,20 +315,6 @@ void VtkAMRBaseReaderWrap::GetNumberOfCellArrays(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetNumberOfCellArrays();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkAMRBaseReaderWrap::GetNumberOfLevels(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
-	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetNumberOfLevels();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -594,26 +557,6 @@ void VtkAMRBaseReaderWrap::SetEnableCaching(const Nan::FunctionCallbackInfo<v8::
 		}
 		native->SetEnableCaching(
 			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAMRBaseReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
-	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
-	{
-		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetFileName(
-			*a0
 		);
 		return;
 	}

@@ -65,6 +65,9 @@ void VtkImagePlaneWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DisplayTextOn", DisplayTextOn);
 	Nan::SetPrototypeMethod(tpl, "displayTextOn", DisplayTextOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,6 +76,9 @@ void VtkImagePlaneWidgetWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetCurrentImageValue", GetCurrentImageValue);
 	Nan::SetPrototypeMethod(tpl, "getCurrentImageValue", GetCurrentImageValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetCursorData", GetCursorData);
+	Nan::SetPrototypeMethod(tpl, "getCursorData", GetCursorData);
 
 	Nan::SetPrototypeMethod(tpl, "GetCursorDataStatus", GetCursorDataStatus);
 	Nan::SetPrototypeMethod(tpl, "getCursorDataStatus", GetCursorDataStatus);
@@ -149,11 +155,23 @@ void VtkImagePlaneWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMiddleButtonAutoModifierMinValue", GetMiddleButtonAutoModifierMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMiddleButtonAutoModifierMinValue", GetMiddleButtonAutoModifierMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetPlaneOrientation", GetPlaneOrientation);
 	Nan::SetPrototypeMethod(tpl, "getPlaneOrientation", GetPlaneOrientation);
 
 	Nan::SetPrototypeMethod(tpl, "GetPlaneProperty", GetPlaneProperty);
 	Nan::SetPrototypeMethod(tpl, "getPlaneProperty", GetPlaneProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint1", GetPoint1);
+	Nan::SetPrototypeMethod(tpl, "getPoint1", GetPoint1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2", GetPoint2);
+	Nan::SetPrototypeMethod(tpl, "getPoint2", GetPoint2);
 
 	Nan::SetPrototypeMethod(tpl, "GetPolyData", GetPolyData);
 	Nan::SetPrototypeMethod(tpl, "getPolyData", GetPolyData);
@@ -224,8 +242,17 @@ void VtkImagePlaneWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetUserControlledLookupTable", GetUserControlledLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getUserControlledLookupTable", GetUserControlledLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetVector1", GetVector1);
+	Nan::SetPrototypeMethod(tpl, "getVector1", GetVector1);
+
+	Nan::SetPrototypeMethod(tpl, "GetVector2", GetVector2);
+	Nan::SetPrototypeMethod(tpl, "getVector2", GetVector2);
+
 	Nan::SetPrototypeMethod(tpl, "GetWindow", GetWindow);
 	Nan::SetPrototypeMethod(tpl, "getWindow", GetWindow);
+
+	Nan::SetPrototypeMethod(tpl, "GetWindowLevel", GetWindowLevel);
+	Nan::SetPrototypeMethod(tpl, "getWindowLevel", GetWindowLevel);
 
 	Nan::SetPrototypeMethod(tpl, "InteractionOff", InteractionOff);
 	Nan::SetPrototypeMethod(tpl, "interactionOff", InteractionOff);
@@ -451,6 +478,43 @@ void VtkImagePlaneWidgetWrap::DisplayTextOn(const Nan::FunctionCallbackInfo<v8::
 	native->DisplayTextOn();
 }
 
+void VtkImagePlaneWidgetWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCenter(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImagePlaneWidgetWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
@@ -500,6 +564,45 @@ void VtkImagePlaneWidgetWrap::GetCurrentImageValue(const Nan::FunctionCallbackIn
 	}
 	r = native->GetCurrentImageValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImagePlaneWidgetWrap::GetCursorData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetCursorData(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImagePlaneWidgetWrap::GetCursorDataStatus(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -879,6 +982,80 @@ void VtkImagePlaneWidgetWrap::GetMiddleButtonAutoModifierMinValue(const Nan::Fun
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImagePlaneWidgetWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetNormal(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImagePlaneWidgetWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetOrigin(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImagePlaneWidgetWrap::GetPlaneOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
@@ -914,6 +1091,80 @@ void VtkImagePlaneWidgetWrap::GetPlaneProperty(const Nan::FunctionCallbackInfo<v
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImagePlaneWidgetWrap::GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint1(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImagePlaneWidgetWrap::GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint2(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImagePlaneWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1316,6 +1567,80 @@ void VtkImagePlaneWidgetWrap::GetUserControlledLookupTable(const Nan::FunctionCa
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImagePlaneWidgetWrap::GetVector1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetVector1(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImagePlaneWidgetWrap::GetVector2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetVector2(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImagePlaneWidgetWrap::GetWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
@@ -1328,6 +1653,43 @@ void VtkImagePlaneWidgetWrap::GetWindow(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetWindow();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImagePlaneWidgetWrap::GetWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
+	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetWindowLevel(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImagePlaneWidgetWrap::InteractionOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1403,7 +1765,37 @@ void VtkImagePlaneWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1773,7 +2165,37 @@ void VtkImagePlaneWidgetWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrigin(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1895,7 +2317,37 @@ void VtkImagePlaneWidgetWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1922,7 +2374,37 @@ void VtkImagePlaneWidgetWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImagePlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info.Holder());
 	vtkImagePlaneWidget *native = (vtkImagePlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

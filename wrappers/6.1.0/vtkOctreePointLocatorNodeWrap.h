@@ -45,6 +45,10 @@ class VtkOctreePointLocatorNodeWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaxBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaxDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMinBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMinDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

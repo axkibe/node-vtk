@@ -55,6 +55,7 @@ class VtkAbstractPolygonalHandleRepresentation3DWrap : public VtkHandleRepresent
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHandle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHandleVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -64,9 +65,12 @@ class VtkAbstractPolygonalHandleRepresentation3DWrap : public VtkHandleRepresent
 		static void SetSelectedProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSmoothMotion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniformScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SmoothMotionOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SmoothMotionOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

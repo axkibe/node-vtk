@@ -29,7 +29,10 @@ class VtkPolygonWrap : public VtkCellWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeArea(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeCentroid(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +41,7 @@ class VtkPolygonWrap : public VtkCellWrap
 		static void GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseMVCInterpolation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IntersectConvex2DCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsPrimaryCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

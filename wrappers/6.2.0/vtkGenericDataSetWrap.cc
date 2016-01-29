@@ -10,8 +10,6 @@
 #include "vtkGenericDataSetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCellTypesWrap.h"
-#include "vtkGenericCellIteratorWrap.h"
-#include "vtkGenericPointIteratorWrap.h"
 #include "vtkGenericAttributeCollectionWrap.h"
 #include "vtkDataSetAttributesWrap.h"
 #include "vtkGenericCellTessellatorWrap.h"
@@ -55,17 +53,17 @@ void VtkGenericDataSetWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkGenericDataSetWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "ComputeBounds", ComputeBounds);
-	Nan::SetPrototypeMethod(tpl, "computeBounds", ComputeBounds);
-
 	Nan::SetPrototypeMethod(tpl, "GetAttributes", GetAttributes);
 	Nan::SetPrototypeMethod(tpl, "getAttributes", GetAttributes);
 
-	Nan::SetPrototypeMethod(tpl, "GetCellDimension", GetCellDimension);
-	Nan::SetPrototypeMethod(tpl, "getCellDimension", GetCellDimension);
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetCellTypes", GetCellTypes);
 	Nan::SetPrototypeMethod(tpl, "getCellTypes", GetCellTypes);
+
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -85,17 +83,8 @@ void VtkGenericDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
-	Nan::SetPrototypeMethod(tpl, "NewBoundaryIterator", NewBoundaryIterator);
-	Nan::SetPrototypeMethod(tpl, "newBoundaryIterator", NewBoundaryIterator);
-
-	Nan::SetPrototypeMethod(tpl, "NewCellIterator", NewCellIterator);
-	Nan::SetPrototypeMethod(tpl, "newCellIterator", NewCellIterator);
-
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "NewPointIterator", NewPointIterator);
-	Nan::SetPrototypeMethod(tpl, "newPointIterator", NewPointIterator);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -129,18 +118,6 @@ void VtkGenericDataSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkGenericDataSetWrap::ComputeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info.Holder());
-	vtkGenericDataSet *native = (vtkGenericDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->ComputeBounds();
 }
 
 void VtkGenericDataSetWrap::GetAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -189,18 +166,41 @@ void VtkGenericDataSetWrap::GetAttributes(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkGenericDataSetWrap::GetCellDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
+void VtkGenericDataSetWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info.Holder());
 	vtkGenericDataSet *native = (vtkGenericDataSet *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
 	{
-		Nan::ThrowError("Too many parameters.");
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
 		return;
 	}
-	r = native->GetCellDimension();
-	info.GetReturnValue().Set(Nan::New(r));
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGenericDataSetWrap::GetCellTypes(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -217,6 +217,43 @@ void VtkGenericDataSetWrap::GetCellTypes(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->GetCellTypes(
 			(vtkCellTypes *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericDataSetWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info.Holder());
+	vtkGenericDataSet *native = (vtkGenericDataSet *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCenter(
+			b0
 		);
 		return;
 	}
@@ -365,70 +402,6 @@ void VtkGenericDataSetWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkGenericDataSetWrap::NewBoundaryIterator(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info.Holder());
-	vtkGenericDataSet *native = (vtkGenericDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			vtkGenericCellIterator * r;
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			r = native->NewBoundaryIterator(
-				info[0]->Int32Value(),
-				info[1]->Int32Value()
-			);
-				VtkGenericCellIteratorWrap::InitPtpl();
-			v8::Local<v8::Value> argv[1] =
-				{ Nan::New(vtkNodeJsNoWrap) };
-			v8::Local<v8::Function> cons =
-				Nan::New<v8::FunctionTemplate>(VtkGenericCellIteratorWrap::ptpl)->GetFunction();
-			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-			VtkGenericCellIteratorWrap *w = new VtkGenericCellIteratorWrap();
-			w->native = r;
-			w->Wrap(wo);
-			info.GetReturnValue().Set(wo);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkGenericDataSetWrap::NewCellIterator(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info.Holder());
-	vtkGenericDataSet *native = (vtkGenericDataSet *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		vtkGenericCellIterator * r;
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		r = native->NewCellIterator(
-			info[0]->Int32Value()
-		);
-			VtkGenericCellIteratorWrap::InitPtpl();
-		v8::Local<v8::Value> argv[1] =
-			{ Nan::New(vtkNodeJsNoWrap) };
-		v8::Local<v8::Function> cons =
-			Nan::New<v8::FunctionTemplate>(VtkGenericCellIteratorWrap::ptpl)->GetFunction();
-		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-		VtkGenericCellIteratorWrap *w = new VtkGenericCellIteratorWrap();
-		w->native = r;
-		w->Wrap(wo);
-		info.GetReturnValue().Set(wo);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkGenericDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info.Holder());
@@ -447,29 +420,6 @@ void VtkGenericDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		Nan::New<v8::FunctionTemplate>(VtkGenericDataSetWrap::ptpl)->GetFunction();
 	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
 	VtkGenericDataSetWrap *w = new VtkGenericDataSetWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkGenericDataSetWrap::NewPointIterator(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info.Holder());
-	vtkGenericDataSet *native = (vtkGenericDataSet *)wrapper->native.GetPointer();
-	vtkGenericPointIterator * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->NewPointIterator();
-		VtkGenericPointIteratorWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkGenericPointIteratorWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkGenericPointIteratorWrap *w = new VtkGenericPointIteratorWrap();
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);

@@ -59,6 +59,7 @@ class VtkAlgorithmWrap : public VtkObjectWrap
 		static void GetProgressText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReleaseDataFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTotalNumberOfInputConnections(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdateGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdateNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdatePiece(const Nan::FunctionCallbackInfo<v8::Value>& info);

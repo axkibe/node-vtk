@@ -9,6 +9,7 @@
 #include "vtkAbstractMapperWrap.h"
 #include "vtkAbstractMapper3DWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkMatrix4x4Wrap.h"
 
 using namespace v8;
 
@@ -47,8 +48,17 @@ void VtkAbstractMapper3DWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAbstractMapper3DWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetClippingPlaneInDataCoords", GetClippingPlaneInDataCoords);
+	Nan::SetPrototypeMethod(tpl, "getClippingPlaneInDataCoords", GetClippingPlaneInDataCoords);
 
 	Nan::SetPrototypeMethod(tpl, "GetLength", GetLength);
 	Nan::SetPrototypeMethod(tpl, "getLength", GetLength);
@@ -99,6 +109,80 @@ void VtkAbstractMapper3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkAbstractMapper3DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
+	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractMapper3DWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
+	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCenter(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAbstractMapper3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
@@ -111,6 +195,52 @@ void VtkAbstractMapper3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAbstractMapper3DWrap::GetClippingPlaneInDataCoords(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapper3DWrap>(info.Holder());
+	vtkAbstractMapper3D *native = (vtkAbstractMapper3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[4];
+				if( a2->Length() < 4 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 4; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetClippingPlaneInDataCoords(
+					(vtkMatrix4x4 *) a0->native.GetPointer(),
+					info[1]->Int32Value(),
+					b2
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAbstractMapper3DWrap::GetLength(const Nan::FunctionCallbackInfo<v8::Value>& info)

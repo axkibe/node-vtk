@@ -58,6 +58,9 @@ void VtkCaptionRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetActors2D", GetActors2D);
 	Nan::SetPrototypeMethod(tpl, "getActors2D", GetActors2D);
 
+	Nan::SetPrototypeMethod(tpl, "GetAnchorPosition", GetAnchorPosition);
+	Nan::SetPrototypeMethod(tpl, "getAnchorPosition", GetAnchorPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetAnchorRepresentation", GetAnchorRepresentation);
 	Nan::SetPrototypeMethod(tpl, "getAnchorRepresentation", GetAnchorRepresentation);
 
@@ -75,6 +78,9 @@ void VtkCaptionRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetFontFactorMinValue", GetFontFactorMinValue);
 	Nan::SetPrototypeMethod(tpl, "getFontFactorMinValue", GetFontFactorMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
@@ -99,6 +105,9 @@ void VtkCaptionRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAnchorPosition", SetAnchorPosition);
+	Nan::SetPrototypeMethod(tpl, "setAnchorPosition", SetAnchorPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetAnchorRepresentation", SetAnchorRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setAnchorRepresentation", SetAnchorRepresentation);
@@ -164,6 +173,43 @@ void VtkCaptionRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<v
 		}
 		native->GetActors2D(
 			(vtkPropCollection *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCaptionRepresentationWrap::GetAnchorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCaptionRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionRepresentationWrap>(info.Holder());
+	vtkCaptionRepresentation *native = (vtkCaptionRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetAnchorPosition(
+			b0
 		);
 		return;
 	}
@@ -270,6 +316,43 @@ void VtkCaptionRepresentationWrap::GetFontFactorMinValue(const Nan::FunctionCall
 	}
 	r = native->GetFontFactorMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCaptionRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCaptionRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionRepresentationWrap>(info.Holder());
+	vtkCaptionRepresentation *native = (vtkCaptionRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetSize(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCaptionRepresentationWrap::HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -443,6 +526,43 @@ void VtkCaptionRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCaptionRepresentationWrap::SetAnchorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCaptionRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionRepresentationWrap>(info.Holder());
+	vtkCaptionRepresentation *native = (vtkCaptionRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAnchorPosition(
+			b0
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

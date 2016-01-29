@@ -12,6 +12,7 @@
 #include "vtkAxisActorWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkViewportWrap.h"
+#include "vtkCameraWrap.h"
 
 using namespace v8;
 
@@ -55,6 +56,9 @@ void VtkProp3DAxisFollowerWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "AutoCenterOn", AutoCenterOn);
 	Nan::SetPrototypeMethod(tpl, "autoCenterOn", AutoCenterOn);
+
+	Nan::SetPrototypeMethod(tpl, "AutoScale", AutoScale);
+	Nan::SetPrototypeMethod(tpl, "autoScale", AutoScale);
 
 	Nan::SetPrototypeMethod(tpl, "ComputeMatrix", ComputeMatrix);
 	Nan::SetPrototypeMethod(tpl, "computeMatrix", ComputeMatrix);
@@ -194,6 +198,59 @@ void VtkProp3DAxisFollowerWrap::AutoCenterOn(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	native->AutoCenterOn();
+}
+
+void VtkProp3DAxisFollowerWrap::AutoScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProp3DAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DAxisFollowerWrap>(info.Holder());
+	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkCameraWrap *a1 = ObjectWrap::Unwrap<VtkCameraWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					double r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->AutoScale(
+						(vtkViewport *) a0->native.GetPointer(),
+						(vtkCamera *) a1->native.GetPointer(),
+						info[2]->NumberValue(),
+						b3
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkProp3DAxisFollowerWrap::ComputeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)

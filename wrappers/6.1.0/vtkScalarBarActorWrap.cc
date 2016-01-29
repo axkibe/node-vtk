@@ -188,6 +188,9 @@ void VtkScalarBarActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOrientationMinValue", GetOrientationMinValue);
 	Nan::SetPrototypeMethod(tpl, "getOrientationMinValue", GetOrientationMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetScalarBarRect", GetScalarBarRect);
+	Nan::SetPrototypeMethod(tpl, "getScalarBarRect", GetScalarBarRect);
+
 	Nan::SetPrototypeMethod(tpl, "GetTextPad", GetTextPad);
 	Nan::SetPrototypeMethod(tpl, "getTextPad", GetTextPad);
 
@@ -1027,6 +1030,48 @@ void VtkScalarBarActorWrap::GetOrientationMinValue(const Nan::FunctionCallbackIn
 	}
 	r = native->GetOrientationMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkScalarBarActorWrap::GetScalarBarRect(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
+	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetScalarBarRect(
+				b0,
+				(vtkViewport *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkScalarBarActorWrap::GetTextPad(const Nan::FunctionCallbackInfo<v8::Value>& info)

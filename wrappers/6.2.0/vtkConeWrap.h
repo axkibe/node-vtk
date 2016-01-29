@@ -30,6 +30,7 @@ class VtkConeWrap : public VtkImplicitFunctionWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

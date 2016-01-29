@@ -70,9 +70,6 @@ void VtkObjectFactoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassOverrideWithName", GetClassOverrideWithName);
 	Nan::SetPrototypeMethod(tpl, "getClassOverrideWithName", GetClassOverrideWithName);
 
-	Nan::SetPrototypeMethod(tpl, "GetDescription", GetDescription);
-	Nan::SetPrototypeMethod(tpl, "getDescription", GetDescription);
-
 	Nan::SetPrototypeMethod(tpl, "GetEnableFlag", GetEnableFlag);
 	Nan::SetPrototypeMethod(tpl, "getEnableFlag", GetEnableFlag);
 
@@ -90,9 +87,6 @@ void VtkObjectFactoryWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetRegisteredFactories", GetRegisteredFactories);
 	Nan::SetPrototypeMethod(tpl, "getRegisteredFactories", GetRegisteredFactories);
-
-	Nan::SetPrototypeMethod(tpl, "GetVTKSourceVersion", GetVTKSourceVersion);
-	Nan::SetPrototypeMethod(tpl, "getVTKSourceVersion", GetVTKSourceVersion);
 
 	Nan::SetPrototypeMethod(tpl, "HasOverride", HasOverride);
 	Nan::SetPrototypeMethod(tpl, "hasOverride", HasOverride);
@@ -307,20 +301,6 @@ void VtkObjectFactoryWrap::GetClassOverrideWithName(const Nan::FunctionCallbackI
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkObjectFactoryWrap::GetDescription(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
-	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	char const * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetDescription();
-	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
 void VtkObjectFactoryWrap::GetEnableFlag(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
@@ -457,20 +437,6 @@ void VtkObjectFactoryWrap::GetRegisteredFactories(const Nan::FunctionCallbackInf
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkObjectFactoryWrap::GetVTKSourceVersion(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
-	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	char const * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetVTKSourceVersion();
-	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
 void VtkObjectFactoryWrap::HasOverride(const Nan::FunctionCallbackInfo<v8::Value>& info)

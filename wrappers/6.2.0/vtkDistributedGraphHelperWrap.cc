@@ -47,9 +47,6 @@ void VtkDistributedGraphHelperWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkDistributedGraphHelperWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "Clone", Clone);
-	Nan::SetPrototypeMethod(tpl, "clone", Clone);
-
 	Nan::SetPrototypeMethod(tpl, "DISTRIBUTEDEDGEIDS", DISTRIBUTEDEDGEIDS);
 
 	Nan::SetPrototypeMethod(tpl, "DISTRIBUTEDVERTEXIDS", DISTRIBUTEDVERTEXIDS);
@@ -65,9 +62,6 @@ void VtkDistributedGraphHelperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "Synchronize", Synchronize);
-	Nan::SetPrototypeMethod(tpl, "synchronize", Synchronize);
 
 	ptpl.Reset( tpl );
 }
@@ -95,29 +89,6 @@ void VtkDistributedGraphHelperWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkDistributedGraphHelperWrap::Clone(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkDistributedGraphHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDistributedGraphHelperWrap>(info.Holder());
-	vtkDistributedGraphHelper *native = (vtkDistributedGraphHelper *)wrapper->native.GetPointer();
-	vtkDistributedGraphHelper * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->Clone();
-		VtkDistributedGraphHelperWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkDistributedGraphHelperWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkDistributedGraphHelperWrap *w = new VtkDistributedGraphHelperWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
 }
 
 void VtkDistributedGraphHelperWrap::DISTRIBUTEDEDGEIDS(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -254,17 +225,5 @@ void VtkDistributedGraphHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkDistributedGraphHelperWrap::Synchronize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkDistributedGraphHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDistributedGraphHelperWrap>(info.Holder());
-	vtkDistributedGraphHelper *native = (vtkDistributedGraphHelper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Synchronize();
 }
 

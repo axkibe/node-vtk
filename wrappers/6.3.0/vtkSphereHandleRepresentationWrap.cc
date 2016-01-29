@@ -100,6 +100,9 @@ void VtkSphereHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "PlaceWidget", PlaceWidget);
+	Nan::SetPrototypeMethod(tpl, "placeWidget", PlaceWidget);
+
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
@@ -111,6 +114,9 @@ void VtkSphereHandleRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDisplayPosition", SetDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setDisplayPosition", SetDisplayPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetHandleSize", SetHandleSize);
 	Nan::SetPrototypeMethod(tpl, "setHandleSize", SetHandleSize);
@@ -130,14 +136,23 @@ void VtkSphereHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTranslationMode", SetTranslationMode);
 	Nan::SetPrototypeMethod(tpl, "setTranslationMode", SetTranslationMode);
 
+	Nan::SetPrototypeMethod(tpl, "SetWorldPosition", SetWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setWorldPosition", SetWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
+
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
 
 	Nan::SetPrototypeMethod(tpl, "TranslationModeOff", TranslationModeOff);
 	Nan::SetPrototypeMethod(tpl, "translationModeOff", TranslationModeOff);
 
 	Nan::SetPrototypeMethod(tpl, "TranslationModeOn", TranslationModeOn);
 	Nan::SetPrototypeMethod(tpl, "translationModeOn", TranslationModeOn);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -457,6 +472,43 @@ void VtkSphereHandleRepresentationWrap::NewInstance(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkSphereHandleRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
+	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkSphereHandleRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
@@ -547,6 +599,43 @@ void VtkSphereHandleRepresentationWrap::SafeDownCast(const Nan::FunctionCallback
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSphereHandleRepresentationWrap::SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
+	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDisplayPosition(
+			b0
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -668,6 +757,43 @@ void VtkSphereHandleRepresentationWrap::SetTranslationMode(const Nan::FunctionCa
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkSphereHandleRepresentationWrap::SetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
+	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkSphereHandleRepresentationWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
@@ -682,6 +808,43 @@ void VtkSphereHandleRepresentationWrap::ShallowCopy(const Nan::FunctionCallbackI
 		}
 		native->ShallowCopy(
 			(vtkProp *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSphereHandleRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
+	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
 		);
 		return;
 	}
@@ -710,5 +873,42 @@ void VtkSphereHandleRepresentationWrap::TranslationModeOn(const Nan::FunctionCal
 		return;
 	}
 	native->TranslationModeOn();
+}
+
+void VtkSphereHandleRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphereHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereHandleRepresentationWrap>(info.Holder());
+	vtkSphereHandleRepresentation *native = (vtkSphereHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

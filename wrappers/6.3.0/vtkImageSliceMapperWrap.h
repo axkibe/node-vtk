@@ -31,6 +31,7 @@ class VtkImageSliceMapperWrap : public VtkImageMapper3DWrap
 
 		static void CroppingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CroppingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCropping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,7 @@ class VtkImageSliceMapperWrap : public VtkImageMapper3DWrap
 		static void GetSliceNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceNumberMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceNumberMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSlicePlaneInDataCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);

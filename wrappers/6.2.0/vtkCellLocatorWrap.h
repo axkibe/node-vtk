@@ -32,6 +32,7 @@ class VtkCellLocatorWrap : public VtkAbstractCellLocatorWrap
 		static void BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildLocatorIfNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BuildLocatorInternal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FindCellsAlongLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ForceBuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,7 @@ class VtkCellLocatorWrap : public VtkAbstractCellLocatorWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfBuckets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfCellsPerBucket(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IntersectWithLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

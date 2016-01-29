@@ -53,6 +53,9 @@ void VtkCoincidentPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCoincidentPointIds", GetCoincidentPointIds);
+	Nan::SetPrototypeMethod(tpl, "getCoincidentPointIds", GetCoincidentPointIds);
+
 	Nan::SetPrototypeMethod(tpl, "GetNextCoincidentPointIds", GetNextCoincidentPointIds);
 	Nan::SetPrototypeMethod(tpl, "getNextCoincidentPointIds", GetNextCoincidentPointIds);
 
@@ -124,6 +127,54 @@ void VtkCoincidentPointsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkCoincidentPointsWrap::GetCoincidentPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCoincidentPointsWrap *wrapper = ObjectWrap::Unwrap<VtkCoincidentPointsWrap>(info.Holder());
+	vtkCoincidentPoints *native = (vtkCoincidentPoints *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		vtkIdList * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetCoincidentPointIds(
+			b0
+		);
+			VtkIdListWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkIdListWrap *w = new VtkIdListWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCoincidentPointsWrap::GetNextCoincidentPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info)

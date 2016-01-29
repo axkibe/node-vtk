@@ -51,11 +51,11 @@ void VtkWidgetRepresentationWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkWidgetRepresentationWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
-	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
-
 	Nan::SetPrototypeMethod(tpl, "ComputeInteractionState", ComputeInteractionState);
 	Nan::SetPrototypeMethod(tpl, "computeInteractionState", ComputeInteractionState);
+
+	Nan::SetPrototypeMethod(tpl, "EndWidgetInteraction", EndWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "endWidgetInteraction", EndWidgetInteraction);
 
 	Nan::SetPrototypeMethod(tpl, "GetActors", GetActors);
 	Nan::SetPrototypeMethod(tpl, "getActors", GetActors);
@@ -165,6 +165,12 @@ void VtkWidgetRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
+
 	ptpl.Reset( tpl );
 }
 
@@ -193,18 +199,6 @@ void VtkWidgetRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(info.This());
 }
 
-void VtkWidgetRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
-	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->BuildRepresentation();
-}
-
 void VtkWidgetRepresentationWrap::ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
@@ -230,6 +224,43 @@ void VtkWidgetRepresentationWrap::ComputeInteractionState(const Nan::FunctionCal
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkWidgetRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
+	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->EndWidgetInteraction(
+			b0
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -860,6 +891,80 @@ void VtkWidgetRepresentationWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8
 		}
 		native->ShallowCopy(
 			(vtkProp *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkWidgetRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
+	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkWidgetRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
+	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

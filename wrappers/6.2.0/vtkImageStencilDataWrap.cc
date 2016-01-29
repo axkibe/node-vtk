@@ -55,6 +55,9 @@ void VtkImageStencilDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AllocateExtents", AllocateExtents);
 	Nan::SetPrototypeMethod(tpl, "allocateExtents", AllocateExtents);
 
+	Nan::SetPrototypeMethod(tpl, "Clip", Clip);
+	Nan::SetPrototypeMethod(tpl, "clip", Clip);
+
 	Nan::SetPrototypeMethod(tpl, "CopyInformationFromPipeline", CopyInformationFromPipeline);
 	Nan::SetPrototypeMethod(tpl, "copyInformationFromPipeline", CopyInformationFromPipeline);
 
@@ -180,6 +183,45 @@ void VtkImageStencilDataWrap::AllocateExtents(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	native->AllocateExtents();
+}
+
+void VtkImageStencilDataWrap::Clip(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
+	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Clip(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageStencilDataWrap::CopyInformationFromPipeline(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -585,7 +627,37 @@ void VtkImageStencilDataWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -624,7 +696,37 @@ void VtkImageStencilDataWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrigin(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -651,7 +753,37 @@ void VtkImageStencilDataWrap::SetSpacing(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageStencilDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info.Holder());
 	vtkImageStencilData *native = (vtkImageStencilData *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSpacing(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

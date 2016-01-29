@@ -88,6 +88,9 @@ void VtkParallelCoordinatesRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPositionNearXCoordinate", GetPositionNearXCoordinate);
 	Nan::SetPrototypeMethod(tpl, "getPositionNearXCoordinate", GetPositionNearXCoordinate);
 
+	Nan::SetPrototypeMethod(tpl, "GetRangeAtPosition", GetRangeAtPosition);
+	Nan::SetPrototypeMethod(tpl, "getRangeAtPosition", GetRangeAtPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetUseCurves", GetUseCurves);
 	Nan::SetPrototypeMethod(tpl, "getUseCurves", GetUseCurves);
 
@@ -141,6 +144,9 @@ void VtkParallelCoordinatesRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetPlotTitle", SetPlotTitle);
 	Nan::SetPrototypeMethod(tpl, "setPlotTitle", SetPlotTitle);
+
+	Nan::SetPrototypeMethod(tpl, "SetRangeAtPosition", SetRangeAtPosition);
+	Nan::SetPrototypeMethod(tpl, "setRangeAtPosition", SetRangeAtPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetUseCurves", SetUseCurves);
 	Nan::SetPrototypeMethod(tpl, "setUseCurves", SetUseCurves);
@@ -383,6 +389,49 @@ void VtkParallelCoordinatesRepresentationWrap::GetPositionNearXCoordinate(const 
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkParallelCoordinatesRepresentationWrap::GetRangeAtPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
+	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetRangeAtPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkParallelCoordinatesRepresentationWrap::GetUseCurves(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
@@ -557,7 +606,37 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisColor(const Nan::FunctionC
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAxisColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -584,7 +663,37 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisLabelColor(const Nan::Func
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAxisLabelColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -688,7 +797,37 @@ void VtkParallelCoordinatesRepresentationWrap::SetLineColor(const Nan::FunctionC
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLineColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -765,6 +904,49 @@ void VtkParallelCoordinatesRepresentationWrap::SetPlotTitle(const Nan::FunctionC
 			*a0
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkParallelCoordinatesRepresentationWrap::SetRangeAtPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
+	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetRangeAtPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

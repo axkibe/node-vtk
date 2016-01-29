@@ -135,6 +135,9 @@ void VtkGaussianSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SamplePoint", SamplePoint);
+	Nan::SetPrototypeMethod(tpl, "samplePoint", SamplePoint);
+
 	Nan::SetPrototypeMethod(tpl, "ScalarWarpingOff", ScalarWarpingOff);
 	Nan::SetPrototypeMethod(tpl, "scalarWarpingOff", ScalarWarpingOff);
 
@@ -649,6 +652,45 @@ void VtkGaussianSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkGaussianSplatterWrap::SamplePoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
+	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SamplePoint(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGaussianSplatterWrap::ScalarWarpingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
@@ -808,7 +850,37 @@ void VtkGaussianSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetModelBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -904,7 +976,37 @@ void VtkGaussianSplatterWrap::SetSampleDimensions(const Nan::FunctionCallbackInf
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSampleDimensions(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

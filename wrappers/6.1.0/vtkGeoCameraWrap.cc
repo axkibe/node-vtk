@@ -81,6 +81,9 @@ void VtkGeoCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetVTKCamera", GetVTKCamera);
 	Nan::SetPrototypeMethod(tpl, "getVTKCamera", GetVTKCamera);
 
+	Nan::SetPrototypeMethod(tpl, "InitializeNodeAnalysis", InitializeNodeAnalysis);
+	Nan::SetPrototypeMethod(tpl, "initializeNodeAnalysis", InitializeNodeAnalysis);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -321,6 +324,43 @@ void VtkGeoCameraWrap::GetVTKCamera(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGeoCameraWrap::InitializeNodeAnalysis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
+	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->InitializeNodeAnalysis(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGeoCameraWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

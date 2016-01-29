@@ -67,11 +67,17 @@ void VtkSplineRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ComputeInteractionState", ComputeInteractionState);
 	Nan::SetPrototypeMethod(tpl, "computeInteractionState", ComputeInteractionState);
 
+	Nan::SetPrototypeMethod(tpl, "EndWidgetInteraction", EndWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "endWidgetInteraction", EndWidgetInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetClosed", GetClosed);
 	Nan::SetPrototypeMethod(tpl, "getClosed", GetClosed);
+
+	Nan::SetPrototypeMethod(tpl, "GetHandlePosition", GetHandlePosition);
+	Nan::SetPrototypeMethod(tpl, "getHandlePosition", GetHandlePosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetHandlePositions", GetHandlePositions);
 	Nan::SetPrototypeMethod(tpl, "getHandlePositions", GetHandlePositions);
@@ -199,6 +205,12 @@ void VtkSplineRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
+
 	ptpl.Reset( tpl );
 }
 
@@ -293,6 +305,43 @@ void VtkSplineRepresentationWrap::ComputeInteractionState(const Nan::FunctionCal
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkSplineRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSplineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSplineRepresentationWrap>(info.Holder());
+	vtkSplineRepresentation *native = (vtkSplineRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->EndWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkSplineRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSplineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSplineRepresentationWrap>(info.Holder());
@@ -319,6 +368,47 @@ void VtkSplineRepresentationWrap::GetClosed(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetClosed();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSplineRepresentationWrap::GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSplineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSplineRepresentationWrap>(info.Holder());
+	vtkSplineRepresentation *native = (vtkSplineRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetHandlePosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkSplineRepresentationWrap::GetHandlePositions(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -848,9 +938,40 @@ void VtkSplineRepresentationWrap::SetHandlePosition(const Nan::FunctionCallbackI
 {
 	VtkSplineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSplineRepresentationWrap>(info.Holder());
 	vtkSplineRepresentation *native = (vtkSplineRepresentation *)wrapper->native.GetPointer();
+	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsNumber())
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetHandlePosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
@@ -1098,6 +1219,80 @@ void VtkSplineRepresentationWrap::SetResolution(const Nan::FunctionCallbackInfo<
 		}
 		native->SetResolution(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSplineRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSplineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSplineRepresentationWrap>(info.Holder());
+	vtkSplineRepresentation *native = (vtkSplineRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSplineRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSplineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSplineRepresentationWrap>(info.Holder());
+	vtkSplineRepresentation *native = (vtkSplineRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

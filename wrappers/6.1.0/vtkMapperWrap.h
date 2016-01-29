@@ -35,6 +35,7 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void GetArrayComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -68,7 +69,6 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void MapScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScalarVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScalarVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

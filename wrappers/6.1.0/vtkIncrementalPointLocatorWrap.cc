@@ -50,9 +50,6 @@ void VtkIncrementalPointLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
-	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -102,18 +99,6 @@ void VtkIncrementalPointLocatorWrap::GetClassName(const Nan::FunctionCallbackInf
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkIncrementalPointLocatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkIncrementalPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info.Holder());
-	vtkIncrementalPointLocator *native = (vtkIncrementalPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Initialize();
 }
 
 void VtkIncrementalPointLocatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -31,12 +31,17 @@ class VtkLinearTransformWrap : public VtkHomogeneousTransformWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinearInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPointsNormalsVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

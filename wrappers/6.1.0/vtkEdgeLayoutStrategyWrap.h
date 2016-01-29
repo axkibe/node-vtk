@@ -33,7 +33,6 @@ class VtkEdgeLayoutStrategyWrap : public VtkObjectWrap
 		static void GetEdgeWeightArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeWeightArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);

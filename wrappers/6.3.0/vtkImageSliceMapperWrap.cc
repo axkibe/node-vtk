@@ -12,6 +12,7 @@
 #include "vtkRendererWrap.h"
 #include "vtkImageSliceWrap.h"
 #include "vtkWindowWrap.h"
+#include "vtkMatrix4x4Wrap.h"
 
 using namespace v8;
 
@@ -56,6 +57,9 @@ void VtkImageSliceMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CroppingOn", CroppingOn);
 	Nan::SetPrototypeMethod(tpl, "croppingOn", CroppingOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -79,6 +83,9 @@ void VtkImageSliceMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSliceNumberMinValue", GetSliceNumberMinValue);
 	Nan::SetPrototypeMethod(tpl, "getSliceNumberMinValue", GetSliceNumberMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetSlicePlaneInDataCoords", GetSlicePlaneInDataCoords);
+	Nan::SetPrototypeMethod(tpl, "getSlicePlaneInDataCoords", GetSlicePlaneInDataCoords);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -170,6 +177,43 @@ void VtkImageSliceMapperWrap::CroppingOn(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	native->CroppingOn();
+}
+
+void VtkImageSliceMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
+	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageSliceMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -282,6 +326,48 @@ void VtkImageSliceMapperWrap::GetSliceNumberMinValue(const Nan::FunctionCallback
 	}
 	r = native->GetSliceNumberMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageSliceMapperWrap::GetSlicePlaneInDataCoords(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
+	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSlicePlaneInDataCoords(
+				(vtkMatrix4x4 *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageSliceMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -428,7 +514,37 @@ void VtkImageSliceMapperWrap::SetCroppingRegion(const Nan::FunctionCallbackInfo<
 {
 	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCroppingRegion(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

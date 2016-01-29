@@ -32,6 +32,7 @@ class VtkHomogeneousTransformWrap : public VtkAbstractTransformWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHomogeneousInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InternalTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

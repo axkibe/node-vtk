@@ -75,6 +75,7 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void GetLabelOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRebuildAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRenderedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTickLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTickLocationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

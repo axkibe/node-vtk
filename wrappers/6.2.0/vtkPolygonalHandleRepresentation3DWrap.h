@@ -34,6 +34,7 @@ class VtkPolygonalHandleRepresentation3DWrap : public VtkAbstractPolygonalHandle
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

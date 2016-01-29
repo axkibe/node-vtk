@@ -47,9 +47,6 @@ void VtkProcessWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkProcessWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "Execute", Execute);
-	Nan::SetPrototypeMethod(tpl, "execute", Execute);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -97,18 +94,6 @@ void VtkProcessWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkProcessWrap::Execute(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkProcessWrap *wrapper = ObjectWrap::Unwrap<VtkProcessWrap>(info.Holder());
-	vtkProcess *native = (vtkProcess *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Execute();
 }
 
 void VtkProcessWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

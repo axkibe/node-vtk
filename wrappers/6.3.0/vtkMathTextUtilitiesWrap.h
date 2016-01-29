@@ -32,14 +32,11 @@ class VtkMathTextUtilitiesWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConstrainedFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsAvailable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void StringToPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -68,6 +68,9 @@ void VtkHyperTreeGridSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetQuadric", GetQuadric);
 	Nan::SetPrototypeMethod(tpl, "getQuadric", GetQuadric);
 
+	Nan::SetPrototypeMethod(tpl, "GetQuadricCoefficients", GetQuadricCoefficients);
+	Nan::SetPrototypeMethod(tpl, "getQuadricCoefficients", GetQuadricCoefficients);
+
 	Nan::SetPrototypeMethod(tpl, "GetTransposedRootIndexing", GetTransposedRootIndexing);
 	Nan::SetPrototypeMethod(tpl, "getTransposedRootIndexing", GetTransposedRootIndexing);
 
@@ -115,6 +118,9 @@ void VtkHyperTreeGridSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetQuadric", SetQuadric);
 	Nan::SetPrototypeMethod(tpl, "setQuadric", SetQuadric);
+
+	Nan::SetPrototypeMethod(tpl, "SetQuadricCoefficients", SetQuadricCoefficients);
+	Nan::SetPrototypeMethod(tpl, "setQuadricCoefficients", SetQuadricCoefficients);
 
 	Nan::SetPrototypeMethod(tpl, "SetTransposedRootIndexing", SetTransposedRootIndexing);
 	Nan::SetPrototypeMethod(tpl, "setTransposedRootIndexing", SetTransposedRootIndexing);
@@ -275,6 +281,43 @@ void VtkHyperTreeGridSourceWrap::GetQuadric(const Nan::FunctionCallbackInfo<v8::
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkHyperTreeGridSourceWrap::GetQuadricCoefficients(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
+	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[10];
+		if( a0->Length() < 10 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 10; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetQuadricCoefficients(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkHyperTreeGridSourceWrap::GetTransposedRootIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -439,7 +482,37 @@ void VtkHyperTreeGridSourceWrap::SetGridScale(const Nan::FunctionCallbackInfo<v8
 {
 	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
 	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGridScale(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -550,7 +623,37 @@ void VtkHyperTreeGridSourceWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
 	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrigin(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -587,6 +690,43 @@ void VtkHyperTreeGridSourceWrap::SetQuadric(const Nan::FunctionCallbackInfo<v8::
 		}
 		native->SetQuadric(
 			(vtkQuadric *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHyperTreeGridSourceWrap::SetQuadricCoefficients(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeGridSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridSourceWrap>(info.Holder());
+	vtkHyperTreeGridSource *native = (vtkHyperTreeGridSource *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[10];
+		if( a0->Length() < 10 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 10; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetQuadricCoefficients(
+			b0
 		);
 		return;
 	}

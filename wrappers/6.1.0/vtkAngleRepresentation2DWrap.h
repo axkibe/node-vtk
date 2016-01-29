@@ -32,7 +32,13 @@ class VtkAngleRepresentation2DWrap : public VtkAngleRepresentationWrap
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArc(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenterDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenterWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRay1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRay2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +46,9 @@ class VtkAngleRepresentation2DWrap : public VtkAngleRepresentationWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCenterDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -57,11 +57,11 @@ void VtkAngleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
+	Nan::SetPrototypeMethod(tpl, "CenterWidgetInteraction", CenterWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "centerWidgetInteraction", CenterWidgetInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeInteractionState", ComputeInteractionState);
 	Nan::SetPrototypeMethod(tpl, "computeInteractionState", ComputeInteractionState);
-
-	Nan::SetPrototypeMethod(tpl, "GetAngle", GetAngle);
-	Nan::SetPrototypeMethod(tpl, "getAngle", GetAngle);
 
 	Nan::SetPrototypeMethod(tpl, "GetArcVisibility", GetArcVisibility);
 	Nan::SetPrototypeMethod(tpl, "getArcVisibility", GetArcVisibility);
@@ -138,6 +138,12 @@ void VtkAngleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
+
 	ptpl.Reset( tpl );
 }
 
@@ -202,6 +208,43 @@ void VtkAngleRepresentationWrap::BuildRepresentation(const Nan::FunctionCallback
 	native->BuildRepresentation();
 }
 
+void VtkAngleRepresentationWrap::CenterWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
+	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->CenterWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAngleRepresentationWrap::ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
@@ -229,20 +272,6 @@ void VtkAngleRepresentationWrap::ComputeInteractionState(const Nan::FunctionCall
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAngleRepresentationWrap::GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
-	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	double r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetAngle();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAngleRepresentationWrap::GetArcVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -672,6 +701,80 @@ void VtkAngleRepresentationWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetTolerance(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
+	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAngleRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
+	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

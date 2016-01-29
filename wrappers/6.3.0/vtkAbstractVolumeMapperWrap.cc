@@ -11,8 +11,6 @@
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkDataObjectWrap.h"
-#include "vtkRendererWrap.h"
-#include "vtkVolumeWrap.h"
 #include "vtkWindowWrap.h"
 
 using namespace v8;
@@ -61,6 +59,9 @@ void VtkAbstractVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetArrayName", GetArrayName);
 	Nan::SetPrototypeMethod(tpl, "getArrayName", GetArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -84,9 +85,6 @@ void VtkAbstractVolumeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -180,6 +178,43 @@ void VtkAbstractVolumeMapperWrap::GetArrayName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetArrayName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAbstractVolumeMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info.Holder());
+	vtkAbstractVolumeMapper *native = (vtkAbstractVolumeMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAbstractVolumeMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -331,31 +366,6 @@ void VtkAbstractVolumeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 			(vtkWindow *) a0->native.GetPointer()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info.Holder());
-	vtkAbstractVolumeMapper *native = (vtkAbstractVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Render(
-				(vtkRenderer *) a0->native.GetPointer(),
-				(vtkVolume *) a1->native.GetPointer()
-			);
-			return;
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

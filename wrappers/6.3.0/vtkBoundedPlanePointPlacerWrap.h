@@ -30,6 +30,7 @@ class VtkBoundedPlanePointPlacerWrap : public VtkPointPlacerWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddBoundingPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoundingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetObliquePlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +51,8 @@ class VtkBoundedPlanePointPlacerWrap : public VtkPointPlacerWrap
 		static void SetProjectionNormalToYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectionNormalToZAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void UpdateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

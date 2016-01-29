@@ -43,6 +43,7 @@ class VtkPropertyWrap : public VtkObjectWrap
 		static void GetAmbientMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackfaceCulling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiffuse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiffuseMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiffuseMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

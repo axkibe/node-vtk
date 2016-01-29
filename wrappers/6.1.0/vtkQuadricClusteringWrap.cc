@@ -88,6 +88,9 @@ void VtkQuadricClusteringWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFeaturePointsAngleMinValue", GetFeaturePointsAngleMinValue);
 	Nan::SetPrototypeMethod(tpl, "getFeaturePointsAngleMinValue", GetFeaturePointsAngleMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfDivisions", GetNumberOfDivisions);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfDivisions", GetNumberOfDivisions);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfXDivisions", GetNumberOfXDivisions);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfXDivisions", GetNumberOfXDivisions);
 
@@ -412,6 +415,43 @@ void VtkQuadricClusteringWrap::GetFeaturePointsAngleMinValue(const Nan::Function
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkQuadricClusteringWrap::GetNumberOfDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
+	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetNumberOfDivisions(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkQuadricClusteringWrap::GetNumberOfXDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
@@ -666,7 +706,37 @@ void VtkQuadricClusteringWrap::SetDivisionOrigin(const Nan::FunctionCallbackInfo
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDivisionOrigin(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -693,7 +763,37 @@ void VtkQuadricClusteringWrap::SetDivisionSpacing(const Nan::FunctionCallbackInf
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDivisionSpacing(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -739,7 +839,37 @@ void VtkQuadricClusteringWrap::SetNumberOfDivisions(const Nan::FunctionCallbackI
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfDivisions(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

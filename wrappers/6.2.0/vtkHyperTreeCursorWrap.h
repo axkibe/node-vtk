@@ -29,27 +29,10 @@ class VtkHyperTreeCursorWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void Clone(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Found(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetChildIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetCurrentLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfChildren(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsEqual(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsLeaf(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsRoot(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsTerminalNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void SameTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ToChild(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ToParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ToRoot(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void ToSameNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

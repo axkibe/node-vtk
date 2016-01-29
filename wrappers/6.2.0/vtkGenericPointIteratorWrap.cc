@@ -46,23 +46,14 @@ void VtkGenericPointIteratorWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkGenericPointIteratorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "Begin", Begin);
-	Nan::SetPrototypeMethod(tpl, "begin", Begin);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
-	Nan::SetPrototypeMethod(tpl, "IsAtEnd", IsAtEnd);
-	Nan::SetPrototypeMethod(tpl, "isAtEnd", IsAtEnd);
-
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "Next", Next);
-	Nan::SetPrototypeMethod(tpl, "next", Next);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -93,18 +84,6 @@ void VtkGenericPointIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkGenericPointIteratorWrap::Begin(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericPointIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericPointIteratorWrap>(info.Holder());
-	vtkGenericPointIterator *native = (vtkGenericPointIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Begin();
 }
 
 void VtkGenericPointIteratorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -143,20 +122,6 @@ void VtkGenericPointIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkGenericPointIteratorWrap::IsAtEnd(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericPointIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericPointIteratorWrap>(info.Holder());
-	vtkGenericPointIterator *native = (vtkGenericPointIterator *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsAtEnd();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkGenericPointIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericPointIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericPointIteratorWrap>(info.Holder());
@@ -178,18 +143,6 @@ void VtkGenericPointIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkGenericPointIteratorWrap::Next(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGenericPointIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericPointIteratorWrap>(info.Holder());
-	vtkGenericPointIterator *native = (vtkGenericPointIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Next();
 }
 
 void VtkGenericPointIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

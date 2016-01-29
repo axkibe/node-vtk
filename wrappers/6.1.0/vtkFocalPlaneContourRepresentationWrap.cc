@@ -50,6 +50,18 @@ void VtkFocalPlaneContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetIntermediatePointDisplayPosition", GetIntermediatePointDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getIntermediatePointDisplayPosition", GetIntermediatePointDisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetIntermediatePointWorldPosition", GetIntermediatePointWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getIntermediatePointWorldPosition", GetIntermediatePointWorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetNthNodeDisplayPosition", GetNthNodeDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getNthNodeDisplayPosition", GetNthNodeDisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetNthNodeWorldPosition", GetNthNodeWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getNthNodeWorldPosition", GetNthNodeWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -108,6 +120,186 @@ void VtkFocalPlaneContourRepresentationWrap::GetClassName(const Nan::FunctionCal
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkFocalPlaneContourRepresentationWrap::GetIntermediatePointDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlaneContourRepresentationWrap>(info.Holder());
+	vtkFocalPlaneContourRepresentation *native = (vtkFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->GetIntermediatePointDisplayPosition(
+					info[0]->Int32Value(),
+					info[1]->Int32Value(),
+					b2
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFocalPlaneContourRepresentationWrap::GetIntermediatePointWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlaneContourRepresentationWrap>(info.Holder());
+	vtkFocalPlaneContourRepresentation *native = (vtkFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->GetIntermediatePointWorldPosition(
+					info[0]->Int32Value(),
+					info[1]->Int32Value(),
+					b2
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFocalPlaneContourRepresentationWrap::GetNthNodeDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlaneContourRepresentationWrap>(info.Holder());
+	vtkFocalPlaneContourRepresentation *native = (vtkFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNthNodeDisplayPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFocalPlaneContourRepresentationWrap::GetNthNodeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlaneContourRepresentationWrap>(info.Holder());
+	vtkFocalPlaneContourRepresentation *native = (vtkFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetNthNodeWorldPosition(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkFocalPlaneContourRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

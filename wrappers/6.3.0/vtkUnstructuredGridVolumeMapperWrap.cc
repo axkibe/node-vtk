@@ -11,8 +11,6 @@
 #include "vtkObjectWrap.h"
 #include "vtkUnstructuredGridBaseWrap.h"
 #include "vtkDataSetWrap.h"
-#include "vtkRendererWrap.h"
-#include "vtkVolumeWrap.h"
 #include "vtkWindowWrap.h"
 
 using namespace v8;
@@ -69,9 +67,6 @@ void VtkUnstructuredGridVolumeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -228,31 +223,6 @@ void VtkUnstructuredGridVolumeMapperWrap::ReleaseGraphicsResources(const Nan::Fu
 			(vtkWindow *) a0->native.GetPointer()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkUnstructuredGridVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkUnstructuredGridVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeMapperWrap>(info.Holder());
-	vtkUnstructuredGridVolumeMapper *native = (vtkUnstructuredGridVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Render(
-				(vtkRenderer *) a0->native.GetPointer(),
-				(vtkVolume *) a1->native.GetPointer()
-			);
-			return;
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

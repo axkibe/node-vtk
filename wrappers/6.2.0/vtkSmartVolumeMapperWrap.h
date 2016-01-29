@@ -29,6 +29,7 @@ class VtkSmartVolumeMapperWrap : public VtkVolumeMapperWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CreateCanonicalView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractiveUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractiveUpdateRateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

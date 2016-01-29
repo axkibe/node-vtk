@@ -53,6 +53,9 @@ void VtkImageBSplineCoefficientsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BypassOn", BypassOn);
 	Nan::SetPrototypeMethod(tpl, "bypassOn", BypassOn);
 
+	Nan::SetPrototypeMethod(tpl, "CheckBounds", CheckBounds);
+	Nan::SetPrototypeMethod(tpl, "checkBounds", CheckBounds);
+
 	Nan::SetPrototypeMethod(tpl, "Evaluate", Evaluate);
 	Nan::SetPrototypeMethod(tpl, "evaluate", Evaluate);
 
@@ -131,6 +134,9 @@ void VtkImageBSplineCoefficientsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplineDegree", SetSplineDegree);
 	Nan::SetPrototypeMethod(tpl, "setSplineDegree", SetSplineDegree);
 
+	Nan::SetPrototypeMethod(tpl, "SplitExtent", SplitExtent);
+	Nan::SetPrototypeMethod(tpl, "splitExtent", SplitExtent);
+
 	ptpl.Reset( tpl );
 }
 
@@ -184,11 +190,82 @@ void VtkImageBSplineCoefficientsWrap::BypassOn(const Nan::FunctionCallbackInfo<v
 	native->BypassOn();
 }
 
+void VtkImageBSplineCoefficientsWrap::CheckBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
+	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CheckBounds(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImageBSplineCoefficientsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Evaluate(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -603,6 +680,74 @@ void VtkImageBSplineCoefficientsWrap::SetSplineDegree(const Nan::FunctionCallbac
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageBSplineCoefficientsWrap::SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
+	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->SplitExtent(
+						b0,
+						b1,
+						info[2]->Int32Value(),
+						info[3]->Int32Value()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

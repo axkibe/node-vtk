@@ -66,6 +66,12 @@ void VtkBSPIntersectionsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfRegions", GetNumberOfRegions);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfRegions", GetNumberOfRegions);
 
+	Nan::SetPrototypeMethod(tpl, "GetRegionBounds", GetRegionBounds);
+	Nan::SetPrototypeMethod(tpl, "getRegionBounds", GetRegionBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetRegionDataBounds", GetRegionDataBounds);
+	Nan::SetPrototypeMethod(tpl, "getRegionDataBounds", GetRegionDataBounds);
+
 	Nan::SetPrototypeMethod(tpl, "IntersectsBox", IntersectsBox);
 	Nan::SetPrototypeMethod(tpl, "intersectsBox", IntersectsBox);
 
@@ -206,6 +212,92 @@ void VtkBSPIntersectionsWrap::GetNumberOfRegions(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetNumberOfRegions();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkBSPIntersectionsWrap::GetRegionBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBSPIntersectionsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPIntersectionsWrap>(info.Holder());
+	vtkBSPIntersections *native = (vtkBSPIntersections *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetRegionBounds(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBSPIntersectionsWrap::GetRegionDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBSPIntersectionsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPIntersectionsWrap>(info.Holder());
+	vtkBSPIntersections *native = (vtkBSPIntersections *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetRegionDataBounds(
+				info[0]->Int32Value(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkBSPIntersectionsWrap::IntersectsBox(const Nan::FunctionCallbackInfo<v8::Value>& info)

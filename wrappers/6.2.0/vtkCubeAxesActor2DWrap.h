@@ -31,6 +31,7 @@ class VtkCubeAxesActor2DWrap : public VtkActor2DWrap
 
 		static void GetAxisLabelTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisTitleTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCornerOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,6 +49,7 @@ class VtkCubeAxesActor2DWrap : public VtkActor2DWrap
 		static void GetNumberOfLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLabelsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfLabelsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRanges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowActualBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowActualBoundsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -48,9 +48,6 @@ void VtkCompositeInterpolatedVelocityFieldWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkCompositeInterpolatedVelocityFieldWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "AddDataSet", AddDataSet);
-	Nan::SetPrototypeMethod(tpl, "addDataSet", AddDataSet);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -95,26 +92,6 @@ void VtkCompositeInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackI
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkCompositeInterpolatedVelocityFieldWrap::AddDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCompositeInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeInterpolatedVelocityFieldWrap>(info.Holder());
-	vtkCompositeInterpolatedVelocityField *native = (vtkCompositeInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->AddDataSet(
-			(vtkDataSet *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCompositeInterpolatedVelocityFieldWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

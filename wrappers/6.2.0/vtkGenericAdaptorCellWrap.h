@@ -31,28 +31,12 @@ class VtkGenericAdaptorCellWrap : public VtkObjectWrap
 
 		static void Clip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Contour(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void CountNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetAttributeOrder(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetBoundaryIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetGeometryOrder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHighestOrderAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLength2(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfBoundaries(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfDOFNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetNumberOfVerticesOnFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetPointIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsAttributeLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsGeometryLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsInDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsOnBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsPrimary(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void NewCellIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Tessellate(const Nan::FunctionCallbackInfo<v8::Value>& info);

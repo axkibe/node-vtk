@@ -49,6 +49,12 @@ void VtkInteractorObserverWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkInteractorObserverWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeDisplayToWorld", ComputeDisplayToWorld);
+	Nan::SetPrototypeMethod(tpl, "computeDisplayToWorld", ComputeDisplayToWorld);
+
+	Nan::SetPrototypeMethod(tpl, "ComputeWorldToDisplay", ComputeWorldToDisplay);
+	Nan::SetPrototypeMethod(tpl, "computeWorldToDisplay", ComputeWorldToDisplay);
+
 	Nan::SetPrototypeMethod(tpl, "EnabledOff", EnabledOff);
 	Nan::SetPrototypeMethod(tpl, "enabledOff", EnabledOff);
 
@@ -162,6 +168,114 @@ void VtkInteractorObserverWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkInteractorObserverWrap::ComputeDisplayToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						double b4[4];
+						if( a4->Length() < 4 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 4; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->ComputeDisplayToWorld(
+							(vtkRenderer *) a0->native.GetPointer(),
+							info[1]->NumberValue(),
+							info[2]->NumberValue(),
+							info[3]->NumberValue(),
+							b4
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorObserverWrap::ComputeWorldToDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->ComputeWorldToDisplay(
+							(vtkRenderer *) a0->native.GetPointer(),
+							info[1]->NumberValue(),
+							info[2]->NumberValue(),
+							info[3]->NumberValue(),
+							b4
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkInteractorObserverWrap::EnabledOff(const Nan::FunctionCallbackInfo<v8::Value>& info)

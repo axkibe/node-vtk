@@ -29,7 +29,6 @@ class VtkGenericMovieWriterWrap : public VtkImageAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void End(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -37,8 +36,6 @@ class VtkGenericMovieWriterWrap : public VtkImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Start(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

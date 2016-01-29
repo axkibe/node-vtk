@@ -38,7 +38,9 @@ class VtkFunctionParserWrap : public VtkObjectWrap
 		static void GetScalarResult(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVariableValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVectorResult(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVectorVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVectorVariableValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InvalidateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsScalarResult(const Nan::FunctionCallbackInfo<v8::Value>& info);

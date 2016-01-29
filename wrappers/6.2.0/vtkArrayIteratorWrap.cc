@@ -8,7 +8,6 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkArrayIteratorWrap.h"
-#include "vtkAbstractArrayWrap.h"
 
 using namespace v8;
 
@@ -49,12 +48,6 @@ void VtkArrayIteratorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
-
-	Nan::SetPrototypeMethod(tpl, "GetDataType", GetDataType);
-	Nan::SetPrototypeMethod(tpl, "getDataType", GetDataType);
-
-	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
-	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -105,40 +98,6 @@ void VtkArrayIteratorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkArrayIteratorWrap::GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkArrayIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayIteratorWrap>(info.Holder());
-	vtkArrayIterator *native = (vtkArrayIterator *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetDataType();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkArrayIteratorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkArrayIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayIteratorWrap>(info.Holder());
-	vtkArrayIterator *native = (vtkArrayIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->Initialize(
-			(vtkAbstractArray *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkArrayIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

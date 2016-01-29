@@ -29,25 +29,11 @@ class VtkPainterDeviceAdapterWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void BeginPrimitive(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Compatible(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void DisableAttributeArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void EnableAttributeArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void EndPrimitive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void IsAttributesSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void MakeBlending(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void MakeLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void MakeMultisampling(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void MakeVertexEmphasis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void QueryBlending(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void QueryLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void QueryMultisampling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAttributePointer(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Stencil(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

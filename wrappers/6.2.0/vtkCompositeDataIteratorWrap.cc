@@ -9,8 +9,6 @@
 #include "vtkObjectWrap.h"
 #include "vtkCompositeDataIteratorWrap.h"
 #include "vtkCompositeDataSetWrap.h"
-#include "vtkDataObjectWrap.h"
-#include "vtkInformationWrap.h"
 
 using namespace v8;
 
@@ -52,12 +50,6 @@ void VtkCompositeDataIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetCurrentDataObject", GetCurrentDataObject);
-	Nan::SetPrototypeMethod(tpl, "getCurrentDataObject", GetCurrentDataObject);
-
-	Nan::SetPrototypeMethod(tpl, "GetCurrentMetaData", GetCurrentMetaData);
-	Nan::SetPrototypeMethod(tpl, "getCurrentMetaData", GetCurrentMetaData);
-
 	Nan::SetPrototypeMethod(tpl, "GetDataSet", GetDataSet);
 	Nan::SetPrototypeMethod(tpl, "getDataSet", GetDataSet);
 
@@ -67,15 +59,6 @@ void VtkCompositeDataIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSkipEmptyNodes", GetSkipEmptyNodes);
 	Nan::SetPrototypeMethod(tpl, "getSkipEmptyNodes", GetSkipEmptyNodes);
 
-	Nan::SetPrototypeMethod(tpl, "GoToFirstItem", GoToFirstItem);
-	Nan::SetPrototypeMethod(tpl, "goToFirstItem", GoToFirstItem);
-
-	Nan::SetPrototypeMethod(tpl, "GoToNextItem", GoToNextItem);
-	Nan::SetPrototypeMethod(tpl, "goToNextItem", GoToNextItem);
-
-	Nan::SetPrototypeMethod(tpl, "HasCurrentMetaData", HasCurrentMetaData);
-	Nan::SetPrototypeMethod(tpl, "hasCurrentMetaData", HasCurrentMetaData);
-
 	Nan::SetPrototypeMethod(tpl, "InitReverseTraversal", InitReverseTraversal);
 	Nan::SetPrototypeMethod(tpl, "initReverseTraversal", InitReverseTraversal);
 
@@ -84,9 +67,6 @@ void VtkCompositeDataIteratorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "IsDoneWithTraversal", IsDoneWithTraversal);
-	Nan::SetPrototypeMethod(tpl, "isDoneWithTraversal", IsDoneWithTraversal);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -148,52 +128,6 @@ void VtkCompositeDataIteratorWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
-void VtkCompositeDataIteratorWrap::GetCurrentDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
-	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	vtkDataObject * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetCurrentDataObject();
-		VtkDataObjectWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkDataObjectWrap *w = new VtkDataObjectWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
-void VtkCompositeDataIteratorWrap::GetCurrentMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
-	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	vtkInformation * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetCurrentMetaData();
-		VtkInformationWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkInformationWrap *w = new VtkInformationWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
 void VtkCompositeDataIteratorWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
@@ -245,44 +179,6 @@ void VtkCompositeDataIteratorWrap::GetSkipEmptyNodes(const Nan::FunctionCallback
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkCompositeDataIteratorWrap::GoToFirstItem(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
-	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->GoToFirstItem();
-}
-
-void VtkCompositeDataIteratorWrap::GoToNextItem(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
-	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->GoToNextItem();
-}
-
-void VtkCompositeDataIteratorWrap::HasCurrentMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
-	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->HasCurrentMetaData();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkCompositeDataIteratorWrap::InitReverseTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
@@ -327,20 +223,6 @@ void VtkCompositeDataIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkCompositeDataIteratorWrap::IsDoneWithTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
-	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsDoneWithTraversal();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCompositeDataIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

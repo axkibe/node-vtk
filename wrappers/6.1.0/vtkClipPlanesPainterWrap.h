@@ -34,6 +34,7 @@ class VtkClipPlanesPainterWrap : public VtkPainterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void UpdateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

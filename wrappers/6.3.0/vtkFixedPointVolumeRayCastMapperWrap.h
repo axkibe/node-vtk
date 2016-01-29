@@ -32,6 +32,7 @@ class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void AbortRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutoAdjustSampleDistancesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutoAdjustSampleDistancesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CreateCanonicalView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayRenderedImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdjustSampleDistancesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

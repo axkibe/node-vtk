@@ -84,6 +84,12 @@ void VtkCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEyeAngle", GetEyeAngle);
 	Nan::SetPrototypeMethod(tpl, "getEyeAngle", GetEyeAngle);
 
+	Nan::SetPrototypeMethod(tpl, "GetEyePlaneNormal", GetEyePlaneNormal);
+	Nan::SetPrototypeMethod(tpl, "getEyePlaneNormal", GetEyePlaneNormal);
+
+	Nan::SetPrototypeMethod(tpl, "GetEyePosition", GetEyePosition);
+	Nan::SetPrototypeMethod(tpl, "getEyePosition", GetEyePosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetEyeSeparation", GetEyeSeparation);
 	Nan::SetPrototypeMethod(tpl, "getEyeSeparation", GetEyeSeparation);
 
@@ -95,6 +101,9 @@ void VtkCameraWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetFreezeFocalPoint", GetFreezeFocalPoint);
 	Nan::SetPrototypeMethod(tpl, "getFreezeFocalPoint", GetFreezeFocalPoint);
+
+	Nan::SetPrototypeMethod(tpl, "GetFrustumPlanes", GetFrustumPlanes);
+	Nan::SetPrototypeMethod(tpl, "getFrustumPlanes", GetFrustumPlanes);
 
 	Nan::SetPrototypeMethod(tpl, "GetLeftEye", GetLeftEye);
 	Nan::SetPrototypeMethod(tpl, "getLeftEye", GetLeftEye);
@@ -182,6 +191,9 @@ void VtkCameraWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetEyeAngle", SetEyeAngle);
 	Nan::SetPrototypeMethod(tpl, "setEyeAngle", SetEyeAngle);
+
+	Nan::SetPrototypeMethod(tpl, "SetEyePosition", SetEyePosition);
+	Nan::SetPrototypeMethod(tpl, "setEyePosition", SetEyePosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetEyeSeparation", SetEyeSeparation);
 	Nan::SetPrototypeMethod(tpl, "setEyeSeparation", SetEyeSeparation);
@@ -523,6 +535,80 @@ void VtkCameraWrap::GetEyeAngle(const Nan::FunctionCallbackInfo<v8::Value>& info
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkCameraWrap::GetEyePlaneNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
+	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetEyePlaneNormal(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCameraWrap::GetEyePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
+	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetEyePosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCameraWrap::GetEyeSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
@@ -586,6 +672,47 @@ void VtkCameraWrap::GetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetFreezeFocalPoint();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCameraWrap::GetFrustumPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
+	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[24];
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 24; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetFrustumPlanes(
+				info[0]->NumberValue(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCameraWrap::GetLeftEye(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1111,7 +1238,37 @@ void VtkCameraWrap::SetClippingRange(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetClippingRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1168,6 +1325,43 @@ void VtkCameraWrap::SetEyeAngle(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkCameraWrap::SetEyePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
+	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEyePosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCameraWrap::SetEyeSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
@@ -1191,7 +1385,37 @@ void VtkCameraWrap::SetEyeTransformMatrix(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[16];
+		if( a0->Length() < 16 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 16; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEyeTransformMatrix(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1230,7 +1454,37 @@ void VtkCameraWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFocalPoint(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1295,7 +1549,37 @@ void VtkCameraWrap::SetModelTransformMatrix(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[16];
+		if( a0->Length() < 16 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 16; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetModelTransformMatrix(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
 		if(info.Length() != 1)
@@ -1376,7 +1660,37 @@ void VtkCameraWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1422,7 +1736,37 @@ void VtkCameraWrap::SetScreenBottomLeft(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScreenBottomLeft(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1449,7 +1793,37 @@ void VtkCameraWrap::SetScreenBottomRight(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScreenBottomRight(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1476,7 +1850,37 @@ void VtkCameraWrap::SetScreenTopRight(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScreenTopRight(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1619,7 +2023,37 @@ void VtkCameraWrap::SetViewShear(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetViewShear(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -1646,7 +2080,37 @@ void VtkCameraWrap::SetViewUp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
 	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetViewUp(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

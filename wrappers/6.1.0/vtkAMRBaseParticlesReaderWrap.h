@@ -40,7 +40,6 @@ class VtkAMRBaseParticlesReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetParticleArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParticleArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParticleDataArraySelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void GetTotalNumberOfParticles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

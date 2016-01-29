@@ -31,6 +31,10 @@ class VtkImageCroppingRegionsWidgetWrap : public Vtk3DWidgetWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCroppingRegionFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLine1Color(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLine2Color(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLine3Color(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLine4Color(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVolumeMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +46,7 @@ class VtkImageCroppingRegionsWidgetWrap : public Vtk3DWidgetWrap
 		static void OnButtonPress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnButtonRelease(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCroppingRegionFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);

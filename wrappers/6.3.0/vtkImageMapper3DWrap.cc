@@ -9,13 +9,11 @@
 #include "vtkAbstractMapper3DWrap.h"
 #include "vtkImageMapper3DWrap.h"
 #include "vtkObjectWrap.h"
-#include "vtkRendererWrap.h"
-#include "vtkImageSliceWrap.h"
-#include "vtkWindowWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkPlaneWrap.h"
+#include "vtkMatrix4x4Wrap.h"
 
 using namespace v8;
 
@@ -102,6 +100,9 @@ void VtkImageMapper3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSlicePlane", GetSlicePlane);
 	Nan::SetPrototypeMethod(tpl, "getSlicePlane", GetSlicePlane);
 
+	Nan::SetPrototypeMethod(tpl, "GetSlicePlaneInDataCoords", GetSlicePlaneInDataCoords);
+	Nan::SetPrototypeMethod(tpl, "getSlicePlaneInDataCoords", GetSlicePlaneInDataCoords);
+
 	Nan::SetPrototypeMethod(tpl, "GetStreaming", GetStreaming);
 	Nan::SetPrototypeMethod(tpl, "getStreaming", GetStreaming);
 
@@ -110,12 +111,6 @@ void VtkImageMapper3DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
-
-	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
-	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
-
-	Nan::SetPrototypeMethod(tpl, "Render", Render);
-	Nan::SetPrototypeMethod(tpl, "render", Render);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -439,6 +434,48 @@ void VtkImageMapper3DWrap::GetSlicePlane(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkImageMapper3DWrap::GetSlicePlaneInDataCoords(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
+	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSlicePlaneInDataCoords(
+				(vtkMatrix4x4 *) a0->native.GetPointer(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkImageMapper3DWrap::GetStreaming(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
@@ -496,51 +533,6 @@ void VtkImageMapper3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkImageMapper3DWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
-	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->ReleaseGraphicsResources(
-			(vtkWindow *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkImageMapper3DWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
-	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageSliceWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkImageSliceWrap *a1 = ObjectWrap::Unwrap<VtkImageSliceWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->Render(
-				(vtkRenderer *) a0->native.GetPointer(),
-				(vtkImageSlice *) a1->native.GetPointer()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageMapper3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

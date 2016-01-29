@@ -13,8 +13,6 @@
 #include "vtkRendererCollectionWrap.h"
 #include "vtkCollectionWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
-#include "vtkUnsignedCharArrayWrap.h"
-#include "vtkFloatArrayWrap.h"
 #include "vtkPainterDeviceAdapterWrap.h"
 
 using namespace v8;
@@ -84,12 +82,6 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CopyResultFrame", CopyResultFrame);
 	Nan::SetPrototypeMethod(tpl, "copyResultFrame", CopyResultFrame);
 
-	Nan::SetPrototypeMethod(tpl, "Finalize", Finalize);
-	Nan::SetPrototypeMethod(tpl, "finalize", Finalize);
-
-	Nan::SetPrototypeMethod(tpl, "Frame", Frame);
-	Nan::SetPrototypeMethod(tpl, "frame", Frame);
-
 	Nan::SetPrototypeMethod(tpl, "FullScreenOff", FullScreenOff);
 	Nan::SetPrototypeMethod(tpl, "fullScreenOff", FullScreenOff);
 
@@ -117,14 +109,8 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCurrentCursor", GetCurrentCursor);
 	Nan::SetPrototypeMethod(tpl, "getCurrentCursor", GetCurrentCursor);
 
-	Nan::SetPrototypeMethod(tpl, "GetDepthBufferSize", GetDepthBufferSize);
-	Nan::SetPrototypeMethod(tpl, "getDepthBufferSize", GetDepthBufferSize);
-
 	Nan::SetPrototypeMethod(tpl, "GetDesiredUpdateRate", GetDesiredUpdateRate);
 	Nan::SetPrototypeMethod(tpl, "getDesiredUpdateRate", GetDesiredUpdateRate);
-
-	Nan::SetPrototypeMethod(tpl, "GetEventPending", GetEventPending);
-	Nan::SetPrototypeMethod(tpl, "getEventPending", GetEventPending);
 
 	Nan::SetPrototypeMethod(tpl, "GetFDFrames", GetFDFrames);
 	Nan::SetPrototypeMethod(tpl, "getFDFrames", GetFDFrames);
@@ -168,12 +154,6 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPolygonSmoothing", GetPolygonSmoothing);
 	Nan::SetPrototypeMethod(tpl, "getPolygonSmoothing", GetPolygonSmoothing);
 
-	Nan::SetPrototypeMethod(tpl, "GetRGBACharPixelData", GetRGBACharPixelData);
-	Nan::SetPrototypeMethod(tpl, "getRGBACharPixelData", GetRGBACharPixelData);
-
-	Nan::SetPrototypeMethod(tpl, "GetRGBAPixelData", GetRGBAPixelData);
-	Nan::SetPrototypeMethod(tpl, "getRGBAPixelData", GetRGBAPixelData);
-
 	Nan::SetPrototypeMethod(tpl, "GetRenderLibrary", GetRenderLibrary);
 	Nan::SetPrototypeMethod(tpl, "getRenderLibrary", GetRenderLibrary);
 
@@ -204,23 +184,14 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetUseConstantFDOffsets", GetUseConstantFDOffsets);
 	Nan::SetPrototypeMethod(tpl, "getUseConstantFDOffsets", GetUseConstantFDOffsets);
 
-	Nan::SetPrototypeMethod(tpl, "GetZbufferData", GetZbufferData);
-	Nan::SetPrototypeMethod(tpl, "getZbufferData", GetZbufferData);
-
 	Nan::SetPrototypeMethod(tpl, "HasRenderer", HasRenderer);
 	Nan::SetPrototypeMethod(tpl, "hasRenderer", HasRenderer);
-
-	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
-	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
 
 	Nan::SetPrototypeMethod(tpl, "InitializeFromCurrentContext", InitializeFromCurrentContext);
 	Nan::SetPrototypeMethod(tpl, "initializeFromCurrentContext", InitializeFromCurrentContext);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "IsCurrent", IsCurrent);
-	Nan::SetPrototypeMethod(tpl, "isCurrent", IsCurrent);
 
 	Nan::SetPrototypeMethod(tpl, "IsDirect", IsDirect);
 	Nan::SetPrototypeMethod(tpl, "isDirect", IsDirect);
@@ -239,9 +210,6 @@ void VtkRenderWindowWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "LineSmoothingOn", LineSmoothingOn);
 	Nan::SetPrototypeMethod(tpl, "lineSmoothingOn", LineSmoothingOn);
-
-	Nan::SetPrototypeMethod(tpl, "MakeCurrent", MakeCurrent);
-	Nan::SetPrototypeMethod(tpl, "makeCurrent", MakeCurrent);
 
 	Nan::SetPrototypeMethod(tpl, "MakeRenderWindowInteractor", MakeRenderWindowInteractor);
 	Nan::SetPrototypeMethod(tpl, "makeRenderWindowInteractor", MakeRenderWindowInteractor);
@@ -303,9 +271,6 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetForceMakeCurrent", SetForceMakeCurrent);
 	Nan::SetPrototypeMethod(tpl, "setForceMakeCurrent", SetForceMakeCurrent);
 
-	Nan::SetPrototypeMethod(tpl, "SetFullScreen", SetFullScreen);
-	Nan::SetPrototypeMethod(tpl, "setFullScreen", SetFullScreen);
-
 	Nan::SetPrototypeMethod(tpl, "SetInAbortCheck", SetInAbortCheck);
 	Nan::SetPrototypeMethod(tpl, "setInAbortCheck", SetInAbortCheck);
 
@@ -321,29 +286,14 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMultiSamples", SetMultiSamples);
 	Nan::SetPrototypeMethod(tpl, "setMultiSamples", SetMultiSamples);
 
-	Nan::SetPrototypeMethod(tpl, "SetNextWindowInfo", SetNextWindowInfo);
-	Nan::SetPrototypeMethod(tpl, "setNextWindowInfo", SetNextWindowInfo);
-
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfLayers", SetNumberOfLayers);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfLayers", SetNumberOfLayers);
-
-	Nan::SetPrototypeMethod(tpl, "SetParentInfo", SetParentInfo);
-	Nan::SetPrototypeMethod(tpl, "setParentInfo", SetParentInfo);
-
-	Nan::SetPrototypeMethod(tpl, "SetPixelData", SetPixelData);
-	Nan::SetPrototypeMethod(tpl, "setPixelData", SetPixelData);
 
 	Nan::SetPrototypeMethod(tpl, "SetPointSmoothing", SetPointSmoothing);
 	Nan::SetPrototypeMethod(tpl, "setPointSmoothing", SetPointSmoothing);
 
 	Nan::SetPrototypeMethod(tpl, "SetPolygonSmoothing", SetPolygonSmoothing);
 	Nan::SetPrototypeMethod(tpl, "setPolygonSmoothing", SetPolygonSmoothing);
-
-	Nan::SetPrototypeMethod(tpl, "SetRGBACharPixelData", SetRGBACharPixelData);
-	Nan::SetPrototypeMethod(tpl, "setRGBACharPixelData", SetRGBACharPixelData);
-
-	Nan::SetPrototypeMethod(tpl, "SetRGBAPixelData", SetRGBAPixelData);
-	Nan::SetPrototypeMethod(tpl, "setRGBAPixelData", SetRGBAPixelData);
 
 	Nan::SetPrototypeMethod(tpl, "SetStencilCapable", SetStencilCapable);
 	Nan::SetPrototypeMethod(tpl, "setStencilCapable", SetStencilCapable);
@@ -396,18 +346,6 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseConstantFDOffsets", SetUseConstantFDOffsets);
 	Nan::SetPrototypeMethod(tpl, "setUseConstantFDOffsets", SetUseConstantFDOffsets);
 
-	Nan::SetPrototypeMethod(tpl, "SetWindowInfo", SetWindowInfo);
-	Nan::SetPrototypeMethod(tpl, "setWindowInfo", SetWindowInfo);
-
-	Nan::SetPrototypeMethod(tpl, "SetZbufferData", SetZbufferData);
-	Nan::SetPrototypeMethod(tpl, "setZbufferData", SetZbufferData);
-
-	Nan::SetPrototypeMethod(tpl, "ShowCursor", ShowCursor);
-	Nan::SetPrototypeMethod(tpl, "showCursor", ShowCursor);
-
-	Nan::SetPrototypeMethod(tpl, "Start", Start);
-	Nan::SetPrototypeMethod(tpl, "start", Start);
-
 	Nan::SetPrototypeMethod(tpl, "StencilCapableOff", StencilCapableOff);
 	Nan::SetPrototypeMethod(tpl, "stencilCapableOff", StencilCapableOff);
 
@@ -443,12 +381,6 @@ void VtkRenderWindowWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SwapBuffersOn", SwapBuffersOn);
 	Nan::SetPrototypeMethod(tpl, "swapBuffersOn", SwapBuffersOn);
-
-	Nan::SetPrototypeMethod(tpl, "WaitForCompletion", WaitForCompletion);
-	Nan::SetPrototypeMethod(tpl, "waitForCompletion", WaitForCompletion);
-
-	Nan::SetPrototypeMethod(tpl, "WindowRemap", WindowRemap);
-	Nan::SetPrototypeMethod(tpl, "windowRemap", WindowRemap);
 
 	ptpl.Reset( tpl );
 }
@@ -619,30 +551,6 @@ void VtkRenderWindowWrap::CopyResultFrame(const Nan::FunctionCallbackInfo<v8::Va
 	native->CopyResultFrame();
 }
 
-void VtkRenderWindowWrap::Finalize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Finalize();
-}
-
-void VtkRenderWindowWrap::Frame(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Frame();
-}
-
 void VtkRenderWindowWrap::FullScreenOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -765,20 +673,6 @@ void VtkRenderWindowWrap::GetCurrentCursor(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkRenderWindowWrap::GetDepthBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetDepthBufferSize();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
 void VtkRenderWindowWrap::GetDesiredUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -790,20 +684,6 @@ void VtkRenderWindowWrap::GetDesiredUpdateRate(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetDesiredUpdateRate();
-	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkRenderWindowWrap::GetEventPending(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	int r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetEventPending();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1021,90 +901,6 @@ void VtkRenderWindowWrap::GetPolygonSmoothing(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkRenderWindowWrap::GetRGBACharPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					if(info.Length() > 4 && info[4]->IsInt32())
-					{
-						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[5]))
-						{
-							VtkUnsignedCharArrayWrap *a5 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[5]->ToObject());
-							int r;
-							if(info.Length() != 6)
-							{
-								Nan::ThrowError("Too many parameters.");
-								return;
-							}
-							r = native->GetRGBACharPixelData(
-								info[0]->Int32Value(),
-								info[1]->Int32Value(),
-								info[2]->Int32Value(),
-								info[3]->Int32Value(),
-								info[4]->Int32Value(),
-								(vtkUnsignedCharArray *) a5->native.GetPointer()
-							);
-							info.GetReturnValue().Set(Nan::New(r));
-							return;
-						}
-					}
-				}
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::GetRGBAPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					if(info.Length() > 4 && info[4]->IsInt32())
-					{
-						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[5]))
-						{
-							VtkFloatArrayWrap *a5 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[5]->ToObject());
-							int r;
-							if(info.Length() != 6)
-							{
-								Nan::ThrowError("Too many parameters.");
-								return;
-							}
-							r = native->GetRGBAPixelData(
-								info[0]->Int32Value(),
-								info[1]->Int32Value(),
-								info[2]->Int32Value(),
-								info[3]->Int32Value(),
-								info[4]->Int32Value(),
-								(vtkFloatArray *) a5->native.GetPointer()
-							);
-							info.GetReturnValue().Set(Nan::New(r));
-							return;
-						}
-					}
-				}
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkRenderWindowWrap::GetRenderLibrary(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -1254,44 +1050,6 @@ void VtkRenderWindowWrap::GetUseConstantFDOffsets(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
-void VtkRenderWindowWrap::GetZbufferData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
-					{
-						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
-						int r;
-						if(info.Length() != 5)
-						{
-							Nan::ThrowError("Too many parameters.");
-							return;
-						}
-						r = native->GetZbufferData(
-							info[0]->Int32Value(),
-							info[1]->Int32Value(),
-							info[2]->Int32Value(),
-							info[3]->Int32Value(),
-							(vtkFloatArray *) a4->native.GetPointer()
-						);
-						info.GetReturnValue().Set(Nan::New(r));
-						return;
-					}
-				}
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkRenderWindowWrap::HasRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -1312,18 +1070,6 @@ void VtkRenderWindowWrap::HasRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->HideCursor();
 }
 
 void VtkRenderWindowWrap::InitializeFromCurrentContext(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1360,20 +1106,6 @@ void VtkRenderWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::IsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsCurrent();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRenderWindowWrap::IsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1450,18 +1182,6 @@ void VtkRenderWindowWrap::LineSmoothingOn(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	native->LineSmoothingOn();
-}
-
-void VtkRenderWindowWrap::MakeCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->MakeCurrent();
 }
 
 void VtkRenderWindowWrap::MakeRenderWindowInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1696,7 +1416,37 @@ void VtkRenderWindowWrap::SetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAnaglyphColorMask(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -1826,25 +1576,6 @@ void VtkRenderWindowWrap::SetForceMakeCurrent(const Nan::FunctionCallbackInfo<v8
 	native->SetForceMakeCurrent();
 }
 
-void VtkRenderWindowWrap::SetFullScreen(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetFullScreen(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkRenderWindowWrap::SetInAbortCheck(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -1941,26 +1672,6 @@ void VtkRenderWindowWrap::SetMultiSamples(const Nan::FunctionCallbackInfo<v8::Va
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkRenderWindowWrap::SetNextWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
-	{
-		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetNextWindowInfo(
-			*a0
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
 void VtkRenderWindowWrap::SetNumberOfLayers(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -1976,68 +1687,6 @@ void VtkRenderWindowWrap::SetNumberOfLayers(const Nan::FunctionCallbackInfo<v8::
 			info[0]->Int32Value()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::SetParentInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
-	{
-		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetParentInfo(
-			*a0
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::SetPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[4]))
-					{
-						VtkUnsignedCharArrayWrap *a4 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[4]->ToObject());
-						if(info.Length() > 5 && info[5]->IsInt32())
-						{
-							int r;
-							if(info.Length() != 6)
-							{
-								Nan::ThrowError("Too many parameters.");
-								return;
-							}
-							r = native->SetPixelData(
-								info[0]->Int32Value(),
-								info[1]->Int32Value(),
-								info[2]->Int32Value(),
-								info[3]->Int32Value(),
-								(vtkUnsignedCharArray *) a4->native.GetPointer(),
-								info[5]->Int32Value()
-							);
-							info.GetReturnValue().Set(Nan::New(r));
-							return;
-						}
-					}
-				}
-			}
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -2076,98 +1725,6 @@ void VtkRenderWindowWrap::SetPolygonSmoothing(const Nan::FunctionCallbackInfo<v8
 			info[0]->Int32Value()
 		);
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::SetRGBACharPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[4]))
-					{
-						VtkUnsignedCharArrayWrap *a4 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[4]->ToObject());
-						if(info.Length() > 5 && info[5]->IsInt32())
-						{
-							if(info.Length() > 6 && info[6]->IsInt32())
-							{
-								int r;
-								if(info.Length() != 7)
-								{
-									Nan::ThrowError("Too many parameters.");
-									return;
-								}
-								r = native->SetRGBACharPixelData(
-									info[0]->Int32Value(),
-									info[1]->Int32Value(),
-									info[2]->Int32Value(),
-									info[3]->Int32Value(),
-									(vtkUnsignedCharArray *) a4->native.GetPointer(),
-									info[5]->Int32Value(),
-									info[6]->Int32Value()
-								);
-								info.GetReturnValue().Set(Nan::New(r));
-								return;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::SetRGBAPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
-					{
-						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
-						if(info.Length() > 5 && info[5]->IsInt32())
-						{
-							if(info.Length() > 6 && info[6]->IsInt32())
-							{
-								int r;
-								if(info.Length() != 7)
-								{
-									Nan::ThrowError("Too many parameters.");
-									return;
-								}
-								r = native->SetRGBAPixelData(
-									info[0]->Int32Value(),
-									info[1]->Int32Value(),
-									info[2]->Int32Value(),
-									info[3]->Int32Value(),
-									(vtkFloatArray *) a4->native.GetPointer(),
-									info[5]->Int32Value(),
-									info[6]->Int32Value()
-								);
-								info.GetReturnValue().Set(Nan::New(r));
-								return;
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -2425,88 +1982,6 @@ void VtkRenderWindowWrap::SetUseConstantFDOffsets(const Nan::FunctionCallbackInf
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkRenderWindowWrap::SetWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsString())
-	{
-		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->SetWindowInfo(
-			*a0
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::SetZbufferData(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() > 1 && info[1]->IsInt32())
-		{
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				if(info.Length() > 3 && info[3]->IsInt32())
-				{
-					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[4]))
-					{
-						VtkFloatArrayWrap *a4 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[4]->ToObject());
-						int r;
-						if(info.Length() != 5)
-						{
-							Nan::ThrowError("Too many parameters.");
-							return;
-						}
-						r = native->SetZbufferData(
-							info[0]->Int32Value(),
-							info[1]->Int32Value(),
-							info[2]->Int32Value(),
-							info[3]->Int32Value(),
-							(vtkFloatArray *) a4->native.GetPointer()
-						);
-						info.GetReturnValue().Set(Nan::New(r));
-						return;
-					}
-				}
-			}
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkRenderWindowWrap::ShowCursor(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->ShowCursor();
-}
-
-void VtkRenderWindowWrap::Start(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Start();
-}
-
 void VtkRenderWindowWrap::StencilCapableOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -2651,29 +2126,5 @@ void VtkRenderWindowWrap::SwapBuffersOn(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	native->SwapBuffersOn();
-}
-
-void VtkRenderWindowWrap::WaitForCompletion(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->WaitForCompletion();
-}
-
-void VtkRenderWindowWrap::WindowRemap(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
-	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->WindowRemap();
 }
 

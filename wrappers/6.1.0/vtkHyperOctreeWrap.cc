@@ -102,6 +102,9 @@ void VtkHyperOctreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPointsOnParentEdge2D", GetPointsOnParentEdge2D);
 	Nan::SetPrototypeMethod(tpl, "getPointsOnParentEdge2D", GetPointsOnParentEdge2D);
 
+	Nan::SetPrototypeMethod(tpl, "GetPointsOnParentFaces", GetPointsOnParentFaces);
+	Nan::SetPrototypeMethod(tpl, "getPointsOnParentFaces", GetPointsOnParentFaces);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -580,6 +583,57 @@ void VtkHyperOctreeWrap::GetPointsOnParentEdge2D(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkHyperOctreeWrap::GetPointsOnParentFaces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
+	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkHyperOctreeCursorWrap *a2 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->GetPointsOnParentFaces(
+						b0,
+						info[1]->Int32Value(),
+						(vtkHyperOctreeCursor *) a2->native.GetPointer(),
+						(vtkHyperOctreePointsGrabber *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkHyperOctreeWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
@@ -779,7 +833,37 @@ void VtkHyperOctreeWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrigin(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -806,7 +890,37 @@ void VtkHyperOctreeWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSize(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

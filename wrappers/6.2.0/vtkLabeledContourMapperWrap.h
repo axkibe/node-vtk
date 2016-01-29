@@ -29,6 +29,7 @@ class VtkLabeledContourMapperWrap : public VtkMapperWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);

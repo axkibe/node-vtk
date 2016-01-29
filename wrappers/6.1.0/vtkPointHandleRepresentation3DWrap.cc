@@ -124,6 +124,9 @@ void VtkPointHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "OutlineOn", OutlineOn);
 	Nan::SetPrototypeMethod(tpl, "outlineOn", OutlineOn);
 
+	Nan::SetPrototypeMethod(tpl, "PlaceWidget", PlaceWidget);
+	Nan::SetPrototypeMethod(tpl, "placeWidget", PlaceWidget);
+
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
 
@@ -135,6 +138,9 @@ void VtkPointHandleRepresentation3DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDisplayPosition", SetDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setDisplayPosition", SetDisplayPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetHandleSize", SetHandleSize);
 	Nan::SetPrototypeMethod(tpl, "setHandleSize", SetHandleSize);
@@ -157,6 +163,9 @@ void VtkPointHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTranslationMode", SetTranslationMode);
 	Nan::SetPrototypeMethod(tpl, "setTranslationMode", SetTranslationMode);
 
+	Nan::SetPrototypeMethod(tpl, "SetWorldPosition", SetWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setWorldPosition", SetWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "SetXShadows", SetXShadows);
 	Nan::SetPrototypeMethod(tpl, "setXShadows", SetXShadows);
 
@@ -175,11 +184,17 @@ void VtkPointHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SmoothMotionOn", SmoothMotionOn);
 	Nan::SetPrototypeMethod(tpl, "smoothMotionOn", SmoothMotionOn);
 
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "TranslationModeOff", TranslationModeOff);
 	Nan::SetPrototypeMethod(tpl, "translationModeOff", TranslationModeOff);
 
 	Nan::SetPrototypeMethod(tpl, "TranslationModeOn", TranslationModeOn);
 	Nan::SetPrototypeMethod(tpl, "translationModeOn", TranslationModeOn);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	Nan::SetPrototypeMethod(tpl, "XShadowsOff", XShadowsOff);
 	Nan::SetPrototypeMethod(tpl, "xShadowsOff", XShadowsOff);
@@ -621,6 +636,43 @@ void VtkPointHandleRepresentation3DWrap::OutlineOn(const Nan::FunctionCallbackIn
 	native->OutlineOn();
 }
 
+void VtkPointHandleRepresentation3DWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
+	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->PlaceWidget(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPointHandleRepresentation3DWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
@@ -711,6 +763,43 @@ void VtkPointHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbac
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPointHandleRepresentation3DWrap::SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
+	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDisplayPosition(
+			b0
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -851,6 +940,43 @@ void VtkPointHandleRepresentation3DWrap::SetTranslationMode(const Nan::FunctionC
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPointHandleRepresentation3DWrap::SetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
+	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPointHandleRepresentation3DWrap::SetXShadows(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
@@ -952,6 +1078,43 @@ void VtkPointHandleRepresentation3DWrap::SmoothMotionOn(const Nan::FunctionCallb
 	native->SmoothMotionOn();
 }
 
+void VtkPointHandleRepresentation3DWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
+	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPointHandleRepresentation3DWrap::TranslationModeOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
@@ -974,6 +1137,43 @@ void VtkPointHandleRepresentation3DWrap::TranslationModeOn(const Nan::FunctionCa
 		return;
 	}
 	native->TranslationModeOn();
+}
+
+void VtkPointHandleRepresentation3DWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
+	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPointHandleRepresentation3DWrap::XShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& info)

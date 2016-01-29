@@ -31,12 +31,16 @@ class VtkPlotBarWrap : public VtkPlotWrap
 
 		static void CreateDefaultLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBarsCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);

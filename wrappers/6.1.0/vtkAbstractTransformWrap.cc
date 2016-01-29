@@ -60,14 +60,8 @@ void VtkAbstractTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInverse", GetInverse);
 	Nan::SetPrototypeMethod(tpl, "getInverse", GetInverse);
 
-	Nan::SetPrototypeMethod(tpl, "Inverse", Inverse);
-	Nan::SetPrototypeMethod(tpl, "inverse", Inverse);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "MakeTransform", MakeTransform);
-	Nan::SetPrototypeMethod(tpl, "makeTransform", MakeTransform);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -78,11 +72,20 @@ void VtkAbstractTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInverse", SetInverse);
 	Nan::SetPrototypeMethod(tpl, "setInverse", SetInverse);
 
+	Nan::SetPrototypeMethod(tpl, "TransformNormalAtPoint", TransformNormalAtPoint);
+	Nan::SetPrototypeMethod(tpl, "transformNormalAtPoint", TransformNormalAtPoint);
+
+	Nan::SetPrototypeMethod(tpl, "TransformPoint", TransformPoint);
+	Nan::SetPrototypeMethod(tpl, "transformPoint", TransformPoint);
+
 	Nan::SetPrototypeMethod(tpl, "TransformPoints", TransformPoints);
 	Nan::SetPrototypeMethod(tpl, "transformPoints", TransformPoints);
 
 	Nan::SetPrototypeMethod(tpl, "TransformPointsNormalsVectors", TransformPointsNormalsVectors);
 	Nan::SetPrototypeMethod(tpl, "transformPointsNormalsVectors", TransformPointsNormalsVectors);
+
+	Nan::SetPrototypeMethod(tpl, "TransformVectorAtPoint", TransformVectorAtPoint);
+	Nan::SetPrototypeMethod(tpl, "transformVectorAtPoint", TransformVectorAtPoint);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -194,18 +197,6 @@ void VtkAbstractTransformWrap::GetInverse(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(wo);
 }
 
-void VtkAbstractTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
-	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Inverse();
-}
-
 void VtkAbstractTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
@@ -226,29 +217,6 @@ void VtkAbstractTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAbstractTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
-	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
-	vtkAbstractTransform * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkAbstractTransformWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkAbstractTransformWrap *w = new VtkAbstractTransformWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
 }
 
 void VtkAbstractTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -325,6 +293,143 @@ void VtkAbstractTransformWrap::SetInverse(const Nan::FunctionCallbackInfo<v8::Va
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
+	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->TransformNormalAtPoint(
+					b0,
+					b1,
+					b2
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractTransformWrap::TransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
+	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->TransformPoint(
+				b0,
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAbstractTransformWrap::TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
@@ -389,6 +494,85 @@ void VtkAbstractTransformWrap::TransformPointsNormalsVectors(const Nan::Function
 						}
 					}
 				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
+	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->TransformVectorAtPoint(
+					b0,
+					b1,
+					b2
+				);
+				return;
 			}
 		}
 	}

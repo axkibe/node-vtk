@@ -9,7 +9,6 @@
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkAffineRepresentationWrap.h"
 #include "vtkObjectWrap.h"
-#include "vtkTransformWrap.h"
 #include "vtkPropWrap.h"
 
 using namespace v8;
@@ -60,9 +59,6 @@ void VtkAffineRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetToleranceMinValue", GetToleranceMinValue);
 	Nan::SetPrototypeMethod(tpl, "getToleranceMinValue", GetToleranceMinValue);
-
-	Nan::SetPrototypeMethod(tpl, "GetTransform", GetTransform);
-	Nan::SetPrototypeMethod(tpl, "getTransform", GetTransform);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -161,26 +157,6 @@ void VtkAffineRepresentationWrap::GetToleranceMinValue(const Nan::FunctionCallba
 	}
 	r = native->GetToleranceMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkAffineRepresentationWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAffineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentationWrap>(info.Holder());
-	vtkAffineRepresentation *native = (vtkAffineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->GetTransform(
-			(vtkTransform *) a0->native.GetPointer()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAffineRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

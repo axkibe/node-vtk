@@ -33,6 +33,7 @@ class VtkGeoInteractorStyleWrap : public VtkInteractorStyleTrackballCameraWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeoCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRayIntersection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LockHeadingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LockHeadingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

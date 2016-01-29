@@ -35,6 +35,8 @@ class VtkBSPIntersectionsWrap : public VtkObjectWrap
 		static void GetComputeIntersectionsUsingDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCuts(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfRegions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRegionBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRegionDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntersectsBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntersectsCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IntersectsSphere2(const Nan::FunctionCallbackInfo<v8::Value>& info);

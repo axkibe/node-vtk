@@ -35,6 +35,7 @@ class VtkAxisActor2DWrap : public VtkActor2DWrap
 		static void AxisVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAdjustLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAdjustedNumberOfLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAdjustedRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);

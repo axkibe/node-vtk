@@ -37,6 +37,7 @@ class VtkDendrogramItemWrap : public VtkContextItemWrap
 		static void ExtendLeafNodesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ExtendLeafNodesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleForOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayNumberOfCollapsedLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDrawLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);

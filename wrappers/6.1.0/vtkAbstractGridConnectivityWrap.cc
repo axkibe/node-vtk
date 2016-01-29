@@ -50,12 +50,6 @@ void VtkAbstractGridConnectivityWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAbstractGridConnectivityWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-	Nan::SetPrototypeMethod(tpl, "ComputeNeighbors", ComputeNeighbors);
-	Nan::SetPrototypeMethod(tpl, "computeNeighbors", ComputeNeighbors);
-
-	Nan::SetPrototypeMethod(tpl, "CreateGhostLayers", CreateGhostLayers);
-	Nan::SetPrototypeMethod(tpl, "createGhostLayers", CreateGhostLayers);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -109,37 +103,6 @@ void VtkAbstractGridConnectivityWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	}
 
 	info.GetReturnValue().Set(info.This());
-}
-
-void VtkAbstractGridConnectivityWrap::ComputeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractGridConnectivityWrap>(info.Holder());
-	vtkAbstractGridConnectivity *native = (vtkAbstractGridConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->ComputeNeighbors();
-}
-
-void VtkAbstractGridConnectivityWrap::CreateGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAbstractGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractGridConnectivityWrap>(info.Holder());
-	vtkAbstractGridConnectivity *native = (vtkAbstractGridConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->CreateGhostLayers(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAbstractGridConnectivityWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

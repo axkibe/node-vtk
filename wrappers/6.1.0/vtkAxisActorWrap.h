@@ -36,6 +36,8 @@ class VtkAxisActorWrap : public VtkActorWrap
 		static void CalculateLabelOffsetOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CalculateTitleOffsetOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CalculateTitleOffsetOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeMaxLabelLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeTitleLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawGridlinesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawGridlinesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawGridlinesOnlyOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -53,6 +55,7 @@ class VtkAxisActorWrap : public VtkActorWrap
 		static void GetAxisTypeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisTypeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCalculateLabelOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCalculateTitleOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);

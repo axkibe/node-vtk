@@ -54,9 +54,6 @@ void VtkBiDimensionalRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLabelFormat", GetLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "getLabelFormat", GetLabelFormat);
 
-	Nan::SetPrototypeMethod(tpl, "GetLabelText", GetLabelText);
-	Nan::SetPrototypeMethod(tpl, "getLabelText", GetLabelText);
-
 	Nan::SetPrototypeMethod(tpl, "GetLength1", GetLength1);
 	Nan::SetPrototypeMethod(tpl, "getLength1", GetLength1);
 
@@ -69,17 +66,41 @@ void VtkBiDimensionalRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLine2Visibility", GetLine2Visibility);
 	Nan::SetPrototypeMethod(tpl, "getLine2Visibility", GetLine2Visibility);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint1DisplayPosition", GetPoint1DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint1DisplayPosition", GetPoint1DisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetPoint1Representation", GetPoint1Representation);
 	Nan::SetPrototypeMethod(tpl, "getPoint1Representation", GetPoint1Representation);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint1WorldPosition", GetPoint1WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint1WorldPosition", GetPoint1WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2DisplayPosition", GetPoint2DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint2DisplayPosition", GetPoint2DisplayPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetPoint2Representation", GetPoint2Representation);
 	Nan::SetPrototypeMethod(tpl, "getPoint2Representation", GetPoint2Representation);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint2WorldPosition", GetPoint2WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint2WorldPosition", GetPoint2WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint3DisplayPosition", GetPoint3DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint3DisplayPosition", GetPoint3DisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetPoint3Representation", GetPoint3Representation);
 	Nan::SetPrototypeMethod(tpl, "getPoint3Representation", GetPoint3Representation);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint3WorldPosition", GetPoint3WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint3WorldPosition", GetPoint3WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint4DisplayPosition", GetPoint4DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint4DisplayPosition", GetPoint4DisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetPoint4Representation", GetPoint4Representation);
 	Nan::SetPrototypeMethod(tpl, "getPoint4Representation", GetPoint4Representation);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint4WorldPosition", GetPoint4WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint4WorldPosition", GetPoint4WorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetShowLabelAboveWidget", GetShowLabelAboveWidget);
 	Nan::SetPrototypeMethod(tpl, "getShowLabelAboveWidget", GetShowLabelAboveWidget);
@@ -128,6 +149,30 @@ void VtkBiDimensionalRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetLine2Visibility", SetLine2Visibility);
 	Nan::SetPrototypeMethod(tpl, "setLine2Visibility", SetLine2Visibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint1DisplayPosition", SetPoint1DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint1DisplayPosition", SetPoint1DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint1WorldPosition", SetPoint1WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint1WorldPosition", SetPoint1WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint2DisplayPosition", SetPoint2DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint2DisplayPosition", SetPoint2DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint2WorldPosition", SetPoint2WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint2WorldPosition", SetPoint2WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint3DisplayPosition", SetPoint3DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint3DisplayPosition", SetPoint3DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint3WorldPosition", SetPoint3WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint3WorldPosition", SetPoint3WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint4DisplayPosition", SetPoint4DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint4DisplayPosition", SetPoint4DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint4WorldPosition", SetPoint4WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint4WorldPosition", SetPoint4WorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "SetShowLabelAboveWidget", SetShowLabelAboveWidget);
 	Nan::SetPrototypeMethod(tpl, "setShowLabelAboveWidget", SetShowLabelAboveWidget);
@@ -197,20 +242,6 @@ void VtkBiDimensionalRepresentationWrap::GetLabelFormat(const Nan::FunctionCallb
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
-void VtkBiDimensionalRepresentationWrap::GetLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
-	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	char const * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetLabelText();
-	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
 void VtkBiDimensionalRepresentationWrap::GetLength1(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
@@ -267,6 +298,43 @@ void VtkBiDimensionalRepresentationWrap::GetLine2Visibility(const Nan::FunctionC
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkBiDimensionalRepresentationWrap::GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint1DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkBiDimensionalRepresentationWrap::GetPoint1Representation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
@@ -288,6 +356,80 @@ void VtkBiDimensionalRepresentationWrap::GetPoint1Representation(const Nan::Func
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkBiDimensionalRepresentationWrap::GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint1WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint2DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkBiDimensionalRepresentationWrap::GetPoint2Representation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -313,6 +455,80 @@ void VtkBiDimensionalRepresentationWrap::GetPoint2Representation(const Nan::Func
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkBiDimensionalRepresentationWrap::GetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint2WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::GetPoint3DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint3DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkBiDimensionalRepresentationWrap::GetPoint3Representation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
@@ -336,6 +552,80 @@ void VtkBiDimensionalRepresentationWrap::GetPoint3Representation(const Nan::Func
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkBiDimensionalRepresentationWrap::GetPoint3WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint3WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::GetPoint4DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint4DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkBiDimensionalRepresentationWrap::GetPoint4Representation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
@@ -357,6 +647,43 @@ void VtkBiDimensionalRepresentationWrap::GetPoint4Representation(const Nan::Func
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkBiDimensionalRepresentationWrap::GetPoint4WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint4WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkBiDimensionalRepresentationWrap::GetShowLabelAboveWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -623,6 +950,302 @@ void VtkBiDimensionalRepresentationWrap::SetLine2Visibility(const Nan::FunctionC
 		}
 		native->SetLine2Visibility(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::SetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::SetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::SetPoint3DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint3DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::SetPoint3WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint3WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::SetPoint4DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint4DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBiDimensionalRepresentationWrap::SetPoint4WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
+	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint4WorldPosition(
+			b0
 		);
 		return;
 	}

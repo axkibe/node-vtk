@@ -31,6 +31,7 @@ class VtkPiecewiseFunctionWrap : public VtkDataObjectWrap
 
 		static void AddPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AddSegment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AdjustRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AllowDuplicateScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AllowDuplicateScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClampingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,7 @@ class VtkPiecewiseFunctionWrap : public VtkDataObjectWrap
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFirstNonZeroValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -53,6 +55,7 @@ class VtkPiecewiseFunctionWrap : public VtkDataObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAllowDuplicateScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetClamping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

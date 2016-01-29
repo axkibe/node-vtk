@@ -9,7 +9,6 @@
 #include "vtk3DWidgetWrap.h"
 #include "vtkPolyDataSourceWidgetWrap.h"
 #include "vtkObjectWrap.h"
-#include "vtkPolyDataAlgorithmWrap.h"
 
 using namespace v8;
 
@@ -51,9 +50,6 @@ void VtkPolyDataSourceWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetPolyDataAlgorithm", GetPolyDataAlgorithm);
-	Nan::SetPrototypeMethod(tpl, "getPolyDataAlgorithm", GetPolyDataAlgorithm);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -65,9 +61,6 @@ void VtkPolyDataSourceWidgetWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
-
-	Nan::SetPrototypeMethod(tpl, "UpdatePlacement", UpdatePlacement);
-	Nan::SetPrototypeMethod(tpl, "updatePlacement", UpdatePlacement);
 
 	ptpl.Reset( tpl );
 }
@@ -109,29 +102,6 @@ void VtkPolyDataSourceWidgetWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkPolyDataSourceWidgetWrap::GetPolyDataAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataSourceWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSourceWidgetWrap>(info.Holder());
-	vtkPolyDataSourceWidget *native = (vtkPolyDataSourceWidget *)wrapper->native.GetPointer();
-	vtkPolyDataAlgorithm * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->GetPolyDataAlgorithm();
-		VtkPolyDataAlgorithmWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkPolyDataAlgorithmWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkPolyDataAlgorithmWrap *w = new VtkPolyDataAlgorithmWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
 }
 
 void VtkPolyDataSourceWidgetWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -252,17 +222,5 @@ void VtkPolyDataSourceWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkPolyDataSourceWidgetWrap::UpdatePlacement(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkPolyDataSourceWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSourceWidgetWrap>(info.Holder());
-	vtkPolyDataSourceWidget *native = (vtkPolyDataSourceWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->UpdatePlacement();
 }
 

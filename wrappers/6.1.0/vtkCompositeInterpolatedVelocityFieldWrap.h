@@ -29,7 +29,6 @@ class VtkCompositeInterpolatedVelocityFieldWrap : public VtkAbstractInterpolated
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
-		static void AddDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLastDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLastDataSetIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);

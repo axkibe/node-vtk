@@ -29,6 +29,7 @@ class VtkImageBSplineInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ComputeSupportSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSplineDegree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSplineDegreeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

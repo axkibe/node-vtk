@@ -63,9 +63,6 @@ void VtkAreaLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
-	Nan::SetPrototypeMethod(tpl, "Layout", Layout);
-	Nan::SetPrototypeMethod(tpl, "layout", Layout);
-
 	Nan::SetPrototypeMethod(tpl, "LayoutEdgePoints", LayoutEdgePoints);
 	Nan::SetPrototypeMethod(tpl, "layoutEdgePoints", LayoutEdgePoints);
 
@@ -180,36 +177,6 @@ void VtkAreaLayoutStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
-	}
-	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkAreaLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkAreaLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutStrategyWrap>(info.Holder());
-	vtkAreaLayoutStrategy *native = (vtkAreaLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
-			{
-				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				native->Layout(
-					(vtkTree *) a0->native.GetPointer(),
-					(vtkDataArray *) a1->native.GetPointer(),
-					(vtkDataArray *) a2->native.GetPointer()
-				);
-				return;
-			}
-		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

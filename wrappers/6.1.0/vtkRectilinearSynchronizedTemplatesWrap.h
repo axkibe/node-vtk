@@ -35,6 +35,7 @@ class VtkRectilinearSynchronizedTemplatesWrap : public VtkPolyDataAlgorithmWrap
 		static void ComputeNormalsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ComputeSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateTrianglesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateTrianglesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateValues(const Nan::FunctionCallbackInfo<v8::Value>& info);

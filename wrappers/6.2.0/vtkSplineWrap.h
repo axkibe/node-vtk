@@ -34,9 +34,7 @@ class VtkSplineWrap : public VtkObjectWrap
 		static void ClampValueOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClosedOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClosedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Compute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
-		static void Evaluate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClampValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClosed(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,6 +43,7 @@ class VtkSplineWrap : public VtkObjectWrap
 		static void GetLeftConstraintMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeftValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetParametricRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRightConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRightConstraintMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRightConstraintMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

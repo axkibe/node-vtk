@@ -33,6 +33,9 @@ class VtkParallelCoordinatesInteractorStyleWrap : public VtkInteractorStyleTrack
 		static void EndPan(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EndZoom(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCursorCurrentPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCursorLastPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCursorStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Inspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

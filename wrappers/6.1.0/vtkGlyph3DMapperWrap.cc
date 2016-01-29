@@ -58,6 +58,9 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ClampingOn", ClampingOn);
 	Nan::SetPrototypeMethod(tpl, "clampingOn", ClampingOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClamping", GetClamping);
 	Nan::SetPrototypeMethod(tpl, "getClamping", GetClamping);
 
@@ -283,6 +286,43 @@ void VtkGlyph3DMapperWrap::ClampingOn(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	native->ClampingOn();
+}
+
+void VtkGlyph3DMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetBounds(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGlyph3DMapperWrap::GetClamping(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -943,7 +983,37 @@ void VtkGlyph3DMapperWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
 	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRange(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

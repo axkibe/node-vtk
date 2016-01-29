@@ -50,6 +50,7 @@ class VtkDefaultPainterWrap : public VtkPainterWrap
 		static void SetLightingPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentationPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarsToColorsPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void UpdateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

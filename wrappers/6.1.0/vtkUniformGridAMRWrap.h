@@ -31,11 +31,14 @@ class VtkUniformGridAMRWrap : public VtkCompositeDataSetWrap
 
 		static void CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

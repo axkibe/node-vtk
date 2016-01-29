@@ -31,6 +31,7 @@ class VtkCompassRepresentationWrap : public VtkContinuousValueWidgetRepresentati
 
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DistanceWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EndDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EndTilt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -46,6 +47,7 @@ class VtkCompassRepresentationWrap : public VtkContinuousValueWidgetRepresentati
 		static void Highlight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,8 +56,11 @@ class VtkCompassRepresentationWrap : public VtkContinuousValueWidgetRepresentati
 		static void SetHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTilt(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TiltWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateTilt(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

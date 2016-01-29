@@ -66,14 +66,8 @@ void VtkMultiProcessControllerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Broadcast", Broadcast);
 	Nan::SetPrototypeMethod(tpl, "broadcast", Broadcast);
 
-	Nan::SetPrototypeMethod(tpl, "CreateOutputWindow", CreateOutputWindow);
-	Nan::SetPrototypeMethod(tpl, "createOutputWindow", CreateOutputWindow);
-
 	Nan::SetPrototypeMethod(tpl, "CreateSubController", CreateSubController);
 	Nan::SetPrototypeMethod(tpl, "createSubController", CreateSubController);
-
-	Nan::SetPrototypeMethod(tpl, "Finalize", Finalize);
-	Nan::SetPrototypeMethod(tpl, "finalize", Finalize);
 
 	Nan::SetPrototypeMethod(tpl, "Gather", Gather);
 	Nan::SetPrototypeMethod(tpl, "gather", Gather);
@@ -110,9 +104,6 @@ void VtkMultiProcessControllerWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "MultipleMethodExecute", MultipleMethodExecute);
-	Nan::SetPrototypeMethod(tpl, "multipleMethodExecute", MultipleMethodExecute);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -158,9 +149,6 @@ void VtkMultiProcessControllerWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetSingleProcessObject", SetSingleProcessObject);
 	Nan::SetPrototypeMethod(tpl, "setSingleProcessObject", SetSingleProcessObject);
-
-	Nan::SetPrototypeMethod(tpl, "SingleMethodExecute", SingleMethodExecute);
-	Nan::SetPrototypeMethod(tpl, "singleMethodExecute", SingleMethodExecute);
 
 	Nan::SetPrototypeMethod(tpl, "TriggerBreakRMIs", TriggerBreakRMIs);
 	Nan::SetPrototypeMethod(tpl, "triggerBreakRMIs", TriggerBreakRMIs);
@@ -322,18 +310,6 @@ void VtkMultiProcessControllerWrap::Broadcast(const Nan::FunctionCallbackInfo<v8
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkMultiProcessControllerWrap::CreateOutputWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
-	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->CreateOutputWindow();
-}
-
 void VtkMultiProcessControllerWrap::CreateSubController(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
@@ -363,30 +339,6 @@ void VtkMultiProcessControllerWrap::CreateSubController(const Nan::FunctionCallb
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkMultiProcessControllerWrap::Finalize(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
-	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
-	{
-		if(info.Length() != 1)
-		{
-			Nan::ThrowError("Too many parameters.");
-			return;
-		}
-		native->Finalize(
-			info[0]->Int32Value()
-		);
-		return;
-	}
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Finalize();
 }
 
 void VtkMultiProcessControllerWrap::Gather(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -615,18 +567,6 @@ void VtkMultiProcessControllerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkMultiProcessControllerWrap::MultipleMethodExecute(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
-	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->MultipleMethodExecute();
 }
 
 void VtkMultiProcessControllerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1025,18 +965,6 @@ void VtkMultiProcessControllerWrap::SetSingleProcessObject(const Nan::FunctionCa
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkMultiProcessControllerWrap::SingleMethodExecute(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
-	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->SingleMethodExecute();
 }
 
 void VtkMultiProcessControllerWrap::TriggerBreakRMIs(const Nan::FunctionCallbackInfo<v8::Value>& info)

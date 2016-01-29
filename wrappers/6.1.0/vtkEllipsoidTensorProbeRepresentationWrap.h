@@ -37,6 +37,7 @@ class VtkEllipsoidTensorProbeRepresentationWrap : public VtkTensorProbeRepresent
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SelectProbe(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

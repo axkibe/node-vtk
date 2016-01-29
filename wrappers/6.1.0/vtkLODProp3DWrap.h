@@ -44,6 +44,7 @@ class VtkLODProp3DWrap : public VtkProp3DWrap
 		static void GetAutomaticPickLODSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomaticPickLODSelectionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomaticPickLODSelectionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLODEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -65,9 +65,6 @@ void VtkGraphLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsLayoutComplete", IsLayoutComplete);
 	Nan::SetPrototypeMethod(tpl, "isLayoutComplete", IsLayoutComplete);
 
-	Nan::SetPrototypeMethod(tpl, "Layout", Layout);
-	Nan::SetPrototypeMethod(tpl, "layout", Layout);
-
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -199,18 +196,6 @@ void VtkGraphLayoutStrategyWrap::IsLayoutComplete(const Nan::FunctionCallbackInf
 	}
 	r = native->IsLayoutComplete();
 	info.GetReturnValue().Set(Nan::New(r));
-}
-
-void VtkGraphLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGraphLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info.Holder());
-	vtkGraphLayoutStrategy *native = (vtkGraphLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Layout();
 }
 
 void VtkGraphLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

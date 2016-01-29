@@ -9,8 +9,8 @@
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkHandleRepresentationWrap.h"
 #include "vtkObjectWrap.h"
-#include "vtkPropWrap.h"
 #include "vtkRendererWrap.h"
+#include "vtkPropWrap.h"
 #include "vtkPointPlacerWrap.h"
 
 using namespace v8;
@@ -56,6 +56,9 @@ void VtkHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ActiveRepresentationOn", ActiveRepresentationOn);
 	Nan::SetPrototypeMethod(tpl, "activeRepresentationOn", ActiveRepresentationOn);
 
+	Nan::SetPrototypeMethod(tpl, "CheckConstraint", CheckConstraint);
+	Nan::SetPrototypeMethod(tpl, "checkConstraint", CheckConstraint);
+
 	Nan::SetPrototypeMethod(tpl, "ConstrainedOff", ConstrainedOff);
 	Nan::SetPrototypeMethod(tpl, "constrainedOff", ConstrainedOff);
 
@@ -73,6 +76,9 @@ void VtkHandleRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetConstrained", GetConstrained);
 	Nan::SetPrototypeMethod(tpl, "getConstrained", GetConstrained);
+
+	Nan::SetPrototypeMethod(tpl, "GetDisplayPosition", GetDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getDisplayPosition", GetDisplayPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetInteractionStateMaxValue", GetInteractionStateMaxValue);
 	Nan::SetPrototypeMethod(tpl, "getInteractionStateMaxValue", GetInteractionStateMaxValue);
@@ -92,6 +98,9 @@ void VtkHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetToleranceMinValue", GetToleranceMinValue);
 	Nan::SetPrototypeMethod(tpl, "getToleranceMinValue", GetToleranceMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetWorldPosition", GetWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getWorldPosition", GetWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -107,6 +116,9 @@ void VtkHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetConstrained", SetConstrained);
 	Nan::SetPrototypeMethod(tpl, "setConstrained", SetConstrained);
 
+	Nan::SetPrototypeMethod(tpl, "SetDisplayPosition", SetDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setDisplayPosition", SetDisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "SetInteractionState", SetInteractionState);
 	Nan::SetPrototypeMethod(tpl, "setInteractionState", SetInteractionState);
 
@@ -118,6 +130,9 @@ void VtkHandleRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
+
+	Nan::SetPrototypeMethod(tpl, "SetWorldPosition", SetWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setWorldPosition", SetWorldPosition);
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
@@ -172,6 +187,50 @@ void VtkHandleRepresentationWrap::ActiveRepresentationOn(const Nan::FunctionCall
 		return;
 	}
 	native->ActiveRepresentationOn();
+}
+
+void VtkHandleRepresentationWrap::CheckConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
+	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->CheckConstraint(
+				(vtkRenderer *) a0->native.GetPointer(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkHandleRepresentationWrap::ConstrainedOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -258,6 +317,43 @@ void VtkHandleRepresentationWrap::GetConstrained(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetConstrained();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHandleRepresentationWrap::GetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
+	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetDisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkHandleRepresentationWrap::GetInteractionStateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -351,6 +447,43 @@ void VtkHandleRepresentationWrap::GetToleranceMinValue(const Nan::FunctionCallba
 	}
 	r = native->GetToleranceMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHandleRepresentationWrap::GetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
+	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetWorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkHandleRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -467,6 +600,43 @@ void VtkHandleRepresentationWrap::SetConstrained(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkHandleRepresentationWrap::SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
+	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkHandleRepresentationWrap::SetInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
@@ -539,6 +709,43 @@ void VtkHandleRepresentationWrap::SetTolerance(const Nan::FunctionCallbackInfo<v
 		}
 		native->SetTolerance(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHandleRepresentationWrap::SetWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info.Holder());
+	vtkHandleRepresentation *native = (vtkHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWorldPosition(
+			b0
 		);
 		return;
 	}

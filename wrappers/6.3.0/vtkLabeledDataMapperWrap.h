@@ -40,6 +40,7 @@ class VtkLabeledDataMapperWrap : public VtkMapper2DWrap
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabeledComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);

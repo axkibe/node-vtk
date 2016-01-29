@@ -9,6 +9,7 @@
 #include "vtkPointPlacerWrap.h"
 #include "vtkFocalPlanePointPlacerWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkRendererWrap.h"
 
 using namespace v8;
 
@@ -47,6 +48,9 @@ void VtkFocalPlanePointPlacerWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkFocalPlanePointPlacerWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "ComputeWorldPosition", ComputeWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "computeWorldPosition", ComputeWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -67,6 +71,9 @@ void VtkFocalPlanePointPlacerWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetPointBounds", SetPointBounds);
 	Nan::SetPrototypeMethod(tpl, "setPointBounds", SetPointBounds);
+
+	Nan::SetPrototypeMethod(tpl, "ValidateWorldPosition", ValidateWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "validateWorldPosition", ValidateWorldPosition);
 
 	ptpl.Reset( tpl );
 }
@@ -95,6 +102,127 @@ void VtkFocalPlanePointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkFocalPlanePointPlacerWrap::ComputeWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFocalPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlanePointPlacerWrap>(info.Holder());
+	vtkFocalPlanePointPlacer *native = (vtkFocalPlanePointPlacer *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						double b4[9];
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 9; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							b1,
+							b2,
+							b3,
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeWorldPosition(
+						(vtkRenderer *) a0->native.GetPointer(),
+						b1,
+						b2,
+						b3
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkFocalPlanePointPlacerWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -224,7 +352,37 @@ void VtkFocalPlanePointPlacerWrap::SetPointBounds(const Nan::FunctionCallbackInf
 {
 	VtkFocalPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlanePointPlacerWrap>(info.Holder());
 	vtkFocalPlanePointPlacer *native = (vtkFocalPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPointBounds(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -255,6 +413,77 @@ void VtkFocalPlanePointPlacerWrap::SetPointBounds(const Nan::FunctionCallbackInf
 				}
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFocalPlanePointPlacerWrap::ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFocalPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlanePointPlacerWrap>(info.Holder());
+	vtkFocalPlanePointPlacer *native = (vtkFocalPlanePointPlacer *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ValidateWorldPosition(
+				b0,
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ValidateWorldPosition(
+			b0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

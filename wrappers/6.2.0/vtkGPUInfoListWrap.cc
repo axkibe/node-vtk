@@ -65,9 +65,6 @@ void VtkGPUInfoListWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
-	Nan::SetPrototypeMethod(tpl, "Probe", Probe);
-	Nan::SetPrototypeMethod(tpl, "probe", Probe);
-
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -215,18 +212,6 @@ void VtkGPUInfoListWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
-}
-
-void VtkGPUInfoListWrap::Probe(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkGPUInfoListWrap *wrapper = ObjectWrap::Unwrap<VtkGPUInfoListWrap>(info.Holder());
-	vtkGPUInfoList *native = (vtkGPUInfoList *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	native->Probe();
 }
 
 void VtkGPUInfoListWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

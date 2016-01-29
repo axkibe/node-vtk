@@ -37,6 +37,7 @@ class VtkPointWidgetWrap : public Vtk3DWidgetWrap
 		static void GetHotSpotSizeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTranslationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);

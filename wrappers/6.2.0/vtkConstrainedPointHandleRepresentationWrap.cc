@@ -13,8 +13,8 @@
 #include "vtkPlaneWrap.h"
 #include "vtkPlaneCollectionWrap.h"
 #include "vtkPlanesWrap.h"
-#include "vtkPropertyWrap.h"
 #include "vtkRendererWrap.h"
+#include "vtkPropertyWrap.h"
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
@@ -63,6 +63,9 @@ void VtkConstrainedPointHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BuildRepresentation", BuildRepresentation);
 	Nan::SetPrototypeMethod(tpl, "buildRepresentation", BuildRepresentation);
 
+	Nan::SetPrototypeMethod(tpl, "CheckConstraint", CheckConstraint);
+	Nan::SetPrototypeMethod(tpl, "checkConstraint", CheckConstraint);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeInteractionState", ComputeInteractionState);
 	Nan::SetPrototypeMethod(tpl, "computeInteractionState", ComputeInteractionState);
 
@@ -86,6 +89,9 @@ void VtkConstrainedPointHandleRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetObliquePlane", GetObliquePlane);
 	Nan::SetPrototypeMethod(tpl, "getObliquePlane", GetObliquePlane);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetProjectionNormal", GetProjectionNormal);
 	Nan::SetPrototypeMethod(tpl, "getProjectionNormal", GetProjectionNormal);
@@ -147,6 +153,9 @@ void VtkConstrainedPointHandleRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCursorShape", SetCursorShape);
 	Nan::SetPrototypeMethod(tpl, "setCursorShape", SetCursorShape);
 
+	Nan::SetPrototypeMethod(tpl, "SetDisplayPosition", SetDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setDisplayPosition", SetDisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "SetObliquePlane", SetObliquePlane);
 	Nan::SetPrototypeMethod(tpl, "setObliquePlane", SetObliquePlane);
 
@@ -176,6 +185,12 @@ void VtkConstrainedPointHandleRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
+
+	Nan::SetPrototypeMethod(tpl, "StartWidgetInteraction", StartWidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "startWidgetInteraction", StartWidgetInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
+	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
 	ptpl.Reset( tpl );
 }
@@ -236,6 +251,50 @@ void VtkConstrainedPointHandleRepresentationWrap::BuildRepresentation(const Nan:
 		return;
 	}
 	native->BuildRepresentation();
+}
+
+void VtkConstrainedPointHandleRepresentationWrap::CheckConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
+	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->CheckConstraint(
+				(vtkRenderer *) a0->native.GetPointer(),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkConstrainedPointHandleRepresentationWrap::ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -414,6 +473,43 @@ void VtkConstrainedPointHandleRepresentationWrap::GetObliquePlane(const Nan::Fun
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkConstrainedPointHandleRepresentationWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
+	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkConstrainedPointHandleRepresentationWrap::GetProjectionNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -805,6 +901,43 @@ void VtkConstrainedPointHandleRepresentationWrap::SetCursorShape(const Nan::Func
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkConstrainedPointHandleRepresentationWrap::SetDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
+	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkConstrainedPointHandleRepresentationWrap::SetObliquePlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
@@ -829,7 +962,37 @@ void VtkConstrainedPointHandleRepresentationWrap::SetPosition(const Nan::Functio
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPosition(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -972,6 +1135,80 @@ void VtkConstrainedPointHandleRepresentationWrap::ShallowCopy(const Nan::Functio
 		}
 		native->ShallowCopy(
 			(vtkProp *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkConstrainedPointHandleRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
+	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->StartWidgetInteraction(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkConstrainedPointHandleRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
+	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[2];
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 2; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->WidgetInteraction(
+			b0
 		);
 		return;
 	}

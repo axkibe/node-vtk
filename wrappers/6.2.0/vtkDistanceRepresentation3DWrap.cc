@@ -88,6 +88,18 @@ void VtkDistanceRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfRulerTicksMinValue", GetMaximumNumberOfRulerTicksMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfRulerTicksMinValue", GetMaximumNumberOfRulerTicksMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint1DisplayPosition", GetPoint1DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint1DisplayPosition", GetPoint1DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint1WorldPosition", GetPoint1WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint1WorldPosition", GetPoint1WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2DisplayPosition", GetPoint2DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint2DisplayPosition", GetPoint2DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2WorldPosition", GetPoint2WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getPoint2WorldPosition", GetPoint2WorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -117,6 +129,18 @@ void VtkDistanceRepresentation3DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfRulerTicks", SetMaximumNumberOfRulerTicks);
 	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfRulerTicks", SetMaximumNumberOfRulerTicks);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint1DisplayPosition", SetPoint1DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint1DisplayPosition", SetPoint1DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint1WorldPosition", SetPoint1WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint1WorldPosition", SetPoint1WorldPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint2DisplayPosition", SetPoint2DisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint2DisplayPosition", SetPoint2DisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "SetPoint2WorldPosition", SetPoint2WorldPosition);
+	Nan::SetPrototypeMethod(tpl, "setPoint2WorldPosition", SetPoint2WorldPosition);
 
 	ptpl.Reset( tpl );
 }
@@ -349,6 +373,154 @@ void VtkDistanceRepresentation3DWrap::GetMaximumNumberOfRulerTicksMinValue(const
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDistanceRepresentation3DWrap::GetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
+	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint1DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDistanceRepresentation3DWrap::GetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
+	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint1WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDistanceRepresentation3DWrap::GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
+	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint2DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDistanceRepresentation3DWrap::GetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
+	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetPoint2WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkDistanceRepresentation3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
@@ -531,7 +703,37 @@ void VtkDistanceRepresentation3DWrap::SetLabelScale(const Nan::FunctionCallbackI
 {
 	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLabelScale(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
@@ -567,6 +769,154 @@ void VtkDistanceRepresentation3DWrap::SetMaximumNumberOfRulerTicks(const Nan::Fu
 		}
 		native->SetMaximumNumberOfRulerTicks(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDistanceRepresentation3DWrap::SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
+	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDistanceRepresentation3DWrap::SetPoint1WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
+	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint1WorldPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDistanceRepresentation3DWrap::SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
+	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2DisplayPosition(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDistanceRepresentation3DWrap::SetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
+	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPoint2WorldPosition(
+			b0
 		);
 		return;
 	}

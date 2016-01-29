@@ -49,17 +49,11 @@ void VtkArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CreateArray", CreateArray);
 	Nan::SetPrototypeMethod(tpl, "createArray", CreateArray);
 
-	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
-	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
-
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
-
-	Nan::SetPrototypeMethod(tpl, "IsDense", IsDense);
-	Nan::SetPrototypeMethod(tpl, "isDense", IsDense);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -129,29 +123,6 @@ void VtkArrayWrap::CreateArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
-void VtkArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkArrayWrap *wrapper = ObjectWrap::Unwrap<VtkArrayWrap>(info.Holder());
-	vtkArray *native = (vtkArray *)wrapper->native.GetPointer();
-	vtkArray * r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->DeepCopy();
-		VtkArrayWrap::InitPtpl();
-	v8::Local<v8::Value> argv[1] =
-		{ Nan::New(vtkNodeJsNoWrap) };
-	v8::Local<v8::Function> cons =
-		Nan::New<v8::FunctionTemplate>(VtkArrayWrap::ptpl)->GetFunction();
-	v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
-	VtkArrayWrap *w = new VtkArrayWrap();
-	w->native = r;
-	w->Wrap(wo);
-	info.GetReturnValue().Set(wo);
-}
-
 void VtkArrayWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkArrayWrap *wrapper = ObjectWrap::Unwrap<VtkArrayWrap>(info.Holder());
@@ -186,20 +157,6 @@ void VtkArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
-}
-
-void VtkArrayWrap::IsDense(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkArrayWrap *wrapper = ObjectWrap::Unwrap<VtkArrayWrap>(info.Holder());
-	vtkArray *native = (vtkArray *)wrapper->native.GetPointer();
-	bool r;
-	if(info.Length() != 0)
-	{
-		Nan::ThrowError("Too many parameters.");
-		return;
-	}
-	r = native->IsDense();
-	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

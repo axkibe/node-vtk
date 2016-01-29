@@ -32,6 +32,7 @@ class VtkExtentRCBPartitionerWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPartitionExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Partition(const Nan::FunctionCallbackInfo<v8::Value>& info);

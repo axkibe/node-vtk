@@ -57,6 +57,9 @@ void VtkStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetCellDims", GetCellDims);
+	Nan::SetPrototypeMethod(tpl, "getCellDims", GetCellDims);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,11 +72,17 @@ void VtkStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataObjectType", GetDataObjectType);
 	Nan::SetPrototypeMethod(tpl, "getDataObjectType", GetDataObjectType);
 
+	Nan::SetPrototypeMethod(tpl, "GetDimensions", GetDimensions);
+	Nan::SetPrototypeMethod(tpl, "getDimensions", GetDimensions);
+
 	Nan::SetPrototypeMethod(tpl, "GetExtentType", GetExtentType);
 	Nan::SetPrototypeMethod(tpl, "getExtentType", GetExtentType);
 
 	Nan::SetPrototypeMethod(tpl, "GetMaxCellSize", GetMaxCellSize);
 	Nan::SetPrototypeMethod(tpl, "getMaxCellSize", GetMaxCellSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint", GetPoint);
+	Nan::SetPrototypeMethod(tpl, "getPoint", GetPoint);
 
 	Nan::SetPrototypeMethod(tpl, "HasAnyBlankCells", HasAnyBlankCells);
 	Nan::SetPrototypeMethod(tpl, "hasAnyBlankCells", HasAnyBlankCells);
@@ -165,6 +174,43 @@ void VtkStructuredGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->DeepCopy(
 			(vtkDataObject *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredGridWrap::GetCellDims(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
+	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetCellDims(
+			b0
 		);
 		return;
 	}
@@ -268,6 +314,43 @@ void VtkStructuredGridWrap::GetDataObjectType(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkStructuredGridWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
+	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetDimensions(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStructuredGridWrap::GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
@@ -294,6 +377,59 @@ void VtkStructuredGridWrap::GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetMaxCellSize();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStructuredGridWrap::GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
+	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsBoolean())
+					{
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->GetPoint(
+							info[0]->Int32Value(),
+							info[1]->Int32Value(),
+							info[2]->Int32Value(),
+							b3,
+							info[4]->BooleanValue()
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkStructuredGridWrap::HasAnyBlankCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -416,7 +552,37 @@ void VtkStructuredGridWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
 	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDimensions(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
@@ -443,7 +609,37 @@ void VtkStructuredGridWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
 	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsInt32())
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetExtent(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{

@@ -50,6 +50,24 @@ void VtkImageConvolveWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetKernel3x3", GetKernel3x3);
+	Nan::SetPrototypeMethod(tpl, "getKernel3x3", GetKernel3x3);
+
+	Nan::SetPrototypeMethod(tpl, "GetKernel3x3x3", GetKernel3x3x3);
+	Nan::SetPrototypeMethod(tpl, "getKernel3x3x3", GetKernel3x3x3);
+
+	Nan::SetPrototypeMethod(tpl, "GetKernel5x5", GetKernel5x5);
+	Nan::SetPrototypeMethod(tpl, "getKernel5x5", GetKernel5x5);
+
+	Nan::SetPrototypeMethod(tpl, "GetKernel5x5x5", GetKernel5x5x5);
+	Nan::SetPrototypeMethod(tpl, "getKernel5x5x5", GetKernel5x5x5);
+
+	Nan::SetPrototypeMethod(tpl, "GetKernel7x7", GetKernel7x7);
+	Nan::SetPrototypeMethod(tpl, "getKernel7x7", GetKernel7x7);
+
+	Nan::SetPrototypeMethod(tpl, "GetKernel7x7x7", GetKernel7x7x7);
+	Nan::SetPrototypeMethod(tpl, "getKernel7x7x7", GetKernel7x7x7);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -58,6 +76,24 @@ void VtkImageConvolveWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetKernel3x3", SetKernel3x3);
+	Nan::SetPrototypeMethod(tpl, "setKernel3x3", SetKernel3x3);
+
+	Nan::SetPrototypeMethod(tpl, "SetKernel3x3x3", SetKernel3x3x3);
+	Nan::SetPrototypeMethod(tpl, "setKernel3x3x3", SetKernel3x3x3);
+
+	Nan::SetPrototypeMethod(tpl, "SetKernel5x5", SetKernel5x5);
+	Nan::SetPrototypeMethod(tpl, "setKernel5x5", SetKernel5x5);
+
+	Nan::SetPrototypeMethod(tpl, "SetKernel5x5x5", SetKernel5x5x5);
+	Nan::SetPrototypeMethod(tpl, "setKernel5x5x5", SetKernel5x5x5);
+
+	Nan::SetPrototypeMethod(tpl, "SetKernel7x7", SetKernel7x7);
+	Nan::SetPrototypeMethod(tpl, "setKernel7x7", SetKernel7x7);
+
+	Nan::SetPrototypeMethod(tpl, "SetKernel7x7x7", SetKernel7x7x7);
+	Nan::SetPrototypeMethod(tpl, "setKernel7x7x7", SetKernel7x7x7);
 
 	ptpl.Reset( tpl );
 }
@@ -100,6 +136,228 @@ void VtkImageConvolveWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkImageConvolveWrap::GetKernel3x3(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetKernel3x3(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::GetKernel3x3x3(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[27];
+		if( a0->Length() < 27 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 27; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetKernel3x3x3(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::GetKernel5x5(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[25];
+		if( a0->Length() < 25 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 25; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetKernel5x5(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::GetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[125];
+		if( a0->Length() < 125 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 125; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetKernel5x5x5(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::GetKernel7x7(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[49];
+		if( a0->Length() < 49 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 49; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetKernel7x7(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::GetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[343];
+		if( a0->Length() < 343 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 343; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetKernel7x7x7(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkImageConvolveWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -173,6 +431,228 @@ void VtkImageConvolveWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::SetKernel3x3(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetKernel3x3(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::SetKernel3x3x3(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[27];
+		if( a0->Length() < 27 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 27; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetKernel3x3x3(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::SetKernel5x5(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[25];
+		if( a0->Length() < 25 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 25; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetKernel5x5(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::SetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[125];
+		if( a0->Length() < 125 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 125; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetKernel5x5x5(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::SetKernel7x7(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[49];
+		if( a0->Length() < 49 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 49; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetKernel7x7(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::SetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		double b0[343];
+		if( a0->Length() < 343 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 343; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetKernel7x7x7(
+			b0
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
